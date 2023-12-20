@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="sharing_document-desktop">
+    <output-path>$PROJECT_DIR$/features/sharing_document/build/libs</output-path>
+    <root id="archive" name="sharing_document-desktop.jar">
+      <element id="module-output" name="JUST_Digital_Diary.features.sharing_document.desktopMain" />
+    </root>
+  </artifact>
+</component>

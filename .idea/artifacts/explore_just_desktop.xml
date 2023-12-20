@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="explore_just-desktop">
+    <output-path>$PROJECT_DIR$/features/explore_just/build/libs</output-path>
+    <root id="archive" name="explore_just-desktop.jar">
+      <element id="module-output" name="JUST_Digital_Diary.features.explore_just.desktopMain" />
+    </root>
+  </artifact>
+</component>

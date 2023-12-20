@@ -187,3 +187,6 @@ local.properties
 /desktop/build/kotlin/compileKotlinJvm/local-state/build-history.bin
 /desktop/build/test-results/kotlin-test-tasks-state.bin
 /desktop/build/tmp/jvmJar/MANIFEST.MF
+/.idea/artifacts/employees_desktop.xml
+/.idea/artifacts/notes_desktop.xml
+/.idea/artifacts/search_desktop.xml

@@ -54,7 +54,12 @@ android {
 dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(compose.ui)
-   implementation(compose.material3)
-   // implementation(compose.preview)
+    implementation(compose.material3)
+    implementation(compose.preview)
+    implementation(compose.materialIconsExtended)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation("androidx.navigation:navigation-compose:2.7.6")
     implementation(project(":shared"))
+    implementation(project(":features:root_home"))
+
 }
