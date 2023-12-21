@@ -13,6 +13,7 @@ kotlin {
         val jvmMain by getting{
             dependencies {
                 implementation(project(":shared"))
+                implementation(project(":features:auth"))
                 implementation(compose.desktop.common)
                 implementation(compose.desktop.currentOs)
             }

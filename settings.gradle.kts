@@ -22,3 +22,6 @@ include(":common")
 include(":desktop")
 include(":shared")
 include(":web")
+include(":features")
+include(":features:auth")
+

@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(compose.ui)
    implementation(compose.material3)
-   // implementation(compose.preview)
+   implementation(compose.preview)
     implementation(project(":shared"))
+    implementation(project(":features:auth"))
 }
