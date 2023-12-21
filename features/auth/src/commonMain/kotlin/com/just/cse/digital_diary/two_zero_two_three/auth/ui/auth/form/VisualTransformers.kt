@@ -1,4 +1,4 @@
-package com.khalekuzzamanjustcse.taskmanagement.ui_layer.navigation.screens.auth.form
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping

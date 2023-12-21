@@ -1,8 +1,9 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.TextFieldDefaults
@@ -38,37 +39,35 @@ fun AuthTextFieldPreview() {
 
     var state by remember {
         mutableStateOf(
-            FormTextFieldState(
-                text = "",
-                errorMessage = null
-            )
+            FormTextFieldState()
         )
     }
     val onValueChanged: (String) -> Unit = {
         state = state.copy(
-            text = it,
-            errorMessage = if (it.length <= 6) "Too Short" else null
+            value = it,
         )
     }
-
 
     AuthTextField(
         properties = properties,
         state = state,
         onValueChanged = onValueChanged,
-
+        isHorizontalOrientation = calculateWindowSizeClass()
+            .widthSizeClass!=WindowWidthSizeClass.Compact,
+        labelMinWidth = 100.dp
         )
 }
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun AuthTextField(
     properties: FormTextFieldProperties,
     state: FormTextFieldState,
+    isHorizontalOrientation: Boolean,
+    labelMinWidth:Dp,
     onValueChanged: (String) -> Unit,
+    onTrailingIconClick:()->Unit={},
 ) {
 
-    val windowSizeClass = calculateWindowSizeClass()
     FormTextInput(
         properties = properties.copy(
             colors = TextFieldDefaults.colors(
@@ -76,15 +75,16 @@ fun AuthTextField(
                 unfocusedIndicatorColor = Color.Unspecified
             ),
         ),
-        value = state.text,
+        value = state.value,
         errorMessage = state.errorMessage,
         onValueChanged = onValueChanged,
+        onTrailingIconClick =onTrailingIconClick ,
         labelFieldLayout = { label, field ->
-            if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact) {
+            if (isHorizontalOrientation) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    label(Modifier)
+                    label(Modifier.defaultMinSize(minWidth = labelMinWidth))
                     Spacer(Modifier.width(4.dp))
                     field(Modifier)
                 }

@@ -1,9 +1,8 @@
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import com.just.cse.digital_diary.two_zero_two_three.auth.AuthModuleGreeting
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.AuthTextFieldPreview
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.FormTextInputPreview
-import com.just.cse.digitaldiary.twozerotwothree.CommonMainGreeting
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.LoginForm
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.RegistrationForm
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.theme.AuthModuleTheme
 
 fun main() {
     application {
@@ -11,7 +10,11 @@ fun main() {
             title = "Compose Desktop",
             onCloseRequest = ::exitApplication
         ){
-            AuthTextFieldPreview()
+            AuthModuleTheme {
+               // LoginForm()
+                RegistrationForm()
+            }
+
         }
     }
 

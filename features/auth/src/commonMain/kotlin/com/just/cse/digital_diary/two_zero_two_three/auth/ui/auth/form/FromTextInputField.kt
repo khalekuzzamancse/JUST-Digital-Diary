@@ -26,7 +26,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 data class FormTextFieldState(
-    val text: String = "",
+    val value: String = "",
     val errorMessage: String? = null,
 )
 
@@ -69,7 +69,8 @@ fun FormTextInputPreview() {
                 Spacer(Modifier.height(2.dp))
                 field(Modifier)
             }
-        }
+        },
+        onTrailingIconClick = {}
     )
 }
 
@@ -119,8 +120,8 @@ fun FormTextInput(
         singleLine = properties.singleLine,
         readOnly = properties.readOnly,
         errorMessage = errorMessage,
-        leadingIcon = null,
-        trailingIcon = null,
+        leadingIcon = properties.leadingIcon,
+        trailingIcon = properties.trailingIcon,
         keyboardType = properties.keyboardType,
         visualTransformation = properties.visualTransformation,
         onTrailingIconClick = onTrailingIconClick,
