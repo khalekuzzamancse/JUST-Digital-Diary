@@ -260,8 +260,14 @@ fun FormTextInput(
     )
 }
 
+
+
+
+
+
+
 @Composable
-private fun formInputFieldIcon(
+fun formInputFieldIcon(
     icon: ImageVector?, onClick: (() -> Unit)? = null,
 ): @Composable (() -> Unit)? {
     if (icon != null)

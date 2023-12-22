@@ -11,10 +11,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -38,6 +42,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.FormTextFieldProperties
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.FormTextFieldState
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.MyDropDownMenu
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -132,7 +137,7 @@ fun RegistrationForm(
     val density = LocalDensity.current.density
     val textMeasurer = rememberTextMeasurer()
     val labelRowWidth: Int = remember {
-        val res = LoginFormLabels.getRowWidth(textMeasurer)
+        val res = RegistrationFormLabels.getRowWidth(textMeasurer)
         (res * density).toInt() + 80//fixing bug adding 80
         //   has a bug when use material theme ,fix it
 
@@ -144,8 +149,8 @@ fun RegistrationForm(
     val w = calculateWindowSizeClass().widthSizeClass
 
     Row(
-        modifier.fillMaxSize(),
-        horizontalArrangement = Arrangement.Center
+        modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.Center,
     ) {
         if (w == WindowWidthSizeClass.Expanded) {
             WelcomeExpandedScreen(
@@ -205,7 +210,7 @@ fun RegistrationFields(
     var passwordFieldProperty by remember {
         mutableStateOf(
             FormTextFieldProperties(
-                label = LoginFormLabels.PASSWORD,
+                label = RegistrationFormLabels.PASSWORD,
                 visualTransformation = PasswordVisualTransformation(),
                 leadingIcon = Icons.Default.Lock,
                 trailingIcon = Icons.Default.Visibility,
@@ -261,7 +266,7 @@ fun RegistrationFields(
 
         AuthTextField(
             properties = FormTextFieldProperties(
-                label = LoginFormLabels.USER_NAME,
+                label = RegistrationFormLabels.USER_NAME,
                 leadingIcon = Icons.Default.Person,
                 keyboardType = KeyboardType.Text
             ),
@@ -272,6 +277,16 @@ fun RegistrationFields(
 
         )
         Spacer(Modifier.height(8.dp))
+        MyDropDownMenu(
+            options = listOf("CSE","EEE"),
+            onOptionSelected = onDeptChanged,
+            isHorizontalOrientation = isHorizontal,
+            labelMinWidth =labelRowWidth,
+            selected = dept.value,
+            leadingIcon = Icons.Default.School
+        )
+        Spacer(Modifier.height(8.dp))
+
         AuthTextField(
             properties = passwordFieldProperty,
             state = password,
@@ -282,7 +297,9 @@ fun RegistrationFields(
         )
         Spacer(Modifier.height(8.dp))
         AuthTextField(
-            properties = passwordFieldProperty,
+            properties = passwordFieldProperty.copy(
+                label = RegistrationFormLabels.CONFIRMED_PASSWORD
+            ),
             state = confirmedPassword,
             onValueChanged = onConfirmedPassword,
             isHorizontalOrientation = isHorizontal,

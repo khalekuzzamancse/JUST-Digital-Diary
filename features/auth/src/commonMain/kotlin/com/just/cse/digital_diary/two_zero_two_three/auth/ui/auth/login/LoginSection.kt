@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -20,15 +20,13 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextMeasurer
-import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.FormTextFieldState
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.LoginForm
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -58,7 +56,7 @@ class LoginViewModel() {
     }
 
     fun onLoginRequest() {
-      //  println("onLoginRequest, ${userName.value}, ${password.value}")
+        //  println("onLoginRequest, ${userName.value}, ${password.value}")
     }
 
 }
@@ -66,63 +64,46 @@ class LoginViewModel() {
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-fun LoginForm(
+fun LoginSection(
     modifier: Modifier = Modifier,
 ) {
-    val viewModel = remember {
-        LoginViewModel()
+
+
+    val state = remember {
+        LoginFieldsState()
     }
-    val density = LocalDensity.current.density
-    val textMeasurer = rememberTextMeasurer()
-    val labelRowWidth:Int = remember {
-       val res=LoginFormLabels.getRowWidth(textMeasurer)
-        (res*density).toInt()+80//fixing bug adding 80
-     //   has a bug when use material theme ,fix it
-
-    }
-
-
     val isHorizontal = calculateWindowSizeClass().widthSizeClass != WindowWidthSizeClass.Compact
-
-    val w = calculateWindowSizeClass().widthSizeClass
-    println("LabelWidth:$labelRowWidth")
-
+    val w= calculateWindowSizeClass().widthSizeClass
 
     Row(
         modifier.fillMaxSize().verticalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.Center,
 
-    ) {
+        ) {
         if (w == WindowWidthSizeClass.Expanded) {
             WelcomeExpandedScreen(
                 modifier.padding(32.dp).weight(1f).align(Alignment.CenterVertically)
             )
         }
         Column(
-            modifier = modifier.padding(16.dp).width(IntrinsicSize.Min),
+            modifier = modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             JUSTLogoAndGreetings(
                 modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)
             )
             Spacer(Modifier.height(16.dp))
-            LoginFields(
-                userName = viewModel.userName.collectAsState().value,
-                password = viewModel.password.collectAsState().value,
-                onUserNameChanged = viewModel::onUserNameChanged,
-                onPasswordChanged = viewModel::onPasswordChanged,
-                labelRowWidth = labelRowWidth.dp,
-                isHorizontal = isHorizontal,
-                modifier = Modifier.wrapContentWidth()
+            LoginForm(
+                modifier = Modifier.widthIn(max=500.dp)
             )
             Spacer(Modifier.height(16.dp))
             ForgetPassword { }
             VerticalSpacer()
             LoginOrSignUp(
                 modifier = if (isHorizontal)
-                    Modifier.padding(start = 16.dp + labelRowWidth.dp).fillMaxWidth()
+                    Modifier.padding(start = 16.dp).fillMaxWidth()
                 else Modifier.padding(start = 16.dp).fillMaxWidth(),
-                onLoginRequest = viewModel::onLoginRequest,
+                onLoginRequest = {},
                 onRegisterRequest = {}
             )
 
