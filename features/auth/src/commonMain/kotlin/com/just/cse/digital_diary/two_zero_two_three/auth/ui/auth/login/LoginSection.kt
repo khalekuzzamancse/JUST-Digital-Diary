@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -74,19 +75,20 @@ fun LoginSection(
     val isHorizontal = calculateWindowSizeClass().widthSizeClass != WindowWidthSizeClass.Compact
     val w = calculateWindowSizeClass().widthSizeClass
 
-    Row(
+    Column(
         modifier.fillMaxSize().verticalScroll(rememberScrollState()),
-        horizontalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment =Alignment.CenterHorizontally
     ) {
         if (w == WindowWidthSizeClass.Expanded) {
 //            WelcomeExpandedScreen(
 //                modifier.padding(32.dp).weight(1f).align(Alignment.CenterVertically)
 //            )
         }
-//        JUSTLogoAndGreetings(
-//            modifier = Modifier.align(Alignment.CenterHorizontally)
-//        )
-//        Spacer(Modifier.height(16.dp))
+        LoginSectionHeader(
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
+        Spacer(Modifier.height(16.dp))
         LoginFieldsNControls(
             modifier = Modifier,
             isHorizontal = isHorizontal,
@@ -96,6 +98,7 @@ fun LoginSection(
         )
 
     }
+
 }
 
 @Composable

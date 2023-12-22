@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
@@ -161,7 +160,7 @@ fun RegistrationForm(
             modifier = modifier.padding(16.dp).width(IntrinsicSize.Min),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            JUSTLogoAndGreetings(
+            LoginSectionHeader(
                 modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)
             )
             Spacer(Modifier.height(16.dp))
