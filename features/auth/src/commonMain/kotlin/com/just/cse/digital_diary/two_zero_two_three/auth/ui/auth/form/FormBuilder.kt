@@ -1,13 +1,13 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -15,9 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.LoginFieldsState
 
@@ -26,13 +28,13 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.LoginFie
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun LoginForm(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    verticalGap: Dp,
 ) {
     val state = remember {
         LoginFieldsState()
     }
     val isHorizontal = calculateWindowSizeClass().widthSizeClass != WindowWidthSizeClass.Compact
-
 
     LoginForm(
         fieldModifier = Modifier,
@@ -43,7 +45,8 @@ fun LoginForm(
         passwordState = state.password.collectAsState().value,
         onPasswordChanged = state::onPasswordChanged,
         showPassword = state.showPassword.collectAsState().value,
-        onTogglePasswordVisibility = state::onTogglePasswordVisibility
+        onTogglePasswordVisibility = state::onTogglePasswordVisibility,
+        verticalGap=verticalGap
     )
 }
 
@@ -58,11 +61,14 @@ fun LoginForm(
     onPasswordChanged: (String) -> Unit,
     showPassword: Boolean,
     onTogglePasswordVisibility: () -> Unit,
+    verticalGap: Dp,
 ) {
     if (isHorizontal) {
         FormLayout(
             eachRow1stChildMaxWidth = 200.dp,
-            modifier = formModifier
+            modifier = formModifier,
+            verticalGap = verticalGap,
+            horizontalGap = 8.dp
         ) {
             Text(text = "User Name")
             AuthInputField(
@@ -121,7 +127,11 @@ fun AuthInputField(
         properties = LabelLessTextFieldProperties(
             leadingIcon = leadingIcon,
             trailingIcon = trailingIcon,
-            visualTransformation = visualTransformation
+            visualTransformation = visualTransformation,
+            colors = TextFieldDefaults.colors(
+                focusedIndicatorColor = Color.Unspecified,
+                unfocusedIndicatorColor = Color.Unspecified
+            )
         ),
         state = state,
         onValueChanged = onValueChanged,

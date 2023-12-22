@@ -11,7 +11,8 @@ import kotlin.math.max
 @Composable
  fun FormLayout(
     eachRow1stChildMaxWidth: Dp,
-    verticalGap: Dp = 5.dp,
+    verticalGap: Dp,
+    horizontalGap: Dp,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
@@ -38,7 +39,7 @@ import kotlin.math.max
         }
         //let gap between two column=5dp
 
-        val firstColumnWidth = firstColumnChildPlaceAbles.maxOf { it.width + verticalGap.toPx().toInt() }
+        val firstColumnWidth = firstColumnChildPlaceAbles.maxOf { it.width  }+horizontalGap.toPx().toInt()
         val secondColumnWidth = constraints.maxWidth - firstColumnWidth
         val eachRowSecondChildConstraint = Constraints(
             minWidth = secondColumnWidth,
@@ -49,15 +50,13 @@ import kotlin.math.max
         val secondColumnChildPlaceAbles = secondColumnChildMeasureAbles.map { measurable ->
             measurable.measure(eachRowSecondChildConstraint)
         }
-        val layoutHeight = max(
-            firstColumnChildPlaceAbles.sumOf { it.height },
-            secondColumnChildPlaceAbles.sumOf { it.height }
-        )
+        val layoutHeight = max(firstColumnChildPlaceAbles.sumOf { it.height }, secondColumnChildPlaceAbles.sumOf { it.height })
         layout(constraints.maxWidth, layoutHeight) {
             var y = 0
             firstColumnChildPlaceAbles.forEachIndexed { i, label ->
                 val textField = secondColumnChildPlaceAbles[i]
-                val rowHeight = max(label.height, textField.height)
+                //Height
+                val rowHeight = max(label.height, textField.height)+verticalGap.toPx().toInt()
                 val eachRow1stChildMoveDown = (rowHeight - label.height) / 2
                 val eachRow2ndChildMoveDown = (rowHeight - textField.height) / 2
                 label.placeRelative(0, y + eachRow1stChildMoveDown)

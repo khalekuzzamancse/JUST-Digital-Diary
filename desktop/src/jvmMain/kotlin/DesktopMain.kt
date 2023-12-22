@@ -11,7 +11,7 @@ fun main() {
             onCloseRequest = ::exitApplication
         ){
             AuthModuleTheme {
-                AuthModule()
+                LoginSection()
             }
 
         }
@@ -21,5 +21,5 @@ fun main() {
 
 @Composable
 fun AuthModule() {
-    LoginSection()
+
 }
