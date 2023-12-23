@@ -26,8 +26,10 @@ data class NavigationRailState(
 
 data class NavigationItem(
     val label: String,
-    val icon: ImageVector,
-    val route: String = label
+    val unFocusedIcon: ImageVector,
+    val route: String = label,
+    val focusedIcon:ImageVector=unFocusedIcon,
+    val badge:String?=null,
 )
 
 @Composable
@@ -56,7 +58,7 @@ fun NavigationRails(
     NavigationRail(modifier) {
         destinations.forEachIndexed { index, item ->
             RailItem(
-                icon = item.icon,
+                icon = item.unFocusedIcon,
                 label = item.label,
                 selected = selectedDestinationIndex == index,
                 isHorizontal = isExpanded,

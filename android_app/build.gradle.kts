@@ -54,8 +54,10 @@ android {
 dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(compose.ui)
-   implementation(compose.material3)
-   implementation(compose.preview)
+    implementation(compose.material3)
+    implementation(compose.preview)
+    implementation(compose.materialIconsExtended)
+
     implementation(project(":shared"))
     implementation(project(":features:auth"))
 }

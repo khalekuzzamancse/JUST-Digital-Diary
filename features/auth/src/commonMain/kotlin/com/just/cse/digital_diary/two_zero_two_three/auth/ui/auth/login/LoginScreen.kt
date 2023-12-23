@@ -23,31 +23,31 @@ import kotlinx.coroutines.launch
 val homeDestinations = listOf(
     NavigationItem(
         label = "Menu",
-        icon = Icons.Default.Menu
+        unFocusedIcon = Icons.Default.Menu
     ),
     NavigationItem(
         label = "Factually Members",
-        icon = Icons.Default.Person4
+        unFocusedIcon = Icons.Default.Person4
     ),
     NavigationItem(
         label = "Admin Office",
-        icon = Icons.Default.Settings
+        unFocusedIcon = Icons.Default.Settings
     ),
     NavigationItem(
         label = "Vehicle Tracking",
-        icon = Icons.Default.LocationSearching
+        unFocusedIcon = Icons.Default.LocationSearching
     ),
     NavigationItem(
         label = "Daily Diary",
-        icon = Icons.Default.Note
+        unFocusedIcon = Icons.Default.Note
     ),
     NavigationItem(
         label = "Daily Diary",
-        icon = Icons.Default.CalendarMonth
+        unFocusedIcon = Icons.Default.CalendarMonth
     ),
     NavigationItem(
         label = "Explore JUST",
-        icon = Icons.Default.Explore
+        unFocusedIcon = Icons.Default.Explore
     )
 )
 

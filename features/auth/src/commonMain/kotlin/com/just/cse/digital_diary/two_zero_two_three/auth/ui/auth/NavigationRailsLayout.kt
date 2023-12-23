@@ -34,16 +34,7 @@ fun NavigationRailLayout(
     snackBarMessage: String? = null,
     content: @Composable (Modifier) -> Unit
 ) {
-
     val screenType = calculateWindowSizeClass().widthSizeClass
-    val scope = rememberCoroutineScope()
-    val hostState = remember { SnackbarHostState() }
-
-    snackBarMessage?.let { message ->
-        scope.launch {
-            hostState.showSnackbar(message)
-        }
-    }
     Row(modifier = Modifier) {
         NavigationRails(
             modifier = Modifier,

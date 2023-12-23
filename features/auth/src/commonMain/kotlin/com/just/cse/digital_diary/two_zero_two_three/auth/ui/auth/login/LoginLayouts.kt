@@ -112,8 +112,7 @@ fun LoginLayoutOnCompactScreen(
         val width = this.maxWidth
         Row(modifier = Modifier.fillMaxSize()) {
             ScreenWithDrawer(
-                drawerState = drawerState,
-                drawerWidth = width * .8f,//80%
+                drawerState=drawerState,
                 destination = destination,
                 closeDrawer = onDrawerCloseRequested,
                 onDrawerItemClick = onDrawerItemClick,
