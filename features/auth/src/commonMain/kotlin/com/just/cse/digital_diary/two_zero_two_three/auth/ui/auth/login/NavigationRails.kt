@@ -10,7 +10,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationRail
-import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,8 +36,8 @@ fun NavigationRails(
     onSelectionChanged: (Int) -> Unit,
 ) {
     NavigationRails(
-        selectedItem = state.selectedItem,
-        options = state.options,
+        selectedDestinationIndex = state.selectedItem,
+        destinations = state.options,
         isExpanded = state.isExpandMode,
         onSelectionChanged = onSelectionChanged
     )
@@ -47,18 +46,19 @@ fun NavigationRails(
 
 @Composable
 fun NavigationRails(
-    selectedItem: Int,
+    modifier: Modifier=Modifier,
+    selectedDestinationIndex: Int,
     isExpanded: Boolean,
-    options: List<NavigationItem>,
+    destinations: List<NavigationItem>,
     onSelectionChanged: (Int) -> Unit,
 ) {
 
-    NavigationRail {
-        options.forEachIndexed { index, item ->
+    NavigationRail(modifier) {
+        destinations.forEachIndexed { index, item ->
             RailItem(
                 icon = item.icon,
                 label = item.label,
-                selected = selectedItem == index,
+                selected = selectedDestinationIndex == index,
                 isHorizontal = isExpanded,
                 onClick = {
                     onSelectionChanged(index)
