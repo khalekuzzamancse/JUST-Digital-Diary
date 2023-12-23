@@ -30,6 +30,8 @@ data class ModalDrawerGroup(
     val isVisible: Boolean = true,
 )
 
+
+
 @Composable
 fun ScreenWithDrawer(
     drawerState: DrawerState,
@@ -46,9 +48,9 @@ fun ScreenWithDrawer(
         onDrawerItemClick = onDrawerItemClick,
         drawerState = drawerState,
         closeDrawer = closeDrawer,
-        content = content,
         header=header,
-        onGroupClicked=onGroupClicked
+        onGroupClicked=onGroupClicked,
+        content = content,
     )
 
 }
@@ -108,7 +110,7 @@ private fun DrawerSheetContent(
                 })
                 Divider(thickness = 2.dp)
                 if(group.isVisible){
-                    GroupItems(
+                    GroupItem(
                         destination = items,
                         selectedItem = selectedItem.value,
                         onSelectedItem = {
@@ -129,7 +131,7 @@ private fun DrawerSheetContent(
 
 
  @Composable
-fun GroupItems(
+fun GroupItem(
     selectedItem:NavigationItem,
     destination: List<NavigationItem>,
     onNavigate:(String) -> Unit,
@@ -163,7 +165,7 @@ fun GroupItems(
 
 
 @Composable
-private fun GroupSection(
+ fun GroupSection(
     groupName: String,
     onClick:()->Unit,
 ) {

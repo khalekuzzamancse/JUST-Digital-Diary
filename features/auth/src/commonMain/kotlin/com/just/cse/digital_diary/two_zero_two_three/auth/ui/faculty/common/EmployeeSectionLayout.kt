@@ -1,12 +1,9 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.common
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -42,7 +39,17 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.compact
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.expanded
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.medium
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.modal_drawer.ModalDrawerGroup
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.modal_drawer.ScreenWithDrawer
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.Department
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.DepartmentList
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.Employee
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.EmployeeList
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.EmployeeListDemo
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.SectionCategory
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.SectionType
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.administrativeOffices
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.depts
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.employees
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.faculties
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -65,12 +72,13 @@ class FacultyLayoutFactoryState(
 
     private val _drawerGroup = MutableStateFlow(
         listOf(
-            ModalDrawerGroup("Faculty Members", members =  destination,isVisible = false),
-            ModalDrawerGroup("Admin Office", members = administrativeOffices,isVisible = false)
+            ModalDrawerGroup("Faculty Members", members = destination, isVisible = false),
+            ModalDrawerGroup("Admin Office", members = administrativeOffices, isVisible = false)
         )
     )
     val drawerGroups = _drawerGroup.asStateFlow()
     fun onDrawerGroupClick(index: Int) {
+        println("Group clicked: ${index}")
         _drawerGroup.update { groups ->
             groups.mapIndexed { i, group ->
                 if (i == index) group.copy(isVisible = !group.isVisible) else group
@@ -140,9 +148,6 @@ fun FacultyLayoutFactory(
         snackbarMessage = snackbarMessage,
         contentSection = contentSection,
         onDrawerGroupClick = factory::onDrawerGroupClick,
-        drawerHeader = {
-            Text("This is drawer header")
-        },
         tabSection = {
             TabSection(
                 modifier = it,
@@ -198,7 +203,11 @@ fun TabSection(
 
 }
 
-//Stateless
+
+
+//Builder will maintain the different layout on based on screen size.
+//it will not expose which layout is it using
+//need to refactor i
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun FacultyLayoutBuilder(
@@ -209,7 +218,6 @@ fun FacultyLayoutBuilder(
     destination: List<NavigationItem>,
     drawerGroups: List<ModalDrawerGroup>,
     snackbarMessage: String? = null,
-    drawerHeader: @Composable (ColumnScope.(Modifier) -> Unit) = {},
     onDrawerGroupClick: (Int) -> Unit = {},
     contentSection: @Composable ((Modifier) -> Unit),
     tabSection: @Composable ((Modifier) -> Unit)
@@ -228,14 +236,13 @@ fun FacultyLayoutBuilder(
         compact, medium -> {
             LayoutOnNoExpended(
                 contentSection = contentSection,
-                bottomTabSection = tabSection,
+                tabSection = tabSection,
                 modifier = Modifier,
-                destination = drawerGroups,
+                drawerGroups = drawerGroups,
                 drawerState = drawerState,
                 onDrawerItemClick = onDrawerItemClick,
                 onDrawerCloseRequested = onDrawerCloseRequested,
                 snackbarMessage = snackbarMessage,
-                drawerHeader = drawerHeader,
                 onDrawerGroupClick = onDrawerGroupClick
             )
         }
@@ -250,12 +257,11 @@ fun LayoutOnNoExpended(
     drawerState: DrawerState,
     onDrawerItemClick: (String) -> Unit,
     onDrawerCloseRequested: () -> Unit,
-    destination: List<ModalDrawerGroup>,
+    drawerGroups: List<ModalDrawerGroup>,
     snackbarMessage: String? = null,
-    drawerHeader: @Composable (ColumnScope.(Modifier) -> Unit) = {},
     onDrawerGroupClick: (Int) -> Unit = {},
     contentSection: @Composable ((Modifier) -> Unit),
-    bottomTabSection: @Composable ((Modifier) -> Unit)
+    tabSection: @Composable ((Modifier) -> Unit)
 
 ) {
     val hostState = remember { SnackbarHostState() }
@@ -265,39 +271,35 @@ fun LayoutOnNoExpended(
             hostState.showSnackbar(message)
         }
     }
-    BoxWithConstraints(modifier) {
-        Row(modifier = Modifier.fillMaxSize()) {
-            ScreenWithDrawer(
-                drawerState = drawerState,
-                destination = destination,
-                closeDrawer = onDrawerCloseRequested,
-                onDrawerItemClick = onDrawerItemClick,
-                header = drawerHeader,
+    ModalDrawer(
+        modifier = Modifier,
+        drawerState = drawerState,
+        sheet = {
+            HomeScreenDrawerSheet(
+                groups = drawerGroups,
                 onGroupClicked = onDrawerGroupClick,
-                content = {
-                    //Scaffold used top level so that for any screen snack-bar can be used
-                    Scaffold(
-                        modifier = modifier,
-                        snackbarHost = {
-                            SnackbarHost(hostState = hostState)
-                        },
-                        topBar = {
-                            bottomTabSection(Modifier)
-                        },
-
-                        ) { scaffoldPadding ->
-                        Column(Modifier.padding(scaffoldPadding)) {
-                            Spacer(Modifier.height(16.dp))
-                            contentSection(Modifier)
-                        }
-                    }
-
+                onItemClicked = { _, _ ->
+                    onDrawerItemClick("")
+                    onDrawerCloseRequested()
                 }
-
             )
-        }
+        },
+        content = {
+            //Scaffold used top level so that for any screen snack-bar can be used
+            Scaffold(
+                modifier = modifier,
+                snackbarHost = { SnackbarHost(hostState = hostState) },
+                topBar = { tabSection(Modifier) },
 
-    }
+                ) { scaffoldPadding ->
+                Column(Modifier.padding(scaffoldPadding)) {
+                    Spacer(Modifier.height(16.dp))
+                    contentSection(Modifier)
+                }
+            }
+        },
+
+        )
 }
 
 

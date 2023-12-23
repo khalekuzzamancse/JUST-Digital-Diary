@@ -21,13 +21,24 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import kotlin.random.Random
 
+data class SectionType(
+    val sectionId: Int,//finder  to ask for data using it
+    val name: String,
+    val logo:ImageVector
+)
+data class SectionCategory(
+    val id: Int,//finder  to ask for data using it
+    val name: String,
+    val logo:ImageVector
+)
 data class EmployeeSection(
     val name: String,
-    val department: List<Department>,
-    val logo:ImageVector
+    val departments: List<Department>,
+    val logo:ImageVector?=null
 )
 
 
+//dept id=dept name science each dept name is unique
 data class Department(
     val fullName: String,
     val shortName: String,
