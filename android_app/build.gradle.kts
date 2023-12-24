@@ -57,6 +57,23 @@ dependencies {
     implementation(compose.material3)
     implementation(compose.preview)
     implementation(compose.materialIconsExtended)
+    val voyagerVersion = "1.0.0"
+
+    // Multiplatform
+    // Navigator
+    implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+
+    // Screen Model
+    implementation("cafe.adriel.voyager:voyager-screenmodel:$voyagerVersion")
+
+    // BottomSheetNavigator
+    implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:$voyagerVersion")
+
+    // TabNavigator
+    implementation("cafe.adriel.voyager:voyager-tab-navigator:$voyagerVersion")
+
+    // Transitions
+    implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
 
     implementation(project(":shared"))
     implementation(project(":features:auth"))

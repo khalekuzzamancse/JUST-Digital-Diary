@@ -1,5 +1,11 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,14 +16,24 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.Person4
 import androidx.compose.material.icons.filled.School
+import androidx.compose.material.icons.outlined.People
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import kotlin.random.Random
@@ -234,13 +250,44 @@ fun DepartmentCard(
             )
             Spacer(Modifier.height(4.dp))
             Row(modifier = Modifier) {
-                Icon(imageVector = Icons.Default.Person4, null)
+                Icon(imageVector = Icons.Default.School, null)
                 Spacer(Modifier.width(4.dp))
                 Text(text = "${department.employeeCount} Teacher(s)")
             }
         }
     }
 }
+//@Composable
+//fun DepartmentCard(
+//    modifier: Modifier,
+//    fullName: String,
+//    shortName: String,
+//    showFullName: Boolean = false,
+//    employeeCount: Int = Random.nextInt(5, 20),
+//    icon: ImageVector = Icons.Default.School
+//) {
+//    Surface(
+//        modifier = modifier,
+//        shadowElevation = 8.dp,
+//        onClick = {}
+//    ) {
+//        Column(
+//            modifier = Modifier
+//        ) {
+//            Text(
+//                text = if (showFullName) fullName else shortName,
+//                style = MaterialTheme.typography.titleMedium
+//            )
+//            Spacer(Modifier.height(4.dp))
+//            Row(modifier = Modifier) {
+//                Icon(imageVector = icon, null)
+//                Spacer(Modifier.width(4.dp))
+//                Text(text = "$employeeCount Teacher(s)")
+//            }
+//        }
+//    }
+//}
+
 @Composable
 fun DepartmentCard(
     modifier: Modifier,
@@ -248,25 +295,38 @@ fun DepartmentCard(
     shortName: String,
     showFullName: Boolean = false,
     employeeCount: Int = Random.nextInt(5, 20),
-    icon: ImageVector = Icons.Default.School
+    icon: ImageVector = Icons.Outlined.People
 ) {
-    Surface(
-        modifier = modifier,
-        shadowElevation = 8.dp,
-        onClick = {}
+    val interactionSource = remember { MutableInteractionSource() }
+
+    val indication = LocalIndication.current
+    Card(
+        modifier = modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .animateContentSize()
+            .clickable(onClick = {  })
+            .indication(interactionSource,indication),
+        elevation =CardDefaults.cardElevation(10.dp),
+        shape = CardDefaults.shape,
+        colors = CardDefaults.cardColors(
+            containerColor =MaterialTheme.colorScheme.secondaryContainer,
+            contentColor =MaterialTheme.colorScheme.onSecondaryContainer,
+        )
     ) {
         Column(
             modifier = Modifier
+                .padding(16.dp) // Add some padding inside the card
         ) {
             Text(
                 text = if (showFullName) fullName else shortName,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
             )
             Spacer(Modifier.height(4.dp))
             Row(modifier = Modifier) {
-                Icon(imageVector = Icons.Default.Person4, null)
+                Icon(imageVector = icon, null) // Set the color of the icon to green
                 Spacer(Modifier.width(4.dp))
-                Text(text = "$employeeCount Teacher(s)")
+                Text(text = "$employeeCount Teacher(s)") // Set the color of the text to blue
             }
         }
     }

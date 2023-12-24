@@ -1,6 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -8,6 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.NavigationGroup
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.NavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.compact
@@ -15,11 +20,15 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.expanded
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.medium
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.common.LayoutOnNoExpended
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.common.NavGroupSelectedItem
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.home_screen.HomeScreen
+import com.khalekuzzamanjustcse.taskmanagement.ui_layer.theme.AuthModuleTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class SectionFactory {
+class SectionFactory (
+   val  onNavigateToHome:()-> Unit={},
+){
     private val _selectedGroupIndexWhoseMembersAreVisible = MutableStateFlow(-1)
     private val _selectedItem = MutableStateFlow(NavGroupSelectedItem())
     val selectedItem = _selectedItem.asStateFlow()
@@ -36,6 +45,11 @@ class SectionFactory {
     private val _navGroups = MutableStateFlow(
         listOf(
             NavigationGroup(
+                name = "Home",
+                icon = Icons.Outlined.Home,
+                members = emptyList()
+            ),
+            NavigationGroup(
                 name = "Faculty",
                 icon = Icons.Outlined.School,
                 members = emptyList()
@@ -50,6 +64,12 @@ class SectionFactory {
     val navGroups = _navGroups.asStateFlow()
 
     fun onGroupSelect(selectedGroupIndex: Int) {
+        if(selectedGroupIndex==0){
+            onNavigateToHome()
+            return
+        }
+        //
+
         hideGroupMembersExecptThisIndex(selectedGroupIndex)
         val alreadySelected = _selectedGroupIndexWhoseMembersAreVisible.value == selectedGroupIndex
         if (alreadySelected) {
@@ -109,7 +129,8 @@ class SectionFactory {
     fun onItemSelect(groupIndex: Int, itemIndex: Int) {
         _selectedItem.value = NavGroupSelectedItem(groupIndex, itemIndex)
         when (groupIndex) {
-            0 -> {
+
+            1 -> {
                 when (itemIndex) {
                     0 -> {
                         _destinationsOfSelectedSectionChild.value =
@@ -170,20 +191,42 @@ class SectionFactory {
 
 /*
  */
-@Composable
-fun FacultyLayoutBuilder2Demo() {
-    val factory = remember {
-        SectionFactory()
+class MainScreen: Screen {
+    @Composable
+    override fun Content() {
+        val navigator= LocalNavigator.current
+        FacultyLayoutBuilder2Demo(
+            onNavigateToHome = {
+                navigator?.push(HomeScreen())
+            }
+        )
+
     }
-    FacultyLayoutBuilder2(
-        sections = factory.navGroups.collectAsState().value,
-        onSectionSelected = factory::onGroupSelect,
-        onSectionChildSelected = factory::onItemSelect,
-        sectionSelectionChild = factory.selectedItem.collectAsState().value,
-        destinationOfSelectedSectionChild = factory.destinationsOfSelectedSectionChild.collectAsState().value,
-        selectedDestinationIndexOfSelectedSectionChild = factory.selectedDestinationIndexOfSelectedSectionChild.collectAsState().value,
-        onSelectedDestinationOfSelectedSectionChildChanged = factory::onSelectedDestinationOfSelectedSectionChildChanged
-    )
+
+}
+@Composable
+fun FacultyLayoutBuilder2Demo(
+    onNavigateToHome: () -> Unit={},
+) {
+
+    val factory = remember {
+        SectionFactory(onNavigateToHome = {
+            onNavigateToHome()
+        })
+    }
+    AuthModuleTheme{
+        FacultyLayoutBuilder2(
+            sections = factory.navGroups.collectAsState().value,
+            onSectionSelected = factory::onGroupSelect,
+            onSectionChildSelected = factory::onItemSelect,
+            sectionSelectionChild = factory.selectedItem.collectAsState().value,
+            destinationOfSelectedSectionChild = factory.destinationsOfSelectedSectionChild.collectAsState().value,
+            selectedDestinationIndexOfSelectedSectionChild = factory.selectedDestinationIndexOfSelectedSectionChild.collectAsState().value,
+            onSelectedDestinationOfSelectedSectionChildChanged = factory::onSelectedDestinationOfSelectedSectionChildChanged
+        )
+   }
+
+
 
 }
 

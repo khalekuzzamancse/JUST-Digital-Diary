@@ -19,9 +19,29 @@ kotlin {
             dependencies {
                 implementation(compose.ui)
                 implementation(compose.material3)
+                implementation(compose.animation)
+                implementation(compose.animationGraphics)
                 implementation(compose.materialIconsExtended)
                 implementation(compose.preview)
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
+                val voyagerVersion = "1.0.0"
+
+                // Multiplatform
+                // Navigator
+                implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+
+                // Screen Model
+                implementation("cafe.adriel.voyager:voyager-screenmodel:$voyagerVersion")
+
+                // BottomSheetNavigator
+                implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:$voyagerVersion")
+
+                // TabNavigator
+                implementation("cafe.adriel.voyager:voyager-tab-navigator:$voyagerVersion")
+
+                // Transitions
+                implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
+
             }
         }
 //        val androidMain by getting{

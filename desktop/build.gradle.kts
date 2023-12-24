@@ -16,6 +16,23 @@ kotlin {
                 implementation(project(":features:auth"))
                 implementation(compose.desktop.common)
                 implementation(compose.desktop.currentOs)
+                val voyagerVersion = "1.0.0"
+
+                // Multiplatform
+                // Navigator
+                implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+
+                // Screen Model
+                implementation("cafe.adriel.voyager:voyager-screenmodel:$voyagerVersion")
+
+                // BottomSheetNavigator
+                implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:$voyagerVersion")
+
+                // TabNavigator
+                implementation("cafe.adriel.voyager:voyager-tab-navigator:$voyagerVersion")
+
+                // Transitions
+                implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
             }
         }
     }
