@@ -39,13 +39,9 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.compact
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.expanded
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.medium
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.modal_drawer.ModalDrawerGroup
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.Department
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.DepartmentList
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.Employee
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.EmployeeList
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.EmployeeListDemo
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.SectionCategory
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.SectionType
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.administrativeOffices
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.depts
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.employees
@@ -204,7 +200,6 @@ fun TabSection(
 }
 
 
-
 //Builder will maintain the different layout on based on screen size.
 //it will not expose which layout is it using
 //need to refactor i
@@ -302,6 +297,150 @@ fun LayoutOnNoExpended(
         )
 }
 
+/*
+
+this should handle manage the it component state
+it will tell only which nav group is currently selected,so that you can pass down the
+group members of of the selected or clicked group.
+it will manage the drawer itself,the drawer responsibility should not go to its parent because
+it parent does need to know how to display the the destination,
+so the destination can be shown in the different style based on the screen size.
+
+it will ask for for which
+it responsibility:
+ maintain the navigation(drawer here) since it not expanded screen.
+ Inform current which group is clicked so that parent pass down the group member,or update the groups or group members.
+ inform to which group item is clicked,so that parent pass down the content or tab means
+ it can pass down the content associated with current selected or clicked members of the group.
+
+ Responsibility:
+ Keep drawer state
+ Open drawer
+ close drawer
+ notify which group is clicked
+ notify which group which member is clicked
+
+ */
+class MyDrawerState(
+    private val scope: CoroutineScope,
+) {
+    val drawerState = DrawerState(DrawerValue.Open)
+    fun openDrawer() {
+        scope.launch {
+            drawerState.open()
+        }
+    }
+
+    fun closeDrawer() {
+        scope.launch {
+            drawerState.close()
+        }
+    }
+}
+@Composable
+fun LayoutOnNoExpended3(
+    modifier: Modifier,
+    drawerController:MyDrawerState,
+    onNaigationItemClick: (groupIndex:Int, itemIndex:Int) -> Unit,
+    selectedItem:NavGroupSelectedItem,
+    drawerGroups: List<ModalDrawerGroup>,
+    snackbarMessage: String? = null,
+    onDrawerGroupClick: (Int) -> Unit = {},
+    contentSection: @Composable ((Modifier) -> Unit),
+    tabSection: @Composable ((Modifier) -> Unit)
+
+) {
+
+    val hostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    snackbarMessage?.let { message ->
+        scope.launch {
+            hostState.showSnackbar(message)
+        }
+    }
+    ModalDrawer(
+        modifier = Modifier,
+        drawerState = drawerController.drawerState,
+        sheet = {
+            HomeScreenDrawerSheet(
+                selectedItemIndex = selectedItem,
+                groups = drawerGroups,
+                onGroupClicked = onDrawerGroupClick,
+                onItemClicked = { groupIndex, index ->
+                    onNaigationItemClick(groupIndex,index)
+                   drawerController.closeDrawer()
+                }
+            )
+        },
+        content = {
+            //Scaffold used top level so that for any screen snack-bar can be used
+            Scaffold(
+                modifier = modifier,
+                snackbarHost = { SnackbarHost(hostState = hostState) },
+                topBar = { tabSection(Modifier) },
+
+                ) { scaffoldPadding ->
+                Column(Modifier.padding(scaffoldPadding)) {
+                    Spacer(Modifier.height(16.dp))
+                    contentSection(Modifier)
+                }
+            }
+        },
+
+        )
+}
+@Composable
+fun LayoutOnNoExpended2(
+    modifier: Modifier,
+    drawerState: DrawerState,
+    onDrawerItemClick: (groupIndex:Int,itemIndex:Int) -> Unit,
+    onDrawerCloseRequested: () -> Unit,
+    selectedItem:NavGroupSelectedItem,
+    drawerGroups: List<ModalDrawerGroup>,
+    snackbarMessage: String? = null,
+    onDrawerGroupClick: (Int) -> Unit = {},
+    contentSection: @Composable ((Modifier) -> Unit),
+    tabSection: @Composable ((Modifier) -> Unit)
+
+) {
+    val hostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    snackbarMessage?.let { message ->
+        scope.launch {
+            hostState.showSnackbar(message)
+        }
+    }
+    ModalDrawer(
+        modifier = Modifier,
+        drawerState = drawerState,
+        sheet = {
+            HomeScreenDrawerSheet(
+                selectedItemIndex = selectedItem,
+                groups = drawerGroups,
+                onGroupClicked = onDrawerGroupClick,
+                onItemClicked = { groupIndex, index ->
+                    onDrawerItemClick(groupIndex,index)
+                    onDrawerCloseRequested()
+                }
+            )
+        },
+        content = {
+            //Scaffold used top level so that for any screen snack-bar can be used
+            Scaffold(
+                modifier = modifier,
+                snackbarHost = { SnackbarHost(hostState = hostState) },
+                topBar = { tabSection(Modifier) },
+
+                ) { scaffoldPadding ->
+                Column(Modifier.padding(scaffoldPadding)) {
+                    Spacer(Modifier.height(16.dp))
+                    contentSection(Modifier)
+                }
+            }
+        },
+
+        )
+}
 
 /*
 In Expanded:

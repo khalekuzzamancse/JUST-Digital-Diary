@@ -145,9 +145,8 @@ fun GroupItem(
             modifier = Modifier.padding(top=8.dp, bottom = 8.dp),
             icon = {
                 Icon(
-                    imageVector = if (navigationItem == selectedItem)
-                        navigationItem.focusedIcon
-                    else navigationItem.unFocusedIcon,
+                    imageVector =
+                    navigationItem.unFocusedIcon,
                     contentDescription = null
                 )
             },

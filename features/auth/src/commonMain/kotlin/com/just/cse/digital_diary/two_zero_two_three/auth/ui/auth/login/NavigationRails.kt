@@ -23,13 +23,17 @@ data class NavigationRailState(
     val selectedItem: Int,
     val isExpandMode: Boolean
 )
+data class NavigationGroup(
+    val name: String,
+    val icon: ImageVector,
+    val members: List<NavigationItem>
+)
 
 data class NavigationItem(
     val label: String,
     val unFocusedIcon: ImageVector,
     val route: String = label,
-    val focusedIcon:ImageVector=unFocusedIcon,
-    val badge:String?=null,
+    val badge: String? = null,
 )
 
 @Composable

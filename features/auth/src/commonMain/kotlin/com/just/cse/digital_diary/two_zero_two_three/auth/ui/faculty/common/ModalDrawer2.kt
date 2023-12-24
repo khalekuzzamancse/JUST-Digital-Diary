@@ -10,28 +10,33 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.NavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.modal_drawer.GroupSection
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.modal_drawer.ModalDrawerGroup
 
 
 
-
+/*
+Passing clicked group,
+passing clicked item.
+do don't need to pass group item group index when passing clicked item index
+because parent already know which group is selected/clicked.
+But what if the case,if all group item are shown at once,in that case we need to pass
+group index and item index when passing which item is clicked
+ */
+data class NavGroupSelectedItem(
+    val groupIndex: Int=-1,
+    val itemIndex: Int=-1
+)
 @Composable
 fun HomeScreenDrawerSheet(
+    selectedItemIndex:NavGroupSelectedItem= NavGroupSelectedItem(),//group index,item index
     groups: List<ModalDrawerGroup>,
     onGroupClicked: (Int) -> Unit,
     onItemClicked: (groupIndex: Int, index: Int) -> Unit
 ) {
-    var selected by remember {
-        mutableStateOf<NavigationItem?>(null)
-    }
+
     DrawerSheet(
         header = {
                  Text("This is Header")
@@ -48,7 +53,6 @@ fun HomeScreenDrawerSheet(
         },
         itemDecorator = { groupIndex, itemIndex ->
             groups.getOrNull(groupIndex)?.let { group ->
-                if(group.isVisible){
                     group.members.getOrNull(itemIndex)?.let { navigationItem ->
                         NavigationDrawerItem(
                             modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
@@ -59,19 +63,17 @@ fun HomeScreenDrawerSheet(
                                 )
                             },
                             label = { Text(navigationItem.label) },
-                            selected = navigationItem==selected,
+                            selected = selectedItemIndex==NavGroupSelectedItem(
+                                groupIndex=groupIndex,
+                                itemIndex=itemIndex
+                            ),
                             onClick = {
                                 onItemClicked(groupIndex, itemIndex)
-                                selected=navigationItem
                             },
                         )
 
                     }
-                }
-
             }
-
-
         })
 }
 
