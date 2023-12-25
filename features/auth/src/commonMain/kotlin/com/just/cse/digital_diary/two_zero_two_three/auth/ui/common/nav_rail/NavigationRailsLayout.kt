@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.nav_rail
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -23,7 +23,7 @@ data class NavigationRailGroup(
     val name: String,
     val icon: ImageVector? = null,
     val isVisible: Boolean = true,
-    val items: List<NavigationItem>,
+    val items: List<NavigationItem<Int>>,
 )
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -70,7 +70,7 @@ fun NavigationRail(
 @Composable
 fun NavigationRailLayout(
     selectedDestinationIndex: Int,
-    destinations: List<NavigationItem>,
+    destinations: List<NavigationItem<Int>>,
     onNavRailItemSelected: (Int) -> Unit,
     snackBarMessage: String? = null,
     content: @Composable (Modifier) -> Unit

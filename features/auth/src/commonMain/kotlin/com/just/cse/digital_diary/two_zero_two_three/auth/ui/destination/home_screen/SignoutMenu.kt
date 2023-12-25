@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.home_screen
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.home_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

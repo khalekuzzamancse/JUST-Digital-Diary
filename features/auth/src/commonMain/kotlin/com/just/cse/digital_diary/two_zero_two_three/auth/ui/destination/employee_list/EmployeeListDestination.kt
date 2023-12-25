@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.employee_list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,76 +19,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-
-data class Employee(
-    val name: String,
-    val email: String,
-    val additionalEmail: String,
-    val profileImageLink: String,
-    val achievements: String,
-    val phone: String,
-    val designations: String,
-    val deptName: String,
-    val deptSortName: String,
-    val roomName: String,
-)
-
-
-    val employees = listOf(
-        Employee(
-            name = "Alice Smith",
-            email = "alice@khulna.edu",
-            additionalEmail = "alice.smith@gmail.com",
-            profileImageLink = "https://i.imgur.com/1.jpg",
-            achievements = "Best Teacher Award 2022",
-            phone = "+880123456789",
-            designations = "Assistant Professor",
-            deptName = "Computer Science",
-            deptSortName = "CS",
-            roomName = "A-101"
-        ),
-        Employee(
-            name = "Bob Jones",
-            email = "bob@khulna.edu",
-            additionalEmail = "bob.jones@yahoo.com",
-            profileImageLink = "https://i.imgur.com/2.jpg",
-            achievements = "Best Research Paper 2023",
-            phone = "+880987654321",
-            designations = "Associate Professor",
-            deptName = "Mathematics",
-            deptSortName = "Math",
-            roomName = "B-202"
-        ),
-        Employee(
-            name = "Charlie Brown",
-            email = "charlie@khulna.edu",
-            additionalEmail = "charlie.brown@hotmail.com",
-            profileImageLink = "https://i.imgur.com/3.jpg",
-            achievements = "Best Student Mentor 2021",
-            phone = "+880456789123",
-            designations = "Lecturer",
-            deptName = "Physics",
-            deptSortName = "Phys",
-            roomName = "C-303"
-        )
-    )
+import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.Employee
+import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.employees
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.list.GenericListScreen
 
 @Composable
 fun EmployeeListDemo() {
     EmployeeList(
-       employees=employees
+        employees = employees
     )
 }
 
+
+/*
+It this function must be called with a list.
+the user have to choice where to place this composable,
+will it place in a separate screen or it it place in a  pane dependent on the
+client code,but this is responsive enough so it can be used with either separate screen or part of
+another screen such as pane
+ */
 @Composable
 fun EmployeeList(
-    modifier: Modifier=Modifier,
+    modifier: Modifier = Modifier,
     employees: List<Employee>
 ) {
     GenericListScreen(
         modifier = modifier,
         items = employees
-    ) {mod,teacher->
+    ) { mod, teacher ->
         EmployeeCard(
             modifier = mod.padding(8.dp),
             employee = teacher
@@ -106,7 +64,7 @@ fun EmployeeCard(
         modifier = modifier,
         shadowElevation = 4.dp
     ) {
-        val infoAlignment=Alignment.Start
+        val infoAlignment = Alignment.Start
         Column(
             modifier = Modifier
                 .padding(8.dp)

@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.home_screen
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.create_note
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -54,7 +54,7 @@ class CreateNoteScreen: Screen {
     @Composable
     override fun Content() {
         val navigator= LocalNavigator.current
-       NoteCreation(
+       CreateNoteDestination(
            onBackArrowClick = {
                navigator?.pop()
            }
@@ -65,7 +65,7 @@ class CreateNoteScreen: Screen {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteCreation(
+fun CreateNoteDestination(
     onBackArrowClick: () -> Unit = {},
 ) {
     val uiState = remember {

@@ -19,22 +19,25 @@ import androidx.compose.ui.unit.dp
 
 
 data class NavigationRailState(
-    val options: List<NavigationItem>,
+    val options: List<NavigationItem<Int>>,
     val selectedItem: Int,
     val isExpandMode: Boolean
 )
 data class NavigationGroup(
     val name: String,
     val icon: ImageVector,
-    val members: List<NavigationItem>
+    val members: List<NavigationItem<Int>>
 )
 
-data class NavigationItem(
+//use key to uniquely identify
+data class NavigationItem<T>(
+    val key:T,
     val label: String,
-    val unFocusedIcon: ImageVector,
+    val icon: ImageVector,
     val route: String = label,
     val badge: String? = null,
 )
+
 
 @Composable
 fun NavigationRails(
@@ -55,14 +58,14 @@ fun NavigationRails(
     modifier: Modifier=Modifier,
     selectedDestinationIndex: Int,
     isExpanded: Boolean,
-    destinations: List<NavigationItem>,
+    destinations: List<NavigationItem<Int>>,
     onSelectionChanged: (Int) -> Unit,
 ) {
 
     NavigationRail(modifier) {
         destinations.forEachIndexed { index, item ->
             RailItem(
-                icon = item.unFocusedIcon,
+                icon = item.icon,
                 label = item.label,
                 selected = selectedDestinationIndex == index,
                 isHorizontal = isExpanded,

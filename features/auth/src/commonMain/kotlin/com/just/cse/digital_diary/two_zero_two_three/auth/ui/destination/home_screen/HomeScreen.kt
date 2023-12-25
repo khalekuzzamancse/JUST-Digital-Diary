@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.faculty.home_screen
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.home_screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -29,23 +29,9 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.annotation.InternalVoyagerApi
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.navigator.currentOrThrow
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.create_note.CreateNoteScreen
 
-class HomeScreen:Screen{
-    @Composable
-    override fun Content() {
-        val navigator= LocalNavigator.current
-      Home(
-          onCreateTask = {
-              navigator?.push(CreateNoteScreen())
-          }
-      ) {
 
-      }
-    }
-
-}
 
 @OptIn(InternalVoyagerApi::class)
 @Composable
@@ -139,6 +125,7 @@ fun HomeTopAppbar(
             HomeScreenDropDown(
                 onLogOutIconClick = onLogOut
             )
+
 
         },
     )
