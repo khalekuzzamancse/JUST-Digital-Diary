@@ -21,7 +21,7 @@ class DepartmentListViewModel(
         departments.map {
             NavigationItem(
                 label = it.shortName,
-                icon = it.logo,
+                unFocusedIcon = it.logo,
                 key = it.id
             )
         }

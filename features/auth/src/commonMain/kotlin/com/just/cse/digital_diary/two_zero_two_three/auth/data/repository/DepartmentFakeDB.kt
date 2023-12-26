@@ -92,7 +92,8 @@ object DepartmentFakeDB {
     val departmentsOfEngineeringAndTechnology = listOf(
         Department(
             fullName = "Department Of Biomedical Engineering",
-            shortName = "Biomedical Engineering"
+            shortName = "Biomedical Engineering",
+
         ),
         Department(
             fullName = "Department Of Chemical Engineering",

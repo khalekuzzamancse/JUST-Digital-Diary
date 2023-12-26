@@ -8,7 +8,6 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
-import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.DepartmentFakeDB
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.FacultyRepository
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.SectionRepository
 
@@ -53,12 +52,14 @@ class HomeNavHost : Screen {
     }
 
     private fun navigateToSectionChild(sectionId: String) {
-        val subSection = SectionRepository.getSectionChild(sectionId)
+        val subSections = SectionRepository.getSectionChild(sectionId)
+        val destinationInfo=SectionRepository.getSection(sectionId)
 
         navigator?.push(
             SectionChildScreen(
-                subSections = subSection,
-                onSubSectionSelected = ::navigateToDepartmentList
+                subSections = subSections,
+                onSubSectionSelected = ::navigateToDepartmentList,
+                destinationName = "$destinationInfo"
             )
         )
     }

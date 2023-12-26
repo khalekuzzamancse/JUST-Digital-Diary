@@ -35,7 +35,7 @@ fun <T>Sheet(
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
                 icon = {
                     Icon(
-                        navigationItem.icon,
+                        navigationItem.unFocusedIcon,
                         contentDescription = null
                     )
                 },

@@ -13,6 +13,7 @@ class DepartmentList(
     private val destinationName: String="",
     private val departments: List<Department>,
     private val navigateToDepartment:(String)->Unit,
+
 ) : Screen {
     @Composable
     override fun Content() {

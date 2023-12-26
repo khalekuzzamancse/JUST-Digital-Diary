@@ -3,7 +3,6 @@ package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.home_s
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.SectionInfo
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.SectionRepository
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.NavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.home_screen.drawer.ScreenWithModalDrawer
@@ -90,7 +89,7 @@ class HomeScreenViewModel(
         repository.sectionInfo.map {
             NavigationItem(
                 label = it.name,
-                icon = it.logo,
+                unFocusedIcon = it.logo,
                 key = it.id
             )
         }

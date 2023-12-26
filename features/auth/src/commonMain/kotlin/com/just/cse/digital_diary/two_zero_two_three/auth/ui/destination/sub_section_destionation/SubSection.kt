@@ -20,7 +20,7 @@ class SubSectionViewModel(
     private val _sections = MutableStateFlow(subSections.map {
         NavigationItem(
             label = it.name,
-            icon = it.logo,
+            unFocusedIcon = it.logo,
             key = it.id
         )
     })

@@ -33,7 +33,8 @@ data class NavigationGroup(
 data class NavigationItem<T>(
     val key:T,
     val label: String,
-    val icon: ImageVector,
+    val unFocusedIcon: ImageVector,
+    val focusedIcon:ImageVector=unFocusedIcon,
     val route: String = label,
     val badge: String? = null,
 )
@@ -65,7 +66,7 @@ fun NavigationRails(
     NavigationRail(modifier) {
         destinations.forEachIndexed { index, item ->
             RailItem(
-                icon = item.icon,
+                icon = item.unFocusedIcon,
                 label = item.label,
                 selected = selectedDestinationIndex == index,
                 isHorizontal = isExpanded,
