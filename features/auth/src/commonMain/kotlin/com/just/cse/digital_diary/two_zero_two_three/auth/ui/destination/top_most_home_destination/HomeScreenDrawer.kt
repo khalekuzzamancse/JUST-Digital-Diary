@@ -1,11 +1,12 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.home_screen
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.top_most_home_destination
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.SectionRepository
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.NavigationItem
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.home_screen.drawer.ScreenWithModalDrawer
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.modal_drawer.ModalDrawerDecorator
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.top_most_home_destination.nav_graph.topMostDestinations
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -27,73 +28,13 @@ it just can provide data as a database kind of thing..
  */
 
 
-//@Composable
-//fun HomeDestination(
-//    navigationGroups: List<NavigationGroup>,
-//    selectedItem: NavGroupSelectedItem,
-//    onNavigationGroupClicked: (Int) -> Unit = {},
-//    onNavigationItemClick: (groupIndex: Int, itemIndex: Int) -> Unit,
-//    content: @Composable () -> Unit,
-//    onFacultySelected: (String) -> Unit,//dept id
-//) {
-//    val navigationManager = remember {
-//        HomeViewModel {
-//            onFacultySelected(it)
-//        }
-//    }
-//
-//    ScreenDrawer(
-//        navigationGroups = navigationManager.navGroups.collectAsState().value,
-//        selectedItem = navigationManager.selectedItem.collectAsState().value,
-//        onNavigationGroupClicked = navigationManager::onGroupSelect,
-//        onNavigationItemClick = navigationManager::onItemSelect,
-//        content = {
-//
-//        }
-//    )
-//
-//
-//}
-//
-//@Composable
-//fun HomeDestination(
-//    onFacultySelected: (String) -> Unit,//dept id
-//) {
-//    val navigationManager = remember {
-//        HomeViewModel {
-//            onFacultySelected(it)
-//        }
-//    }
-//
-//    ScreenDrawer(
-//        navigationGroups = navigationManager.navGroups.collectAsState().value,
-//        selectedItem = navigationManager.selectedItem.collectAsState().value,
-//        onNavigationGroupClicked = navigationManager::onGroupSelect,
-//        onNavigationItemClick = navigationManager::onItemSelect,
-//        content = {
-//
-//        }
-//    )
-//
-//
-//}
-
-
 class HomeScreenViewModel(
     val navigateToSection: (String) -> Unit = {},
 ) {
     private val repository = SectionRepository
     private val _selectedIndex = MutableStateFlow(-1)
     val selectedSectionIndex = _selectedIndex.asStateFlow()
-    private val _sections = MutableStateFlow(
-        repository.sectionInfo.map {
-            NavigationItem(
-                label = it.name,
-                unFocusedIcon = it.logo,
-                key = it.id
-            )
-        }
-    )
+    private val _sections = MutableStateFlow(topMostDestinations)
 
 
     val section = _sections.asStateFlow()
@@ -140,8 +81,7 @@ fun HomeScreen(
     content: @Composable () -> Unit = {},
 ) {
 
-
-    ScreenWithModalDrawer(
+    ModalDrawerDecorator(
         destinations = sections,
         selectedDesertionIndex = selectedSectionIndex,
         onDestinationSelected = onSectionSelected,
@@ -150,16 +90,3 @@ fun HomeScreen(
 
 }
 
-
-/*
- {
-            Scaffold(
-                modifier = Modifier,
-                topBar = { topSection(Modifier) },
-            ) { scaffoldPadding ->
-                Column(Modifier.padding(scaffoldPadding)) {
-                    content(Modifier)
-                }
-            }
-        }
- */

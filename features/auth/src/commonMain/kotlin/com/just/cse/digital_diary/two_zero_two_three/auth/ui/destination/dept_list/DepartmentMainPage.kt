@@ -1,12 +1,13 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.dept_list
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.SupervisorAccount
@@ -21,18 +22,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.Department
+import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.Employee
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.NavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.bottom_navigation.BottomNavigationBar
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.employee_list.EmployeeList
+import kotlin.random.Random
 
 val departmentSubDestinations = listOf(
     NavigationItem(
@@ -67,30 +70,61 @@ All the department top and the bottom bar is fixed.
 
 @Composable
 fun DepartmentHomeDestinationContent(
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        Text(
-            text = "This is Home Page",
-            style = MaterialTheme.typography.headlineSmall
-        )
+        DepartmentFromChairmen()
 
     }
 
 }
 
 @Composable
+fun DepartmentFromChairmen() {
+    Column(
+        modifier = Modifier
+            .padding(8.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalAlignment = Alignment.Start
+    ) {
+        Box(
+            modifier = Modifier
+                .size(200.dp)
+                .clip(CircleShape)
+                .background(Color(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256)))
+                .align(Alignment.CenterHorizontally),
+        )
+        Text(
+            text = "MESSAGE FROM THE CHAIRMAN",
+            style = MaterialTheme.typography.headlineMedium
+        )
+        Text(
+            text="Welcome to the Department of Biomedical Engineering (BME) " +
+                    "at Jashore University of Science and Technology (JUST). Our department was founded in 2016 and we want" +
+                    " to create an environment of educational excellence, both in academic and research." +
+                    "You’ll find a lively academic atmosphere in our department—including our faculty members, amiable staffs and specifically charming undergraduate students. Our teachers take pleasure in conveying their knowledge and intellectual " +
+                    "passion to students. They also encourage students in thoughtful activities and ",
+            style = MaterialTheme.typography.labelMedium
+        )
+
+
+    }
+
+
+}
+
+@Composable
 fun DepartmentTeacherListDestinationContent(
-    modifier: Modifier
+    modifier: Modifier = Modifier,
+    teachers: List<Employee>,
 ) {
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        Text(
-            text = "Show the list of teachers",
-            style = MaterialTheme.typography.headlineSmall
+        EmployeeList(
+            employees = teachers
         )
 
 
@@ -101,14 +135,14 @@ fun DepartmentTeacherListDestinationContent(
 
 @Composable
 fun DepartmentStaffListDestinationContent(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
+    staffs: List<Employee>,
 ) {
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        Text(
-            text = "Show the list of staff members",
-            style = MaterialTheme.typography.headlineSmall
+        EmployeeList(
+            employees = staffs
         )
 
     }

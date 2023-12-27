@@ -120,5 +120,18 @@ object DepartmentFakeDB {
             shortName = "Textile Engineering"
         )
     )
+    fun getDepartmentById(departmentId: String): Department? {
+        val allDepartments = listOf(
+            departmentsOfAppliedScienceAndTechnology,
+            departmentsOfBiologicalScienceAndTechnology,
+            departmentsOfNursingAndHealthScience,
+            departmentOfEnglish,
+            departmentsOfScience,
+            departmentsOfBusinessAndFinance,
+            departmentsOfEngineeringAndTechnology
+        ).flatten()
+
+        return allDepartments.find { it.id == departmentId }
+    }
 
 }

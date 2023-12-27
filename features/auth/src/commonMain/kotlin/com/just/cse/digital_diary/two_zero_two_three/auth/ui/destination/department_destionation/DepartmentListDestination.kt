@@ -6,7 +6,8 @@ import androidx.compose.runtime.remember
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.Department
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.SectionRepository
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.NavigationItem
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.home_screen.drawer.ScreenWithModalDrawer
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.modal_drawer.ModalDrawerDecorator
+
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -70,7 +71,7 @@ fun DepartmentListDestination(
     content: @Composable () -> Unit = {},
 ) {
 
-    ScreenWithModalDrawer(
+    ModalDrawerDecorator(
         destinations = subSection,
         selectedDesertionIndex = selectedSubSectionIndex,
         onDestinationSelected = onSubSectionSelected,

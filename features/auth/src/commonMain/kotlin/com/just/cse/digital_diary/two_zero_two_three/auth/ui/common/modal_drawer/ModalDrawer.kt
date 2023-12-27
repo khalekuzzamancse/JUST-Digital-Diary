@@ -1,5 +1,9 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.modal_drawer
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -7,7 +11,10 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.NavigationGroup
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.NavigationItem
 
@@ -105,10 +112,34 @@ fun ModalDrawer(
     sheet: @Composable () -> Unit,
     content: @Composable () -> Unit,
 ) {
-    ModalNavigationDrawer(
-        modifier = modifier,
-        drawerState = drawerState,
-        drawerContent = sheet,
-        content = content,
-    )
+    AnimateVisibilityDecorator{
+        ModalNavigationDrawer(
+            modifier = modifier,
+            drawerState = drawerState,
+            drawerContent = sheet,
+            content = content,
+        )
+    }
+
+}
+@Composable
+fun AnimateVisibilityDecorator(
+    content: @Composable () -> Unit
+) {
+    val state = remember {
+        MutableTransitionState(false).apply {
+            targetState = true
+        }
+    }
+    val density = LocalDensity.current
+    AnimatedVisibility(
+        visibleState = state,
+        enter = slideInHorizontally {
+            with(density) { -400.dp.roundToPx() }
+        },
+        exit = slideOutHorizontally(),
+    ) {
+        content()
+    }
+
 }

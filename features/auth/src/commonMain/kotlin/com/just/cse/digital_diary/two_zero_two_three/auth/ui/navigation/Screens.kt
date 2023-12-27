@@ -1,16 +1,16 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.Department
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.FacultyInfo
+import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.generateDummyEmployeeList
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.department_destionation.DepartmentListDestination
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.home_screen.HomeScreen
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.employee_list.EmployeeList
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.top_most_home_destination.HomeScreen
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.sub_section_destionation.SectionChild
 
 class DepartmentList(
-    private val destinationName: String="",
     private val departments: List<Department>,
     private val navigateToDepartment:(String)->Unit,
 
@@ -21,7 +21,9 @@ class DepartmentList(
             departments = departments,
             navigateToDepartment = navigateToDepartment,//index
             content = {
-                Text("Welcome to :$destinationName")
+                EmployeeList(
+                    employees = generateDummyEmployeeList(10)
+                )
             },
         )
     }
@@ -38,7 +40,9 @@ class SectionChildScreen(
             subSections,
             navigateToSectionChild = onSubSectionSelected,
             content = {
-                Text("Welcome to :$destinationName")
+                EmployeeList(
+                    employees = generateDummyEmployeeList(10)
+                )
             }
         )
     }

@@ -4,22 +4,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.SupervisorAccount
-import androidx.compose.material.icons.filled.Work
-import androidx.compose.material.icons.rounded.Flaky
-import cafe.adriel.voyager.navigator.Navigator
+import androidx.compose.material.icons.outlined.ExpandMore
 import com.example.compose.AppTheme
 
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.navigation.NavHost
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.navigation.FacultyDestinationNavGraph
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Icons.Filled.Work
         setContent {
+            Icons.Outlined.ExpandMore
             AppTheme{
-                NavHost()
+                FacultyDestinationNavGraph()
             }
 
         }

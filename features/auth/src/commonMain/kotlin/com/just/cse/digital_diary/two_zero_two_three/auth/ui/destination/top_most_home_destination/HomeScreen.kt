@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.home_screen
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.top_most_home_destination
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,22 +26,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.annotation.InternalVoyagerApi
-import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.create_note.CreateNoteScreen
 
 
-
-@OptIn(InternalVoyagerApi::class)
 @Composable
-fun Home(
-    onCreateTask: () -> Unit = {},
+fun RootHomeContent(
+    onCreateNote: () -> Unit = {},
     openDrawer: () -> Unit = {},
     onLogOut: () -> Unit = {},
 ){
-
-
     var username by remember {
         mutableStateOf("NULL")
     }
@@ -59,7 +51,7 @@ fun Home(
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                onCreateTask()
+                onCreateNote()
             }) {
                 Icon(Icons.Filled.Add, null)
             }

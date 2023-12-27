@@ -10,10 +10,11 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.FacultyRepository
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.SectionRepository
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.dept_list.DepartmentNavGraph
 
 
 @Composable
-fun NavHost() {
+fun FacultyDestinationNavGraph() {
     Navigator(
         screen = HomeNavHost()
     )
@@ -35,7 +36,15 @@ class HomeNavHost : Screen {
     }
     private fun onDepartmentInfoAsk(id: String){
         val department=FacultyRepository.getDepartmentById(id)
-        println("Department List:$department")
+        navigateToDepartmentInfo(id)
+        println("DepartmentInfo:$department")
+    }
+    private fun navigateToDepartmentInfo(id: String){
+        navigator?.push(DepartmentInfo(
+            deptId = id,
+            onNavigateToBack = {
+                navigator?.pop()
+            }))
     }
 
     private fun navigateToDepartmentList(facultyId: String) {
@@ -45,8 +54,6 @@ class HomeNavHost : Screen {
             DepartmentList(
                 departments = departmentList,
                 navigateToDepartment = ::onDepartmentInfoAsk,
-                destinationName = "$facultyInfo"
-
             )
         )
     }
@@ -54,7 +61,6 @@ class HomeNavHost : Screen {
     private fun navigateToSectionChild(sectionId: String) {
         val subSections = SectionRepository.getSectionChild(sectionId)
         val destinationInfo=SectionRepository.getSection(sectionId)
-
         navigator?.push(
             SectionChildScreen(
                 subSections = subSections,
@@ -74,6 +80,20 @@ class HomeNavHost : Screen {
 
 
 }
+class DepartmentInfo(
+    val onNavigateToBack:()->Unit,
+    val deptId:String,
+):Screen{
+    @Composable
+    override fun Content() {
+        DepartmentNavGraph(
+            departmentId = deptId,
+            onNavigationIconClick = onNavigateToBack
+        )
+    }
+
+}
+
 
 /*
   val navigateToDepartmentList: (String) -> Unit = {

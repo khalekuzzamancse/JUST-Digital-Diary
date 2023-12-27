@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.home_screen.drawer.sheet
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.top_most_home_destination.drawer.sheet
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

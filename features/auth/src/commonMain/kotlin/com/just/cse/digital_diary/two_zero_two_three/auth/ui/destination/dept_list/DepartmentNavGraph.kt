@@ -1,32 +1,22 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.dept_list
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.Department
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.DepartmentFakeDB
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.bottom_navigation.BottomNavigationBar
+import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.employees
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -47,9 +37,14 @@ class DepartmentMainPageState {
 
 @Composable
 fun DepartmentNavGraph(
-    department: Department = DepartmentFakeDB.departmentsOfEngineeringAndTechnology[0]
+    departmentId: String = "",
+    onNavigationIconClick: () -> Unit,
 ) {
-    Navigator(DepartmentNavHost(department)) { navigator ->
+    Navigator(
+        DepartmentNavHost(
+            departmentId = departmentId,
+            onNavigationIconClick = onNavigationIconClick)
+    ) { navigator ->
         SlideTransition(navigator = navigator)
     }
 
@@ -57,39 +52,50 @@ fun DepartmentNavGraph(
 }
 
 class DepartmentNavHost(
-    val department: Department,
+   val onNavigationIconClick: () -> Unit,
+    private val departmentId: String,
 ) : Screen {
-
     @Composable
     override fun Content() {
+        val deptInfo = DepartmentFakeDB.getDepartmentById(departmentId)
         val uiState = remember {
             DepartmentMainPageState()
         }
         val selectedDestination = uiState.selectedDestinationIndex.collectAsState().value
         TopNBottomBarDecorator(
-            topBarTitle = "Hello",
-            topNavigationIcon = Icons.Outlined.ArrowBack,
-            onNavigationIconClick = {},
+            topBarTitle = deptInfo?.shortName ?: "",
+            topNavigationIcon = if (selectedDestination == 0) Icons.Outlined.ArrowBack else null,
+            onNavigationIconClick = onNavigationIconClick,
             bottomDestinations = departmentSubDestinations,
             selectedDestinationIndex = selectedDestination,
             onDestinationSelected = uiState::onDestinationSelected
         ) { modifier ->
             when (selectedDestination) {
                 0 -> {
-                    AnimationDecorator{
-                        DepartmentHomeDestinationContent(modifier)
+                    AnimateVisibilityDecorator {
+                        DepartmentHomeDestinationContent(
+                            modifier = modifier
+                        )
                     }
 
 
                 }
+
                 1 -> {
-                    AnimationDecorator {
-                        DepartmentTeacherListDestinationContent(modifier)
+                    AnimateVisibilityDecorator {
+                        DepartmentTeacherListDestinationContent(
+                            modifier = modifier,
+                            teachers = employees
+                        )
                     }
                 }
+
                 2 -> {
-                    AnimationDecorator {
-                        DepartmentStaffListDestinationContent(modifier)
+                    AnimateVisibilityDecorator {
+                        DepartmentStaffListDestinationContent(
+                            modifier = modifier,
+                            staffs = employees
+                        )
                     }
                 }
             }
@@ -101,22 +107,21 @@ class DepartmentNavHost(
 }
 
 @Composable
-fun AnimationDecorator(
-    content:@Composable ()->Unit
+fun AnimateVisibilityDecorator(
+    content: @Composable () -> Unit
 ) {
-    val state = remember { MutableTransitionState(false).apply {
-        targetState = true
-    } }
-    val density= LocalDensity.current
+    val state = remember {
+        MutableTransitionState(false).apply {
+            targetState = true
+        }
+    }
+    val density = LocalDensity.current
     AnimatedVisibility(
         visibleState = state,
-        enter = slideInVertically {
-            with(density) { -40.dp.roundToPx() }
+        enter = slideInHorizontally {
+            with(density) { 400.dp.roundToPx() }
         },
-        exit = slideOutHorizontally (
-            targetOffsetX = { fullWidth -> -fullWidth },
-            animationSpec = tween(300, easing = FastOutLinearInEasing)
-            ),
+        exit = slideOutHorizontally(),
     ) {
         content()
     }
