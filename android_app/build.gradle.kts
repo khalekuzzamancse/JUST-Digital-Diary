@@ -76,5 +76,5 @@ dependencies {
     implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
 
     implementation(project(":shared"))
-    implementation(project(":features:auth"))
+    implementation(project(":features:root_home"))
 }

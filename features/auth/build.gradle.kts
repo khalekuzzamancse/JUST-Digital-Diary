@@ -23,6 +23,7 @@ kotlin {
                 implementation(compose.animationGraphics)
                 implementation(compose.materialIconsExtended)
                 implementation(compose.preview)
+                implementation(project(":features:common_ui"))
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 val voyagerVersion = "1.0.0"
 

@@ -1,7 +1,8 @@
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.top_most_home_destination.nav_graph.RootNavGraph
+import com.just.cse.digital_diary.two_zero_two_three.root_home.RootModule
+
 
 fun main() {
     application {
@@ -10,8 +11,7 @@ fun main() {
             onCloseRequest = ::exitApplication
         ) {
             MaterialTheme {
-                RootNavGraph()
-               // DepartmentNavGraph()
+                RootModule()
             }
         }
     }

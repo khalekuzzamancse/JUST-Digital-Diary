@@ -31,9 +31,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.just.cse.digital_diary.features.common_ui.bottom_navigation.BottomNavigationBar
+import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.Employee
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.NavigationItem
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.bottom_navigation.BottomNavigationBar
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.employee_list.EmployeeList
 import kotlin.random.Random
 

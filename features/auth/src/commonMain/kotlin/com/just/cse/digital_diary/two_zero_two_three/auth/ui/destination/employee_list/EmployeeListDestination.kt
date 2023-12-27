@@ -40,9 +40,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import com.just.cse.digital_diary.features.common_ui.list.GenericListScreen
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.Employee
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.employees
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.list.GenericListScreen
 import kotlin.random.Random
 
 @Composable

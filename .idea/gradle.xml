@@ -14,6 +14,11 @@
             <option value="$PROJECT_DIR$/desktop" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/auth" />
+            <option value="$PROJECT_DIR$/features/common_ui" />
+            <option value="$PROJECT_DIR$/features/department" />
+            <option value="$PROJECT_DIR$/features/faculty" />
+            <option value="$PROJECT_DIR$/features/repository" />
+            <option value="$PROJECT_DIR$/features/root_home" />
             <option value="$PROJECT_DIR$/shared" />
             <option value="$PROJECT_DIR$/web" />
           </set>

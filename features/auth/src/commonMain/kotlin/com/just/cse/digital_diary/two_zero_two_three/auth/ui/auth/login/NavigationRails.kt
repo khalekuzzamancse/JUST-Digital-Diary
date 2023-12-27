@@ -16,28 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-
-
-data class NavigationRailState(
-    val options: List<NavigationItem<Int>>,
-    val selectedItem: Int,
-    val isExpandMode: Boolean
-)
-data class NavigationGroup(
-    val name: String,
-    val icon: ImageVector,
-    val members: List<NavigationItem<Int>>
-)
-
-//use key to uniquely identify
-data class NavigationItem<T>(
-    val key:T,
-    val label: String,
-    val unFocusedIcon: ImageVector,
-    val focusedIcon:ImageVector=unFocusedIcon,
-    val route: String = label,
-    val badge: String? = null,
-)
+import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.features.common_ui.navigation.NavigationRailState
 
 
 @Composable

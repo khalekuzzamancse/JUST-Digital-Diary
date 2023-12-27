@@ -24,8 +24,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.just.cse.digital_diary.features.common_ui.list.GenericListScreen
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.Department
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.list.GenericListScreen
 import kotlin.random.Random
 
 

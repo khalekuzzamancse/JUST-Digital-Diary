@@ -3,10 +3,10 @@ package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.sub_se
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.ModalDrawerDecorator
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.FacultyInfo
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.SectionRepository
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.NavigationItem
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.modal_drawer.ModalDrawerDecorator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
