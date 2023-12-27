@@ -91,6 +91,7 @@ class RootNavHost : Screen {
                 1->{
                     AnimateVisibilityDecorator {
                         FacultyDestinationNavGraph()
+                        //
                     }
 
 
