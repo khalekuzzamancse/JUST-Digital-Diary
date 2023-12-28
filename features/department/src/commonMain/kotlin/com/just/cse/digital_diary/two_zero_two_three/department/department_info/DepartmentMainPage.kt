@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.dept_list
+package com.just.cse.digital_diary.two_zero_two_three.department.department_info
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,8 +33,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.features.common_ui.bottom_navigation.BottomNavigationBar
 import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
-import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.Employee
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.employee_list.EmployeeList
+import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.Employee
 import kotlin.random.Random
 
 val departmentSubDestinations = listOf(

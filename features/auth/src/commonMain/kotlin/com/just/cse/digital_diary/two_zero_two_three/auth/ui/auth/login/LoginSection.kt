@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -29,8 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.FormTextFieldState
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.LoginForm
+import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldState
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.LoginForm
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

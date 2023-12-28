@@ -11,6 +11,3 @@ val destinations=SectionRepository
             key = it.id
         )
     }
-fun main() {
-    println(destinations)
-}

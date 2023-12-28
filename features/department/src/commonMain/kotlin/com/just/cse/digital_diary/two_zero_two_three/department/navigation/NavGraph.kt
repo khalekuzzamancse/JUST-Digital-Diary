@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.dept_list
+package com.just.cse.digital_diary.two_zero_two_three.department.navigation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
@@ -6,27 +6,47 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.DepartmentFakeDB
-import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.employees
+import com.just.cse.digital_diary.two_zero_two_three.department.department_info.DepartmentHomeDestinationContent
+import com.just.cse.digital_diary.two_zero_two_three.department.department_info.DepartmentStaffListDestinationContent
+import com.just.cse.digital_diary.two_zero_two_three.department.department_info.DepartmentTeacherListDestinationContent
+import com.just.cse.digital_diary.two_zero_two_three.department.department_info.TopNBottomBarDecorator
+import com.just.cse.digital_diary.two_zero_two_three.department.department_info.departmentSubDestinations
+import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.DepartmentFakeDB
+import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.employees
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+class DepartmentModule(
+    private val departmentId: String,
+):Screen{
+    @Composable
+    override fun Content() {
+        DepartmentNavGraph(
+            departmentId=departmentId
+        ) {
+
+        }
+    }
+
+}
+
+//
 /*
 All department have the shared top and bottom bar.
 they must maintain a separate backstack means navigator
 
  */
-class DepartmentMainPageState {
+ class DepartmentMainPageState {
     private val _selectedDestinationIndex = MutableStateFlow(0)
     val selectedDestinationIndex = _selectedDestinationIndex.asStateFlow()
     fun onDestinationSelected(index: Int) {
@@ -52,7 +72,7 @@ fun DepartmentNavGraph(
 }
 
 class DepartmentNavHost(
-   val onNavigationIconClick: () -> Unit,
+    val onNavigationIconClick: () -> Unit,
     private val departmentId: String,
 ) : Screen {
     @Composable

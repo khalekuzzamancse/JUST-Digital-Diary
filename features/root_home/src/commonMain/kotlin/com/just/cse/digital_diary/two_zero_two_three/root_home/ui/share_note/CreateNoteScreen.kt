@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.create_note
+package com.just.cse.digital_diary.two_zero_two_three.root_home.ui.share_note
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,10 +28,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.FormTextFieldProperties
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.FormTextFieldState
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.FormTextInput
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.AuthTextField
+import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldProperties
+import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldState
+import com.just.cse.digital_diary.features.common_ui.form.FormTextInput
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 

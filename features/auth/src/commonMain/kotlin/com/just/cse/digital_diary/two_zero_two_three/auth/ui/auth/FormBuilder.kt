@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
@@ -21,6 +21,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.just.cse.digital_diary.features.common_ui.form.FormLayout
+import com.just.cse.digital_diary.features.common_ui.form.LabelLessTextField
+import com.just.cse.digital_diary.features.common_ui.form.LabelLessTextFieldProperties
+import com.just.cse.digital_diary.features.common_ui.form.LabelLessTextFieldState
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login.LoginFieldsState
 
 

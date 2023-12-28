@@ -39,9 +39,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.FormTextFieldProperties
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.FormTextFieldState
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form.MyDropDownMenu
+import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldProperties
+import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldState
+import com.just.cse.digital_diary.features.common_ui.form.MyDropDownMenu
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -238,7 +238,7 @@ fun RegistrationFields(
     }
 
     Column(modifier = modifier) {
-        AuthTextField(
+        InputTextField(
             properties = FormTextFieldProperties(
                 label = RegistrationFormLabels.FULL_NAME,
                 leadingIcon = Icons.Default.Person,
@@ -250,7 +250,7 @@ fun RegistrationFields(
             labelMinWidth = labelRowWidth
         )
         Spacer(Modifier.height(8.dp))
-        AuthTextField(
+        InputTextField(
             properties = FormTextFieldProperties(
                 label = RegistrationFormLabels.EMAIL,
                 leadingIcon = Icons.Default.Email,
@@ -263,7 +263,7 @@ fun RegistrationFields(
         )
         Spacer(Modifier.height(8.dp))
 
-        AuthTextField(
+        InputTextField(
             properties = FormTextFieldProperties(
                 label = RegistrationFormLabels.USER_NAME,
                 leadingIcon = Icons.Default.Person,
@@ -286,7 +286,7 @@ fun RegistrationFields(
         )
         Spacer(Modifier.height(8.dp))
 
-        AuthTextField(
+        InputTextField(
             properties = passwordFieldProperty,
             state = password,
             onValueChanged = onPasswordChanged,
@@ -295,7 +295,7 @@ fun RegistrationFields(
             onTrailingIconClick = togglePasswordVisibility
         )
         Spacer(Modifier.height(8.dp))
-        AuthTextField(
+        InputTextField(
             properties = passwordFieldProperty.copy(
                 label = RegistrationFormLabels.CONFIRMED_PASSWORD
             ),

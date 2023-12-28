@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login
+package com.just.cse.digital_diary.two_zero_two_three.root_home.ui.share_note
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,13 +20,12 @@ import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldState
 import com.just.cse.digital_diary.features.common_ui.form.FormTextInput
 import kotlin.math.max
 
-
 @Composable
-fun InputTextField(
+fun AuthTextField(
     properties: FormTextFieldProperties,
     state: FormTextFieldState,
     isHorizontalOrientation: Boolean,
-    labelMinWidth:Dp,
+    labelMinWidth: Dp,
     onValueChanged: (String) -> Unit,
     onTrailingIconClick:()->Unit={},
 ) {

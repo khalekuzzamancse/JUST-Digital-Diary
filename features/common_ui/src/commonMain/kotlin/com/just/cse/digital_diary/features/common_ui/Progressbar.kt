@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth
+package com.just.cse.digital_diary.features.common_ui
 
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator

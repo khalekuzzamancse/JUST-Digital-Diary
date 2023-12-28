@@ -5,7 +5,7 @@ import cafe.adriel.voyager.navigator.Navigator
 
 
 @Composable
-fun FacultyDestinationNavGraph() {
+fun FacultyModule() {
     Navigator(
         screen = FacultyModuleNavHost()
     )

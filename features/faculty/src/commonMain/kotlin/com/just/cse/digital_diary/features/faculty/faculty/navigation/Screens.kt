@@ -6,15 +6,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.Navigator
+import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
 import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.ModalDrawerDecorator
-import com.just.cse.digital_diary.two_zero_two_three.department.department_list.DepartmentListDestination
-import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.DepartmentFakeDB
+import com.just.cse.digital_diary.two_zero_two_three.department.navigation.DepartmentModule
+import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.FacultyRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-
-class TopMostDestinationViewModel {
+class NavigationStateHolder {
     private val _selectedIndex = MutableStateFlow(-1)
     val selectedSectionIndex = _selectedIndex.asStateFlow()
     fun onSectionSelected(index: Int) {
@@ -24,37 +23,38 @@ class TopMostDestinationViewModel {
 }
 
 
-class FacultyModuleNavHost : Screen {
-    var navigator:Navigator?=null
+class ListOfDepartments(
+    private val facultyId: String,
+) : Screen {
     @Composable
     override fun Content() {
-        navigator= LocalNavigator.current
-
-        val viewModel = remember { TopMostDestinationViewModel() }
-        val currentDestinationIndex=viewModel.selectedSectionIndex.collectAsState().value
+        val navigator = LocalNavigator.current
+        val viewModel = remember {
+            NavigationStateHolder()
+        }
+        val departments = FacultyRepository.getDepartments(facultyId)
+        val destinations = departments.map {
+            NavigationItem(
+                key = it.id,
+                label = it.fullName,
+                unFocusedIcon = it.logo
+            )
+        }
+        val currentDestinationIndex = viewModel.selectedSectionIndex.collectAsState().value
         ModalDrawerDecorator(
             destinations = destinations,
-            selectedDesertionIndex =currentDestinationIndex ,
-            onDestinationSelected = {
-                viewModel.onSectionSelected(it)
-                when(it){
-                    0->{
-                        navigator?.push(DepartmentDestinations())
-                    }
+            selectedDesertionIndex = currentDestinationIndex,
+            onDestinationSelected = { index ->
+                viewModel.onSectionSelected(index)
+                val deptId = destinations.getOrNull(index)?.key
+                if (deptId != null) {
+                    navigator?.push(DepartmentModule(deptId))
                 }
             }
-        ){
-            Text("This is department list")
+        ) {
+            Text("This is Department list ")
 
         }
-    }
-}
-class DepartmentDestinations:Screen{
-    @Composable
-    override fun Content() {
-        DepartmentListDestination(
-            departments = DepartmentFakeDB.departmentsOfEngineeringAndTechnology
-        )
     }
 
 }

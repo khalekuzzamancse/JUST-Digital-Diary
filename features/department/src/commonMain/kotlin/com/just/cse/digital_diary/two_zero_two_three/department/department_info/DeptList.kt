@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destination.dept_list
+package com.just.cse.digital_diary.two_zero_two_three.department.department_info
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.LocalIndication
@@ -25,7 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.features.common_ui.list.GenericListScreen
-import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.Department
+import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.Department
 import kotlin.random.Random
 
 

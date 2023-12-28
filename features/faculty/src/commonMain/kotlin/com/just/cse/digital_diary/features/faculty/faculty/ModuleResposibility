@@ -1,0 +1,8 @@
+This module show the information related to this faculty such as:
+The number of departments in this faculty.
+the list of available faculty
+for a particular faculty it will show the information related
+to this faculty such as list of departments in it.
+if user interested  to go a department then it will show
+navigate to the department module to show more about this particular
+department

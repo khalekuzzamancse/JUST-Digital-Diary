@@ -11,19 +11,3 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.just.cse.digital_diary.two_zero_two_three.auth.data.repository.SectionRepository
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.FacultyRepository
 
-
-
-class DepartmentInfo(
-    val onNavigateToBack:()->Unit,
-    val deptId:String,
-):Screen{
-    @Composable
-    override fun Content() {
-//        DepartmentNavGraph(
-//            departmentId = deptId,
-//            onNavigationIconClick = onNavigateToBack
-//        )
-    }
-
-}
-

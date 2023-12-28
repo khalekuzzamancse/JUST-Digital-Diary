@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.form
+package com.just.cse.digital_diary.features.common_ui.form
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

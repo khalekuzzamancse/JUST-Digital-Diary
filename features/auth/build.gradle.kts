@@ -25,23 +25,10 @@ kotlin {
                 implementation(compose.preview)
                 implementation(project(":features:common_ui"))
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
-                val voyagerVersion = "1.0.0"
-
-                // Multiplatform
-                // Navigator
-                implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
-
-                // Screen Model
-                implementation("cafe.adriel.voyager:voyager-screenmodel:$voyagerVersion")
-
-                // BottomSheetNavigator
-                implementation("cafe.adriel.voyager:voyager-bottom-sheet-navigator:$voyagerVersion")
-
-                // TabNavigator
-                implementation("cafe.adriel.voyager:voyager-tab-navigator:$voyagerVersion")
-
-                // Transitions
-                implementation("cafe.adriel.voyager:voyager-transitions:$voyagerVersion")
+                implementation(libs.voyager.navigator)
+                implementation(libs.voyager.transitions)
+                implementation(project(":features:repository"))
+                implementation(project(":features:common_ui"))
 
             }
         }
