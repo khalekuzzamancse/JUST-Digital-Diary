@@ -10,6 +10,7 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.ui.navigation.AuthNavG
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.RootNavGraph
 
 @Composable
+//
 fun RootModule() {
     var loginSuccess by remember {
         mutableStateOf(false)
