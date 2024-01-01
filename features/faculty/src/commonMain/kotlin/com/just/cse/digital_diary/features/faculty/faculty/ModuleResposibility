@@ -1,0 +1,43 @@
+It will show the list of faculties:
+   The list are itself is destination.these destination can be shown by either using a drawer
+   or something else.
+   Ways of showing destinations:
+   1.Bottom navigation
+   2.Modal drawer
+   3.
+   destinations>5 ,so options 1 is not valid.
+   There are already a top level navigation drawer,using another navigation drawer may not be the
+   best approach because the concept of navigation drawer says,
+   it will always show the top level destination what ever screen is it is.using the child modal drawer
+   will hide the top level drawer in some screen.
+   at this moment i do not have any better solution,at based on the requirement the UI may needed to
+   update,so design this module such as way so that the other module or it dependent modules
+   does not affect,it the UI of this module is changed.
+
+ What about Bottom Sheets:
+ Bottom Sheets are used for supplement content or actions ,not for destinations.
+ however is the bottom sheet you are allowed to represent list or grid or any types of layout.
+ so if we going to use the destination as a list then you can use the list in the bottom sheet
+ if you want.
+
+ Navigation Drawer:
+ Used for if we have more level of nested hierarchy.
+ it is used for switching between two unrelated destination quickly.
+ Do not use two navigation components such as bottom navigation with drawer
+ ,with the same screen.
+
+
+
+
+
+
+
+
+This module show the information related to this faculty such as:
+The number of departments in this faculty.
+the list of available faculty
+for a particular faculty it will show the information related
+to this faculty such as list of departments in it.
+if user interested  to go a department then it will show
+navigate to the department module to show more about this particular
+department

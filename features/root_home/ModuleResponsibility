@@ -1,0 +1,16 @@
+ Do not use two navigation components such as bottom navigation with drawer
+ ,with the same screen.
+ since the a screen/module may have it own navigation graph or hierarchy
+ so be careful to use  call a screen as a content parameter of the drawer decorator,
+ example as:
+ DrawerDecorator(
+ ...
+ content=X
+ )
+ it is possible that X may have it own navigation component such as bottom
+ navigation,in that case X have to navigation component one is the drawer and
+ other is the bottom navigation,it not recommended to use.
+ to avoid that pass only those screen as  content parameter of the drawer that
+ has not other navigation component,if the screen may have navigation component
+ in that case instead of calling it as drawer decorator content,just navigate to it by pushing
+ into a back stack.
