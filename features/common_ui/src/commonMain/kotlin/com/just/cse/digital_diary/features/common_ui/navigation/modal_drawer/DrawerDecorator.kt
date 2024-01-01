@@ -11,10 +11,35 @@ import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.she
 
 @Composable
 fun <T>ModalDrawerDecorator(
+    drawerController: ModalDrawerState,
     destinations: List<NavigationItem<T>>,
     selectedDesertionIndex: Int,
     onDestinationSelected: (Int) -> Unit = {},
+    content: @Composable () -> Unit,
+) {
+    ModalDrawer(
+        modifier = Modifier,
+        drawerState = drawerController.drawerState,
+        sheet = {
+            Sheet(
+                selectedDestinationIndex = selectedDesertionIndex,
+                destinations = destinations,
+                onDestinationSelected = { index ->
+                    onDestinationSelected(index)
+                    drawerController.closeDrawer()
+                }
+            )
+        },
+        content=content
+    )
+}
 
+
+@Composable
+fun <T>ModalDrawerDecorator(
+    destinations: List<NavigationItem<T>>,
+    selectedDesertionIndex: Int,
+    onDestinationSelected: (Int) -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
@@ -34,7 +59,6 @@ fun <T>ModalDrawerDecorator(
                 }
             )
         },
-//        content = content,
         content=content
     )
 }

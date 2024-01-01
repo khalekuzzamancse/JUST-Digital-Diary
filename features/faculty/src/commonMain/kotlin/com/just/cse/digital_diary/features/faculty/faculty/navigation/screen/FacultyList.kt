@@ -1,16 +1,33 @@
 package com.just.cse.digital_diary.features.faculty.faculty.navigation.screen
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Work
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Work
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
+import com.just.cse.digital_diary.features.common_ui.bottom_navigation.BottomNavigationBar
+import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.AnimateVisibilityDecorator
 import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.ModalDrawerDecorator
-import com.just.cse.digital_diary.features.faculty.faculty.SearchDecorator
+import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.ModalDrawerState
+import com.just.cse.digital_diary.features.common_ui.search_bar.SearchDecorator
+import com.just.cse.digital_diary.features.faculty.faculty.SearchableEmployeeList
 import com.just.cse.digital_diary.features.faculty.faculty.navigation.Faculties
 import com.just.cse.digital_diary.two_zero_two_three.department.department_info.EmployeeCard
 import com.just.cse.digital_diary.two_zero_two_three.department.department_info.EmployeeList
@@ -39,10 +56,17 @@ class FacultyModuleNavHost : Screen {
 
     @Composable
     override fun Content() {
+        val scope = rememberCoroutineScope()
+        val drawerController by remember {
+            mutableStateOf(ModalDrawerState(scope))
+        }
+
+
         navigator = LocalNavigator.current
         val viewModel = remember { TopMostDestinationViewModel() }
         val currentDestinationIndex = viewModel.selectedSectionIndex.collectAsState().value
         ModalDrawerDecorator(
+            drawerController=drawerController,
             destinations = destinations,
             selectedDesertionIndex = currentDestinationIndex,
             onDestinationSelected = { selectedDestinationIndex ->
@@ -53,53 +77,13 @@ class FacultyModuleNavHost : Screen {
                 }
             }
         ) {
-            //  SearchScreenTopBar()
-//            SearchDecorator(
-//                navigationIcon = Icons.Default.Menu,
-//                onNavigationClick = {
-//
-//                },
-//                employees = employeeList,
-//                contentOnNoSearch = {
-//                    EmployeeList(
-//                        modifier = it,
-//                        employees = employeeList,
-//                    )
-//                }
-//            )
-            SearchDecorator(
-                predicate={employee,queryText->
-                    predicate(employee,queryText)
-                },
-                items = employeeList,
-                navigationIcon = Icons.Default.Menu,
-                onNavigationClick = {},
-                itemDecorator = {employee,queryText->
-                    EmployeeCard(
-                        modifier = Modifier,
-                        highlightedText =queryText,
-                        employee= employee
-                    )
-                },
-                contentOnNoSearch = {
-                    EmployeeList(
-                        modifier = it,
-                        employees = employeeList,
-                    )
-                },
+            SearchableEmployeeList(
+               employeeList =  generateDummyEmployeeList(10),
+                onNavigationClick = {
+                    drawerController.openDrawer()
+                }
             )
         }
     }
 }
 
-
-val employeeList = generateDummyEmployeeList(10)
-
-fun predicate(employee: Employee, queryText: String): Boolean {
-    return (
-            employee.name.contains(queryText, ignoreCase = true)
-                    || employee.deptName.contains(queryText, ignoreCase = true)
-                    || employee.deptSortName.contains(queryText, ignoreCase = true)
-                    || employee.email.contains(queryText, ignoreCase = true)
-            )
-}

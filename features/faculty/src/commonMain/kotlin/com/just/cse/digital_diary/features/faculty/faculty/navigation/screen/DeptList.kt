@@ -5,13 +5,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
 import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.ModalDrawerDecorator
+import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.ModalDrawerState
+import com.just.cse.digital_diary.features.faculty.faculty.SearchableEmployeeList
 import com.just.cse.digital_diary.two_zero_two_three.department.navigation.DepartmentModule
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.FacultyRepository
+import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.generateDummyEmployeeList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -30,9 +34,11 @@ class ListOfDepartments(
 ) : Screen {
     @Composable
     override fun Content() {
-        var searchedFor by remember {
-            mutableStateOf("")
+        val scope = rememberCoroutineScope()
+        val drawerController by remember {
+            mutableStateOf(ModalDrawerState(scope))
         }
+
         val navigator = LocalNavigator.current
         val viewModel = remember {
             NavigationStateHolder()
@@ -47,6 +53,7 @@ class ListOfDepartments(
         }
         val currentDestinationIndex = viewModel.selectedSectionIndex.collectAsState().value
         ModalDrawerDecorator(
+            drawerController=drawerController,
             destinations = destinations,
             selectedDesertionIndex = currentDestinationIndex,
             onDestinationSelected = { index ->
@@ -57,8 +64,12 @@ class ListOfDepartments(
                 }
             }
         ) {
-
-
+            SearchableEmployeeList(
+                employeeList =  generateDummyEmployeeList(10),
+                onNavigationClick = {
+                    drawerController.openDrawer()
+                }
+            )
 
         }
     }

@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.faculty.faculty
+package com.just.cse.digital_diary.features.common_ui.search_bar
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.features.common_ui.MySearchBar
 import com.just.cse.digital_diary.features.common_ui.list.GenericListScreen
-import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.Employee
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -37,8 +36,8 @@ class SearchDecoratorState<T>(
     fun onQueryChanged(query: String) {
         _query.update { query }
         _results.value = results.value.filter { predicate(it, query) }
-        if(query==""){
-            _results.value =items
+        if (query == "") {
+            _results.value = items
         }
     }
 
@@ -73,10 +72,11 @@ fun <T> SearchDecorator(
     navigationIcon: ImageVector? = null,
     onNavigationClick: (() -> Unit)? = null,
     itemDecorator: @Composable (T, highLightedText: String) -> Unit,
-    contentOnNoSearch: @Composable (Modifier) -> Unit,
+    bottomNavbar:@Composable () -> Unit={},
+    content: @Composable (Modifier) -> Unit,
 ) {
     val uiState = remember {
-        SearchDecoratorState<T>(
+        SearchDecoratorState(
             items,
             predicate
         )
@@ -92,7 +92,8 @@ fun <T> SearchDecorator(
         navigationIcon = navigationIcon,
         onNavigationClick = onNavigationClick,
         itemDecorator = itemDecorator,
-        contentOnNoSearch = contentOnNoSearch,
+        contentOnNoSearch = content,
+        bottomNavbar = bottomNavbar
     )
 }
 
@@ -109,6 +110,7 @@ fun <T> SearchDecorator(
     navigationIcon: ImageVector? = null,
     onNavigationClick: (() -> Unit)? = null,
     itemDecorator: @Composable (T, String) -> Unit,
+    bottomNavbar: @Composable () -> Unit={},
     contentOnNoSearch: @Composable (Modifier) -> Unit,
 ) {
 
@@ -136,6 +138,7 @@ fun <T> SearchDecorator(
                             IconButton(
                                 onClick = {
                                     onShowSearchChanged(true)
+                                    onActiveChanged(true)
                                 }
                             ) {
                                 Icon(
@@ -149,7 +152,8 @@ fun <T> SearchDecorator(
                         )
                     )
 
-                }
+                },
+                bottomBar = bottomNavbar
             ) {
                 contentOnNoSearch(Modifier.padding(it))
             }
@@ -180,100 +184,3 @@ fun <T> SearchDecorator(
 
 }
 
-
-fun getSearchResult(employees: List<Employee>, queryText: String): List<Employee> {
-    return (
-            employees.filter { employee ->
-                employee.name.contains(queryText, ignoreCase = true) ||
-                        employee.deptName.contains(queryText, ignoreCase = true) ||
-                        employee.deptSortName.contains(queryText, ignoreCase = true) ||
-                        employee.email.contains(queryText, ignoreCase = true)
-            }
-            )
-}
-
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun SearchDecorator(
-//    employees: List<Employee>,
-//    navigationIcon: ImageVector? = null,
-//    onNavigationClick: (() -> Unit)? = null,
-//    contentOnNoSearch: @Composable (Modifier) -> Unit,
-//) {
-//    var searchedEmployees by remember {
-//        mutableStateOf(employees)
-//    }
-//    var searchedFor by remember {
-//        mutableStateOf("")
-//    }
-//    var showSearch by remember {
-//        mutableStateOf(false)
-//    }
-//    Box {
-//        if (!showSearch) {
-//            Scaffold(
-//                topBar = {
-//                    TopAppBar(
-//                        title = {},
-//                        navigationIcon = {
-//                            if (navigationIcon != null) {
-//                                IconButton(
-//                                    onClick = {
-//                                        onNavigationClick?.invoke()
-//                                    }) {
-//                                    Icon(
-//                                        imageVector = navigationIcon,
-//                                        contentDescription = null
-//                                    )
-//                                }
-//                            }
-//
-//                        },
-//                        actions = {
-//                            IconButton(
-//                                onClick = {
-//                                    showSearch = true
-//                                }
-//                            ) {
-//                                Icon(
-//                                    imageVector = Icons.Default.Search,
-//                                    contentDescription = null
-//                                )
-//                            }
-//                        },
-//                        colors = TopAppBarDefaults.topAppBarColors(
-//                            containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(8.dp)
-//                        )
-//                    )
-//
-//                }
-//            ) {
-//                contentOnNoSearch(Modifier.padding(it))
-//            }
-//        } else {
-//            MySearchBar(
-//                query =,
-//                onQueryChange = { searchFor ->
-//                    searchedEmployees = getSearchResult(
-//                        employees,
-//                        searchFor
-//                    )
-//                    searchedFor = searchFor
-//                },
-//                modifier = Modifier,
-//                onGoBack = {
-//                    showSearch = false
-//                }
-//            ) {
-//                EmployeeList(
-//                    modifier = Modifier,
-//                    employees = searchedEmployees,
-//                    highlightedText = searchedFor
-//                )
-//            }
-//        }
-//
-//    }
-//
-//
-//}
