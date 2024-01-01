@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 fun <T> GenericListScreen(
     modifier: Modifier = Modifier,
     items: List<T>,
-    itemContent: @Composable (Modifier, T) -> Unit,
+    itemDecorator: @Composable (Modifier, T) -> Unit,
 ) {
     // Use a Box to place an invisible Text with the longest name
     // This will determine the width of the LazyColumn
@@ -18,7 +18,7 @@ fun <T> GenericListScreen(
         modifier = modifier,
     ) {
         items(items) { item ->
-            itemContent(Modifier, item)
+            itemDecorator(Modifier, item)
         }
     }
 

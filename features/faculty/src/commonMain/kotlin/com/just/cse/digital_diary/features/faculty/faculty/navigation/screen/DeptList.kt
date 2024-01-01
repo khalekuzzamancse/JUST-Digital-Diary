@@ -1,9 +1,11 @@
-package com.just.cse.digital_diary.features.faculty.faculty.navigation
+package com.just.cse.digital_diary.features.faculty.faculty.navigation.screen
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
@@ -28,6 +30,9 @@ class ListOfDepartments(
 ) : Screen {
     @Composable
     override fun Content() {
+        var searchedFor by remember {
+            mutableStateOf("")
+        }
         val navigator = LocalNavigator.current
         val viewModel = remember {
             NavigationStateHolder()
@@ -52,9 +57,11 @@ class ListOfDepartments(
                 }
             }
         ) {
-            Text("This is Department list ")
+
+
 
         }
     }
 
 }
+

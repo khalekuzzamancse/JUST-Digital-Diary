@@ -36,6 +36,7 @@ import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.Employee
 import kotlin.random.Random
 
+
 val departmentSubDestinations = listOf(
     NavigationItem(
         key = 0,

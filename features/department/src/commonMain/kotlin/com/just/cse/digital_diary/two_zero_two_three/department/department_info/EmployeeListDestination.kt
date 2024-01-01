@@ -40,6 +40,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import com.just.cse.digital_diary.features.common_ui.getHighLightedString
 import com.just.cse.digital_diary.features.common_ui.list.GenericListScreen
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.Employee
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.employees
@@ -60,6 +61,25 @@ will it place in a separate screen or it it place in a  pane dependent on the
 client code,but this is responsive enough so it can be used with either separate screen or part of
 another screen such as pane
  */
+@Composable
+fun EmployeeList(
+    modifier: Modifier = Modifier,
+    employees: List<Employee>,
+    highlightedText: String,
+) {
+    GenericListScreen(
+        modifier = modifier,
+        items = employees
+    ) { mod, teacher ->
+        EmployeeCard(
+            modifier = mod.padding(8.dp),
+            employee = teacher,
+            highlightedText = highlightedText
+
+        )
+    }
+}
+
 @Composable
 fun EmployeeList(
     modifier: Modifier = Modifier,
@@ -134,6 +154,72 @@ fun EmployeeCard(
                         }
                     }
 
+            }
+
+
+        }
+
+    }
+
+}
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun EmployeeCard(
+    modifier: Modifier,
+    highlightedText: String,
+    employee: Employee
+) {
+    var expanded by remember { mutableStateOf(false) }
+    Surface(
+        modifier = modifier,
+        shadowElevation = 2.dp
+    ) {
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(CircleShape)
+                    .background(Color(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256)))
+                    .align(Alignment.CenterVertically),
+            )
+            Column(
+                modifier = Modifier
+                    .padding(8.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalAlignment = Alignment.Start
+            ) {
+
+                Text(
+                    text = getHighLightedString(employee.name,highlightedText),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                Row(
+                    modifier = Modifier,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = getHighLightedString(employee.phone,highlightedText),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+//                    Icon(
+//                        imageVector = if (expanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
+//                        contentDescription = null,
+//                        modifier=Modifier.clickable {
+//                            expanded = !expanded
+//                        }
+//                    )
+
+                }
+//                if (expanded) {
+//                    ContentAnimationDecorator(
+//                        state = expanded
+//                    ) {
+//                       // EmployeeCardExpandAblePart(employee,highlightedText)
+//                    }
+//                }
+                EmployeeCardExpandAblePart(employee,highlightedText)
             }
 
 
@@ -233,4 +319,67 @@ fun EmployeeCardExpandAblePart(
     }
 
 }
+@Composable
+fun EmployeeCardExpandAblePart(
+    employee: Employee,
+    highlightedText: String,
+) {
+
+    Column(
+        modifier = Modifier,
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalAlignment = Alignment.Start
+    ) {
+        Text(
+            text = getHighLightedString(employee.designations,highlightedText),
+            style = MaterialTheme.typography.bodySmall,
+        )
+        Text(
+            text =getHighLightedString("${employee.deptSortName} - ${employee.roomName}",highlightedText),
+            style = MaterialTheme.typography.bodySmall,
+        )
+        Text(
+            text =getHighLightedString(employee.email,highlightedText),
+            style = MaterialTheme.typography.bodySmall,
+        )
+        Text(
+            text =getHighLightedString(employee.additionalEmail,highlightedText),
+            style = MaterialTheme.typography.bodySmall,
+        )
+
+
+        Text(
+            text = getHighLightedString(employee.achievements,highlightedText),
+            style = MaterialTheme.typography.bodySmall,
+        )
+        Row(
+            modifier = Modifier
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            IconButton(
+                onClick = {
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Email,
+                    contentDescription = null
+                )
+            }
+            IconButton(
+                onClick = {
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Phone,
+                    contentDescription = null
+                )
+
+            }
+        }
+
+    }
+
+}
+
 

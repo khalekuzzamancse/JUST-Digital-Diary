@@ -31,11 +31,13 @@ class DepartmentModule(
 ):Screen{
     @Composable
     override fun Content() {
+        val navigator= LocalNavigator.current
         DepartmentNavGraph(
-            departmentId=departmentId
-        ) {
-
-        }
+            departmentId=departmentId,
+            onGoBackRequest = {
+            navigator?.pop()
+            }
+        )
     }
 
 }
@@ -58,12 +60,12 @@ they must maintain a separate backstack means navigator
 @Composable
 fun DepartmentNavGraph(
     departmentId: String = "",
-    onNavigationIconClick: () -> Unit,
+    onGoBackRequest: () -> Unit,
 ) {
     Navigator(
         DepartmentNavHost(
             departmentId = departmentId,
-            onNavigationIconClick = onNavigationIconClick)
+            onNavigationIconClick = onGoBackRequest)
     ) { navigator ->
         SlideTransition(navigator = navigator)
     }

@@ -37,3 +37,10 @@ val topMostDestinations = listOf(
     ),
 
     )
+object RootDestinations{
+    const val HOME=0
+    const val FACULTY_MEMBERS=1
+    const val ADMINISTRATION=2
+    const val MESSAGE_FROM_VC=3
+    const val ABOUT_US=4
+}
