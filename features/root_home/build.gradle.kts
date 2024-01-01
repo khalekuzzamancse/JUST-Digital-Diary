@@ -25,6 +25,7 @@ kotlin {
                 implementation(compose.preview)
                 implementation(project(":features:common_ui"))
                 implementation(project(":features:faculty"))
+                implementation(project(":features:auth"))
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(libs.voyager.navigator)
                 implementation(libs.voyager.transitions)

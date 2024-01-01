@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.login
 
 import com.just.cse.digital_diary.features.common_ui.form.LabelLessTextFieldState
 import kotlinx.coroutines.flow.MutableStateFlow

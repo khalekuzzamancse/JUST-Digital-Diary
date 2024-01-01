@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,6 +20,8 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -125,6 +127,24 @@ class RegistrationViewModel() {
     }
 }
 
+@Composable
+fun RegisterSection(
+    onRegister:()->Unit,
+) {
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState())
+    ) {
+        RegistrationForm()
+        Button(
+            modifier = Modifier.width(200.dp).align(Alignment.CenterHorizontally),
+            onClick = onRegister
+        ) {
+            Text(text = "Register".uppercase())
+        }
+    }
+
+}
+
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun RegistrationForm(
@@ -148,7 +168,7 @@ fun RegistrationForm(
     val w = calculateWindowSizeClass().widthSizeClass
 
     Row(
-        modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+        modifier.wrapContentWidth(),
         horizontalArrangement = Arrangement.Center,
     ) {
         if (w == WindowWidthSizeClass.Expanded) {
@@ -182,6 +202,7 @@ fun RegistrationForm(
                 modifier = Modifier.wrapContentWidth()
             )
             Spacer(Modifier.height(16.dp))
+
 
         }
     }

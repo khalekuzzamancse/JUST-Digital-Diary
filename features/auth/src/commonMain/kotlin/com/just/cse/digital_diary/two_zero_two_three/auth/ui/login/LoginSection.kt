@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.login
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldState
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.auth.LoginForm
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.LoginForm
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -69,6 +69,9 @@ class LoginViewModel() {
 @Composable
 fun LoginSection(
     modifier: Modifier = Modifier,
+    onRegisterRequest: () -> Unit={},
+    onLoginRequest: () -> Unit={},
+    onPasswordResetRequest: () -> Unit={},
 ) {
 
     val isHorizontal = calculateWindowSizeClass().widthSizeClass != WindowWidthSizeClass.Compact
@@ -91,9 +94,9 @@ fun LoginSection(
         LoginFieldsNControls(
             modifier = Modifier,
             isHorizontal = isHorizontal,
-            onRegisterRequest = {},
-            onLoginRequest = {},
-            onPasswordResetRequest = {}
+            onRegisterRequest = onRegisterRequest,
+            onLoginRequest =onLoginRequest,
+            onPasswordResetRequest = onPasswordResetRequest
         )
 
     }
