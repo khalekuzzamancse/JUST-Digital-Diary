@@ -24,6 +24,10 @@ kotlin {
                 implementation(compose.materialIconsExtended)
                 implementation(compose.preview)
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.okhttp)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.kamel)
             }
         }
 //        val androidMain by getting{

@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.just.cse.digital_diary.features.common_ui.ImageLoader
 
 data class ViceChancellorInfo(
     val name: String,
@@ -81,15 +84,13 @@ fun ViceChancellorMessage() {
 
 @Composable
 private fun ColumnScope.ViceChancellorImage() {
-    Box(
-        modifier = Modifier
-            .height(200.dp)
-            .fillMaxWidth()
-            .background(
-                color = Color(0xFFB3E5FC),
-                shape = RoundedCornerShape(16.dp)
-            )
+    ImageLoader(
+        url = "https://just.edu.bd/images/vc2.jpg",
+        modifier = Modifier.height(200.dp)
+        .fillMaxWidth()
+
     )
+
 }
 
 @Composable

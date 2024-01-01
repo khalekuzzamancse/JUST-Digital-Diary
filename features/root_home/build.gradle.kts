@@ -30,6 +30,7 @@ kotlin {
                 implementation(libs.voyager.navigator)
                 implementation(libs.voyager.transitions)
 
+
             }
         }
 //        val androidMain by getting{
@@ -37,11 +38,11 @@ kotlin {
 //
 //            }
 //        }
-//        val desktopMain by getting{
-//            dependencies {
-//
-//            }
-//        }
+        val desktopMain by getting{
+            dependencies {
+
+            }
+        }
     }
 
 

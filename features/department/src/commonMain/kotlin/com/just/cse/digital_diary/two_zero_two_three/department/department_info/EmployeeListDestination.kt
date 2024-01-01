@@ -40,6 +40,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import com.just.cse.digital_diary.features.common_ui.ImageLoader
 import com.just.cse.digital_diary.features.common_ui.getHighLightedString
 import com.just.cse.digital_diary.features.common_ui.list.GenericListScreen
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.Employee
@@ -111,13 +112,14 @@ fun EmployeeCard(
             FlowRow(
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Box(
+                ImageLoader(
+                    url = "http://tinyurl.com/4m2eayaj",
                     modifier = Modifier
                         .size(64.dp)
                         .clip(CircleShape)
-                        .background(Color(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256)))
                         .align(Alignment.CenterVertically),
                 )
+
                 Column(
                     modifier = Modifier
                         .padding(8.dp),
@@ -177,11 +179,11 @@ fun EmployeeCard(
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Box(
+            ImageLoader(
+                url = "http://tinyurl.com/4m2eayaj",
                 modifier = Modifier
                     .size(64.dp)
                     .clip(CircleShape)
-                    .background(Color(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256)))
                     .align(Alignment.CenterVertically),
             )
             Column(
@@ -203,22 +205,10 @@ fun EmployeeCard(
                         text = getHighLightedString(employee.phone,highlightedText),
                         style = MaterialTheme.typography.bodySmall,
                     )
-//                    Icon(
-//                        imageVector = if (expanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
-//                        contentDescription = null,
-//                        modifier=Modifier.clickable {
-//                            expanded = !expanded
-//                        }
-//                    )
+
 
                 }
-//                if (expanded) {
-//                    ContentAnimationDecorator(
-//                        state = expanded
-//                    ) {
-//                       // EmployeeCardExpandAblePart(employee,highlightedText)
-//                    }
-//                }
+
                 EmployeeCardExpandAblePart(employee,highlightedText)
             }
 
