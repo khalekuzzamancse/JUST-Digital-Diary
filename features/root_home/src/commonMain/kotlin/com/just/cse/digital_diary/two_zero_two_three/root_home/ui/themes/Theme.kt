@@ -1,6 +1,7 @@
-package com.just.cse.digitaldiaryremake.justdigitaldiary.twozeotwothree.ui.theme.theme
+package com.just.cse.digital_diary.two_zero_two_three.root_home.ui.themes
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
@@ -74,19 +75,19 @@ private val DarkColors = darkColorScheme(
 
 @Composable
 fun AppTheme(
-  useDarkTheme: Boolean = isSystemInDarkTheme(),
-  content: @Composable() () -> Unit
+    useDarkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable() () -> Unit
 ) {
-  val colors = if (!useDarkTheme) {
-    LightColors
-  } else {
-    DarkColors
-  }
+    val colors = if (!useDarkTheme) {
+        LightColors
+    } else {
+        DarkColors
+    }
 
-  MaterialTheme(
-    colorScheme = colors,
-    content = content,
-      typography = typography,
-      shapes = shapes
-  )
+    MaterialTheme(
+        colorScheme = colors,
+        typography = typography,
+        shapes = shapes,
+        content = content
+    )
 }

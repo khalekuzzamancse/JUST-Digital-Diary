@@ -12,24 +12,28 @@ import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.features.common_ui.ImageLoader
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.navigation.AuthNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.RootNavGraph
+import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.themes.AppTheme
 
 
 @Composable
 //
 fun RootModule() {
-    var loginSuccess by remember {
-        mutableStateOf(false)
+    AppTheme{
+        var loginSuccess by remember {
+            mutableStateOf(false)
+        }
+        if(loginSuccess){
+            RootNavGraph()
+        }
+        else{
+            AuthNavGraph(
+                onLoginSuccess ={
+                    loginSuccess=true
+                }
+            )
+        }
     }
-    if(loginSuccess){
-        RootNavGraph()
-    }
-    else{
-        AuthNavGraph(
-            onLoginSuccess ={
-                loginSuccess=true
-            }
-        )
-    }
+
 
 }
 
