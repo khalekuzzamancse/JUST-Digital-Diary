@@ -2,6 +2,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("org.jetbrains.compose")
+    alias(libs.plugins.kotlinxSerialization)
 }
 kotlin {
     androidTarget {
@@ -28,6 +29,7 @@ kotlin {
                 implementation(libs.ktor.client.okhttp)
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.kamel)
+                implementation(libs.ktor.serialization.kotlinx.json)
             }
         }
 //        val androidMain by getting{

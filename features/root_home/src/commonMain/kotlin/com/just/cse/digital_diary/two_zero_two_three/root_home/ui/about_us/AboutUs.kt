@@ -21,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.SpanStyle
@@ -32,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.just.cse.digital_diary.features.common_ui.TypeWriter
 
 private val features = listOf(
     "Create notes with rich text formatting",
@@ -91,11 +91,16 @@ fun AppDescription() {
         }
         append(".")
     }
-    Text(
-        text = text,
-        style = MaterialTheme.typography.bodyMedium,
-        textAlign = TextAlign.Justify
-    )
+
+    TypeWriter(
+        text=text,
+        delay = 10){
+        Text(
+            text = it,
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Justify
+        )
+    }
     Spacer(modifier = Modifier.height(16.dp))
 }
 
@@ -114,13 +119,10 @@ fun ColumnScope.FeaturesSection() {
 
 @Composable
 fun FeaturesList() {
-    // Define a list of symbols to use
     val symbols = listOf("\u25CF", "\u2713", "\u2605", "\u2764", "\u262F", "\u263A")
-    // Determine the text color based on the theme
     val textColor = MaterialTheme.colorScheme.onSurface
 
     Column {
-        // Loop through the features and the corresponding symbols
         features.forEachIndexed { index, feature ->
             BulletPointText(symbol = symbols.getOrNull(index) ?: "\u2022", feature = feature, textColor = textColor)
         }
@@ -130,15 +132,19 @@ fun FeaturesList() {
 @Composable
 fun BulletPointText(symbol: String, feature: String, textColor: Color) {
     // Display a text with the symbol and the feature
-    Text(
-        text = "$symbol $feature",
-        style = TextStyle(
-            color = textColor,
-            fontWeight = FontWeight.Normal,
-            textDecoration = TextDecoration.None
-        ),
-        textAlign = TextAlign.Justify
-    )
+
+    TypeWriter(text=feature, delay = 10){
+        Text(
+            text = "$symbol $it",
+            style = TextStyle(
+                color = textColor,
+                fontWeight = FontWeight.Normal,
+                textDecoration = TextDecoration.None
+            ),
+            textAlign = TextAlign.Justify
+        )
+    }
+
 }
 
 
@@ -164,16 +170,23 @@ fun ColumnScope.ContactInfo() {
     ) {
         Row {
             ContactIcon(imageVector = Icons.Default.Email, contentDescription = "Email")
-            Text(
-                text = "justdigitaldiary@gmail.com",
-                style = MaterialTheme.typography.bodyLarge
-            )
+            TypeWriter(text="justdigitaldiary@gmail.com", delay = 250){
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+
         }
        Row {  ContactIcon(imageVector = Icons.Default.Phone, contentDescription = "Phone")
-           Text(
-               text = "+880-1234-5678",
-               style = MaterialTheme.typography.bodyLarge
-           ) }
+           TypeWriter(text="+880-1234-5678", delay = 250){
+               Text(
+                   text = it,
+                   style = MaterialTheme.typography.bodyLarge
+               )
+           }
+
+       }
     }
 }
 
