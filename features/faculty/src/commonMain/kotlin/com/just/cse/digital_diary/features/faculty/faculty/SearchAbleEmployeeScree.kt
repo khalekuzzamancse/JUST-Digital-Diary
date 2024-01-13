@@ -1,86 +1,128 @@
 package com.just.cse.digital_diary.features.faculty.faculty
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Work
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.features.common_ui.navigation.bottom_navigation.BottomNavigationBar
+import cafe.adriel.voyager.navigator.LocalNavigator
 import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
-import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.AnimateVisibilityDecorator
-import com.just.cse.digital_diary.features.common_ui.search_bar.SearchDecorator
+import com.just.cse.digital_diary.features.common_ui.navigation.bottom_sheet.BottomSheetNavigation
+import com.just.cse.digital_diary.features.common_ui.search_bar.SearchSection
+import com.just.cse.digital_diary.features.faculty.faculty.navigation.screen.ListOfDepartments
+import com.just.cse.digital_diary.features.faculty.faculty.navigation.screen.TopMostDestinationViewModel
+import com.just.cse.digital_diary.features.faculty.faculty.navigation.screen.destinations
 import com.just.cse.digital_diary.two_zero_two_three.department.department_info.EmployeeCard
 import com.just.cse.digital_diary.two_zero_two_three.department.department_info.EmployeeList
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.Employee
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.generateDummyEmployeeList
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchableEmployeeList(
-    employeeList: List<Employee>,
-    onNavigationClick:()->Unit={},
+fun <T>SearchableEmployeeList(
+    destinations: List<NavigationItem<T>>,
+    selectedDesertionIndex: Int,
+    onDrawerOpenRequested:()->Unit={},
+    onDestinationSelected: (Int) -> Unit = {},
 ) {
-    var selectedBottomDestinations by remember {
-        mutableStateOf(0)
+    var searchMode by remember { mutableStateOf(false) }
+    val topAppbar=@Composable{
+        TopAppBar(
+            title = {},
+            navigationIcon = {
+                IconButton(
+                    onClick = onDrawerOpenRequested
+                ) {
+                    Icon(Icons.Default.Menu, null)
+                }
+            },
+            actions = {
+                IconButton(
+                    onClick = {
+                        searchMode = true
+                    }
+                ) {
+                    Icon(Icons.Default.Search, null)
+                }
+
+            }
+        )
     }
 
-    SearchDecorator(
-        predicate = { employee, queryText ->
-            predicate(employee, queryText)
-        },
-        items = employeeList,
-        navigationIcon = Icons.Default.Menu,
-        onNavigationClick = onNavigationClick,
-        itemDecorator = { employee, queryText ->
-            EmployeeCard(
-                modifier = Modifier,
-                highlightedText = queryText,
-                employee = employee
-            )
-        },
-        content = {modifier->
-            when(selectedBottomDestinations){
-                0->{
-                    AnimateVisibilityDecorator {
-                        EmployeeList(
-                            modifier = modifier,
-                            employees = employeeList,
-                        )
-                    }
-                }
-                else->{
-                    AnimateVisibilityDecorator {
-                        ScreenUnderConstruction(modifier)
-                    }
-
-                }
+    BottomSheetNavigation(
+        visibilityDelay = 70L,
+        destinations =destinations ,
+        selectedDesertionIndex = selectedDesertionIndex,
+        onDestinationSelected = onDestinationSelected,
+        topBar = if(!searchMode)topAppbar else null
+    ) {
+        SearchableEmployeeList(
+            searchMode = searchMode,
+            employeeList = generateDummyEmployeeList(10),
+            onSearchExitRequest = {
+                searchMode = false
             }
+        )
+    }
 
-        },
-        bottomNavbar = {
-            BottomNavigationBar(
-                destinations = bottomDestinations,
-                selectedDestinationIndex = selectedBottomDestinations,
-                onDestinationSelected = {
-                    selectedBottomDestinations = it
-                }
-            )
-        }
-
-    )
 
 }
+@Composable
+fun SearchableEmployeeList(
+    searchMode: Boolean = false,
+    onSearchExitRequest:()->Unit,
+    employeeList: List<Employee>,
+) {
+
+    AnimatedVisibility(
+        visible = searchMode
+    ) {
+        SearchSection(
+            onSearchExitRequest =onSearchExitRequest,
+            predicate = { employee, queryText ->
+                predicate(employee, queryText)
+            },
+            items = employeeList,
+            searchedItemDecorator = { employee, queryText ->
+                EmployeeCard(
+                    modifier = Modifier,
+                    highlightedText = queryText,
+                    employee = employee
+                )
+            },
+
+        )
+    }
+    AnimatedVisibility(
+        visible = !searchMode
+    ){
+        EmployeeList(
+            modifier = Modifier,
+            employees = employeeList,
+        )
+    }
+}
+
 
 
 fun predicate(employee: Employee, queryText: String): Boolean {
@@ -116,7 +158,7 @@ val bottomDestinations = listOf(
 
 @Composable
 fun ScreenUnderConstruction(modifier: Modifier = Modifier) {
-    Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+    Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text("Under construction")
     }
 }

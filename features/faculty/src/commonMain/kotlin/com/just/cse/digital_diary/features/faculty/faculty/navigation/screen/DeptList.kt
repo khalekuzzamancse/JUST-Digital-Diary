@@ -33,11 +33,6 @@ class ListOfDepartments(
 ) : Screen {
     @Composable
     override fun Content() {
-        val scope = rememberCoroutineScope()
-        val drawerController by remember {
-            mutableStateOf(ModalDrawerState(scope))
-        }
-
         val navigator = LocalNavigator.current
         val viewModel = remember {
             NavigationStateHolder()
@@ -51,8 +46,7 @@ class ListOfDepartments(
             )
         }
         val currentDestinationIndex = viewModel.selectedSectionIndex.collectAsState().value
-        ModalDrawerDecorator(
-            drawerState=drawerController,
+        SearchableEmployeeList(
             destinations = destinations,
             selectedDesertionIndex = currentDestinationIndex,
             onDestinationSelected = { index ->
@@ -62,15 +56,7 @@ class ListOfDepartments(
                     navigator?.push(DepartmentModule(deptId))
                 }
             }
-        ) {
-            SearchableEmployeeList(
-                employeeList =  generateDummyEmployeeList(10),
-                onNavigationClick = {
-                    drawerController.openDrawer()
-                }
-            )
-
-        }
+        )
     }
 
 }

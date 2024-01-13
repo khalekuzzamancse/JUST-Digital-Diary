@@ -26,11 +26,10 @@ fun MySearchBar(
     onGoBack: () -> Unit={},
     query: String,
     onQueryChange: (String) -> Unit={},
-    active: Boolean = true,
+    active: Boolean,
     onActiveChanged: (Boolean)-> Unit,
     content:@Composable ColumnScope.()->Unit={},
 ) {
-
 
     SearchBar(
         modifier = modifier.fillMaxWidth(),

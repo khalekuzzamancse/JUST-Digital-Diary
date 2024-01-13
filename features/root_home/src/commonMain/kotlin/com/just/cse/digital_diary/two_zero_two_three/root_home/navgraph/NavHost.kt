@@ -41,7 +41,7 @@ class RootNavHost : Screen {
     override fun Content() {
         val scope = rememberCoroutineScope()
         var drawerState by remember {
-            mutableStateOf(DrawerState(DrawerValue.Open))
+            mutableStateOf(DrawerState(DrawerValue.Closed))
         }
 
         LaunchedEffect(drawerState) {
@@ -73,7 +73,9 @@ class RootNavHost : Screen {
             content = {
                 when (currentDestinationIndex) {
                     RootDestinations.HOME -> {
+
                         AnimateVisibilityDecorator {
+
                             RootHomeContent(
                                 openDrawer = {
                                     scope.launch {
