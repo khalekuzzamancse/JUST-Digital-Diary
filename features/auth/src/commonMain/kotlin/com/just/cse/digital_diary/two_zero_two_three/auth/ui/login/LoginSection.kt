@@ -23,64 +23,41 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldState
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.LoginForm
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.register.LoginSectionHeader
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-object LoginFormLabels {
-    const val USER_NAME = "User Name or Email"
-    const val PASSWORD = "Password"
-    fun getRowWidth(measurer: TextMeasurer): Int {
-        val userNameLabelWidth = measurer.measure(USER_NAME).size.width
-        val passwordLabelWidth = measurer.measure(PASSWORD).size.width
-        println("userNameLabelWidth:$userNameLabelWidth, passwordLabelWidth:$passwordLabelWidth")
-        return maxOf(userNameLabelWidth, passwordLabelWidth)
-    }
-}
 
-class LoginViewModel() {
-    private val _userName = MutableStateFlow(FormTextFieldState(value = ""))
-    val userName = _userName.asStateFlow()
-    private val _password = MutableStateFlow(FormTextFieldState())
-    val password = _password.asStateFlow()
-    fun onUserNameChanged(userName: String) {
-        _userName.update { it.copy(value = userName) }
-    }
-
-    fun onPasswordChanged(password: String) {
-        _password.update { it.copy(value = password) }
-    }
-
-    fun onLoginRequest() {
-        //  println("onLoginRequest, ${userName.value}, ${password.value}")
-    }
-
-}
 
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun LoginSection(
     modifier: Modifier = Modifier,
-    onRegisterRequest: () -> Unit={},
-    onLoginRequest: () -> Unit={},
-    onPasswordResetRequest: () -> Unit={},
+    viewModel: LoginViewModel,
+    onNavigateToRegisterScreen: () -> Unit = {},
+    onLoginSuccess: () -> Unit = {},
+    onPasswordResetRequest: () -> Unit = {},
 ) {
 
     val isHorizontal = calculateWindowSizeClass().widthSizeClass != WindowWidthSizeClass.Compact
     val w = calculateWindowSizeClass().widthSizeClass
+    val scope = rememberCoroutineScope()
+
 
     Column(
         modifier.fillMaxSize().verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment =Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (w == WindowWidthSizeClass.Expanded) {
 //            WelcomeExpandedScreen(
@@ -94,9 +71,17 @@ fun LoginSection(
         LoginFieldsNControls(
             modifier = Modifier,
             isHorizontal = isHorizontal,
-            onRegisterRequest = onRegisterRequest,
-            onLoginRequest =onLoginRequest,
-            onPasswordResetRequest = onPasswordResetRequest
+            onRegisterRequest = onNavigateToRegisterScreen,
+            onLoginRequest = {
+                scope.launch {
+                    val success = viewModel.onLoginRequest()
+                    if (success) {
+                        onLoginSuccess()
+                    }
+                }
+            },
+            onPasswordResetRequest = onPasswordResetRequest,
+            state = viewModel.state
         )
 
     }
@@ -106,6 +91,7 @@ fun LoginSection(
 @Composable
 fun LoginFieldsNControls(
     modifier: Modifier,
+    state: LoginFieldsState,
     isHorizontal: Boolean,
     onRegisterRequest: () -> Unit,
     onPasswordResetRequest: () -> Unit,
@@ -113,7 +99,7 @@ fun LoginFieldsNControls(
 ) {
 
     Surface(
-        modifier=modifier.padding(16.dp).background(Color.Red),
+        modifier = modifier.padding(16.dp).background(Color.Red),
         shadowElevation = 8.dp
 
     ) {
@@ -124,7 +110,8 @@ fun LoginFieldsNControls(
 
             LoginForm(
                 modifier = Modifier.widthIn(max = 500.dp),
-                verticalGap = 8.dp
+                verticalGap = 8.dp,
+                state = state
             )
             Spacer(Modifier.height(16.dp))
             ForgetPassword(

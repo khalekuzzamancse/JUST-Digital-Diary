@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.login
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
@@ -7,7 +7,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -15,18 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.features.common_ui.form.FormLayout
-import com.just.cse.digital_diary.features.common_ui.form.LabelLessTextField
-import com.just.cse.digital_diary.features.common_ui.form.LabelLessTextFieldProperties
 import com.just.cse.digital_diary.features.common_ui.form.LabelLessTextFieldState
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.login.LoginFieldsState
-
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthInputField
 
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -34,10 +27,8 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.ui.login.LoginFieldsSt
 fun LoginForm(
     modifier: Modifier = Modifier,
     verticalGap: Dp,
+    state: LoginFieldsState,
 ) {
-    val state = remember {
-        LoginFieldsState()
-    }
     val isHorizontal = calculateWindowSizeClass().widthSizeClass != WindowWidthSizeClass.Compact
 
     LoginForm(
@@ -116,29 +107,3 @@ fun LoginForm(
 
 }
 
-@Composable
-fun AuthInputField(
-    modifier: Modifier = Modifier,
-    trailingIcon: ImageVector? = null,
-    visualTransformation: VisualTransformation? = null,
-    onTrailingIconClicked: (() -> Unit)? = null,
-    state: LabelLessTextFieldState,
-    leadingIcon: ImageVector,
-    onValueChanged: (String) -> Unit,
-) {
-    LabelLessTextField(
-        modifier = modifier,
-        properties = LabelLessTextFieldProperties(
-            leadingIcon = leadingIcon,
-            trailingIcon = trailingIcon,
-            visualTransformation = visualTransformation,
-            colors = TextFieldDefaults.colors(
-                focusedIndicatorColor = Color.Unspecified,
-                unfocusedIndicatorColor = Color.Unspecified
-            )
-        ),
-        state = state,
-        onValueChanged = onValueChanged,
-        onTrailingIconClick = onTrailingIconClicked
-    )
-}

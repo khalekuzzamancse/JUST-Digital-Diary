@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.just.cse.digital_diary.features.common_ui.ImageLoader
+import com.just.cse.digital_diary.features.common_ui.TypeWriter
 
 data class ViceChancellorInfo(
     val name: String,
@@ -119,12 +120,15 @@ private fun MoreInfoOnVC(info: String) {
 
 @Composable
 private fun UniversityName(info: String) {
-    Text(
-        text = info,
-        style = MaterialTheme.typography.titleSmall,
-        textAlign = TextAlign.Center,
-        modifier = Modifier.fillMaxWidth()
-    )
+    TypeWriter(text=info, delay = 50){
+        Text(
+            text = it,
+            style = MaterialTheme.typography.titleSmall,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+
 }
 
 @Composable
@@ -142,12 +146,16 @@ private fun MessageSection(
 
     Spacer(modifier = Modifier.height(8.dp))
 
-    Text(
-        text = messageText,
-        style = MaterialTheme.typography.bodyMedium,
-        textAlign = TextAlign.Justify,
-        modifier = Modifier.fillMaxWidth()
-    )
+    TypeWriter(text=messageText, delay = 50){
+        Text(
+            text = it,
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Justify,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+    }
+
 }
 
 
