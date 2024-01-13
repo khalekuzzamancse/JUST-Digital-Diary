@@ -9,6 +9,7 @@ import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,19 +27,21 @@ fun <T> BottomSheetNavigation(
         topBar = topBar,
         sheetState = sheetState,
         sheetContent = {
-            BottomSheetNavigation(
-                destinations = destinations,
-                destinationDecorator = {
-                    BottomSheetItemDecorator(
-                        visibilityDelay = visibilityDelay,
-                        isSelected = selectedDesertionIndex == it,
-                        onClick = {
-                            onDestinationSelected(it)
-                        },
-                        navigationItem = destinations[it]
-                    )
-                }
-            )
+                BottomSheetNavigation(
+                    destinations = destinations,
+                    destinationDecorator = {
+                        BottomSheetItemDecorator(
+                            visibilityDelay = visibilityDelay,
+                            isSelected = selectedDesertionIndex == it,
+                            onClick = {
+                                onDestinationSelected(it)
+                            },
+                            navigationItem = destinations[it]
+                        )
+                    }
+                )
+
+
         },
         content = {
             content()
@@ -58,10 +61,12 @@ fun BottomSheetDecorator(
         bottomSheetState = sheetState
     )
     BottomSheetScaffold(
+        sheetShadowElevation = 8.dp,
         topBar = topBar,
         scaffoldState = scaffoldState,
         sheetContent = {
-            sheetContent()
+                sheetContent()
+
         },
         content = {
             Box(Modifier.padding(it)) {

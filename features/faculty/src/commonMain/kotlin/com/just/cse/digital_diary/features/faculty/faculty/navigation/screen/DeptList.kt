@@ -1,5 +1,6 @@
 package com.just.cse.digital_diary.features.faculty.faculty.navigation.screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -46,17 +47,18 @@ class ListOfDepartments(
             )
         }
         val currentDestinationIndex = viewModel.selectedSectionIndex.collectAsState().value
-        SearchableEmployeeList(
-            destinations = destinations,
-            selectedDesertionIndex = currentDestinationIndex,
-            onDestinationSelected = { index ->
-                viewModel.onSectionSelected(index)
-                val deptId = destinations.getOrNull(index)?.key
-                if (deptId != null) {
-                    navigator?.push(DepartmentModule(deptId))
+            SearchableEmployeeList(
+                destinations = destinations,
+                selectedDesertionIndex = currentDestinationIndex,
+                onDestinationSelected = { index ->
+                    viewModel.onSectionSelected(index)
+                    val deptId = destinations.getOrNull(index)?.key
+                    if (deptId != null) {
+                        navigator?.push(DepartmentModule(deptId))
+                    }
                 }
-            }
-        )
+            )
+
     }
 
 }
