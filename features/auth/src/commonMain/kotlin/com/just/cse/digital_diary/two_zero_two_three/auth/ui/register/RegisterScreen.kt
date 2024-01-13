@@ -13,8 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.login.LoginSection
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.login.LoginViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

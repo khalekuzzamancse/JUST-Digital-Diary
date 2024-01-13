@@ -1,47 +1,36 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.login
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.material.icons.filled.Person4
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.features.common_ui.form.FormLayout
-import com.just.cse.digital_diary.features.common_ui.form.LabelLessTextFieldState
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthInputField
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthPasswordField
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTextField
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.register.RegistrationFormLabels
 
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+data class LoginFormData(
+    val username: String="",
+    val password: String="",
+)
 @Composable
 fun LoginForm(
     modifier: Modifier = Modifier,
-    verticalGap: Dp,
-    state: LoginFieldsState,
+    state: LoginViewModel,
 ) {
-    val isHorizontal = calculateWindowSizeClass().widthSizeClass != WindowWidthSizeClass.Compact
-
+    val data=state.data.collectAsState().value
     LoginForm(
-        fieldModifier = Modifier,
+        data=data,
+        fieldModifier = Modifier.fillMaxWidth(),
         formModifier = modifier,
-        isHorizontal = isHorizontal,
-        userNameState = state.userName.collectAsState().value,
         onUserNameChanged = state::onUserNameChanged,
-        passwordState = state.password.collectAsState().value,
         onPasswordChanged = state::onPasswordChanged,
-        showPassword = state.showPassword.collectAsState().value,
-        onTogglePasswordVisibility = state::onTogglePasswordVisibility,
-        verticalGap=verticalGap
     )
 }
 
@@ -49,61 +38,51 @@ fun LoginForm(
 fun LoginForm(
     fieldModifier: Modifier = Modifier,
     formModifier: Modifier = Modifier,
-    isHorizontal: Boolean,
-    userNameState: LabelLessTextFieldState,
+    data:LoginFormData,
     onUserNameChanged: (String) -> Unit,
-    passwordState: LabelLessTextFieldState,
     onPasswordChanged: (String) -> Unit,
-    showPassword: Boolean,
-    onTogglePasswordVisibility: () -> Unit,
-    verticalGap: Dp,
 ) {
-    if (isHorizontal) {
-        FormLayout(
-            eachRow1stChildMaxWidth = 200.dp,
-            modifier = formModifier,
-            verticalGap = verticalGap,
-            horizontalGap = 8.dp
-        ) {
-            Text(text = "User Name")
-            AuthInputField(
-                modifier = fieldModifier,
-                leadingIcon = Icons.Default.Person,
-                state = userNameState,
-                onValueChanged = onUserNameChanged
-            )
-            Text(text = "Password")
-            AuthInputField(
-                modifier = fieldModifier,
-                leadingIcon = Icons.Default.Lock,
-                state = passwordState,
-                onValueChanged = onPasswordChanged,
-                trailingIcon = if (showPassword) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                onTrailingIconClicked = onTogglePasswordVisibility,
-                visualTransformation = if (showPassword) null else PasswordVisualTransformation()
-            )
-        }
-
-    } else {
-        Column(fieldModifier) {
-            Text(text = "User Name")
-            AuthInputField(
-                modifier = fieldModifier,
-                leadingIcon = Icons.Default.Person,
-                state = userNameState,
-                onValueChanged = onUserNameChanged
-            )
-            Text(text = "Password")
-            AuthInputField(
-                modifier = fieldModifier,
-                leadingIcon = Icons.Default.Lock,
-                state = passwordState,
-                onValueChanged = onPasswordChanged,
-                trailingIcon = if (showPassword) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                onTrailingIconClicked = onTogglePasswordVisibility
-            )
-        }
-    }
+    LoginForm(
+        fieldModifier = fieldModifier,
+        formModifier = formModifier,
+        userName = data.username,
+        password = data.password,
+        onUserNameChanged=onUserNameChanged,
+        onPasswordChanged=onPasswordChanged
+    )
 
 }
 
+@Composable
+fun LoginForm(
+    fieldModifier: Modifier = Modifier,
+    formModifier: Modifier = Modifier,
+    userName: String,
+    onUserNameChanged: (String) -> Unit,
+    password: String,
+    onPasswordChanged: (String) -> Unit,
+) {
+    Column(
+        modifier = formModifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        AuthTextField(
+            modifier = fieldModifier,
+            label = RegistrationFormLabels.USER_NAME,
+            value = userName,
+            onValueChanged = onUserNameChanged,
+            keyboardType = KeyboardType.Text,
+            leadingIcon = Icons.Default.Person4,
+        )
+
+        AuthPasswordField(
+            modifier = fieldModifier,
+            label = RegistrationFormLabels.PASSWORD,
+            value = password,
+            onValueChanged = onPasswordChanged,
+        )
+
+    }
+
+
+}

@@ -23,17 +23,12 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.register.LoginSectionHeader
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 
@@ -81,7 +76,7 @@ fun LoginSection(
                 }
             },
             onPasswordResetRequest = onPasswordResetRequest,
-            state = viewModel.state
+            state = viewModel
         )
 
     }
@@ -91,7 +86,7 @@ fun LoginSection(
 @Composable
 fun LoginFieldsNControls(
     modifier: Modifier,
-    state: LoginFieldsState,
+    state: LoginViewModel,
     isHorizontal: Boolean,
     onRegisterRequest: () -> Unit,
     onPasswordResetRequest: () -> Unit,
@@ -110,7 +105,6 @@ fun LoginFieldsNControls(
 
             LoginForm(
                 modifier = Modifier.widthIn(max = 500.dp),
-                verticalGap = 8.dp,
                 state = state
             )
             Spacer(Modifier.height(16.dp))
@@ -198,4 +192,3 @@ fun VerticalSpacer() {
 
     )
 }
-//

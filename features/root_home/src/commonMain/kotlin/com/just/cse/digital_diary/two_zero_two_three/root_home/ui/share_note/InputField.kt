@@ -39,8 +39,8 @@ fun AuthTextField(
         ),
         value = state.value,
         errorMessage = state.errorMessage,
+        onTrailingIconClick =onTrailingIconClick,
         onValueChanged = onValueChanged,
-        onTrailingIconClick =onTrailingIconClick ,
         labelFieldLayout = { label, field ->
             if (isHorizontalOrientation) {
                 Row(
@@ -58,7 +58,8 @@ fun AuthTextField(
                 }
             }
 
-        }
+        },
+        modifier = Modifier
     )
 }
 

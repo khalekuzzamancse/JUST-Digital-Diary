@@ -1,37 +1,182 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.common
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldProperties
 import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldState
 import com.just.cse.digital_diary.features.common_ui.form.FormTextInput
-import kotlin.math.max
+import com.just.cse.digital_diary.features.common_ui.form.formInputFieldIcon
 
+@Composable
+fun AuthPasswordField(
+    modifier: Modifier,
+    label: String,
+    value: String,
+    onValueChanged: (String) -> Unit,
+    errorMessage: String? = null,
+    shape: Shape = TextFieldDefaults.shape,
+    color: TextFieldColors = TextFieldDefaults.colors(),
+) {
+    var showPassword by remember { mutableStateOf(true) }
+    val trailingIcon = if (showPassword) Icons.Default.Visibility else Icons.Default.VisibilityOff
+    val leadingIcon = remember { Icons.Default.Lock }
+    val keyboardType = remember { KeyboardType.Password }
+    val visualTransformation = if(showPassword)VisualTransformation.None else PasswordVisualTransformation()
+    val onTogglePassword: () -> Unit = remember {
+        { showPassword = !showPassword }
+    }
+
+    val content: @Composable ColumnScope.() -> Unit =
+        if (errorMessage == null) {
+            @Composable {
+                Text(text = label)
+                Spacer(Modifier.height(8.dp))
+                TextField(
+                    shape = shape,
+                    modifier = modifier,
+                    singleLine = true,
+                    value = value,
+                    onValueChange = onValueChanged,
+                    leadingIcon = formInputFieldIcon(icon = leadingIcon),
+                    trailingIcon = formInputFieldIcon(trailingIcon, onTogglePassword),
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
+                    visualTransformation = visualTransformation,
+                    colors = color,
+                )
+            }
+        } else {
+            @Composable {
+                Text(text = label)
+                Spacer(Modifier.height(8.dp))
+                TextField(
+                    shape = shape,
+                    modifier = modifier,
+                    singleLine = true,
+                    value = value,
+                    onValueChange = onValueChanged,
+                    leadingIcon = formInputFieldIcon(icon = leadingIcon),
+                    trailingIcon = formInputFieldIcon(trailingIcon, onTogglePassword),
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
+                    visualTransformation = visualTransformation,
+                    colors = color,
+                    isError = true,
+                    supportingText = {
+                        Text(
+                            text = errorMessage
+                        )
+                    },
+                )
+            }
+
+
+    }
+    Column(modifier = modifier) {
+        content()
+    }
+}
+
+@Composable
+fun AuthTextField(
+    modifier: Modifier,
+    label: String,
+    value: String,
+    leadingIcon: ImageVector?,
+    keyboardType: KeyboardType,
+    color: TextFieldColors = TextFieldDefaults.colors(),
+    shape: Shape = TextFieldDefaults.shape,
+    errorMessage: String? = null,
+    onValueChanged: (String) -> Unit,
+) {
+    val content: @Composable ColumnScope.() -> Unit = if (errorMessage == null) @Composable {
+        {
+            Text(text = label)
+            Spacer(Modifier.height(8.dp))
+            TextField(
+                shape = shape,
+                modifier = modifier,
+                value = value,
+                onValueChange = onValueChanged,
+                leadingIcon = formInputFieldIcon(icon = leadingIcon),
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
+                colors = color,
+            )
+
+        }
+    } else @Composable {
+        {
+            Text(text = label)
+            Spacer(Modifier.height(8.dp))
+            TextField(
+                shape = shape,
+                modifier = modifier,
+                value = value,
+                onValueChange = onValueChanged,
+                leadingIcon = formInputFieldIcon(icon = leadingIcon),
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
+                colors = color,
+                isError = true,
+                supportingText = {
+                    Text(
+                        text = errorMessage
+                    )
+                },
+            )
+        }
+
+    }
+    Column(modifier = modifier) {
+        content()
+    }
+
+
+}
 
 @Composable
 fun InputTextField(
+    modifier: Modifier = Modifier,
     properties: FormTextFieldProperties,
     state: FormTextFieldState,
     isHorizontalOrientation: Boolean,
-    labelMinWidth:Dp,
+    labelMinWidth: Dp,
     onValueChanged: (String) -> Unit,
-    onTrailingIconClick:()->Unit={},
+    onTrailingIconClick: () -> Unit = {},
 ) {
 
     FormTextInput(
+        modifier = Modifier,
         properties = properties.copy(
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Unspecified,
@@ -41,7 +186,7 @@ fun InputTextField(
         value = state.value,
         errorMessage = state.errorMessage,
         onValueChanged = onValueChanged,
-        onTrailingIconClick =onTrailingIconClick ,
+        onTrailingIconClick = onTrailingIconClick,
         labelFieldLayout = { label, field ->
             if (isHorizontalOrientation) {
                 Row(
@@ -49,72 +194,16 @@ fun InputTextField(
                 ) {
                     label(Modifier.defaultMinSize(minWidth = labelMinWidth))
                     Spacer(Modifier.width(4.dp))
-                    field(Modifier)
+                    field(Modifier.fillMaxWidth().background(Color.Blue))
                 }
             } else {
                 Column {
                     label(Modifier)
                     Spacer(Modifier.height(2.dp))
-                    field(Modifier)
+                    field(Modifier.fillMaxWidth().background(Color.Blue))
                 }
             }
 
         }
     )
-}
-
-@Composable
-private fun FormLayout(
-    eachRow1stChildMaxWidth: Dp,
-    verticalGap: Dp = 5.dp,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
-) {
-    Layout(
-        modifier = modifier, content = content
-    ) { measurables, constraints ->
-        val firstColumnChildMeasureAbles = measurables.filterIndexed { i, measurable -> i % 2 == 0 }
-        val secondColumnChildMeasureAbles =
-            measurables.filterIndexed { i, measurable -> i % 2 == 1 }
-        val eachRow1stChildConstraint = Constraints(
-            minWidth = 0,
-            minHeight = 0,
-            maxWidth = eachRow1stChildMaxWidth.toPx().toInt(),
-            maxHeight = Constraints.Infinity
-        )
-        val firstColumnChildPlaceAbles = firstColumnChildMeasureAbles.map { measurable ->
-            measurable.measure(eachRow1stChildConstraint)
-        }
-        //let gap between two column=5dp
-
-        val firstColumnWidth =
-            firstColumnChildPlaceAbles.maxOf { it.width + verticalGap.toPx().toInt() }
-        val secondColumnWidth = constraints.maxWidth - firstColumnWidth
-        val eachRowSecondChildConstraint = Constraints(
-            minWidth = secondColumnWidth,
-            minHeight = 0,
-            maxWidth = secondColumnWidth,
-            maxHeight = Constraints.Infinity
-        )
-        val secondColumnChildPlaceAbles = secondColumnChildMeasureAbles.map { measurable ->
-            measurable.measure(eachRowSecondChildConstraint)
-        }
-        val layoutHeight = max(
-            firstColumnChildPlaceAbles.sumOf { it.height },
-            secondColumnChildPlaceAbles.sumOf { it.height }
-        )
-        layout(constraints.maxWidth, layoutHeight) {
-            var y = 0;
-            firstColumnChildPlaceAbles.forEachIndexed { i, label ->
-                val textField = secondColumnChildPlaceAbles[i]
-                val rowHeight = max(label.height, textField.height)
-                val eachRow1stChildMoveDown = (rowHeight - label.height) / 2
-                val eachRow2ndChildMoveDown = (rowHeight - textField.height) / 2
-                label.placeRelative(0, y + eachRow1stChildMoveDown)
-                textField.placeRelative(firstColumnWidth, y + eachRow2ndChildMoveDown)
-                y += rowHeight
-            }
-
-        }
-    }
 }

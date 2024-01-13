@@ -183,6 +183,7 @@ fun CreateNoteTextField(
                 field(Modifier)
             }
 
-        }
+        },
+        modifier = Modifier
     )
 }

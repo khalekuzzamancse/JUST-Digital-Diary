@@ -3,6 +3,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import com.just.cse.digital_diary.two_zero_two_three.root_home.RootModule
@@ -10,8 +11,10 @@ import com.just.cse.digital_diary.two_zero_two_three.root_home.RootModule
 
 fun main() {
     application {
-        val state= remember { WindowState() }
-        state.size= DpSize(width = 500.dp, height =650.dp)
+        val state= remember { WindowState(
+            position = WindowPosition(0.dp, 0.dp),
+        ) }
+        state.size= DpSize(width = 500.dp, height =700.dp)
         Window(
             state=state,
             title = "Compose Desktop",

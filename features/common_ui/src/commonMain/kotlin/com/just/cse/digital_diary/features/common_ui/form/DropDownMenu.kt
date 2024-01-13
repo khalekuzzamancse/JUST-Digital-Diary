@@ -38,56 +38,16 @@ import androidx.compose.ui.unit.toSize
 fun MyDropDownMenu(
     modifier: Modifier = Modifier,
     options: List<String>,
-    isHorizontalOrientation: Boolean,
     selected: String,
-    labelMinWidth: Dp,
     leadingIcon: ImageVector? = null,
     onOptionSelected: (String) -> Unit,
 ) {
-    val properties by remember {
-        mutableStateOf(
-            FormTextFieldProperties(
-                label = "Department",
-                trailingIcon = Icons.Default.ArrowDropDown
-            )
-        )
-    }
 
-
-    if (isHorizontalOrientation) {
-        Row(
-            modifier,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = properties.label, modifier = Modifier.defaultMinSize(
-                    minWidth = labelMinWidth
-                )
-            )
-            Spacer(Modifier.width(4.dp))
-            MyDrop(
-                options = options,
-                selected = selected, onOptionSelected = onOptionSelected,
-                leadingIcon = leadingIcon
-            )
-        }
-    } else {
-        Column(modifier) {
-            Text(
-                text = properties.label,
-            )
-            Spacer(Modifier.height(8.dp))
-            MyDrop(
-                options = options,
-                selected = selected, onOptionSelected = onOptionSelected,
-                leadingIcon = leadingIcon
-            )
-        }
-    }
 }
 
 @Composable
-private fun MyDrop(
+fun MyDrop(
+    modifier: Modifier,
     options: List<String>,
     leadingIcon: ImageVector? = null,
     selected: String,
@@ -100,9 +60,10 @@ private fun MyDrop(
 
     Box {
         TextField(
-            modifier =Modifier.onGloballyPositioned { coordinates ->
+            modifier =modifier.onGloballyPositioned { coordinates ->
                 textFieldSize = coordinates.size.toSize()
             },
+            readOnly = true,
             value = selected,
             onValueChange = onOptionSelected,
             trailingIcon = {

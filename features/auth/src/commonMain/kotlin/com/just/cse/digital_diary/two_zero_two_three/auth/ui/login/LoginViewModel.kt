@@ -4,13 +4,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    val scope: CoroutineScope,
-
-    ) {
-    val state = LoginFieldsState()
+    val scope: CoroutineScope
+) {
     private val _showProcessBar = MutableStateFlow(false)
     val showProcessBar = _showProcessBar.asStateFlow()
     private val _screenMessage = MutableStateFlow<String?>(null)
@@ -46,12 +45,9 @@ class LoginViewModel(
     }
 
     suspend fun  onLoginRequest(): Boolean {
-        val username = state.userName.value.value
-        val password = state.password.value.value
-        log("username: $username password: $password")
         _showProcessBar.value=true
         delay(2000)
-        val success = username == "abc" && password == "123"
+        val success = data.value.username == "abc" &&data.value. password == "123"
         if (success) {
             onLoginSuccess()
         } else {
@@ -67,6 +63,16 @@ class LoginViewModel(
         updateScreenMessage("Login failed,put username=abc,password=123")
     }
 
-
+    private val _data = MutableStateFlow(
+        LoginFormData()
+    )
+    val data=_data.asStateFlow()
+    fun onUserNameChanged(username: String) {
+        _data.update { it.copy(username = username) }
+    }
+    fun onPasswordChanged(password: String) {
+        _data.update { it.copy(password = password) }
+    }
 
 }
+

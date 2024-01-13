@@ -1,5 +1,6 @@
 package com.just.cse.digital_diary.features.common_ui.form
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -45,34 +46,6 @@ data class FormTextFieldProperties(
 )
 
 
-@Composable
-fun FormTextInputPreview() {
-    val properties = FormTextFieldProperties(
-        singleLine = true,
-        label = "Username",
-        leadingIcon = Icons.Default.Person,
-        colors = TextFieldDefaults.colors(
-            focusedIndicatorColor = Color.Unspecified,
-            unfocusedIndicatorColor =Color.Unspecified,
-        )
-    )
-
-    FormTextInput(
-        properties = properties,
-        value = "JohnDoe",
-        onValueChanged = {},
-        labelFieldLayout = {label,field->
-            Column (
-                modifier = Modifier.padding(4.dp)
-            ){
-                label(Modifier)
-                Spacer(Modifier.height(2.dp))
-                field(Modifier)
-            }
-        },
-        onTrailingIconClick = {}
-    )
-}
 
 
 @Composable
@@ -105,14 +78,17 @@ fun FormTextInput(
 
 @Composable
 fun FormTextInput(
+    modifier: Modifier,
     properties: FormTextFieldProperties,
     value: String,
     errorMessage: String? = null,
     onTrailingIconClick: () -> Unit = {},
     onValueChanged: (String) -> Unit,
-    labelFieldLayout: @Composable (@Composable (Modifier) -> Unit, @Composable (Modifier) -> Unit) -> Unit
+    labelFieldLayout: @Composable (@Composable (Modifier) -> Unit, @Composable (Modifier) -> Unit) -> Unit,
+
 ) {
     FormTextInput(
+        modifier=modifier,
         shape = properties.shape?:MaterialTheme.shapes.medium,
         color = properties.colors?:TextFieldDefaults.colors(),
         label = properties.label,
@@ -193,6 +169,7 @@ fun FormTextInput(
 
 @Composable
 fun FormTextInput(
+    modifier: Modifier,
     label: String,
     value: String,
     singleLine: Boolean = true,
@@ -200,10 +177,10 @@ fun FormTextInput(
     errorMessage: String? = null,
     leadingIcon: ImageVector? = null,
     trailingIcon: ImageVector? = null,
-    shape: Shape =MaterialTheme.shapes.medium,
+    shape: Shape = MaterialTheme.shapes.medium,
     keyboardType: KeyboardType = KeyboardType.Text,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    color:TextFieldColors=TextFieldDefaults.colors(),
+    color: TextFieldColors = TextFieldDefaults.colors(),
     onTrailingIconClick: () -> Unit = {},
     onValueChanged: (String) -> Unit,
     labelFieldLayout: @Composable (@Composable (Modifier) -> Unit, @Composable (Modifier) -> Unit) -> Unit
@@ -216,7 +193,7 @@ fun FormTextInput(
             if(errorMessage==null){
                 TextField(
                     shape=shape,
-                    modifier = mod,
+                    modifier = mod.fillMaxWidth(),
                     singleLine = singleLine,
                     value = value,
                     onValueChange = onValueChanged,
@@ -234,7 +211,7 @@ fun FormTextInput(
             else{
                 TextField(
                     shape=shape,
-                    modifier = mod,
+                    modifier = mod.fillMaxWidth().background(Color.Blue),
                     singleLine = singleLine,
                     value = value,
                     onValueChange = onValueChanged,
