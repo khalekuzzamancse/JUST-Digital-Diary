@@ -8,14 +8,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class RegistrationFormData(
-    val name: String="",
-    val email: String = "",
-    val username: String = "",
-    val dept:String="",
-    val password: String = "",
-    val confirmPassword: String = ""
-)
 
 class RegistrationViewModel(
     val scope: CoroutineScope

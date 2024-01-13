@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
@@ -53,7 +52,7 @@ class ListOfDepartments(
         }
         val currentDestinationIndex = viewModel.selectedSectionIndex.collectAsState().value
         ModalDrawerDecorator(
-            drawerController=drawerController,
+            drawerState=drawerController,
             destinations = destinations,
             selectedDesertionIndex = currentDestinationIndex,
             onDestinationSelected = { index ->

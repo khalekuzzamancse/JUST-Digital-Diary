@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.common_ui.nav_rail
+package com.just.cse.digital_diary.features.common_ui.navigation.nav_rail
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi

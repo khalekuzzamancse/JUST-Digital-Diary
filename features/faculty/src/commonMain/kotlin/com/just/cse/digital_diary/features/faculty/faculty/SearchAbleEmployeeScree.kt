@@ -16,7 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.features.common_ui.bottom_navigation.BottomNavigationBar
+import com.just.cse.digital_diary.features.common_ui.navigation.bottom_navigation.BottomNavigationBar
 import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
 import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.AnimateVisibilityDecorator
 import com.just.cse.digital_diary.features.common_ui.search_bar.SearchDecorator

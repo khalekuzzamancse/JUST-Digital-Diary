@@ -28,9 +28,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldProperties
-import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldState
-import com.just.cse.digital_diary.features.common_ui.form.FormTextInput
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -67,95 +64,95 @@ class CreateNoteScreen: Screen {
 fun CreateNoteDestination(
     onBackArrowClick: () -> Unit = {},
 ) {
-    val uiState = remember {
-        NoteCreationState()
-    }
-
-    val properties = remember {
-        FormTextFieldProperties(
-            label = "Title",
-        )
-    }
-
-
-    var state by remember {
-        mutableStateOf(
-            FormTextFieldState()
-        )
-    }
-    val onValueChanged: (String) -> Unit = {
-        state = state.copy(
-            value = it,
-        )
-    }
-
-    AuthTextField(
-        properties = properties,
-        state = state,
-        onValueChanged = onValueChanged,
-        isHorizontalOrientation = false,
-        labelMinWidth = 100.dp
-    )
-
-    val title = "New Note"
-
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = title)
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBackArrowClick) {
-                        Icon(Icons.Filled.ArrowBack, null)
-                    }
-                },
-                actions = {
-
-                },
-            )
-        },
-        floatingActionButtonPosition = FabPosition.Center,
-        floatingActionButton = {
-            Button(onClick = {
-
-            }) {
-                Text(text = "Create Note")
-            }
-
-
-        }
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize()
-        ) {
-
-            Column(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxSize()
-            ) {
-                CreateNoteTextField(
-                    label = "Title",
-                    text = uiState.title.collectAsState().value,
-                    onValueChanged = uiState::onTitleChanged,
-                    singleLine = true
-                )
-                Spacer(Modifier.height(16.dp))
-                CreateNoteTextField(
-                    label = "Description",
-                    onValueChanged = uiState::onDescriptionChanged,
-                    text = uiState.description.collectAsState().value
-                )
-
-            }
-
-        }
-
-    }
+//    val uiState = remember {
+//        NoteCreationState()
+//    }
+//
+//    val properties = remember {
+//        FormTextFieldProperties(
+//            label = "Title",
+//        )
+//    }
+//
+//
+//    var state by remember {
+//        mutableStateOf(
+//            FormTextFieldState()
+//        )
+//    }
+//    val onValueChanged: (String) -> Unit = {
+//        state = state.copy(
+//            value = it,
+//        )
+//    }
+//
+//    AuthTextField(
+//        properties = properties,
+//        state = state,
+//        onValueChanged = onValueChanged,
+//        isHorizontalOrientation = false,
+//        labelMinWidth = 100.dp
+//    )
+//
+//    val title = "New Note"
+//
+//
+//    Scaffold(
+//        topBar = {
+//            TopAppBar(
+//                title = {
+//                    Text(text = title)
+//                },
+//                navigationIcon = {
+//                    IconButton(onClick = onBackArrowClick) {
+//                        Icon(Icons.Filled.ArrowBack, null)
+//                    }
+//                },
+//                actions = {
+//
+//                },
+//            )
+//        },
+//        floatingActionButtonPosition = FabPosition.Center,
+//        floatingActionButton = {
+//            Button(onClick = {
+//
+//            }) {
+//                Text(text = "Create Note")
+//            }
+//
+//
+//        }
+//    ) {
+//        Box(
+//            modifier = Modifier
+//                .padding(it)
+//                .fillMaxSize()
+//        ) {
+//
+//            Column(
+//                modifier = Modifier
+//                    .padding(8.dp)
+//                    .fillMaxSize()
+//            ) {
+//                CreateNoteTextField(
+//                    label = "Title",
+//                    text = uiState.title.collectAsState().value,
+//                    onValueChanged = uiState::onTitleChanged,
+//                    singleLine = true
+//                )
+//                Spacer(Modifier.height(16.dp))
+//                CreateNoteTextField(
+//                    label = "Description",
+//                    onValueChanged = uiState::onDescriptionChanged,
+//                    text = uiState.description.collectAsState().value
+//                )
+//
+//            }
+//
+//        }
+//
+//    }
 }
 
 @Composable
@@ -165,25 +162,25 @@ fun CreateNoteTextField(
     text: String,
     onValueChanged: (String) -> Unit,
 ) {
-    FormTextInput(
-        properties = FormTextFieldProperties(
-            label = label,
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Unspecified,
-                unfocusedContainerColor = Color.Unspecified
-            ),
-            singleLine = singleLine
-        ),
-        value = text,
-        onValueChanged = onValueChanged,
-        labelFieldLayout = { label1, field ->
-            Column {
-                label1(Modifier)
-                Spacer(Modifier.height(2.dp))
-                field(Modifier)
-            }
-
-        },
-        modifier = Modifier
-    )
+//    FormTextInput(
+//        properties = FormTextFieldProperties(
+//            label = label,
+//            colors = TextFieldDefaults.colors(
+//                focusedContainerColor = Color.Unspecified,
+//                unfocusedContainerColor = Color.Unspecified
+//            ),
+//            singleLine = singleLine
+//        ),
+//        value = text,
+//        onValueChanged = onValueChanged,
+//        labelFieldLayout = { label1, field ->
+//            Column {
+//                label1(Modifier)
+//                Spacer(Modifier.height(2.dp))
+//                field(Modifier)
+//            }
+//
+//        },
+//        modifier = Modifier
+//    )
 }

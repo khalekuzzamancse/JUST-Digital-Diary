@@ -32,75 +32,6 @@ data class NavGroupSelectedItem(
 )
 
 
-@Composable
-fun <T>DrawerSheet(
-    header: (@Composable () -> Unit)? = null,
-    footer: (@Composable () -> Unit)? = null,
-    destinations: List<NavigationItem<T>>,
-    destinationDecorator: @Composable (index: Int) -> Unit,
-) {
-    ModalDrawerSheet(
-        modifier = Modifier,
-    ) {
-        LazyColumn(
-            modifier = Modifier,
-        ) {
-            if (header != null) {
-                item {
-                    header()
-                }
-            }
-                itemsIndexed(destinations) {index,_->
-                    destinationDecorator(index)
-                }
-            if (footer != null) {
-                item {
-                    footer()
-                }
-            }
-        }
-
-    }
-
-}
-
-@Composable
-fun DrawerSheet(
-    header: (@Composable () -> Unit)? = null,
-    footer: (@Composable () -> Unit)? = null,
-    groups: List<NavigationGroup>,
-    groupDecorator: @Composable (Int) -> Unit,
-    itemDecorator: @Composable (groupIndex: Int, index: Int) -> Unit,
-) {
-    ModalDrawerSheet(
-        modifier = Modifier,
-    ) {
-        LazyColumn(
-            modifier = Modifier,
-        ) {
-            if (header != null) {
-                item {
-                    header()
-                }
-            }
-            groups.forEachIndexed { groupIndex, group ->
-                item {
-                    groupDecorator(groupIndex)
-                }
-                itemsIndexed(group.members) { index, _ ->
-                    itemDecorator(groupIndex, index)
-                }
-            }
-            if (footer != null) {
-                item {
-                    footer()
-                }
-            }
-        }
-
-    }
-
-}
 
 
 
@@ -113,6 +44,7 @@ fun ModalDrawer(
 ) {
     AnimateVisibilityDecorator{
         ModalNavigationDrawer(
+            gesturesEnabled = true,
             modifier = modifier,
             drawerState = drawerState,
             drawerContent = sheet,

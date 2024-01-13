@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.common_ui.bottom_navigation
+package com.just.cse.digital_diary.features.common_ui.navigation.bottom_navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold

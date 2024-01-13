@@ -1,15 +1,10 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.common
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
@@ -25,20 +20,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldProperties
-import com.just.cse.digital_diary.features.common_ui.form.FormTextFieldState
-import com.just.cse.digital_diary.features.common_ui.form.FormTextInput
-import com.just.cse.digital_diary.features.common_ui.form.formInputFieldIcon
+
 
 @Composable
 fun AuthPasswordField(
@@ -54,7 +43,8 @@ fun AuthPasswordField(
     val trailingIcon = if (showPassword) Icons.Default.Visibility else Icons.Default.VisibilityOff
     val leadingIcon = remember { Icons.Default.Lock }
     val keyboardType = remember { KeyboardType.Password }
-    val visualTransformation = if(showPassword)VisualTransformation.None else PasswordVisualTransformation()
+    val visualTransformation =
+        if (showPassword) VisualTransformation.None else PasswordVisualTransformation()
     val onTogglePassword: () -> Unit = remember {
         { showPassword = !showPassword }
     }
@@ -70,8 +60,14 @@ fun AuthPasswordField(
                     singleLine = true,
                     value = value,
                     onValueChange = onValueChanged,
-                    leadingIcon = formInputFieldIcon(icon = leadingIcon),
-                    trailingIcon = formInputFieldIcon(trailingIcon, onTogglePassword),
+                    leadingIcon = {
+                        Icon(imageVector = leadingIcon, contentDescription = null)
+                    },
+                    trailingIcon ={
+                        Icon(imageVector = leadingIcon, contentDescription = null,modifier=Modifier.clickable {
+                            onTogglePassword()
+                        })
+                    },
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
                     visualTransformation = visualTransformation,
                     colors = color,
@@ -87,8 +83,14 @@ fun AuthPasswordField(
                     singleLine = true,
                     value = value,
                     onValueChange = onValueChanged,
-                    leadingIcon = formInputFieldIcon(icon = leadingIcon),
-                    trailingIcon = formInputFieldIcon(trailingIcon, onTogglePassword),
+                    leadingIcon = {
+                        Icon(imageVector = leadingIcon, contentDescription = null)
+                    },
+                    trailingIcon ={
+                        Icon(imageVector = leadingIcon, contentDescription = null,modifier=Modifier.clickable {
+                            onTogglePassword()
+                        })
+                    },
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
                     visualTransformation = visualTransformation,
                     colors = color,
@@ -102,7 +104,7 @@ fun AuthPasswordField(
             }
 
 
-    }
+        }
     Column(modifier = modifier) {
         content()
     }
@@ -129,7 +131,12 @@ fun AuthTextField(
                 modifier = modifier,
                 value = value,
                 onValueChange = onValueChanged,
-                leadingIcon = formInputFieldIcon(icon = leadingIcon),
+                leadingIcon = {
+                    if (leadingIcon != null) {
+                        Icon(imageVector = leadingIcon, contentDescription = null)
+                    }
+                },
+
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
                 colors = color,
             )
@@ -144,7 +151,12 @@ fun AuthTextField(
                 modifier = modifier,
                 value = value,
                 onValueChange = onValueChanged,
-                leadingIcon = formInputFieldIcon(icon = leadingIcon),
+                leadingIcon = {
+                    if (leadingIcon != null) {
+                        Icon(imageVector = leadingIcon, contentDescription = null)
+                    }
+                },
+
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
                 colors = color,
                 isError = true,
@@ -162,48 +174,4 @@ fun AuthTextField(
     }
 
 
-}
-
-@Composable
-fun InputTextField(
-    modifier: Modifier = Modifier,
-    properties: FormTextFieldProperties,
-    state: FormTextFieldState,
-    isHorizontalOrientation: Boolean,
-    labelMinWidth: Dp,
-    onValueChanged: (String) -> Unit,
-    onTrailingIconClick: () -> Unit = {},
-) {
-
-    FormTextInput(
-        modifier = Modifier,
-        properties = properties.copy(
-            colors = TextFieldDefaults.colors(
-                focusedIndicatorColor = Color.Unspecified,
-                unfocusedIndicatorColor = Color.Unspecified
-            ),
-        ),
-        value = state.value,
-        errorMessage = state.errorMessage,
-        onValueChanged = onValueChanged,
-        onTrailingIconClick = onTrailingIconClick,
-        labelFieldLayout = { label, field ->
-            if (isHorizontalOrientation) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    label(Modifier.defaultMinSize(minWidth = labelMinWidth))
-                    Spacer(Modifier.width(4.dp))
-                    field(Modifier.fillMaxWidth().background(Color.Blue))
-                }
-            } else {
-                Column {
-                    label(Modifier)
-                    Spacer(Modifier.height(2.dp))
-                    field(Modifier.fillMaxWidth().background(Color.Blue))
-                }
-            }
-
-        }
-    )
 }

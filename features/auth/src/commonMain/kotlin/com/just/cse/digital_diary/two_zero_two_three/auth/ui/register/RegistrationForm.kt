@@ -40,7 +40,14 @@ fun RegistrationForm(
     )
 
 }
-
+data class RegistrationFormData(
+    val name: String="",
+    val email: String = "",
+    val username: String = "",
+    val dept:String="",
+    val password: String = "",
+    val confirmPassword: String = ""
+)
 
 object RegistrationFormLabels {
     const val FULL_NAME = "Full Name"

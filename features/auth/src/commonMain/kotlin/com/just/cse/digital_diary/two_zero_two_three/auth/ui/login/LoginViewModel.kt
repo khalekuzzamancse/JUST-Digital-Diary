@@ -47,7 +47,7 @@ class LoginViewModel(
     suspend fun  onLoginRequest(): Boolean {
         _showProcessBar.value=true
         delay(2000)
-        val success = data.value.username == "abc" &&data.value. password == "123"
+        val success = data.value.username.trim().trimEnd() == "abc" &&data.value. password.trim().trimEnd() == "123"
         if (success) {
             onLoginSuccess()
         } else {
@@ -64,7 +64,9 @@ class LoginViewModel(
     }
 
     private val _data = MutableStateFlow(
-        LoginFormData()
+        LoginFormData(
+            username = "abc", password = "123"
+        )
     )
     val data=_data.asStateFlow()
     fun onUserNameChanged(username: String) {

@@ -4,22 +4,38 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ModalDrawerState(
     private val scope: CoroutineScope,
 ) {
-    val drawerState = DrawerState(DrawerValue.Closed)
+    val drawerState = MutableStateFlow(DrawerState(DrawerValue.Closed))
+    private val _drawerOpened=MutableStateFlow(false)
+    val drawerOpened=_drawerOpened.asStateFlow()
+    init {
+
+        scope.launch {
+            openDrawer()
+            delay(2000)
+            closeDrawer()
+        }
+    }
+
 
     fun openDrawer() {
         scope.launch {
-            drawerState.open()
+            drawerState.value =DrawerState(DrawerValue.Open)
+            _drawerOpened.value=true
+
         }
     }
 
     fun closeDrawer() {
         scope.launch {
-            drawerState.close()
+            drawerState.value =DrawerState(DrawerValue.Closed)
+            _drawerOpened.value=false
         }
     }
 }

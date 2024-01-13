@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.features.common_ui.bottom_navigation.BottomNavigationBar
+import com.just.cse.digital_diary.features.common_ui.navigation.bottom_navigation.BottomNavigationBar
 import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
 
 @Composable

@@ -1,21 +1,17 @@
 package com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.sheet
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.features.common_ui.navigation.NavigationGroup
 import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
-import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.DrawerSheet
 import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.NavGroupSelectedItem
-
-
 @Composable
 fun <T>Sheet(
     selectedDestinationIndex: Int =-1,
+    visibilityDelay:Long,
     destinations: List<NavigationItem<T>>,
     onDestinationSelected: (index: Int) -> Unit
 ) {
@@ -31,23 +27,16 @@ fun <T>Sheet(
         destinations = destinations,
         destinationDecorator = { index ->
             val navigationItem=destinations[index]
-            NavigationDrawerItem(
-                modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
-                icon = {
-                    Icon(
-                        navigationItem.unFocusedIcon,
-                        contentDescription = null
-                    )
-                },
-                label = {
-                    Text(
-                        text = navigationItem.label,
+            ItemDecorator(
+                visibilityDelay = index*visibilityDelay,
+                navigationItem=navigationItem,
+                isSelected= index==selectedDestinationIndex ,
+                onClick = {
+                    onDestinationSelected(index)
+                }
 
-                        )
-                },
-                selected = index==selectedDestinationIndex ,
-                onClick = { onDestinationSelected(index) },
             )
+
         }
     )
 
@@ -88,14 +77,14 @@ fun Sheet(
 
             groups.getOrNull(groupIndex)?.let { group ->
                 group.members.getOrNull(itemIndex)?.let { navigationItem ->
-                 ItemDecorator(
-                     navigationItem=navigationItem,
-                     isSelected=isSelected,
-                     onClick = {
-                         onItemClicked(groupIndex, itemIndex)
-                     }
+                    ItemDecorator(
+                        navigationItem=navigationItem,
+                        isSelected=isSelected,
+                        onClick = {
+                            onItemClicked(groupIndex, itemIndex)
+                        }
 
-                 )
+                    )
 
                 }
             }
@@ -105,3 +94,76 @@ fun Sheet(
 
 
 }
+@Composable
+fun <T>DrawerSheet(
+    header: (@Composable () -> Unit)? = null,
+    footer: (@Composable () -> Unit)? = null,
+    destinations: List<NavigationItem<T>>,
+    destinationDecorator: @Composable (index: Int) -> Unit,
+) {
+    ModalDrawerSheet(
+        modifier = Modifier,
+    ) {
+        LazyColumn(
+            modifier = Modifier,
+        ) {
+            if (header != null) {
+                item {
+                    header()
+                }
+            }
+            itemsIndexed(
+                items = destinations,
+                ) {index,_->
+                destinationDecorator(index)
+            }
+            if (footer != null) {
+                item {
+                    footer()
+                }
+            }
+        }
+
+    }
+
+}
+
+@Composable
+fun DrawerSheet(
+    header: (@Composable () -> Unit)? = null,
+    footer: (@Composable () -> Unit)? = null,
+    groups: List<NavigationGroup>,
+    groupDecorator: @Composable (Int) -> Unit,
+    itemDecorator: @Composable (groupIndex: Int, index: Int) -> Unit,
+) {
+    ModalDrawerSheet(
+        modifier = Modifier,
+    ) {
+        LazyColumn(
+            modifier = Modifier,
+        ) {
+            if (header != null) {
+                item {
+                    header()
+                }
+            }
+            groups.forEachIndexed { groupIndex, group ->
+                item {
+                    groupDecorator(groupIndex)
+                }
+                itemsIndexed(group.members) { index, _ ->
+                    itemDecorator(groupIndex, index)
+                }
+            }
+            if (footer != null) {
+                item {
+                    footer()
+                }
+            }
+        }
+
+    }
+
+}
+
+
