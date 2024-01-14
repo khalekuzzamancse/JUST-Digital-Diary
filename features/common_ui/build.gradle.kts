@@ -30,6 +30,8 @@ kotlin {
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.kamel)
                 implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(project(":features:repository"))
+
             }
         }
 //        val androidMain by getting{
@@ -54,3 +56,4 @@ android {
     }
 
 }
+

@@ -28,7 +28,6 @@ kotlin {
                 implementation(libs.voyager.transitions)
                 implementation(project(":features:repository"))
                 implementation(project(":features:department_info"))
-                implementation(project(":features:departments"))
                 implementation(project(":features:common_ui"))
 
             }
@@ -48,7 +47,7 @@ kotlin {
 
 }
 android {
-    namespace = "com.just.cse.digital_diary.features.faculty"
+    namespace = "com.just.cse.digital_diary.features.departments"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

@@ -56,25 +56,6 @@ val employees = listOf(
 )
 
 
-fun generateDummyEmployeeList(numberOfEmployees: Int): List<Employee> {
-    val employeeNames = listOf("John", "Jane", "Bob", "Alice", "Eva", "David", "Emily", "Michael", "Olivia", "Daniel")
-    val departmentNames = listOf("IT", "HR", "Marketing", "Finance", "Engineering", "Sales")
-
-    return List(numberOfEmployees) {
-        Employee(
-            name = employeeNames.random(),
-            email = "example${it + 1}@company.com",
-            additionalEmail = "additional${it + 1}@company.com",
-            profileImageLink = "https://example.com/image${it + 1}.png",
-            achievements = "Achievements for Employee $it",
-            phone = "+1 555-1234-${String.format("%04d", it)}",
-            designations = "Designation $it",
-            deptName = departmentNames.random(),
-            deptSortName = "DeptSort$it",
-            roomName = "Room$it"
-        )
-    }
-}
 
 
 
