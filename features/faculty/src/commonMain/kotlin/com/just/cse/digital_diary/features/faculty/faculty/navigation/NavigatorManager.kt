@@ -35,28 +35,14 @@ internal class NavigatorManager(
         push(
             DepartmentListModuleEntryPoint(
                 facultyId = facultyId,
-                onExitRequest ={
-                    /*
-                    FacultyList has bottom sheet,sheet is cashing crash when pop back
-                    fix it later,that is why we directly jump to a screen that has no bottom sheet
-                     */
-                       navigator?.popUntilRoot()
-
-
-                }
+                onExitRequest =::pop
             )
         )
     }
     fun navigateSearchDestination() {
         push(
             SearchScreen(
-                onExitRequest ={
-                    /*
-                    FacultyList has bottom sheet,sheet is cashing crash when pop back
-                    fix it later,that is why we directly jump to a screen that has no bottom sheet
-                     */
-                    navigator?.pop()
-                }
+                onExitRequest =::pop
             )
         )
     }

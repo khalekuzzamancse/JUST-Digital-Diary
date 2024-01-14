@@ -34,21 +34,13 @@ internal class NavigatorManager(
     fun navigateDepartmentInfoModule(departmentId: String) {
         push(DepartmentModule(
             departmentId=departmentId,
-            onExitRequest = {
-                /*
-             FacultyList has bottom sheet,sheet is cashing crash when pop back
-             fix it later,that is why we directly jump to a screen that has no bottom sheet
-             */
-                navigator?.popUntilRoot()
-            }
+            onExitRequest = ::pop
         ))
     }
     fun navigateSearchDestination() {
         push(
             SearchScreen(
-                onExitRequest ={
-                    navigator?.pop()
-                }
+                onExitRequest =::pop
             )
         )
     }

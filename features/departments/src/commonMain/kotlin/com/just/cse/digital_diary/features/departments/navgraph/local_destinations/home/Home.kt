@@ -49,12 +49,21 @@ internal fun HomeDestination(
             else sheetState.expand()
         }
     }
+    val hideBottomSheet: () -> Unit = {
+
+        sheetVisible=!sheetVisible
+        scope.launch {
+            sheetState.hide()
+        }
+    }
 
     BottomSheetNavigation(
         visibilityDelay = 0L,
         destinations = destinations,
         selectedDesertionIndex = currentDestinationIndex,
         onDestinationSelected = {
+            //to avoid crash hide the sheet
+            hideBottomSheet()
             viewModel.onSectionSelected(it)
             onDepartmentSelected(departments[it])
         },
@@ -65,7 +74,11 @@ internal fun HomeDestination(
                 onNavigationIconClick = onExitRequest,
                 onToggleBottomSheet = onToggleBottomSheet,
                 sheetVisible = sheetVisible,
-                onSearchRequest =onSearchRequested
+                onSearchRequest ={
+                    //to avoid crash hide the sheet
+                    hideBottomSheet()
+                    onSearchRequested()
+                }
             )
         },
         content = content
