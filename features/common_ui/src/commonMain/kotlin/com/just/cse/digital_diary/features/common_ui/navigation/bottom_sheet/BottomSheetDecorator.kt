@@ -28,6 +28,7 @@ fun BottomSheetDecorator(
     BottomSheetScaffold(
         sheetShadowElevation = 8.dp,
         topBar = topBar,
+        sheetPeekHeight = 0.dp,
         scaffoldState = scaffoldState,
         sheetContent = {
                 sheetContent()

@@ -1,6 +1,7 @@
 package com.just.cse.digital_diary.features.departments.navgraph.local_destinations.home
 
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -10,7 +11,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.features.common_ui.navigation.bottom_sheet.BottomSheetDecorator
 import com.just.cse.digital_diary.features.common_ui.navigation.bottom_sheet.BottomSheetNavigation
+import com.just.cse.digital_diary.features.departments.navgraph.local_destinations.home.bottom_sheet.AnimatedBottomSheet
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.Department
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.FacultyInfo
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,31 +60,36 @@ internal fun HomeDestination(
         }
     }
 
-    BottomSheetNavigation(
-        visibilityDelay = 0L,
-        destinations = destinations,
-        selectedDesertionIndex = currentDestinationIndex,
-        onDestinationSelected = {
-            //to avoid crash hide the sheet
-            hideBottomSheet()
-            viewModel.onSectionSelected(it)
-            onDepartmentSelected(departments[it])
-        },
-        sheetState = sheetState,
+    BottomSheetDecorator(
         topBar = {
             HomeTopBar(
-                title = "Departments  Info",
+                title = "Departments Info",
                 onNavigationIconClick = onExitRequest,
                 onToggleBottomSheet = onToggleBottomSheet,
                 sheetVisible = sheetVisible,
-                onSearchRequest ={
-                    //to avoid crash hide the sheet
+                onSearchRequest = {
+                    //hide the sheet to causes crash
                     hideBottomSheet()
                     onSearchRequested()
                 }
             )
         },
-        content = content
+        sheetState = sheetState,
+        sheetContent = {
+            if (sheetState.currentValue!= SheetValue.Hidden){
+                AnimatedBottomSheet(
+                    visible = sheetVisible,
+                    selectedIndex=currentDestinationIndex,
+                    faculties=departments,
+                    onFacultyClick = {
+                        //hide the sheet to avoid crash
+                        hideBottomSheet()
+                        viewModel.onSectionSelected(it)
+                        onDepartmentSelected(departments[it])
+                    }
+                )
+            }
+        }, content = content
     )
 
 }

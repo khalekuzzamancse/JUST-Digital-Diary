@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.just.cse.digital_diary.features.common_ui.navigation.bottom_sheet.BottomSheetDecorator
+import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home.bottom_sheet.AnimatedBottomSheet
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.FacultyInfo
 import kotlinx.coroutines.launch
 
@@ -38,10 +39,11 @@ internal fun HomeDestination(
     }
     val onToggleBottomSheet: () -> Unit = {
         scope.launch {
-            sheetVisible = if(sheetState.currentValue!=SheetValue.Hidden){
+            sheetVisible = if(sheetState.currentValue==SheetValue.Expanded||sheetState.currentValue==SheetValue.PartiallyExpanded){
                 hideBottomSheet()
                 false
-            } else{
+            }
+            else{
                 sheetState.expand()
                 true
             }
@@ -65,17 +67,19 @@ internal fun HomeDestination(
         },
         sheetState = sheetState,
         sheetContent = {
-            BottomSheet(
-                visible = sheetVisible,
-                currentDestinationIndex=currentDestinationIndex,
-                faculties=faculties,
-                onItemClick = {
-                    //hide the sheet to avoid crash
-                    hideBottomSheet()
-                    viewModel.onSectionSelected(it)
-                    onFacultySelected(faculties[it])
-                }
-            )
+            if (sheetState.currentValue!=SheetValue.Hidden){
+                AnimatedBottomSheet(
+                    visible = sheetVisible,
+                    selectedIndex=currentDestinationIndex,
+                    faculties=faculties,
+                    onFacultyClick = {
+                        //hide the sheet to avoid crash
+                        hideBottomSheet()
+                        viewModel.onSectionSelected(it)
+                        onFacultySelected(faculties[it])
+                    }
+                )
+            }
         }, content = content
     )
 
