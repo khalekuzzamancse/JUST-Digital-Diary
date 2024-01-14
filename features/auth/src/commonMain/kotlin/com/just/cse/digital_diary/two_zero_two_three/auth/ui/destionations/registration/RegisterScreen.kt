@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.login
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,16 +13,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.ElevatedField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreenCom(
-    onLoginSuccess: () -> Unit = {},
-    onNavigateToRegisterScreen: () -> Unit = {}
+fun RegisterScreenCom(
+    onExitRequest:()->Unit,
+    onRegisterSuccess: () -> Unit = {},
+
 ) {
     val scope = rememberCoroutineScope()
-    val viewModel = remember { LoginViewModel(scope) }
+    val viewModel = remember { RegistrationViewModel(scope) }
     val showProgressBar = viewModel.showProcessBar.collectAsState().value
     val showToast = viewModel.screenMessage.collectAsState().value
     val snackbarHostState = remember { SnackbarHostState() }
@@ -35,19 +37,26 @@ fun LoginScreenCom(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         }
+        , topBar = {
+            RegistrationTopAppBar(
+                title = "Registration Form",
+                onNavigationIconClick = onExitRequest
+            )
+        }
     ) {
         Box(modifier = Modifier.padding(it).fillMaxSize()) {
-            LoginSection(
-                viewModel = viewModel,
-                onNavigateToRegisterScreen = onNavigateToRegisterScreen,
-                onLoginSuccess = {
-                    scope.launch {
-                        delay(1000) //delay show to success message
-                        onLoginSuccess()
-                    }
 
-                },
-                onPasswordResetRequest = {})
+                RegisterSection(
+                    viewModel = viewModel,
+                    onRegisterSuccess = {
+                        scope.launch {
+                            delay(1000)
+                            onRegisterSuccess()
+                        }
+                    }
+                )
+
+
             if (showProgressBar) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }

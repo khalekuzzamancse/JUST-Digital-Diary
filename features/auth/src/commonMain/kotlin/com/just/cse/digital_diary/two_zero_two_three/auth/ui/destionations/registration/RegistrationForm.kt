@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.register
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,16 +9,13 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Person4
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthDropDownMenu
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthPasswordField
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTextField
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.ElevatedField
 
 @Composable
 fun RegistrationForm(
@@ -113,49 +110,58 @@ fun RegistrationForm(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        AuthTextField(
-            modifier = fieldModifier,
-            label = RegistrationFormLabels.FULL_NAME,
-            value = name,
-            onValueChanged = onNameChanged,
-            keyboardType = KeyboardType.Text,
-            leadingIcon = Icons.Default.Person,
-        )
-        AuthTextField(
-            modifier = fieldModifier,
-            label = RegistrationFormLabels.EMAIL,
-            value = email,
-            onValueChanged = onEmailChanged,
-            keyboardType = KeyboardType.Email,
-            leadingIcon = Icons.Default.Email,
-        )
-        AuthTextField(
-            modifier = fieldModifier,
-            label = RegistrationFormLabels.USER_NAME,
-            value = username,
-            onValueChanged = onUserNameChanged,
-            keyboardType = KeyboardType.Text,
-            leadingIcon = Icons.Default.Person4,
-        )
-        AuthDropDownMenu(
-            modifier = fieldModifier,
-            label = RegistrationFormLabels.Dept,
-            options = departments,
-            onOptionSelected = onDeptChanged,
-            selected = dept
-        )
-        AuthPasswordField(
-            modifier = fieldModifier,
-            label = RegistrationFormLabels.PASSWORD,
-            value = password,
-            onValueChanged = onPasswordChanged,
-        )
-        AuthPasswordField(
-            modifier = fieldModifier,
-            label = RegistrationFormLabels.CONFIRMED_PASSWORD,
-            value = confirmedPassword,
-            onValueChanged = onConfirmedPassword,
-        )
+
+            AuthTextField(
+                modifier = fieldModifier,
+                label = RegistrationFormLabels.FULL_NAME,
+                value = name,
+                onValueChanged = onNameChanged,
+                keyboardType = KeyboardType.Text,
+                leadingIcon = Icons.Default.Person,
+            )
+
+
+           AuthTextField(
+               modifier = fieldModifier,
+               label = RegistrationFormLabels.EMAIL,
+               value = email,
+               onValueChanged = onEmailChanged,
+               keyboardType = KeyboardType.Email,
+               leadingIcon = Icons.Default.Email,
+           )
+
+
+           AuthTextField(
+               modifier = fieldModifier,
+               label = RegistrationFormLabels.USER_NAME,
+               value = username,
+               onValueChanged = onUserNameChanged,
+               keyboardType = KeyboardType.Text,
+               leadingIcon = Icons.Default.Person4,
+           )
+
+           AuthDropDownMenu(
+               modifier = fieldModifier,
+               label = RegistrationFormLabels.Dept,
+               options = departments,
+               onOptionSelected = onDeptChanged,
+               selected = dept
+           )
+
+           AuthPasswordField(
+               modifier = fieldModifier,
+               label = RegistrationFormLabels.PASSWORD,
+               value = password,
+               onValueChanged = onPasswordChanged,
+           )
+
+           AuthPasswordField(
+               modifier = fieldModifier,
+               label = RegistrationFormLabels.CONFIRMED_PASSWORD,
+               value = confirmedPassword,
+               onValueChanged = onConfirmedPassword,
+           )
+
 
     }
 

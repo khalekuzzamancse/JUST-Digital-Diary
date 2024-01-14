@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.register
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,15 +13,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.navigation.LoginTopAppBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun RegisterScreenCom(
-    onRegisterSuccess: () -> Unit = {},
+fun LoginScreenCom(
+    onLoginSuccess: () -> Unit = {},
+    onNavigateToRegisterScreen: () -> Unit = {}
 ) {
     val scope = rememberCoroutineScope()
-    val viewModel = remember { RegistrationViewModel(scope) }
+    val viewModel = remember { LoginViewModel(scope) }
     val showProgressBar = viewModel.showProcessBar.collectAsState().value
     val showToast = viewModel.screenMessage.collectAsState().value
     val snackbarHostState = remember { SnackbarHostState() }
@@ -33,18 +35,25 @@ fun RegisterScreenCom(
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
+        },
+        topBar = {
+            LoginTopAppBar(
+                title = "Login",
+            )
         }
     ) {
         Box(modifier = Modifier.padding(it).fillMaxSize()) {
-            RegisterSection(
+            LoginSection(
                 viewModel = viewModel,
-                onRegisterSuccess = {
+                onNavigateToRegisterScreen = onNavigateToRegisterScreen,
+                onLoginSuccess = {
                     scope.launch {
-                        delay(1000)
-                        onRegisterSuccess()
+                        delay(1000) //delay show to success message
+                        onLoginSuccess()
                     }
-                }
-            )
+
+                },
+                onPasswordResetRequest = {})
             if (showProgressBar) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }

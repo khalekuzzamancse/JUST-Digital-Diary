@@ -1,17 +1,17 @@
-package com.just.cse.digital_diary.two_zero_two_three.root_home.ui.message_from_vc
+package com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.message_from_vc
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.just.cse.digital_diary.features.common_ui.ImageLoader
 import com.just.cse.digital_diary.features.common_ui.TypeWriter
+import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.about_us.AboutUsTopBar
 
 data class ViceChancellorInfo(
     val name: String,
@@ -30,9 +31,10 @@ data class ViceChancellorInfo(
     val university: String
 )
 
-
 @Composable
-fun ViceChancellorMessage() {
+fun ViceChancellorMessage(
+    onExitRequest:()->Unit,
+) {
     val titleStyle = TextStyle(
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
@@ -53,34 +55,57 @@ fun ViceChancellorMessage() {
     val messageText = """
         Jashore University of Science and Technology (JUST) has started a steady journey of reaching a new height of excellence in research and to achieve a unique milestone in promoting new ideas and innovation, and in serving the nation and the global community by creating enlightened and skilled professionals who can meet the challenges of the 21st century fostering the motto of ‘being the employer, not the employee’. In keeping with this purpose, JUST has already been declared a research university that aims at generating and advancing knowledge by cutting-edge research in its state-of-the-art laboratories and in the congenial academic ambience. Apart from these, JUST has international and local collaboration with a wide range of reputed academia and industry...
     """.trimIndent()
+    Scaffold(
+        topBar = {
+            MessageFromVCTopBar(
+                onNavigationIconClick = onExitRequest,
+                title = "Message from VC"
+            )
+        },
 
-    Column(
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth()
+        floatingActionButtonPosition = FabPosition.Center
     ) {
-        ViceChancellorImage()
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxSize()
 
-        NameOfVC(info = viceChancellorInfo.name)
+                .verticalScroll(rememberScrollState())
+        ){
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+            ) {
+                ViceChancellorImage()
 
-        Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-        MoreInfoOnVC(info = viceChancellorInfo.title)
+                NameOfVC(info = viceChancellorInfo.name)
 
-        Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
-        UniversityName(info = viceChancellorInfo.university)
+                MoreInfoOnVC(info = viceChancellorInfo.title)
 
-        Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
-        MessageSection(
-            titleStyle = titleStyle,
-            bodyStyle = bodyStyle,
-            messageText = messageText
-        )
+                UniversityName(info = viceChancellorInfo.university)
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                MessageSection(
+                    titleStyle = titleStyle,
+                    bodyStyle = bodyStyle,
+                    messageText = messageText
+                )
+            }
+
+        }
     }
+
+
+
 }
 
 @Composable

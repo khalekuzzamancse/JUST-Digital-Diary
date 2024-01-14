@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.navigation.AuthNavGraph
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.navigation.AuthModuleEntryPoint
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.RootNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.themes.AppTheme
 
@@ -19,7 +19,7 @@ fun RootModule() {
         if (loginSuccess) {
             RootNavGraph()
         } else {
-            AuthNavGraph(
+            AuthModuleEntryPoint(
                 onLoginSuccess = {
                     loginSuccess = true
                 }

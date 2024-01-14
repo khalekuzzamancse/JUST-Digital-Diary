@@ -1,10 +1,11 @@
-package com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CloseFullscreen
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.OpenInFull
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,52 +24,22 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun HomeTopBar(
-    sheetVisible: Boolean,
+internal fun LoginTopAppBar(
     title: String,
-    onNavigationIconClick: () -> Unit,
-    onToggleBottomSheet: () -> Unit,
-    onSearchRequest: () -> Unit,
 ) {
-    val sheetIcon = if (sheetVisible) Icons.Default.OpenInFull else Icons.Default.CloseFullscreen
-
+    Surface(
+        tonalElevation = 0.dp,
+        shadowElevation = 0.dp,
+    ) {
         TopAppBar(
             title = {
                 Text(text = title)
             },
-            navigationIcon = {
-                IconButton(
-                    onClick = onNavigationIconClick
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = null
-                    )
-                }
-            },
-            actions = {
-                IconButton(
-                    onClick = onToggleBottomSheet
-                ) {
-                    Icon(
-                        imageVector = sheetIcon,
-                        contentDescription = null
-                    )
-                }
-                IconButton(
-                    onClick = onSearchRequest
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = null
-                    )
-                }
-
-            },
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(8.dp)
             )
-        )
 
+        )
+    }
 
 }

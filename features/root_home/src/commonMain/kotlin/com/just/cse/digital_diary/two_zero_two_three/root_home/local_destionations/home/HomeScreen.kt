@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.root_home.ui.home
+package com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -34,13 +34,14 @@ fun RootHomeContent(
     openDrawer: () -> Unit = {},
     onLogOut: () -> Unit = {},
 ){
-    var username by remember {
+    val username by remember {
         mutableStateOf("NULL")
     }
 
     val onNavigationIconClick: () -> Unit = {
         openDrawer()
     }
+
 
     Scaffold(
         topBar = {
@@ -99,27 +100,4 @@ fun UserInfo(
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HomeTopAppbar(
-    navigationIcon: ImageVector = Icons.Filled.Segment,
-    onNavigationIconClick: () -> Unit = {},
-    onLogOut: () -> Unit,
-) {
-    TopAppBar(
-        title = { Text(text = "Home") },
-        navigationIcon = {
-            IconButton(onClick = onNavigationIconClick) {
-                Icon(navigationIcon, null)
-            }
-        },
-        actions = {
-            HomeScreenDropDown(
-                onLogOutIconClick = onLogOut
-            )
-
-
-        },
-    )
-}
 

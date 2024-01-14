@@ -1,6 +1,6 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.register
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration
 
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.login.LoginViewModel
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.LoginViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

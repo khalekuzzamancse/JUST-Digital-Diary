@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.login
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,13 +28,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.register.LoginSectionHeader
 import kotlinx.coroutines.launch
 
 
 
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun LoginSection(
     modifier: Modifier = Modifier,
@@ -44,28 +42,16 @@ fun LoginSection(
     onPasswordResetRequest: () -> Unit = {},
 ) {
 
-    val isHorizontal = calculateWindowSizeClass().widthSizeClass != WindowWidthSizeClass.Compact
-    val w = calculateWindowSizeClass().widthSizeClass
     val scope = rememberCoroutineScope()
-
-
     Column(
         modifier.fillMaxSize().verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (w == WindowWidthSizeClass.Expanded) {
-//            WelcomeExpandedScreen(
-//                modifier.padding(32.dp).weight(1f).align(Alignment.CenterVertically)
-//            )
-        }
-        LoginSectionHeader(
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
+        LoginHeaderSection()
         Spacer(Modifier.height(16.dp))
         LoginFieldsNControls(
             modifier = Modifier,
-            isHorizontal = isHorizontal,
+            isHorizontal = false,
             onRegisterRequest = onNavigateToRegisterScreen,
             onLoginRequest = {
                 scope.launch {
@@ -96,11 +82,10 @@ fun LoginFieldsNControls(
     Surface(
         modifier = modifier.padding(16.dp).background(Color.Red),
         shadowElevation = 8.dp
-
     ) {
         Column(
             modifier = Modifier.padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
             LoginForm(

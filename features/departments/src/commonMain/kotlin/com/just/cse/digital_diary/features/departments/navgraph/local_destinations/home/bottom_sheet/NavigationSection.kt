@@ -64,7 +64,8 @@ internal fun <T> NavigationSection(
                 .padding(8.dp)
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             destinations.forEachIndexed { index, _ ->
                 AnimatedNavigationItem(

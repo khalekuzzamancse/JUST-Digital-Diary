@@ -5,16 +5,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 
-@Composable
-fun AuthNavGraph(
-    onLoginSuccess: () -> Unit = {},
-) {
-    Navigator(
-        NavGraph(
-            onLoginSuccess = onLoginSuccess
-        )
-    )
-}
+
 
 class NavGraph(
     val onLoginSuccess: () -> Unit,
@@ -31,7 +22,11 @@ class NavGraph(
                     RegisterScreen(
                         onRegisterSuccess = {
                             navigator.pop()
-                        })
+                        },
+                        onExitRequest = {
+                            navigator.pop()
+                        }
+                    )
                 )
             }
         ))

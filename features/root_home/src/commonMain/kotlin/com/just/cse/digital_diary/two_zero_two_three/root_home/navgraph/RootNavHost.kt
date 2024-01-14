@@ -1,5 +1,14 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Down
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Up
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.EaseIn
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.togetherWith
+import androidx.compose.animation.with
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.runtime.Composable
@@ -13,9 +22,12 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.AnimateVisibilityDecorator
 import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.ModalDrawerDecorator
-import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.about_us.AboutUs
-import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.home.RootHomeContent
-import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.message_from_vc.ViceChancellorMessage
+import com.just.cse.digital_diary.two_zero_two_three.root_home.NavigatorManager
+import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.about_us.AboutUs
+import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.RootDestinations
+import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.RootHomeContent
+import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.topMostDestinations
+import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.message_from_vc.ViceChancellorMessage
 import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.share_note.CreateNoteScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -44,7 +56,6 @@ class RootNavHost : Screen {
             mutableStateOf(DrawerState(DrawerValue.Closed))
         }
         val openDrawer: () -> Unit = {
-            println("RootNavHostClass:OpenDrawerRequest")
             scope.launch {
                 drawerState.open()
             }
@@ -68,37 +79,61 @@ class RootNavHost : Screen {
                 viewModel.onSectionSelected(selectedDestinationIndex)
                 closedDrawer()
             },
+
             content = {
-                when (currentDestinationIndex) {
-                    RootDestinations.HOME -> {
-                        AnimateVisibilityDecorator {
-                            RootHomeContent(
-                                openDrawer = openDrawer,
-                                onCreateNote = {
-                                    navigator?.push(CreateNoteScreen())
-                                }
+                AnimatedContent(
+                    targetState = currentDestinationIndex,
+                    transitionSpec = {
+                        slideIntoContainer(
+                            animationSpec = tween(durationMillis = 300, easing = EaseIn),
+                            towards = Up
+                        ).togetherWith(
+                            slideOutOfContainer(
+                                animationSpec = tween(durationMillis = 300, easing = EaseIn),
+                                towards = Down
                             )
+                        )
+                    }
+                ){localDestination->
+                    when (localDestination){
+                        RootDestinations.HOME -> {
+                            AnimateVisibilityDecorator {
+                                RootHomeContent(
+                                    openDrawer = openDrawer,
+                                    onCreateNote = {
+                                        navigator?.push(CreateNoteScreen())
+                                    }
+                                )
+                            }
+
+                        }
+                        RootDestinations.MESSAGE_FROM_VC -> {
+                            AnimateVisibilityDecorator {
+                                ViceChancellorMessage(
+                                    onExitRequest = openDrawer
+                                )
+                            }
+                        }
+
+                        RootDestinations.ABOUT_US -> {
+                            AnimateVisibilityDecorator {
+                                AboutUs(
+                                    onExitRequest = openDrawer
+                                )
+                            }
+
+
                         }
 
                     }
 
+
+                }
+                when (currentDestinationIndex) {
                     RootDestinations.FACULTY_MEMBERS -> {
                         navigatorManager.navigateToFacultyModule()
                     }
 
-                    RootDestinations.MESSAGE_FROM_VC -> {
-                        AnimateVisibilityDecorator {
-                            ViceChancellorMessage()
-                        }
-                    }
-
-                    RootDestinations.ABOUT_US -> {
-                        AnimateVisibilityDecorator {
-                            AboutUs()
-                        }
-
-
-                    }
                 }
             }
         )

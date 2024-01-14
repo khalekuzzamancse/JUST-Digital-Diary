@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.root_home.ui.about_us
+package com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.about_us
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,10 +13,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,6 +36,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.features.common_ui.TypeWriter
+import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.HomeTopAppbar
+import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.UserInfo
 
 private val features = listOf(
     "Create notes with rich text formatting",
@@ -43,18 +49,36 @@ private val features = listOf(
 )
 
 @Composable
-fun AboutUs() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState())
+fun AboutUs(
+    onExitRequest:()->Unit,
+) {
+    Scaffold(
+        topBar = {
+            AboutUsTopBar(
+                onNavigationIconClick = onExitRequest,
+                title = "About Us"
+            )
+        },
+
+        floatingActionButtonPosition = FabPosition.Center
     ) {
-        AppName()
-        AppDescription()
-        FeaturesSection()
-        ContactSection()
+
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxSize()
+
+                .verticalScroll(rememberScrollState())
+        ) {
+            AppName()
+            AppDescription()
+            FeaturesSection()
+            ContactSection()
+        }
+
+
     }
+
 }
 
 @Composable
