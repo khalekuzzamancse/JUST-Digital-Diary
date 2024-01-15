@@ -35,22 +35,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
-@Composable
-fun ElevatedField(
-    content:@Composable ()->Unit,
-) {
-    Surface(
-        shadowElevation = 4.dp,
-        shape = RoundedCornerShape(16.dp)
-    ) {
-        Box(Modifier.padding(8.dp)){
-            content()
-        }
-
-
-    }
-
-}
 
 
 

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
-class RegistrationViewModel(
+class RegistraionViewModel(
     val scope: CoroutineScope
 ) {
     companion object {

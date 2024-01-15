@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration
+package com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
@@ -24,7 +25,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun RegistrationTopAppBar(
+internal fun CreateNoteTopBar(
     title: String,
     onNavigationIconClick: () -> Unit,
 ) {

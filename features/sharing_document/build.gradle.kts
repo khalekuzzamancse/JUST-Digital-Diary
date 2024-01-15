@@ -12,11 +12,11 @@ kotlin {
             }
         }
     }
-    jvm("desktop"){
+    jvm("desktop") {
         jvmToolchain(17)
     }
-    sourceSets{
-        val commonMain by getting{
+    sourceSets {
+        val commonMain by getting {
             dependencies {
                 implementation(compose.ui)
                 implementation(compose.material3)
@@ -24,16 +24,12 @@ kotlin {
                 implementation(compose.animationGraphics)
                 implementation(compose.materialIconsExtended)
                 implementation(compose.preview)
+                implementation(project(":features:common_ui"))
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(libs.voyager.navigator)
                 implementation(libs.voyager.transitions)
+                implementation(project(":features:repository"))
                 implementation(libs.ktor.serialization.kotlinx.json)
-
-
-                implementation(project(":features:common_ui"))
-                implementation(project(":features:faculty"))
-                implementation(project(":features:sharing_document"))
-                implementation(project(":features:auth"))
 
             }
         }
@@ -42,9 +38,10 @@ kotlin {
 //
 //            }
 //        }
-        val desktopMain by getting{
+        val desktopMain by getting {
             dependencies {
-
+//coroutines
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing")
             }
         }
     }
@@ -52,7 +49,7 @@ kotlin {
 
 }
 android {
-    namespace = "com.just.cse.digital_diary.two_zero_two_three.root_home"
+    namespace = "com.just.cse.digital_diary.two_zero_two_three.sharing_document"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

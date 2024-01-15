@@ -12,7 +12,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthPasswordField
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTextField
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.ElevatedField
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.RegistrationFormLabels
 
 

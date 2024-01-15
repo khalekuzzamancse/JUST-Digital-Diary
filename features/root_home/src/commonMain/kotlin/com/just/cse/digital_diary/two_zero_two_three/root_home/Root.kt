@@ -27,10 +27,7 @@ fun RootModule() {
             )
         }
     }
-//    LaunchedEffect(Unit){
-//    val res= Response("https://sebi.io/demo-image-api/pictures.json").get()
-//      println(res)
-//
+
 
 
 
