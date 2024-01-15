@@ -1,5 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,6 +15,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import com.just.cse.digital_diary.features.common_ui.progressbar.ProgressBarDecorator
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.navigation.LoginTopAppBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -29,6 +33,7 @@ fun LoginScreenCom(
     val snackbarHostState = remember { SnackbarHostState() }
     if (showToast != null) {
         scope.launch {
+
             snackbarHostState.showSnackbar(showToast)
         }
     }
@@ -42,7 +47,10 @@ fun LoginScreenCom(
             )
         }
     ) {
-        Box(modifier = Modifier.padding(it).fillMaxSize()) {
+        ProgressBarDecorator(
+            modifier = Modifier.padding(it).fillMaxSize(),
+            showProgressBar = showProgressBar,
+        ) {
             LoginSection(
                 viewModel = viewModel,
                 onNavigateToRegisterScreen = onNavigateToRegisterScreen,
@@ -53,13 +61,11 @@ fun LoginScreenCom(
                     }
 
                 },
-                onPasswordResetRequest = {})
-            if (showProgressBar) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
-
+                onPasswordResetRequest = {}
+            )
         }
     }
 
 
 }
+

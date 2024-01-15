@@ -13,16 +13,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.just.cse.digital_diary.features.common_ui.progressbar.ProgressBarDecorator
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.ElevatedField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreenCom(
-    onExitRequest:()->Unit,
+    onExitRequest: () -> Unit,
     onRegisterSuccess: () -> Unit = {},
 
-) {
+    ) {
     val scope = rememberCoroutineScope()
     val viewModel = remember { RegistrationViewModel(scope) }
     val showProgressBar = viewModel.showProcessBar.collectAsState().value
@@ -36,30 +37,26 @@ fun RegisterScreenCom(
     Scaffold(
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
-        }
-        , topBar = {
+        }, topBar = {
             RegistrationTopAppBar(
                 title = "Registration Form",
                 onNavigationIconClick = onExitRequest
             )
         }
     ) {
-        Box(modifier = Modifier.padding(it).fillMaxSize()) {
-
-                RegisterSection(
-                    viewModel = viewModel,
-                    onRegisterSuccess = {
-                        scope.launch {
-                            delay(1000)
-                            onRegisterSuccess()
-                        }
+        ProgressBarDecorator(
+            modifier = Modifier.padding(it).fillMaxSize(),
+            showProgressBar = showProgressBar,
+        ) {
+            RegisterSection(
+                viewModel = viewModel,
+                onRegisterSuccess = {
+                    scope.launch {
+                        delay(1000)
+                        onRegisterSuccess()
                     }
-                )
-
-
-            if (showProgressBar) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
+                }
+            )
 
         }
     }

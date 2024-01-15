@@ -86,7 +86,8 @@ fun AuthModuleTheme(
 
     MaterialTheme(
         colorScheme = colors,
-        typography = typography,
+       typography = typography,
+       // typography=getAuthModuleTypography(),works in desktop,crash in android,fix it later
         shapes = shapes,
         content = content
     )

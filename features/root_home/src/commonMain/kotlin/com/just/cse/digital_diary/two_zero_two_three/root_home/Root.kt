@@ -13,6 +13,7 @@ import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.themes.AppThem
 @Composable
 fun RootModule() {
     AppTheme {
+
         var loginSuccess by remember {
             mutableStateOf(false)
         }

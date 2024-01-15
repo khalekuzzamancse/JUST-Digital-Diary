@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.common_ui
+package com.just.cse.digital_diary.features.common_ui.progressbar
 
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.CircularProgressIndicator
