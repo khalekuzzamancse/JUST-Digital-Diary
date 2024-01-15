@@ -6,11 +6,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.just.cse.digital_diary.features.common_ui.network_image.ImageLoader
 
 @Composable
 fun RegistrationHeaderSection() {
@@ -23,12 +23,11 @@ fun RegistrationHeaderSection() {
            .fillMaxWidth()
            .height(200.dp),
        ){
-           Text(
-               modifier = Modifier.align(Alignment.Center),
-               text = "USE UNIVERSITY EMAIL",
-               color = MaterialTheme.colorScheme.onPrimary,
+               ImageLoader(
+                   url = "https://automation.just.edu.bd/images/just-logo.png",
+                   modifier = Modifier.height(100.dp).align(Alignment.Center)
+               )
 
-           )
        }
    }
 }

@@ -21,9 +21,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun RegisterScreenCom(
     onExitRequest: () -> Unit,
-    onRegisterSuccess: () -> Unit = {},
-
-    ) {
+    onRegisterSuccess: () -> Unit = {}
+) {
     val scope = rememberCoroutineScope()
     val viewModel = remember { RegistrationViewModel(scope) }
     val showProgressBar = viewModel.showProcessBar.collectAsState().value

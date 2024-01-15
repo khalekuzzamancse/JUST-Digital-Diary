@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.common_ui
+package com.just.cse.digital_diary.features.common_ui.animation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

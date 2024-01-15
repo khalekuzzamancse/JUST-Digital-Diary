@@ -24,14 +24,11 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HomeTopBar(
-    sheetVisible: Boolean,
     title: String,
     onNavigationIconClick: () -> Unit,
-    onToggleBottomSheet: () -> Unit,
+    sheetController:@Composable () -> Unit,
     onSearchRequest: () -> Unit,
 ) {
-    val sheetIcon = if (sheetVisible) Icons.Default.OpenInFull else Icons.Default.CloseFullscreen
-
         TopAppBar(
             title = {
                 Text(text = title)
@@ -47,14 +44,7 @@ internal fun HomeTopBar(
                 }
             },
             actions = {
-                IconButton(
-                    onClick = onToggleBottomSheet
-                ) {
-                    Icon(
-                        imageVector = sheetIcon,
-                        contentDescription = null
-                    )
-                }
+                sheetController()
                 IconButton(
                     onClick = onSearchRequest
                 ) {

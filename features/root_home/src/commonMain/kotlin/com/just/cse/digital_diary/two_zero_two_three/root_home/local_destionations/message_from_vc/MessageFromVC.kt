@@ -21,9 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.just.cse.digital_diary.features.common_ui.ImageLoader
-import com.just.cse.digital_diary.features.common_ui.TypeWriter
-import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.about_us.AboutUsTopBar
+import com.just.cse.digital_diary.features.common_ui.network_image.ImageLoader
+import com.just.cse.digital_diary.features.common_ui.animation.TypeWriter
 
 data class ViceChancellorInfo(
     val name: String,

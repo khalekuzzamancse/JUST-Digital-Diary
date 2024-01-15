@@ -1,34 +1,38 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.just.cse.digital_diary.features.common_ui.network_image.ImageLoader
 
 @Composable
 fun LoginHeaderSection() {
-   Surface(
-       modifier = Modifier,
-       shape = RoundedCornerShape(bottomStart = 100.dp),
-       color = MaterialTheme.colorScheme.primary
-   ) {
-       Box(modifier = Modifier
-           .fillMaxWidth()
-           .height(200.dp),
-       ){
-           Text(
-               modifier = Modifier.align(Alignment.Center),
-               text = "USE UNIVERSITY EMAIL",
-               color = MaterialTheme.colorScheme.onPrimary,
+    Surface(
+        modifier = Modifier,
+        shape = RoundedCornerShape(bottomStart = 100.dp),
+        // color = MaterialTheme.colorScheme.primary
+    ) {
 
-           )
-       }
-   }
+            Column {
+                ImageLoader(
+                    url = "https://just.edu.bd/logo/download.png",
+                    modifier = Modifier.height(100.dp),
+                    onSuccess = {
+                    }
+
+                )
+
+
+
+        }
+    }
 }

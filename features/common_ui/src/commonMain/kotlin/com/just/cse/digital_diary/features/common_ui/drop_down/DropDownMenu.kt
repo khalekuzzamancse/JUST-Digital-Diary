@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.common_ui
+package com.just.cse.digital_diary.features.common_ui.drop_down
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
