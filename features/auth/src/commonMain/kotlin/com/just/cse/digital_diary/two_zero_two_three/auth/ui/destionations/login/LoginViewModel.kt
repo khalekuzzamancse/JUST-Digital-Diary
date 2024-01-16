@@ -1,6 +1,8 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login
 
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.form.LoginFormData
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -8,8 +10,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    val scope: CoroutineScope
+  private val  onLoginSuccess:()->Unit,
 ) {
+    private val scope: CoroutineScope= CoroutineScope(Dispatchers.Default)
+
     private val _showProcessBar = MutableStateFlow(false)
     val showProcessBar = _showProcessBar.asStateFlow()
     private val _screenMessage = MutableStateFlow<String?>(null)
@@ -44,20 +48,29 @@ class LoginViewModel(
         }
     }
 
-    suspend fun  onLoginRequest(): Boolean {
-        _showProcessBar.value=true
-        delay(2000)
-        val success = data.value.username.trim().trimEnd() == "abc" &&data.value. password.trim().trimEnd() == "123"
-        if (success) {
-            onLoginSuccess()
-        } else {
-            onLoginFailure()
-        }
-        _showProcessBar.value=false
-        return success
+     fun  onLoginRequest() {
+         scope.launch {
+             _showProcessBar.value=true
+             delay(2000)
+             val success = data.value.username.trim().trimEnd() == "abc" &&data.value. password.trim().trimEnd() == "123"
+             if (success) {
+                 loginSuccess()
+             } else {
+                 onLoginFailure()
+             }
+             _showProcessBar.value=false
+
+         }
+
     }
-    private fun onLoginSuccess(){
-        updateScreenMessage("Login Success")
+    private fun loginSuccess(){
+        scope.launch {
+            updateScreenMessage("Login Success")
+            delay(1000)
+            onLoginSuccess()
+        }
+
+
     }
     private fun onLoginFailure(){
         updateScreenMessage("Login failed,put username=abc,password=123")
@@ -75,6 +88,7 @@ class LoginViewModel(
     fun onPasswordChanged(password: String) {
         _data.update { it.copy(password = password) }
     }
+
 
 }
 

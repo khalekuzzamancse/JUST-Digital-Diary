@@ -39,9 +39,9 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun AuthPasswordField(
+fun NonCompactAuthPasswordField(
     modifier: Modifier,
-    label: String?=null,
+    label: String,
     value: String,
     onValueChanged: (String) -> Unit,
     errorMessage: String? = null,
@@ -63,9 +63,7 @@ fun AuthPasswordField(
     val content: @Composable ColumnScope.() -> Unit =
         if (errorMessage == null) {
             @Composable {
-                if (label != null) {
-                    Text(text = label)
-                }
+                Text(text = label)
                 TextField(
                     label=null,
                     shape = shape,
@@ -91,9 +89,7 @@ fun AuthPasswordField(
             }
         } else {
             @Composable {
-                if (label != null) {
-                    Text(text = label)
-                }
+                Text(text = label)
                 TextField(
                     label=null,
                     shape = shape,
@@ -132,9 +128,9 @@ fun AuthPasswordField(
 }
 
 @Composable
-fun AuthTextField(
+fun NonCompactAuthTextField(
     modifier: Modifier,
-    label: String?=null,
+    label: String,
     value: String,
     leadingIcon: ImageVector?,
     keyboardType: KeyboardType,
@@ -148,9 +144,7 @@ fun AuthTextField(
     )
     val content: @Composable ColumnScope.() -> Unit = if (errorMessage == null) @Composable {
         {
-            if (label != null) {
-                Text(text = label)
-            }
+            Text(text = label)
             TextField(
                 label=null,
                 shape = shape,
@@ -169,9 +163,7 @@ fun AuthTextField(
         }
     } else @Composable {
         {
-            if (label != null) {
-                Text(text = label)
-            }
+            Text(text = label)
             TextField(
                 label=null,
                 shape = shape,

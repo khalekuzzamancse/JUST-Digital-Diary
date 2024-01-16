@@ -33,7 +33,7 @@ fun ProgressBarNSnackBarDecorator(
     }
     else{
         Box(
-            modifier = modifier
+            modifier = modifier,
         ) {
             content()
             AnimatedVisibility(

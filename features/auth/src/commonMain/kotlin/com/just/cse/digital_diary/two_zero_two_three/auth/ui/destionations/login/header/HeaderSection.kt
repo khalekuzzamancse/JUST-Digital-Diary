@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.header
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -13,8 +13,6 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.network_image.Ima
 fun LoginHeaderSection() {
     Surface(
         modifier = Modifier,
-        shape = RoundedCornerShape(bottomStart = 100.dp),
-        // color = MaterialTheme.colorScheme.primary
     ) {
 
             Column {
