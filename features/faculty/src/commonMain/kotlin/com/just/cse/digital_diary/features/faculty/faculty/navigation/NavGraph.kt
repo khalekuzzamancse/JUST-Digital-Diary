@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home.HomeContent
 import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home.HomeDestination
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.FacultyInfo
 
@@ -31,12 +32,7 @@ internal fun NavGraph(
             navManager.navigateSearchDestination()
         },
         content = {
-            Box(
-                Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "Welcome to Faculty Information")
-            }
+            HomeContent()
         }
     )
 }

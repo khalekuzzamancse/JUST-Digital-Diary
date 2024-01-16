@@ -20,51 +20,43 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HomeTopBar(
-    sheetVisible: Boolean,
     title: String,
     onNavigationIconClick: () -> Unit,
-    onToggleBottomSheet: () -> Unit,
+    sheetController:@Composable () -> Unit,
     onSearchRequest: () -> Unit,
 ) {
-    val sheetIcon = if (sheetVisible) Icons.Default.OpenInFull else Icons.Default.CloseFullscreen
 
-        TopAppBar(
-            title = {
-                Text(text = title)
-            },
-            navigationIcon = {
-                IconButton(
-                    onClick = onNavigationIconClick
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = null
-                    )
-                }
-            },
-            actions = {
-                IconButton(
-                    onClick = onToggleBottomSheet
-                ) {
-                    Icon(
-                        imageVector = sheetIcon,
-                        contentDescription = null
-                    )
-                }
-                IconButton(
-                    onClick = onSearchRequest
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = null
-                    )
-                }
 
-            },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(8.dp)
-            )
+    TopAppBar(
+        title = {
+            Text(text = title)
+        },
+        navigationIcon = {
+            IconButton(
+                onClick = onNavigationIconClick
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = null
+                )
+            }
+        },
+        actions = {
+            sheetController()
+            IconButton(
+                onClick = onSearchRequest
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = null
+                )
+            }
+
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(8.dp)
         )
+    )
 
 
 }

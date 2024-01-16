@@ -1,13 +1,13 @@
-package com.just.cse.digital_diary.two_zero_two_three.department.local_destinations
+package com.just.cse.digital_diary.two_zero_two_three.department.common
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.just.cse.digital_diary.features.common_ui.navigation.bottom_navigation.BottomNavigationBar
 import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
-import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.home.DepartmentTopAppbar
+import com.just.cse.digital_diary.features.common_ui.navigation.bottom_navigation.BottomNavigationBar
+import com.just.cse.digital_diary.features.common_ui.top_bar.SimpleTopBar
 
 
 @Composable
@@ -22,7 +22,7 @@ internal fun <T> TopNBottomBarDecorator(
 ) {
     Scaffold(
         topBar = {
-            DepartmentTopAppbar(
+            SimpleTopBar(
                 title = topBarTitle,
                 navigationIcon = topNavigationIcon,
                 onNavigationIconClick = onNavigationIconClick

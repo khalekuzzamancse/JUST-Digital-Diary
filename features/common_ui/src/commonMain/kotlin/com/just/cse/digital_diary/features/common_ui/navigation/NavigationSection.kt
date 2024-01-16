@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.departments.navgraph.local_destinations.home.bottom_sheet
+package com.just.cse.digital_diary.features.common_ui.navigation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
@@ -42,53 +42,17 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-internal fun <T> NavigationSection(
-    destinations: List<NavigationItem<T>>,
-    currentDestinationIndex: Int,
-    onItemClick: (Int) -> Unit,
-) {
-    Surface(
-        modifier = Modifier.padding(8.dp),
-        shadowElevation = 8.dp,
-        shape = RoundedCornerShape(topStart = 4.dp)
-    ) {
-        FlowRow(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            destinations.forEachIndexed { index, _ ->
-                AnimatedNavigationItem(
-                    navigationItem = destinations[index],
-                    visibilityDelay = (index + 1) * 10L,
-                    selected = currentDestinationIndex == index,
-                    onClick = {
-                        onItemClick(index)
-                    }
-                )
-            }
-
-        }
-    }
-
-
-}
 
 @Composable
-private fun <T> AnimatedNavigationItem(
+ fun <T> AnimatedNavigationItem(
     navigationItem: NavigationItem<T>,
-    visibilityDelay: Long,
     selected: Boolean,
+    visibilityDelay: Long=0,
+    onFocusing: () -> Unit={},
     onClick: () -> Unit,
 ) {
     var show by remember { mutableStateOf(false) }
@@ -107,19 +71,21 @@ private fun <T> AnimatedNavigationItem(
             focusedIcon = navigationItem.focusedIcon,
             onClick = onClick,
             unFocusedIcon = navigationItem.unFocusedIcon,
-            label = navigationItem.label
+            label = navigationItem.label,
+            onFocusing = onFocusing
         )
     }
 }
 
 @Composable
-private fun NavigationItem(
+ private fun NavigationItem(
     label: String,
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     unFocusedIcon: ImageVector,
     focusedIcon: ImageVector,
+    onFocusing: () -> Unit={},
     shape: Shape = RoundedCornerShape(topStart = 8.dp, bottomEnd = 8.dp),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
 ) {
@@ -136,8 +102,12 @@ private fun NavigationItem(
                 focusing = false
             }
 
+
         }
 
+    }
+    if(focusing){
+        onFocusing()
     }
     val backgroundColor by animateColorAsState(
         targetValue = if (focusing) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.primaryContainer

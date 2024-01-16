@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.department.local_destinations
+package com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.home
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home

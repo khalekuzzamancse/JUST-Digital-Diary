@@ -5,14 +5,14 @@ import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import com.just.cse.digital_diary.two_zero_two_three.department.AnimateVisibilityDecorator
-import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.TopNBottomBarDecorator
-import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.departmentSubDestinations
-import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.destinations.DepartmentHomeDestinationContent
-import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.destinations.DepartmentStaffListDestinationContent
-import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.destinations.DepartmentTeacherListDestinationContent
+import com.just.cse.digital_diary.two_zero_two_three.department.common.AnimateVisibilityDecorator
+import com.just.cse.digital_diary.two_zero_two_three.department.common.TopNBottomBarDecorator
+import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.home.departmentSubDestinations
+import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.home.Home
+import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.staff_list.DepartmentStaffListDestinationContent
+import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.teacher_list.DepartmentTeacherListDestinationContent
+import com.just.cse.digitaldiary.twozerotwothree.data.data.department_info.DepartmentInfoRepository
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.DepartmentFakeDB
-import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.employees
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -56,7 +56,7 @@ internal fun DepartmentModuleLocalNavGraph(
         when (selectedDestination) {
             0 -> {
                 AnimateVisibilityDecorator {
-                    DepartmentHomeDestinationContent(
+                    Home(
                         modifier = modifier
                     )
                 }
@@ -68,7 +68,7 @@ internal fun DepartmentModuleLocalNavGraph(
                 AnimateVisibilityDecorator {
                     DepartmentTeacherListDestinationContent(
                         modifier = modifier,
-                        teachers = employees
+                        teachers = DepartmentInfoRepository.getTeacherList("1")
                     )
                 }
             }
@@ -77,7 +77,7 @@ internal fun DepartmentModuleLocalNavGraph(
                 AnimateVisibilityDecorator {
                     DepartmentStaffListDestinationContent(
                         modifier = modifier,
-                        staffs = employees
+                        staffs = DepartmentInfoRepository.getTeacherList("2")
                     )
                 }
             }

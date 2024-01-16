@@ -2,7 +2,7 @@ package com.just.cse.digital_diary.features.departments.navgraph.child_destinati
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import com.just.cse.digital_diary.two_zero_two_three.department.navigation.DepartmentModuleEntryPoint
+import com.just.cse.digital_diary.two_zero_two_three.department.DepartmentModuleEntryPoint
 
 internal class DepartmentModule(
     private val departmentId: String,

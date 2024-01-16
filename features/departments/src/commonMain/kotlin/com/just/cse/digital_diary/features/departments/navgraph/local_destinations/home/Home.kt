@@ -7,6 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import com.just.cse.digital_diary.features.common_ui.bottom_sheet.decorator.BottomSheetDecorator
+import com.just.cse.digital_diary.features.common_ui.bottom_sheet.handler.BottomSheetControllerIcon
 import com.just.cse.digital_diary.features.common_ui.bottom_sheet.handler.BottomSheetHandlerImp
 import com.just.cse.digital_diary.features.departments.navgraph.local_destinations.home.bottom_sheet.AnimatedBottomSheet
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.Department
@@ -33,8 +34,11 @@ internal fun HomeDestination(
             HomeTopBar(
                 title = "Departments Info",
                 onNavigationIconClick = onExitRequest,
-                onToggleBottomSheet = sheetHandler::toggleState,
-                sheetVisible = true,
+                sheetController = {
+                    BottomSheetControllerIcon(
+                        handler = sheetHandler
+                    )
+                },
                 onSearchRequest = {
                     //hide the sheet to causes crash
                     sheetHandler.hideSheet()

@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Science
 import androidx.compose.material.icons.outlined.Science
 import androidx.compose.runtime.Composable
+import com.just.cse.digital_diary.features.common_ui.bottom_sheet.BottomSheetNavigationSection
 import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.Department
 import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.FacultyInfo
@@ -36,7 +37,7 @@ internal fun AnimatedBottomSheet(
             )
         ),
     ) {
-        NavigationSection(
+        BottomSheetNavigationSection(
             destinations = destinations,
             onItemClick=onFacultyClick,
             currentDestinationIndex = selectedIndex

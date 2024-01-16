@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Segment
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -26,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.just.cse.digital_diary.features.common_ui.top_bar.SimpleTopBar
 
 
 @Composable
@@ -45,9 +47,10 @@ fun RootHomeContent(
 
     Scaffold(
         topBar = {
-            HomeTopAppbar(
+            SimpleTopBar(
                 onNavigationIconClick = onNavigationIconClick,
-                onLogOut = onLogOut
+               title = "Home",
+                navigationIcon = Icons.Default.Menu
             )
         },
         floatingActionButton = {

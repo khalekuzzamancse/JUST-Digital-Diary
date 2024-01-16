@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.just.cse.digital_diary.features.common_ui.network_image.ImageLoader
 import com.just.cse.digital_diary.features.common_ui.animation.TypeWriter
+import com.just.cse.digital_diary.features.common_ui.top_bar.SimpleTopBar
 
 data class ViceChancellorInfo(
     val name: String,
@@ -56,7 +57,7 @@ fun ViceChancellorMessage(
     """.trimIndent()
     Scaffold(
         topBar = {
-            MessageFromVCTopBar(
+            SimpleTopBar(
                 onNavigationIconClick = onExitRequest,
                 title = "Message from VC"
             )

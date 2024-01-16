@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.features.common_ui.animation.TypeWriter
+import com.just.cse.digital_diary.features.common_ui.top_bar.SimpleTopBar
 
 private val features = listOf(
     "Create notes with rich text formatting",
@@ -50,7 +51,7 @@ fun AboutUs(
 ) {
     Scaffold(
         topBar = {
-            AboutUsTopBar(
+            SimpleTopBar(
                 onNavigationIconClick = onExitRequest,
                 title = "About Us"
             )

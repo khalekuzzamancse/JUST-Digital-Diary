@@ -4,6 +4,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,6 +24,18 @@ class BottomSheetHandlerImp(
         )
     )
     override val sheetState = _sheetState.asStateFlow()
+    init {
+        scope.launch {
+            delay(1500)
+            _sheetState.update {
+                SheetState(
+                    initialValue = SheetValue.PartiallyExpanded,
+                    confirmValueChange = { true },
+                    skipPartiallyExpanded = false
+                )
+            }
+        }
+    }
 
     override fun hideSheet() {
        _sheetState.update {

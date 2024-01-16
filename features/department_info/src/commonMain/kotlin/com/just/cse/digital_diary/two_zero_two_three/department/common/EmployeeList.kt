@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.department.department_info
+package com.just.cse.digital_diary.two_zero_two_three.department.common
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.SizeTransform
