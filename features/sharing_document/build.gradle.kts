@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.compose")
     alias(libs.plugins.kotlinxSerialization)
 }
+//
 kotlin {
     androidTarget {
         compilations.all {
