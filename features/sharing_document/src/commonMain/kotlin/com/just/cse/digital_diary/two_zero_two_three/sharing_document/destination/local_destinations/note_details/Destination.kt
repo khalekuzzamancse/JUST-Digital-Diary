@@ -5,9 +5,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
-import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.common.CreateNoteTopBar
-import com.just.cse.digitaldiary.twozerotwothree.data.data.created_note.DummyNoteDataProvider
-import com.just.cse.digitaldiary.twozerotwothree.data.data.created_note.Note
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.created_note.Note
 
 class NoteDetailDestination(
     private val note:Note,
@@ -29,7 +28,7 @@ fun NoteDetails(
 ) {
     Scaffold (
         topBar = {
-            CreateNoteTopBar(
+            SimpleTopBar(
                 title = "Note Details",
                 onNavigationIconClick =onExitRequest
             )

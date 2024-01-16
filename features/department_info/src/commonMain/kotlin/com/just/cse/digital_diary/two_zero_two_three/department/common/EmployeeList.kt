@@ -37,9 +37,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.features.common_ui.network_image.ImageLoader
-import com.just.cse.digital_diary.features.common_ui.list.GenericListScreen
-import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.Employee
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.network_image.ImageLoader
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.list.GenericListScreen
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.Employee
 
 
 /*

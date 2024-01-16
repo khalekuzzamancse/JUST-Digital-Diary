@@ -30,7 +30,7 @@ kotlin {
                 implementation(libs.ktor.serialization.kotlinx.json)
 
 
-                implementation(project(":features:common_ui"))
+                implementation(project(":common_ui"))
                 implementation(project(":features:faculty"))
                 implementation(project(":features:sharing_document"))
                 implementation(project(":features:auth"))

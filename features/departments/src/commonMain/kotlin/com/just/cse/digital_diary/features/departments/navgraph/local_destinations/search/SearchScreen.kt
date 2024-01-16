@@ -2,8 +2,8 @@ package com.just.cse.digital_diary.features.departments.navgraph.local_destinati
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import com.just.cse.digital_diary.features.common_ui.search_bar.SearchableEmployeeList
-import com.just.cse.digital_diary.features.common_ui.search_bar.generateDummyEmployeeList
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.search_bar.SearchableEmployeeList
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.search_bar.generateDummyEmployeeList
 
 internal class SearchScreen(
    private val onExitRequest: () -> Unit,

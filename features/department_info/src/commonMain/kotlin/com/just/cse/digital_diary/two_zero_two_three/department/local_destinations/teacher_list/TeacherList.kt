@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.department.common.EmployeeList
-import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.Employee
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.Employee
 
 @Composable
 internal fun DepartmentTeacherListDestinationContent(

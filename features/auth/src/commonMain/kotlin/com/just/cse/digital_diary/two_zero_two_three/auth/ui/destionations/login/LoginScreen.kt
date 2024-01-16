@@ -8,7 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.features.common_ui.progressbar.ProgressBarNSnackBarDecorator
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.progressbar.ProgressBarNSnackBarDecorator
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTopBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

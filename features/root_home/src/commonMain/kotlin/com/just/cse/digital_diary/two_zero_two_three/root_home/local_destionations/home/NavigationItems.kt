@@ -10,7 +10,7 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Message
 import androidx.compose.material.icons.outlined.Notes
 import androidx.compose.material.icons.outlined.School
-import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
 
 val topMostDestinations = listOf(
     NavigationItem(

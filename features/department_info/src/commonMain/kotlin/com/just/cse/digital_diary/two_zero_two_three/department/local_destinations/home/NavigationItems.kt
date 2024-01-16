@@ -7,7 +7,7 @@ import androidx.compose.material.icons.filled.Work
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.SupervisorAccount
 import androidx.compose.material.icons.outlined.Work
-import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
 
 
 internal val departmentSubDestinations = listOf(

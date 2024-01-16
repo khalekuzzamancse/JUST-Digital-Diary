@@ -17,8 +17,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.AnimateVisibilityDecorator
-import com.just.cse.digital_diary.features.common_ui.navigation.modal_drawer.ModalDrawerDecorator
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.AnimateVisibilityDecorator
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.ModalDrawerDecorator
 import com.just.cse.digital_diary.two_zero_two_three.root_home.NavigatorManager
 import com.just.cse.digital_diary.two_zero_two_three.root_home.child_destination.EditProfile
 import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.about_us.AboutUs

@@ -1,19 +1,9 @@
 package com.just.cse.digital_diary.features.faculty.faculty.navigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home.HomeContent
 import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home.HomeDestination
-import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.FacultyInfo
 
 @Composable
 internal fun NavGraph(

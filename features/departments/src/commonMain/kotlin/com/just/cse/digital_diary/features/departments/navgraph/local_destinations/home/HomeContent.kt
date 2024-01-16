@@ -14,10 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.features.common_ui.animation.TypeWriter
-import com.just.cse.digital_diary.features.common_ui.network_image.ImageLoader
-import com.just.cse.digitaldiary.twozerotwothree.data.data.faculty_info.FacultyInfoRepository
-import com.just.cse.digitaldiary.twozerotwothree.data.data.faculty_info.FacultyMessage
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.animation.TypeWriter
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.network_image.ImageLoader
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.faculty_info.FacultyInfoRepository
 
 @Composable
 internal fun HomeContent() {

@@ -1,11 +1,9 @@
 package com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -14,10 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.features.common_ui.animation.TypeWriter
-import com.just.cse.digital_diary.features.common_ui.network_image.ImageLoader
-import com.just.cse.digitaldiary.twozerotwothree.data.data.faculties_info.FacultiesInfoRepository
-import com.just.cse.digitaldiary.twozerotwothree.data.data.faculty_info.FacultyInfoRepository
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.animation.TypeWriter
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.faculties_info.FacultiesInfoRepository
 
 @Composable
 fun HomeContent() {

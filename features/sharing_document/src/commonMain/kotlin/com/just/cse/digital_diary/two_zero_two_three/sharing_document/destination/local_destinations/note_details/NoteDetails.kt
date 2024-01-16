@@ -23,7 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.features.common_ui.animation.TypeWriter
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.animation.TypeWriter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

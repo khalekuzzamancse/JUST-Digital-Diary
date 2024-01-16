@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.just.cse.digital_diary.features.departments.navgraph.local_destinations.home.HomeContent
 import com.just.cse.digital_diary.features.departments.navgraph.local_destinations.home.HomeDestination
-import com.just.cse.digitaldiary.twozerotwothree.data.data.repository.FacultyRepository
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.FacultyRepository
 
 @Composable
 fun NavGraph(

@@ -16,8 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.features.common_ui.navigation.NavigationItem
-import com.just.cse.digital_diary.features.common_ui.navigation.NavigationRailState
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationRailState
 
 
 @Composable

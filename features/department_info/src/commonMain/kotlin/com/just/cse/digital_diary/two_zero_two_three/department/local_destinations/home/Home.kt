@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.just.cse.digitaldiary.twozerotwothree.data.data.department_info.DepartmentInfoRepository
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.department_info.DepartmentInfoRepository
 
 @Composable
 internal fun Home(

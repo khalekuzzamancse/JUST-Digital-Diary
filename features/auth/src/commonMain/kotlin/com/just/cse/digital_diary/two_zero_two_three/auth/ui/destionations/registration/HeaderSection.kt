@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.features.common_ui.network_image.ImageLoader
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.network_image.ImageLoader
 
 @Composable
 fun RegistrationHeaderSection() {

@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -21,9 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.just.cse.digital_diary.features.common_ui.network_image.ImageLoader
-import com.just.cse.digital_diary.features.common_ui.animation.TypeWriter
-import com.just.cse.digital_diary.features.common_ui.top_bar.SimpleTopBar
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.network_image.ImageLoader
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.animation.TypeWriter
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
 data class ViceChancellorInfo(
     val name: String,
@@ -59,7 +61,8 @@ fun ViceChancellorMessage(
         topBar = {
             SimpleTopBar(
                 onNavigationIconClick = onExitRequest,
-                title = "Message from VC"
+                title = "Message from VC",
+                navigationIcon = Icons.Default.Menu
             )
         },
 

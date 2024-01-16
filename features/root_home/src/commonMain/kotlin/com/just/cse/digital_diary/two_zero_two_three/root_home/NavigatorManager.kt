@@ -37,7 +37,8 @@ internal class NavigatorManager(
             )
         )
     }
-    fun navigateToSharedNote() {
+    fun navigateToSharedNote(
+    ) {
         push(
             NoteListDestination(
                 onExitRequest = ::pop

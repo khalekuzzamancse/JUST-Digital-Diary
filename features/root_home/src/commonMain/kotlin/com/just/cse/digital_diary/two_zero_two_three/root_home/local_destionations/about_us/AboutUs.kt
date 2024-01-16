@@ -14,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
@@ -33,8 +34,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.features.common_ui.animation.TypeWriter
-import com.just.cse.digital_diary.features.common_ui.top_bar.SimpleTopBar
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.animation.TypeWriter
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
 private val features = listOf(
     "Create notes with rich text formatting",
@@ -53,7 +54,8 @@ fun AboutUs(
         topBar = {
             SimpleTopBar(
                 onNavigationIconClick = onExitRequest,
-                title = "About Us"
+                title = "About Us",
+                navigationIcon = Icons.Default.Menu
             )
         },
 
