@@ -10,43 +10,43 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Message
 import androidx.compose.material.icons.outlined.Notes
 import androidx.compose.material.icons.outlined.School
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 
 val topMostDestinations = listOf(
-    NavigationItem(
+    NavigationItemInfo(
         label = "Home",
         unFocusedIcon = Icons.Outlined.Home,
         key = ""
     ),
 
-    NavigationItem(
+    NavigationItemInfo(
         label = "Faculty Members",
         unFocusedIcon = Icons.Outlined.School,
         key = ""
     ),
-    NavigationItem(
+    NavigationItemInfo(
         label = "Administrators",
         unFocusedIcon = Icons.Outlined.AdminPanelSettings,
         key = ""
     ),
 
-    NavigationItem(
+    NavigationItemInfo(
         label = "Message(Vice -Chancellor)",
         unFocusedIcon = Icons.Outlined.Message,
         key = ""
     ),
-    NavigationItem(
+    NavigationItemInfo(
         label = "About Us",
         unFocusedIcon = Icons.Outlined.Info,
         key = ""
     ),
-    NavigationItem(
+    NavigationItemInfo(
         label = "Edit Profile",
         unFocusedIcon = Icons.Outlined.Edit,
         focusedIcon = Icons.Filled.Edit,
         key = ""
     ),
-    NavigationItem(
+    NavigationItemInfo(
         label = "Notes",
         unFocusedIcon = Icons.Outlined.Notes,
         focusedIcon = Icons.Filled.Notes,

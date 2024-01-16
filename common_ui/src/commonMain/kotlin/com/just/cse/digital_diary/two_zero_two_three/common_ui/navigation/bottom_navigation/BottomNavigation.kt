@@ -9,14 +9,14 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> BottomNavigationBar(
     modifier: Modifier=Modifier,
-    destinations: List<NavigationItem<T>>,
+    destinations: List<NavigationItemInfo<T>>,
     selectedDestinationIndex:Int,
     onDestinationSelected:(Int) -> Unit,
 ) {

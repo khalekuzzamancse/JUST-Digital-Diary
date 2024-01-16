@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation
+package com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
@@ -39,11 +39,38 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-
+@Composable
+fun <T> AnimatedNavigationItemTextIcon(
+    navigationItem: NavigationItemInfo2<T>,
+    selected: Boolean,
+    visibilityDelay: Long=0,
+    onFocusing: () -> Unit={},
+    onClick: () -> Unit,
+) {
+    var show by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(visibilityDelay)
+            show = true
+            break
+        }
+    }
+    AnimatedVisibility(
+        visible = show
+    ) {
+        NavigationItemTextIcon(
+            label=navigationItem.label,
+            selected=selected,
+            onClick=onClick,
+            iconText = navigationItem.iconText,
+            onFocusing=onFocusing
+        )
+    }
+}
 
 @Composable
- fun <T> AnimatedNavigationItem(
-    navigationItem: NavigationItem<T>,
+ fun <T> AnimatedNavigationItemTextIcon(
+    navigationItem: NavigationItemInfo<T>,
     selected: Boolean,
     visibilityDelay: Long=0,
     onFocusing: () -> Unit={},
@@ -72,7 +99,7 @@ import kotlinx.coroutines.launch
 }
 
 @Composable
- private fun NavigationItem(
+  fun NavigationItem(
     label: String,
     selected: Boolean,
     onClick: () -> Unit,

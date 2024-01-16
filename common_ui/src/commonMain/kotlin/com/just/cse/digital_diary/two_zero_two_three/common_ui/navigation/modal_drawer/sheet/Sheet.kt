@@ -5,14 +5,14 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationGroup
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationGroup
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.NavGroupSelectedItem
 @Composable
 fun <T>Sheet(
     selectedDestinationIndex: Int =-1,
     visibilityDelay:Long,
-    destinations: List<NavigationItem<T>>,
+    destinations: List<NavigationItemInfo<T>>,
     onDestinationSelected: (index: Int) -> Unit
 ) {
 
@@ -98,7 +98,7 @@ fun Sheet(
 fun <T>DrawerSheet(
     header: (@Composable () -> Unit)? = null,
     footer: (@Composable () -> Unit)? = null,
-    destinations: List<NavigationItem<T>>,
+    destinations: List<NavigationItemInfo<T>>,
     destinationDecorator: @Composable (index: Int) -> Unit,
 ) {
     ModalDrawerSheet(

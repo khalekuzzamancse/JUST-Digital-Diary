@@ -15,14 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.bottom_navigation.BottomNavigationBar
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 
 @Composable
 fun <T> TopNBottomBarDecorator(
     topBarTitle: String,
     topNavigationIcon: ImageVector? = null,
     onNavigationIconClick: () -> Unit={},
-    bottomDestinations: List<NavigationItem<T>>,
+    bottomDestinations: List<NavigationItemInfo<T>>,
     onDestinationSelected: (Int) -> Unit,
     selectedDestinationIndex: Int,
     content: @Composable (Modifier) -> Unit,

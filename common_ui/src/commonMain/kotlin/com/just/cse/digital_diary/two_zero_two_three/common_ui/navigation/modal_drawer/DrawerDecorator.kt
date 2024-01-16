@@ -6,14 +6,14 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.sheet.Sheet
 
 @Composable
 fun <T>ModalDrawerDecorator(
     drawerState: ModalDrawerState,
     visibilityDelay:Long = 70L,
-    destinations: List<NavigationItem<T>>,
+    destinations: List<NavigationItemInfo<T>>,
     selectedDesertionIndex: Int,
     onDestinationSelected: (Int) -> Unit = {},
     content: @Composable () -> Unit,
@@ -40,7 +40,7 @@ fun <T>ModalDrawerDecorator(
 
 @Composable
 fun <T>ModalDrawerDecorator(
-    destinations: List<NavigationItem<T>>,
+    destinations: List<NavigationItemInfo<T>>,
     visibilityDelay:Long = 70L,
     selectedDesertionIndex: Int,
     drawerState: DrawerState,

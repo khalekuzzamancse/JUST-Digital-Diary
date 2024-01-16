@@ -4,11 +4,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 
 @Composable
 fun <T> BottomBarDecorator(
-    bottomDestinations: List<NavigationItem<T>>,
+    bottomDestinations: List<NavigationItemInfo<T>>,
     onDestinationSelected: (Int) -> Unit,
     selectedDestinationIndex: Int,
     topAppbar:@Composable () -> Unit,

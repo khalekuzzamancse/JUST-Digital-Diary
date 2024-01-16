@@ -13,12 +13,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 import kotlinx.coroutines.delay
 
 @Composable
 fun <T> ItemDecorator(
-    navigationItem: NavigationItem<T>,
+    navigationItem: NavigationItemInfo<T>,
     isSelected: Boolean,
     visibilityDelay: Long,
     onClick: () -> Unit,
@@ -61,7 +61,7 @@ fun <T> ItemDecorator(
 
 @Composable
 fun <T> ItemDecorator(
-    navigationItem: NavigationItem<T>,
+    navigationItem: NavigationItemInfo<T>,
     isSelected: Boolean,
     onClick: () -> Unit,
 ) {

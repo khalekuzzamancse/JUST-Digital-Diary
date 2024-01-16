@@ -9,7 +9,7 @@ import androidx.compose.material.icons.filled.Science
 import androidx.compose.material.icons.outlined.Science
 import androidx.compose.runtime.Composable
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.bottom_sheet.BottomSheetNavigationSection
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.FacultyInfo
 
 @Composable
@@ -20,7 +20,7 @@ internal fun AnimatedBottomSheet(
     onFacultyClick: (Int) -> Unit,
 ) {
     val destinations = faculties.map {
-        NavigationItem(
+        NavigationItemInfo(
             label = it.name,
             unFocusedIcon = Icons.Outlined.Science,
             focusedIcon =Icons.Filled.Science,

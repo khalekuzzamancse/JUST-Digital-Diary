@@ -5,7 +5,7 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 
 //Scaffold need for snack bar
 //No top bar and bottom bar,since it is for medium and expanded screen
@@ -20,7 +20,7 @@ data class NavigationRailGroup(
     val name: String,
     val icon: ImageVector? = null,
     val isVisible: Boolean = true,
-    val items: List<NavigationItem<Int>>,
+    val items: List<NavigationItemInfo<Int>>,
 )
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

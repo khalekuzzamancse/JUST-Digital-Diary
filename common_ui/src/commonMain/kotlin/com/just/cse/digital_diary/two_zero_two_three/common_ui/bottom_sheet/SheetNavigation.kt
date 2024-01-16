@@ -12,13 +12,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.AnimatedNavigationItem
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.AnimatedNavigationItemTextIcon
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
  fun <T> BottomSheetNavigationSection(
-    destinations: List<NavigationItem<T>>,
+    destinations: List<NavigationItemInfo<T>>,
     currentDestinationIndex: Int,
     onItemClick: (Int) -> Unit,
 ) {
@@ -36,7 +37,43 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.Naviga
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             destinations.forEachIndexed { index, _ ->
-                AnimatedNavigationItem(
+                AnimatedNavigationItemTextIcon(
+                    navigationItem = destinations[index],
+                    visibilityDelay = (index + 1) * 10L,
+                    selected = currentDestinationIndex == index,
+                    onClick = {
+                        onItemClick(index)
+                    }
+                )
+            }
+
+        }
+    }
+
+
+}
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun <T> BottomSheetNavigationSection2(
+    destinations: List<NavigationItemInfo2<T>>,
+    currentDestinationIndex: Int,
+    onItemClick: (Int) -> Unit,
+) {
+    Surface(
+        modifier = Modifier.padding(8.dp),
+        shadowElevation = 8.dp,
+        shape = RoundedCornerShape(topStart = 4.dp)
+    ) {
+        FlowRow(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            destinations.forEachIndexed { index, _ ->
+                AnimatedNavigationItemTextIcon(
                     navigationItem = destinations[index],
                     visibilityDelay = (index + 1) * 10L,
                     selected = currentDestinationIndex == index,

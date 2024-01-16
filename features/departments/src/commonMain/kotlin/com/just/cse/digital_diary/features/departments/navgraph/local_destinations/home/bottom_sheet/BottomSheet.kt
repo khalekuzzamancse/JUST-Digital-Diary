@@ -4,12 +4,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideInVertically
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Science
-import androidx.compose.material.icons.outlined.Science
 import androidx.compose.runtime.Composable
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.bottom_sheet.BottomSheetNavigationSection
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.bottom_sheet.BottomSheetNavigationSection2
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.Department
 
 @Composable
@@ -20,10 +17,9 @@ internal fun AnimatedBottomSheet(
     onFacultyClick: (Int) -> Unit,
 ) {
     val destinations = faculties.map {
-        NavigationItem(
+        NavigationItemInfo2(
             label = it.fullName,
-            unFocusedIcon = Icons.Outlined.Science,
-            focusedIcon =Icons.Filled.Science,
+            iconText = it.shortName,
             key = it.id
         )
     }
@@ -36,7 +32,7 @@ internal fun AnimatedBottomSheet(
             )
         ),
     ) {
-        BottomSheetNavigationSection(
+        BottomSheetNavigationSection2(
             destinations = destinations,
             onItemClick=onFacultyClick,
             currentDestinationIndex = selectedIndex

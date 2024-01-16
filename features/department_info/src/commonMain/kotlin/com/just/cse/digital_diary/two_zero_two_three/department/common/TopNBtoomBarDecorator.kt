@@ -5,7 +5,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.bottom_navigation.BottomNavigationBar
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
@@ -15,7 +15,7 @@ internal fun <T> TopNBottomBarDecorator(
     topBarTitle: String,
     topNavigationIcon: ImageVector? = null,
     onNavigationIconClick: () -> Unit,
-    bottomDestinations: List<NavigationItem<T>>,
+    bottomDestinations: List<NavigationItemInfo<T>>,
     onDestinationSelected: (Int) -> Unit,
     selectedDestinationIndex: Int,
     content: @Composable (Modifier) -> Unit,

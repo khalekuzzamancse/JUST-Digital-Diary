@@ -4,25 +4,25 @@ object DepartmentFakeDB {
     val departmentsOfAppliedScienceAndTechnology = listOf(
         Department(
             fullName = "Department Of Agro Product Processing Technology",
-            shortName = "Agro Processing"
+            shortName = "APPT"
         ),
         Department(
             fullName = "Department Of Climate and Disaster Management",
-            shortName = "Climate & Disaster Management"
+            shortName = "CDM"
         ),
         Department(
             fullName = "Department Of Environmental Science and Technology",
-            shortName = "Environmental Science & Tech"
+            shortName = "EST"
         ),
         Department(
             fullName = "Department Of Nutrition and Food Technology",
-            shortName = "Nutrition & Food Tech"
+            shortName = "NFT"
         )
     )
     val departmentsOfBiologicalScienceAndTechnology = listOf(
         Department(
             fullName = "Department Of Fisheries and Marine Bioscience",
-            shortName = "Fisheries & Marine Bioscience"
+            shortName = "FMB"
         ),
         Department(
             fullName = "Department Of Genetic Engineering and Biotechnology",
@@ -30,17 +30,17 @@ object DepartmentFakeDB {
         ),
         Department(
             fullName = "Department Of Microbiology",
-            shortName = "Microbiology"
+            shortName = "M"
         ),
         Department(
             fullName = "Department Of Pharmacy",
-            shortName = "Pharmacy"
+            shortName = "P"
         )
     )
     val departmentsOfNursingAndHealthScience = listOf(
         Department(
             fullName = "Department Of Nursing and Health Science",
-            shortName = "Nursing & Health Science"
+            shortName = "NHS"
         ),
         Department(
             fullName = "Department Of Physical Education and Sports Science",
@@ -54,21 +54,21 @@ object DepartmentFakeDB {
     val departmentOfEnglish = listOf(
         Department(
             fullName = "Department Of English",
-            shortName = "English"
+            shortName = "Eng"
         )
     )
     val departmentsOfScience = listOf(
         Department(
             fullName = "Department Of Chemistry",
-            shortName = "Chemistry"
+            shortName = "Che"
         ),
         Department(
             fullName = "Department Of Mathematics",
-            shortName = "Mathematics"
+            shortName = "Math"
         ),
         Department(
             fullName = "Department Of Physics",
-            shortName = "Physics"
+            shortName = "Phy"
         )
     )
     val departmentsOfBusinessAndFinance = listOf(

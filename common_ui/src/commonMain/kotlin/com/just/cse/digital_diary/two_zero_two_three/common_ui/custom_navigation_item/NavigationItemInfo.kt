@@ -1,24 +1,31 @@
-package com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation
+package com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
 data class NavigationRailState(
-    val options: List<NavigationItem<Int>>,
+    val options: List<NavigationItemInfo<Int>>,
     val selectedItem: Int,
     val isExpandMode: Boolean
 )
 data class NavigationGroup(
     val name: String,
     val icon: ImageVector,
-    val members: List<NavigationItem<Int>>
+    val members: List<NavigationItemInfo<Int>>
 )
 
 //use key to uniquely identify
-data class NavigationItem<T>(
+data class NavigationItemInfo<T>(
     val key:T,
     val label: String,
     val unFocusedIcon: ImageVector,
     val focusedIcon: ImageVector =unFocusedIcon,
+    val route: String = label,
+    val badge: String? = null,
+)
+data class NavigationItemInfo2<T>(
+    val key:T,
+    val label: String,
+    val iconText: String,
     val route: String = label,
     val badge: String? = null,
 )
