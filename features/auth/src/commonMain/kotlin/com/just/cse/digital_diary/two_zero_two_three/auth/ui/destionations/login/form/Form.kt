@@ -29,7 +29,7 @@ internal fun LoginForm(
             NonCompactScreenLoginForm(
                 data = data,
                 fieldModifier = Modifier.fillMaxWidth(),
-                formModifier = formModifier.widthIn(max = 500.dp),
+                formModifier = formModifier,
                 onUserNameChanged = onUserNameChanged,
                 onPasswordChanged = onPasswordChanged,
             )

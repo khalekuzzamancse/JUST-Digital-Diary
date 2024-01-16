@@ -1,11 +1,14 @@
 package com.just.cse.digital_diary.two_zero_two_three.common_ui.form_layout
 
 
+import androidx.compose.foundation.background
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import kotlin.math.max
 
 @Composable
@@ -36,12 +39,10 @@ fun FormLayout(
         val firstColumnChildPlaceAbles = firstColumnChildMeasureAbles.map { measurable ->
             measurable.measure(eachRow1stChildConstraint)
         }
-        //let gap between two column=5dp
-
         val firstColumnWidth = firstColumnChildPlaceAbles.maxOf { it.width  }+horizontalGap.toPx().toInt()
         val secondColumnWidth = constraints.maxWidth - firstColumnWidth
         val eachRowSecondChildConstraint = Constraints(
-            minWidth = secondColumnWidth,
+            minWidth = 0,
             minHeight = 0,
             maxWidth = secondColumnWidth,
             maxHeight = Constraints.Infinity
@@ -49,8 +50,13 @@ fun FormLayout(
         val secondColumnChildPlaceAbles = secondColumnChildMeasureAbles.map { measurable ->
             measurable.measure(eachRowSecondChildConstraint)
         }
-        val layoutHeight = max(firstColumnChildPlaceAbles.sumOf { it.height }, secondColumnChildPlaceAbles.sumOf { it.height })
-        layout(constraints.maxWidth, layoutHeight) {
+        val totalVerticalGap=verticalGap*firstColumnChildMeasureAbles.size
+        val layoutHeight = max(firstColumnChildPlaceAbles.sumOf { it.height },
+            secondColumnChildPlaceAbles.sumOf { it.height })+totalVerticalGap.toPx().toInt()
+        val layoutWidth =  firstColumnChildPlaceAbles.maxBy { it.width }.width+
+                secondColumnChildPlaceAbles.maxBy { it.width }.width+horizontalGap.toPx().toInt()
+
+        layout(width = layoutWidth, height = layoutHeight) {
             var y = 0
             firstColumnChildPlaceAbles.forEachIndexed { i, label ->
                 val textField = secondColumnChildPlaceAbles[i]

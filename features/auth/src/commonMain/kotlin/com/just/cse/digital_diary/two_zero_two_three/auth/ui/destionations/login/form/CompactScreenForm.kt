@@ -6,14 +6,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person4
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthPasswordField
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTextField
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.LoginViewModel
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.RegistrationFormLabels
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.form.RegistrationFormLabels
 
 
 

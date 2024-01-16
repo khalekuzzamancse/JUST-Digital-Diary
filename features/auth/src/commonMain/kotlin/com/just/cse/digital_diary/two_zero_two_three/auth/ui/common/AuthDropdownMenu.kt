@@ -36,15 +36,18 @@ fun AuthDropDownMenu(
     modifier: Modifier,
     options:List<String>,
     onOptionSelected: (String) -> Unit,
-    label: String,
+    label: String?=null,
     selected: String,
 ) {
 
     Column {
-        Text(
-            text = label,
-        )
-        Spacer(Modifier.height(8.dp))
+        if (label != null) {
+            Text(
+                text = label,
+            )
+            Spacer(Modifier.height(8.dp))
+        }
+
         MyDrop2(
             modifier=modifier,
             options = options,

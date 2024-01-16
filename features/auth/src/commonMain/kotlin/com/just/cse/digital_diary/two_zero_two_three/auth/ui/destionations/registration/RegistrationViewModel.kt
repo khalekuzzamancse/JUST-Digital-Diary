@@ -1,6 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration
 
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.LoginViewModel
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.form.RegistrationFormData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,8 +10,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
-class RegistraionViewModel(
-    val scope: CoroutineScope
+class RegistrationViewModel(
+    private val scope: CoroutineScope
 ) {
     companion object {
         private const val TAG = "RegistrationViewModel: "
@@ -76,21 +77,21 @@ class RegistraionViewModel(
     }
 
 
-    suspend fun onRegistrationRequest(): Boolean {
+     fun onRegistrationRequest() {
+         scope.launch {
+             log("${data.value}")
+             _showProcessBar.value = true
+             delay(2000) //pretend for network IO
 
-        log("${data.value}")
-        _showProcessBar.value = true
-        delay(2000) //pretend for network IO
-
-        val success = if (_data.value.email.contains("just.edu.bd")) {
-            onRegisterSuccess()
-            true
-        } else {
-            onRegisterFailure()
-            false
-        }
-        _showProcessBar.value = false
-        return success
+             val success = if (_data.value.email.contains("just.edu.bd")) {
+                 onRegisterSuccess()
+                 true
+             } else {
+                 onRegisterFailure()
+                 false
+             }
+             _showProcessBar.value = false
+         }
     }
 
     private fun onRegisterSuccess() {

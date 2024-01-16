@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -80,12 +81,15 @@ private fun LoginSlot(
             shadowElevation = 6.dp,
         ) {
             Column(modifier = Modifier.padding(12.dp)) {
-                LoginForm(
-                    data = viewModel.data.collectAsState().value,
-                    fieldModifier = Modifier.fillMaxWidth(),
-                    onUserNameChanged = viewModel::onUserNameChanged,
-                    onPasswordChanged = viewModel::onPasswordChanged,
-                )
+                Box(Modifier.widthIn(max = 500.dp).align(Alignment.CenterHorizontally)) {
+                    LoginForm(
+                        data = viewModel.data.collectAsState().value,
+                        fieldModifier = Modifier.fillMaxWidth(),
+                        onUserNameChanged = viewModel::onUserNameChanged,
+                        onPasswordChanged = viewModel::onPasswordChanged,
+                    )
+                }
+
                 Spacer(Modifier.height(16.dp))
                 LoginControls(
                     modifier = Modifier.align(Alignment.CenterHorizontally),

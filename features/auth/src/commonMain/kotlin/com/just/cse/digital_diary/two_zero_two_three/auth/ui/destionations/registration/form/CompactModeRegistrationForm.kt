@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.form
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,7 +8,6 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Person4
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -16,26 +15,6 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthDropDown
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthPasswordField
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTextField
 
-@Composable
-fun RegistrationForm(
-    modifier: Modifier = Modifier,
-    fieldModifier: Modifier = Modifier,
-    viewModel: RegistraionViewModel,
-) {
-    val data = viewModel.data.collectAsState().value
-    RegistrationForm(
-        modifier = modifier,
-        fieldModifier = fieldModifier.fillMaxWidth(),
-        data = data,
-        onNameChanged = viewModel::onFullNameChanged,
-        onEmailChanged = viewModel::onEmailChanged,
-        onUserNameChanged = viewModel::onUsernameChanged,
-        onPasswordChanged = viewModel::onPasswordChanged,
-        onDeptChanged = viewModel::onDeptChanged,
-        onConfirmedPassword = viewModel::onConfirmedPasswordChanged
-    )
-
-}
 data class RegistrationFormData(
     val name: String="",
     val email: String = "",
@@ -45,7 +24,7 @@ data class RegistrationFormData(
     val confirmPassword: String = ""
 )
 
-object RegistrationFormLabels {
+internal object RegistrationFormLabels {
     const val FULL_NAME = "Full Name"
     const val EMAIL = "Email"
     const val USER_NAME = "User Name"
@@ -55,7 +34,7 @@ object RegistrationFormLabels {
 }
 
 @Composable
-fun RegistrationForm(
+ internal fun CompactModeRegistrationForm(
     modifier: Modifier = Modifier,
     fieldModifier: Modifier,
     data: RegistrationFormData,
@@ -88,7 +67,7 @@ fun RegistrationForm(
 }
 
 @Composable
-fun RegistrationForm(
+private fun RegistrationForm(
     modifier: Modifier = Modifier,
     fieldModifier: Modifier,
     name: String,
@@ -106,7 +85,7 @@ fun RegistrationForm(
     onConfirmedPassword: (String) -> Unit,
 ) {
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
 

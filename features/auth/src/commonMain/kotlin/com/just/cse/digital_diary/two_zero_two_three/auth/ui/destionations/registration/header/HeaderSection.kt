@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.header
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,19 +13,21 @@ import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.network_image.ImageLoader
 
 @Composable
-fun RegistrationHeaderSection() {
+fun RegistrationHeaderSection(
+    modifier: Modifier,
+) {
    Surface(
-       modifier = Modifier,
-       shape = RoundedCornerShape(bottomStart = 100.dp),
+       modifier = modifier,
+       shape = RoundedCornerShape(bottomStart = 80.dp),
        color = MaterialTheme.colorScheme.primary
    ) {
        Box(modifier = Modifier
            .fillMaxWidth()
-           .height(200.dp),
+           .height(100.dp),
        ){
                ImageLoader(
                    url = "https://automation.just.edu.bd/images/just-logo.png",
-                   modifier = Modifier.height(100.dp).align(Alignment.Center)
+                   modifier = Modifier.height(60.dp).align(Alignment.Center)
                )
 
        }

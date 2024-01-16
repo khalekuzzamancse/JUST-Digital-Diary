@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.edit_profile
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.edit_profile.form
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,25 +13,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthDropDownMenu
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTextField
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.RegistraionViewModel
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.edit_profile.EditProfileViewModel
 
-@Composable
-internal fun EditForm(
-    modifier: Modifier = Modifier,
-    fieldModifier: Modifier = Modifier,
-    viewModel: EditProfileViewModel,
-) {
-    val data = viewModel.data.collectAsState().value
-    EditForm(
-        modifier = modifier,
-        fieldModifier = fieldModifier.fillMaxWidth(),
-        data = data,
-        onNameChanged = viewModel::onFullNameChanged,
-        onUserNameChanged = viewModel::onUsernameChanged,
-        onDeptChanged = viewModel::onDeptChanged,
-    )
 
-}
 data class EditFormData(
     val name: String,
     val dept:String,
@@ -45,7 +29,7 @@ object EditFormLabels {
 }
 
 @Composable
-fun EditForm(
+fun CompactModeEditForm(
     modifier: Modifier = Modifier,
     fieldModifier: Modifier,
     data: EditFormData,
