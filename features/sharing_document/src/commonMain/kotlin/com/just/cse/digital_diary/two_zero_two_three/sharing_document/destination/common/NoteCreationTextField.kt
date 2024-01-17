@@ -25,7 +25,7 @@ internal fun TitleTextField(
     modifier: Modifier,
     shape: Shape = TextFieldDefaults.shape,
     errorMessage: String? = null,
-    label: String,
+    label: String?=null,
     value: String,
     onValueChanged: (String) -> Unit,
 ) {
@@ -35,7 +35,9 @@ internal fun TitleTextField(
     )
     val content: @Composable ColumnScope.() -> Unit = if (errorMessage == null) @Composable {
         {
-            Text(text = label)
+            if (label != null) {
+                Text(text = label)
+            }
             TextField(
                 leadingIcon = {
                     Icon(imageVector = Icons.Default.Title, contentDescription = null)
@@ -53,7 +55,9 @@ internal fun TitleTextField(
     } else @Composable {
         {
 
-            Text(text = label)
+            if (label != null) {
+                Text(text = label)
+            }
 
             TextField(
                 leadingIcon = {
@@ -90,7 +94,7 @@ internal fun DescriptionTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     shape: Shape = TextFieldDefaults.shape,
     errorMessage: String? = null,
-    label: String,
+    label: String?=null,
     value: String,
     singleLine: Boolean,
     leadingIcon: ImageVector?,
@@ -107,7 +111,9 @@ internal fun DescriptionTextField(
                     Icon(imageVector = leadingIcon, contentDescription = null)
                 }
                 Spacer(Modifier.width(4.dp))
-                Text(text = label)
+                if (label != null) {
+                    Text(text = label)
+                }
             }
             TextField(
                 singleLine = singleLine,
@@ -127,7 +133,9 @@ internal fun DescriptionTextField(
                 if (leadingIcon != null) {
                     Icon(imageVector = leadingIcon, contentDescription = null)
                 }
-                Text(text = label)
+                if (label != null) {
+                    Text(text = label)
+                }
             }
             TextField(
                 label = null,

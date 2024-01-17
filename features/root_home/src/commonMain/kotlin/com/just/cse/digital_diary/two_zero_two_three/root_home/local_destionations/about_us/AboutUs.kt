@@ -46,39 +46,7 @@ private val features = listOf(
     "Protect your diary with a password or fingerprint"
 )
 
-@Composable
-fun AboutUs(
-    onExitRequest:()->Unit,
-) {
-    Scaffold(
-        topBar = {
-            SimpleTopBar(
-                onNavigationIconClick = onExitRequest,
-                title = "About Us",
-                navigationIcon = Icons.Default.Menu
-            )
-        },
 
-        floatingActionButtonPosition = FabPosition.Center
-    ) {
-
-        Column(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize()
-
-                .verticalScroll(rememberScrollState())
-        ) {
-            AppName()
-            AppDescription()
-            FeaturesSection()
-            ContactSection()
-        }
-
-
-    }
-
-}
 
 @Composable
 fun ColumnScope.AppName() {

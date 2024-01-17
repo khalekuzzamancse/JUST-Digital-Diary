@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.runtime.Composable
@@ -17,16 +16,16 @@ import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destinatio
 Title:
 Description:
  */
-
-
 @Composable
-internal fun CreateNoteForm(
+internal fun CompactModeCreateNoteForm(
+    modifier: Modifier=Modifier,
     data:CreateNoteData,
     onTitleChanged:(String)->Unit,
     onDescriptionChanged:(String)->Unit
 ) {
 
     Column (
+        modifier=modifier,
     ){
         TitleTextField(
             modifier = Modifier.fillMaxWidth(),

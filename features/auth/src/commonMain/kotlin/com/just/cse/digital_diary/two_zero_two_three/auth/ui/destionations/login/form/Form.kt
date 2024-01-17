@@ -1,11 +1,9 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.form
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.WindowSizeDecorator
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
 
 @Composable
 internal fun LoginForm(

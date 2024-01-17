@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.edit_profile
+package com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.local_destinations.create_note
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.filled.Notes
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -25,75 +27,68 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.progressbar.ProgressBarNSnackBarDecorator
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTopBar
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.WindowSizeDecorator
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.edit_profile.form.EditForm
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
 @Composable
-internal fun EditProfileScreen(
+internal fun CreateNoteScreen(
     onExitRequest:()->Unit,
 ) {
-    val viewModel = remember { EditProfileViewModel() }
+    val viewModel= remember { CreateNoteViewModel() }
     WindowSizeDecorator(
-        showProgressBar = viewModel.showProcessBar.collectAsState().value,
+        showProgressBar = viewModel.showProgressBar.collectAsState().value,
         snackBarMessage = viewModel.snackBarMessage.collectAsState().value,
         onCompact = {
-            Scaffold(
+            Scaffold (
                 topBar = {
-                    AuthTopBar(
-                        title = "Edit Profile",
-                        onNavigationIconClick = onExitRequest,
-                        navigationIcon = Icons.Default.Menu
+                    SimpleTopBar(
+                        title = "Note Creation",
+                        onNavigationIconClick =onExitRequest
                     )
                 },
                 floatingActionButtonPosition = FabPosition.Center,
                 floatingActionButton = {
                     FloatingActionButton(
-                        onClick = viewModel::onEditRequest
+                        onClick = viewModel::onCreateRequest
                     ) {
                         Row(
                             modifier = Modifier.padding(start = 8.dp, end = 8.dp)
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Create,
+                                imageVector = Icons.Default.Notes,
                                 contentDescription = null
                             )
                             Spacer(Modifier.width(8.dp))
-                            Text("Edit Profile")
+                            Text("Create Note")
                         }
 
                     }
                 }
-
-            ) {
-                EditForm(
-                    modifier = Modifier.padding(it).padding(16.dp),
-                    fieldModifier = Modifier.fillMaxWidth(),
-                    data = viewModel.data.collectAsState().value,
-                    onNameChanged = viewModel::onFullNameChanged,
-                    onUserNameChanged = viewModel::onUsernameChanged,
-                    onDeptChanged = viewModel::onDeptChanged,
+            )
+            {
+                CreateNoteForm(
+                    modifier = Modifier.padding(it),
+                    data=viewModel.data.collectAsState().value,
+                    onTitleChanged=viewModel::onTitleChanged,
+                    onDescriptionChanged=viewModel::onDescriptionChanged
                 )
             }
         },
         onNonCompact = {
-            Box(Modifier.fillMaxWidth().padding(16.dp)){
+            Box(Modifier.fillMaxWidth().padding(16.dp).verticalScroll(rememberScrollState())){
                 Surface (modifier = Modifier.widthIn(max=500.dp).align(Alignment.TopCenter), shadowElevation = 6.dp){
                     Column(
                         modifier =  Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        EditForm(
-                            modifier = Modifier.padding(16.dp),
-                            fieldModifier = Modifier.fillMaxWidth(),
-                            data = viewModel.data.collectAsState().value,
-                            onNameChanged = viewModel::onFullNameChanged,
-                            onUserNameChanged = viewModel::onUsernameChanged,
-                            onDeptChanged = viewModel::onDeptChanged,
+                        CreateNoteForm(
+                            modifier = Modifier,
+                            data=viewModel.data.collectAsState().value,
+                            onTitleChanged=viewModel::onTitleChanged,
+                            onDescriptionChanged=viewModel::onDescriptionChanged
                         )
                         Spacer(Modifier.width(12.dp))
-
                         Row(
                             modifier = Modifier.padding(start = 8.dp, end = 8.dp)
                         ) {
@@ -105,9 +100,9 @@ internal fun EditProfileScreen(
                             }
                             Spacer(Modifier.width(8.dp))
                             TextButton(
-                                onClick = onExitRequest
+                                onClick =  viewModel::onCreateRequest
                             ){
-                                Text(text="Save")
+                                Text(text="Create")
 
                             }
 

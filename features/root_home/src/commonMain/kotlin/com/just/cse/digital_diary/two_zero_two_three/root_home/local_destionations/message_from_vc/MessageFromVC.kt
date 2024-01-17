@@ -27,92 +27,11 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.network_image.Ima
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.animation.TypeWriter
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
-data class ViceChancellorInfo(
-    val name: String,
-    val title: String,
-    val university: String
-)
+
+
 
 @Composable
-fun ViceChancellorMessage(
-    onExitRequest:()->Unit,
-) {
-    val titleStyle = TextStyle(
-        fontWeight = FontWeight.Bold,
-        fontSize = 24.sp,
-        color = Color.Black
-    )
-
-    val bodyStyle = TextStyle(
-        fontSize = 18.sp,
-        color = Color.Gray
-    )
-
-    val viceChancellorInfo = ViceChancellorInfo(
-        name = "Mr. X",
-        title = "Vice Chancellor",
-        university = "Jashore University of Science and Technology"
-    )
-
-    val messageText = """
-        Jashore University of Science and Technology (JUST) has started a steady journey of reaching a new height of excellence in research and to achieve a unique milestone in promoting new ideas and innovation, and in serving the nation and the global community by creating enlightened and skilled professionals who can meet the challenges of the 21st century fostering the motto of ‘being the employer, not the employee’. In keeping with this purpose, JUST has already been declared a research university that aims at generating and advancing knowledge by cutting-edge research in its state-of-the-art laboratories and in the congenial academic ambience. Apart from these, JUST has international and local collaboration with a wide range of reputed academia and industry...
-    """.trimIndent()
-    Scaffold(
-        topBar = {
-            SimpleTopBar(
-                onNavigationIconClick = onExitRequest,
-                title = "Message from VC",
-                navigationIcon = Icons.Default.Menu
-            )
-        },
-
-        floatingActionButtonPosition = FabPosition.Center
-    ) {
-
-        Column(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize()
-
-                .verticalScroll(rememberScrollState())
-        ){
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
-            ) {
-                ViceChancellorImage()
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                NameOfVC(info = viceChancellorInfo.name)
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                MoreInfoOnVC(info = viceChancellorInfo.title)
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                UniversityName(info = viceChancellorInfo.university)
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                MessageSection(
-                    titleStyle = titleStyle,
-                    bodyStyle = bodyStyle,
-                    messageText = messageText
-                )
-            }
-
-        }
-    }
-
-
-
-}
-
-@Composable
-private fun ColumnScope.ViceChancellorImage() {
+fun ColumnScope.ViceChancellorImage() {
     ImageLoader(
         url = "https://just.edu.bd/images/vc2.jpg",
         modifier = Modifier.height(200.dp)
@@ -123,7 +42,7 @@ private fun ColumnScope.ViceChancellorImage() {
 }
 
 @Composable
-private fun NameOfVC(info: String) {
+fun NameOfVC(info: String) {
     Text(
         text = info,
         style = TextStyle(
@@ -137,7 +56,7 @@ private fun NameOfVC(info: String) {
 }
 
 @Composable
-private fun MoreInfoOnVC(info: String) {
+fun MoreInfoOnVC(info: String) {
     Text(
         text = info,
         style = MaterialTheme.typography.bodySmall,
@@ -147,7 +66,7 @@ private fun MoreInfoOnVC(info: String) {
 }
 
 @Composable
-private fun UniversityName(info: String) {
+fun UniversityName(info: String) {
     TypeWriter(text=info, delay = 50){
         Text(
             text = it,
@@ -160,7 +79,7 @@ private fun UniversityName(info: String) {
 }
 
 @Composable
-private fun MessageSection(
+fun MessageSection(
     titleStyle: TextStyle,
     bodyStyle: TextStyle,
     messageText: String

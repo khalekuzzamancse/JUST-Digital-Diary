@@ -21,11 +21,11 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.ModalDrawerDecorator
 import com.just.cse.digital_diary.two_zero_two_three.root_home.NavigatorManager
 import com.just.cse.digital_diary.two_zero_two_three.root_home.child_destination.EditProfile
-import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.about_us.AboutUs
+import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.about_us.AboutUsScreen
 import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.RootDestinations
 import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.RootHomeContent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.topMostDestinations
-import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.message_from_vc.ViceChancellorMessage
+import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.message_from_vc.ViceChancellorMessageScreen
 import com.just.cse.digital_diary.two_zero_two_three.root_home.child_destination.CreateNoteScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -107,7 +107,7 @@ class RootNavHost : Screen {
                         }
                         RootDestinations.MESSAGE_FROM_VC -> {
                             AnimateVisibilityDecorator {
-                                ViceChancellorMessage(
+                                ViceChancellorMessageScreen(
                                     onExitRequest = openDrawer
                                 )
                             }
@@ -115,7 +115,7 @@ class RootNavHost : Screen {
 
                         RootDestinations.ABOUT_US -> {
                             AnimateVisibilityDecorator {
-                                AboutUs(
+                                AboutUsScreen(
                                     onExitRequest = openDrawer
                                 )
                             }

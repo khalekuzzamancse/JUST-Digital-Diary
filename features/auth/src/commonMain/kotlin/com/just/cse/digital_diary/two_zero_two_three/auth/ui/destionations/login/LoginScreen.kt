@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -19,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTopBar
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.form.LoginControls
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.form.LoginForm
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.WindowSizeDecorator
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.header.LoginHeaderSection
 
 @Composable
@@ -44,14 +46,14 @@ fun LoginScreenCom(
                 }
             ) {
                 LoginSlot(
-                    modifier = Modifier.padding(it).fillMaxWidth(),
+                    modifier = Modifier.padding(it).fillMaxWidth().verticalScroll(rememberScrollState()),
                     viewModel = viewModel,
                     onNavigateToRegisterScreen = onNavigateToRegisterScreen
                 )
             }
         },
         onNonCompact = {
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
                 LoginSlot(
                     modifier = Modifier.fillMaxWidth().align(Alignment.TopCenter),
                     viewModel = viewModel,

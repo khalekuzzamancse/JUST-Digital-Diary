@@ -10,7 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTopBar
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.WindowSizeDecorator
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
 
 @Composable
 fun RegisterScreenCom(

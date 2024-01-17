@@ -31,6 +31,7 @@ kotlin {
 
 
                 implementation(project(":common_ui"))
+                implementation(project(":data_layer:repository"))
                 implementation(project(":features:faculty"))
                 implementation(project(":features:sharing_document"))
                 implementation(project(":features:auth"))
