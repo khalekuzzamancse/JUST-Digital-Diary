@@ -2,17 +2,17 @@ package com.just.cse.digital_diary.features.faculty.faculty.navigation.child_des
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import com.just.cse.digital_diary.features.departments.navgraph.DepartmentListModuleEntryPoint
+import com.just.cse.digital_diary.two_zero_two_three.department.DepartmentModuleEntryPoint
 
-class DepartmentListModuleEntryPoint(
-    private val facultyId: String,
+internal class DepartmentModule(
+    private val departmentId: String,
     private val onExitRequest: () -> Unit
 ): Screen {
     @Composable
     override fun Content() {
-        DepartmentListModuleEntryPoint(
-            facultyId=facultyId,
-            onExitRequest = onExitRequest
+        DepartmentModuleEntryPoint(
+            departmentId=departmentId,
+            onExitRequested = onExitRequest
         )
     }
 

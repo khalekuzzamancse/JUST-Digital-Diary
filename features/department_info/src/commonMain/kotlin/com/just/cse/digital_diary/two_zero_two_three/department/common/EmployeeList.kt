@@ -50,6 +50,28 @@ client code,but this is responsive enough so it can be used with either separate
 another screen such as pane
  */
 
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+internal fun EmployeeListGrid(
+    modifier: Modifier = Modifier,
+    employees: List<Employee>
+) {
+
+    FlowRow (
+        modifier=modifier,
+    ){
+        employees.forEach {employee->
+            EmployeeCard(
+                modifier = Modifier.padding(8.dp),
+                employee = employee,
+                expandMode = true
+            )
+        }
+
+    }
+
+}
+
 @Composable
 internal fun EmployeeList(
     modifier: Modifier = Modifier,
@@ -71,7 +93,8 @@ internal fun EmployeeList(
 @Composable
 private fun EmployeeCard(
     modifier: Modifier,
-    employee: Employee
+    employee: Employee,
+    expandMode:Boolean=false
 ) {
     var expanded by remember { mutableStateOf(false) }
     Surface(
@@ -79,7 +102,7 @@ private fun EmployeeCard(
         shadowElevation = 2.dp
     ) {
             FlowRow(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier,
             ) {
                 ImageLoader(
                     url = "http://tinyurl.com/4m2eayaj",
@@ -100,30 +123,40 @@ private fun EmployeeCard(
                         text = employee.name,
                         style = MaterialTheme.typography.titleMedium,
                     )
-                    Row(
-                        modifier = Modifier,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
+                    if (expandMode){
                         Text(
                             text = employee.phone,
                             style = MaterialTheme.typography.bodySmall,
                         )
-                        Icon(
-                            imageVector = if (expanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
-                            contentDescription = null,
-                            modifier=Modifier.clickable {
-                                expanded = !expanded
-                            }
-                        )
-
+                        EmployeeCardExpandAblePart(employee)
                     }
-                    if (expanded) {
-                        ContentAnimationDecorator(
-                            state = expanded
+                    else{
+                        Row(
+                            modifier = Modifier,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            EmployeeCardExpandAblePart(employee)
+                            Text(
+                                text = employee.phone,
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                            Icon(
+                                imageVector = if (expanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
+                                contentDescription = null,
+                                modifier=Modifier.clickable {
+                                    expanded = !expanded
+                                }
+                            )
+
+                        }
+                        if (expanded) {
+                            ContentAnimationDecorator(
+                                state = expanded
+                            ) {
+                                EmployeeCardExpandAblePart(employee)
+                            }
                         }
                     }
+
 
             }
 

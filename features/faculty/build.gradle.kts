@@ -28,7 +28,6 @@ kotlin {
                 implementation(libs.voyager.transitions)
                 implementation(project(":data_layer:repository"))
                 implementation(project(":features:department_info"))
-                implementation(project(":features:departments"))
                 implementation(project(":common_ui"))
 
             }

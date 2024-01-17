@@ -6,7 +6,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class ViewModel {
+internal class ViewModel (
+    private val onDepartmentNavigationRequest:(String)->Unit,
+){
     private val _faculties = MutableStateFlow(FacultyRepository.faculties)
     val faculties = _faculties.asStateFlow()
     private val _selectedFacultyDepartments = MutableStateFlow<List<Department>>(emptyList())
@@ -22,8 +24,13 @@ class ViewModel {
     }
 
     fun onDepartmentSelected(index: Int) {
-       // _selectedDepartment.update { index }
+        _selectedDepartment.update { index }
+        onDepartmentNavigationRequest(
+            _selectedFacultyDepartments.value[index].id
+        )
+
     }
+
 
     fun onClearDepartmentSelection() {
         _selectedDepartment.update { 0 }

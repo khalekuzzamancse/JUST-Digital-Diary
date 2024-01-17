@@ -32,8 +32,12 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
 
 @Composable
-fun FacultiesScreenNonExpanded() {
-    val viewModel = remember { ViewModel() }
+internal fun FacultiesScreen(
+    onDepartmentNavigationRequest:(String)->Unit,
+) {
+    val viewModel = remember { ViewModel(
+        onDepartmentNavigationRequest=onDepartmentNavigationRequest
+    ) }
     val facultiesDestinations = viewModel.faculties.collectAsState().value.map {
         NavigationItemInfo2(
             label = it.name,
@@ -172,7 +176,7 @@ private fun DepartmentsDestination(
 }
 
 @Composable
-fun VerticalListNavigation(
+private fun VerticalListNavigation(
     modifier: Modifier = Modifier,
     destinations: List<NavigationItemInfo2<String>>,
     onDestinationSelected: (Int) -> Unit,

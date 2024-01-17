@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home.HomeTopBar
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.bottom_sheet.decorator.BottomSheetDecorator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.bottom_sheet.handler.BottomSheetControllerIcon
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.bottom_sheet.handler.BottomSheetHandler
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,6 +30,11 @@ internal fun CompactScreenLayout(
                 as,we have animation when showing department destination as a result ,to give better user                experience not hiding(recompose) the faculties,
                  Use a department background that hide the faculties  without recomposing the faculties
                   */
+    LaunchedEffect(Unit){
+        sheetHandler.expand()
+        delay(5000)
+        sheetHandler.partialExpand()
+    }
     Box(modifier = Modifier.fillMaxSize()) {
         BottomSheetDecorator(
             topBar = {

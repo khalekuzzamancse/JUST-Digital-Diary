@@ -2,7 +2,7 @@ package com.just.cse.digital_diary.features.faculty.faculty.navigation
 
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
-import com.just.cse.digital_diary.features.faculty.faculty.navigation.child_destinations.DepartmentListModuleEntryPoint
+import com.just.cse.digital_diary.features.faculty.faculty.navigation.child_destinations.DepartmentModule
 import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.search.SearchScreen
 
 
@@ -31,19 +31,27 @@ internal class NavigatorManager(
             navigator.push(des)
 
     }
-    fun navigateDepartmentsModule(facultyId: String) {
-        push(
-            DepartmentListModuleEntryPoint(
-                facultyId = facultyId,
-                onExitRequest =::pop
-            )
-        )
-    }
+//    fun navigateDepartmentsModule(facultyId: String) {
+//        push(
+//            DepartmentListModuleEntryPoint(
+//                facultyId = facultyId,
+//                onExitRequest =::pop
+//            )
+//        )
+//    }
     fun navigateSearchDestination() {
         push(
             SearchScreen(
                 onExitRequest =::pop
             )
+        )
+    }
+    fun navigateDepartmentInfoModule(departmentId: String) {
+        push(
+            DepartmentModule(
+            departmentId=departmentId,
+            onExitRequest = ::pop
+        )
         )
     }
 

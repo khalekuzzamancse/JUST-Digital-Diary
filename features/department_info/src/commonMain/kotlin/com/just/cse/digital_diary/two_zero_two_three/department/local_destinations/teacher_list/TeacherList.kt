@@ -16,7 +16,8 @@ internal fun DepartmentTeacherListDestinationContent(
         modifier = modifier.fillMaxSize()
     ) {
         EmployeeList(
-            employees = teachers
+            employees = teachers,
+
         )
 
 

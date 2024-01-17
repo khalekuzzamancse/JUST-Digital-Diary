@@ -59,7 +59,7 @@ class BottomSheetHandlerImp(
     override fun partialExpand() {
         _sheetState.update {
             SheetState(
-                initialValue = SheetValue.Expanded,
+                initialValue = SheetValue.PartiallyExpanded,
                 confirmValueChange = { true },
                 skipPartiallyExpanded = false
             )
