@@ -1,42 +1,34 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home
 
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.auth.AuthModuleEntryPoint
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.icons.capital_letters.IconDemo
-import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.RootNavGraph
+import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.faculties.FacultiesScreenNonExpanded
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.side_sheet.SideSheet
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.side_sheet.SideSheetNavigation
 import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.themes.AppTheme
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.FacultyRepository
 
 
 @Composable
 fun RootModule() {
     AppTheme {
-
-
-        var loginSuccess by remember {
-            mutableStateOf(false)
-        }
-        if (loginSuccess) {
-            RootNavGraph()
-        } else {
-            AuthModuleEntryPoint(
-                onLoginSuccess = {
-                    loginSuccess = true
-                }
-            )
-        }
+        FacultiesScreenNonExpanded()
+//        var loginSuccess by remember {
+//            mutableStateOf(false)
+//        }
+//        if (loginSuccess) {
+//            RootNavGraph()
+//        } else {
+//            AuthModuleEntryPoint(
+//                onLoginSuccess = {
+//                    loginSuccess = true
+//                }
+//            )
+//        }
     }
 
 
-
-
 }
-
 
 

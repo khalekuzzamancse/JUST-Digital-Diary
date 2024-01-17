@@ -4,6 +4,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 class BottomSheetHandlerImp(
-    private val scope: CoroutineScope,
+    private val scope: CoroutineScope= CoroutineScope(Dispatchers.Default),
     initialState:SheetValue=SheetValue.Hidden,
 ): BottomSheetHandler {
     private val _sheetState = MutableStateFlow(
@@ -68,14 +69,32 @@ class BottomSheetHandlerImp(
         scope.launch {
             when (_sheetState.value.currentValue) {
                 SheetValue.Hidden -> {
-                   _sheetState.value.show()//Hidden ->Partial Expanded
+                    _sheetState.update {
+                        SheetState(
+                            initialValue = SheetValue.PartiallyExpanded,
+                            confirmValueChange = { true },
+                            skipPartiallyExpanded = false
+                        )
+                    }
                 }
                 SheetValue.PartiallyExpanded -> {
-                    _sheetState.value.expand()
+                    _sheetState.update {
+                        SheetState(
+                            initialValue = SheetValue.Expanded,
+                            confirmValueChange = { true },
+                            skipPartiallyExpanded = false
+                        )
+                    }
                 }
 
                 SheetValue.Expanded -> {
-                    _sheetState.value.hide()
+                    _sheetState.update {
+                        SheetState(
+                            initialValue = SheetValue.Hidden,
+                            confirmValueChange = { true },
+                            skipPartiallyExpanded = false
+                        )
+                    }
                 }
             }
 

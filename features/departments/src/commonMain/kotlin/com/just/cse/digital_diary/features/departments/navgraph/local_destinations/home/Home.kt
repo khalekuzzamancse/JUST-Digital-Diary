@@ -51,7 +51,7 @@ internal fun HomeDestination(
             AnimatedBottomSheet(
                 visible = true,
                 selectedIndex = currentDestinationIndex,
-                faculties = departments,
+                departments = departments,
                 onFacultyClick = {
                     //hide the sheet to avoid crash
                     sheetHandler.hideSheet()

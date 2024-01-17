@@ -13,12 +13,12 @@ import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.Depa
 internal fun AnimatedBottomSheet(
     visible: Boolean,
     selectedIndex: Int,
-    faculties: List<Department>,
+    departments: List<Department>,
     onFacultyClick: (Int) -> Unit,
 ) {
-    val destinations = faculties.map {
+    val destinations = departments.map {
         NavigationItemInfo2(
-            label = it.fullName,
+            label = it.name,
             iconText = it.shortName,
             key = it.id
         )

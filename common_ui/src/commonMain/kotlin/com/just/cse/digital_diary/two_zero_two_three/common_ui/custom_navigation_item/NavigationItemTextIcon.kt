@@ -80,6 +80,11 @@ private fun TextToIcon(
     iconText: String,
     modifier: Modifier = Modifier,
     onFocusing: () -> Unit={},
+    colors:NavigationItemColor = NavigationItemColor(
+        focusedColor =MaterialTheme.colorScheme.errorContainer ,
+        unFocusedColor =MaterialTheme.colorScheme.primaryContainer,
+
+        ),
     shape: Shape = RoundedCornerShape(topStart = 8.dp, bottomEnd = 8.dp),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
 ) {
@@ -104,7 +109,7 @@ private fun TextToIcon(
         onFocusing()
     }
     val backgroundColor by animateColorAsState(
-        targetValue = if (focusing) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.primaryContainer
+        targetValue = if (focusing) colors.focusedColor else colors.unFocusedColor
     )
 //    val icon = if (focusing) focusedIcon else unFocusedIcon
     val infiniteTransition = rememberInfiniteTransition()

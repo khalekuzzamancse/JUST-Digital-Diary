@@ -10,12 +10,14 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.bottom_sheet.deco
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.bottom_sheet.handler.BottomSheetControllerIcon
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.bottom_sheet.handler.BottomSheetHandlerImp
 import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home.bottom_sheet.AnimatedBottomSheet
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.bottom_sheet.handler.BottomSheetHandler
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.FacultyInfo
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun HomeDestination(
+internal fun CompactScreenSlots(
+
     faculties: List<FacultyInfo>,
     onFacultySelected: (FacultyInfo) -> Unit,
     onExitRequested: () -> Unit,
@@ -59,7 +61,8 @@ internal fun HomeDestination(
                     onFacultySelected(faculties[it])
                 }
             )
-        }, content = content
+        },
+        content = content
     )
 
 }

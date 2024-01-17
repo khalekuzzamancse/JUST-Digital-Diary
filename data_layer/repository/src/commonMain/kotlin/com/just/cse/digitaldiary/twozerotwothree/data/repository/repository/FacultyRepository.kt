@@ -28,17 +28,17 @@ object FacultyRepository {
     val faculties = listOf(
         Faculty(
             name = "Applied Science And Technology",
-            id = UUID.randomUUID().toString(),
+            id ="01",
             departments = DepartmentFakeDB.departmentsOfAppliedScienceAndTechnology
         ),
         Faculty(
             name = "Biological Science And Technology",
-            id = UUID.randomUUID().toString(),
+            id = "02",
             departments = DepartmentFakeDB.departmentsOfBiologicalScienceAndTechnology
         ),
         Faculty(
             name = "Nursing And Health Science",
-            id = UUID.randomUUID().toString(),
+            id = "03",
             departments = DepartmentFakeDB.departmentsOfNursingAndHealthScience
         ),
         Faculty(
@@ -82,7 +82,7 @@ object FacultyRepository {
 
 data class Department(
     val id:String=UUID.randomUUID().toString(),
-    val fullName: String,
+    val name: String,
     val shortName: String,
     val employeeCount: Int = Random.nextInt(5, 20),
     val logo: ImageVector = Icons.Default.School

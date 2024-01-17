@@ -3,7 +3,7 @@ package com.just.cse.digital_diary.features.faculty.faculty.navigation
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home.HomeContent
-import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home.HomeDestination
+import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home.CompactScreenSlots
 
 @Composable
 internal fun NavGraph(
@@ -12,7 +12,7 @@ internal fun NavGraph(
     val faculties = Faculties.facultyInfoList
     val navigator = LocalNavigator.current
     val navManager = NavigatorManager(navigator)
-    HomeDestination(
+    CompactScreenSlots(
         faculties = faculties,
         onExitRequested = onExitRequested,
         onFacultySelected = { facultyInfo ->
