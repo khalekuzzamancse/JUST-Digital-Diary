@@ -12,7 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.AnimatedNavigationItemTextIcon
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
 
@@ -37,7 +37,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             destinations.forEachIndexed { index, _ ->
-                AnimatedNavigationItemTextIcon(
+                NavigationItem(
                     navigationItem = destinations[index],
                     visibilityDelay = (index + 1) * 10L,
                     selected = currentDestinationIndex == index,
@@ -73,7 +73,7 @@ fun <T> BottomSheetNavigationSection2(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             destinations.forEachIndexed { index, _ ->
-                AnimatedNavigationItemTextIcon(
+                NavigationItem(
                     navigationItem = destinations[index],
                     visibilityDelay = (index + 1) * 10L,
                     selected = currentDestinationIndex == index,

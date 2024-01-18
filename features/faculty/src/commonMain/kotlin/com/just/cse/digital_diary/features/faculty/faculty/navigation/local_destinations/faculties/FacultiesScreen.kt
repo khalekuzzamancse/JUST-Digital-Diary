@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home.HomeContent
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.bottom_sheet.handler.BottomSheetHandlerImp
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.AnimatedNavigationItemTextIcon
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemColor
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItem
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemProps
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
 
 @Composable
@@ -165,7 +165,7 @@ private fun DepartmentsDestination(
             destinations = destinations,
             onDestinationSelected = onDestinationSelected,
             selectedDestinationIndex = selectedDestinationIndex,
-            colors = NavigationItemColor(
+            colors = NavigationItemProps(
                 focusedColor = MaterialTheme.colorScheme.secondary,
                 unFocusedColor = MaterialTheme.colorScheme.secondaryContainer,
             )
@@ -181,7 +181,7 @@ private fun VerticalListNavigation(
     destinations: List<NavigationItemInfo2<String>>,
     onDestinationSelected: (Int) -> Unit,
     selectedDestinationIndex: Int,
-    colors: NavigationItemColor = NavigationItemColor(
+    colors: NavigationItemProps = NavigationItemProps(
         focusedColor = MaterialTheme.colorScheme.errorContainer,
         unFocusedColor = MaterialTheme.colorScheme.primaryContainer,
     )
@@ -193,7 +193,7 @@ private fun VerticalListNavigation(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         destinations.forEachIndexed { index, _ ->
-            AnimatedNavigationItemTextIcon(
+            NavigationItem(
                 modifier = Modifier.fillMaxWidth(),
                 navigationItem = destinations[index],
                 visibilityDelay = (index + 1) * 10L,

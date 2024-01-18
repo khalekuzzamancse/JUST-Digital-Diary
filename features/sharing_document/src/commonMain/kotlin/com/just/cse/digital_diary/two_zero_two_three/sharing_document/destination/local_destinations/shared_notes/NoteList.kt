@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -18,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.list.GenericListScreen
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.list.AdaptiveList
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.progressbar.ProgressBarNSnackBarDecorator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.created_note.NoteListItem
@@ -63,12 +61,12 @@ internal fun NoteList(
                 )
             }
         ) {
-            GenericListScreen(
+            AdaptiveList(
                 modifier = modifier.padding(it),
                 items = notes
-            ) { itemModifier, item ->
+            ) {  item ->
                 NoteCard(
-                    modifier = itemModifier.padding(8.dp),
+                    modifier = Modifier.padding(8.dp),
                     title = item.title,
                     onClick = {
                         onDetailsOpen(item.id)

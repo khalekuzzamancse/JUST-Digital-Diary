@@ -1,7 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("org.jetbrains.compose")
+//    id("org.jetbrains.compose")
 }
 kotlin {
     androidTarget {
@@ -17,10 +17,7 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
-                implementation(compose.ui)
-                implementation(compose.material3)
-                implementation(compose.preview)
-                implementation(compose.materialIconsExtended)
+
             }
         }
 //        val androidMain by getting{

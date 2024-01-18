@@ -1,5 +1,6 @@
 package com.just.cse.digitaldiary.twozerotwothree.data.repository.department_info
 
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.Employee
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.employees
 
 object DepartmentInfoRepository {
@@ -18,5 +19,5 @@ object DepartmentInfoRepository {
         )
     }
     fun getTeacherList(departmentId: String)=employees
-    fun getStaffList(departmentId: String)=employees
+    fun getStaffList(departmentId: String)= employees
 }

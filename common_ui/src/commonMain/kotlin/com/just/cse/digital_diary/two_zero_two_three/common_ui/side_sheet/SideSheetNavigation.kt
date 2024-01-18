@@ -4,16 +4,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.AnimatedNavigationItemTextIcon
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
 
 @Composable
@@ -39,7 +37,7 @@ fun <T> SideSheetNavigation(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             destinations.forEachIndexed { index, _ ->
-                AnimatedNavigationItemTextIcon(
+                NavigationItem(
                     modifier=destinationModifier.fillMaxWidth(),
                     navigationItem = destinations[index],
                     visibilityDelay = (index + 1) * 10L,

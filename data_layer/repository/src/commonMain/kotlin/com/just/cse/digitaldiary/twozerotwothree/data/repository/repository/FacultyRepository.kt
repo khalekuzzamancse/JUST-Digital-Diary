@@ -1,9 +1,5 @@
 package com.just.cse.digitaldiary.twozerotwothree.data.repository.repository
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.School
-import androidx.compose.material.icons.filled.Science
-import androidx.compose.ui.graphics.vector.ImageVector
 import java.util.UUID
 import kotlin.random.Random
 
@@ -12,14 +8,12 @@ import kotlin.random.Random
 data class Faculty(
     val name: String,
     val id: String,
-    val logo: ImageVector = Icons.Default.Science,
     val departments: List<Department> = emptyList()
 )
 
 data class FacultyInfo(
     val name: String,
     val id: String,
-    val logo: ImageVector = Icons.Default.Science,
 )
 
 
@@ -81,9 +75,8 @@ object FacultyRepository {
 
 
 data class Department(
-    val id:String=UUID.randomUUID().toString(),
+    val id: String = UUID.randomUUID().toString(),
     val name: String,
     val shortName: String,
-    val employeeCount: Int = Random.nextInt(5, 20),
-    val logo: ImageVector = Icons.Default.School
+    val employeeCount: Int = Random.nextInt(5, 20)
 )

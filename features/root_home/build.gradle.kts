@@ -34,6 +34,7 @@ kotlin {
                 implementation(project(":data_layer:repository"))
                 implementation(project(":features:faculty"))
                 implementation(project(":features:sharing_document"))
+                implementation(project(":features:department_info"))
                 implementation(project(":features:auth"))
 
             }

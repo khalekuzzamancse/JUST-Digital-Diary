@@ -1,5 +1,3 @@
-
-
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -35,7 +33,6 @@ kotlin {
                 implementation(libs.coil3)
                 implementation(libs.coil3.core)
                 implementation(libs.ktor.serialization.kotlinx.json)
-                implementation(project(":data_layer:repository"))
 
             }
         }

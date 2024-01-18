@@ -2,11 +2,7 @@ package com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigatio
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
-data class NavigationRailState(
-    val options: List<NavigationItemInfo<Int>>,
-    val selectedItem: Int,
-    val isExpandMode: Boolean
-)
+
 data class NavigationGroup(
     val name: String,
     val icon: ImageVector,
