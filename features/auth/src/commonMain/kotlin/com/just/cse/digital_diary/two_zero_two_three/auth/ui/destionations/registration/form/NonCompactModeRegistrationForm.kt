@@ -27,30 +27,25 @@ internal fun NonCompactModeRegistrationForm(
     modifier: Modifier = Modifier,
     fieldModifier: Modifier,
     data: RegistrationFormData,
-    onNameChanged: (String) -> Unit,
-    onEmailChanged: (String) -> Unit,
-    onUserNameChanged: (String) -> Unit,
-    onPasswordChanged: (String) -> Unit,
-    onDeptChanged: (String) -> Unit,
-    onConfirmedPassword: (String) -> Unit,
+    event: RegisterFormEvent
 ) {
 
     NonCompactModeRegistrationForm(
         modifier = modifier,
         fieldModifier = fieldModifier,
         name = data.name,
-        onNameChanged = onNameChanged,
+        onNameChanged = event.onNameChanged,
         email = data.email,
-        onEmailChanged = onEmailChanged,
+        onEmailChanged = event.onEmailChanged,
         username = data.username,
-        onUserNameChanged = onUserNameChanged,
+        onUserNameChanged = event.onUserNameChanged,
         password = data.password,
-        onPasswordChanged = onPasswordChanged,
+        onPasswordChanged = event.onPasswordChanged,
         departments = listOf("CSE", "EEE"),
         dept = data.dept,
-        onDeptChanged = onDeptChanged,
+        onDeptChanged = event.onDeptChanged,
         confirmedPassword = data.confirmPassword,
-        onConfirmedPassword = onConfirmedPassword
+        onConfirmedPassword = event.onConfirmedPassword
     )
 
 }

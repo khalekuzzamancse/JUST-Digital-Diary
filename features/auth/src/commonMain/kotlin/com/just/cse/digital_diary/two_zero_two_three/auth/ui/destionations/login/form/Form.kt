@@ -10,26 +10,24 @@ internal fun LoginForm(
     fieldModifier: Modifier = Modifier,
     formModifier: Modifier = Modifier,
     data: LoginFormData,
-    onUserNameChanged: (String) -> Unit,
-    onPasswordChanged: (String) -> Unit,
+    event: LoginFormEvent,
 ) {
     WindowSizeDecorator(
         onCompact = {
             CompactScreenLoginForm(
                 data = data,
+                event = event,
                 fieldModifier = fieldModifier,
                 formModifier = formModifier,
-                onUserNameChanged = onUserNameChanged,
-                onPasswordChanged = onPasswordChanged,
+
             )
         },
         onNonCompact = {
             NonCompactScreenLoginForm(
                 data = data,
+                event=event,
                 fieldModifier = Modifier.fillMaxWidth(),
                 formModifier = formModifier,
-                onUserNameChanged = onUserNameChanged,
-                onPasswordChanged = onPasswordChanged,
             )
         }
     )

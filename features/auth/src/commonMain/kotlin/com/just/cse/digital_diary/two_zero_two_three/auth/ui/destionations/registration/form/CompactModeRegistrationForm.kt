@@ -2,7 +2,6 @@ package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.regi
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
@@ -15,53 +14,31 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthDropDown
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthPasswordField
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTextField
 
-data class RegistrationFormData(
-    val name: String="",
-    val email: String = "",
-    val username: String = "",
-    val dept:String="",
-    val password: String = "",
-    val confirmPassword: String = ""
-)
-
-internal object RegistrationFormLabels {
-    const val FULL_NAME = "Full Name"
-    const val EMAIL = "Email"
-    const val USER_NAME = "User Name"
-    const val Dept = "Department"
-    const val PASSWORD = "Password"
-    const val CONFIRMED_PASSWORD = "Confirm Password"
-}
 
 @Composable
  internal fun CompactModeRegistrationForm(
     modifier: Modifier = Modifier,
     fieldModifier: Modifier,
     data: RegistrationFormData,
-    onNameChanged: (String) -> Unit,
-    onEmailChanged: (String) -> Unit,
-    onUserNameChanged: (String) -> Unit,
-    onPasswordChanged: (String) -> Unit,
-    onDeptChanged: (String) -> Unit,
-    onConfirmedPassword: (String) -> Unit,
+    event: RegisterFormEvent,
 ) {
 
     RegistrationForm(
         modifier = modifier,
         fieldModifier = fieldModifier,
         name = data.name,
-        onNameChanged = onNameChanged,
+        onNameChanged = event.onNameChanged,
         email = data.email,
-        onEmailChanged = onEmailChanged,
+        onEmailChanged = event.onEmailChanged,
         username = data.username,
-        onUserNameChanged = onUserNameChanged,
+        onUserNameChanged = event.onUserNameChanged,
         password = data.password,
-        onPasswordChanged = onPasswordChanged,
+        onPasswordChanged = event.onPasswordChanged,
         departments = listOf("CSE", "EEE"),
         dept = data.dept,
-        onDeptChanged = onDeptChanged,
+        onDeptChanged = event.onDeptChanged,
         confirmedPassword = data.confirmPassword,
-        onConfirmedPassword = onConfirmedPassword
+        onConfirmedPassword = event.onConfirmedPassword
     )
 
 }

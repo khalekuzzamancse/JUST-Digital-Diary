@@ -12,48 +12,33 @@ internal fun RegistrationForm(
     modifier: Modifier = Modifier,
     fieldModifier: Modifier,
     data: RegistrationFormData,
-    onNameChanged: (String) -> Unit,
-    onEmailChanged: (String) -> Unit,
-    onUserNameChanged: (String) -> Unit,
-    onPasswordChanged: (String) -> Unit,
-    onDeptChanged: (String) -> Unit,
-    onConfirmedPassword: (String) -> Unit,
-){
+    event: RegisterFormEvent,
+) {
     WindowSizeDecorator(
         onCompact = {
-           Surface (
-               modifier=modifier,
-               shadowElevation = 6.dp,
-           ){
-               CompactModeRegistrationForm(
-                   modifier = Modifier.padding(8.dp),
-                   data = data,
-                   fieldModifier = fieldModifier,
-                   onNameChanged = onNameChanged,
-                   onEmailChanged = onEmailChanged,
-                   onUserNameChanged = onUserNameChanged,
-                   onPasswordChanged = onPasswordChanged,
-                   onDeptChanged = onDeptChanged,
-                   onConfirmedPassword = onConfirmedPassword,
+            Surface(
+                modifier = modifier,
+                shadowElevation = 6.dp,
+            ) {
+                CompactModeRegistrationForm(
+                    modifier = Modifier.padding(8.dp),
+                    data = data,
+                    fieldModifier = fieldModifier,
+                    event = event
 
-                   )
-           }
+                )
+            }
         },
         onNonCompact = {
-            Surface (
-                modifier=modifier,
+            Surface(
+                modifier = modifier,
                 shadowElevation = 6.dp,
-            ){
+            ) {
                 NonCompactModeRegistrationForm(
                     modifier = Modifier.padding(8.dp),
                     data = data,
                     fieldModifier = Modifier,
-                    onNameChanged = onNameChanged,
-                    onEmailChanged = onEmailChanged,
-                    onUserNameChanged = onUserNameChanged,
-                    onPasswordChanged = onPasswordChanged,
-                    onDeptChanged = onDeptChanged,
-                    onConfirmedPassword = onConfirmedPassword,
+                    event=event
                 )
             }
 

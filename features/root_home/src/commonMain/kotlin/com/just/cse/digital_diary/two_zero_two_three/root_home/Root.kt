@@ -25,12 +25,14 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.list.AdaptiveList
 import com.just.cse.digital_diary.two_zero_two_three.department.DepartmentModuleEntryPoint
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.RootNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.themes.AppTheme
+import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.local_destinations.notes_screen.NotesScreen
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.department_info.DepartmentInfoRepository
 
 
 @Composable
 fun RootModule() {
     AppTheme {
+        NotesScreen()
 //        var loginSuccess by remember {
 //            mutableStateOf(false)
 //        }
@@ -43,10 +45,7 @@ fun RootModule() {
 //                }
 //            )
 //        }
-        DepartmentModuleEntryPoint(
-            departmentId = "01",
-            onExitRequested = {}
-        )
+
  }
 
 

@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.form
+package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.controls
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

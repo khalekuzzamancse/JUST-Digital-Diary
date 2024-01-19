@@ -1,7 +1,6 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.edit_profile
 
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.edit_profile.form.EditFormData
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.LoginViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -66,7 +65,7 @@ class EditProfileViewModel(
         scope.launch {
             snackBarMessage.collect { msg ->
                 if (msg != null) {
-                    LoginViewModel.log(msg)
+
 
                 }
             }

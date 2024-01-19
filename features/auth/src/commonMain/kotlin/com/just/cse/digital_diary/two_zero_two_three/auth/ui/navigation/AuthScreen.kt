@@ -2,17 +2,16 @@ package com.just.cse.digital_diary.two_zero_two_three.auth.ui.navigation
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.LoginScreenCom
+import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.auth.AuthScreen
 
-class LoginScreen(
+class AuthScreen(
     private val onNavigateToRegisterScreen: () -> Unit = {},
     private val onLoginSuccess: () -> Unit = {},
 ) : Screen {
     @Composable
     override fun Content() {
-        LoginScreenCom(
-            onLoginSuccess=onLoginSuccess,
-            onNavigateToRegisterScreen=onNavigateToRegisterScreen
+        AuthScreen(
+            onLoginSuccess=onLoginSuccess
         )
 
     }

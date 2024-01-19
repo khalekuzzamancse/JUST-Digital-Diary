@@ -32,23 +32,15 @@ internal class NavigatorManager(
         onLoginSuccess:()->Unit,
     ) {
         push(
-            LoginScreen(
+            AuthScreen(
                 onLoginSuccess = {
                     onLoginSuccess()
                 },
-                onNavigateToRegisterScreen =::navigateRegisterDestination
+                onNavigateToRegisterScreen ={}
             )
         )
     }
-   private fun navigateRegisterDestination(){
-       push(
-           RegisterScreen(
-               onRegisterSuccess =::pop,
-               onExitRequest =::pop
-           )
-       )
 
-    }
 
 
 }
