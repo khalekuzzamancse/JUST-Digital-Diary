@@ -1,7 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.department.navigation
 
 import androidx.compose.runtime.Composable
-import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.screen.Screen
+import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.screen.DepartmentInfoScreen
 
 
 //
@@ -20,7 +20,7 @@ internal fun DepartmentModuleLocalNavGraph(
     onExitRequested: () -> Unit,
 ) {
 
-    Screen(
+    DepartmentInfoScreen(
         departmentId=departmentId,
         onExitRequested=onExitRequested
     )

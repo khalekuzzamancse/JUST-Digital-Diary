@@ -1,3 +1,5 @@
+@file:Suppress("OPT_IN_USAGE_FUTURE_ERROR")
+
 package com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.faculties
 
 import androidx.compose.animation.AnimatedContent
@@ -28,16 +30,19 @@ import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_dest
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.bottom_sheet.handler.BottomSheetHandlerImp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItem
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemProps
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemProps
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
 
 @Composable
 internal fun FacultiesScreen(
-    onDepartmentNavigationRequest:(String)->Unit,
+    onDepartmentNavigationRequest: (String) -> Unit,
 ) {
-    val viewModel = remember { ViewModel(
-        onDepartmentNavigationRequest=onDepartmentNavigationRequest
-    ) }
+    val viewModel = remember {
+        ViewModel(
+            onDepartmentNavigationRequest = onDepartmentNavigationRequest
+        )
+    }
     val facultiesDestinations = viewModel.faculties.collectAsState().value.map {
         NavigationItemInfo2(
             label = it.name,
@@ -56,7 +61,7 @@ internal fun FacultiesScreen(
     val departmentsList: @Composable () -> Unit = @Composable {
         AnimatedContent(
             targetState = departmentsDestinations //animate on different faculty department list shown
-        ){
+        ) {
             DepartmentsDestination(
                 modifier = Modifier,
                 enableBackNavigation = true,
@@ -70,6 +75,7 @@ internal fun FacultiesScreen(
     }
 
     val bottomSheetHandler = remember { BottomSheetHandlerImp() }
+
     WindowSizeDecorator(
         onCompact = {
             CompactScreenLayout(
@@ -90,8 +96,10 @@ internal fun FacultiesScreen(
 
         },
         onNonCompact = {
-            NonCompactScreenLayout(
-                facultyDestinations = {
+            TwoPaneLayout(
+                pane2AnimationState =viewModel.selectedFaculty.collectAsState().value,
+                showPane2 = true,
+                pane1 = {
                     FacultiesDestinations(
                         modifier = Modifier,
                         destinations = facultiesDestinations,
@@ -99,9 +107,20 @@ internal fun FacultiesScreen(
                         selectedDestinationIndex = viewModel.selectedFaculty.collectAsState().value,
                     )
                 },
-                departmentDestinations = if (departmentsDestinations.isNotEmpty()) departmentsList else null,
-                content = {
-                    HomeContent()
+                pane2 = {
+                    if (departmentsDestinations.isNotEmpty()) {
+                        DepartmentsDestination(
+                            modifier = Modifier,
+                            enableBackNavigation = true,
+                            title = "Departments List",
+                            destinations = departmentsDestinations,
+                            onDestinationSelected = viewModel::onDepartmentSelected,
+                            selectedDestinationIndex = viewModel.selectedDepartment.collectAsState().value,
+                            onDismissRequest = viewModel::onClearDepartmentSelection
+                        )
+                    } else {
+                        HomeContent()
+                    }
                 }
             )
         }

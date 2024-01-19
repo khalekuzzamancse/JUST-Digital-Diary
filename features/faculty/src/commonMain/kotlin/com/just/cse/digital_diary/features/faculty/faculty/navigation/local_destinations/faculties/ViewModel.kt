@@ -20,6 +20,7 @@ internal class ViewModel (
 
 
     fun onFacultySelected(index: Int) {
+        _selectedFaculty.update { index }
         _selectedFacultyDepartments.update { FacultyRepository.getDepartments(_faculties.value[index].id) }
     }
 

@@ -10,13 +10,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.list.AdaptiveList
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.progressbar.ProgressBarNSnackBarDecorator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.created_note.NoteListItem
 
@@ -27,14 +24,7 @@ internal fun NoteListDestination(
     onDetailsOpen: (String) -> Unit,
     onExitRequest:()->Unit,
 ) {
-    val viewModel= remember {
-        NoteListViewModel()
-    }
 
-    ProgressBarNSnackBarDecorator (
-        snackBarMessage = viewModel.snackBarMessage.collectAsState().value,
-        showProgressBar = viewModel.showProgressBar.collectAsState().value
-    ){
         Scaffold(
             topBar = {
                 SimpleTopBar(
@@ -58,7 +48,7 @@ internal fun NoteListDestination(
                 )
             }
         }
-    }
+
 
 
 }
