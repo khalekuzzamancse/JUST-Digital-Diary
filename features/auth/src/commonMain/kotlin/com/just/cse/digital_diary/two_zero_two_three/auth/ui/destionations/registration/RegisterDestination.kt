@@ -12,13 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTopBar
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.controls.LoginSection
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.controls.RegistrationControls
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.form.RegisterFormEvent
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.form.RegistrationForm
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.form.RegistrationFormData
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.header.RegistrationHeaderSection
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
 @Composable
 fun RegisterDestination(
@@ -30,7 +30,7 @@ fun RegisterDestination(
 ) {
     Scaffold(
         topBar = {
-            AuthTopBar(
+            SimpleTopBar(
                 title = "Registration Form",
                 onNavigationIconClick = onExitRequest
             )
@@ -70,7 +70,7 @@ private fun RegisterFormNControls(
         Box(Modifier.widthIn(max = 500.dp).align(Alignment.CenterHorizontally)) {
             RegistrationForm(
                 modifier = Modifier.padding(8.dp),
-                fieldModifier = Modifier,
+                fieldModifier = Modifier.fillMaxWidth(),
                 data = data,
                 event = event
             )

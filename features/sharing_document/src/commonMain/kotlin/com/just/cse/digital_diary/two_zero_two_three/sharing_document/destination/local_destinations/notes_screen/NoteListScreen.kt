@@ -14,10 +14,10 @@ fun NotesScreen() {
     val viewModel = remember { NotesScreenViewModel() }
     val openedNotes = viewModel.openedNote.collectAsState().value
     TwoPaneLayout(
-        pane2AnimationState = openedNotes,
-        showPane2 = openedNotes != null,
+        secondaryPaneAnimationState = openedNotes,
+        showTopOrRightPane = openedNotes != null,
         props = TwoPaneProps(),
-        pane1 = {
+        leftPane = {
             NoteListDestination(
                 modifier = Modifier,
                 notes = viewModel.notes.collectAsState().value,
@@ -25,7 +25,7 @@ fun NotesScreen() {
                 onExitRequest = {},
             )
         },
-        pane2 = {
+        topOrRightPane = {
             if (openedNotes != null) {
                 NoteDetails(
                     note = openedNotes,

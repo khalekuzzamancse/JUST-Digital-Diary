@@ -72,7 +72,7 @@ private fun TwoPanes(
                     transitionSpec = {
                         slideIntoContainer(
                             animationSpec = tween(durationMillis = 300, easing = EaseIn),
-                            towards = AnimatedContentTransitionScope.SlideDirection.Start
+                            towards = AnimatedContentTransitionScope.SlideDirection.Down
                         ).togetherWith(
                             slideOutOfContainer(
                                 animationSpec = tween(durationMillis = 300, easing = EaseIn),
@@ -82,6 +82,7 @@ private fun TwoPanes(
                     }
                 ){
                     pane2()
+
                 }
 
             }

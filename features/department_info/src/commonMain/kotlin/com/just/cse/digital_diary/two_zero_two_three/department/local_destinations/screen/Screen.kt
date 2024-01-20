@@ -38,9 +38,9 @@ fun DepartmentInfoScreen(
         },
         onNonCompact = {
             TwoPaneLayout(
-                showPane2 = true,
+                showTopOrRightPane = true,
                 props = TwoPaneProps(),
-                pane1 = {
+                leftPane = {
                     val destinations = listOf(
                         NavigationItemInfo2(
                             key = "1",
@@ -60,8 +60,8 @@ fun DepartmentInfoScreen(
                         selectedDestinationIndex = viewModel.selectedDestination.collectAsState().value,
                     )
                 },
-                pane2AnimationState = viewModel.employees.collectAsState().value,
-                pane2 = {
+                secondaryPaneAnimationState = viewModel.employees.collectAsState().value,
+                topOrRightPane = {
                     val employees = viewModel.employees.collectAsState().value
                     if (employees == null) {
                         Home(modifier = Modifier)

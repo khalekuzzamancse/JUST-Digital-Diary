@@ -34,13 +34,22 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemProps
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
 
+/**
+ * * It Show the have the List of Faculties([FacultiesDestinations]).
+ *   * Upon selecting a faculty, the associated department list ([DepartmentsDestination]) becomes visible.
+ *   * On Compact Window DepartmentList([DepartmentsDestination]) will appear in the BottomSheet
+ *  * On Medium,Expanded Window FacultyList([FacultiesDestinations]) and Selected Faculties DepartmentList [DepartmentsDestination]  displayed side by side
+ * @param onDepartmentDepartmentSelected :Will be called by passing department id when use select a department under a facility,using
+ * this the departmentID then you can show information associated with that department or navigate to the DEPARTMENT_INFO module
+ *
+ */
 @Composable
 internal fun FacultiesScreen(
-    onDepartmentNavigationRequest: (String) -> Unit,
+    onDepartmentDepartmentSelected: (String) -> Unit,
 ) {
     val viewModel = remember {
         ViewModel(
-            onDepartmentNavigationRequest = onDepartmentNavigationRequest
+            onDepartmentNavigationRequest = onDepartmentDepartmentSelected
         )
     }
     val facultiesDestinations = viewModel.faculties.collectAsState().value.map {
@@ -97,9 +106,9 @@ internal fun FacultiesScreen(
         },
         onNonCompact = {
             TwoPaneLayout(
-                pane2AnimationState =viewModel.selectedFaculty.collectAsState().value,
-                showPane2 = true,
-                pane1 = {
+                secondaryPaneAnimationState = viewModel.selectedFaculty.collectAsState().value,
+                showTopOrRightPane = true,
+                leftPane = {
                     FacultiesDestinations(
                         modifier = Modifier,
                         destinations = facultiesDestinations,
@@ -107,7 +116,7 @@ internal fun FacultiesScreen(
                         selectedDestinationIndex = viewModel.selectedFaculty.collectAsState().value,
                     )
                 },
-                pane2 = {
+                topOrRightPane = {
                     if (departmentsDestinations.isNotEmpty()) {
                         DepartmentsDestination(
                             modifier = Modifier,
@@ -128,6 +137,15 @@ internal fun FacultiesScreen(
 
 
 }
+
+/**
+ * * It Show the have the List of in Bottom sheet.
+ *  * In Compact Window Faculties will be shown in the bottom sheet,in NonCompact Window Faculties will be shown in SIDE_SHEET
+ * @param modifier [Modifier]
+ * @param destinations list of [NavigationItemInfo2] to represent the faculties
+ * @param onDestinationSelected called when a faculty is selected
+ * @param selectedDestinationIndex the destination that is selected.it is used to highlight the selected faculty as [NavigationItemInfo2]
+ */
 
 @Composable
 private fun FacultiesDestinations(

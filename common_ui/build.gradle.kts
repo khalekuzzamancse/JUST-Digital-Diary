@@ -34,6 +34,7 @@ kotlin {
                 implementation(libs.coil3.core)
                 implementation(libs.ktor.serialization.kotlinx.json)
 
+
             }
         }
         val androidMain by getting{

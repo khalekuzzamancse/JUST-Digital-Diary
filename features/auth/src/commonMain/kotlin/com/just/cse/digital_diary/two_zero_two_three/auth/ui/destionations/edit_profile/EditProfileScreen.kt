@@ -26,9 +26,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTopBar
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.edit_profile.form.EditForm
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
 @Composable
 internal fun EditProfileScreen(
@@ -41,7 +41,7 @@ internal fun EditProfileScreen(
         onCompact = {
             Scaffold(
                 topBar = {
-                    AuthTopBar(
+                    SimpleTopBar(
                         title = "Edit Profile",
                         onNavigationIconClick = onExitRequest,
                         navigationIcon = Icons.Default.Menu

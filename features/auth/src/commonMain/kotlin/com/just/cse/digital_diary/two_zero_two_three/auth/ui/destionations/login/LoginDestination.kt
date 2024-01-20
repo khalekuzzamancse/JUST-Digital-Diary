@@ -16,12 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.common.AuthTopBar
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.controls.LoginControls
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.form.LoginForm
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.form.LoginFormData
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.form.LoginFormEvent
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.header.LoginHeaderSection
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
 
 @Composable
@@ -35,7 +35,7 @@ fun LoginDestination(
     Box(modifier.fillMaxSize()){
         Scaffold(
             topBar = {
-                AuthTopBar(
+                SimpleTopBar(
                     title = "Login",
                     onNavigationIconClick = {},
                     navigationIcon = null
