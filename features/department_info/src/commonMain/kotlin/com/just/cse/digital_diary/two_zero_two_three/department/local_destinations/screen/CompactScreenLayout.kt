@@ -21,7 +21,11 @@ internal fun CompactScreenLayout(
     selectedDestinationIndex: Int,
     employees: List<Employee>? = null,
     onEmployeeListRequest: (Int) -> Unit,
+    onCallRequest: (String) -> Unit,
+    onEmailRequest: (String) -> Unit,
+    onMessageRequest: (String) -> Unit,
     onExitRequested:()->Unit,
+
 ) {
 
     TopNBottomBarDecorator(
@@ -52,9 +56,10 @@ internal fun CompactScreenLayout(
                    if (employees != null) {
                        EmployeeList(
                            employees=employees,
-                           onCallRequest = {},
-                           onEmailRequest = {}
-                       ) {}
+                           onCallRequest = onCallRequest,
+                           onEmailRequest = onEmailRequest,
+                           onMessageRequest = onMessageRequest
+                       )
                    }
                }
 

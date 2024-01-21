@@ -10,9 +10,9 @@ import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.Empl
 fun SearchableEmployeeList(
     employeeList: List<Employee>,
     onSearchExitRequest: () -> Unit,
-    onCallRequest: () -> Unit,
-    onEmailRequest: () -> Unit,
-    onMessageRequest: () -> Unit,
+    onCallRequest: (String) -> Unit,
+    onEmailRequest: (String) -> Unit,
+    onMessageRequest: (String) -> Unit,
 ) {
     SearchSection(
         onSearchExitRequest = onSearchExitRequest,
@@ -34,9 +34,15 @@ fun SearchableEmployeeList(
                 modifier = Modifier,
                 highLightedText = queryText,
                 employee = employee,
-                onCallRequest=onCallRequest,
-                onMessageRequest = onMessageRequest,
-                onEmailRequest = onEmailRequest
+                onCallRequest = {
+                    onCallRequest(employee.phone)
+                },
+                onMessageRequest = {
+                    onMessageRequest(employee.phone)
+                },
+                onEmailRequest = {
+                    onEmailRequest(employee.email)
+                }
             )
         },
 

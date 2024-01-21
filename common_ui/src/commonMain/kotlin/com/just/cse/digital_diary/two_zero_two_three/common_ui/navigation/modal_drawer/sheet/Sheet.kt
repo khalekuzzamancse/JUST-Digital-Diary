@@ -1,17 +1,21 @@
 package com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.sheet
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationGroup
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.NavGroupSelectedItem
+
 @Composable
-fun <T>Sheet(
-    selectedDestinationIndex: Int =-1,
-    visibilityDelay:Long,
+fun <T> Sheet(
+    selectedDestinationIndex: Int = -1,
+    visibilityDelay: Long,
     destinations: List<NavigationItemInfo<T>>,
     onDestinationSelected: (index: Int) -> Unit
 ) {
@@ -19,18 +23,18 @@ fun <T>Sheet(
     DrawerSheet(
         header = {
             Header(
-                name="Md Abul Kalam",
+                name = "Md Abul Kalam",
                 department = "CSE"
             )
         },
         footer = null,
         destinations = destinations,
         destinationDecorator = { index ->
-            val navigationItem=destinations[index]
+            val navigationItem = destinations[index]
             ItemDecorator(
-                visibilityDelay = index*visibilityDelay,
-                navigationItem=navigationItem,
-                isSelected= index==selectedDestinationIndex ,
+                visibilityDelay = index * visibilityDelay,
+                navigationItem = navigationItem,
+                isSelected = index == selectedDestinationIndex,
                 onClick = {
                     onDestinationSelected(index)
                 }
@@ -39,7 +43,6 @@ fun <T>Sheet(
 
         }
     )
-
 
 
 }
@@ -54,7 +57,7 @@ fun Sheet(
     DrawerSheet(
         header = {
             Header(
-                name="Md Abul Kalam",
+                name = "Md Abul Kalam",
                 department = "CSE"
             )
         },
@@ -70,7 +73,7 @@ fun Sheet(
             }
         },
         itemDecorator = { groupIndex, itemIndex ->
-            val isSelected= selectedItemIndex== NavGroupSelectedItem(
+            val isSelected = selectedItemIndex == NavGroupSelectedItem(
                 groupIndex = groupIndex,
                 itemIndex = itemIndex
             )
@@ -78,8 +81,8 @@ fun Sheet(
             groups.getOrNull(groupIndex)?.let { group ->
                 group.members.getOrNull(itemIndex)?.let { navigationItem ->
                     ItemDecorator(
-                        navigationItem=navigationItem,
-                        isSelected=isSelected,
+                        navigationItem = navigationItem,
+                        isSelected = isSelected,
                         onClick = {
                             onItemClicked(groupIndex, itemIndex)
                         }
@@ -92,10 +95,10 @@ fun Sheet(
     )
 
 
-
 }
+
 @Composable
-fun <T>DrawerSheet(
+fun <T> DrawerSheet(
     header: (@Composable () -> Unit)? = null,
     footer: (@Composable () -> Unit)? = null,
     destinations: List<NavigationItemInfo<T>>,
@@ -104,23 +107,20 @@ fun <T>DrawerSheet(
     ModalDrawerSheet(
         modifier = Modifier,
     ) {
-        LazyColumn(
-            modifier = Modifier,
+        Column(
+            modifier = Modifier.verticalScroll(rememberScrollState()),
         ) {
             if (header != null) {
-                item {
-                    header()
-                }
+
+                header()
             }
-            itemsIndexed(
-                items = destinations,
-                ) {index,_->
+            destinations.forEachIndexed(
+            ) { index, _ ->
                 destinationDecorator(index)
             }
             if (footer != null) {
-                item {
-                    footer()
-                }
+                footer()
+
             }
         }
 

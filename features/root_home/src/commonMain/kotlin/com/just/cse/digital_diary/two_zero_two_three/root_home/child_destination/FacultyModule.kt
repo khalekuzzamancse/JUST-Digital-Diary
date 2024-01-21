@@ -2,20 +2,23 @@ package com.just.cse.digital_diary.two_zero_two_three.root_home.child_destinatio
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.AnimateVisibilityDecorator
-import com.just.cse.digital_diary.features.faculty.faculty.navigation.FacultyModuleEntryPoint
+import com.just.cse.digital_diary.features.faculty.faculty.FacultyModuleEntryPoint
+import com.just.cse.digital_diary.features.faculty.faculty.FacultyModuleEvent
 
 
 class FacultyModule(
+    private val event: FacultyModuleEvent,
     private val onExitRequested:()->Unit,
 ): Screen {
     @Composable
     override fun Content() {
-        AnimateVisibilityDecorator {
-            FacultyModuleEntryPoint(
-                onExitRequested=onExitRequested
-            )
-        }
+        FacultyModuleEntryPoint(
+            event=event,
+            onExitRequested=onExitRequested
+        )
+//        AnimateVisibilityDecorator {
+//
+//        }
     }
 
 }

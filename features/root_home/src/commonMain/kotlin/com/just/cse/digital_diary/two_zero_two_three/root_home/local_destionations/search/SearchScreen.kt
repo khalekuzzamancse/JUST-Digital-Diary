@@ -24,13 +24,16 @@ import com.just.cse.digitaldiary.twozerotwothree.data.repository.department_info
 @Composable
 fun SearchScreen(
     onExitRequest: () -> Unit,
+    onCallRequest: (String) -> Unit,
+    onEmailRequest: (String) -> Unit,
+    onMessageRequest: (String) -> Unit,
 ) {
     SearchableEmployeeList(
         onSearchExitRequest = onExitRequest,
         employeeList = DepartmentInfoRepository.getTeacherList("01"),
-        onEmailRequest = {},
-        onMessageRequest = {},
-        onCallRequest = {}
+        onCallRequest =onCallRequest,
+        onMessageRequest =onMessageRequest,
+        onEmailRequest =onEmailRequest
     )
 
 

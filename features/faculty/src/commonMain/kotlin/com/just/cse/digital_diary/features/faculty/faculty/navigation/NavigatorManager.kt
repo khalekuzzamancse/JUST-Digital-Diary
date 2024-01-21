@@ -4,6 +4,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import com.just.cse.digital_diary.features.faculty.faculty.navigation.child_destinations.DepartmentModule
 import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.search.SearchScreen
+import com.just.cse.digital_diary.two_zero_two_three.department.DepartmentModuleEvent
 
 
 internal class NavigatorManager(
@@ -46,11 +47,12 @@ internal class NavigatorManager(
             )
         )
     }
-    fun navigateDepartmentInfoModule(departmentId: String) {
+    fun navigateDepartmentInfoModule(departmentId: String,event: DepartmentModuleEvent) {
         push(
             DepartmentModule(
             departmentId=departmentId,
-            onExitRequest = ::pop
+            onExitRequest = ::pop,
+                event = event
         )
         )
     }

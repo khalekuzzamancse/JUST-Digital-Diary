@@ -1,6 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.department.navigation
 
 import androidx.compose.runtime.Composable
+import com.just.cse.digital_diary.two_zero_two_three.department.DepartmentModuleEvent
 import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.screen.DepartmentInfoScreen
 
 
@@ -17,12 +18,14 @@ they must maintain a separate backstack means navigator
 @Composable
 internal fun DepartmentModuleLocalNavGraph(
     departmentId: String,
+    event: DepartmentModuleEvent,
     onExitRequested: () -> Unit,
 ) {
 
     DepartmentInfoScreen(
         departmentId=departmentId,
-        onExitRequested=onExitRequested
+        onExitRequested=onExitRequested,
+        event = event
     )
 
 

@@ -9,6 +9,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorat
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.TwoPaneProps
+import com.just.cse.digital_diary.two_zero_two_three.department.DepartmentModuleEvent
 import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.Home
 import com.just.cse.digital_diary.two_zero_two_three.employee_list.employee_list.EmployeeList
 
@@ -16,7 +17,8 @@ import com.just.cse.digital_diary.two_zero_two_three.employee_list.employee_list
 @Composable
 fun DepartmentInfoScreen(
     departmentId: String,
-    onExitRequested: () -> Unit
+    event: DepartmentModuleEvent,
+    onExitRequested: () -> Unit,
 ) {
     val viewModel = remember { ViewModel() }
 
@@ -32,7 +34,10 @@ fun DepartmentInfoScreen(
                 employees = viewModel.employees.collectAsState().value,
                 onEmployeeListRequest = viewModel::updateEmployee,
                 selectedDestinationIndex = viewModel.selectedDestination.collectAsState().value,
-                onExitRequested = onExitRequested
+                onExitRequested = onExitRequested,
+                onCallRequest = event.onCallRequest,
+                onEmailRequest =event.onEmailRequest ,
+                onMessageRequest = event.onMessageRequest
             )
 
         },
@@ -70,9 +75,10 @@ fun DepartmentInfoScreen(
                         EmployeeList(
                             modifier = Modifier.fillMaxSize(),
                             employees = employees,
-                            onCallRequest = {},
-                            onEmailRequest = {}
-                        ) {}
+                            onCallRequest = event.onCallRequest,
+                            onEmailRequest =event.onEmailRequest ,
+                            onMessageRequest = event.onMessageRequest
+                        )
 
                     }
 

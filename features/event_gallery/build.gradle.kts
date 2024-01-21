@@ -38,7 +38,6 @@ kotlin {
                 implementation(libs.voyager.navigator)
                 implementation(libs.voyager.transitions)
                 implementation(project(":data_layer:repository"))
-                implementation(project(":common_ui"))
 
 
 
@@ -66,7 +65,7 @@ kotlin {
 
 }
 android {
-    namespace = "com.just.cse.digital_diary.two_zero_two_three.explore_just"
+    namespace = "com.just.cse.digital_diary.two_zero_two_three.event_gallery"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

@@ -11,32 +11,28 @@ import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.themes.AppThem
 
 
 @Composable
-fun RootModule() {
+fun RootModule(event: AppEvent) {
     AppTheme {
-        Tester()
-        var loginSuccess by remember {
-            mutableStateOf(false)
-        }
-        if (loginSuccess) {
-            RootNavGraph()
-        } else {
-            AuthModuleEntryPoint(
-                onLoginSuccess = {
-                    loginSuccess = true
-                },
-                onExitRequest = {}
-            )
-        }
 
-    }
-
-
-}
-
-@Composable
-fun Tester() {
+//        var loginSuccess by remember {
+//            mutableStateOf(false)
+//        }
+//        if (loginSuccess) {
+//            RootNavGraph(event =event)
+//        } else {
+//            AuthModuleEntryPoint(
+//                onLoginSuccess = {
+//                    loginSuccess = true
+//                },
+//                onExitRequest = {}
+//            )
+//        }
+//
+  }
 
 
 }
+
+
 
 

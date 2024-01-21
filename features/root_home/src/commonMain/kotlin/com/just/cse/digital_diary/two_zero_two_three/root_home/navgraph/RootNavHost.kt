@@ -17,14 +17,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.just.cse.digital_diary.features.faculty.faculty.FacultyModuleEvent
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.AnimateVisibilityDecorator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.ModalDrawerDecorator
+import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.NavigatorManager
 import com.just.cse.digital_diary.two_zero_two_three.root_home.child_destination.CreateNoteScreen
+import com.just.cse.digital_diary.two_zero_two_three.root_home.child_destination.EventGallery
 import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.about_us.AboutUsScreen
-import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.RootDestinations
+import com.just.cse.digital_diary.two_zero_two_three.root_home.RootDestinations
 import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.RootHomeContent
-import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.topMostDestinations
+import com.just.cse.digital_diary.two_zero_two_three.root_home.topMostDestinations
 import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.message_from_vc.ViceChancellorMessageScreen
 import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.search.SearchScreen
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,7 +46,7 @@ class TopMostDestinationViewModel {
 }
 
 
-class RootNavHost : Screen {
+class RootNavHost(private val appEvent: AppEvent) : Screen {
     @Composable
     override fun Content() {
         val scope = rememberCoroutineScope()
@@ -70,7 +73,7 @@ class RootNavHost : Screen {
         val currentDestinationIndex = viewModel.selectedSectionIndex.collectAsState().value
 
         ModalDrawerDecorator(
-            visibilityDelay = 30,
+            visibilityDelay = 10,
             drawerState = drawerState,
             destinations = topMostDestinations,
             selectedDesertionIndex = currentDestinationIndex,
@@ -128,12 +131,30 @@ class RootNavHost : Screen {
                                 SearchScreen(
                                     onExitRequest = {
                                         viewModel.onSectionSelected(0)//go to home page
-                                    }
+                                    },
+                                    onCallRequest = appEvent.onCallRequest,
+                                    onMessageRequest = appEvent.onMessageRequest,
+                                    onEmailRequest = appEvent.onEmailRequest
                                 )
                             }
 
 
                         }
+                        RootDestinations.EventGallery -> {
+                            AnimateVisibilityDecorator {
+                                EventGallery(
+                                    onExitRequest =openDrawer
+                                )
+                            }
+
+
+                        }
+                        RootDestinations.EXPLORE_JUST -> {
+                            appEvent.onWebsiteViewRequest("https://just.edu.bd/")
+
+                        }
+
+
 
 
                     }
@@ -142,7 +163,13 @@ class RootNavHost : Screen {
                 }
                 when (currentDestinationIndex) {
                     RootDestinations.FACULTY_MEMBERS -> {
-                        navigatorManager.navigateToFacultyModule()
+                        navigatorManager.navigateToFacultyModule(
+                            event= FacultyModuleEvent(
+                                onEmailRequest =appEvent.onEmailRequest,
+                                onMessageRequest = appEvent.onMessageRequest,
+                                onCallRequest = appEvent.onCallRequest
+                            )
+                        )
                     }
                     RootDestinations.Notes -> {
                         navigatorManager.navigateToSharedNote()

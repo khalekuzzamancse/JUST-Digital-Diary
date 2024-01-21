@@ -10,12 +10,14 @@ This is only accessible from the outside module,it is the entry point to jump to
 @Composable
 fun DepartmentModuleEntryPoint(
     departmentId: String,
+    event: DepartmentModuleEvent,
     onExitRequested: () -> Unit,
 ) {
     DepartmentInfoModuleTheme{
         DepartmentModuleLocalNavGraph(
             departmentId = departmentId,
-            onExitRequested = onExitRequested
+            onExitRequested = onExitRequested,
+            event = event
         )
     }
 

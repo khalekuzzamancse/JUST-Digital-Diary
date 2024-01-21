@@ -1,10 +1,14 @@
-package com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home
+package com.just.cse.digital_diary.two_zero_two_three.root_home
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Explore
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Notes
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.AdminPanelSettings
+import androidx.compose.material.icons.outlined.Explore
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Message
 import androidx.compose.material.icons.outlined.Notes
@@ -52,7 +56,18 @@ val topMostDestinations = listOf(
         focusedIcon = Icons.Filled.Notes,
         key = ""
     ),
-
+    NavigationItemInfo(
+        label = "Event Gallery",
+        unFocusedIcon = Icons.Outlined.Image,
+        focusedIcon = Icons.Filled.Image,
+        key = ""
+    ),
+    NavigationItemInfo(
+        label = "Explore JUST",
+        unFocusedIcon = Icons.Outlined.Explore,
+        focusedIcon = Icons.Filled.Explore,
+        key = ""
+    ),
     )
 
 object RootDestinations {
@@ -63,4 +78,6 @@ object RootDestinations {
     const val ABOUT_US = 4
     const val  Search=5
     const val Notes=6
+    const val EventGallery=7
+    const val EXPLORE_JUST=8
 }

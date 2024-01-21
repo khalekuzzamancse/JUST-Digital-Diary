@@ -24,43 +24,32 @@ another screen such as pane
 fun EmployeeList(
     modifier: Modifier = Modifier,
     employees: List<Employee>,
-    onCallRequest: () -> Unit,
-    onEmailRequest: () -> Unit,
-    onMessageRequest: () -> Unit,
+    onCallRequest: (String) -> Unit,
+    onEmailRequest: (String) -> Unit,
+    onMessageRequest: (String) -> Unit,
 ) {
     Surface(
         shadowElevation = 8.dp
     ) {
-        AdaptiveEmployeeList(
-            modifier = modifier.wrapContentWidth(),
-            employees = employees,
-            onCallRequest=onCallRequest,
-            onMessageRequest = onMessageRequest,
-            onEmailRequest = onEmailRequest
-        )
-    }
+        AdaptiveList(
+            modifier = modifier,
+            items = employees
+        ) { employee ->
+            EmployeeCard(
+                modifier = Modifier.padding(8.dp),
+                employee = employee,
+                onCallRequest = {
+                    onCallRequest(employee.phone)
+                },
+                onMessageRequest = {
+                    onMessageRequest(employee.phone)
+                },
+                onEmailRequest = {
+                    onEmailRequest(employee.email)
+                }
+            )
+        }
 
-
-}
-
-@Composable
-private fun AdaptiveEmployeeList(
-    modifier: Modifier = Modifier,
-    employees: List<Employee>,
-    onCallRequest: () -> Unit,
-    onEmailRequest: () -> Unit,
-    onMessageRequest: () -> Unit,
-) {
-    AdaptiveList(
-        modifier = modifier,
-        items = employees
-    ) { teacher ->
-        EmployeeCard(
-            modifier = Modifier.padding(8.dp),
-            employee = teacher,
-            onCallRequest=onCallRequest,
-            onMessageRequest = onMessageRequest,
-            onEmailRequest = onEmailRequest
-        )
     }
 }
+
