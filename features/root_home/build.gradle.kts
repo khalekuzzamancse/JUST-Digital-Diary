@@ -2,7 +2,6 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("org.jetbrains.compose")
-    alias(libs.plugins.kotlinxSerialization)
 }
 kotlin {
     androidTarget {
@@ -27,17 +26,16 @@ kotlin {
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(libs.voyager.navigator)
                 implementation(libs.voyager.transitions)
-                implementation(libs.ktor.serialization.kotlinx.json)
-
-
+                implementation(libs.voyager.screenmodel)
                 implementation(project(":common_ui"))
-                implementation(project(":data_layer:repository"))
+                implementation(project(":core:data_layer:repository"))
                 implementation(project(":features:faculty"))
                 implementation(project(":features:sharing_document"))
                 implementation(project(":features:department_info"))
                 implementation(project(":features:auth"))
                 implementation(project(":features:employee_list"))
                 implementation(project(":features:event_gallery"))
+                implementation(project(":core:network"))
             }
         }
 //        val androidMain by getting{

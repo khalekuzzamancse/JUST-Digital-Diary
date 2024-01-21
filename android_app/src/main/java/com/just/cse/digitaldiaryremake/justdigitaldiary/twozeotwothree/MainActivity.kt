@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
                 RootModule(
-                    event = event
+                    appEvent = event
                 )
 
 

@@ -15,6 +15,25 @@ dependencyResolutionManagement {
 //        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
+val featureModules = listOf(
+    ":features",
+    ":features:auth",
+    ":features:root_home",
+    ":features:faculty",
+    ":features:department_info",
+    ":features:departments",
+    ":features:sharing_document",
+    ":features:employee_list",
+    ":features:event_gallery"
+)
+val coreModules = listOf(
+    ":core",
+    ":core:data_layer",
+    ":core:data_layer:repository",
+    ":core:network",
+    
+
+)
 
 rootProject.name = "JUST Digital Diary"
 include(":android_app")
@@ -22,14 +41,7 @@ include(":common")
 include(":desktop")
 include(":shared")
 include(":web")
-include(":features")
 include(":data_layer")
-include(":features:auth")
 include("common_ui")
-include(":features:root_home")
-include(":features:faculty")
-include(":data_layer:repository")
-include(":features:department_info",":features:departments")
-include(":features:sharing_document")
-include(":features:employee_list")
-include(":features:event_gallery")
+include(featureModules)
+include(coreModules)

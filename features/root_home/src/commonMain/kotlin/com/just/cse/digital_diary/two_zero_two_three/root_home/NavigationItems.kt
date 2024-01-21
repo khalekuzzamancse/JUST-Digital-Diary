@@ -77,7 +77,7 @@ object RootDestinations {
     const val MESSAGE_FROM_VC = 3
     const val ABOUT_US = 4
     const val  Search=5
-    const val Notes=6
+    const val NOTE_LIST=6
     const val EventGallery=7
     const val EXPLORE_JUST=8
 }

@@ -3,8 +3,6 @@ package com.just.cse.digital_diary.two_zero_two_three.root_home
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import com.just.cse.digital_diary.features.faculty.faculty.FacultyModuleEvent
-import com.just.cse.digital_diary.two_zero_two_three.root_home.child_destination.FacultyModule
-import com.just.cse.digital_diary.two_zero_two_three.root_home.child_destination.NoteListDestination
 
 internal class NavigatorManager(
     private val navigator: Navigator?
@@ -32,20 +30,11 @@ internal class NavigatorManager(
     }
 
     fun navigateToFacultyModule(event: FacultyModuleEvent) {
-        push(
-            FacultyModule(
-                event=event,
-                onExitRequested = ::pop
-            )
-        )
+
     }
     fun navigateToSharedNote(
     ) {
-        push(
-            NoteListDestination(
-                onExitRequest = ::pop
-            )
-        )
+
     }
 
 }

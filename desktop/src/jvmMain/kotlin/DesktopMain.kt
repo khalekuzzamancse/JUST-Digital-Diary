@@ -23,7 +23,7 @@ fun main() {
         ) {
             MaterialTheme {
                 RootModule(
-                    event = AppEvent(
+                    appEvent = AppEvent(
                         onCallRequest = {
                                         println("Call:$it")
                         },

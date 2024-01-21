@@ -1,8 +1,8 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="repository-desktop">
-    <output-path>$PROJECT_DIR$/data_layer/repository/build/libs</output-path>
+    <output-path>$PROJECT_DIR$/core/data_layer/repository/build/libs</output-path>
     <root id="archive" name="repository-desktop.jar">
-      <element id="module-output" name="JUST_Digital_Diary.data_layer.repository.desktopMain" />
+      <element id="module-output" name="JUST_Digital_Diary.core.data_layer.repository.desktopMain" />
     </root>
   </artifact>
 </component>

@@ -1,7 +1,6 @@
 package com.just.cse.digital_diary.two_zero_two_three.employee_list.employee_list
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

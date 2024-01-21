@@ -26,7 +26,7 @@ kotlin {
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(libs.voyager.navigator)
                 implementation(libs.voyager.transitions)
-                implementation(project(":data_layer:repository"))
+                implementation(project(":core:data_layer:repository"))
                 implementation(project(":features:department_info"))
                 implementation(project(":common_ui"))
 
