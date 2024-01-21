@@ -1,10 +1,12 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("org.jetbrains.compose")
-    alias(libs.plugins.kotlinxSerialization)
 }
 kotlin {
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -12,6 +14,7 @@ kotlin {
             }
         }
     }
+
     jvm("desktop"){
         jvmToolchain(17)
     }
@@ -23,20 +26,21 @@ kotlin {
                 implementation(compose.animation)
                 implementation(compose.animationGraphics)
                 implementation(compose.materialIconsExtended)
-                implementation(compose.preview)
+                //for custom fonts
+                @OptIn(ExperimentalComposeLibrary::class)
+                implementation(compose.components.resources)
+                //
+                api(libs.coil3)
+                api(libs.coil3.network)
+                //
+                implementation(project(":common_ui"))
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(libs.voyager.navigator)
                 implementation(libs.voyager.transitions)
-                implementation(libs.ktor.serialization.kotlinx.json)
-
-
-                implementation(project(":common_ui"))
                 implementation(project(":data_layer:repository"))
-                implementation(project(":features:faculty"))
-                implementation(project(":features:sharing_document"))
-                implementation(project(":features:department_info"))
-                implementation(project(":features:auth"))
-                implementation(project(":features:employee_list"))
+                implementation(project(":common_ui"))
+
+
 
             }
         }
@@ -45,9 +49,16 @@ kotlin {
 //
 //            }
 //        }
-        val desktopMain by getting{
-            dependencies {
-
+//        val desktopMain by getting{
+//            dependencies {
+//
+//            }
+//        }
+        //to use expect and actual keywords
+        kotlin {
+            compilerOptions {
+                // Common compiler options applied to all Kotlin source sets
+                freeCompilerArgs.add("-Xmulti-platform")
             }
         }
     }
@@ -55,10 +66,11 @@ kotlin {
 
 }
 android {
-    namespace = "com.just.cse.digital_diary.two_zero_two_three.root_home"
+    namespace = "com.just.cse.digital_diary.two_zero_two_three.explore_just"
     compileSdk = 34
     defaultConfig {
         minSdk = 27
     }
 
 }
+

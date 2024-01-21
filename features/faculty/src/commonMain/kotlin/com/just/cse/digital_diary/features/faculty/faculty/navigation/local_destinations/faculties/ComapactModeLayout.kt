@@ -21,7 +21,7 @@ internal fun CompactScreenLayout(
     facultyDestinations: @Composable () -> Unit,
     departmentDestinations: (@Composable () -> Unit)? = null,
     sheetHandler: BottomSheetHandler,
-    onExitRequested: () -> Unit = {},
+    onExitRequest: () -> Unit,
     searchContent: ((@Composable () -> Unit)?)=null,
     content: (@Composable () -> Unit)? = null,
 ) {
@@ -40,7 +40,7 @@ internal fun CompactScreenLayout(
             topBar = {
                 HomeTopBar(
                     title = "Faculty Info",
-                    onNavigationIconClick = onExitRequested,
+                    onNavigationIconClick = onExitRequest,
                     sheetController = {
                         BottomSheetControllerIcon(
                             handler = sheetHandler

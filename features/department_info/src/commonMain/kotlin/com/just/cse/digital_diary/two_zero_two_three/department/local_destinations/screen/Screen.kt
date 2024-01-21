@@ -10,7 +10,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.TwoPaneProps
 import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.Home
-import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.employees.EmployeeList
+import com.just.cse.digital_diary.two_zero_two_three.employee_list.employee_list.EmployeeList
 
 
 @Composable
@@ -69,9 +69,10 @@ fun DepartmentInfoScreen(
                     if (employees != null) {
                         EmployeeList(
                             modifier = Modifier.fillMaxSize(),
-                            onDismissRequest = viewModel::clearEmployeeList,
-                            employees = employees
-                        )
+                            employees = employees,
+                            onCallRequest = {},
+                            onEmailRequest = {}
+                        ) {}
 
                     }
 

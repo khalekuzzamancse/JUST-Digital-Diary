@@ -26,13 +26,26 @@ import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.animation.TypeWriter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
+/**
+ * * Show the details of a a selected note.
+ * * It is it is internal to the module can outer module can not directly access it.
+ * * It this can handle both compact,medium,expanded window size.
+ * * It take the notes details as primitive and display the details
+ * * It is not coupled with any custom data types that is why it is easy to test and change
+ * @param modifier
+ * @param  title [String]
+ * @param description[String]
+ * @param timeStamp[String]
+ * @param creatorName[String]
+ * @param creatorImageUrl[String]
+ * @param creatorMoreInfo[String] to show the more information about the creator  such as department name,student or employee,..ete
+ */
 @Composable
 internal fun NoteDetails(
     modifier: Modifier=Modifier,
     title: String,
     description: String,
-    timeString: String,
+    timeStamp: String,
     creatorName: String,
     creatorImageUrl: String,
     creatorMoreInfo: String,
@@ -73,7 +86,7 @@ internal fun NoteDetails(
                 CreationDetails(
                     creatorName = creatorName,
                     creatorImageUrl = creatorImageUrl,
-                    timeStamp = timeString,
+                    timeStamp = timeStamp,
                     creatorMoreInfo = creatorMoreInfo
                 )
             }

@@ -1,15 +1,15 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Notes
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.AdminPanelSettings
-import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Message
 import androidx.compose.material.icons.outlined.Notes
 import androidx.compose.material.icons.outlined.School
+import androidx.compose.material.icons.outlined.Search
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 
 val topMostDestinations = listOf(
@@ -41,9 +41,9 @@ val topMostDestinations = listOf(
         key = ""
     ),
     NavigationItemInfo(
-        label = "Edit Profile",
-        unFocusedIcon = Icons.Outlined.Edit,
-        focusedIcon = Icons.Filled.Edit,
+        label = "Search",
+        unFocusedIcon = Icons.Outlined.Search,
+        focusedIcon = Icons.Filled.Search,
         key = ""
     ),
     NavigationItemInfo(
@@ -61,6 +61,6 @@ object RootDestinations {
     const val ADMINISTRATION = 2
     const val MESSAGE_FROM_VC = 3
     const val ABOUT_US = 4
-    const val  EditProfile=5
+    const val  Search=5
     const val Notes=6
 }

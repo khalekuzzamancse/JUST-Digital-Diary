@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notes
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
@@ -28,11 +26,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.progressbar.ProgressBarNSnackBarDecorator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
+/**
+ * * It used to create  the Notes
+ * * It is it is internal to the module can outer module can not directly access it.
+ * * It this can handle both compact,medium,expanded window size.
+ * @param onExitRequest will be called to exit the from note creation screen
+ */
 @Composable
-internal fun CreateNoteScreen(
+internal fun CreateNoteDestination(
     onExitRequest:()->Unit,
 ) {
     val viewModel= remember { CreateNoteViewModel() }

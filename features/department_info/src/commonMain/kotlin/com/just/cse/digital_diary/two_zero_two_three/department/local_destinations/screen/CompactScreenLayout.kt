@@ -9,8 +9,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.runtime.Composable
 import com.just.cse.digital_diary.two_zero_two_three.department.common.TopNBottomBarDecorator
-import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.employees.AdaptiveEmployeeList
 import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.navigation_items.bottomNavigationItems
+import com.just.cse.digital_diary.two_zero_two_three.employee_list.employee_list.EmployeeList
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.Employee
 
 
@@ -50,9 +50,11 @@ internal fun CompactScreenLayout(
             when (selectedDestination) {
                 1,2->{
                    if (employees != null) {
-                       AdaptiveEmployeeList(
-                           employees=employees
-                       )
+                       EmployeeList(
+                           employees=employees,
+                           onCallRequest = {},
+                           onEmailRequest = {}
+                       ) {}
                    }
                }
 

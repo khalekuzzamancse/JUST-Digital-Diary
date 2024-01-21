@@ -20,13 +20,13 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.AnimateVisibilityDecorator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.ModalDrawerDecorator
 import com.just.cse.digital_diary.two_zero_two_three.root_home.NavigatorManager
-import com.just.cse.digital_diary.two_zero_two_three.root_home.child_destination.EditProfile
+import com.just.cse.digital_diary.two_zero_two_three.root_home.child_destination.CreateNoteScreen
 import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.about_us.AboutUsScreen
 import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.RootDestinations
 import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.RootHomeContent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.home.topMostDestinations
 import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.message_from_vc.ViceChancellorMessageScreen
-import com.just.cse.digital_diary.two_zero_two_three.root_home.child_destination.CreateNoteScreen
+import com.just.cse.digital_diary.two_zero_two_three.root_home.local_destionations.search.SearchScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -36,6 +36,7 @@ class TopMostDestinationViewModel {
     val selectedSectionIndex = _selectedIndex.asStateFlow()
     fun onSectionSelected(index: Int) {
         _selectedIndex.value = index
+
     }
 
 
@@ -122,14 +123,18 @@ class RootNavHost : Screen {
 
 
                         }
-                        RootDestinations.EditProfile -> {
+                        RootDestinations.Search -> {
                             AnimateVisibilityDecorator {
-                                EditProfile(
-                                    onExitRequest = openDrawer
+                                SearchScreen(
+                                    onExitRequest = {
+                                        viewModel.onSectionSelected(0)//go to home page
+                                    }
                                 )
                             }
 
+
                         }
+
 
                     }
 

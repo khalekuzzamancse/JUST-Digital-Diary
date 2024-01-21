@@ -1,44 +1,33 @@
-package com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.employees
+package com.just.cse.digital_diary.two_zero_two_three.employee_list.searchable_employee_list
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.expandIn
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ExpandLess
-import androidx.compose.material.icons.outlined.ExpandMore
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.network_image.ImageLoader
-import com.just.cse.digital_diary.two_zero_two_three.department.theme.CardTypography
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.search.search_bar.SearcherHighlightedText
+import com.just.cse.digital_diary.two_zero_two_three.employee_list.employee_list.CardTypography
+import com.just.cse.digital_diary.two_zero_two_three.employee_list.employee_list.Controls
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.Employee
 
 @Composable
-fun EmployeeCard(
+internal fun SearchedEmployeeCard(
     modifier: Modifier,
     employee: Employee,
-    expandMode: Boolean = true
+    highLightedText: String = "",
+    onCallRequest: () -> Unit,
+    onEmailRequest: () -> Unit,
+    onMessageRequest: () -> Unit,
 ) {
     Surface(
         modifier = modifier,
@@ -58,21 +47,14 @@ fun EmployeeCard(
                     .background(Color.Red)
                     .align(Alignment.CenterHorizontally),
             )
-            if (expandMode) {
-                ExpandAbleInfo(
-                    employee = employee
-                )
-            } else {
-                EmployeeName(
-                    name = employee.name,
-                    modifier = Modifier
-                )
-                EmployeeDetails(
-                    employee = employee,
-                    modifier = Modifier
-                )
-            }
+            ExpandAbleInfo(
+                employee = employee,
+                highLightedText = highLightedText,
+                onCallRequest=onCallRequest,
+                onMessageRequest = onMessageRequest,
+                onEmailRequest = onEmailRequest
 
+            )
 
         }
 
@@ -84,9 +66,12 @@ fun EmployeeCard(
 @Composable
 private fun ExpandAbleInfo(
     modifier: Modifier = Modifier,
-    employee: Employee
+    employee: Employee,
+    highLightedText: String,
+    onCallRequest: () -> Unit,
+    onEmailRequest: () -> Unit,
+    onMessageRequest: () -> Unit,
 ) {
-    var expanded by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -100,31 +85,20 @@ private fun ExpandAbleInfo(
         ) {
             EmployeeName(
                 name = employee.name,
-                modifier = Modifier
-            )
-            Icon(
-                imageVector = if (expanded) Icons.Outlined.ExpandLess else Icons.Outlined.ExpandMore,
-                contentDescription = null,
-                modifier = Modifier.clickable {
-                    expanded = !expanded
-                }
-            )
-        }
-        AnimatedVisibility(
-            visible = expanded,
-            enter = fadeIn() + expandIn(
-                animationSpec = spring(
-                    dampingRatio = Spring.DampingRatioLowBouncy,
-                    stiffness = Spring.StiffnessLow
-                )
-            ),
-            exit= shrinkOut() + fadeOut()
-        ) {
-            EmployeeDetails(
                 modifier = Modifier,
-                employee = employee
+                highLightedText = highLightedText
             )
         }
+        EmployeeDetails(
+            modifier = Modifier,
+            employee = employee,
+            highLightedText=highLightedText
+        )
+        Controls(
+            onCallRequest=onCallRequest,
+            onMessageRequest = onMessageRequest,
+            onEmailRequest = onEmailRequest
+        )
 
     }
 
@@ -134,10 +108,11 @@ private fun ExpandAbleInfo(
 private fun EmployeeName(
     modifier: Modifier,
     name: String,
+    highLightedText: String,
 ) {
     Text(
         modifier = modifier,
-        text = name,
+        text = SearcherHighlightedText().getHighLightedString(name, highLightedText),
         style = CardTypography.title
     )
 
@@ -146,7 +121,8 @@ private fun EmployeeName(
 @Composable
 private fun EmployeeDetails(
     modifier: Modifier,
-    employee: Employee
+    employee: Employee,
+    highLightedText: String,
 ) {
     Column(
         modifier = modifier
@@ -155,23 +131,23 @@ private fun EmployeeDetails(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = employee.achievements,
+            text = SearcherHighlightedText().getHighLightedString(employee.achievements,highLightedText),
             style = CardTypography.subTitle
         )
         Text(
-            text = employee.designations,
+            text = SearcherHighlightedText().getHighLightedString(employee.designations,highLightedText),
             style = CardTypography.title2
         )
         Text(
-            text = employee.email,
+            text = SearcherHighlightedText().getHighLightedString(employee.email,highLightedText),
             style = CardTypography.contactStyle
         )
         Text(
-            text = employee.additionalEmail,
+            text =SearcherHighlightedText().getHighLightedString(employee.additionalEmail,highLightedText),
             style = CardTypography.contactStyle
         )
         Text(
-            text = employee.phone,
+            text =SearcherHighlightedText().getHighLightedString(employee.phone,highLightedText),
             style = CardTypography.contactStyle
         )
 

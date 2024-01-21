@@ -46,6 +46,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLay
 @Composable
 internal fun FacultiesScreen(
     onDepartmentDepartmentSelected: (String) -> Unit,
+    onExitRequest:()->Unit,
 ) {
     val viewModel = remember {
         ViewModel(
@@ -88,6 +89,7 @@ internal fun FacultiesScreen(
     WindowSizeDecorator(
         onCompact = {
             CompactScreenLayout(
+                onExitRequest=onExitRequest,
                 facultyDestinations = {
                     FacultiesDestinations(
                         modifier = Modifier,
@@ -154,6 +156,7 @@ private fun FacultiesDestinations(
     onDestinationSelected: (Int) -> Unit,
     selectedDestinationIndex: Int,
 ) {
+
     VerticalListNavigation(
         modifier = modifier,
         destinations = destinations,

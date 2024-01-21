@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.department.theme
+package com.just.cse.digital_diary.two_zero_two_three.employee_list.employee_list
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily

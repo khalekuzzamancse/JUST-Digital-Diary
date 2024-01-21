@@ -14,7 +14,9 @@ internal fun NavGraph(
     FacultiesScreen(
         onDepartmentDepartmentSelected = {
             navigatorManager.navigateDepartmentInfoModule(it)
-        }
+
+        },
+        onExitRequest=onExitRequested
     )
 }
 

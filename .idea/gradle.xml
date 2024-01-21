@@ -19,7 +19,8 @@
             <option value="$PROJECT_DIR$/features/auth" />
             <option value="$PROJECT_DIR$/features/department_info" />
             <option value="$PROJECT_DIR$/features/departments" />
-            <option value="$PROJECT_DIR$/features/edit_profile" />
+            <option value="$PROJECT_DIR$/features/employee_list" />
+            <option value="$PROJECT_DIR$/features/explore_just" />
             <option value="$PROJECT_DIR$/features/faculty" />
             <option value="$PROJECT_DIR$/features/root_home" />
             <option value="$PROJECT_DIR$/features/sharing_document" />

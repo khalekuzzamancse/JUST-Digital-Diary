@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.department.un_used.search_bar
+package com.just.cse.digital_diary.two_zero_two_three.common_ui.search.search_bar
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,7 +36,7 @@ fun MySearchBar(
         active = active,
         onActiveChange = onActiveChanged,
         placeholder = {
-            Text(text = "Search in emails")
+            Text(text = "Type here  to to search")
         },
         shape = RectangleShape,
         leadingIcon = {

@@ -3,7 +3,7 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+//        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 
     }
 }
@@ -12,7 +12,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+//        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
@@ -31,4 +31,5 @@ include(":features:faculty")
 include(":data_layer:repository")
 include(":features:department_info",":features:departments")
 include(":features:sharing_document")
-include(":features:edit_profile")
+include(":features:employee_list")
+include(":features:explore_just")
