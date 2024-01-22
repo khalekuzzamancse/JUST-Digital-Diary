@@ -1,5 +1,6 @@
 package com.just.cse.digitaldiary.twozerotwothree.data.repository.faculty_list_repository.data
 
+import com.just.cse.digitaldiary.twozerotwothree.core.network.deparment_list.data.DepartmentListFetcher
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.faculty_list_repository.model.Department
 
 object DepartmentListRepository {
@@ -36,7 +37,17 @@ object DepartmentListRepository {
         )
     )
     suspend fun getDepartments(facultyId: String):List<Department> {
-        return departmentsOfEngineeringAndTechnology
+        println("getDepartmentsRequest:$facultyId")
+        val res= DepartmentListFetcher().fetch(facultyId)
+        println("getDepartmentsRequest:$res")
+        return res.map {
+            Department(
+                id=it.dept_id,
+                name = it.name,
+                employeeCount = it.membersCount,
+                shortName = it.shortname
+            )
+        }
     }
 
 }

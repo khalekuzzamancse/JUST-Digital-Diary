@@ -50,19 +50,19 @@ suspend fun apiDemo() {
 
 
 
-suspend fun getRequest() {
-    val httpClient = HttpClient {
-        install(ContentNegotiation) {
-            json()
-        }
-    }
-    val res = httpClient.request {
-        method = HttpMethod.Get
-        url("https://diary.rnzgoldenventure.com/api/faculties")
-       // header("Authorization", authToken)
-    }.body<FacultiesResponse>()
-    println(res)
-}
+//suspend fun getRequest() {
+//    val httpClient = HttpClient {
+//        install(ContentNegotiation) {
+//            json()
+//        }
+//    }
+//    val res = httpClient.request {
+//        method = HttpMethod.Get
+//        url("https://diary.rnzgoldenventure.com/api/faculties")
+//       // header("Authorization", authToken)
+//    }.body<FacultiesResponse>()
+//    println(res)
+//}
 
 @Serializable
 data class LoginResponse(
@@ -71,16 +71,3 @@ data class LoginResponse(
 )
 
 
-@Serializable
-data class Faculty(
-    val id: Int,
-    val faculty_id: String,
-    val name: String,
-    val departmentsCount: Int
-)
-
-@Serializable
-data class FacultiesResponse(
-    val message: String,
-    val data: List<Faculty>
-)

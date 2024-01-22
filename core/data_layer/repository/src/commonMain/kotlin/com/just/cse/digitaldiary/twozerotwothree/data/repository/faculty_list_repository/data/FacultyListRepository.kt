@@ -1,5 +1,6 @@
 package com.just.cse.digitaldiary.twozerotwothree.data.repository.faculty_list_repository.data
 
+import com.just.cse.digitaldiary.twozerotwothree.core.network.faculty_list.data.FacultyListFetcher
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.faculty_list_repository.model.Faculty
 import java.util.UUID
 
@@ -43,7 +44,14 @@ object FacultyListRepository {
     )
 
    suspend fun getFacultyInfoList(): List<Faculty> {
-        return faculties
+           val res= FacultyListFetcher().fetch()
+        return res.map {
+            Faculty(
+                name = it.name,
+                id = it.faculty_id,
+                departmentCnt = it.departmentsCount
+            )
+        }
     }
 
 

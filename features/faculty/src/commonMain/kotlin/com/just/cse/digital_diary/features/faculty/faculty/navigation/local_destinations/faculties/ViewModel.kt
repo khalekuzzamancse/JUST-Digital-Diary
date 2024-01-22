@@ -17,6 +17,7 @@ internal class ViewModel (
     private val scope= CoroutineScope(Dispatchers.IO)
     private val _faculties = MutableStateFlow<List<Faculty>>(emptyList())
     init {
+
         scope.launch {
             _faculties.update { FacultyListRepository.getFacultyInfoList()  }
         }
