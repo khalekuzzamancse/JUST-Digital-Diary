@@ -1,15 +1,31 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.local_destination_graph
 
 import androidx.compose.runtime.Composable
+import com.just.cse.digital_diary.features.faculty.faculty.FacultyModuleEvent
+import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.child_destination.AuthDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.child_destination.EventGalleryDestination
+import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.child_destination.FacultyListDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.child_destination.NoteListDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.local_destionations.about_us.AboutUsDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.local_destionations.home.HomeDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.local_destionations.message_from_vc.MessageFromVCDestination
+import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.local_destionations.search.SearchDestination
+import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.local_destinations.notes_screen.NotesScreenViewModel
 import com.just.cse.digital_diary.two_zero_two_three.sharing_document.module_entry_point.NoteCreationScreen
 
-object TopMostDestinations {
+
+object RootModuleDrawerDestinations {
+    val HOME = createDestination("HOME")
+    val FACULTY_LIST = createDestination("FACULTY_LIST")
+    val ABOUT_US = createDestination("ABOUT_US")
+    val MESSAGE_FROM_VC = createDestination("MESSAGE_FROM_VC")
+    val NOTE_LIST = createDestination("NOTE_LIST")
+    val EVENT_GALLERY = createDestination("EVENT_GALLERY")
+    val SEARCH = createDestination("SEARCH")
+    val NOTE_CREATION = createDestination("NOTE_CREATION")
+
+
     @Composable
     fun Home(
         onCreateNoteRequest: () -> Unit,
@@ -47,7 +63,10 @@ object TopMostDestinations {
     fun NoteList(
         onExitRequest: () -> Unit
     ) {
-       // NoteListDestination(onExitRequest = onExitRequest)
+        NoteListDestination(
+            viewModel =NotesScreenViewModel(),
+            onExitRequest = onExitRequest
+        )
     }
 
 
@@ -68,12 +87,43 @@ object TopMostDestinations {
     fun EventGallery(
         onExitRequest: () -> Unit
     ) {
-        EventGalleryDestination(onExitRequest=onExitRequest)
+        EventGalleryDestination(onExitRequest = onExitRequest)
 
     }
 
     @Composable
-    fun ExploreJust() {
+    fun Search(
+        onExitRequest: () -> Unit,
+        onCallRequest: (String) -> Unit,
+        onEmailRequest: (String) -> Unit,
+        onMessageRequest: (String) -> Unit,
+    ) {
+        SearchDestination(
+            onExitRequest = onExitRequest,
+            onCallRequest = onCallRequest,
+            onMessageRequest = onMessageRequest,
+            onEmailRequest = onEmailRequest
+        )
+    }
+
+    @Composable
+    fun FacultyList(
+        event: AppEvent,
+        onExitRequest: () -> Unit,
+    ) {
+        FacultyListDestination(
+            event = FacultyModuleEvent(
+                onCallRequest = event.onCallRequest,
+                onMessageRequest = event.onMessageRequest,
+                onEmailRequest = event.onEmailRequest
+            ),
+            onExitRequest = onExitRequest
+        )
 
     }
+
+}
+
+private fun createDestination(route: String) = object : Destination {
+    override val route: String = route
 }

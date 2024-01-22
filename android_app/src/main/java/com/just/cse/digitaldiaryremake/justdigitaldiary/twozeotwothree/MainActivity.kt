@@ -8,14 +8,15 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
-import com.just.cse.digital_diary.two_zero_two_three.root_home.RootModule
 import com.just.cse.digitaldiaryremake.justdigitaldiary.twozeotwothree.ui.theme.theme.AppTheme
+import com.just.cse.digitaldiaryremake.justdigitaldiary.twozeotwothree.navigation.ScreenWithDrawer
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val event = AppEvent(
+
+        val appEvent = AppEvent(
             onMessageRequest = {
                 val smsIntent = Intent(Intent.ACTION_VIEW)
                 smsIntent.setData(Uri.parse("smsto:"))
@@ -66,8 +67,8 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             AppTheme {
-                RootModule(
-                    appEvent = event
+                ScreenWithDrawer(
+                    appEvent = appEvent
                 )
 
 

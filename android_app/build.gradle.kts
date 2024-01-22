@@ -60,4 +60,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(project(":shared"))
     implementation(project(":features:root_home"))
+    implementation("androidx.navigation:navigation-compose:2.7.6")
 }

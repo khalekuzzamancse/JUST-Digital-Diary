@@ -6,31 +6,45 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.ModalDrawerDecorator
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
+import com.just.cse.digital_diary.two_zero_two_three.root_home.NavigationEvent
+import com.just.cse.digital_diary.two_zero_two_three.root_home.RootDestinations
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.local_destination_graph.ModalDrawerHandler
-import com.just.cse.digital_diary.two_zero_two_three.root_home.topMostDestinations
+import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.local_destination_graph.RootModuleDrawerDestinations
+import com.just.cse.digital_diary.two_zero_two_three.root_home.rootModuleTopMostDestinations
 
 @Composable
-fun DrawerDecorator(
+fun RootModuleDrawer(
     drawerHandler: ModalDrawerHandler,
-    content: @Composable() (AnimatedContentScope.(Int) -> Unit)
+    navigationEvent: NavigationEvent,
+    navHost: @Composable() (AnimatedContentScope.(Int) -> Unit)
 ) {
+    val navigateTo=navigationEvent.drawerDestinationNavigationRequest
+    LaunchedEffect(Unit){
+        drawerHandler.selectedSectionIndex.collect{destination->
+            when(destination){
+                RootDestinations.HOME->navigateTo(RootModuleDrawerDestinations.HOME)
+                RootDestinations.FACULTY_LIST->navigateTo(RootModuleDrawerDestinations.FACULTY_LIST)
+                RootDestinations.MESSAGE_FROM_VC->navigateTo(RootModuleDrawerDestinations.MESSAGE_FROM_VC)
+                RootDestinations.ABOUT_US->navigateTo(RootModuleDrawerDestinations.ABOUT_US)
+                RootDestinations.Search->navigateTo(RootModuleDrawerDestinations.SEARCH)
+                RootDestinations.NOTE_LIST->navigateTo(RootModuleDrawerDestinations.NOTE_LIST)
+                RootDestinations.EventGallery->navigateTo(RootModuleDrawerDestinations.EVENT_GALLERY)
+                RootDestinations.EXPLORE_JUST->navigationEvent.onWebsiteViewRequest("https://www.just.edu.bd")
+            }
+        }
+    }
     ModalDrawerDecorator(
         visibilityDelay = 10,
         drawerState = drawerHandler.drawerState.collectAsState().value,
-        destinations = topMostDestinations,
+        destinations = rootModuleTopMostDestinations,
         selectedDesertionIndex = drawerHandler.selectedSectionIndex.collectAsState().value,
         onDestinationSelected = drawerHandler::onSectionSelected,
         content = {
-
                 AnimatedContent(
                     modifier = Modifier,
                     targetState = drawerHandler.selectedSectionIndex.collectAsState().value,
@@ -46,7 +60,7 @@ fun DrawerDecorator(
                         )
                     }
                 ) { localDestination ->
-                    content(localDestination)
+                    navHost(localDestination)
                 }
 
         }

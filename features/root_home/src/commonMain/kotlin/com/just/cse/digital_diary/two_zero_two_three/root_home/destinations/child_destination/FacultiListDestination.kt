@@ -7,11 +7,11 @@ import com.just.cse.digital_diary.features.faculty.faculty.FacultyModuleEvent
 @Composable
 internal fun FacultyListDestination(
     event: FacultyModuleEvent,
-    onExitRequested: () -> Unit,
+    onExitRequest: () -> Unit,
 ) {
     FacultyModuleEntryPoint(
         event = event,
-        onExitRequested = onExitRequested
+        onExitRequested = onExitRequest
     )
 
 }

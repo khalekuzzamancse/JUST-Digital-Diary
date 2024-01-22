@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notes
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
@@ -47,7 +48,8 @@ internal fun CreateNoteDestination(
                 topBar = {
                     SimpleTopBar(
                         title = "Note Creation",
-                        onNavigationIconClick =onExitRequest
+                        onNavigationIconClick =onExitRequest,
+                        navigationIcon = Icons.Default.Menu
                     )
                 },
                 floatingActionButtonPosition = FabPosition.Center,
