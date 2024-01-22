@@ -41,7 +41,7 @@ class BottomSheetHandlerImp(
     override fun hideSheet() {
        _sheetState.update {
            SheetState(
-               initialValue = SheetValue.Hidden,
+               initialValue = SheetValue.PartiallyExpanded,
                confirmValueChange = { true },
                skipPartiallyExpanded = false
            )

@@ -58,7 +58,8 @@ dependencies {
     implementation(compose.preview)
     implementation(compose.materialIconsExtended)
     implementation(libs.kotlinx.coroutines.android)
+    implementation("androidx.navigation:navigation-compose:2.7.6")
     implementation(project(":shared"))
     implementation(project(":features:root_home"))
-    implementation("androidx.navigation:navigation-compose:2.7.6")
+
 }

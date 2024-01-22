@@ -35,8 +35,9 @@ fun BottomSheetDecorator(
     content: @Composable () -> Unit,
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = sheetState
+        bottomSheetState = sheetState,
     )
+
     BottomSheetScaffold(
         modifier = modifier,
         sheetContainerColor = sheetContainerColor,

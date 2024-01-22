@@ -33,7 +33,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.network_image.ImageLoader
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.Employee
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.employee_list_repoisitory.model.Employee
+
 
 @Composable
 internal fun EmployeeCard(

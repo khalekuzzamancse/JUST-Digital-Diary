@@ -1,15 +1,27 @@
 package com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.faculties
 
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.Department
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.FacultyRepository
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.faculty_list_repository.data.DepartmentListRepository
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.faculty_list_repository.data.FacultyListRepository
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.faculty_list_repository.model.Department
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.faculty_list_repository.model.Faculty
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 internal class ViewModel (
     private val onDepartmentNavigationRequest:(String)->Unit,
 ){
-    private val _faculties = MutableStateFlow(FacultyRepository.faculties)
+    private val scope= CoroutineScope(Dispatchers.IO)
+    private val _faculties = MutableStateFlow<List<Faculty>>(emptyList())
+    init {
+        scope.launch {
+            _faculties.update { FacultyListRepository.getFacultyInfoList()  }
+        }
+    }
+
     val faculties = _faculties.asStateFlow()
     private val _selectedFacultyDepartments = MutableStateFlow<List<Department>>(emptyList())
     val selectedFacultyDepartments = _selectedFacultyDepartments.asStateFlow()
@@ -21,7 +33,10 @@ internal class ViewModel (
 
     fun onFacultySelected(index: Int) {
         _selectedFaculty.update { index }
-        _selectedFacultyDepartments.update { FacultyRepository.getDepartments(_faculties.value[index].id) }
+        scope.launch {
+            _selectedFacultyDepartments.update { DepartmentListRepository.getDepartments(_faculties.value[index].id) }
+        }
+
     }
 
     fun onDepartmentSelected(index: Int) {

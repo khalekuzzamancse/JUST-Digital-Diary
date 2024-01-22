@@ -16,17 +16,13 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_
 fun <T> Sheet(
     selectedDestinationIndex: Int = -1,
     visibilityDelay: Long,
+    header: @Composable () -> Unit,
     destinations: List<NavigationItemInfo<T>>,
-    onDestinationSelected: (index: Int) -> Unit
+    onDestinationSelected: (index: Int) -> Unit,
 ) {
 
     DrawerSheet(
-        header = {
-            Header(
-                name = "Md Abul Kalam",
-                department = "CSE"
-            )
-        },
+        header = header,
         footer = null,
         destinations = destinations,
         destinationDecorator = { index ->
@@ -56,10 +52,7 @@ fun Sheet(
 ) {
     DrawerSheet(
         header = {
-            Header(
-                name = "Md Abul Kalam",
-                department = "CSE"
-            )
+
         },
         footer = null,
         groups = groups,

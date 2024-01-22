@@ -35,14 +35,16 @@ kotlin {
                 implementation(project(":features:auth"))
                 implementation(project(":features:employee_list"))
                 implementation(project(":features:event_gallery"))
+                implementation(project(":features:admin_office"))
                 implementation(project(":core:network"))
             }
         }
-//        val androidMain by getting{
-//            dependencies {
-//
-//            }
-//        }
+        val androidMain by getting{
+            dependencies {
+                implementation(libs.kotlinx.coroutines.android)
+                implementation("androidx.navigation:navigation-compose:2.7.6")
+            }
+        }
         val desktopMain by getting{
             dependencies {
 

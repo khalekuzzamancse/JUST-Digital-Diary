@@ -16,12 +16,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.singed_in_user_info_repository.data.SignedInUserRepository
 
 
 @Composable
@@ -30,8 +33,12 @@ fun HomeDestination(
     onOpenDrawerRequest: () -> Unit = {},
     onLogOutRequest: () -> Unit = {},
 ){
-    val username by remember {
-        mutableStateOf("NULL")
+    var username by remember {
+        mutableStateOf<String?>(null)
+    }
+    LaunchedEffect(Unit){
+       val userInfo= SignedInUserRepository.getUserInfo()
+        username=userInfo.name
     }
 
     val onNavigationIconClick: () -> Unit = {
@@ -55,15 +62,15 @@ fun HomeDestination(
             }
         },
         floatingActionButtonPosition = FabPosition.Center
-    ) {
+    ) { paddingValues ->
 
         Column(
             modifier = Modifier
-                .padding(it)
+                .padding(paddingValues)
                 .padding(start = 16.dp)
                 .fillMaxSize()
         ) {
-            UserInfo(username = username)
+            username?.let { UserInfo(username = it) }
             Spacer(modifier = Modifier.height(16.dp))
 
 

@@ -6,12 +6,12 @@ import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.togetherWith
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.runtime.Composable
 import com.just.cse.digital_diary.two_zero_two_three.department.common.TopNBottomBarDecorator
 import com.just.cse.digital_diary.two_zero_two_three.department.local_destinations.navigation_items.bottomNavigationItems
 import com.just.cse.digital_diary.two_zero_two_three.employee_list.employee_list.EmployeeList
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.Employee
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.employee_list_repoisitory.model.Employee
 
 
 @Composable
@@ -26,11 +26,11 @@ internal fun CompactScreenLayout(
     onMessageRequest: (String) -> Unit,
     onExitRequested:()->Unit,
 
-) {
+    ) {
 
     TopNBottomBarDecorator(
         topBarTitle = destinationTitle,
-        topNavigationIcon = if (selectedDestinationIndex <=0) Icons.Outlined.ArrowBack else null,
+        topNavigationIcon = if (selectedDestinationIndex <=0) Icons.Outlined.Menu else null,
         onNavigationIconClick = onExitRequested,
         bottomDestinations = bottomNavigationItems,
         selectedDestinationIndex = selectedDestinationIndex,

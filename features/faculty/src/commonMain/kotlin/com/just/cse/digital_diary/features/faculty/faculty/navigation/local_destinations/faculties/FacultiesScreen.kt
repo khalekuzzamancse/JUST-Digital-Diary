@@ -53,18 +53,18 @@ internal fun FacultiesScreen(
             onDepartmentNavigationRequest = onDepartmentDepartmentSelected
         )
     }
-    val facultiesDestinations = viewModel.faculties.collectAsState().value.map {
+    val facultiesDestinations = viewModel.faculties.collectAsState().value.map { faculty ->
         NavigationItemInfo2(
-            label = it.name,
-            iconText = "FCT",
-            key = it.id
+            label = faculty.name,
+            iconText = "${faculty.departmentCnt}",
+            key = faculty.id
         )
     }
-    val departmentsDestinations = viewModel.selectedFacultyDepartments.collectAsState().value.map {
+    val departmentsDestinations = viewModel.selectedFacultyDepartments.collectAsState().value.map { department ->
         NavigationItemInfo2(
-            label = it.name,
-            iconText = "FCT",
-            key = it.id
+            label = department.name,
+            iconText = department.shortName,
+            key = department.id
         )
     }
 
@@ -158,7 +158,7 @@ private fun FacultiesDestinations(
 ) {
 
     VerticalListNavigation(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         destinations = destinations,
         onDestinationSelected = onDestinationSelected,
         selectedDestinationIndex = selectedDestinationIndex
@@ -177,7 +177,7 @@ private fun DepartmentsDestination(
 ) {
 
     Column(
-        modifier = modifier
+        modifier = modifier.fillMaxWidth()
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {

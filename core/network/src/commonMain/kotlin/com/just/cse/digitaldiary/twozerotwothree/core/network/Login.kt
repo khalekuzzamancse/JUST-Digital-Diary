@@ -16,10 +16,14 @@ import kotlinx.serialization.Serializable
 const val loginUrl="https://diary.rnzgoldenventure.com/api/login"
 @Serializable
 data class LoginData(
-    val usernameOrEmail: String = "tests2",
-    val password: String = "test@123"
+    val usernameOrEmail: String ,
+    val password: String
 )
-
+//@Serializable
+//data class LoginData(
+//    val usernameOrEmail: String = "tests2",
+//    val password: String = "test@123"
+//)
 suspend fun apiDemo() {
     sendLoginRequest()
 }
@@ -33,7 +37,10 @@ suspend fun apiDemo() {
         try {
             val response: LoginResponse = httpClient.post(loginUrl) {
                 contentType(ContentType.Application.Json)
-                setBody(LoginData())
+                setBody(LoginData(
+                    usernameOrEmail = "tests2",
+                    password = "test@123"
+                ))
             }.body()
             println("API Fetched Result: $response")
         } catch (e: Exception) {

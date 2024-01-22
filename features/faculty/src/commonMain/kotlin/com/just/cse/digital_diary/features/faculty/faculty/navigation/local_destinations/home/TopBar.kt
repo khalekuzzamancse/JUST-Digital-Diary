@@ -28,7 +28,6 @@ internal fun HomeTopBar(
     title: String,
     onNavigationIconClick: () -> Unit,
     sheetController:@Composable () -> Unit,
-    onSearchRequest: () -> Unit,
 ) {
         TopAppBar(
             title = {
@@ -46,14 +45,7 @@ internal fun HomeTopBar(
             },
             actions = {
                 sheetController()
-                IconButton(
-                    onClick = onSearchRequest
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = null
-                    )
-                }
+
 
             },
             colors = TopAppBarDefaults.topAppBarColors(

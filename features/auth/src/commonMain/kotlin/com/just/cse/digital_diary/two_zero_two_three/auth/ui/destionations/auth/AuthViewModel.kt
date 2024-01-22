@@ -2,6 +2,7 @@ package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.auth
 
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.login.form.LoginFormManager
 import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.registration.form.RegistrationFormManager
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.auth_repository.data.AuthenticationManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 class AuthViewModel(
     val onLoginSuccess: () -> Unit,
 ) {
-    private val scope= CoroutineScope(Dispatchers.Default)
+    private val scope = CoroutineScope(Dispatchers.Default)
     val event = AuthScreenEvent(
         onRegistrationRequest = ::onRegisterRequest,
         onRegistrationFromOpenRequest = ::openRegisterForm,
@@ -48,12 +49,24 @@ class AuthViewModel(
     private fun onLoginRequest() {
         scope.launch {
             _showProcessBar.update { true }
-            delay(1500)
-            _screenMessage.update { "Login Success" }
-            delay(1500)
-            _screenMessage.update { null }
-            _showProcessBar.update { false }
-            onLoginSuccess()
+            val isSuccess = AuthenticationManager.login(
+                username = loginFormManager.data.value.username,
+                password = loginFormManager.data.value.password
+            )
+            if (isSuccess) {
+                delay(1500)
+                _screenMessage.update { "Login Success" }
+                delay(1500)
+                _screenMessage.update { null }
+                _showProcessBar.update { false }
+                onLoginSuccess()
+            } else {
+                _screenMessage.update { "Login Failed,User name or password wrong" }
+                delay(2000)
+                _screenMessage.update { null }
+                _showProcessBar.update { false }
+            }
+
         }
 
 
@@ -62,13 +75,34 @@ class AuthViewModel(
     private fun onRegisterRequest() {
         scope.launch {
             _showProcessBar.update { true }
-            delay(1500)
-            _screenMessage.update { "Register Success" }
-            delay(1500)
-            _screenMessage.update { null }
-            _showProcessBar.update { false }
-            closeRegisterDestination()
+            registrationFormManager?.let { registrationFormManager ->
+                println("RegisterDta: ${registrationFormManager.data.value}")
+                val isSuccess = AuthenticationManager.register(
+                    name = registrationFormManager.data.value.name,
+                    email = registrationFormManager.data.value.email,
+                    username = registrationFormManager.data.value.username,
+                    password = registrationFormManager.data.value.password
+                )
+
+                if (isSuccess) {
+                    delay(1500)
+                    _screenMessage.update { "Register  Success" }
+                    delay(1500)
+                    _screenMessage.update { null }
+                    _showProcessBar.update { false }
+                    closeRegisterDestination()
+                } else {
+                    _screenMessage.update { "Register Failed" }
+                    delay(2000)
+                    _screenMessage.update { null }
+                    _showProcessBar.update { false }
+                }
+            }
+
+
+
         }
+
 
     }
 

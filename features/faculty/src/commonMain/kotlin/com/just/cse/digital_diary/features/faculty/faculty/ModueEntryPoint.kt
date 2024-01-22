@@ -1,8 +1,7 @@
 package com.just.cse.digital_diary.features.faculty.faculty
 
 import androidx.compose.runtime.Composable
-import com.just.cse.digital_diary.features.faculty.faculty.navigation.NavGraph
-import com.just.cse.digital_diary.two_zero_two_three.department.DepartmentModuleEvent
+import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.faculties.FacultiesScreen
 
 /**
  * * This is Only the entry point to the Faculty module
@@ -15,16 +14,10 @@ fun FacultyModuleEntryPoint(
     event: FacultyModuleEvent,
     onExitRequested: () -> Unit,
 ) {
-    NavGraph(
-        onExitRequested = onExitRequested,
-        event = DepartmentModuleEvent(
-            onCallRequest = event.onCallRequest,
-            onMessageRequest = event.onMessageRequest,
-            onEmailRequest = event.onEmailRequest
-        )
+    FacultiesScreen(
+        onDepartmentDepartmentSelected = event.onDepartmentInfoRequest,
+        onExitRequest = onExitRequested
     )
-
-
 
 }
 

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.vc_repsoitory.VCInfoRepository
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.vc_repsoitory.data.VCInfoRepository
 
 @Composable
 internal fun MessageFromVCDestination(onExitRequest: () -> Unit) {

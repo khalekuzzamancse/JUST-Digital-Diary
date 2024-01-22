@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.list.AdaptiveList
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.event_gallery_repository.repository.EventGalleryRepository
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.event_gallery_repository.data.EventGalleryRepository
 
 @Composable
 internal fun EventGallery(

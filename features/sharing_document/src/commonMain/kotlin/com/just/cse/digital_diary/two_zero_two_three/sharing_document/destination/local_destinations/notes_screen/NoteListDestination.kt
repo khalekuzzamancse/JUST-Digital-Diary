@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.list.AdaptiveList
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.created_note.NoteListItem
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.created_note.model.NoteListItem
 
 @Composable
 internal fun NoteListDestination(

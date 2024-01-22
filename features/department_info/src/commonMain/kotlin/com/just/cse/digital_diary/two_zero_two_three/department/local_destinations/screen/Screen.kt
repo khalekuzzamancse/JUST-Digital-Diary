@@ -26,7 +26,7 @@ fun DepartmentInfoScreen(
     WindowSizeDecorator(
         onCompact = {
             CompactScreenLayout(
-                destinationTitle = "Department of CSE",
+                destinationTitle = "Department Information",
                 homeContent = {
                     Home(modifier = Modifier)
 

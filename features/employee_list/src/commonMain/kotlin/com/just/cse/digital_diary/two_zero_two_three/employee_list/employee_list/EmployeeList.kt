@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.list.AdaptiveList
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.Employee
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.employee_list_repoisitory.model.Employee
 
 
 /*

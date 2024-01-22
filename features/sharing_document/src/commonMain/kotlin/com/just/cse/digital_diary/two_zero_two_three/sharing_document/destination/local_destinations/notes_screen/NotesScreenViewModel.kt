@@ -1,7 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.local_destinations.notes_screen
 
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.created_note.DummyNoteDataProvider
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.created_note.Note
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.created_note.data.DummyNoteDataProvider
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.created_note.model.Note
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

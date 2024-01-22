@@ -16,6 +16,7 @@ fun <T>ModalDrawerDecorator(
     destinations: List<NavigationItemInfo<T>>,
     selectedDesertionIndex: Int,
     onDestinationSelected: (Int) -> Unit = {},
+    header: @Composable () -> Unit,
     content: @Composable () -> Unit,
 ) {
     ModalDrawer(
@@ -29,7 +30,8 @@ fun <T>ModalDrawerDecorator(
                 onDestinationSelected = { index ->
                     onDestinationSelected(index)
                     drawerState.closeDrawer()
-                }
+                },
+                header = header
             )
         },
         content=content
@@ -45,6 +47,7 @@ fun <T>ModalDrawerDecorator(
     selectedDesertionIndex: Int,
     drawerState: DrawerState,
     onDestinationSelected: (Int) -> Unit = {},
+    header:@Composable ()->Unit,
     content: @Composable () -> Unit,
 ) {
 
@@ -61,7 +64,8 @@ fun <T>ModalDrawerDecorator(
                    destinations = destinations,
                    onDestinationSelected = { index ->
                        onDestinationSelected(index)
-                   }
+                   },
+                   header = header
                )
            }
 

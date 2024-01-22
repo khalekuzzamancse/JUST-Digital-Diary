@@ -3,7 +3,7 @@ package com.just.cse.digital_diary.two_zero_two_three.employee_list.searchable_e
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.search.search_bar.decorator.SearchSection
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.repository.Employee
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.employee_list_repoisitory.model.Employee
 
 
 @Composable

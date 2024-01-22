@@ -22,7 +22,6 @@ internal fun CompactScreenLayout(
     departmentDestinations: (@Composable () -> Unit)? = null,
     sheetHandler: BottomSheetHandler,
     onExitRequest: () -> Unit,
-    searchContent: ((@Composable () -> Unit)?)=null,
     content: (@Composable () -> Unit)? = null,
 ) {
     /*
@@ -30,11 +29,7 @@ internal fun CompactScreenLayout(
                 as,we have animation when showing department destination as a result ,to give better user                experience not hiding(recompose) the faculties,
                  Use a department background that hide the faculties  without recomposing the faculties
                   */
-    LaunchedEffect(Unit){
-        sheetHandler.expand()
-        delay(5000)
-        sheetHandler.partialExpand()
-    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         BottomSheetDecorator(
             topBar = {
@@ -46,10 +41,7 @@ internal fun CompactScreenLayout(
                             handler = sheetHandler
                         )
                     },
-                    onSearchRequest = {
-                        //hide the sheet to causes crash
-                        sheetHandler.hideSheet()
-                    }
+
                 )
             },
             sheetState = sheetHandler.sheetState.collectAsState().value,
@@ -69,13 +61,6 @@ internal fun CompactScreenLayout(
                 departmentDestinations()
             }
 
-        }
-        if(searchContent!=null){
-            Box(
-                Modifier.matchParentSize().background(MaterialTheme.colorScheme.secondaryContainer)
-            ) {
-                searchContent()
-            }
         }
 
 

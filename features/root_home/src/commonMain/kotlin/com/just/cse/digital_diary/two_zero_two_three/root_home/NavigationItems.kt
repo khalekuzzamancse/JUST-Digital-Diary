@@ -24,12 +24,12 @@ val rootModuleTopMostDestinations = listOf(
     ),
 
     NavigationItemInfo(
-        label = "Faculty Members",
+        label = "Faculty List",
         unFocusedIcon = Icons.Outlined.School,
         key = ""
     ),
     NavigationItemInfo(
-        label = "Administrators",
+        label = "Admin Offices",
         unFocusedIcon = Icons.Outlined.AdminPanelSettings,
         key = ""
     ),
@@ -73,7 +73,7 @@ val rootModuleTopMostDestinations = listOf(
 object RootDestinations {
     const val HOME = 0
     const val FACULTY_LIST = 1
-    const val ADMINISTRATION = 2
+    const val ADMIN_OFFICE = 2
     const val MESSAGE_FROM_VC = 3
     const val ABOUT_US = 4
     const val Search = 5
