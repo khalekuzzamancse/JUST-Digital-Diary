@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/data_layer" />
             <option value="$PROJECT_DIR$/desktop" />
             <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/admin_office" />
             <option value="$PROJECT_DIR$/features/auth" />
             <option value="$PROJECT_DIR$/features/department_info" />
             <option value="$PROJECT_DIR$/features/departments" />

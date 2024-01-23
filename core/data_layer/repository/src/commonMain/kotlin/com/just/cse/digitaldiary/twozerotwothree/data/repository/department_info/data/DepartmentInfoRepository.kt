@@ -1,7 +1,7 @@
 package com.just.cse.digitaldiary.twozerotwothree.data.repository.department_info.data
 
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.department_info.model.DepartmentMessage
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.employee_list_repoisitory.data.EmployeeRepository
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.department_employee_list_repoisitory.data.EmployeeRepository
 
 object DepartmentInfoRepository {
     fun getDepartmentMessage(departmentId: String): DepartmentMessage {

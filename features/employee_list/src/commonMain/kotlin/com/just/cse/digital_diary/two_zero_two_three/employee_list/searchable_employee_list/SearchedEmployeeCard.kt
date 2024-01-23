@@ -18,7 +18,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.network_image.Ima
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.search.search_bar.SearcherHighlightedText
 import com.just.cse.digital_diary.two_zero_two_three.employee_list.employee_list.CardTypography
 import com.just.cse.digital_diary.two_zero_two_three.employee_list.employee_list.Controls
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.employee_list_repoisitory.model.Employee
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.department_employee_list_repoisitory.model.Employee
 
 
 @Composable

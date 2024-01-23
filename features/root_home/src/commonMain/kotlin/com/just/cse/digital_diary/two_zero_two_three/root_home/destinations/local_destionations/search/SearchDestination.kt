@@ -8,7 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.just.cse.digital_diary.two_zero_two_three.employee_list.searchable_employee_list.SearchableEmployeeList
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.department_info.data.DepartmentInfoRepository
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.employee_list_repoisitory.model.Employee
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.department_employee_list_repoisitory.model.Employee
 
 var cnt=1
 @Composable

@@ -11,6 +11,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -33,7 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.network_image.ImageLoader
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.employee_list_repoisitory.model.Employee
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.department_employee_list_repoisitory.model.Employee
 
 
 @Composable
@@ -49,6 +51,7 @@ internal fun EmployeeCard(
         modifier = modifier,
         shadowElevation = 2.dp
     ) {
+        println("EmployeeCard:$expandMode:$employee")
         Column(
             modifier = modifier
                 .padding(8.dp),
@@ -93,6 +96,7 @@ internal fun EmployeeCard(
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ExpandAbleInfo(
     modifier: Modifier = Modifier,
@@ -106,10 +110,11 @@ private fun ExpandAbleInfo(
         verticalArrangement = Arrangement.spacedBy(4.dp),
         horizontalAlignment = Alignment.Start
     ) {
-        Row(
+        FlowRow(
             modifier = Modifier,
-            verticalAlignment = Alignment.CenterVertically
+//            verticalAlignment = Alignment.CenterVertically
         ) {
+            //what if the name doesn't fit into one Row?,then button will be hidden
             EmployeeName(
                 name = employee.name,
                 modifier = Modifier

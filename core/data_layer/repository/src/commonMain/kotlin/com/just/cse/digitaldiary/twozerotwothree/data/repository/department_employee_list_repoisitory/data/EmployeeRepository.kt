@@ -1,6 +1,7 @@
-package com.just.cse.digitaldiary.twozerotwothree.data.repository.employee_list_repoisitory.data
+package com.just.cse.digitaldiary.twozerotwothree.data.repository.department_employee_list_repoisitory.data
 
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.employee_list_repoisitory.model.Employee
+import com.just.cse.digitaldiary.twozerotwothree.core.network.employees.data.DepartmentEmployeeListFetcher
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.department_employee_list_repoisitory.model.Employee
 
 
 object EmployeeRepository {
@@ -15,7 +16,7 @@ object EmployeeRepository {
             designations = "Assistant Professor",
             deptName = "Computer Science ",
             deptSortName = "CS",
-            roomName = "A-101"
+            roomNo = "A-101"
         ),
         Employee(
             name = "Bob Jones",
@@ -27,7 +28,7 @@ object EmployeeRepository {
             designations = "Associate Professor",
             deptName = "Mathematics",
             deptSortName = "Math",
-            roomName = "B-202"
+            roomNo = "B-202"
         ),
         Employee(
             name = "Charlie Brown",
@@ -39,15 +40,33 @@ object EmployeeRepository {
             designations = "Lecturer",
             deptName = "Physics",
             deptSortName = "Phys",
-            roomName = "C-303"
+            roomNo = "C-303"
         )
     )
     suspend fun  getEmployees(deptID: String):List<Employee>{
-        return employees
+      return  DepartmentEmployeeListFetcher().fetch(deptID).map {
+            Employee(
+                name = it.name,
+                email = it.email,
+                additionalEmail = it.additional_email?:"",
+                profileImageLink = it.profile_image?:"",
+                achievements = it.achievement,
+                phone = it.phone?:"",
+                designations = it.designations,
+                deptName = it.department_name,
+                deptSortName = it.department_shortname,
+                roomNo = it.room_no,
+            )
+        }
+
+    }
+
+    suspend fun  getStafff(deptID: String):List<Employee>{
+        return  employees
+        }
+
     }
 
 
-
-}
 
 

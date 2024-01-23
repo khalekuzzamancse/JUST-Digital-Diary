@@ -1,4 +1,4 @@
-package com.just.cse.digitaldiary.twozerotwothree.data.repository.employee_list_repoisitory.model
+package com.just.cse.digitaldiary.twozerotwothree.data.repository.department_employee_list_repoisitory.model
 
 data class Employee(
     val name: String,
@@ -10,5 +10,5 @@ data class Employee(
     val designations: String,
     val deptName: String,
     val deptSortName: String,
-    val roomName: String,
+    val roomNo: String,
 )

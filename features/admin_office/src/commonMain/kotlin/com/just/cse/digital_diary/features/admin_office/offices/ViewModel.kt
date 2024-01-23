@@ -2,6 +2,7 @@ package com.just.cse.digital_diary.features.admin_office.offices
 
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.admin_office_repository.data.AdminOfficeRepository
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.admin_office_repository.data.AdminOfficeSubOfficeRepository
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.admin_office_repository.model.AdminOffice
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.admin_office_repository.model.AdminOfficeSubOffice
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,8 +14,10 @@ import kotlinx.coroutines.launch
 internal class ViewModel(
     private val onSubOfficeNavigationRequest: (String) -> Unit,
 ) {
-    val scope= CoroutineScope(Dispatchers.Default)
-    val offices = AdminOfficeRepository().offices
+
+    private val scope= CoroutineScope(Dispatchers.Default)
+    private val _offices=MutableStateFlow<List<AdminOffice>>(emptyList())
+    val offices = _offices.asStateFlow()
     private val _selectedOfficeSubOffices = MutableStateFlow<List<AdminOfficeSubOffice>>(emptyList())
     val selectedOfficeSubOffices = _selectedOfficeSubOffices.asStateFlow()
     private val _selectedOffice = MutableStateFlow(0)
@@ -23,10 +26,16 @@ internal class ViewModel(
     val selectedSubOffice = _selectedSubOffice.asStateFlow()
 
 
+    init {
+        scope.launch {
+           _offices.update {AdminOfficeRepository().getOffices()  }
+        }
+    }
     fun onOfficeSelected(index: Int) {
         _selectedOffice.update { index }
         scope.launch {
-            _selectedOfficeSubOffices.update { AdminOfficeSubOfficeRepository().getSubOffice("01")}
+            val officeId=_offices.value[_selectedOffice.value].id
+            _selectedOfficeSubOffices.update { AdminOfficeSubOfficeRepository().getSubOffice(officeId)}
         }
 
     }

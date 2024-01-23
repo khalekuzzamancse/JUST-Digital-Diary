@@ -1,5 +1,6 @@
 package com.just.cse.digitaldiary.twozerotwothree.data.repository.admin_office_repository.data
 
+import com.just.cse.digitaldiary.twozerotwothree.core.network.admin_office_list.data.SubOfficeListFetcher
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.admin_office_repository.model.AdminOffice
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.admin_office_repository.model.AdminOfficeSubOffice
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,5 +35,13 @@ class AdminOfficeSubOfficeRepository {
         )
     )
 
-    suspend fun getSubOffice(officeId: String) = officeList
+    suspend fun getSubOffice(officeId: String):List<AdminOfficeSubOffice>{
+       return SubOfficeListFetcher().fetch(officeId).map {
+            AdminOfficeSubOffice(
+                name = it.name,
+                id=it.sub_office_id,
+                employeeCount = it.members_count
+            )
+        }
+    }
 }

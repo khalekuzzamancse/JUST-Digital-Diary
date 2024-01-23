@@ -3,7 +3,7 @@ package com.just.cse.digital_diary.two_zero_two_three.employee_list.searchable_e
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.search.search_bar.decorator.SearchSection
-import com.just.cse.digitaldiary.twozerotwothree.data.repository.employee_list_repoisitory.model.Employee
+import com.just.cse.digitaldiary.twozerotwothree.data.repository.department_employee_list_repoisitory.model.Employee
 
 
 @Composable
@@ -24,7 +24,7 @@ fun SearchableEmployeeList(
                     || employee.designations.contains(queryText, ignoreCase = true)
                     || employee.achievements.contains(queryText, ignoreCase = true)
                     || employee.phone.contains(queryText, ignoreCase = true)
-                    || employee.roomName.contains(queryText, ignoreCase = true)
+                    || employee.roomNo.contains(queryText, ignoreCase = true)
                     )
             filter
         },

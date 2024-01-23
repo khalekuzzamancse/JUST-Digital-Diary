@@ -20,7 +20,7 @@ fun DepartmentInfoScreen(
     event: DepartmentModuleEvent,
     onExitRequested: () -> Unit,
 ) {
-    val viewModel = remember { ViewModel() }
+    val viewModel = remember { ViewModel(departmentId) }
 
 
     WindowSizeDecorator(
