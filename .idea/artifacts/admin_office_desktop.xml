@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="admin_office-desktop">
+    <output-path>$PROJECT_DIR$/features/admin_office/build/libs</output-path>
+    <root id="archive" name="admin_office-desktop.jar">
+      <element id="module-output" name="JUST_Digital_Diary.features.admin_office.desktopMain" />
+    </root>
+  </artifact>
+</component>

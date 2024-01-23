@@ -15,6 +15,8 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/data_layer" />
             <option value="$PROJECT_DIR$/core/data_layer/repository" />
+            <option value="$PROJECT_DIR$/core/local_database" />
+            <option value="$PROJECT_DIR$/core/local_database/sql_delight" />
             <option value="$PROJECT_DIR$/core/network" />
             <option value="$PROJECT_DIR$/data_layer" />
             <option value="$PROJECT_DIR$/desktop" />

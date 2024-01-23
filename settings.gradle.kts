@@ -32,6 +32,8 @@ val coreModules = listOf(
     ":core:data_layer",
     ":core:data_layer:repository",
     ":core:network",
+    ":core:local_database",
+    ":core:local_database:sql_delight",
     
 
 )
