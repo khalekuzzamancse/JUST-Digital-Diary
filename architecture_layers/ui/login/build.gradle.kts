@@ -18,6 +18,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project(":core:network"))
+                implementation(project(modules.versions.domain.login.get()))
             }
         }
 //        val androidMain by getting{
@@ -35,7 +36,7 @@ kotlin {
 
 }
 android {
-    namespace =  "com.just.cse.digital_diary.two_zero_two_three.data_layer.login"
+    namespace =  "com.just.cse.digital_diary.two_zero_two_three.ui_layer.login"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

@@ -17,6 +17,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("modules") {
             version("common-ui", ":architecture_layers:ui:common_ui")
+            version("domain-login", ":architecture_layers:domain:login")
         }
     }
 }
