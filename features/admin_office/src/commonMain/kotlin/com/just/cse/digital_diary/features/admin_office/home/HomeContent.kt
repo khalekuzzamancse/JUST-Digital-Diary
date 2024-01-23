@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.animation.TypeWriter
 import com.just.cse.digitaldiary.twozerotwothree.data.repository.faculties_info.FacultiesInfoRepository
 
 @Composable

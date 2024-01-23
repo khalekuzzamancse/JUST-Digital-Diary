@@ -25,7 +25,7 @@ kotlin {
                 implementation(compose.preview)
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(project(":core:data_layer:repository"))
-                implementation(project(":common_ui"))
+                implementation(project(modules.versions.common.ui.get()))
 
             }
         }

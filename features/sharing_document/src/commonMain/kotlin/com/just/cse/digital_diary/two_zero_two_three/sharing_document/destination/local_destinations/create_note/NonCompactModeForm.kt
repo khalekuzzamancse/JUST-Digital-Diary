@@ -1,9 +1,6 @@
 package com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.local_destinations.create_note
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material3.Text

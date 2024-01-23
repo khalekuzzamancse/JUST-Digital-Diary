@@ -2,7 +2,6 @@ package com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.logi
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

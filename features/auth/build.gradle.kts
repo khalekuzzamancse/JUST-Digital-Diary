@@ -35,12 +35,13 @@ kotlin {
                 api(libs.coil3)
                 api(libs.coil3.network)
                 //
-                implementation(project(":common_ui"))
+                implementation(project(":architecture_layers:ui:common_ui"))
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(libs.voyager.navigator)
                 implementation(libs.voyager.transitions)
                 implementation(project(":core:data_layer:repository"))
-                implementation(project(":common_ui"))
+              //  implementation(project(":architecture_layers:ui:common_ui"))
+                implementation(project(modules.versions.common.ui.get()))
 
 
 
