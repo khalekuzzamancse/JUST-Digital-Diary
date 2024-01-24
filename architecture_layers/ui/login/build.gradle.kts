@@ -1,6 +1,9 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("org.jetbrains.compose")
 }
 kotlin {
     androidTarget {
@@ -16,9 +19,15 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
+                implementation(compose.ui)
+                implementation(compose.material3)
+                implementation(compose.animation)
+                implementation(compose.animationGraphics)
+                implementation(compose.materialIconsExtended)
+                implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(project(":core:network"))
                 implementation(project(modules.versions.domain.login.get()))
+                implementation(project(modules.versions.common.ui.get()))
             }
         }
 //        val androidMain by getting{

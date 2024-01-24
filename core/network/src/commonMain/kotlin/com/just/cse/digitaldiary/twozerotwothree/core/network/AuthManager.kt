@@ -21,26 +21,26 @@ object AuthManager {
         private set
 
     suspend fun login(username: String, password: String): Boolean {
-        val body = LoginData(
-            usernameOrEmail = username,
-            password = password
-        )
-        val httpClient = HttpClient {
-            install(ContentNegotiation) {
-                json()
-            }
-        }
+//        val body = LoginRequestBody(
+//            usernameOrEmail = username,
+//            password = password
+//        )
+//        val httpClient = HttpClient {
+//            install(ContentNegotiation) {
+//                json()
+//            }
+//        }
 
         return try {
-            val response: LoginResponse = httpClient.post(loginUrl) {
-                contentType(ContentType.Application.Json)
-                setBody(body)
-            }.body()
-            if (response.message == "Success") {
-                authToken = response.token
-                log("Login successful with token: $authToken")
-                true
-            } else
+//            val response:LoginResponse.Response = httpClient.post(loginUrl) {
+//                contentType(ContentType.Application.Json)
+//                setBody(body)
+//            }.body()
+//            if (response.message == "Success") {
+//                authToken = response.token
+//                log("Login successful with token: $authToken")
+//                true
+//            } else
                 false
         } catch (_: Exception) {
             false
@@ -53,30 +53,31 @@ object AuthManager {
         username: String,
         password: String
     ): Boolean {
-        val body = RegisterData(
-            name = name,
-            email = email,
-            username = username,
-            password = password,
-        )
-        val httpClient = HttpClient {
-            install(ContentNegotiation) {
-                json()
-            }
-        }
-
-        return try {
-            val response: RegistrationResponse = httpClient.post(registerUrl) {
-                contentType(ContentType.Application.Json)
-                setBody(body)
-            }.body()
-            if (response.message == "Registration Success") {
-                log("Register successful: $response")
-                true
-            } else
-                false
-        } catch (_: Exception) {
-            false
-        }
+//        val body = RegisterData(
+//            name = name,
+//            email = email,
+//            username = username,
+//            password = password,
+//        )
+//        val httpClient = HttpClient {
+//            install(ContentNegotiation) {
+//                json()
+//            }
+//        }
+//
+//        return try {
+//            val response: RegistrationResponse = httpClient.post(registerUrl) {
+//                contentType(ContentType.Application.Json)
+//                setBody(body)
+//            }.body()
+//            if (response.message == "Registration Success") {
+//                log("Register successful: $response")
+//                true
+//            } else
+//                false
+//        } catch (_: Exception) {
+//            false
+//        }
+        return false
     }
 }

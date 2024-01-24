@@ -18,6 +18,11 @@ dependencyResolutionManagement {
         create("modules") {
             version("common-ui", ":architecture_layers:ui:common_ui")
             version("domain-login", ":architecture_layers:domain:login")
+            version("data-login", ":architecture_layers:data:login")
+            version("domain-register", ":architecture_layers:domain:register")
+            version("data-register", ":architecture_layers:data:register")
+            version("domain-faculties", ":architecture_layers:domain:faculties")
+            version("data-faculties", ":architecture_layers:data:faculties")
         }
     }
 }
@@ -53,6 +58,7 @@ val featureModules = listOf(
 )
 val coreModules = listOf(
     ":core",
+    ":core:di",
     ":core:data_layer",
     ":core:data_layer:repository",
     ":core:network",

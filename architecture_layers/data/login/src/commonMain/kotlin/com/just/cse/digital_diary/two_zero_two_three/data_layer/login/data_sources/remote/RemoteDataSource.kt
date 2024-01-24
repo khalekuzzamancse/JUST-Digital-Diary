@@ -1,0 +1,25 @@
+package com.just.cse.digital_diary.two_zero_two_three.data_layer.login.data_sources.remote
+
+import com.just.cse.digital_diary.two_zero_two_three.data_layer.login.dto.RemoteResponseDTO
+import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.post.post
+
+internal class RemoteDataSource {
+    private val loginUrl = "https://diary.rnzgoldenventure.com/api/login"
+    suspend fun login(username: String, password: String): Response<RemoteResponseDTO> {
+        val res = post<RemoteResponseDTO>(
+            url = loginUrl,
+            body = LoginRequestBody(usernameOrEmail =username, password = password)
+        )
+        return if (res.isSuccess&&res.result!=null) {
+            Response(
+                result = res.result,
+                reason = null
+            )
+        } else{
+            Response(
+                result =null,
+                reason = res.reason
+            )
+        }
+    }
+}

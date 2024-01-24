@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="domain_layer-js">
+    <output-path>$PROJECT_DIR$/architecture_layers/domain_layer/build/libs</output-path>
+    <root id="archive" name="domain_layer-js.jar">
+      <element id="module-output" name="JUST_Digital_Diary.architecture_layers.domain_layer.jsMain" />
+    </root>
+  </artifact>
+</component>

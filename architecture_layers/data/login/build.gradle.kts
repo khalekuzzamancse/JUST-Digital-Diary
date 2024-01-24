@@ -1,6 +1,8 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    alias(libs.plugins.kotlinxSerialization)
+
 }
 kotlin {
     androidTarget {
@@ -18,6 +20,9 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project(":core:network"))
+                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(project(modules.versions.domain.login.get()))
+
             }
         }
 //        val androidMain by getting{

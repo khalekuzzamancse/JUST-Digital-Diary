@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="register-desktop">
+    <output-path>$PROJECT_DIR$/architecture_layers/ui/register/build/libs</output-path>
+    <root id="archive" name="register-desktop.jar">
+      <element id="module-output" name="JUST_Digital_Diary.architecture_layers.ui.register.desktopMain" />
+    </root>
+  </artifact>
+</component>

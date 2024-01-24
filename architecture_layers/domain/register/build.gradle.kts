@@ -35,7 +35,7 @@ kotlin {
 
 }
 android {
-    namespace =  "com.just.cse.digital_diary.two_zero_two_three.data_layer.register"
+    namespace =  "com.just.cse.digital_diary.two_zero_two_three.domain.register"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

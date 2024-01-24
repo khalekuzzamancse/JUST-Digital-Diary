@@ -38,6 +38,10 @@ kotlin {
                 implementation(project(":features:event_gallery"))
                 implementation(project(":features:admin_office"))
                 implementation(project(":core:network"))
+                implementation(project(":core:di"))
+                implementation(project(modules.versions.domain.login.get()))
+                implementation(project(modules.versions.data.login.get()))
+
             }
         }
         val androidMain by getting{
