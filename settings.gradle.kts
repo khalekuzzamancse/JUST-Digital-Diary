@@ -23,6 +23,18 @@ dependencyResolutionManagement {
             version("data-register", ":architecture_layers:data:register")
             version("domain-faculties", ":architecture_layers:domain:faculties")
             version("data-faculties", ":architecture_layers:data:faculties")
+            version("domain-departments", ":architecture_layers:domain:departments")
+            version("data-departments", ":architecture_layers:data:departments")
+            version("domain-teachers", ":architecture_layers:domain:teachers")
+            version("data-teachers", ":architecture_layers:data:teachers")
+            version("domain-adminOffices", ":architecture_layers:domain:admin_offices")
+            version("data-adminOffices", ":architecture_layers:data:admin_offices")
+
+            version("domain-adminSubOffices", ":architecture_layers:domain:admin_sub_offices")
+            version("data-adminSubOffices", ":architecture_layers:data:admin_sub_offices")
+            version("domain-adminOfficers", ":architecture_layers:domain:admin_officers")
+            version("data-adminOfficers", ":architecture_layers:data:admin_officers")
+
         }
     }
 }
@@ -36,7 +48,9 @@ val dataLayerModules = listOf(
     ":architecture_layers:data:departments",
     ":architecture_layers:data:department_info",
     ":architecture_layers:data:teachers",
-    ":architecture_layers:data:admin_officers"
+    ":architecture_layers:data:admin_officers",
+    ":architecture_layers:data:admin_offices",
+    ":architecture_layers:data:admin_sub_offices"
 
 )
 val domainLayerModules  = dataLayerModules

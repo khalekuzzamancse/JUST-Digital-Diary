@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.faculties.dto
+package com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.faculties.data_sources.remote.dto
 
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.faculties.model.FacultyInfoModel
 import kotlinx.serialization.Serializable

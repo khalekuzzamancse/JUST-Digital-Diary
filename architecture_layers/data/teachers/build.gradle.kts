@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    alias(libs.plugins.kotlinxSerialization)
 }
 kotlin {
     androidTarget {
@@ -18,24 +19,17 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project(":core:network"))
+                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(project(modules.versions.domain.teachers.get()))
             }
         }
-//        val androidMain by getting{
-//            dependencies {
-//
-//            }
-//        }
-//        val desktopMain by getting{
-//            dependencies {
-//
-//            }
-//        }
+
     }
 
 
 }
 android {
-    namespace =  "com.just.cse.digital_diary.two_zero_two_three.data_layer.teachers"
+    namespace =  "com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.teachers"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

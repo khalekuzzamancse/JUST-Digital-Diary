@@ -13,6 +13,8 @@
             <option value="$PROJECT_DIR$/architecture_layers" />
             <option value="$PROJECT_DIR$/architecture_layers/data" />
             <option value="$PROJECT_DIR$/architecture_layers/data/admin_officers" />
+            <option value="$PROJECT_DIR$/architecture_layers/data/admin_offices" />
+            <option value="$PROJECT_DIR$/architecture_layers/data/admin_sub_offices" />
             <option value="$PROJECT_DIR$/architecture_layers/data/department_info" />
             <option value="$PROJECT_DIR$/architecture_layers/data/departments" />
             <option value="$PROJECT_DIR$/architecture_layers/data/faculties" />
@@ -21,6 +23,8 @@
             <option value="$PROJECT_DIR$/architecture_layers/data/teachers" />
             <option value="$PROJECT_DIR$/architecture_layers/domain" />
             <option value="$PROJECT_DIR$/architecture_layers/domain/admin_officers" />
+            <option value="$PROJECT_DIR$/architecture_layers/domain/admin_offices" />
+            <option value="$PROJECT_DIR$/architecture_layers/domain/admin_sub_offices" />
             <option value="$PROJECT_DIR$/architecture_layers/domain/department_info" />
             <option value="$PROJECT_DIR$/architecture_layers/domain/departments" />
             <option value="$PROJECT_DIR$/architecture_layers/domain/faculties" />
@@ -29,6 +33,8 @@
             <option value="$PROJECT_DIR$/architecture_layers/domain/teachers" />
             <option value="$PROJECT_DIR$/architecture_layers/ui" />
             <option value="$PROJECT_DIR$/architecture_layers/ui/admin_officers" />
+            <option value="$PROJECT_DIR$/architecture_layers/ui/admin_offices" />
+            <option value="$PROJECT_DIR$/architecture_layers/ui/admin_sub_offices" />
             <option value="$PROJECT_DIR$/architecture_layers/ui/common_ui" />
             <option value="$PROJECT_DIR$/architecture_layers/ui/department_info" />
             <option value="$PROJECT_DIR$/architecture_layers/ui/departments" />

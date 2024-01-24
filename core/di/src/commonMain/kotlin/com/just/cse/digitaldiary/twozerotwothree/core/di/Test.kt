@@ -1,10 +1,6 @@
 package com.just.cse.digitaldiary.twozerotwothree.core.di
 
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.faculties.repoisitory.FacultyListRepositoryImpl
-import com.just.cse.digital_diary.two_zero_two_three.data_layer.login.repository.LoginRepositoryImpl
-import com.just.cse.digital_diary.two_zero_two_three.data_layer.register.repoisitory.RegisterRepositoryImpl
-import com.just.cse.digital_diary.two_zero_two_three.domain.register.model.RegisterRequestModel
-import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.model.LoginRequestModel
+import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_officers.repoisitory.AdminOfficerListRepositoryImpl
 
 
 suspend fun diTest() {
@@ -22,7 +18,14 @@ suspend fun diTest() {
 //            password = "test@123"
 //        )
 //    )
-        val res=  FacultyListRepositoryImpl().getFaculties()
+
+        // val res=  FacultyListRepositoryImpl().getFaculties()
+//    val res=  DepartmentListRepositoryImpl("01").getDepartment()
+//    val res=  TeacherListRepositoryImpl("01").getTeachers()
+//    val res=  AdminOfficeListRepositoryImpl().getAdminOffices()
+//    val res=  AdminSubOfficeListRepositoryImpl("01").getSubOffices()
+    val res=  AdminOfficerListRepositoryImpl("01").getOfficers()
+
 
     println("DITest:RegisterResult:$res")
 }
