@@ -21,11 +21,11 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTop
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.controls.LoginControls
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.controls.LoginControlsLoginModuleEvent
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.form.LoginForm
-import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.form.LoginFormEvent
+import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.form.state.LoginFormEvent
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.header.LoginHeaderSection
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.event.DestinationLoginModuleEvent
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.event.LoginModuleEvent
-import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.states.FormData
+import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.form.state.FormData
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.viewmodel.LoginDestinationViewModel
 
 @Composable

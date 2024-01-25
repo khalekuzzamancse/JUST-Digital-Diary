@@ -4,6 +4,6 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.
 
 interface DepartmentListRepository{
 
-    suspend fun getDepartment(): DepartmentListResponseModel
+    suspend fun getDepartment(facultyId:String): DepartmentListResponseModel
 
 }

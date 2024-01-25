@@ -19,12 +19,21 @@ dependencyResolutionManagement {
             version("common-ui", ":architecture_layers:ui:common_ui")
             version("domain-login", ":architecture_layers:domain:login")
             version("data-login", ":architecture_layers:data:login")
+            version("ui-login", ":architecture_layers:ui:login")
+
             version("domain-register", ":architecture_layers:domain:register")
             version("data-register", ":architecture_layers:data:register")
+            version("ui-register", ":architecture_layers:ui:register")
+            //
             version("domain-faculties", ":architecture_layers:domain:faculties")
             version("data-faculties", ":architecture_layers:data:faculties")
+            version("ui-faculties", ":architecture_layers:ui:faculties")
+
+            //
             version("domain-departments", ":architecture_layers:domain:departments")
             version("data-departments", ":architecture_layers:data:departments")
+            version("ui-departments", ":architecture_layers:ui:departments")
+            //
             version("domain-teachers", ":architecture_layers:domain:teachers")
             version("data-teachers", ":architecture_layers:data:teachers")
             version("domain-adminOffices", ":architecture_layers:domain:admin_offices")

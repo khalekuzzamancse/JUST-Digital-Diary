@@ -9,7 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.states.FormData
+import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.form.state.FormData
+import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.form.state.LoginFormEvent
 
 
 @Composable
@@ -17,7 +18,7 @@ internal fun CompactScreenLoginForm(
     fieldModifier: Modifier = Modifier,
     formModifier: Modifier = Modifier,
     data: FormData,
-    event:LoginFormEvent,
+    event: LoginFormEvent,
 ) {
     CompactScreenLoginForm(
         fieldModifier = fieldModifier,

@@ -39,8 +39,14 @@ kotlin {
                 implementation(libs.voyager.navigator)
                 implementation(libs.voyager.transitions)
                 implementation(project(":core:data_layer:repository"))
-              //  implementation(project(":architecture_layers:ui:common_ui"))
                 implementation(project(modules.versions.common.ui.get()))
+                implementation(project(modules.versions.ui.login.get()))
+                implementation(project(modules.versions.ui.register.get()))
+                implementation(project(modules.versions.domain.login.get()))
+                implementation(project(modules.versions.domain.register.get()))
+                implementation(project(modules.versions.data.login.get()))
+                implementation(project(modules.versions.data.register.get()))
+
 
 
 

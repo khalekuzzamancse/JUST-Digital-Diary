@@ -27,7 +27,6 @@ kotlin {
                 implementation(libs.voyager.navigator)
                 implementation(libs.voyager.transitions)
                 implementation(libs.voyager.screenmodel)
-              //  implementation(project(":architecture_layers:ui:common_ui"))
                 implementation(project(modules.versions.common.ui.get()))
                 implementation(project(":core:data_layer:repository"))
                 implementation(project(":features:faculty"))

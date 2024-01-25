@@ -4,7 +4,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
-import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.states.FormData
+import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.form.state.FormData
+import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.form.state.LoginFormEvent
 
 @Composable
 internal fun LoginForm(

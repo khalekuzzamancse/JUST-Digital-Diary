@@ -1,8 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth
 
 import androidx.compose.runtime.Composable
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.destionations.auth.AuthScreen
-import com.just.cse.digital_diary.two_zero_two_three.auth.ui.theme.AuthModuleTheme
+import com.just.cse.digital_diary.two_zero_two_three.auth.theme.AuthModuleTheme
 
 /**
  * * This is the Only Entry and Exit point to the AuthModule.
@@ -17,10 +16,7 @@ fun AuthModuleEntryPoint(
     onExitRequest: ()->Unit
 ) {
     AuthModuleTheme {
-        AuthScreen(
-            onLoginSuccess=onLoginSuccess,
-            onExitRequest = onExitRequest
-        )
+        AuthScreen()
 
     }
 

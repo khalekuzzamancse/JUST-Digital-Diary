@@ -29,6 +29,13 @@ kotlin {
                 implementation(project(":core:data_layer:repository"))
               //  implementation(project(":architecture_layers:ui:common_ui"))
                 implementation(project(modules.versions.common.ui.get()))
+                implementation(project(modules.versions.ui.faculties.get()))
+                implementation(project(modules.versions.domain.faculties.get()))
+                implementation(project(modules.versions.data.faculties.get()))
+                //
+                implementation(project(modules.versions.ui.departments.get()))
+                implementation(project(modules.versions.domain.departments.get()))
+                implementation(project(modules.versions.data.departments.get()))
 
             }
         }

@@ -4,8 +4,8 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.de
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.departments.model.DepartmentListResponseModel
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.departments.repoisitory.DepartmentListRepository
 
-class DepartmentListRepositoryImpl(private val facultyId:String): DepartmentListRepository {
-    override suspend fun getDepartment(): DepartmentListResponseModel {
+class DepartmentListRepositoryImpl(): DepartmentListRepository {
+    override suspend fun getDepartment(facultyId:String): DepartmentListResponseModel {
 
         val response=DepartmentListRemoteDataSource(facultyId).getDepartments()
         if (response.isSuccess){
