@@ -1,6 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_officers.data_sources.remote
 
 import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_officers.dto.AboutUsDTO
+import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_officers.dto.EventGalleryDTO
 import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_officers.dto.VCInfoDTO
 
 internal class RemoteDataSource {
@@ -24,4 +25,33 @@ internal class RemoteDataSource {
         otherInfo = ""
 
     )
+    suspend fun getEvents(): List<EventGalleryDTO> {
+        return listOf(
+            EventGalleryDTO(
+                name = "Spring Music Festival",
+                details = "A vibrant outdoor music festival celebrating spring. Features a variety of genres and artists.",
+                imageLink = "https://static.just.edu.bd/images/public/gallery/1670125964939_1200.jpeg"
+            ),
+            EventGalleryDTO(
+                name = "Tech Innovators Conference",
+                details = "Annual conference showcasing the latest in technology and innovation. Networking and keynote speeches.",
+                imageLink = "https://static.just.edu.bd/images/public/gallery/1670125585615_1200.jpeg"
+            ),
+            EventGalleryDTO(
+                name = "Marathon City Run",
+                details = "A city-wide marathon with participants from all over the world. Includes a half-marathon and a 5K run.",
+                imageLink = "https://static.just.edu.bd/images/public/gallery/1611033327761_1200.jpeg"
+            ),
+            EventGalleryDTO(
+                name = "Food and Wine Expo",
+                details = "Explore culinary delights and fine wines at this expo. Features local and international cuisine.",
+                imageLink = "https://static.just.edu.bd/images/public/gallery/1670316318194_1200.jpeg"
+            ),
+            EventGalleryDTO(
+                name = "Artists' Showcase",
+                details = "An exhibition of contemporary art by emerging artists. Paintings, sculptures, and installations.",
+                imageLink = "https://static.just.edu.bd/images/public/gallery/1692174265512_1200.jpeg"
+            )
+        )
+    }
 }

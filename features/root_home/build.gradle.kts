@@ -34,7 +34,6 @@ kotlin {
                 implementation(project(":features:department_info"))
                 implementation(project(":features:auth"))
                 implementation(project(":features:employee_list"))
-                implementation(project(":features:event_gallery"))
                 implementation(project(":features:admin_office"))
                 implementation(project(":core:network"))
                 implementation(project(":core:di"))

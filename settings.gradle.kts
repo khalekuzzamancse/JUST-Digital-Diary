@@ -88,7 +88,6 @@ val featureModules = listOf(
     ":features:departments",
     ":features:sharing_document",
     ":features:employee_list",
-    ":features:event_gallery",
     ":features:admin_office",
 )
 val coreModules = listOf(

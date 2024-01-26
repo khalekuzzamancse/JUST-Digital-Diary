@@ -2,6 +2,7 @@ package com.just.cse.digital_diary.two_zero_two_three.root_home
 
 import androidx.compose.runtime.Composable
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.destination.about_us.AboutUsDestination
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.destination.event_gallery.EventGalleryDestination
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.destination.message_from_vc.MessageFromVCDestination
 import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_officers.repoisitory.OtherInfoRepositoryImpl
 import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.themes.AppTheme
@@ -18,7 +19,10 @@ fun RootModule(appEvent: AppEvent) {
 //        DepartmentModuleEntryPoint(
 //            departmentId = "01",
 //        )
-        AboutUsDestination(
+//        AboutUsDestination(
+//            repository=OtherInfoRepositoryImpl()
+//        )
+        EventGalleryDestination(
             repository=OtherInfoRepositoryImpl()
         )
 //        MessageFromVCDestination(
