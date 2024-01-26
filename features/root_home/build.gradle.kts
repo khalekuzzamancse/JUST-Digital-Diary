@@ -41,6 +41,9 @@ kotlin {
                 implementation(project(modules.versions.domain.login.get()))
                 implementation(project(modules.versions.data.login.get()))
                 implementation(project(modules.versions.data.login.get()))
+                implementation(project(modules.versions.domain.otherInfo.get()))
+                implementation(project(modules.versions.ui.otherInfo.get()))
+                implementation(project(modules.versions.data.otherInfo.get()))
 
             }
         }

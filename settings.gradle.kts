@@ -37,13 +37,14 @@ dependencyResolutionManagement {
 
             version("domain-departmentInfo", ":architecture_layers:domain:department_info")
             version("data-departmentInfo", ":architecture_layers:data:department_info")
-            version("ui-departmentInfo", ":architecture_layers:ui:department_info")
             //
             version("domain-teachers", ":architecture_layers:domain:teachers")
             version("data-teachers", ":architecture_layers:data:teachers")
             version("ui-teachers", ":architecture_layers:ui:teachers")
             //
-
+            version("domain-otherInfo", ":architecture_layers:domain:other_info")
+            version("data-otherInfo", ":architecture_layers:data:other_info")
+            version("ui-otherInfo", ":architecture_layers:ui:other_info")
             //
             version("domain-adminOffices", ":architecture_layers:domain:admin_offices")
             version("data-adminOffices", ":architecture_layers:data:admin_offices")
@@ -68,7 +69,9 @@ val dataLayerModules = listOf(
     ":architecture_layers:data:teachers",
     ":architecture_layers:data:admin_officers",
     ":architecture_layers:data:admin_offices",
-    ":architecture_layers:data:admin_sub_offices"
+    ":architecture_layers:data:admin_sub_offices",
+    ":architecture_layers:data:other_info",
+
 
 )
 val domainLayerModules  = dataLayerModules

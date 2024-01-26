@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/architecture_layers/data/departments" />
             <option value="$PROJECT_DIR$/architecture_layers/data/faculties" />
             <option value="$PROJECT_DIR$/architecture_layers/data/login" />
+            <option value="$PROJECT_DIR$/architecture_layers/data/other_info" />
             <option value="$PROJECT_DIR$/architecture_layers/data/register" />
             <option value="$PROJECT_DIR$/architecture_layers/data/teachers" />
             <option value="$PROJECT_DIR$/architecture_layers/domain" />
@@ -29,6 +30,7 @@
             <option value="$PROJECT_DIR$/architecture_layers/domain/departments" />
             <option value="$PROJECT_DIR$/architecture_layers/domain/faculties" />
             <option value="$PROJECT_DIR$/architecture_layers/domain/login" />
+            <option value="$PROJECT_DIR$/architecture_layers/domain/other_info" />
             <option value="$PROJECT_DIR$/architecture_layers/domain/register" />
             <option value="$PROJECT_DIR$/architecture_layers/domain/teachers" />
             <option value="$PROJECT_DIR$/architecture_layers/ui" />
@@ -40,6 +42,7 @@
             <option value="$PROJECT_DIR$/architecture_layers/ui/departments" />
             <option value="$PROJECT_DIR$/architecture_layers/ui/faculties" />
             <option value="$PROJECT_DIR$/architecture_layers/ui/login" />
+            <option value="$PROJECT_DIR$/architecture_layers/ui/other_info" />
             <option value="$PROJECT_DIR$/architecture_layers/ui/register" />
             <option value="$PROJECT_DIR$/architecture_layers/ui/teachers" />
             <option value="$PROJECT_DIR$/common" />

@@ -6,9 +6,7 @@ import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.chil
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.child_destination.EventGalleryDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.child_destination.FacultyListDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.child_destination.NoteListDestination
-import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.local_destionations.about_us.AboutUsDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.local_destionations.home.HomeDestination
-import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.local_destionations.message_from_vc.MessageFromVCDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.local_destionations.search.SearchDestination
 import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.local_destinations.notes_screen.NotesScreenViewModel
 import com.just.cse.digital_diary.two_zero_two_three.sharing_document.module_entry_point.NoteCreationScreen
@@ -63,13 +61,13 @@ object TopMostDestinations {
     fun AboutUs(
         onExitRequest: () -> Unit
     ) {
-        AboutUsDestination(onExitRequest = onExitRequest)
+       // AboutUsDestination(onExitRequest = onExitRequest)
 
     }
 
     @Composable
     fun MessageFromVC(onExitRequest: () -> Unit) {
-        MessageFromVCDestination(onExitRequest = onExitRequest)
+       // MessageFromVCDestination(onExitRequest = onExitRequest)
     }
 
     @Composable
