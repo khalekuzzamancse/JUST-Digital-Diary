@@ -1,10 +1,10 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home
 
 import androidx.compose.runtime.Composable
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.destination.about_us.AboutUsDestination
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.destination.event_gallery.EventGalleryDestination
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.destination.message_from_vc.MessageFromVCDestination
-import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_officers.repoisitory.OtherInfoRepositoryImpl
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_offices.destination.destination.AdminOfficesDestination
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_offices.destination.viewmodel.AdminOfficesDestinationViewModel
+import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_officers.repoisitory.AdminOfficerListRepositoryImpl
+import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_offices.repoisitory.AdminOfficeListRepositoryImpl
 import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.themes.AppTheme
 
 
@@ -22,8 +22,14 @@ fun RootModule(appEvent: AppEvent) {
 //        AboutUsDestination(
 //            repository=OtherInfoRepositoryImpl()
 //        )
-        EventGalleryDestination(
-            repository=OtherInfoRepositoryImpl()
+//        EventGalleryDestination(
+//            repository=OtherInfoRepositoryImpl()
+//        )
+//
+        AdminOfficesDestination(
+            viewModel = AdminOfficesDestinationViewModel(
+                repository = AdminOfficeListRepositoryImpl()
+            )
         )
 //        MessageFromVCDestination(
 //            repository = OtherInfoRepositoryImpl(),

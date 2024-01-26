@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("org.jetbrains.compose")
 }
 kotlin {
     androidTarget {
@@ -17,7 +18,16 @@ kotlin {
         val commonMain by getting{
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(project(":core:network"))
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(compose.ui)
+                implementation(compose.material3)
+                implementation(compose.animation)
+                implementation(compose.animationGraphics)
+                implementation(compose.materialIconsExtended)
+                implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(project(modules.versions.domain.adminOfficers.get()))
+                implementation(project(modules.versions.common.ui.get()))
             }
         }
 //        val androidMain by getting{
@@ -35,7 +45,7 @@ kotlin {
 
 }
 android {
-    namespace = "com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_officers"
+    namespace = "com.just.cse.digital_diary.two_zero_two_three.architecture_layers.admin_officers"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

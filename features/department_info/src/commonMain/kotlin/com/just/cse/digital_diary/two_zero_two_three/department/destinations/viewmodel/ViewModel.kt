@@ -3,16 +3,14 @@ package com.just.cse.digital_diary.two_zero_two_three.department.destinations.vi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.teachers.repoisitory.TeacherListRepositoryImpl
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.teachers.destination.viewmodel.TeacherListViewModel
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.admin_officers.destination.viewmodel.TeacherListViewModel
 import com.just.cse.digital_diary.two_zero_two_three.department.component.event.DepartmentInfoNavigationEvent
-import com.just.cse.digital_diary.two_zero_two_three.department.component.state.TopNBottomBarDecoratorState
 import com.just.cse.digital_diary.two_zero_two_three.department.destinations.event.DepartmentInfoEvent
 import com.just.cse.digital_diary.two_zero_two_three.department.destinations.state.DepartmentInfoScreenState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 

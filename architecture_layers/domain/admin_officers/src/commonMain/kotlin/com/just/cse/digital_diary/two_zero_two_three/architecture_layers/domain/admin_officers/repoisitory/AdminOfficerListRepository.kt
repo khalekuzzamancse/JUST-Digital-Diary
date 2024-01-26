@@ -4,6 +4,6 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.
 
 interface AdminOfficerListRepository{
 
-    suspend fun getOfficers(): AdminOfficersListResponseModel
+    suspend fun getOfficers(subOfficeId:String): AdminOfficersListResponseModel
 
 }

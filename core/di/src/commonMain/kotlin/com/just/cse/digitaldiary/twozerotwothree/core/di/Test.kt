@@ -24,8 +24,6 @@ suspend fun diTest() {
 //    val res=  TeacherListRepositoryImpl("01").getTeachers()
 //    val res=  AdminOfficeListRepositoryImpl().getAdminOffices()
 //    val res=  AdminSubOfficeListRepositoryImpl("01").getSubOffices()
-    val res=  AdminOfficerListRepositoryImpl("01").getOfficers()
-
-
-    println("DITest:RegisterResult:$res")
+  //  val res=  AdminOfficerListRepositoryImpl("01").getOfficers()
+    //println("DITest:RegisterResult:$res")
 }

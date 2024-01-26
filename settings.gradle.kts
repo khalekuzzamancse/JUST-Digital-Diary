@@ -48,11 +48,14 @@ dependencyResolutionManagement {
             //
             version("domain-adminOffices", ":architecture_layers:domain:admin_offices")
             version("data-adminOffices", ":architecture_layers:data:admin_offices")
+            version("ui-adminOffices", ":architecture_layers:ui:admin_offices")
 
             version("domain-adminSubOffices", ":architecture_layers:domain:admin_sub_offices")
             version("data-adminSubOffices", ":architecture_layers:data:admin_sub_offices")
+            //
             version("domain-adminOfficers", ":architecture_layers:domain:admin_officers")
             version("data-adminOfficers", ":architecture_layers:data:admin_officers")
+            version("ui-adminOfficers", ":architecture_layers:ui:admin_officers")
 
         }
     }

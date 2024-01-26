@@ -20,7 +20,7 @@ data class AdminOfficerDTO (
         email=email,
         additionalEmail = additional_email?:"",
         profileImage= profile_image?:"",
-        achievement=achievement,
+        achievements=achievement,
         phone=phone?:"",
         designations=designations,
         roomNo = room_no

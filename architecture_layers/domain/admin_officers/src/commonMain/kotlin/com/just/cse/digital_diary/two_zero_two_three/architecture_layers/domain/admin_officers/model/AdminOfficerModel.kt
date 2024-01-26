@@ -5,7 +5,7 @@ data class AdminOfficerModel(
     val email: String,
     val additionalEmail: String,
     val profileImage: String,
-    val achievement: String,
+    val achievements: String,
     val phone: String?,
     val designations: String,
     val roomNo: String
