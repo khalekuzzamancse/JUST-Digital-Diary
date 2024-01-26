@@ -1,10 +1,8 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.destination_provider
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import com.just.cse.digital_diary.features.faculty.faculty.FacultyModuleEvent
+import com.just.cse.digital_diary.features.faculty.faculty.event.FacultyModuleEvent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.child_destination.AdminOfficeDestination
-import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.child_destination.AuthDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.child_destination.EventGalleryDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.child_destination.FacultyListDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.child_destination.NoteListDestination
@@ -14,7 +12,6 @@ import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.loca
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.local_destionations.search.SearchDestination
 import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.local_destinations.notes_screen.NotesScreenViewModel
 import com.just.cse.digital_diary.two_zero_two_three.sharing_document.module_entry_point.NoteCreationScreen
-import com.just.cse.digitaldiary.twozerotwothree.core.network.faculty_list.data.FacultyListFetcher
 
 
 object TopMostDestinations {

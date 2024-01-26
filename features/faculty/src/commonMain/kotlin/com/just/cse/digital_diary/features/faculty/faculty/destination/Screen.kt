@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.faculty.faculty.dd.destination
+package com.just.cse.digital_diary.features.faculty.faculty.destination
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -8,8 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.features.faculty.faculty.dd.viewmodel.FacultiesScreenViewModel
-import com.just.cse.digital_diary.features.faculty.faculty.navigation.local_destinations.home.HomeContent
+import com.just.cse.digital_diary.features.faculty.faculty.viewmodel.FacultiesScreenViewModel
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
 
@@ -35,7 +34,7 @@ fun FacultiesScreen(
                 FacultyListDestination(
                     viewModel = facultyViewModel,
                     homeContent = {
-                        HomeContent()
+                      //  HomeContent()
                     }
                 )
                 if (openDepartmentList) {
@@ -57,7 +56,7 @@ fun FacultiesScreen(
                     FacultyListDestination(
                         viewModel = facultyViewModel,
                         homeContent = {
-                            HomeContent()
+                         //   HomeContent()
                         }
 
                     )

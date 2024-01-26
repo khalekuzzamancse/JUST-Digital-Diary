@@ -1,6 +1,6 @@
-package com.just.cse.digital_diary.features.faculty.faculty.dd.viewmodel
+package com.just.cse.digital_diary.features.faculty.faculty.viewmodel
 
-import com.just.cse.digital_diary.features.faculty.faculty.dd.state.FacultiesScreenState
+import com.just.cse.digital_diary.features.faculty.faculty.state.FacultiesScreenState
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.departments.destination.viewmodel.DepartmentListDestinationViewModel
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.faculties.destination.viewmodel.FacultyDestinationViewModel
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.departments.repoisitory.DepartmentListRepositoryImpl

@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.faculty.faculty.dd.destination
+package com.just.cse.digital_diary.features.faculty.faculty.destination
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

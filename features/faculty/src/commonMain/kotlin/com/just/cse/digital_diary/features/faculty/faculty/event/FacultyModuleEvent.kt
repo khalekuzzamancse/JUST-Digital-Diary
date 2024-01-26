@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.faculty.faculty
+package com.just.cse.digital_diary.features.faculty.faculty.event
 
 data class FacultyModuleEvent(
     val onExitRequested: () -> Unit={},
