@@ -40,6 +40,7 @@ kotlin {
                 implementation(project(":core:di"))
                 implementation(project(modules.versions.domain.login.get()))
                 implementation(project(modules.versions.data.login.get()))
+                implementation(project(modules.versions.data.login.get()))
 
             }
         }

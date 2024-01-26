@@ -4,6 +4,6 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.
 
 interface TeacherListRepository{
 
-    suspend fun getTeachers(): TeacherListResponseModel
+    suspend fun getTeachers(deptId:String): TeacherListResponseModel
 
 }

@@ -2,7 +2,6 @@ package com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.destina
 
 import androidx.compose.runtime.Composable
 import com.just.cse.digital_diary.two_zero_two_three.department.DepartmentModuleEntryPoint
-import com.just.cse.digital_diary.two_zero_two_three.department.DepartmentModuleEvent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
 
 object DepartmentInfoModuleDestinations {
@@ -15,13 +14,13 @@ object DepartmentInfoModuleDestinations {
     ) {
         DepartmentModuleEntryPoint(
             departmentId = departmentId,
-            event = DepartmentModuleEvent(
-                onCallRequest = appEvent.onCallRequest,
-                onWebsiteViewRequest = appEvent.onWebsiteViewRequest,
-                onMessageRequest = appEvent.onMessageRequest,
-                onEmailRequest = appEvent.onEmailRequest
-            ),
-            onExitRequested = onExitRequest
+//            event = DepartmentModuleEvent(
+//                onCallRequest = appEvent.onCallRequest,
+//                onWebsiteViewRequest = appEvent.onWebsiteViewRequest,
+//                onMessageRequest = appEvent.onMessageRequest,
+//                onEmailRequest = appEvent.onEmailRequest
+//            ),
+//            onExitRequested = onExitRequest
         )
     }
 

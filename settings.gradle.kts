@@ -34,8 +34,17 @@ dependencyResolutionManagement {
             version("data-departments", ":architecture_layers:data:departments")
             version("ui-departments", ":architecture_layers:ui:departments")
             //
+
+            version("domain-departmentInfo", ":architecture_layers:domain:department_info")
+            version("data-departmentInfo", ":architecture_layers:data:department_info")
+            version("ui-departmentInfo", ":architecture_layers:ui:department_info")
+            //
             version("domain-teachers", ":architecture_layers:domain:teachers")
             version("data-teachers", ":architecture_layers:data:teachers")
+            version("ui-teachers", ":architecture_layers:ui:teachers")
+            //
+
+            //
             version("domain-adminOffices", ":architecture_layers:domain:admin_offices")
             version("data-adminOffices", ":architecture_layers:data:admin_offices")
 

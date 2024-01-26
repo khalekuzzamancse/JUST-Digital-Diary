@@ -23,13 +23,11 @@ kotlin {
                 implementation(compose.animationGraphics)
                 implementation(compose.materialIconsExtended)
                 implementation(compose.preview)
-//                implementation(project(":architecture_layers:ui:common_ui"))
                 implementation(project(modules.versions.common.ui.get()))
-                implementation(project(":features:employee_list"))
-                implementation(project(":core:data_layer:repository"))
+                implementation(project(modules.versions.data.teachers.get()))
+                implementation(project(modules.versions.domain.teachers.get()))
+                implementation(project(modules.versions.ui.teachers.get()))
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
-                implementation(libs.voyager.navigator)
-                implementation(libs.voyager.transitions)
 
             }
         }
