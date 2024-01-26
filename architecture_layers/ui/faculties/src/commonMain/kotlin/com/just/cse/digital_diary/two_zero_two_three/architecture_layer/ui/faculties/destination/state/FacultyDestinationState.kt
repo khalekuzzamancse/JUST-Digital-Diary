@@ -6,4 +6,5 @@ data class FacultyDestinationState(
     val isLoading: Boolean=false,
     val message: String?=null,
     val facultyListState: FacultyListState=FacultyListState(),
+
 )

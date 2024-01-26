@@ -5,7 +5,7 @@ import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.He
 import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.getRequest
 
 class FacultyListRemoteDataSource {
-    private val token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxOTExMDEuY3NlOGFlNDdkYTdkY2VkIiwicm9sZV9pZCI6MTMsImlhdCI6MTcwNjEwNjI4NiwiZXhwIjoxNzA2Mjc5MDg2fQ.WdLDU_smb_tUoV8daagmdTeOK271QKNlSuqr7tQA14g"
+    private val token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxOTExMDEuY3NlOGFlNDdkYTdkY2VkIiwicm9sZV9pZCI6MTMsImlhdCI6MTcwNjI0NDY2OCwiZXhwIjoxNzA2NDE3NDY4fQ.L_dE8lFPZcvHlog6--dU2qpNHFqcKpZ8nyEOi1HbdAY"
     private val url="https://diary.rnzgoldenventure.com/api/faculties"
     private val header =Header(key="Authorization", value = token)
     suspend fun getFaculties()= getRequest<FacultyListResponseDTO>(url=url, header=header)

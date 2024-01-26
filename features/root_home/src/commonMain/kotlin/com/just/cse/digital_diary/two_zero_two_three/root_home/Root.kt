@@ -11,7 +11,9 @@ import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.themes.AppThem
 fun RootModule(appEvent: AppEvent) {
     AppTheme {
        // AuthScreen()
-        FacultiesScreen()
+        FacultiesScreen(onDepartmentSelected = {
+            println("Hoome:SelectedDepartment$it")
+        })
 
   }
 

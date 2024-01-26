@@ -11,19 +11,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DepartmentListDestinationViewModel(
-    private val facultyId: String,
     private val repository: DepartmentListRepository
 ) {
 
+    private val facultyId= MutableStateFlow<String?>(null)
     private val _state = MutableStateFlow(DepartmentDestinationState())
     val state = _state.asStateFlow()
-    private val _selectedDepartmentId= MutableStateFlow<String?>(null)
-    val selectedFacultyId=_selectedDepartmentId.asStateFlow()
-    var onExitRequest:()->Unit={}
+    private val _selectedDepartmentId = MutableStateFlow<String?>(null)
+    val selectedDeptId = _selectedDepartmentId.asStateFlow()
+    var onExitRequest: () -> Unit = {}
+    fun changeFacultyId(id:String){
+        facultyId.update { id }
+    }
 
     fun onEvent(event: DepartmentDestinationEvent) {
         when (event) {
@@ -31,46 +35,62 @@ class DepartmentListDestinationViewModel(
                 clearSelectedDepartment()
                 onExitRequest()
             }
+
             is DepartmentListEvent.DepartmentSelected -> onDepartmentSelected(event.index)
+            is DepartmentListEvent.DismissRequest -> {
+                clearSelectedDepartment()
+                onExitRequest()
+            }
         }
 
     }
-    private fun clearSelectedDepartment(){
+
+    private fun clearSelectedDepartment() {
         onDepartmentSelected(-1)
     }
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            startLoading()
-            when (val result = repository.getDepartment(facultyId)) {
-                is DepartmentListResponseModel.Success -> {
-                    onDepartmentListFetchedSuccessfully(result.data.map {
-                        Department(
-                            name = it.name,
-                            id = it.id,
-                            shortName = it.shortName,
-                        )
-                    })
+            facultyId.collect{facultyId->
+                if(facultyId!=null){
+                    startLoading()
+                    when (val result = repository.getDepartment(facultyId)) {
+                        is DepartmentListResponseModel.Success -> {
+                            onDepartmentListFetchedSuccessfully(result.data.map {
+                                Department(
+                                    name = it.name,
+                                    id = it.id,
+                                    shortName = it.shortName,
+                                )
+                            })
 
+                        }
+
+                        is DepartmentListResponseModel.Failure -> {
+                            onDepartmentListFetchedFailed(result.reason)
+                        }
+
+
+                    }
+                    stopLoading()
                 }
-
-                is DepartmentListResponseModel.Failure -> {
-                    onDepartmentListFetchedFailed(result.reason)
-                }
-
 
             }
-            stopLoading()
+
 
 
         }
     }
 
     private fun onDepartmentListFetchedSuccessfully(departments: List<Department>) {
-        _state.update { state ->
-            val departmentListState = state.departmentListState.copy(departments = departments)
-            state.copy(departmentListState = departmentListState)
+        CoroutineScope(Dispatchers.Default).launch {
+            _state.update { state ->
+                val departmentListState = state.departmentListState.copy(departments = departments)
+                state.copy(departmentListState = departmentListState)
+            }
+
         }
+
 
     }
 
@@ -85,7 +105,9 @@ class DepartmentListDestinationViewModel(
             val departmentListState = state.departmentListState.copy(selected = index)
             state.copy(departmentListState = departmentListState)
         }
-        _selectedDepartmentId.update { _state.value.departmentListState.departments[index].id }
+        if (index>=0){
+            _selectedDepartmentId.update { _state.value.departmentListState.departments[index].id }
+        }
 
     }
 
