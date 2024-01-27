@@ -21,7 +21,6 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.regi
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.form.state.RegistrationFormData
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.header.RegistrationHeaderSection
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.events.RegisterDestinationEvent
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.events.RegisterModuleEvent
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.viewmodel.RegisterDestinationViewModel
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
@@ -30,10 +29,18 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTop
 fun RegisterDestination(
     modifier: Modifier = Modifier,
     viewModel: RegisterDestinationViewModel,
+    onExitRequest: () -> Unit
 ) {
     RegisterDestination(
-        modifier=modifier,
-        onEvent = viewModel::onEvent,
+        modifier = modifier,
+        onEvent = {
+            if (it is RegisterDestinationEvent.ExitRequest) {
+                onExitRequest()
+
+            } else {
+                viewModel.onEvent(it)
+            }
+        },
         data = viewModel.formData.collectAsState().value,
         formEvent = viewModel.formEvent
     )
@@ -42,7 +49,7 @@ fun RegisterDestination(
 @Composable
 private fun RegisterDestination(
     modifier: Modifier = Modifier,
-    onEvent: (RegisterModuleEvent) -> Unit,
+    onEvent: (RegisterDestinationEvent) -> Unit,
     data: RegistrationFormData,
     formEvent: RegisterFormEvent,
 ) {

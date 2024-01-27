@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class AuthViewModel2 {
+class AuthViewModel {
     private val _uiState = MutableStateFlow(AuthScreenState())
     val uiState = _uiState.asStateFlow()
     val loginViewModel = LoginDestinationViewModel(
@@ -20,25 +20,24 @@ class AuthViewModel2 {
     )
     val registerViewModel = RegisterDestinationViewModel(RegisterRepositoryImpl())
 
+
     init {
         loginViewModel.onRegisterDestinationOpenRequest={
             openRegisterDestination()
         }
-        registerViewModel.onExitRequest={
-            closeRegistrationDestination()
-        }
+
     }
+    fun onRegisterDestinationExitRequest()= ::closeRegistrationDestination
 
     private suspend fun observeRegisterDestinationState() {
-        registerViewModel.state.collect { registerDestinationState ->
-            _uiState.update {
-                it.copy(
-                    showProgressBar = registerDestinationState.isLoading,
-                    snackBarMessage = registerDestinationState.message,
-                    isLoginSuccess = registerDestinationState.isRegisterSuccess,
-                )
-            }
-        }
+//        registerViewModel.state.collect { registerDestinationState ->
+//            _uiState.update {
+//                it.copy(
+//                    showProgressBar = registerDestinationState.isLoading,
+//                    snackBarMessage = registerDestinationState.message,
+//                )
+//            }
+//        }
 
     }
 
@@ -75,7 +74,6 @@ class AuthViewModel2 {
                 it.copy(
                     showProgressBar = loginState.isLoading,
                     snackBarMessage = loginState.message,
-                    isLoginSuccess = loginState.isLoginSuccess,
                 )
             }
 

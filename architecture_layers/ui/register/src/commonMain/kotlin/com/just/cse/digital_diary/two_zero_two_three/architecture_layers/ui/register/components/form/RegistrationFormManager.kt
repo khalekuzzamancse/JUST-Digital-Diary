@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.update
 class RegistrationFormManager {
     private val _data = MutableStateFlow(
         RegistrationFormData(
-            name = "", email = "", username = "", password = "", dept = "", confirmPassword = ""
+            name = "khalek", email = "khale@just.edu.bd", username = "khalek", password = "test@123", dept = "", confirmPassword = "test@123"
         )
     )
     val data = _data.asStateFlow()

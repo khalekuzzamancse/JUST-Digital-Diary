@@ -3,13 +3,15 @@ package com.just.cse.digital_diary.two_zero_two_three.auth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.RegisterDestination
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.viewmodel.RegisterDestinationViewModel
+import com.just.cse.digital_diary.two_zero_two_three.auth.event.AuthEvent
 import com.just.cse.digital_diary.two_zero_two_three.auth.state.AuthScreenState
-import com.just.cse.digital_diary.two_zero_two_three.auth.viewmodel.AuthViewModel2
+import com.just.cse.digital_diary.two_zero_two_three.auth.viewmodel.AuthViewModel
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.CompactModeTopPaneAnimation
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.TwoPaneProps
@@ -30,14 +32,24 @@ import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destin
  * @param onExitRequest(mandatory) will be called when want to exit from the AuthModule
  */
 @Composable
-fun AuthScreen() {
+fun AuthScreen(
+    onEvent:(AuthEvent) -> Unit
+) {
     val authViewModel= remember {
-        AuthViewModel2()
+        AuthViewModel()
     }
+    val state=authViewModel.uiState.collectAsState().value
+//    if (state.isLoginSuccess){
+//        onEvent(AuthEvent.LoginSuccess)
+//    }
+
     AuthScreen(
-        state =authViewModel.uiState.collectAsState().value,
+        state =state,
         loginViewModel = authViewModel.loginViewModel,
-        registerViewModel = authViewModel.registerViewModel
+        registerViewModel = authViewModel.registerViewModel,
+        onRegisterExitRequest = {
+            authViewModel.onRegisterDestinationExitRequest()
+        }
     )
 
 }
@@ -47,8 +59,8 @@ private fun AuthScreen(
     state: AuthScreenState,
     loginViewModel: LoginDestinationViewModel,
     registerViewModel: RegisterDestinationViewModel,
+    onRegisterExitRequest:()->Unit,
 ) {
-
     TwoPaneLayout(
         showProgressBar =state.showProgressBar,
         snackBarMessage = state.snackBarMessage,
@@ -67,7 +79,8 @@ private fun AuthScreen(
         topOrRightPane = {
                 RegisterDestination(
                     modifier = Modifier.verticalScroll(rememberScrollState()),
-                    viewModel = registerViewModel
+                    viewModel = registerViewModel,
+                    onExitRequest = onRegisterExitRequest
                 )
         }
     )

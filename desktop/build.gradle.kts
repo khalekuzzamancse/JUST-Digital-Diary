@@ -14,7 +14,7 @@ kotlin {
             dependencies {
                 implementation(project(":shared"))
 //                implementation(project(":features:auth"))
-                implementation(project(":features:root_home"))
+                implementation(project(":features:navigation"))
                 implementation(compose.desktop.common)
                 implementation(compose.desktop.currentOs)
                 val voyagerVersion = "1.0.0"

@@ -1,6 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth
 
 import androidx.compose.runtime.Composable
+import com.just.cse.digital_diary.two_zero_two_three.auth.event.AuthEvent
 import com.just.cse.digital_diary.two_zero_two_three.auth.theme.AuthModuleTheme
 
 /**
@@ -12,11 +13,15 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.theme.AuthModuleTheme
 
 @Composable
 fun AuthModuleEntryPoint(
-    onLoginSuccess: () -> Unit,
-    onExitRequest: ()->Unit
+    onEvent:(AuthEvent) -> Unit
 ) {
     AuthModuleTheme {
-        AuthScreen()
+        AuthScreen(
+            onEvent={
+                println("EventONRegistered:$it")
+
+            }
+        )
 
     }
 

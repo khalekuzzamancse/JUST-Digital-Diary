@@ -85,7 +85,7 @@ val uiLayerModules = dataLayerModules
 val featureModules = listOf(
     ":features",
     ":features:auth",
-    ":features:root_home",
+    ":features:navigation",
     ":features:faculty",
     ":features:department_info",
     ":features:departments",

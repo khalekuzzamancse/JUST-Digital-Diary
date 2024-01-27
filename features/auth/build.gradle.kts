@@ -36,9 +36,6 @@ kotlin {
                 api(libs.coil3.network)
                 //
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
-                implementation(libs.voyager.navigator)
-                implementation(libs.voyager.transitions)
-                implementation(project(":core:data_layer:repository"))
                 implementation(project(modules.versions.common.ui.get()))
                 implementation(project(modules.versions.ui.login.get()))
                 implementation(project(modules.versions.ui.register.get()))

@@ -3,7 +3,6 @@ package com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.reg
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.controls.RegisterControlEvents
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.form.RegistrationFormManager
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.events.RegisterDestinationEvent
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.events.RegisterModuleEvent
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.states.RegisterDestinationState
 import com.just.cse.digital_diary.two_zero_two_three.domain.register.model.RegisterRequestModel
 import com.just.cse.digital_diary.two_zero_two_three.domain.register.model.RegisterResponseModel
@@ -19,23 +18,27 @@ import kotlinx.coroutines.launch
 class RegisterDestinationViewModel(
     private val repository: RegisterRepository
 ) {
-    private val _state = MutableStateFlow(RegisterDestinationState.toEmpty())
+    private val _state = MutableStateFlow(RegisterDestinationState())
     val state = _state.asStateFlow()
     private val formManager = RegistrationFormManager()
-    val formEvent = formManager.event
-    val formData = formManager.data
-    var onExitRequest: () -> Unit = {}
-    fun onEvent(event: RegisterModuleEvent) {
-
+    internal val formEvent = formManager.event
+    internal val formData = formManager.data
+    fun onEvent(event: RegisterDestinationEvent) {
         when (event) {
             is RegisterControlEvents -> onControlsEvent(event)
-            RegisterDestinationEvent.ExitRequest -> onExitRequest()
         }
+    }
+
+    var onPublicEvent: (RegisterDestinationEvent) -> Unit = {
+
     }
 
     private fun onControlsEvent(event: RegisterControlEvents) {
         when (event) {
-            RegisterControlEvents.LoginRequest -> {}
+            RegisterControlEvents.LoginRequest -> {
+                onPublicEvent(RegisterDestinationEvent.ExitRequest)
+            }
+
             RegisterControlEvents.RegisterRequest -> onRegisterRequest()
         }
 
@@ -44,21 +47,9 @@ class RegisterDestinationViewModel(
     private fun onRegisterRequest() {
         CoroutineScope(Dispatchers.IO).launch {
             startLoading()
-            val username = formData.value.username
-            val password = formData.value.password
-            val email = formData.value.email
-            val name = formData.value.name
-            val response = repository.register(
-                RegisterRequestModel(
-                    username = username,
-                    password = password,
-                    name = name,
-                    email = email
-                )
-            )
+            val response = repository.register(getRegistrationModel())
             if (response is RegisterResponseModel.Success) {
                 onRegisterSuccess()
-
             } else if (response is RegisterResponseModel.Failure) {
                 onRegisterFailure(response.reason)
             }
@@ -66,12 +57,24 @@ class RegisterDestinationViewModel(
 
     }
 
+    private fun getRegistrationModel(): RegisterRequestModel {
+        val username = formData.value.username
+        val password = formData.value.password
+        val email = formData.value.email
+        val name = formData.value.name
+        return RegisterRequestModel(
+            username = username,
+            password = password,
+            name = name,
+            email = email
+        )
+    }
+
     private suspend fun onRegisterFailure(reason: String?) {
         stopLoading()
         updateSnackBarMessage("Registration failed because of $reason")
         delay(1500)
         clearMessages()
-        _state.update { it.copy(isRegisterSuccess = false) }
     }
 
     private suspend fun onRegisterSuccess() {
@@ -79,7 +82,8 @@ class RegisterDestinationViewModel(
         updateSnackBarMessage("Register Successful")
         delay(1500)
         clearMessages()
-        _state.update { it.copy(isRegisterSuccess = true) }
+        onPublicEvent(RegisterDestinationEvent.ExitRequest)
+
     }
 
     private fun clearMessages() {
