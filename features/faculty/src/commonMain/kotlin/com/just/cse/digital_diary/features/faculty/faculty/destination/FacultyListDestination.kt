@@ -7,11 +7,13 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin
 @Composable
 fun FacultyListDestination(
     viewModel: FacultyDestinationViewModel,
+    onExitRequest:()->Unit,
     homeContent:@Composable ()->Unit,
 ) {
     FacultiesDestination(
         viewModel = viewModel,
-        homeContent=homeContent
+        homeContent=homeContent,
+        onExitRequest = onExitRequest
     )
 
 }

@@ -22,7 +22,8 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTop
 
 @Composable
 fun EventGalleryDestination(
-    repository: OtherInfoRepository
+    repository: OtherInfoRepository,
+    onExitRequest: () -> Unit,
 ) {
     var state by remember {
         mutableStateOf(
@@ -49,7 +50,7 @@ fun EventGalleryDestination(
     }
     EventGallery(
         state= state,
-        onExitRequest = {}
+        onExitRequest = onExitRequest
     )
 
 }

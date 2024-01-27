@@ -56,7 +56,6 @@ fun MessageFromVCDestination(
             moreInfoOfVC = it.details,
             onExitRequest=onExitRequest,
             imageUrl = it.imageUrl
-
         )
     }
 

@@ -15,6 +15,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLay
 @Composable
 fun FacultiesScreen(
     onDepartmentSelected: (String) -> Unit = {},
+    onExitRequest:()->Unit,
 ) {
     val viewModel = remember { FacultiesScreenViewModel() }
     LaunchedEffect(Unit) {
@@ -35,7 +36,8 @@ fun FacultiesScreen(
                     viewModel = facultyViewModel,
                     homeContent = {
                       //  HomeContent()
-                    }
+                    },
+                    onExitRequest = onExitRequest
                 )
                 if (openDepartmentList) {
                     DepartmentList(
@@ -57,7 +59,8 @@ fun FacultiesScreen(
                         viewModel = facultyViewModel,
                         homeContent = {
                          //   HomeContent()
-                        }
+                        },
+                        onExitRequest = onExitRequest
 
                     )
                 },

@@ -25,6 +25,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTop
 @Composable
 fun AboutUsDestination(
     repository: OtherInfoRepository,
+    onExitRequest: () -> Unit,
 ) {
     var state by remember { mutableStateOf<AboutUsState?>(null) }
     LaunchedEffect(Unit) {
@@ -41,7 +42,7 @@ fun AboutUsDestination(
     state?.let {aboutUsState->
         AboutUsDestination(
             state=aboutUsState,
-            onExitRequest = {}
+            onExitRequest = onExitRequest
         )
     }
 
