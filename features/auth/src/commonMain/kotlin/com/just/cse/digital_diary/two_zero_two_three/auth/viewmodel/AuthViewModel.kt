@@ -18,26 +18,31 @@ class AuthViewModel {
     val loginViewModel = LoginDestinationViewModel(
         repository = LoginRepositoryImpl(),
     )
-    val registerViewModel = RegisterDestinationViewModel(RegisterRepositoryImpl())
+    val registerViewModel: RegisterDestinationViewModel =
+        RegisterDestinationViewModel(RegisterRepositoryImpl())
+    val loginSucess = loginViewModel.shouldExit
 
 
     init {
-        loginViewModel.onRegisterDestinationOpenRequest={
+        loginViewModel.onRegisterDestinationOpenRequest = {
             openRegisterDestination()
         }
 
     }
-    fun onRegisterDestinationExitRequest()= ::closeRegistrationDestination
+
+    fun onRegisterDestinationExitRequest() {
+        closeRegistrationDestination()
+    }
 
     private suspend fun observeRegisterDestinationState() {
-//        registerViewModel.state.collect { registerDestinationState ->
-//            _uiState.update {
-//                it.copy(
-//                    showProgressBar = registerDestinationState.isLoading,
-//                    snackBarMessage = registerDestinationState.message,
-//                )
-//            }
-//        }
+        registerViewModel.state.collect { registerDestinationState ->
+            _uiState.update {
+                it.copy(
+                    showProgressBar = registerDestinationState.isLoading,
+                    snackBarMessage = registerDestinationState.message,
+                )
+            }
+        }
 
     }
 
@@ -53,10 +58,10 @@ class AuthViewModel {
         }
 
 
-
     }
 
     private fun openRegisterDestination() {
+        registerViewModel.clearState()
         _uiState.update {
             it.copy(showRegisterForm = true)
         }
@@ -80,7 +85,6 @@ class AuthViewModel {
         }
 
     }
-
 
 
 }

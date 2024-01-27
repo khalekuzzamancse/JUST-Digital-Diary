@@ -27,12 +27,14 @@ class LoginDestinationViewModel(
         }
     }
     private val scope= CoroutineScope(Dispatchers.Default)
-    private val _state = MutableStateFlow(LoginDestinationState.toEmpty())
+    private val _state = MutableStateFlow(LoginDestinationState())
     val state = _state.asStateFlow()
     private val formManager= LoginFormManager()
     val formEvent =formManager.event
     val formData = formManager.data
     var onRegisterDestinationOpenRequest:()->Unit={}
+    private val _shouldExit=MutableStateFlow(false)
+    val shouldExit = _shouldExit.asStateFlow()
 
     fun onEvent(loginModuleEvent: LoginModuleEvent) {
         when (loginModuleEvent) {
@@ -75,14 +77,13 @@ class LoginDestinationViewModel(
         updateSnackBarMessage("Login failed because of $reason")
         delay(1500)
         clearMessages()
-        _state.update { it.copy(isLoginSuccess = false) }
     }
     private suspend fun onLoginSuccess(){
         stopLoading()
         updateSnackBarMessage("Login Successful")
         delay(1500)
         clearMessages()
-        _state.update { it.copy(isLoginSuccess = true) }
+        _shouldExit.update { true }
     }
     private fun clearMessages(){
         updateSnackBarMessage(null)

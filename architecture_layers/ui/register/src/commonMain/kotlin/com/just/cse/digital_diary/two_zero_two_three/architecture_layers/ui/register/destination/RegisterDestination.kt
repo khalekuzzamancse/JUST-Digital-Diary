@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,12 +32,19 @@ fun RegisterDestination(
     viewModel: RegisterDestinationViewModel,
     onExitRequest: () -> Unit
 ) {
+
+    LaunchedEffect(Unit) {
+        viewModel.shouldExit.collect {
+            if (it) {
+                onExitRequest()
+            }
+        }
+    }
     RegisterDestination(
         modifier = modifier,
         onEvent = {
             if (it is RegisterDestinationEvent.ExitRequest) {
                 onExitRequest()
-
             } else {
                 viewModel.onEvent(it)
             }
@@ -66,16 +74,13 @@ private fun RegisterDestination(
         RegisterFormNControls(
             modifier = modifier.padding(it),
             onLoginRequest = {
-                onEvent(RegisterControlEvents.LoginRequest)
+                onEvent(RegisterDestinationEvent.ExitRequest)
             },
             data = data,
             onRegisterRequest = {
                 onEvent(RegisterControlEvents.RegisterRequest)
             },
-
-            event = formEvent,
-
-            )
+            event = formEvent)
 
     }
 

@@ -23,22 +23,25 @@ class RegisterDestinationViewModel(
     private val formManager = RegistrationFormManager()
     internal val formEvent = formManager.event
     internal val formData = formManager.data
+    private val _shouldExit = MutableStateFlow(false)
+    internal val shouldExit = _shouldExit.asStateFlow()
     fun onEvent(event: RegisterDestinationEvent) {
         when (event) {
             is RegisterControlEvents -> onControlsEvent(event)
         }
     }
-
-    var onPublicEvent: (RegisterDestinationEvent) -> Unit = {
-
+    fun clearState() {
+        _shouldExit.update { false }
+        _state.update { RegisterDestinationState() }
     }
+
+
 
     private fun onControlsEvent(event: RegisterControlEvents) {
         when (event) {
             RegisterControlEvents.LoginRequest -> {
-                onPublicEvent(RegisterDestinationEvent.ExitRequest)
+                _shouldExit.update { true }
             }
-
             RegisterControlEvents.RegisterRequest -> onRegisterRequest()
         }
 
@@ -82,7 +85,7 @@ class RegisterDestinationViewModel(
         updateSnackBarMessage("Register Successful")
         delay(1500)
         clearMessages()
-        onPublicEvent(RegisterDestinationEvent.ExitRequest)
+        _shouldExit.update { true }
 
     }
 

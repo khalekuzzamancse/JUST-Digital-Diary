@@ -33,22 +33,28 @@ import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destin
  */
 @Composable
 fun AuthScreen(
-    onEvent:(AuthEvent) -> Unit
+    onEvent: (AuthEvent) -> Unit
 ) {
-    val authViewModel= remember {
+    val authViewModel = remember {
         AuthViewModel()
     }
-    val state=authViewModel.uiState.collectAsState().value
-//    if (state.isLoginSuccess){
-//        onEvent(AuthEvent.LoginSuccess)
-//    }
+    LaunchedEffect(Unit) {
+        authViewModel.loginSucess.collect {
+            if (it){
+                onEvent(AuthEvent.LoginSuccess)
+            }
+
+        }
+    }
+    val state = authViewModel.uiState.collectAsState().value
 
     AuthScreen(
-        state =state,
+        state = state,
         loginViewModel = authViewModel.loginViewModel,
         registerViewModel = authViewModel.registerViewModel,
         onRegisterExitRequest = {
             authViewModel.onRegisterDestinationExitRequest()
+
         }
     )
 
@@ -59,10 +65,10 @@ private fun AuthScreen(
     state: AuthScreenState,
     loginViewModel: LoginDestinationViewModel,
     registerViewModel: RegisterDestinationViewModel,
-    onRegisterExitRequest:()->Unit,
+    onRegisterExitRequest: () -> Unit,
 ) {
     TwoPaneLayout(
-        showProgressBar =state.showProgressBar,
+        showProgressBar = state.showProgressBar,
         snackBarMessage = state.snackBarMessage,
         showTopOrRightPane = state.showRegisterForm,
         secondaryPaneAnimationState = state.showRegisterForm,
@@ -77,11 +83,11 @@ private fun AuthScreen(
             )
         },
         topOrRightPane = {
-                RegisterDestination(
-                    modifier = Modifier.verticalScroll(rememberScrollState()),
-                    viewModel = registerViewModel,
-                    onExitRequest = onRegisterExitRequest
-                )
+            RegisterDestination(
+                modifier = Modifier.verticalScroll(rememberScrollState()),
+                viewModel = registerViewModel,
+                onExitRequest = onRegisterExitRequest
+            )
         }
     )
 

@@ -17,10 +17,7 @@ fun AuthModuleEntryPoint(
 ) {
     AuthModuleTheme {
         AuthScreen(
-            onEvent={
-                println("EventONRegistered:$it")
-
-            }
+            onEvent=onEvent
         )
 
     }
