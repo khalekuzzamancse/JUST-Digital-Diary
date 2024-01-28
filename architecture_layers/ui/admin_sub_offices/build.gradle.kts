@@ -17,6 +17,7 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
+                implementation(libs.kotlinx.coroutines.core)
                 implementation(compose.ui)
                 implementation(compose.material3)
                 implementation(compose.animation)
@@ -24,7 +25,7 @@ kotlin {
                 implementation(compose.materialIconsExtended)
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(project(modules.versions.domain.adminOffices.get()))
+                implementation(project(modules.versions.domain.adminSubOffices.get()))
                 implementation(project(modules.versions.common.ui.get()))
             }
         }
@@ -43,7 +44,7 @@ kotlin {
 
 }
 android {
-    namespace =  "com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices"
+    namespace =  "com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_sub_offices"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

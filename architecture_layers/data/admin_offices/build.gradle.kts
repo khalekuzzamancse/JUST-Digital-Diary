@@ -18,7 +18,6 @@ kotlin {
         val commonMain by getting{
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(project(":core:network"))
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(project(":core:network"))
                 implementation(project(modules.versions.domain.adminOffices.get()))

@@ -49,8 +49,9 @@ dependencyResolutionManagement {
             version("domain-adminOffices", ":architecture_layers:domain:admin_offices")
             version("data-adminOffices", ":architecture_layers:data:admin_offices")
             version("ui-adminOffices", ":architecture_layers:ui:admin_offices")
-
+//
             version("domain-adminSubOffices", ":architecture_layers:domain:admin_sub_offices")
+            version("ui-adminSubOffices", ":architecture_layers:ui:admin_sub_offices")
             version("data-adminSubOffices", ":architecture_layers:data:admin_sub_offices")
             //
             version("domain-adminOfficers", ":architecture_layers:domain:admin_officers")
@@ -95,9 +96,6 @@ val featureModules = listOf(
 )
 val coreModules = listOf(
     ":core",
-    ":core:di",
-    ":core:data_layer",
-    ":core:data_layer:repository",
     ":core:network",
     ":core:local_database",
     ":core:local_database:sql_delight",
@@ -111,11 +109,6 @@ include(":common")
 include(":desktop")
 include(":shared")
 include(":web")
-//include(":data_layer")
-//include(":ui_layer")
-//include(":domain_layer")
-//include(":ui_layer")
-//include(":data_layer")
 include(":architecture_layers")
 include(":architecture_layers:ui:common_ui")
 include(featureModules)

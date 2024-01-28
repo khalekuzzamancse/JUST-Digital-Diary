@@ -30,7 +30,7 @@ kotlin {
 //                implementation(project(":features:department_info"))
                 implementation(project(":features:auth"))
 //                implementation(project(":features:employee_list"))
-//                implementation(project(":features:admin_office"))
+                implementation(project(":features:admin_office"))
                 implementation(project(modules.versions.domain.otherInfo.get()))
                 implementation(project(modules.versions.ui.otherInfo.get()))
                 implementation(project(modules.versions.data.otherInfo.get()))

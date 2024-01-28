@@ -24,8 +24,10 @@ kotlin {
                 implementation(compose.materialIconsExtended)
                 implementation(compose.preview)
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
-                implementation(project(":core:data_layer:repository"))
                 implementation(project(modules.versions.common.ui.get()))
+                implementation(project(modules.versions.ui.adminOffices.get()))
+                implementation(project(modules.versions.domain.adminOffices.get()))
+                implementation(project(modules.versions.data.adminOffices.get()))
 
             }
         }
