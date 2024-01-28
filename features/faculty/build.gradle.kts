@@ -32,6 +32,11 @@ kotlin {
                 implementation(project(modules.versions.ui.departments.get()))
                 implementation(project(modules.versions.domain.departments.get()))
                 implementation(project(modules.versions.data.departments.get()))
+                //
+                //
+                implementation(project(modules.versions.ui.teachers.get()))
+                implementation(project(modules.versions.domain.teachers.get()))
+                implementation(project(modules.versions.data.teachers.get()))
 
             }
         }

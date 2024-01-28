@@ -5,7 +5,7 @@ import com.just.cse.digital_diary.features.faculty.faculty.event.FacultyModuleEv
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.destination.about_us.AboutUsDestination
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.destination.message_from_vc.MessageFromVCDestination
 import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_officers.repoisitory.OtherInfoRepositoryImpl
-import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.destinations.AdminOfficeDestination
+import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.destinations.admin_office.AdminOfficeDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.destinations.FacultyListDestination
 
 
@@ -120,8 +120,9 @@ object TopMostDestinations {
         onExitRequest: () -> Unit,
     ) {
         AdminOfficeDestination(
-            onSubOfficeSelected = onEmployeeListRequest,
-            onExitRequest = onExitRequest)
+            onExitRequest = onExitRequest,
+            onEmployeeListRequest=onEmployeeListRequest
+        )
 
     }
 

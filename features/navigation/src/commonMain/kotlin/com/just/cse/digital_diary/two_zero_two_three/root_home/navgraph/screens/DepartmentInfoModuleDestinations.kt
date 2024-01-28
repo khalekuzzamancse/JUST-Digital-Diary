@@ -1,7 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens
 
 import androidx.compose.runtime.Composable
-
+import com.just.cse.digital_diary.features.faculty.faculty.destination.teacher_list.TeacherList
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
 
 object DepartmentInfoModuleDestinations {
@@ -12,15 +12,15 @@ object DepartmentInfoModuleDestinations {
         appEvent: AppEvent,
         onExitRequest: () -> Unit,
     ) {
-//        DepartmentModuleEntryPoint(
-//            departmentId = departmentId,
-////            event = DepartmentModuleEvent(
-////                onCallRequest = appEvent.onCallRequest,
-////                onWebsiteViewRequest = appEvent.onWebsiteViewRequest,
-////                onMessageRequest = appEvent.onMessageRequest,
-////                onEmailRequest = appEvent.onEmailRequest
-////            ),
-////            onExitRequested = onExitRequest
+        TeacherList()
+
+//        DepartmentDestinationList(
+//            viewModel = DepartmentListDestinationViewModel(
+//                repository =DepartmentListRepositoryImpl()
+//            ),
+//            onEmployeeListRequest = {
+//                println("Employee list request")
+//            }
 //        )
     }
 

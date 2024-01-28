@@ -61,7 +61,7 @@ private fun DepartmentsList(
     modifier: Modifier = Modifier,
     title: String? = null,
     enableBackNavigation: Boolean = true,
-    onDismissRequest: () -> Unit = {},
+    onDismissRequest: () -> Unit,
     destinations: List<NavigationItemInfo2<String>>,
     onDestinationSelected: (Int) -> Unit,
     selectedDestinationIndex: Int,

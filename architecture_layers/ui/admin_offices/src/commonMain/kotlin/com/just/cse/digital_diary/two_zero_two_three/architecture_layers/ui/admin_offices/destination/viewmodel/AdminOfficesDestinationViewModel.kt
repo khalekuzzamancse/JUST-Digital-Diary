@@ -20,8 +20,11 @@ class AdminOfficesDestinationViewModel(
 
     private val _state = MutableStateFlow(AdminOfficesDestinationState())
     val state = _state.asStateFlow()
-    private val _selectedFacultyId= MutableStateFlow<String?>(null)
-    val selectedFacultyId=_selectedFacultyId.asStateFlow()
+    private val _selectedSubOfficeId= MutableStateFlow<String?>(null)
+    val selectedSubOfficeId=_selectedSubOfficeId.asStateFlow()
+    fun closeSubOffices(){
+        _selectedSubOfficeId.update { null }
+    }
 
     fun onEvent(event: AdminOfficesDestinationEvent) {
         when (event) {
@@ -31,7 +34,11 @@ class AdminOfficesDestinationViewModel(
 
     }
 
+
     init {
+      fetchSubOffices()
+    }
+    private fun fetchSubOffices(){
         CoroutineScope(Dispatchers.Default).launch {
             startLoading()
             when (val result = repository.getAdminOffices()) {
@@ -77,7 +84,7 @@ class AdminOfficesDestinationViewModel(
             val facultyListState = state.facultyListState.copy(selected = index)
             state.copy(facultyListState = facultyListState)
         }
-        _selectedFacultyId.update { _state.value.facultyListState.faculties[index].id }
+        _selectedSubOfficeId.update { _state.value.facultyListState.faculties[index].id }
 
     }
 

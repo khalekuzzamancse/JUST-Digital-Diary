@@ -44,7 +44,7 @@ kotlin {
 
 }
 android {
-    namespace =  "com.just.cse.digital_diary.two_zero_two_three.architecture_layers.teachers"
+    namespace =  "com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.teachers"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

@@ -38,7 +38,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.network_image.Ima
 
 
 @Composable
-internal fun EmployeeCard(
+internal fun AdminOfficerCard(
     modifier: Modifier,
     adminOfficer: AdminOfficer,
     expandMode: Boolean = true,

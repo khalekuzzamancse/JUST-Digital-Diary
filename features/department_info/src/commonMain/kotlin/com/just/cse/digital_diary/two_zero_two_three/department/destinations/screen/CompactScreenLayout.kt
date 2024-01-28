@@ -6,7 +6,7 @@ import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.admin_officers.destination.viewmodel.TeacherListViewModel
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.teachers.destination.viewmodel.TeacherListViewModel
 import com.just.cse.digital_diary.two_zero_two_three.department.component.event.DepartmentInfoNavigationEvent
 import com.just.cse.digital_diary.two_zero_two_three.department.component.TopNBottomBarDecorator
 import com.just.cse.digital_diary.two_zero_two_three.department.component.state.TopNBottomBarDecoratorState

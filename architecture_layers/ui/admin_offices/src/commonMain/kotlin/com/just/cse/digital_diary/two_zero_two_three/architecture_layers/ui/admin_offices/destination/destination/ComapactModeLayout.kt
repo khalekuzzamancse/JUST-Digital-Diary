@@ -1,6 +1,8 @@
 package com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.destination.destination
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,6 +16,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTop
 internal fun CompactModeLayout(
     facultyListState: FacultyListState,
     onEvent: (AdminOfficesDestinationEvent) -> Unit,
+    onExitRequest:()->Unit,
 ) {
     /*
   Note recomposition the faculty destination because recomposition causes animation
@@ -26,7 +29,8 @@ internal fun CompactModeLayout(
         topBar = {
             SimpleTopBar(
                 title = "Admin Office",
-                onNavigationIconClick = {}
+                onNavigationIconClick = onExitRequest,
+                navigationIcon = Icons.Default.Menu
             )
         },
     ) {

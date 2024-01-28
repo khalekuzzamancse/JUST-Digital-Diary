@@ -34,7 +34,7 @@ internal fun ListOfAdminOfficer(
             modifier = modifier,
             items = state.adminOfficers
         ) { employee ->
-            EmployeeCard(
+            AdminOfficerCard(
                 modifier = Modifier.padding(8.dp),
                 adminOfficer = employee,
                 onCallRequest = {

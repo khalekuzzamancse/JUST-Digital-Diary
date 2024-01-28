@@ -8,12 +8,12 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admi
 @Composable
 fun AdminOfficesDestination(
   viewModel: AdminOfficesDestinationViewModel,
+  onExitRequest:()->Unit,
 ) {
-
-
     CompactModeLayout(
         facultyListState = viewModel.state.collectAsState().value.facultyListState,
         onEvent = viewModel::onEvent,
+        onExitRequest=onExitRequest
     )
 
 }

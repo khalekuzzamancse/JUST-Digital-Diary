@@ -28,6 +28,14 @@ kotlin {
                 implementation(project(modules.versions.ui.adminOffices.get()))
                 implementation(project(modules.versions.domain.adminOffices.get()))
                 implementation(project(modules.versions.data.adminOffices.get()))
+                //
+                implementation(project(modules.versions.domain.adminSubOffices.get()))
+                implementation(project(modules.versions.data.adminSubOffices.get()))
+                implementation(project(modules.versions.ui.adminSubOffices.get()))
+                //
+                implementation(project(modules.versions.domain.adminOfficers.get()))
+                implementation(project(modules.versions.ui.adminOfficers.get()))
+                implementation(project(modules.versions.data.adminOfficers.get()))
 
             }
         }

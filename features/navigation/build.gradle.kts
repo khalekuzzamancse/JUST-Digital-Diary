@@ -26,23 +26,15 @@ kotlin {
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(project(modules.versions.common.ui.get()))
                 implementation(project(":features:faculty"))
-//                implementation(project(":features:sharing_document"))
-//                implementation(project(":features:department_info"))
                 implementation(project(":features:auth"))
-//                implementation(project(":features:employee_list"))
                 implementation(project(":features:admin_office"))
                 implementation(project(modules.versions.domain.otherInfo.get()))
                 implementation(project(modules.versions.ui.otherInfo.get()))
                 implementation(project(modules.versions.data.otherInfo.get()))
 
+//
 
-//                implementation(project(modules.versions.domain.adminOfficers.get()))
-//                implementation(project(modules.versions.ui.adminOfficers.get()))
-//                implementation(project(modules.versions.data.adminOfficers.get()))
-//                //
-//                implementation(project(modules.versions.domain.adminOffices.get()))
-//                implementation(project(modules.versions.ui.adminOffices.get()))
-//                implementation(project(modules.versions.data.adminOffices.get()))
+
 
 
             }

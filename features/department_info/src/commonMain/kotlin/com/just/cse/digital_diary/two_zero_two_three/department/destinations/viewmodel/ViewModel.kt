@@ -3,7 +3,7 @@ package com.just.cse.digital_diary.two_zero_two_three.department.destinations.vi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.teachers.repoisitory.TeacherListRepositoryImpl
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.admin_officers.destination.viewmodel.TeacherListViewModel
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.teachers.destination.viewmodel.TeacherListViewModel
 import com.just.cse.digital_diary.two_zero_two_three.department.component.event.DepartmentInfoNavigationEvent
 import com.just.cse.digital_diary.two_zero_two_three.department.destinations.event.DepartmentInfoEvent
 import com.just.cse.digital_diary.two_zero_two_three.department.destinations.state.DepartmentInfoScreenState
