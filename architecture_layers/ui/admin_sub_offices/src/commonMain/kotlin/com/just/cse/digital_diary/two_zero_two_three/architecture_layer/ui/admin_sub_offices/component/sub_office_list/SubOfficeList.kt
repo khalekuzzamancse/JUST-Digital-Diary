@@ -72,7 +72,7 @@ private fun SubOfficeList(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Row(Modifier, verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             AnimatedVisibility(enableBackNavigation) {
                 IconButton(
                     onClick = onDismissRequest
@@ -92,7 +92,7 @@ private fun SubOfficeList(
 
         }
         VerticalListNavigation(
-            modifier = modifier,
+            modifier = Modifier,
             destinations = destinations,
             onDestinationSelected = onDestinationSelected,
             selectedDestinationIndex = selectedDestinationIndex,
@@ -119,7 +119,7 @@ private fun VerticalListNavigation(
 ) {
     Column(
         modifier = modifier
-            .width(IntrinsicSize.Max)
+            .fillMaxWidth()
             .padding(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {

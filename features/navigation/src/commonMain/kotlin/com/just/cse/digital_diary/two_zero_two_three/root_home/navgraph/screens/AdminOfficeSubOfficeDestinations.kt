@@ -12,7 +12,7 @@ object AdminOfficeSubOfficeDestinations {
         appEvent: AppEvent,
         onExitRequest: () -> Unit,
     ) {
-        AdminOfficers()
+        AdminOfficers(onExitRequest=onExitRequest)
     }
 
 }

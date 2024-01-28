@@ -25,13 +25,12 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTop
 @Composable
 fun AboutUsDestination(
     repository: OtherInfoRepository,
-    onExitRequest: () -> Unit,
 ) {
     var state by remember { mutableStateOf<AboutUsState?>(null) }
     LaunchedEffect(Unit) {
         val result = repository.getAboutUs()
-        if (result is AboutUsResponseModel.Success){
-            state=AboutUsState(
+        if (result is AboutUsResponseModel.Success) {
+            state = AboutUsState(
                 appName = result.data.appName,
                 developedDepartmentName = result.data.developedDepartmentName,
                 universityName = result.data.universityName,
@@ -39,10 +38,9 @@ fun AboutUsDestination(
             )
         }
     }
-    state?.let {aboutUsState->
+    state?.let { aboutUsState ->
         AboutUsDestination(
-            state=aboutUsState,
-            onExitRequest = onExitRequest
+            state = aboutUsState,
         )
     }
 
@@ -52,38 +50,23 @@ fun AboutUsDestination(
 @Composable
 private fun AboutUsDestination(
     state: AboutUsState,
-    onExitRequest: () -> Unit,
 ) {
-
     WindowSizeDecorator(
         onCompact = {
-            Scaffold(
-                topBar = {
-                    SimpleTopBar(
-                        onNavigationIconClick = onExitRequest,
-                        title = "About Us",
-                        navigationIcon = Icons.Default.Menu
-                    )
-                },
+            Column(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxSize()
+
+                    .verticalScroll(rememberScrollState())
             ) {
-
-                Column(
-                    modifier = Modifier
-                        .padding(it)
-                        .padding(8.dp)
-                        .fillMaxSize()
-
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    AppName(state.appName)
-                    DeptAndUniversityName(
-                        deptName = state.developedDepartmentName,
-                        universityName = state.universityName
-                    )
-                }
-
-
+                AppName(state.appName)
+                DeptAndUniversityName(
+                    deptName = state.developedDepartmentName,
+                    universityName = state.universityName
+                )
             }
+
         },
         onNonCompact = {
             Column(

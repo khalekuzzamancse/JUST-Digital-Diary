@@ -1,10 +1,19 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import com.just.cse.digital_diary.features.faculty.faculty.event.FacultyModuleEvent
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.destination.about_us.AboutUsDestination
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.destination.message_from_vc.MessageFromVCDestination
-import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_officers.repoisitory.OtherInfoRepositoryImpl
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
+import com.just.cse.digital_diary.two_zero_two_three.features.others.AboutUsDestination
+import com.just.cse.digital_diary.two_zero_two_three.features.others.EventGalleryDestination
+import com.just.cse.digital_diary.two_zero_two_three.features.others.MessageFromVCDestination
+import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.TopBarDecorator
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.destinations.admin_office.AdminOfficeDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.faculites.FacultyListDestination
 
@@ -20,18 +29,34 @@ object TopMostDestinations {
     val SEARCH = Destination.createDestination("SEARCH")
     val NOTE_CREATION = Destination.createDestination("NOTE_CREATION")
 
-
     @Composable
     fun Home(
         onCreateNoteRequest: () -> Unit,
         onOpenDrawerRequest: () -> Unit,
         onLogOutRequest: () -> Unit,
     ) {
-//        HomeDestination(
-//            onCreateNoteRequest = onCreateNoteRequest,
-//            onOpenDrawerRequest = onOpenDrawerRequest,
-//            onLogOutRequest = onLogOutRequest,
-//        )
+
+        Scaffold(
+            topBar = {
+                SimpleTopBar(
+                    title = "Home",
+                    navigationIcon =Icons.Default.Menu,
+                    onNavigationIconClick = onOpenDrawerRequest
+                )
+            },
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = {}
+                ){
+                    Icon(Icons.Default.Add,null)
+                }
+            },
+            floatingActionButtonPosition = FabPosition.Center,
+
+        ) {
+
+        }
+
 
     }
 
@@ -58,28 +83,36 @@ object TopMostDestinations {
     fun AboutUs(
         onExitRequest: () -> Unit
     ) {
-       AboutUsDestination(
-           repository = OtherInfoRepositoryImpl(),
-           onExitRequest = onExitRequest
-       )
+        TopBarDecorator(
+            title = "About Us",
+            onExitRequest = onExitRequest
+        ){
+            AboutUsDestination()
+        }
 
     }
 
     @Composable
     fun MessageFromVC(onExitRequest: () -> Unit) {
-       MessageFromVCDestination(
-           repository = OtherInfoRepositoryImpl(),
-           onExitRequest = onExitRequest
-       )
+        TopBarDecorator(
+            title = "Message From VC",
+            onExitRequest = onExitRequest
+        ){
+           MessageFromVCDestination()
+        }
     }
 
     @Composable
     fun EventGallery(
         onExitRequest: () -> Unit
     ) {
-        com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.destinations.EventGallery(
+        TopBarDecorator(
+            title = "Event Gallery",
             onExitRequest = onExitRequest
-        )
+        ){
+           EventGalleryDestination()
+        }
+
 
     }
 

@@ -28,13 +28,7 @@ kotlin {
                 implementation(project(":features:faculty"))
                 implementation(project(":features:auth"))
                 implementation(project(":features:admin_office"))
-                implementation(project(modules.versions.domain.otherInfo.get()))
-                implementation(project(modules.versions.ui.otherInfo.get()))
-                implementation(project(modules.versions.data.otherInfo.get()))
-
-//
-
-
+                implementation(project(":features:others"))
 
 
             }

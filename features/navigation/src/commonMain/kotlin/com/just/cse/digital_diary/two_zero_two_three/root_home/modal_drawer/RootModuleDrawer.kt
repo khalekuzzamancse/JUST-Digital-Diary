@@ -47,11 +47,11 @@ fun RootModuleDrawer(
     }
     ModalDrawerDecorator(
         header = {
-//            Header(
-//                name = userInfo.name,
-//                department = userInfo.department,
-//                onLogOutRequest = onLogOutRequest,
-//            )
+            Header(
+                name = "",
+                department = "",
+                onLogOutRequest = onLogOutRequest,
+            )
 
         },
         visibilityDelay = 10,

@@ -54,11 +54,10 @@
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/admin_office" />
             <option value="$PROJECT_DIR$/features/auth" />
-            <option value="$PROJECT_DIR$/features/department_info" />
-            <option value="$PROJECT_DIR$/features/departments" />
             <option value="$PROJECT_DIR$/features/employee_list" />
             <option value="$PROJECT_DIR$/features/faculty" />
             <option value="$PROJECT_DIR$/features/navigation" />
+            <option value="$PROJECT_DIR$/features/others" />
             <option value="$PROJECT_DIR$/features/sharing_document" />
             <option value="$PROJECT_DIR$/shared" />
             <option value="$PROJECT_DIR$/web" />

@@ -1,9 +1,5 @@
 package com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.destination.event_gallery
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,13 +13,11 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_i
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.destination.event_gallery.state.EventGalleryDestinationState
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.list.AdaptiveList
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.progressbar.ProgressBarNSnackBarDecorator
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
 
 @Composable
 fun EventGalleryDestination(
     repository: OtherInfoRepository,
-    onExitRequest: () -> Unit,
 ) {
     var state by remember {
         mutableStateOf(
@@ -50,7 +44,6 @@ fun EventGalleryDestination(
     }
     EventGallery(
         state= state,
-        onExitRequest = onExitRequest
     )
 
 }
@@ -58,23 +51,14 @@ fun EventGalleryDestination(
 @Composable
 private fun EventGallery(
     state: EventGalleryDestinationState,
-    onExitRequest: () -> Unit
 ) {
 
     ProgressBarNSnackBarDecorator(
         showProgressBar = state.isLoading
     ) {
-        Scaffold(
-            topBar = {
-                SimpleTopBar(
-                    title = "Event Gallery",
-                    onNavigationIconClick = onExitRequest,
-                    navigationIcon = Icons.Default.Menu
-                )
-            }
-        ) {
+
             AdaptiveList(
-                modifier = Modifier.padding(it),
+                modifier = Modifier,
                 items = state.events
             ) { event ->
                 EventCard(
@@ -85,7 +69,7 @@ private fun EventGallery(
             }
         }
 
-    }
+
 
 
 }

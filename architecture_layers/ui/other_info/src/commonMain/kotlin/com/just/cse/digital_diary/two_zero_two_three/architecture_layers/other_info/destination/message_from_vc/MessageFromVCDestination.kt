@@ -33,7 +33,6 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTop
 @Composable
 fun MessageFromVCDestination(
     repository: OtherInfoRepository,
-    onExitRequest: () -> Unit
 ) {
     var state by remember {
         mutableStateOf<VCInfoState?>(null)
@@ -54,7 +53,6 @@ fun MessageFromVCDestination(
             messageText =it.message,
             vcName = it.name,
             moreInfoOfVC = it.details,
-            onExitRequest=onExitRequest,
             imageUrl = it.imageUrl
         )
     }
@@ -65,7 +63,6 @@ fun MessageFromVCDestination(
 
 @Composable
 private fun MessageFromVCDestination(
-    onExitRequest: () -> Unit,
     imageUrl: String,
     messageText: String,
     vcName: String,
@@ -84,21 +81,9 @@ private fun MessageFromVCDestination(
 
     WindowSizeDecorator(
         onCompact = {
-            Scaffold(
-                topBar = {
-                    SimpleTopBar(
-                        onNavigationIconClick = onExitRequest,
-                        title = "Message from VC",
-                        navigationIcon = Icons.Default.Menu
-                    )
-                },
-
-                floatingActionButtonPosition = FabPosition.Center
-            ) {
 
                 Column(
                     modifier = Modifier
-                        .padding(it)
                         .fillMaxSize()
 
                         .verticalScroll(rememberScrollState())
@@ -131,7 +116,7 @@ private fun MessageFromVCDestination(
                     }
 
                 }
-            }
+
         },
         onNonCompact = {
             Column(
