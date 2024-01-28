@@ -92,7 +92,7 @@ private fun DepartmentsList(
 
         }
         VerticalListNavigation(
-            modifier = modifier,
+            modifier = Modifier.fillMaxWidth(),
             destinations = destinations,
             onDestinationSelected = onDestinationSelected,
             selectedDestinationIndex = selectedDestinationIndex,

@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 //same as the api JSON
 @Serializable
 class FacultyListResponseDTO(
-    val message:String?,
+    val message:String?=null,
     val data: List<FacultyInfoResponseDTO>
 )

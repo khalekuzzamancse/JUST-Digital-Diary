@@ -7,7 +7,6 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.te
 
 @Composable
 fun TeacherList(
-
 ) {
     TeacherListDestination(
         viewModel = TeacherListViewModel(

@@ -35,10 +35,6 @@ fun FacultyList(
     state: FacultyListState,
     onEvent: (FacultyListEvent) -> Unit,
 ) {
-    if(state.faculties.isEmpty()){
-        Text("FacultyList is empty")
-    }
-   else{
         VerticalListNavigation(
             modifier = modifier.fillMaxWidth(),
             destinations = state.faculties.map { faculty ->
@@ -53,7 +49,7 @@ fun FacultyList(
             },
             selectedDestinationIndex = state.selected
         )
-   }
+
 }
 
 @Composable

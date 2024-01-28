@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun BottomSheetDecorator(
     modifier: Modifier = Modifier,
-    sheetPeekHeight: Dp = BottomSheetDefaults.SheetPeekHeight,
+    sheetPeekHeight: Dp = 54.dp,
     sheetShape: Shape = BottomSheetDefaults.ExpandedShape,
     sheetContainerColor: Color = BottomSheetDefaults.ContainerColor,
     sheetContentColor: Color = contentColorFor(sheetContainerColor),

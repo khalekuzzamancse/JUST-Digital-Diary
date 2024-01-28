@@ -6,7 +6,7 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_i
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.destination.message_from_vc.MessageFromVCDestination
 import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_officers.repoisitory.OtherInfoRepositoryImpl
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.destinations.admin_office.AdminOfficeDestination
-import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.destinations.FacultyListDestination
+import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.faculites.FacultyListDestination
 
 
 object TopMostDestinations {

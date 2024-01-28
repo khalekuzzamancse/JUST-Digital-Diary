@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TeacherListDTO(
-    val message: String,
+    val message: String?,
     val data: List<TeacherInfoDTO>
 )

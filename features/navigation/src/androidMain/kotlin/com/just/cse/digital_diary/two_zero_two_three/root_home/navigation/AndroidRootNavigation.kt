@@ -28,7 +28,7 @@ fun AndroidRootNavigation(
         Navigator(navHostController)
     }
     val navigateTo: (Destination) -> Unit = navigator::navigateWithReplacementLastDestination
-    var notSignedIn by remember { mutableStateOf(true) }
+    var notSignedIn by remember { mutableStateOf(false) }
     val onLoginSuccess:()->Unit={
         notSignedIn = false
     }

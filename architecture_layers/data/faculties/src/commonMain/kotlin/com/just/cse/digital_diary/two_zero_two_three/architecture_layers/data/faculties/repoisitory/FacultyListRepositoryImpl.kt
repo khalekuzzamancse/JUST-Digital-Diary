@@ -3,6 +3,7 @@ package com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.f
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.faculties.data_sources.remote.FacultyListRemoteDataSource
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.faculties.model.FacultyListResponseModel
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.faculties.repoisitory.FacultyListRepository
+import kotlinx.coroutines.delay
 
 class FacultyListRepositoryImpl:FacultyListRepository {
     override suspend fun getFaculties(): FacultyListResponseModel {
