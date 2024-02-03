@@ -26,7 +26,7 @@ kotlin {
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(project(modules.versions.common.ui.get()))
                 implementation(project(":features:faculty"))
-                implementation(project(":features:auth"))
+                implementation(project(":features:auth:components"))
                 implementation(project(":features:admin_office"))
                 implementation(project(":features:others"))
 

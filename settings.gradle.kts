@@ -14,7 +14,11 @@ dependencyResolutionManagement {
         mavenCentral()
 //        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
+
     versionCatalogs {
+        create("localModules") {
+            from(files("gradle/localModules.versions.toml"))
+        }
         create("modules") {
             version("common-ui", ":architecture_layers:ui:common_ui")
             version("domain-login", ":architecture_layers:domain:login")
@@ -85,7 +89,7 @@ val uiLayerModules = dataLayerModules
     .map { it.replace(":data:", ":ui:") }
 val featureModules = listOf(
     ":features",
-    ":features:auth",
+    ":features:auth",":features:auth:components",":features:auth:destination",
     ":features:navigation",
     ":features:faculty",
     ":features:others",
@@ -96,11 +100,10 @@ val featureModules = listOf(
 val coreModules = listOf(
     ":core",
     ":core:network",
+    ":core:di",
     ":core:local_database",
-    ":core:local_database:sql_delight",
-
-
-    )
+    ":core:local_database:realm"
+)
 
 rootProject.name = "JUST Digital Diary"
 include(":android_app")

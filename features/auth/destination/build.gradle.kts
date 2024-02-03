@@ -1,13 +1,9 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
-
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("org.jetbrains.compose")
 }
 kotlin {
-
-
 
     androidTarget {
         compilations.all {
@@ -28,24 +24,15 @@ kotlin {
                 implementation(compose.animation)
                 implementation(compose.animationGraphics)
                 implementation(compose.materialIconsExtended)
-                //for custom fonts
-                @OptIn(ExperimentalComposeLibrary::class)
-                implementation(compose.components.resources)
-                //
-                api(libs.coil3)
-                api(libs.coil3.network)
-                //
+
+
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(project(modules.versions.common.ui.get()))
                 implementation(project(modules.versions.ui.login.get()))
                 implementation(project(modules.versions.ui.register.get()))
-                implementation(project(modules.versions.domain.login.get()))
-                implementation(project(modules.versions.domain.register.get()))
                 implementation(project(modules.versions.data.login.get()))
                 implementation(project(modules.versions.data.register.get()))
-
-
-
+                implementation(project(localModules.versions.core.di.get()))
 
             }
         }

@@ -1,7 +1,6 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
