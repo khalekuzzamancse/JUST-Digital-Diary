@@ -10,6 +10,7 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.teac
 @Composable
 fun TeacherListDestination(
     modifier: Modifier = Modifier,
+    deptId: String,
     viewModel: TeacherListViewModel
 ) {
     ListOfTeacher(
@@ -18,7 +19,7 @@ fun TeacherListDestination(
         onEvent = viewModel::onEvent,
     )
     LaunchedEffect(Unit){
-        viewModel.setDepartmentId("01")
+        viewModel.setDepartmentId(deptId)
     }
 
 

@@ -2,28 +2,38 @@ package com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.d
 
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.departments.dto.DepartmentInfoDTO
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.departments.dto.DepartmentListResponseDTO
-import com.just.cse.digitaldiary.twozerotwothree.core.network.AuthManager
-import com.just.cse.digitaldiary.twozerotwothree.core.network.deparment_list.model.DepartmentListResponse
 import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.Header
 import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.getRequest
 import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.post.NetworkResponse
 
-class DepartmentListRemoteDataSource(facultyId:String) {
-    private val baseUrl="https://diary.rnzgoldenventure.com/api/dept/$facultyId"
-    private val token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxOTExMDEuY3NlOGFlNDdkYTdkY2VkIiwicm9sZV9pZCI6MTMsImlhdCI6MTcwNjQxOTc3OSwiZXhwIjoxNzA2NTkyNTc5fQ.AxaN98L4p_lcxqJR5wql-qIVJTHGdN1Ju4Q584PX1iw"
-    private val header = Header(key="Authorization", value = token)
-//    suspend fun getDepartments(): NetworkResponse<DepartmentListResponseDTO> = getRequest<DepartmentListResponseDTO>(url=baseUrl, header=header)
-suspend fun getDepartments(): NetworkResponse<DepartmentListResponseDTO> =
-    NetworkResponse(
-        result = DepartmentListResponseDTO(
-            message = "",
-            data = createDummyDepartmentInfoList()
-        ),
-        isSuccess = true,
-        reason = null
+class DepartmentListRemoteDataSource(
+    private val token: String?,
+    facultyId: String
+) {
+    private val baseUrl = "https://diary.rnzgoldenventure.com/api/dept/$facultyId"
 
-    )
+    suspend fun getDepartments(): NetworkResponse<DepartmentListResponseDTO> {
+        if (token == null)
+            return NetworkResponse(
+                result = null,
+                isSuccess = false,
+                reason = "Token is null"
+            )
+        val header = Header(key = "Authorization", value = token)
+        return getRequest<DepartmentListResponseDTO>(url = baseUrl, header = header)
+    }
+//    suspend fun getDepartments(): NetworkResponse<DepartmentListResponseDTO> =
+//        NetworkResponse(
+//            result = DepartmentListResponseDTO(
+//                message = "",
+//                data = createDummyDepartmentInfoList()
+//            ),
+//            isSuccess = true,
+//            reason = null
+//
+//        )
 }
+
 private fun createDummyDepartmentInfoList(): List<DepartmentInfoDTO> {
     return listOf(
         DepartmentInfoDTO(1, "DEPT001", "Computer Science", "CS", 10),

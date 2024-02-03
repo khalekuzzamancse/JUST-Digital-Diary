@@ -1,6 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -20,6 +21,7 @@ fun DrawerNavHost(
     onAdminOfficeSubOfficeRequest: (subOfficeId: String) -> Unit,
     navController: NavHostController,
 ) {
+    var deptId:String = remember { "" }
     NavHost(
         modifier = modifier,
         navController = navController,
@@ -38,7 +40,10 @@ fun DrawerNavHost(
         composable(route = TopMostDestinations.FACULTY_LIST.route) {
             TopMostDestinations.FacultyList(
                 onExitRequest = openDrawerRequest,
-                onDepartmentInfoRequest = onDepartmentInfoRequest
+                onDepartmentInfoRequest = {
+                    onDepartmentInfoRequest(it)
+                    deptId=it
+                }
             )
         }
         composable(route = TopMostDestinations.ADMIN_OFFICES.route) {
@@ -93,8 +98,8 @@ fun DrawerNavHost(
         }
 
         composable(route = DepartmentInfoModuleDestinations.DEPARTMENT_INFO.route) {
-            DepartmentInfoModuleDestinations.DepartmentInfo(
-                departmentId = "01", appEvent = appEvent, onExitRequest = openDrawerRequest
+            DepartmentInfoModuleDestinations.TeacherList(
+                departmentId = deptId, appEvent = appEvent, onExitRequest = openDrawerRequest
             )
 
         }

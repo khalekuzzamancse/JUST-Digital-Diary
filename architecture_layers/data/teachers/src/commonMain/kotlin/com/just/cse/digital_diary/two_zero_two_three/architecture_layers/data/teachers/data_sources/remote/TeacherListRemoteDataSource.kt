@@ -6,23 +6,35 @@ import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.He
 import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.getRequest
 import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.post.NetworkResponse
 
-class TeacherListRemoteDataSource(deptId: String) {
+class TeacherListRemoteDataSource(
+    private val token: String?,
+    deptId: String
+) {
     private val baseUrl = "https://diary.rnzgoldenventure.com/api/department/$deptId"
-    private val token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxOTExMDEuY3NlOGFlNDdkYTdkY2VkIiwicm9sZV9pZCI6MTMsImlhdCI6MTcwNjQxOTc3OSwiZXhwIjoxNzA2NTkyNTc5fQ.AxaN98L4p_lcxqJR5wql-qIVJTHGdN1Ju4Q584PX1iw"
-    private val header = Header(key = "Authorization", value = token)
 
-    //    suspend fun getTeachers(): NetworkResponse<TeacherListDTO> = getRequest<TeacherListDTO>(url=baseUrl, header=header)
-    suspend fun getTeachers(): NetworkResponse<TeacherListDTO> =
-        NetworkResponse(
-            result = TeacherListDTO(
-                message =null,
-                data = createDummyTeacherInfoList()
-            ),
-            isSuccess = true,
-            reason = null
-        )
+
+    suspend fun getTeachers(): NetworkResponse<TeacherListDTO> {
+        if (token == null)
+            return NetworkResponse(
+                result = null,
+                isSuccess = false,
+                reason = "Token is null"
+            )
+        val header = Header(key = "Authorization", value = token)
+        return getRequest<TeacherListDTO>(url = baseUrl, header = header)
+    }
+
+//    suspend fun getTeachers(): NetworkResponse<TeacherListDTO> =
+//        NetworkResponse(
+//            result = TeacherListDTO(
+//                message =null,
+//                data = createDummyTeacherInfoList()
+//            ),
+//            isSuccess = true,
+//            reason = null
+//        )
 }
+
 private fun createDummyTeacherInfoList(): List<TeacherInfoDTO> {
     return listOf(
         TeacherInfoDTO(

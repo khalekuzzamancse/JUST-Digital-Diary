@@ -4,10 +4,12 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.data.te
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.teachers.model.TeacherListResponseModel
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.teachers.repoisitory.TeacherListRepository
 
-class TeacherListRepositoryImpl(): TeacherListRepository {
+class TeacherListRepositoryImpl(
+    private val token: String?
+): TeacherListRepository {
 
     override suspend fun getTeachers(deptId: String): TeacherListResponseModel {
-        val response= TeacherListRemoteDataSource(deptId).getTeachers()
+        val response= TeacherListRemoteDataSource(token,deptId).getTeachers()
         if (response.isSuccess){
             response.result?.let {dto->
                 return TeacherListResponseModel.Success(data =dto.data.map{it.toModel() })

@@ -8,14 +8,16 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import com.just.cse.digital_diary.features.faculty.faculty.event.FacultyModuleEvent
+import androidx.compose.runtime.LaunchedEffect
+import com.just.cse.digital_diary.features.faculty.destination.FacultyDestinationEvent
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
-import com.just.cse.digital_diary.two_zero_two_three.features.others.AboutUsDestination
-import com.just.cse.digital_diary.two_zero_two_three.features.others.EventGalleryDestination
-import com.just.cse.digital_diary.two_zero_two_three.features.others.MessageFromVCDestination
+import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.AboutUsDestination
+import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.EventGalleryDestination
+import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.MessageFromVCDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.TopBarDecorator
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.destinations.admin_office.AdminOfficeDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.faculites.FacultyListDestination
+import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
 
 
 object TopMostDestinations {
@@ -35,7 +37,9 @@ object TopMostDestinations {
         onOpenDrawerRequest: () -> Unit,
         onLogOutRequest: () -> Unit,
     ) {
-
+        LaunchedEffect(Unit){
+            AuthComponentProvider.updateAuthToken()
+        }
         Scaffold(
             topBar = {
                 SimpleTopBar(
@@ -138,7 +142,7 @@ object TopMostDestinations {
     ) {
 
         FacultyListDestination(
-            event = FacultyModuleEvent(
+            event = FacultyDestinationEvent(
                 onDepartmentInfoRequest = onDepartmentInfoRequest
             ),
             onExitRequest = onExitRequest,

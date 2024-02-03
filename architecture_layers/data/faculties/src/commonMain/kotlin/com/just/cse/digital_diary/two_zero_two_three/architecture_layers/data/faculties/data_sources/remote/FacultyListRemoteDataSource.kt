@@ -7,20 +7,29 @@ import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.ge
 import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.post.NetworkResponse
 import kotlinx.coroutines.delay
 
-class FacultyListRemoteDataSource {
-    private val token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxOTExMDEuY3NlOGFlNDdkYTdkY2VkIiwicm9sZV9pZCI6MTMsImlhdCI6MTcwNjQxOTc3OSwiZXhwIjoxNzA2NTkyNTc5fQ.AxaN98L4p_lcxqJR5wql-qIVJTHGdN1Ju4Q584PX1iw"
+class FacultyListRemoteDataSource(
+    private val token: String?
+) {
     private val url = "https://diary.rnzgoldenventure.com/api/faculties"
-    private val header = Header(key = "Authorization", value = token)
+    suspend fun getFaculties(): NetworkResponse<FacultyListResponseDTO> {
+        if (token == null)
+            return NetworkResponse(
+                result = FacultyListResponseDTO(data = emptyList()),
+                isSuccess = false,
+                reason = "Token is null"
+            )
+        val header = Header(key = "Authorization", value = token)
+        return getRequest<FacultyListResponseDTO>(url = url, header = header)
 
-    //    suspend fun getFaculties(): NetworkResponse<FacultyListResponseDTO> = getRequest<FacultyListResponseDTO>(url=url, header=header)
-    suspend fun getFaculties(): NetworkResponse<FacultyListResponseDTO>{
-        return  NetworkResponse(
-            result = FacultyListResponseDTO(data = createDummyFacultyInfoList()),
-            isSuccess = true,
-            reason = null
-        )
     }
+
+//    suspend fun getFaculties(): NetworkResponse<FacultyListResponseDTO>{
+//        return  NetworkResponse(
+//            result = FacultyListResponseDTO(data = createDummyFacultyInfoList()),
+//            isSuccess = true,
+//            reason = null
+//        )
+//    }
 
 
 }

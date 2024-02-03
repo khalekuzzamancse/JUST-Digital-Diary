@@ -5,9 +5,11 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.faculties.repoisitory.FacultyListRepository
 import kotlinx.coroutines.delay
 
-class FacultyListRepositoryImpl:FacultyListRepository {
+class FacultyListRepositoryImpl(
+    private val token: String?
+):FacultyListRepository {
     override suspend fun getFaculties(): FacultyListResponseModel {
-      val response=  FacultyListRemoteDataSource().getFaculties()
+      val response=  FacultyListRemoteDataSource(token).getFaculties()
         if (response.isSuccess){
            response.result?.let {dto->
              return FacultyListResponseModel.Success(data = dto.data.map { it.toModel() })

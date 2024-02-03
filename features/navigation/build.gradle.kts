@@ -25,11 +25,11 @@ kotlin {
                 implementation(compose.preview)
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(project(modules.versions.common.ui.get()))
-                implementation(project(":features:faculty"))
-                implementation(project(":features:auth:components"))
+                implementation(project(localModules.versions.feature.auth.destination.get()))
+                implementation(project(localModules.versions.feature.faculty.destination.get()))
                 implementation(project(":features:admin_office"))
-                implementation(project(":features:others"))
-
+                implementation(project(localModules.versions.feature.others.destination.get()))
+                implementation(project(localModules.versions.core.di.get()))
 
             }
         }

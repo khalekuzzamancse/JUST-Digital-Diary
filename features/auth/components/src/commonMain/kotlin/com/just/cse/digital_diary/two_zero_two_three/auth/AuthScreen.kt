@@ -15,6 +15,8 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.viewmodel.AuthViewMode
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.CompactModeTopPaneAnimation
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.TwoPaneProps
+import com.just.cse.digital_diary.two_zero_two_three.domain.register.repository.RegisterRepository
+import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.repoisitory.LoginRepository
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.destination.LoginDestination
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.viewmodel.LoginDestinationViewModel
 
@@ -33,14 +35,18 @@ import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destin
  */
 @Composable
 fun AuthScreen(
-    onEvent: (AuthEvent) -> Unit
-) {
+    loginRepository: LoginRepository,
+    registrationRepository: RegisterRepository,
+    onEvent: (AuthEvent) -> Unit) {
     val authViewModel = remember {
-        AuthViewModel()
+        AuthViewModel(
+            loginRepository=loginRepository,
+            registrationRepository=registrationRepository
+        )
     }
     LaunchedEffect(Unit) {
         authViewModel.loginSucess.collect {
-            if (it){
+            if (it) {
                 onEvent(AuthEvent.LoginSuccess)
             }
 

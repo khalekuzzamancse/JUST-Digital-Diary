@@ -4,27 +4,42 @@ core-di=":core:di"
 #Module related to Features:Auth
 feature-auth-destination=":features:auth:destination"
 feature-auth-components=":features:auth:components"
-#
+#Feature:Other features modules
+feature-others-destination=":features:others:destination"
+feature-others-components=":features:others:components"
+#Feature:Facultis
+feature-faculty-destination=":features:faculty:destination"
+feature-faculty-components=":features:faculty:components"
+
+#data layers
+data-otherInfo=":architecture_layers:data:other_info"
+data-departments=":architecture_layers:data:departments"
+data-faculties=":architecture_layers:data:faculties"
+data-teachers=":architecture_layers:data:teachers"
+#UI layers
 common-ui=":architecture_layers:ui:common_ui"
+ui-faculties=":architecture_layers:ui:faculties"
+ui-teachers=":architecture_layers:ui:teachers"
+ui-departments=":architecture_layers:ui:departments"
+#Domain  layers
+domain-departments=":architecture_layers:domain:departments"
+domain-teachers=":architecture_layers:domain:teachers"
+domain-faculties=":architecture_layers:domain:faculties"
+
+
 domain-login=":architecture_layers:domain:login"
 data-login=":architecture_layers:data:login"
 ui-login=":architecture_layers:ui:login"
 domain-register=":architecture_layers:domain:register"
 data-register=":architecture_layers:data:register"
 ui-register=":architecture_layers:ui:register"
-domain-faculties=":architecture_layers:domain:faculties"
-data-faculties=":architecture_layers:data:faculties"
-ui-faculties=":architecture_layers:ui:faculties"
-domain-departments=":architecture_layers:domain:departments"
-data-departments=":architecture_layers:data:departments"
-ui-departments=":architecture_layers:ui:departments"
+
+
 domain-departmentInfo=":architecture_layers:domain:department_info"
 data-departmentInfo=":architecture_layers:data:department_info"
-domain-teachers=":architecture_layers:domain:teachers"
-data-teachers=":architecture_layers:data:teachers"
-ui-teachers=":architecture_layers:ui:teachers"
+
 domain-otherInfo=":architecture_layers:domain:other_info"
-data-otherInfo=":architecture_layers:data:other_info"
+
 ui-otherInfo=":architecture_layers:ui:other_info"
 domain-adminOffices=":architecture_layers:domain:admin_offices"
 data-adminOffices=":architecture_layers:data:admin_offices"

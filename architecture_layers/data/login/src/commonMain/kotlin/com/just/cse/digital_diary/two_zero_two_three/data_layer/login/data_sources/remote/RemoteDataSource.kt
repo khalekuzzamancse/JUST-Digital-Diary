@@ -3,7 +3,7 @@ package com.just.cse.digital_diary.two_zero_two_three.data_layer.login.data_sour
 import com.just.cse.digital_diary.two_zero_two_three.data_layer.login.dto.RemoteResponseDTO
 import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.post.post
 
-internal class RemoteDataSource {
+ class RemoteDataSource {
     private val loginUrl = "https://diary.rnzgoldenventure.com/api/login"
     suspend fun login(username: String, password: String): Response<RemoteResponseDTO> {
         val res = post<RemoteResponseDTO>(
@@ -22,4 +22,12 @@ internal class RemoteDataSource {
             )
         }
     }
+     suspend fun requestToken(username: String, password: String):String?{
+         val result=RemoteDataSource().login(username = username, password = password)
+         return if(result.result!=null){
+             result.result.token
+         } else{
+             null
+         }
+     }
 }

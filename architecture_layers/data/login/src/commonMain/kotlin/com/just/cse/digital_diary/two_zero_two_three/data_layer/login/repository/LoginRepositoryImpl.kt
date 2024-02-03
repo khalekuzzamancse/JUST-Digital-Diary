@@ -14,4 +14,5 @@ class LoginRepositoryImpl: LoginRepository {
             LoginResponseModel.Failure(reason = result.reason)
         }
     }
+
 }

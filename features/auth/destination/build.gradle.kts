@@ -32,6 +32,7 @@ kotlin {
                 implementation(project(modules.versions.ui.register.get()))
                 implementation(project(modules.versions.data.login.get()))
                 implementation(project(modules.versions.data.register.get()))
+                implementation(project(localModules.versions.feature.auth.components.get()))
                 implementation(project(localModules.versions.core.di.get()))
 
             }
@@ -58,7 +59,7 @@ kotlin {
 
 }
 android {
-    namespace = "com.just.cse.digital_diary.two_zero_two_three.auth"
+    namespace = "com.just.cse.digital_diary.two_zero_two_three.auth.destination"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

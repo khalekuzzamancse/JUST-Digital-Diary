@@ -2,8 +2,8 @@ package com.just.cse.digital_diary.two_zero_two_three.auth.viewmodel
 
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.viewmodel.RegisterDestinationViewModel
 import com.just.cse.digital_diary.two_zero_two_three.auth.state.AuthScreenState
-import com.just.cse.digital_diary.two_zero_two_three.data_layer.login.repository.LoginRepositoryImpl
-import com.just.cse.digital_diary.two_zero_two_three.data_layer.register.repoisitory.RegisterRepositoryImpl
+import com.just.cse.digital_diary.two_zero_two_three.domain.register.repository.RegisterRepository
+import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.repoisitory.LoginRepository
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.viewmodel.LoginDestinationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,14 +12,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class AuthViewModel {
+class AuthViewModel(
+    private val loginRepository: LoginRepository,
+    private val registrationRepository: RegisterRepository
+) {
     private val _uiState = MutableStateFlow(AuthScreenState())
     val uiState = _uiState.asStateFlow()
     val loginViewModel = LoginDestinationViewModel(
-        repository = LoginRepositoryImpl(),
+        repository = loginRepository,
     )
-    val registerViewModel: RegisterDestinationViewModel =
-        RegisterDestinationViewModel(RegisterRepositoryImpl())
+    val registerViewModel = RegisterDestinationViewModel(registrationRepository)
     val loginSucess = loginViewModel.shouldExit
 
 
