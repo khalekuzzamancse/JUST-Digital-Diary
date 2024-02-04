@@ -18,11 +18,17 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
-
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.database.realm.base)
             }
         }
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+                implementation(libs.kotlin.test.junit)
+            }
+        }
+
         val androidMain by getting{
             dependencies {
 

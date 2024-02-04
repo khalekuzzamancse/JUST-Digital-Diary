@@ -1,6 +1,5 @@
 package com.just.cse.digitaldiary.twozerotwothree.core.local_database.realm.authentication.other
 
-import com.just.cse.digitaldiary.twozerotwothree.core.local_database.realm.RealmDatabase
 import kotlinx.coroutines.runBlocking
 
 fun main() {
@@ -14,6 +13,6 @@ fun main() {
 //        RealmDatabase.getSingedInUserInfo()
 //    }
         runBlocking {
-        RealmDatabase.getSingedInUserInfo()
+        //RealmDatabase.getSingedInUserInfo()
     }
 }

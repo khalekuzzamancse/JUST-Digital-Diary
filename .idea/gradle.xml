@@ -59,8 +59,12 @@
             <option value="$PROJECT_DIR$/features/auth/destination" />
             <option value="$PROJECT_DIR$/features/employee_list" />
             <option value="$PROJECT_DIR$/features/faculty" />
+            <option value="$PROJECT_DIR$/features/faculty/components" />
+            <option value="$PROJECT_DIR$/features/faculty/destination" />
             <option value="$PROJECT_DIR$/features/navigation" />
             <option value="$PROJECT_DIR$/features/others" />
+            <option value="$PROJECT_DIR$/features/others/components" />
+            <option value="$PROJECT_DIR$/features/others/destination" />
             <option value="$PROJECT_DIR$/features/sharing_document" />
             <option value="$PROJECT_DIR$/shared" />
             <option value="$PROJECT_DIR$/web" />
