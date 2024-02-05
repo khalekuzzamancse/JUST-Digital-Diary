@@ -1,6 +1,8 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -13,6 +15,7 @@ import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.
 import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @Composable
@@ -22,36 +25,35 @@ fun NavigationRoot() {
 
 
 internal object DrawerHost : Screen {
-    private val drawerHandler= ModalDrawerHandler()
-    private var signedIn by  mutableStateOf(AuthComponentProvider.isSignIn())
-    private fun onLoginSuccess(username: String, password: String){
+    private val drawerHandler = ModalDrawerHandler()
+    private var signedIn = AuthComponentProvider.isSignIn()
+    private fun onLoginSuccess(username: String, password: String) {
         CoroutineScope(Dispatchers.Default).launch {
-            signedIn = true
-           val isSuccess= AuthComponentProvider.saveSignInInfo(username, password)
-            if (isSuccess){
+            val isSuccess = AuthComponentProvider.saveSignInInfo(username, password)
+            if (isSuccess) {
                 println("Saved Successfully")
-            }
-            else{
+            } else {
                 println("Saved Failure")
             }
         }
 
     }
-    private fun onLogout(){
-            signedIn = false
-            AuthComponentProvider.signInOut()
+
+    private fun onLogout() {
+
+        AuthComponentProvider.signInOut()
 
     }
 
     @Composable
     override fun Content() {
-        if (!signedIn) {
+        if (!signedIn.collectAsState(true).value) {
             AuthModuleEntryPoint(
-                onLoginSuccess =::onLoginSuccess
+                onLoginSuccess = ::onLoginSuccess
             )
         } else {
             RootModuleDrawer(
-                drawerHandler =drawerHandler,
+                drawerHandler = drawerHandler,
                 navigationEvent = NavigationEvent(),
                 onLogOutRequest = ::onLogout
             )

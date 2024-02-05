@@ -12,6 +12,7 @@ import com.just.cse.digitaldiary.twozerotwothree.core.local_database.realm.authe
  */
 object AuthComponentProvider {
 
+
     var authToken: String? = null
     fun getLoginRepository(): LoginRepositoryImpl {
         return LoginRepositoryImpl()
@@ -20,6 +21,7 @@ object AuthComponentProvider {
     fun getRegisterRepository(): RegisterRepositoryImpl {
         return RegisterRepositoryImpl()
     }
+
 
     suspend fun saveSignInInfo(
         username: String, password: String
@@ -30,9 +32,7 @@ object AuthComponentProvider {
        return response!=null
 
     }
-     fun isSignIn():Boolean{
-        return RealmAuthentication.isSignedIn()
-    }
+     fun isSignIn()=RealmAuthentication.observeSignIn()
     fun signInOut(){
       RealmAuthentication.signOut()
     }
@@ -43,8 +43,8 @@ object AuthComponentProvider {
                 username = response.username, password = response.password
             )
         }
-        println("AuthComponentProvider:getAuthToken():$response")
-        println("AuthComponentProvider:getAuthToken():$authToken")
+//        println("AuthComponentProvider:getAuthToken():$response")
+//        println("AuthComponentProvider:getAuthToken():$authToken")
     }
 
 }
