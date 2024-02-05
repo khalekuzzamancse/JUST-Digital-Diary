@@ -9,13 +9,15 @@ object AuthDestinations {
     val AUTH=Destination.createDestination("AUTH")
     @Composable
     fun Auth(
-        onLoginSuccess:()->Unit,
+        onLoginSuccess:(userName:String,password:String)->Unit,
         onExitRequest:()->Unit,
     ) {
         AuthDestination(
             onEvent ={event->
                 when (event){
-                    is AuthDestinationEvent.LoginSuccess->onLoginSuccess()
+                    is AuthDestinationEvent.LoginSuccess->{
+                        onLoginSuccess(event.username, event.password)
+                    }
                     is AuthDestinationEvent.ExitRequest->onExitRequest()
                 }
 

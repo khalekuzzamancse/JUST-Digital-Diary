@@ -4,11 +4,13 @@ import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.model.Lo
 import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.model.LoginResponseModel
 import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.repoisitory.LoginRepository
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.form.LoginFormManager
+import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.event.LoginModuleEvent
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.states.LoginDestinationState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+
 
 class LoginDestinationViewModel(
     private val repository: LoginRepository,
@@ -28,7 +30,7 @@ class LoginDestinationViewModel(
     val formData = formManager.data
 
 
-    suspend fun login(): Boolean {
+    suspend fun login(): LoginModuleEvent.LoginDestinationEvent.LoginSuccess?{
         startLoading()
         val username = formData.value.username
         val password = formData.value.password
@@ -37,13 +39,15 @@ class LoginDestinationViewModel(
         )
         if (response is LoginResponseModel.Success) {
             onLoginSuccess()
-            return true
+            return LoginModuleEvent.LoginDestinationEvent.LoginSuccess(
+                username = username,password=password
+            )
 
         } else if (response is LoginResponseModel.Failure) {
             onLoginFailure(response.reason)
-            return false
+            return null
         }
-        return false
+        return null
 
     }
 

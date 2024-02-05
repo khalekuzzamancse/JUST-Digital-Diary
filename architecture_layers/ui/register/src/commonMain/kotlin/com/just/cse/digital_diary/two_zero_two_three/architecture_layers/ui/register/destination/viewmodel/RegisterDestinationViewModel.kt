@@ -25,7 +25,7 @@ class RegisterDestinationViewModel(
 
 
 
-     suspend fun onRegisterRequest():Boolean {
+     suspend fun register():Boolean {
             startLoading()
             val response = repository.register(getRegistrationModel())
             if (response is RegisterResponseModel.Success) {

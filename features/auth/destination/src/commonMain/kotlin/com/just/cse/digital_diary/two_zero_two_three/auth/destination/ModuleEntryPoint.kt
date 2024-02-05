@@ -3,6 +3,7 @@ package com.just.cse.digital_diary.two_zero_two_three.auth.destination
 import androidx.compose.runtime.Composable
 import com.just.cse.digital_diary.two_zero_two_three.auth.AuthScreen
 import com.just.cse.digital_diary.two_zero_two_three.auth.theme.AuthModuleTheme
+import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.model.LoginResponseModel
 import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
 
 /**
@@ -14,14 +15,14 @@ import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvi
 
 @Composable
 fun AuthModuleEntryPoint(
-    onLoginSuccess:()->Unit,
+    onLoginSuccess:(String,String)->Unit,
     onExitRequest:()->Unit={},
 ) {
     AuthModuleTheme {
         AuthScreen(
             loginRepository = AuthComponentProvider.getLoginRepository(),
             registrationRepository = AuthComponentProvider.getRegisterRepository(),
-            onLoginSuccess=onLoginSuccess
+            onLoginSuccess =onLoginSuccess
         )
 
     }

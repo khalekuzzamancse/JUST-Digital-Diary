@@ -29,7 +29,7 @@ fun AndroidRootNavigation(
     }
     val navigateTo: (Destination) -> Unit = navigator::navigateWithReplacementLastDestination
     var notSignedIn by remember { mutableStateOf(false) }
-    val onLoginSuccess:()->Unit={
+    val onLoginSuccess:(String,String)->Unit={_, _ ->
         notSignedIn = false
     }
     val onLogOutRequest:() -> Unit ={
@@ -37,7 +37,7 @@ fun AndroidRootNavigation(
     }
     if (notSignedIn)
         AuthDestinations.Auth(
-            onLoginSuccess = onLoginSuccess, onExitRequest = {}
+            onLoginSuccess =onLoginSuccess, onExitRequest = {}
         )
     else {
         RootModuleDrawer(

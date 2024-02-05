@@ -10,11 +10,7 @@ import com.just.cse.digital_diary.two_zero_two_three.root_home.ui.themes.AppThem
 @Composable
 fun RootModule(appEvent: AppEvent) {
     AppTheme {
-        AuthModuleEntryPoint(
-            onLoginSuccess = {
 
-            }
-        )
 //        FacultyListDestination(
 //            event = FacultyDestinationEvent(
 //                onDepartmentInfoRequest = {}

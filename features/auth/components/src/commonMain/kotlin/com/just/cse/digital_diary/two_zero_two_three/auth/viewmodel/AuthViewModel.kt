@@ -3,7 +3,9 @@ package com.just.cse.digital_diary.two_zero_two_three.auth.viewmodel
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.viewmodel.RegisterDestinationViewModel
 import com.just.cse.digital_diary.two_zero_two_three.auth.state.AuthScreenState
 import com.just.cse.digital_diary.two_zero_two_three.domain.register.repository.RegisterRepository
+import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.model.LoginResponseModel
 import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.repoisitory.LoginRepository
+import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.event.LoginModuleEvent
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.viewmodel.LoginDestinationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,8 +15,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AuthViewModel(
-    private val loginRepository: LoginRepository,
-    private val registrationRepository: RegisterRepository
+    loginRepository: LoginRepository,
+    registrationRepository: RegisterRepository
 ) {
     private val _uiState = MutableStateFlow(AuthScreenState())
     val uiState = _uiState.asStateFlow()
@@ -22,9 +24,12 @@ class AuthViewModel(
         repository = loginRepository,
     )
     val registerViewModel = RegisterDestinationViewModel(registrationRepository)
-    val loginSuccess = MutableStateFlow(false)
-    suspend fun login():Boolean{
+
+    suspend fun login():LoginModuleEvent.LoginDestinationEvent.LoginSuccess?{
         return loginViewModel.login()
+    }
+    suspend fun register():Boolean{
+        return registerViewModel.register()
     }
 
 

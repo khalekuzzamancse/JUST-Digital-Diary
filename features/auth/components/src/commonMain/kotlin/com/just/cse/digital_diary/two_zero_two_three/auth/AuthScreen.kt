@@ -3,7 +3,6 @@ package com.just.cse.digital_diary.two_zero_two_three.auth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -17,6 +16,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLay
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.CompactModeTopPaneAnimation
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.TwoPaneProps
 import com.just.cse.digital_diary.two_zero_two_three.domain.register.repository.RegisterRepository
+import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.model.LoginResponseModel
 import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.repoisitory.LoginRepository
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.destination.LoginDestination
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.event.LoginModuleEvent
@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 fun AuthScreen(
     loginRepository: LoginRepository,
     registrationRepository: RegisterRepository,
-    onLoginSuccess: () -> Unit,
+    onLoginSuccess: (userName:String,password:String) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val authViewModel = remember {
@@ -64,8 +64,10 @@ fun AuthScreen(
 
                 LoginModuleEvent.LoginControlsEvent.LoginRequest -> {
                   scope.launch {
-                      val success=authViewModel.login()
-                      println("onLoginRequest:$success")
+                      val responseModel=authViewModel.login()
+                      if (responseModel!=null)
+                          onLoginSuccess(responseModel.username, responseModel.password)
+
                   }
 
                 }
@@ -73,7 +75,15 @@ fun AuthScreen(
         },
         onRegisterEvent = { event ->
             when (event) {
-                RegisterDestinationEvent.RegisterControlEvents.RegisterRequest -> {}
+                RegisterDestinationEvent.RegisterControlEvents.RegisterRequest -> {
+                    scope.launch {
+                        val success=authViewModel.register()
+                        if (success) {
+                            authViewModel.closeRegistrationDestination()
+                        }
+                    }
+
+                }
                 RegisterDestinationEvent.ExitRequest -> {
                     authViewModel.closeRegistrationDestination()
                 }

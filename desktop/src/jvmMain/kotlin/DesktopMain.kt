@@ -7,6 +7,7 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
+import com.just.cse.digital_diary.two_zero_two_three.root_home.NavigationRoot
 import com.just.cse.digital_diary.two_zero_two_three.root_home.RootModule
 
 
@@ -18,23 +19,11 @@ fun main() {
         state.size= DpSize(width = 400.dp, height =700.dp)
         Window(
             state=state,
-            title = "Compose Desktop",
+            title = "JUST Digital Diary",
             onCloseRequest = ::exitApplication
         ) {
             MaterialTheme {
-                RootModule(
-                    appEvent = AppEvent(
-                        onCallRequest = {
-                                        println("Call:$it")
-                        },
-                        onEmailRequest = {
-                            println("Email:$it")
-                        },
-                        onMessageRequest = {
-                            println("Message:$it")
-                        }
-                    )
-                )
+                NavigationRoot()
             }
         }
     }
