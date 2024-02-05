@@ -34,30 +34,21 @@ object TopMostDestinations {
     @Composable
     fun Home(
         onCreateNoteRequest: () -> Unit,
-        onOpenDrawerRequest: () -> Unit,
-        onLogOutRequest: () -> Unit,
     ) {
-        LaunchedEffect(Unit){
+        LaunchedEffect(Unit) {
             AuthComponentProvider.updateAuthToken()
         }
         Scaffold(
-            topBar = {
-                SimpleTopBar(
-                    title = "Home",
-                    navigationIcon =Icons.Default.Menu,
-                    onNavigationIconClick = onOpenDrawerRequest
-                )
-            },
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = {}
-                ){
-                    Icon(Icons.Default.Add,null)
+                ) {
+                    Icon(Icons.Default.Add, null)
                 }
             },
             floatingActionButtonPosition = FabPosition.Center,
 
-        ) {
+            ) {
 
         }
 
@@ -87,35 +78,21 @@ object TopMostDestinations {
     fun AboutUs(
         onExitRequest: () -> Unit
     ) {
-        TopBarDecorator(
-            title = "About Us",
-            onExitRequest = onExitRequest
-        ){
-            AboutUsDestination()
-        }
+        AboutUsDestination()
 
     }
 
     @Composable
     fun MessageFromVC(onExitRequest: () -> Unit) {
-        TopBarDecorator(
-            title = "Message From VC",
-            onExitRequest = onExitRequest
-        ){
-           MessageFromVCDestination()
-        }
+        MessageFromVCDestination()
     }
 
     @Composable
     fun EventGallery(
         onExitRequest: () -> Unit
     ) {
-        TopBarDecorator(
-            title = "Event Gallery",
-            onExitRequest = onExitRequest
-        ){
-           EventGalleryDestination()
-        }
+
+        EventGalleryDestination()
 
 
     }
@@ -146,8 +123,7 @@ object TopMostDestinations {
                 onDepartmentInfoRequest = onDepartmentInfoRequest
             ),
             onExitRequest = onExitRequest,
-
-            )
+        )
 
     }
 
@@ -158,7 +134,7 @@ object TopMostDestinations {
     ) {
         AdminOfficeDestination(
             onExitRequest = onExitRequest,
-            onEmployeeListRequest=onEmployeeListRequest
+            onEmployeeListRequest = onEmployeeListRequest
         )
 
     }

@@ -19,6 +19,7 @@ import com.just.cse.digital_diary.two_zero_two_three.root_home.rootModuleTopMost
 
 @Composable
 fun RootModuleDrawer(
+    modifier: Modifier=Modifier,
     drawerHandler: ModalDrawerHandler,
     navigationEvent: NavigationEvent,
     onLogOutRequest:()->Unit={},
@@ -46,6 +47,7 @@ fun RootModuleDrawer(
         }
     }
     ModalDrawerDecorator(
+        modifier=modifier,
         header = {
             Header(
                 name = "",

@@ -17,10 +17,9 @@ fun FacultyModuleEntryPoint(
 ) {
 
     FacultiesScreen(
-        onEmployeeListRequest = event.onDepartmentInfoRequest,
-        onExitRequest=onExitRequest,
         facultyListRepository = FacultyComponentProvider.getFacultyRepository(),
-        departmentListRepository = FacultyComponentProvider.getDepartListRepository()
+        departmentListRepository = FacultyComponentProvider.getDepartListRepository(),
+        onEmployeeListRequest = event.onDepartmentInfoRequest
     )
 
 }

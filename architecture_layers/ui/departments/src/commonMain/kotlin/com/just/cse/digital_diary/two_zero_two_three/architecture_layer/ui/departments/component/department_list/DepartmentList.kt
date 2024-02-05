@@ -21,15 +21,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.departments.component.department_list.event.DepartmentListEvent
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.departments.component.department_list.state.DepartmentListState
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.departments.destination.event.DepartmentDestinationEvent
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.departments.event.DepartmentDestinationEvent
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemProps
 
 @Composable
-internal fun DepartmentsList(
+ fun DepartmentsListDestination(
     modifier: Modifier = Modifier,
     state: DepartmentListState,
     onEvent: (DepartmentDestinationEvent) -> Unit,
@@ -39,7 +38,7 @@ internal fun DepartmentsList(
         title = state.title,
         enableBackNavigation = state.enableBackNavigation,
         onDismissRequest = {
-            onEvent(DepartmentListEvent.DismissRequest)
+            onEvent(DepartmentDestinationEvent.DepartmentListEvent.DismissRequest)
         },
         destinations = state.departments.map {
             NavigationItemInfo2(
@@ -49,7 +48,7 @@ internal fun DepartmentsList(
             )
         },
         onDestinationSelected = {index->
-            onEvent(DepartmentListEvent.DepartmentSelected(index))
+            onEvent(DepartmentDestinationEvent.DepartmentListEvent.DepartmentSelected(index))
         },
         selectedDestinationIndex = state.selected
     )

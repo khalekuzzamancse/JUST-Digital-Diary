@@ -13,8 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_offices.component.faculty_list.event.FacultyListEvent
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_offices.component.faculty_list.state.FacultyListState
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_offices.event.FacultyDestinationEvent
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemProps
@@ -31,24 +31,28 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation
 
 @Composable
 fun FacultyList(
-    modifier: Modifier=Modifier,
+    modifier: Modifier = Modifier,
     state: FacultyListState,
-    onEvent: (FacultyListEvent) -> Unit,
+    onEvent: (FacultyDestinationEvent) -> Unit,
 ) {
+    val destinations = state.faculties.map { faculty ->
+        NavigationItemInfo2(
+            label = faculty.name,
+            iconText = faculty.numberOfDepartment,
+            key = faculty.id
+        )
+    }
+
         VerticalListNavigation(
             modifier = modifier.fillMaxWidth(),
-            destinations = state.faculties.map { faculty ->
-                NavigationItemInfo2(
-                    label = faculty.name,
-                    iconText = faculty.numberOfDepartment,
-                    key = faculty.id
-                )
-            },
-            onDestinationSelected = {index->
-                onEvent(FacultyListEvent.FacultySelected(index))
+            destinations = destinations,
+            onDestinationSelected = { index ->
+                onEvent(FacultyDestinationEvent.FacultyListEvent.FacultySelected(index))
             },
             selectedDestinationIndex = state.selected
         )
+
+
 
 }
 
@@ -67,8 +71,7 @@ private fun VerticalListNavigation(
         modifier = modifier
             .width(IntrinsicSize.Max)
             .padding(8.dp)
-            .verticalScroll(rememberScrollState())
-        ,
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         destinations.forEachIndexed { index, _ ->

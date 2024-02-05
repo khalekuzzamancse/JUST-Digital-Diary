@@ -42,6 +42,7 @@ fun <T>ModalDrawerDecorator(
 
 @Composable
 fun <T>ModalDrawerDecorator(
+    modifier: Modifier=Modifier,
     destinations: List<NavigationItemInfo<T>>,
     visibilityDelay:Long = 70L,
     selectedDesertionIndex: Int,
@@ -52,7 +53,7 @@ fun <T>ModalDrawerDecorator(
 ) {
 
     ModalDrawer(
-        modifier = Modifier,
+        modifier = modifier,
         drawerState = drawerState,
         sheet = {
            AnimatedVisibility(

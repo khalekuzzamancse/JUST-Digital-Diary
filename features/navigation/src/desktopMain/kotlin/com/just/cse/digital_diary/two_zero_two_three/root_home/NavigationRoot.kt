@@ -1,21 +1,22 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import com.just.cse.digital_diary.two_zero_two_three.auth.destination.AuthModuleEntryPoint
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.RootModuleDrawer
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.ModalDrawerHandler
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.TopMostDestinations
 import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @Composable
@@ -29,14 +30,8 @@ internal object DrawerHost : Screen {
     private var signedIn = AuthComponentProvider.isSignIn()
     private fun onLoginSuccess(username: String, password: String) {
         CoroutineScope(Dispatchers.Default).launch {
-            val isSuccess = AuthComponentProvider.saveSignInInfo(username, password)
-            if (isSuccess) {
-                println("Saved Successfully")
-            } else {
-                println("Saved Failure")
-            }
+            AuthComponentProvider.saveSignInInfo(username, password)
         }
-
     }
 
     private fun onLogout() {
@@ -52,18 +47,27 @@ internal object DrawerHost : Screen {
                 onLoginSuccess = ::onLoginSuccess
             )
         } else {
-            RootModuleDrawer(
-                drawerHandler = drawerHandler,
-                navigationEvent = NavigationEvent(),
-                onLogOutRequest = ::onLogout
-            )
-            {
-                TopMostDestinations.Home(
-                    onCreateNoteRequest = {},
-                    onOpenDrawerRequest = drawerHandler::openDrawer
-                ) {
+            Scaffold(
+                topBar = {
+                    SimpleTopBar(
+                        title = "Home",
+                        navigationIcon = Icons.Default.Menu,
+                        onNavigationIconClick = drawerHandler::openDrawer
+                    )
                 }
+            ) {
+                RootModuleDrawer(
+                    modifier = Modifier.padding(it),
+                    drawerHandler = drawerHandler,
+                    navigationEvent = NavigationEvent(),
+                    onLogOutRequest = ::onLogout
+                )
+                {destination->
+                    NavigationGraph.NavHost(destination)
+                }
+
             }
+
         }
 
 
