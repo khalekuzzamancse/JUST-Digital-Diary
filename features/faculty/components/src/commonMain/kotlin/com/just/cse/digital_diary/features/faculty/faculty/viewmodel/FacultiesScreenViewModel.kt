@@ -105,16 +105,25 @@ class FacultiesScreenViewModel(
                     )
                 }
                 _departmentListState.update { state ->
-                    state?.copy(departments = departments) ?: DepartmentListState(departments = departments)
+                    state?.copy(departments = departments)
+                        ?: DepartmentListState(departments = departments)
 
                 }
 
             }
+
             is DepartmentListResponseModel.Failure -> {
                 onFailure(result.reason)
             }
         }
         stopLoading()
+    }
+
+    fun getDepartmentId(index: Int): String? {
+        _departmentListState.value?.let { state ->
+            return state.departments[index].id
+        }
+        return null
     }
 
     fun clearFacultySelection() {

@@ -47,6 +47,12 @@ fun FacultiesScreen(
             DepartmentDestinationEvent.ExitRequest -> {
                 viewModel.clearFacultySelection()
             }
+
+            is DepartmentDestinationEvent.DepartmentListEvent.DepartmentSelected -> {
+                val deptId = viewModel.getDepartmentId(event.index)
+                if (deptId != null)
+                    onEmployeeListRequest(deptId)
+            }
         }
 
     }
@@ -57,7 +63,7 @@ fun FacultiesScreen(
         viewModel.loadFacultyList()
     }
     WindowSizeDecorator(
-        showProgressBar=viewModel.uiState.collectAsState().value.isLoading,
+        showProgressBar = viewModel.uiState.collectAsState().value.isLoading,
         onCompact = {
             Box(Modifier.fillMaxSize()) {
                 FacultyList(

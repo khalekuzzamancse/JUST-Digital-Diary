@@ -4,18 +4,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.teachers.repoisitory.TeacherListRepository
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.teachers.destination.TeacherListDestination
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.teachers.destination.event.TeachersDestinationEvent
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.teachers.destination.viewmodel.TeacherListViewModel
 
 @Composable
 fun TeacherListScreen(
     deptId: String,
-    repository: TeacherListRepository
+    repository: TeacherListRepository,
+    onExitRequest:()->Unit={},
 ) {
     TeacherListDestination(
         modifier = Modifier,
         viewModel = TeacherListViewModel(
-            repository = repository
+            repository = repository,
+            deptId = deptId
         ),
-        deptId = deptId
+        onEvent = {event ->
+            when(event){
+                TeachersDestinationEvent.ExitRequest->{
+                    onExitRequest()
+                }
+            }
+
+        }
     )
 }

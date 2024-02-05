@@ -6,10 +6,12 @@ import com.just.cse.digitaldiary.twozerotwothree.core.di.faculty.FacultyComponen
 
 @Composable
 fun TeacherListScreen(
-    deptId: String
+    deptId: String,
+    onExitRequest:()->Unit={},
 ) {
     TeacherListScreen(
-        repository = FacultyComponentProvider.getTeacherListRepository(),
-        deptId = deptId
+        deptId = deptId,
+        repository =FacultyComponentProvider.getTeacherListRepository(),
+        onExitRequest=onExitRequest
     )
 }

@@ -8,12 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
+import com.just.cse.digital_diary.features.faculty.destination.TeacherListScreen
 import com.just.cse.digital_diary.two_zero_two_three.auth.destination.AuthModuleEntryPoint
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.RootModuleDrawer
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.ModalDrawerHandler
-import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.TopMostDestinations
 import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +43,7 @@ internal object DrawerHost : Screen {
 
     @Composable
     override fun Content() {
+        val navigator= LocalNavigator.current
         if (!signedIn.collectAsState(true).value) {
             AuthModuleEntryPoint(
                 onLoginSuccess = ::onLoginSuccess
@@ -63,7 +65,17 @@ internal object DrawerHost : Screen {
                     onLogOutRequest = ::onLogout
                 )
                 {destination->
-                    NavigationGraph.NavHost(destination)
+                    NavigationGraph.NavHost(
+                        destination=destination,
+                        onTeacherListRequest = {id->
+                            navigator?.push(TeacherList(
+                                id=id,
+                                onExitRequest = {
+                                    navigator.pop()
+                                }
+                            ))
+                        }
+                    )
                 }
 
             }
@@ -71,6 +83,19 @@ internal object DrawerHost : Screen {
         }
 
 
+    }
+
+}
+class TeacherList(
+    private val id:String,
+    private val  onExitRequest: () -> Unit
+):Screen{
+    @Composable
+    override fun Content() {
+        TeacherListScreen(
+            deptId = id,
+            onExitRequest=onExitRequest
+        )
     }
 
 }
