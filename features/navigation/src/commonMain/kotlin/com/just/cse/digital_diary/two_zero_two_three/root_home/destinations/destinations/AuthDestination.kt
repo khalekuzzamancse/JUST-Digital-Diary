@@ -10,6 +10,8 @@ internal fun AuthDestination(
     onEvent:(AuthDestinationEvent) -> Unit
 ) {
     AuthModuleEntryPoint(
-        onEvent=onEvent
+        onLoginSuccess = {
+            onEvent(AuthDestinationEvent.LoginSuccess)
+        }
     )
 }

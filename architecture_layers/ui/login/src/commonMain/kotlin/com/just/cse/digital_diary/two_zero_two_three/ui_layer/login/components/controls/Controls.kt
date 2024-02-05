@@ -17,11 +17,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.event.LoginModuleEvent
 
 @Composable
 fun LoginControls(
     modifier: Modifier,
-    onEvent: (LoginControlsLoginModuleEvent) -> Unit,
+    onEvent: (LoginModuleEvent.LoginControlsEvent) -> Unit,
 ) {
 
     Column(
@@ -31,17 +32,17 @@ fun LoginControls(
         ForgetPassword(
             modifier = Modifier.align(Alignment.End),
             onPasswordResetRequest = {
-                onEvent(LoginControlsLoginModuleEvent.PasswordResetRequest)
+                onEvent(LoginModuleEvent.LoginControlsEvent.PasswordResetRequest)
             }
         )
         VerticalSpacer()
         LoginOrSignUp(
             modifier = Modifier.padding(start = 16.dp),
             onRegisterRequest = {
-                onEvent(LoginControlsLoginModuleEvent.RegisterRequest)
+                onEvent(LoginModuleEvent.LoginControlsEvent.RegisterRequest)
             },
             onLoginRequest = {
-                onEvent(LoginControlsLoginModuleEvent.LoginModuleRequest)
+                onEvent(LoginModuleEvent.LoginControlsEvent.LoginRequest)
             }
         )
 
@@ -51,7 +52,6 @@ fun LoginControls(
 }
 
 
-//
 @Composable
 private fun LoginOrSignUp(
     modifier: Modifier,

@@ -22,19 +22,11 @@ class AuthViewModel(
         repository = loginRepository,
     )
     val registerViewModel = RegisterDestinationViewModel(registrationRepository)
-    val loginSucess = loginViewModel.shouldExit
-
-
-    init {
-        loginViewModel.onRegisterDestinationOpenRequest = {
-            openRegisterDestination()
-        }
-
+    val loginSuccess = MutableStateFlow(false)
+    suspend fun login():Boolean{
+        return loginViewModel.login()
     }
 
-    fun onRegisterDestinationExitRequest() {
-        closeRegistrationDestination()
-    }
 
     private suspend fun observeRegisterDestinationState() {
         registerViewModel.state.collect { registerDestinationState ->
@@ -62,14 +54,14 @@ class AuthViewModel(
 
     }
 
-    private fun openRegisterDestination() {
+     fun openRegisterDestination() {
         registerViewModel.clearState()
         _uiState.update {
             it.copy(showRegisterForm = true)
         }
     }
 
-    private fun closeRegistrationDestination() {
+     fun closeRegistrationDestination() {
         _uiState.update {
             it.copy(showRegisterForm = false)
         }

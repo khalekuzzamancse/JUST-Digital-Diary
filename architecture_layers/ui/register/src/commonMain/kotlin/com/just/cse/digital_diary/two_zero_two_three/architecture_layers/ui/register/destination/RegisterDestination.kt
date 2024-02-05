@@ -15,13 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.controls.LoginSection
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.controls.RegisterControlEvents
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.controls.RegistrationControls
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.form.event.RegisterFormEvent
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.form.RegistrationForm
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.form.state.RegistrationFormData
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.header.RegistrationHeaderSection
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.events.RegisterDestinationEvent
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.events.RegisterDestinationEvent
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.viewmodel.RegisterDestinationViewModel
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
@@ -30,25 +29,19 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTop
 fun RegisterDestination(
     modifier: Modifier = Modifier,
     viewModel: RegisterDestinationViewModel,
-    onExitRequest: () -> Unit
+    onEvent: (RegisterDestinationEvent) -> Unit
 ) {
 
-    LaunchedEffect(Unit) {
-        viewModel.shouldExit.collect {
-            if (it) {
-                onExitRequest()
-            }
-        }
-    }
+//    LaunchedEffect(Unit) {
+//        viewModel.shouldExit.collect {
+//            if (it) {
+//                onExitRequest()
+//            }
+//        }
+//    }
     RegisterDestination(
         modifier = modifier,
-        onEvent = {
-            if (it is RegisterDestinationEvent.ExitRequest) {
-                onExitRequest()
-            } else {
-                viewModel.onEvent(it)
-            }
-        },
+        onEvent = onEvent,
         data = viewModel.formData.collectAsState().value,
         formEvent = viewModel.formEvent
     )
@@ -78,9 +71,10 @@ private fun RegisterDestination(
             },
             data = data,
             onRegisterRequest = {
-                onEvent(RegisterControlEvents.RegisterRequest)
+                onEvent(RegisterDestinationEvent.RegisterControlEvents.RegisterRequest)
             },
-            event = formEvent)
+            event = formEvent
+        )
 
     }
 

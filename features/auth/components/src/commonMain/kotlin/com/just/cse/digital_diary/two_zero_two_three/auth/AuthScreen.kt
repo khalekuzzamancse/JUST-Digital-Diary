@@ -6,10 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.RegisterDestination
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.destination.viewmodel.RegisterDestinationViewModel
-import com.just.cse.digital_diary.two_zero_two_three.auth.event.AuthEvent
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.events.RegisterDestinationEvent
 import com.just.cse.digital_diary.two_zero_two_three.auth.state.AuthScreenState
 import com.just.cse.digital_diary.two_zero_two_three.auth.viewmodel.AuthViewModel
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
@@ -18,7 +19,9 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.
 import com.just.cse.digital_diary.two_zero_two_three.domain.register.repository.RegisterRepository
 import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.repoisitory.LoginRepository
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.destination.LoginDestination
+import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.event.LoginModuleEvent
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destination.viewmodel.LoginDestinationViewModel
+import kotlinx.coroutines.launch
 
 
 /**
@@ -37,32 +40,47 @@ import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.login_destin
 fun AuthScreen(
     loginRepository: LoginRepository,
     registrationRepository: RegisterRepository,
-    onEvent: (AuthEvent) -> Unit) {
+    onLoginSuccess: () -> Unit,
+) {
+    val scope = rememberCoroutineScope()
     val authViewModel = remember {
         AuthViewModel(
-            loginRepository=loginRepository,
-            registrationRepository=registrationRepository
+            loginRepository = loginRepository,
+            registrationRepository = registrationRepository
         )
     }
-    LaunchedEffect(Unit) {
-        authViewModel.loginSucess.collect {
-            if (it) {
-                onEvent(AuthEvent.LoginSuccess)
-            }
 
-        }
-    }
     val state = authViewModel.uiState.collectAsState().value
 
     AuthScreen(
         state = state,
         loginViewModel = authViewModel.loginViewModel,
         registerViewModel = authViewModel.registerViewModel,
-        onRegisterExitRequest = {
-            authViewModel.onRegisterDestinationExitRequest()
+        onLoginEvent = { event ->
+            when (event) {
+                LoginModuleEvent.LoginControlsEvent.RegisterRequest -> {
+                    authViewModel.openRegisterDestination()
+                }
 
-        }
-    )
+                LoginModuleEvent.LoginControlsEvent.LoginRequest -> {
+                  scope.launch {
+                      val success=authViewModel.login()
+                      println("onLoginRequest:$success")
+                  }
+
+                }
+            }
+        },
+        onRegisterEvent = { event ->
+            when (event) {
+                RegisterDestinationEvent.RegisterControlEvents.RegisterRequest -> {}
+                RegisterDestinationEvent.ExitRequest -> {
+                    authViewModel.closeRegistrationDestination()
+                }
+            }
+        },
+
+        )
 
 }
 
@@ -71,7 +89,8 @@ private fun AuthScreen(
     state: AuthScreenState,
     loginViewModel: LoginDestinationViewModel,
     registerViewModel: RegisterDestinationViewModel,
-    onRegisterExitRequest: () -> Unit,
+    onLoginEvent: (LoginModuleEvent) -> Unit,
+    onRegisterEvent: (RegisterDestinationEvent) -> Unit = {},
 ) {
     TwoPaneLayout(
         showProgressBar = state.showProgressBar,
@@ -85,14 +104,15 @@ private fun AuthScreen(
         leftPane = {
             LoginDestination(
                 modifier = Modifier,
-                viewModel = loginViewModel
+                viewModel = loginViewModel,
+                onEvent = onLoginEvent
             )
         },
         topOrRightPane = {
             RegisterDestination(
                 modifier = Modifier.verticalScroll(rememberScrollState()),
                 viewModel = registerViewModel,
-                onExitRequest = onRegisterExitRequest
+                onEvent = onRegisterEvent
             )
         }
     )
