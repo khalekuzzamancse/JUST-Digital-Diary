@@ -1,6 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home
 
 import androidx.compose.runtime.Composable
+import com.just.cse.digital_diary.features.admin_office.destination.nav_graph.AdminOfficeNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.TopMostDestinations
 
 object NavigationGraph {
@@ -28,9 +29,8 @@ object NavigationGraph {
             }
 
             RootDestinations.ADMIN_OFFICE -> {
-                TopMostDestinations.AdminOfficeList(
-                    onEmployeeListRequest = {},
-                    onExitRequest = {}
+                AdminOfficeNavGraph(
+                    onExitRequest ={}
                 )
             }
             RootDestinations.MESSAGE_FROM_VC -> {

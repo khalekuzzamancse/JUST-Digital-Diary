@@ -25,15 +25,9 @@ kotlin {
                 implementation(compose.preview)
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(project(localModules.versions.common.ui.get()))
-
-                implementation(project(localModules.versions.ui.admin.offices.get()))
-                implementation(project(localModules.versions.data.admin.offices.get()))
-                //
-                implementation(project(localModules.versions.data.admin.subOffices.get()))
-                implementation(project(localModules.versions.ui.admin.subOffices.get()))
-                //
-                implementation(project(localModules.versions.ui.admin.officers.get()))
-                implementation(project(localModules.versions.data.admin.officers.get()))
+                api(project(localModules.versions.ui.admin.offices.get()))
+                api(project(localModules.versions.ui.admin.subOffices.get()))
+                api(project(localModules.versions.ui.admin.officers.get()))
 
             }
         }
@@ -52,7 +46,7 @@ kotlin {
 
 }
 android {
-    namespace = "com.just.cse.digital_diary.features.admin_office"
+    namespace = "com.just.cse.digital_diary.features.admin_office.components"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.admin_office.offices
+package com.just.cse.digital_diary.features.admin_office.components.offices
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,26 +10,28 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.features.admin_office.sub_offices.AdminSubOfficeList
-import com.just.cse.digital_diary.features.admin_office.destination.AdminOfficeListViewModel
+import com.just.cse.digital_diary.features.admin_office.components.destination.AdminOfficeListViewModel
+import com.just.cse.digital_diary.features.admin_office.components.sub_offices.AdminSubOfficeList
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_sub_offices.event.SubOfficeDestinationEvent
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_offices.repoisitory.AdminOfficeListRepository
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_sub_offices.repoisitory.AdminSubOfficeListRepository
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.destination.destination.AdminOfficeList
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.event.AdminOfficesDestinationEvent
-import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_offices.repoisitory.AdminOfficeListRepositoryImpl
-import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_sub_offices.repoisitory.AdminSubOfficeListRepositoryImpl
 import kotlinx.coroutines.launch
 
 @Composable
 fun AdminOffices(
     onEmployeeListRequest: (String) -> Unit,
+    officeRepository: AdminOfficeListRepository,
+    subOfficeRepository: AdminSubOfficeListRepository,
     onExitRequest: () -> Unit,
 ) {
-    val token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxOTExMDEuY3NlOGFlNDdkYTdkY2VkIiwicm9sZV9pZCI6MTMsImlhdCI6MTcwNzEzMzY4MSwiZXhwIjoxNzA3MzA2NDgxfQ.ALBe8IaEKA8OeqyIOcjsAkQx4g-7vZbgslMIkiyHCOw"
+
     val scope = rememberCoroutineScope()
     val viewModel = remember {
         AdminOfficeListViewModel(
-            repository = AdminOfficeListRepositoryImpl(token),
-            subOfficeListRepository = AdminSubOfficeListRepositoryImpl(token)
+            repository = officeRepository,
+            subOfficeListRepository = subOfficeRepository
         )
     }
     LaunchedEffect(Unit) {

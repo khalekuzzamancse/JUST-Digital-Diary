@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.admin_office.destination
+package com.just.cse.digital_diary.features.admin_office.components.destination
 
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_sub_offices.component.sub_office_list.state.SubOffice
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_sub_offices.component.sub_office_list.state.SubOfficeListState
@@ -97,7 +97,7 @@ class AdminOfficeListViewModel(
     }
     private fun onSubOfficeListChanged(subOffices:List<SubOffice>){
         _state.update { state ->
-            val subOfficeState =SubOfficeListState(subOffices=subOffices)
+            val subOfficeState = SubOfficeListState(subOffices=subOffices)
             state.copy(subOfficeState = subOfficeState, showSubOfficeList = true)
         }
 

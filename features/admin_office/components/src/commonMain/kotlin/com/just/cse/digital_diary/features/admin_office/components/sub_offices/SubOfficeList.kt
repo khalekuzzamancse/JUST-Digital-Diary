@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.admin_office.sub_offices
+package com.just.cse.digital_diary.features.admin_office.components.sub_offices
 
 import androidx.compose.runtime.Composable
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_sub_offices.component.sub_office_list.SubOfficeListDestination

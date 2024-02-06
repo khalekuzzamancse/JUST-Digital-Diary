@@ -9,6 +9,7 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.admin_o
 
 @Composable
 fun AdminOfficerListDestination(
+    subOfficeId: String,
     modifier: Modifier = Modifier,
     viewModel: AdminOfficerListViewModel
 ) {
@@ -18,7 +19,7 @@ fun AdminOfficerListDestination(
         onEvent = viewModel::onEvent,
     )
     LaunchedEffect(Unit){
-        viewModel.setDepartmentId("01")
+        viewModel.setDepartmentId(subOfficeId)
     }
 
 }

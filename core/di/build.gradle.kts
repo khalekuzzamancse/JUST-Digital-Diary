@@ -25,6 +25,10 @@ kotlin {
                 api(project(localModules.versions.data.faculties.get()))
                 api(project(localModules.versions.data.departments.get()))
                 api(project(localModules.versions.data.teachers.get()))
+                //Feature:Admin office
+                api(project(localModules.versions.data.admin.offices.get()))
+                api(project(localModules.versions.data.admin.subOffices.get()))
+                api(project(localModules.versions.data.admin.officers.get()))
             }
         }
         val androidMain by getting{

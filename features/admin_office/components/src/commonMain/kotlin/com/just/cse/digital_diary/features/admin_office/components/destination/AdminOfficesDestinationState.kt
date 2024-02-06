@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.admin_office.destination
+package com.just.cse.digital_diary.features.admin_office.components.destination
 
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_sub_offices.component.sub_office_list.state.SubOfficeListState
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.office_list.state.OfficeListState

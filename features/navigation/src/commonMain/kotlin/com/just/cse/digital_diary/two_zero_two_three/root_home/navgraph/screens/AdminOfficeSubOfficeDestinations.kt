@@ -1,7 +1,8 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens
 
 import androidx.compose.runtime.Composable
-import com.just.cse.digital_diary.features.admin_office.admin_officers.AdminOfficers
+
+import com.just.cse.digital_diary.features.admin_office.destination.destinations.AdminOfficeScreen
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
 
 object AdminOfficeSubOfficeDestinations {
@@ -12,7 +13,7 @@ object AdminOfficeSubOfficeDestinations {
         appEvent: AppEvent,
         onExitRequest: () -> Unit,
     ) {
-        AdminOfficers(onExitRequest=onExitRequest)
+        AdminOfficeScreen(onExitRequest=onExitRequest, onEmployeeListRequest = {})
     }
 
 }

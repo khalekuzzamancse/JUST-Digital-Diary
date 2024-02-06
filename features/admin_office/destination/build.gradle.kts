@@ -11,11 +11,11 @@ kotlin {
             }
         }
     }
-    jvm("desktop"){
+    jvm("desktop") {
         jvmToolchain(17)
     }
-    sourceSets{
-        val commonMain by getting{
+    sourceSets {
+        val commonMain by getting {
             dependencies {
                 implementation(compose.ui)
                 implementation(compose.material3)
@@ -26,14 +26,11 @@ kotlin {
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(project(localModules.versions.common.ui.get()))
 
-                implementation(project(localModules.versions.ui.admin.offices.get()))
-                implementation(project(localModules.versions.data.admin.offices.get()))
-                //
-                implementation(project(localModules.versions.data.admin.subOffices.get()))
-                implementation(project(localModules.versions.ui.admin.subOffices.get()))
-                //
-                implementation(project(localModules.versions.ui.admin.officers.get()))
-                implementation(project(localModules.versions.data.admin.officers.get()))
+                implementation(project(localModules.versions.feature.adminOffice.components.get()))
+                implementation(project(localModules.versions.core.di.get()))
+                implementation(libs.voyager.navigator)
+                implementation(libs.voyager.navigator)
+
 
             }
         }
@@ -52,7 +49,7 @@ kotlin {
 
 }
 android {
-    namespace = "com.just.cse.digital_diary.features.admin_office"
+    namespace = "com.just.cse.digital_diary.features.admin_office.destination"
     compileSdk = 34
     defaultConfig {
         minSdk = 27
