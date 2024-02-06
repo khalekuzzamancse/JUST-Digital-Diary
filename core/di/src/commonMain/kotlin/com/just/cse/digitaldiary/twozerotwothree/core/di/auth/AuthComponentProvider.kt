@@ -32,7 +32,7 @@ object AuthComponentProvider {
        return response!=null
 
     }
-     fun isSignIn()=RealmAuthentication.observeSignIn()
+     fun observeSignIn()=RealmAuthentication.observeSignIn()
     fun signInOut(){
       RealmAuthentication.signOut()
     }

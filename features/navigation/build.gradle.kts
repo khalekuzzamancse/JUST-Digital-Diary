@@ -43,6 +43,7 @@ kotlin {
         val desktopMain by getting{
             dependencies {
                 implementation(libs.voyager.navigator)
+                implementation(libs.voyager.transitions)
 
             }
         }
