@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.just.cse.digital_diary.features.faculty.destination.TeacherListScreen
@@ -60,7 +61,12 @@ fun SignedInUserContent(
                     navigationEvent = NavigationEvent(),
                     onLogOutRequest = signOut
                 ) { destination ->
-                    NavigationGraph.NavHost(destination)
+                    NavigationGraph.NavHost(
+                        destination=destination,
+                        onTeacherListRequest = {
+
+                        }
+                    )
                 }
 
             }

@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.faculty_list
+package com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.office_list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,8 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.faculty_list.event.AdminOfficesListEvent
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.faculty_list.state.FacultyListState
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.event.AdminOfficesDestinationEvent
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.office_list.state.OfficeListState
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemProps
@@ -30,26 +30,26 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation
  */
 
 @Composable
-fun OfficeList(
+internal fun OfficeList(
     modifier: Modifier=Modifier,
-    state: FacultyListState,
-    onEvent: (AdminOfficesListEvent) -> Unit,
+    state: OfficeListState,
+    onEvent: (AdminOfficesDestinationEvent.AdminOfficesListEvent) -> Unit,
 ) {
-    if(state.faculties.isEmpty()){
+    if(state.offices.isEmpty()){
         Text("FacultyList is empty")
     }
    else{
         VerticalListNavigation(
             modifier = modifier.fillMaxWidth(),
-            destinations = state.faculties.map { faculty ->
+            destinations = state.offices.map { faculty ->
                 NavigationItemInfo2(
                     label = faculty.name,
-                    iconText = faculty.numberOfDepartment,
+                    iconText = faculty.numberOfSubOffices,
                     key = faculty.id
                 )
             },
             onDestinationSelected = {index->
-                onEvent(AdminOfficesListEvent.AdminOfficesSelected(index))
+                onEvent(AdminOfficesDestinationEvent.AdminOfficesListEvent.AdminOfficesSelected(index))
             },
             selectedDestinationIndex = state.selected
         )

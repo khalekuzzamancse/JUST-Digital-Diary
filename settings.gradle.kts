@@ -25,9 +25,6 @@ dependencyResolutionManagement {
             version("data-login", ":architecture_layers:data:login")
             version("ui-login", ":architecture_layers:ui:login")
 
-            version("domain-register", ":architecture_layers:domain:register")
-            version("data-register", ":architecture_layers:data:register")
-            version("ui-register", ":architecture_layers:ui:register")
             //
             version("domain-faculties", ":architecture_layers:domain:faculties")
             version("data-faculties", ":architecture_layers:data:faculties")
@@ -49,18 +46,7 @@ dependencyResolutionManagement {
             version("domain-otherInfo", ":architecture_layers:domain:other_info")
             version("data-otherInfo", ":architecture_layers:data:other_info")
             version("ui-otherInfo", ":architecture_layers:ui:other_info")
-            //
-            version("domain-adminOffices", ":architecture_layers:domain:admin_offices")
-            version("data-adminOffices", ":architecture_layers:data:admin_offices")
-            version("ui-adminOffices", ":architecture_layers:ui:admin_offices")
-//
-            version("domain-adminSubOffices", ":architecture_layers:domain:admin_sub_offices")
-            version("ui-adminSubOffices", ":architecture_layers:ui:admin_sub_offices")
-            version("data-adminSubOffices", ":architecture_layers:data:admin_sub_offices")
-            //
-            version("domain-adminOfficers", ":architecture_layers:domain:admin_officers")
-            version("data-adminOfficers", ":architecture_layers:data:admin_officers")
-            version("ui-adminOfficers", ":architecture_layers:ui:admin_officers")
+
 
         }
     }

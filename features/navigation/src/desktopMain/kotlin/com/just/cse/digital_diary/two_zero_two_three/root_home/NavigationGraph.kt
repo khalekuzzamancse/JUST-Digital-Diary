@@ -9,7 +9,7 @@ object NavigationGraph {
     @Composable
     fun NavHost(
         destination: Int,
-        onTeacherListRequest:(String) -> Unit={},
+        onTeacherListRequest:(String) -> Unit,
     ) {
 
         when (destination) {
@@ -27,7 +27,12 @@ object NavigationGraph {
 
             }
 
-            RootDestinations.ADMIN_OFFICE -> {}
+            RootDestinations.ADMIN_OFFICE -> {
+                TopMostDestinations.AdminOfficeList(
+                    onEmployeeListRequest = {},
+                    onExitRequest = {}
+                )
+            }
             RootDestinations.MESSAGE_FROM_VC -> {
                 TopMostDestinations.MessageFromVC { }
             }

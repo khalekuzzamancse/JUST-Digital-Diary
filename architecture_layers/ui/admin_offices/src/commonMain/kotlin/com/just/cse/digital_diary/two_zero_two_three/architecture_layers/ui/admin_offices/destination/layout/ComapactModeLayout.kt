@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.destination.destination
+package com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.destination.layout
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -6,15 +6,15 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.faculty_list.OfficeList
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.faculty_list.state.FacultyListState
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.destination.event.AdminOfficesDestinationEvent
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.office_list.OfficeList
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.office_list.state.OfficeListState
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.event.AdminOfficesDestinationEvent
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
 
 @Composable
 internal fun CompactModeLayout(
-    facultyListState: FacultyListState,
+    officeListState: OfficeListState,
     onEvent: (AdminOfficesDestinationEvent) -> Unit,
     onExitRequest:()->Unit,
 ) {
@@ -37,7 +37,7 @@ internal fun CompactModeLayout(
         OfficeList(
             modifier = Modifier.padding(it),
             onEvent = onEvent,
-            state = facultyListState
+            state = officeListState
         )
     }
 

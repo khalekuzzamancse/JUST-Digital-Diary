@@ -20,7 +20,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(project(":core:network"))
-                implementation(project(modules.versions.domain.adminOffices.get()))
+                api(project(localModules.versions.domain.admin.offices.get()))
             }
         }
     }

@@ -16,15 +16,27 @@ data-otherInfo=":architecture_layers:data:other_info"
 data-departments=":architecture_layers:data:departments"
 data-faculties=":architecture_layers:data:faculties"
 data-teachers=":architecture_layers:data:teachers"
+####
+data-admin-offices=":architecture_layers:data:admin_offices"
+data-admin-subOffices=":architecture_layers:data:admin_sub_offices"
+data-admin-officers=":architecture_layers:data:admin_officers"
 #UI layers
 common-ui=":architecture_layers:ui:common_ui"
 ui-faculties=":architecture_layers:ui:faculties"
 ui-teachers=":architecture_layers:ui:teachers"
 ui-departments=":architecture_layers:ui:departments"
+###
+ui-admin-offices=":architecture_layers:ui:admin_offices"
+ui-admin-subOffices=":architecture_layers:ui:admin_sub_offices"
+ui-admin-officers=":architecture_layers:ui:admin_officers"
 #Domain  layers
 domain-departments=":architecture_layers:domain:departments"
 domain-teachers=":architecture_layers:domain:teachers"
 domain-faculties=":architecture_layers:domain:faculties"
+###
+domain-admin-offices=":architecture_layers:domain:admin_offices"
+domain-admin-subOffices=":architecture_layers:domain:admin_sub_offices"
+domain-admin-officers=":architecture_layers:domain:admin_officers"
 
 
 domain-login=":architecture_layers:domain:login"
@@ -41,12 +53,4 @@ data-departmentInfo=":architecture_layers:data:department_info"
 domain-otherInfo=":architecture_layers:domain:other_info"
 
 ui-otherInfo=":architecture_layers:ui:other_info"
-domain-adminOffices=":architecture_layers:domain:admin_offices"
-data-adminOffices=":architecture_layers:data:admin_offices"
-ui-adminOffices=":architecture_layers:ui:admin_offices"
-domain-adminSubOffices=":architecture_layers:domain:admin_sub_offices"
-ui-adminSubOffices=":architecture_layers:ui:admin_sub_offices"
-data-adminSubOffices=":architecture_layers:data:admin_sub_offices"
-domain-adminOfficers=":architecture_layers:domain:admin_officers"
-data-adminOfficers=":architecture_layers:data:admin_officers"
-ui-adminOfficers=":architecture_layers:ui:admin_officers"
+

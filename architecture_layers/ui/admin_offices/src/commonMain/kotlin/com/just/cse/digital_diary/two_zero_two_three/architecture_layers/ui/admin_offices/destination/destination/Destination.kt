@@ -1,19 +1,21 @@
 package com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.destination.destination
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.destination.viewmodel.AdminOfficesDestinationViewModel
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.destination.layout.CompactModeLayout
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.event.AdminOfficesDestinationEvent
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.office_list.state.OfficeListState
 
 @Composable
-fun AdminOfficesDestination(
-  viewModel: AdminOfficesDestinationViewModel,
-  onExitRequest:()->Unit,
+fun AdminOfficeList(
+    officeListState: OfficeListState,
+    onEvent: (AdminOfficesDestinationEvent) -> Unit,
 ) {
     CompactModeLayout(
-        facultyListState = viewModel.state.collectAsState().value.facultyListState,
-        onEvent = viewModel::onEvent,
-        onExitRequest=onExitRequest
+        officeListState = officeListState,
+        onEvent =onEvent,
+        onExitRequest={
+            onEvent(AdminOfficesDestinationEvent.ExitRequest)
+        }
     )
 
 }

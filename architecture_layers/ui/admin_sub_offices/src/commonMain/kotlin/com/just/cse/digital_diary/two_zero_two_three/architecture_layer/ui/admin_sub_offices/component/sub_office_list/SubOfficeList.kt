@@ -4,11 +4,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -21,25 +19,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_sub_offices.component.sub_office_list.event.SubOfficeListEvent
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_sub_offices.component.sub_office_list.state.SubOfficeListState
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_sub_offices.destination.event.SubOfficeDestinationEvent
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_sub_offices.event.SubOfficeDestinationEvent
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemProps
 
 @Composable
-internal fun SubOfficeList(
+ fun SubOfficeListDestination(
     modifier: Modifier = Modifier,
     state: SubOfficeListState,
     onEvent: (SubOfficeDestinationEvent) -> Unit,
 ) {
-    SubOfficeList(
+    SubOfficeListDestination(
         modifier = modifier,
         title = state.title,
         enableBackNavigation = state.enableBackNavigation,
         onDismissRequest = {
-            onEvent(SubOfficeListEvent.DismissRequest)
+            onEvent(SubOfficeDestinationEvent.ExitRequest)
         },
         destinations = state.subOffices.map {
             NavigationItemInfo2(
@@ -49,7 +46,7 @@ internal fun SubOfficeList(
             )
         },
         onDestinationSelected = {index->
-            onEvent(SubOfficeListEvent.SubOfficeSelected(index))
+            onEvent(SubOfficeDestinationEvent.SubOfficeListEvent.SubOfficeSelected(index))
         },
         selectedDestinationIndex = state.selected
     )
@@ -57,7 +54,7 @@ internal fun SubOfficeList(
 }
 
 @Composable
-private fun SubOfficeList(
+private fun SubOfficeListDestination(
     modifier: Modifier = Modifier,
     title: String? = null,
     enableBackNavigation: Boolean = true,

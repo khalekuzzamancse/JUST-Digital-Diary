@@ -3,10 +3,22 @@ package com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_sub_offic
 import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_sub_offices.dto.SubOfficeListResponseDTO
 import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.Header
 import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.getRequest
+import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.post.NetworkResponse
 
-class AdminSubOfficeListRemoteDataSource(officeId:String) {
-    private val baseUrl="https://diary.rnzgoldenventure.com/api/sub-offices/$officeId"
-    private val token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxOTExMDEuY3NlOGFlNDdkYTdkY2VkIiwicm9sZV9pZCI6MTMsImlhdCI6MTcwNjQxOTc3OSwiZXhwIjoxNzA2NTkyNTc5fQ.AxaN98L4p_lcxqJR5wql-qIVJTHGdN1Ju4Q584PX1iw"
-    private val header = Header(key="Authorization", value = token)
-    suspend fun getSubOffices()= getRequest<SubOfficeListResponseDTO>(url=baseUrl, header=header)
+class AdminSubOfficeListRemoteDataSource(
+    officeId: String,
+    private val token: String?
+) {
+    private val baseUrl = "https://diary.rnzgoldenventure.com/api/sub-offices/$officeId"
+
+    suspend fun getSubOffices(): NetworkResponse<SubOfficeListResponseDTO> {
+        if (token == null)
+            return NetworkResponse(
+                result = null,
+                reason = null,
+                isSuccess = false
+            )
+        val header = Header(key = "Authorization", value = token)
+        return getRequest<SubOfficeListResponseDTO>(url = baseUrl, header = header)
+    }
 }

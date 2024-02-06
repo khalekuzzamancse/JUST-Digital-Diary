@@ -4,11 +4,16 @@ import com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_sub_office
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_sub_offices.model.AdminSubOfficeListResponseModel
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_sub_offices.repoisitory.AdminSubOfficeListRepository
 
-class AdminSubOfficeListRepositoryImpl(private val officeID:String): AdminSubOfficeListRepository {
+class AdminSubOfficeListRepositoryImpl(
+    private val token:String?
+): AdminSubOfficeListRepository {
 
 
-    override suspend fun getSubOffices(): AdminSubOfficeListResponseModel {
-        val response= AdminSubOfficeListRemoteDataSource(officeID).getSubOffices()
+    override suspend fun getSubOffices(officeId: String): AdminSubOfficeListResponseModel {
+        val response= AdminSubOfficeListRemoteDataSource(
+            officeId = officeId,
+            token = token
+        ).getSubOffices()
         if (response.isSuccess){
             response.result?.let {dto->
                 return AdminSubOfficeListResponseModel.Success(data =dto.data.map{it.toModel() })
