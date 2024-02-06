@@ -20,8 +20,8 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project(":core:network"))
                 implementation(libs.ktor.serialization.kotlinx.json)
-                implementation(project(modules.versions.domain.adminOfficers.get()))
-                implementation(project(modules.versions.domain.otherInfo.get()))
+                implementation(project(localModules.versions.domain.admin.officers.get()))
+                implementation(project(localModules.versions.domain.otherInfo.get()))
             }
         }
     }

@@ -24,16 +24,6 @@ dependencyResolutionManagement {
             version("domain-login", ":architecture_layers:domain:login")
             version("data-login", ":architecture_layers:data:login")
             version("ui-login", ":architecture_layers:ui:login")
-
-            //
-            version("domain-faculties", ":architecture_layers:domain:faculties")
-            version("data-faculties", ":architecture_layers:data:faculties")
-            version("ui-faculties", ":architecture_layers:ui:faculties")
-
-            //
-            version("domain-departments", ":architecture_layers:domain:departments")
-            version("data-departments", ":architecture_layers:data:departments")
-            version("ui-departments", ":architecture_layers:ui:departments")
             //
 
             version("domain-departmentInfo", ":architecture_layers:domain:department_info")
@@ -81,7 +71,7 @@ val featureModules = listOf(
     ":features:others",":features:others:components",":features:others:destination",
     ":features:sharing_document",
     ":features:employee_list",
-    ":features:admin_office",
+    ":features:admin_office",  ":features:admin_office:components",  ":features:admin_office:destination"
 )
 val coreModules = listOf(
     ":core",

@@ -10,6 +10,9 @@ feature-others-components=":features:others:components"
 #Feature:Facultis
 feature-faculty-destination=":features:faculty:destination"
 feature-faculty-components=":features:faculty:components"
+#feature Admin Office
+feature-adminOffice-destination=":features:admin_office:destination"
+feature-adminOffice-components=":features:admin_office:components"
 
 #data layers
 data-otherInfo=":architecture_layers:data:other_info"

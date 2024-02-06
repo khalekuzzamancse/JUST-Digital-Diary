@@ -54,6 +54,8 @@
             <option value="$PROJECT_DIR$/desktop" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/admin_office" />
+            <option value="$PROJECT_DIR$/features/admin_office/components" />
+            <option value="$PROJECT_DIR$/features/admin_office/destination" />
             <option value="$PROJECT_DIR$/features/auth" />
             <option value="$PROJECT_DIR$/features/auth/components" />
             <option value="$PROJECT_DIR$/features/auth/destination" />

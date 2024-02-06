@@ -4,7 +4,6 @@ plugins {
     id("org.jetbrains.compose")
 }
 kotlin {
-
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -24,14 +23,13 @@ kotlin {
                 implementation(compose.animation)
                 implementation(compose.animationGraphics)
                 implementation(compose.materialIconsExtended)
-
-
+                //
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
-                implementation(project(modules.versions.common.ui.get()))
-                implementation(project(modules.versions.ui.login.get()))
-                implementation(project(modules.versions.ui.register.get()))
-                implementation(project(modules.versions.data.login.get()))
-                implementation(project(modules.versions.data.register.get()))
+                implementation(project(localModules.versions.common.ui.get()))
+                implementation(project(localModules.versions.ui.login.get()))
+                implementation(project(localModules.versions.ui.register.get()))
+                implementation(project(localModules.versions.data.login.get()))
+                implementation(project(localModules.versions.data.register.get()))
                 implementation(project(localModules.versions.feature.auth.components.get()))
                 implementation(project(localModules.versions.core.di.get()))
 

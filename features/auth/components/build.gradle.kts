@@ -1,5 +1,3 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
-
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -31,11 +29,11 @@ kotlin {
 
 
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
-                implementation(project(modules.versions.common.ui.get()))
-                implementation(project(modules.versions.ui.login.get()))
-                implementation(project(modules.versions.ui.register.get()))
-                api(project(modules.versions.domain.login.get()))
-                api(project(modules.versions.domain.register.get()))
+                implementation(project(localModules.versions.common.ui.get()))
+                implementation(project(localModules.versions.ui.login.get()))
+                implementation(project(localModules.versions.ui.register.get()))
+                api(project(localModules.versions.domain.login.get()))
+                api(project(localModules.versions.domain.register.get()))
         
 
             }

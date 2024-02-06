@@ -25,8 +25,8 @@ kotlin {
                 implementation(compose.materialIconsExtended)
                 implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(project(modules.versions.domain.faculties.get()))
-                implementation(project(modules.versions.common.ui.get()))
+                api(project(localModules.versions.domain.faculties.get()))
+                implementation(project(localModules.versions.common.ui.get()))
             }
         }
 //        val androidMain by getting{

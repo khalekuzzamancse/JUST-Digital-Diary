@@ -30,9 +30,9 @@ kotlin {
                 implementation(project(localModules.versions.ui.faculties.get()))
                 implementation(project(localModules.versions.ui.departments.get()))
                 //
-                api(project(modules.versions.domain.faculties.get()))
-                api(project(modules.versions.domain.teachers.get()))
-                api(project(modules.versions.domain.departments.get()))
+                api(project(localModules.versions.domain.faculties.get()))
+                api(project(localModules.versions.domain.teachers.get()))
+                api(project(localModules.versions.domain.departments.get()))
             }
         }
 //        val androidMain by getting{

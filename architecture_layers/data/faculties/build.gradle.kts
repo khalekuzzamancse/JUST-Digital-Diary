@@ -20,7 +20,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project(":core:network"))
                 implementation(libs.ktor.serialization.kotlinx.json)
-                implementation(project(modules.versions.domain.faculties.get()))
+                implementation(project(localModules.versions.domain.faculties.get()))
             }
         }
 //        val androidMain by getting{
