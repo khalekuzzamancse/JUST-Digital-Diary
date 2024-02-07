@@ -11,8 +11,7 @@ import com.just.cse.digital_diary.two_zero_two_three.data_layer.login.repository
  * so the client manually handle the lifecycle of the [LoginRepositoryImpl]
  */
 object AdminOfficeComponentProvider {
-    private const val token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxOTExMDEuY3NlOGFlNDdkYTdkY2VkIiwicm9sZV9pZCI6MTMsImlhdCI6MTcwNzEzMzY4MSwiZXhwIjoxNzA3MzA2NDgxfQ.ALBe8IaEKA8OeqyIOcjsAkQx4g-7vZbgslMIkiyHCOw"
+    private const val token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxOTExMDEuY3NlOGFlNDdkYTdkY2VkIiwicm9sZV9pZCI6MTMsImlhdCI6MTcwNzMxNjgyNywiZXhwIjoxNzA3NDg5NjI3fQ.bHE4wQAIX7oa5uYNQOMgbvr4KMPIU3h8NixfMtsyxKg"
 
     fun getAdminOfficeRepository(): AdminOfficeListRepositoryImpl {
         return AdminOfficeListRepositoryImpl(token)

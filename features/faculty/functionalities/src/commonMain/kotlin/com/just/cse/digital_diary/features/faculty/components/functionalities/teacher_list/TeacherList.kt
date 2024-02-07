@@ -11,6 +11,7 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.teac
 
 @Composable
 fun TeacherList(
+    modifier: Modifier = Modifier,
     deptId: String,
     repository: TeacherListRepository,
 ) {
@@ -19,13 +20,13 @@ fun TeacherList(
             repository, deptId
         )
     }
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         viewModel.loadTeacherList()
     }
     TeacherList(
-        modifier = Modifier,
+        modifier = modifier,
         state = viewModel.uiState.collectAsState().value.teacherListState,
-        onEvent = {
+        onEvent = {event ->
 
         }
     )

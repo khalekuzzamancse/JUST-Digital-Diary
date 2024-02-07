@@ -48,6 +48,7 @@ fun WindowSizeDecorator(
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun WindowSizeDecorator(
+    modifier: Modifier=Modifier,
     snackBarMessage: String? = null,
     showProgressBar: Boolean = false,
     onCompact: @Composable () -> Unit,
@@ -55,7 +56,7 @@ fun WindowSizeDecorator(
     val windowSize = calculateWindowSizeClass()
     val windowWidth = windowSize.widthSizeClass
     ProgressBarNSnackBarDecorator(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         showProgressBar = showProgressBar,
         snackBarMessage = snackBarMessage
     ) {

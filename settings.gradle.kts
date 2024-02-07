@@ -71,7 +71,7 @@ val featureModules = listOf(
     ":features:others",":features:others:components",":features:others:destination",
     ":features:sharing_document",
     ":features:employee_list",
-    ":features:admin_office",  ":features:admin_office:components",  ":features:admin_office:destination"
+    ":features:admin_office",  ":features:admin_office:functionalities",  ":features:admin_office:navgraph"
 )
 val coreModules = listOf(
     ":core",

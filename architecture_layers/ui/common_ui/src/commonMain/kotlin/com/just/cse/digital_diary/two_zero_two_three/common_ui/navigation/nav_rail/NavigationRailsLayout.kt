@@ -29,7 +29,7 @@ fun NavigationRailLayout(
     modifier: Modifier = Modifier,
     selectedDestinationIndex: Int,
     group: List<NavigationRailGroup>,
-    onNavRailItemSelected: (Int) -> Unit,
+     onNavRailItemSelected: (Int) -> Unit,
     groupDecorator: @Composable (Int) -> Unit,
     itemDecorator: @Composable (Int) -> Unit,
     content: @Composable (Modifier) -> Unit

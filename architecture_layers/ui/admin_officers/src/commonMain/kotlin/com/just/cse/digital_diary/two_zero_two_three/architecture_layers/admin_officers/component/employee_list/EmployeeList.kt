@@ -5,7 +5,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.admin_officers.destination.event.AdminOfficersDestinationEvent
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.admin_officers.component.employee_list.event.AdminEmployeeListEvent
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.admin_officers.component.employee_list.state.AdminOfficerListState
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.list.AdaptiveList
@@ -22,10 +21,10 @@ another screen such as pane
 
 
 @Composable
-internal fun ListOfAdminOfficer(
+ fun ListOfAdminOfficer(
     modifier: Modifier = Modifier,
     state: AdminOfficerListState,
-    onEvent:(AdminOfficersDestinationEvent)->Unit,
+    onEvent:(AdminEmployeeListEvent)->Unit,
 ) {
     if (state.adminOfficers.isNotEmpty()){
         Surface(

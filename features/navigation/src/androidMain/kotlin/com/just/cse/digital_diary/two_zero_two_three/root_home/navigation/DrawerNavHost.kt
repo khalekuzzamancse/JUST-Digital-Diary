@@ -1,7 +1,6 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -9,8 +8,6 @@ import androidx.navigation.compose.composable
 import com.just.cse.digital_diary.features.admin_office.destination.AdminOfficeFeatureNavGraph
 import com.just.cse.digital_diary.features.faculty.destination.FacultyFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
-import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.AdminOfficeSubOfficeDestinations
-import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.DepartmentInfoModuleDestinations
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.TopMostDestinations
 
 @Composable
@@ -21,25 +18,20 @@ fun DrawerNavHost(
     onNoteCreationRequest: () -> Unit,
     navController: NavHostController,
 ) {
+
     NavHost(
         modifier = modifier,
         navController = navController,
         startDestination = TopMostDestinations.HOME.route
     ) {
-
         composable(route = TopMostDestinations.HOME.route) {
             TopMostDestinations.Home(
                 onCreateNoteRequest = onNoteCreationRequest,
             )
 
         }
-
-        composable(route = TopMostDestinations.FACULTY_LIST.route) {
-            FacultyFeatureNavGraph()
-        }
-        composable(route = TopMostDestinations.ADMIN_OFFICES.route) {
-            AdminOfficeFeatureNavGraph()
-        }
+        FacultyFeatureNavGraph.graph(this, navController)
+        AdminOfficeFeatureNavGraph.graph(this, navController)
 
         composable(route = TopMostDestinations.SEARCH.route) {
             TopMostDestinations.Search(
@@ -53,14 +45,11 @@ fun DrawerNavHost(
             TopMostDestinations.EventGallery(
                 onExitRequest = openDrawerRequest
             )
-
-
         }
         composable(route = TopMostDestinations.MESSAGE_FROM_VC.route) {
             TopMostDestinations.MessageFromVC(
                 onExitRequest = openDrawerRequest
             )
-
         }
 
         composable(route = TopMostDestinations.NOTE_LIST.route) {
@@ -78,8 +67,6 @@ fun DrawerNavHost(
                 onExitRequest = openDrawerRequest
             )
         }
-
-
 
 
     }

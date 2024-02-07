@@ -11,8 +11,8 @@ feature-others-components=":features:others:components"
 feature-faculty-destination=":features:faculty:navgraph"
 feature-faculty-components=":features:faculty:functionalities"
 #feature Admin Office
-feature-adminOffice-destination=":features:admin_office:destination"
-feature-adminOffice-components=":features:admin_office:components"
+feature-adminOffice-destination=":features:admin_office:navgraph"
+feature-adminOffice-components=":features:admin_office:functionalities"
 
 #data layers
 data-otherInfo=":architecture_layers:data:other_info"

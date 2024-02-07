@@ -16,7 +16,9 @@ class AdminOfficeListRepositoryImpl(
                 return AdminOfficeListResponseModel.Success(data = dto.data.map { it.toModel() })
             }
             return AdminOfficeListResponseModel.Success(data = emptyList())
-        } else
+        } else{
             return AdminOfficeListResponseModel.Failure(reason = response.reason)
+        }
+
     }
 }

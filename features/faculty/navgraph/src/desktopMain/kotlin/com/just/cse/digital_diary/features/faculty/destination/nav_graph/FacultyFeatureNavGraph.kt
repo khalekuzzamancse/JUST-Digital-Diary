@@ -7,5 +7,5 @@ import com.just.cse.digital_diary.features.faculty.destination.screens.FacultyLi
 
 @Composable
 fun FacultyFeatureNavGraph() {
-    Navigator(FacultyListScreen(onExitRequest = {}))
+    Navigator(FacultyListScreen())
 }

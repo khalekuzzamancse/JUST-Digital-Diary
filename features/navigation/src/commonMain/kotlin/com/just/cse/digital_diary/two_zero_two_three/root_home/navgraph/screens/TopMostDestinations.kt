@@ -16,8 +16,8 @@ import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvi
 
 object TopMostDestinations {
     val HOME = Destination.createDestination("HOME")
-    val FACULTY_LIST = Destination.createDestination("FACULTY_LIST")
-    val ADMIN_OFFICES = Destination.createDestination("ADMIN_OFFICES")
+    val FACULTY_LIST = Destination.createDestination("FacultyFeatureNavigation")
+    val ADMIN_OFFICES = Destination.createDestination("AdminOfficeFeatureNavGraph")
     val ABOUT_US = Destination.createDestination("ABOUT_US")
     val MESSAGE_FROM_VC = Destination.createDestination("MESSAGE_FROM_VC")
     val NOTE_LIST = Destination.createDestination("NOTE_LIST")

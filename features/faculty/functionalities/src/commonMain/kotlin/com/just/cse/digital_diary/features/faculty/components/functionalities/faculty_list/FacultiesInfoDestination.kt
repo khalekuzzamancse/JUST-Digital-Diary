@@ -20,6 +20,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLay
 
 @Composable
 fun FacultiesInfoDestination(
+    modifier: Modifier=Modifier,
     facultyListRepository: FacultyListRepository,
     departmentListRepository: DepartmentListRepository,
     onEmployeeListRequest: (String) -> Unit = {},
@@ -55,6 +56,7 @@ fun FacultiesInfoDestination(
         viewModel.loadFacultyList()
     }
     WindowSizeDecorator(
+        modifier=modifier,
         showProgressBar = viewModel.uiState.collectAsState().value.isLoading,
         onCompact = {
             Box(Modifier.fillMaxSize()) {
