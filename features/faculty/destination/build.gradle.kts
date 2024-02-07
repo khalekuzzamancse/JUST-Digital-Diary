@@ -32,16 +32,17 @@ kotlin {
 
             }
         }
-//        val androidMain by getting{
-//            dependencies {
-//
-//            }
-//        }
-//        val desktopMain by getting{
-//            dependencies {
-//
-//            }
-//        }
+        val androidMain by getting{
+            dependencies {
+                implementation("androidx.navigation:navigation-compose:2.7.6")
+            }
+        }
+        val desktopMain by getting{
+            dependencies {
+                implementation(libs.voyager.navigator)
+                implementation(libs.voyager.navigator)
+            }
+        }
     }
 
 

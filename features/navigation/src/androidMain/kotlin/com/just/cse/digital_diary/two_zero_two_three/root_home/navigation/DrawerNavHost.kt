@@ -6,6 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.just.cse.digital_diary.features.admin_office.destination.AdminOfficeFeatureNavGraph
+import com.just.cse.digital_diary.features.faculty.destination.FacultyFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.AdminOfficeSubOfficeDestinations
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.DepartmentInfoModuleDestinations
@@ -17,11 +19,8 @@ fun DrawerNavHost(
     appEvent: AppEvent,
     openDrawerRequest: () -> Unit,
     onNoteCreationRequest: () -> Unit,
-    onDepartmentInfoRequest: (String) -> Unit,
-    onAdminOfficeSubOfficeRequest: (subOfficeId: String) -> Unit,
     navController: NavHostController,
 ) {
-    var deptId:String = remember { "" }
     NavHost(
         modifier = modifier,
         navController = navController,
@@ -31,34 +30,17 @@ fun DrawerNavHost(
         composable(route = TopMostDestinations.HOME.route) {
             TopMostDestinations.Home(
                 onCreateNoteRequest = onNoteCreationRequest,
-                onOpenDrawerRequest = openDrawerRequest
-            ) {
-            }
+            )
 
         }
 
         composable(route = TopMostDestinations.FACULTY_LIST.route) {
-            TopMostDestinations.FacultyList(
-                onExitRequest = openDrawerRequest,
-                onDepartmentInfoRequest = {
-                    onDepartmentInfoRequest(it)
-                    deptId=it
-                }
-            )
+            FacultyFeatureNavGraph()
         }
         composable(route = TopMostDestinations.ADMIN_OFFICES.route) {
-            TopMostDestinations.AdminOfficeList(
-                onExitRequest = openDrawerRequest,
-                onEmployeeListRequest = onAdminOfficeSubOfficeRequest
-            )
+            AdminOfficeFeatureNavGraph()
         }
-        composable(route = AdminOfficeSubOfficeDestinations.SUB_OFFICE_EMPLOYEES.route) {
-            AdminOfficeSubOfficeDestinations.AdminOfficeSubOfficeEmployees(
-                subOfficeId = "01",
-                appEvent = appEvent,
-                onExitRequest = openDrawerRequest
-            )
-        }
+
         composable(route = TopMostDestinations.SEARCH.route) {
             TopMostDestinations.Search(
                 onExitRequest = openDrawerRequest,
@@ -97,12 +79,7 @@ fun DrawerNavHost(
             )
         }
 
-        composable(route = DepartmentInfoModuleDestinations.DEPARTMENT_INFO.route) {
-            DepartmentInfoModuleDestinations.TeacherList(
-                departmentId = deptId, appEvent = appEvent, onExitRequest = openDrawerRequest
-            )
 
-        }
 
 
     }

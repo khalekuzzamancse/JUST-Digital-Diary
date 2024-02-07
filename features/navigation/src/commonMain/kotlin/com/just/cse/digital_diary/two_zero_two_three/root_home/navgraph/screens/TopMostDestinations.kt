@@ -2,21 +2,15 @@ package com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.just.cse.digital_diary.features.faculty.destination.FacultyDestinationEvent
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.AboutUsDestination
 import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.EventGalleryDestination
 import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.MessageFromVCDestination
-import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.TopBarDecorator
-import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.destinations.admin_office.AdminOfficeDestination
-import com.just.cse.digital_diary.two_zero_two_three.root_home.destinations.faculites.FacultyListDestination
 import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
 
 
@@ -112,32 +106,8 @@ object TopMostDestinations {
 //        )
     }
 
-    @Composable
-    fun FacultyList(
-        onDepartmentInfoRequest: (String) -> Unit,
-        onExitRequest: () -> Unit,
-    ) {
 
-        FacultyListDestination(
-            event = FacultyDestinationEvent(
-                onDepartmentInfoRequest = onDepartmentInfoRequest
-            ),
-            onExitRequest = onExitRequest,
-        )
 
-    }
-
-    @Composable
-    fun AdminOfficeList(
-        onEmployeeListRequest: (subOfficeId: String) -> Unit,
-        onExitRequest: () -> Unit,
-    ) {
-        AdminOfficeDestination(
-            onExitRequest = onExitRequest,
-            onEmployeeListRequest = onEmployeeListRequest
-        )
-
-    }
 
 }
 

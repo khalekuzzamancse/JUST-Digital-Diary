@@ -1,17 +1,17 @@
 package com.just.cse.digital_diary.features.faculty.destination
 
 import androidx.compose.runtime.Composable
-import com.just.cse.digital_diary.features.faculty.faculty.destination.teacher_list.TeacherListScreen
+import com.just.cse.digital_diary.features.faculty.faculty.destination.teacher_list.TeacherList
 import com.just.cse.digitaldiary.twozerotwothree.core.di.faculty.FacultyComponentProvider
 
 @Composable
-fun TeacherListScreen(
+fun TeacherListDestination(
     deptId: String,
     onExitRequest:()->Unit={},
 ) {
-    TeacherListScreen(
+    TeacherList(
         deptId = deptId,
-        repository =FacultyComponentProvider.getTeacherListRepository(),
+        repository = FacultyComponentProvider.getTeacherListRepository(),
         onExitRequest=onExitRequest
     )
 }

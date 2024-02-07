@@ -8,7 +8,7 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.teac
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.teachers.destination.viewmodel.TeacherListViewModel
 
 @Composable
-fun TeacherListScreen(
+ fun TeacherList(
     deptId: String,
     repository: TeacherListRepository,
     onExitRequest:()->Unit={},

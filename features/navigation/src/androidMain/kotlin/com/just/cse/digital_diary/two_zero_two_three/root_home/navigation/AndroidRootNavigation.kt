@@ -55,14 +55,7 @@ fun AndroidRootNavigation(
                     onNoteCreationRequest = {
                         navigateTo(TopMostDestinations.NOTE_CREATION)
                     },
-                    onDepartmentInfoRequest = {
-                        //navigate by pushing back stack so that on back press previous destination will be back
-                        navigator.navigatePushing(DepartmentInfoModuleDestinations.DEPARTMENT_INFO)
-                    },
-                    onAdminOfficeSubOfficeRequest = {
-                        //navigate by pushing back stack so that on back press previous destination will be back
-                        navigator.navigatePushing(AdminOfficeSubOfficeDestinations.SUB_OFFICE_EMPLOYEES)
-                    }
+
                 )
             }
         )

@@ -17,6 +17,7 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.teac
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.list.AdaptiveList
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.progressbar.ProgressBarNSnackBarDecorator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
+import kotlinx.coroutines.delay
 
 @Composable
 fun TeacherListDestination(
@@ -26,8 +27,11 @@ fun TeacherListDestination(
 ) {
     LaunchedEffect(Unit) {
         viewModel.loadTeacherList()
+        delay(1000)
+        viewModel.loadTeacherList()
     }
-    val teacherList=viewModel.uiState.collectAsState().value.teacherListState.teachers
+    val teacherList=viewModel.uiState.collectAsState().value
+    println("TeacherListState:${teacherList.teacherListState.teachers}")
 
     ProgressBarNSnackBarDecorator(
         showProgressBar = viewModel.uiState.collectAsState().value.isLoading
@@ -43,14 +47,14 @@ fun TeacherListDestination(
                 )
             }
         ) {
-            if (teacherList.isNotEmpty()) {
+            println("TeacherListScreem:${teacherList.teacherListState.teachers}")
                 Surface(
                     shadowElevation = 8.dp,
                     modifier = Modifier.padding(it)
                 ) {
                     AdaptiveList(
                         modifier = modifier,
-                        items = teacherList
+                        items = teacherList.teacherListState.teachers
                     ) { employee ->
                         EmployeeCard(
                             modifier = Modifier.padding(8.dp),
@@ -68,7 +72,7 @@ fun TeacherListDestination(
                     }
 
                 }
-            }
+
         }
     }
 

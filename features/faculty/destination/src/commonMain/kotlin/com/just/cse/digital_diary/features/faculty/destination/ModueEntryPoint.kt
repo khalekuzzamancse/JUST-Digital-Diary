@@ -11,15 +11,15 @@ import com.just.cse.digitaldiary.twozerotwothree.core.di.faculty.FacultyComponen
  *
  */
 @Composable
-fun FacultyModuleEntryPoint(
-    event: FacultyDestinationEvent,
+fun FacultyListDestination(
+    onEmptyRequest:(String)->Unit,
     onExitRequest: () -> Unit={},
 ) {
 
     FacultiesScreen(
         facultyListRepository = FacultyComponentProvider.getFacultyRepository(),
         departmentListRepository = FacultyComponentProvider.getDepartListRepository(),
-        onEmployeeListRequest = event.onDepartmentInfoRequest
+        onEmployeeListRequest = onEmptyRequest
     )
 
 }
