@@ -17,16 +17,17 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
-                implementation(libs.kotlinx.coroutines.core)
                 implementation(compose.ui)
                 implementation(compose.material3)
                 implementation(compose.animation)
                 implementation(compose.animationGraphics)
                 implementation(compose.materialIconsExtended)
                 implementation(libs.windowSize)
-                implementation(libs.kotlinx.coroutines.core)
-                api(project(localModules.versions.domain.faculties.get()))
-                implementation(project(localModules.versions.common.ui.get()))
+                implementation(project(modules.versions.common.ui.get()))
+                api(project(localModules.versions.ui.teachers.get()))
+                api(project(localModules.versions.ui.faculties.get()))
+                api(project(localModules.versions.ui.departments.get()))
+
             }
         }
 //        val androidMain by getting{
@@ -44,7 +45,7 @@ kotlin {
 
 }
 android {
-    namespace =  "com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.faculties"
+    namespace = "com.just.cse.digital_diary.features.faculty.components"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

@@ -61,8 +61,8 @@
             <option value="$PROJECT_DIR$/features/auth/destination" />
             <option value="$PROJECT_DIR$/features/employee_list" />
             <option value="$PROJECT_DIR$/features/faculty" />
-            <option value="$PROJECT_DIR$/features/faculty/components" />
-            <option value="$PROJECT_DIR$/features/faculty/destination" />
+            <option value="$PROJECT_DIR$/features/faculty/functionalities" />
+            <option value="$PROJECT_DIR$/features/faculty/navgraph" />
             <option value="$PROJECT_DIR$/features/navigation" />
             <option value="$PROJECT_DIR$/features/others" />
             <option value="$PROJECT_DIR$/features/others/components" />

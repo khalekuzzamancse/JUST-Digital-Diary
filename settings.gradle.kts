@@ -67,7 +67,7 @@ val featureModules = listOf(
     ":features",
     ":features:auth",":features:auth:components",":features:auth:destination",
     ":features:navigation",
-    ":features:faculty",":features:faculty:destination",":features:faculty:components",
+    ":features:faculty",":features:faculty:navgraph",":features:faculty:functionalities",
     ":features:others",":features:others:components",":features:others:destination",
     ":features:sharing_document",
     ":features:employee_list",

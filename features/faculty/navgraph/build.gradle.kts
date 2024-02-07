@@ -17,34 +17,37 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
-                implementation(libs.kotlinx.coroutines.core)
                 implementation(compose.ui)
                 implementation(compose.material3)
                 implementation(compose.animation)
                 implementation(compose.animationGraphics)
                 implementation(compose.materialIconsExtended)
+                implementation(compose.preview)
                 implementation(libs.windowSize)
-                implementation(libs.kotlinx.coroutines.core)
-                api(project(localModules.versions.domain.faculties.get()))
                 implementation(project(localModules.versions.common.ui.get()))
+                implementation(project(localModules.versions.feature.faculty.components.get()))
+                implementation(project(localModules.versions.core.di.get()))
+
+
             }
         }
-//        val androidMain by getting{
-//            dependencies {
-//
-//            }
-//        }
-//        val desktopMain by getting{
-//            dependencies {
-//
-//            }
-//        }
+        val androidMain by getting{
+            dependencies {
+                implementation("androidx.navigation:navigation-compose:2.7.6")
+            }
+        }
+        val desktopMain by getting{
+            dependencies {
+                implementation(libs.voyager.navigator)
+                implementation(libs.voyager.transitions)
+            }
+        }
     }
 
 
 }
 android {
-    namespace =  "com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.faculties"
+    namespace = "com.just.cse.digital_diary.features.faculty.destination"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

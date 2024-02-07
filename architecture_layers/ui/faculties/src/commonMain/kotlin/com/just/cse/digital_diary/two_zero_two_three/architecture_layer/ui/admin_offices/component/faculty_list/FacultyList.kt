@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_offices.component.faculty_list.state.FacultyListState
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_offices.event.FacultyDestinationEvent
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_offices.event.FacultyListEvent
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo2
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemProps
@@ -33,7 +33,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation
 fun FacultyList(
     modifier: Modifier = Modifier,
     state: FacultyListState,
-    onEvent: (FacultyDestinationEvent) -> Unit,
+    onEvent: (FacultyListEvent) -> Unit,
 ) {
     val destinations = state.faculties.map { faculty ->
         NavigationItemInfo2(
@@ -47,50 +47,10 @@ fun FacultyList(
             modifier = modifier.fillMaxWidth(),
             destinations = destinations,
             onDestinationSelected = { index ->
-                onEvent(FacultyDestinationEvent.FacultyListEvent.FacultySelected(index))
+                onEvent(FacultyListEvent.FacultySelected(index))
             },
-            selectedDestinationIndex = state.selected
+            selectedDestinationIndex = state.selected?:-1
         )
-
-
-
-}
-
-@Composable
-private fun VerticalListNavigation(
-    modifier: Modifier = Modifier,
-    destinations: List<NavigationItemInfo2<String>>,
-    onDestinationSelected: (Int) -> Unit,
-    selectedDestinationIndex: Int,
-    colors: NavigationItemProps = NavigationItemProps(
-        focusedColor = MaterialTheme.colorScheme.errorContainer,
-        unFocusedColor = MaterialTheme.colorScheme.primaryContainer,
-    )
-) {
-    Column(
-        modifier = modifier
-            .width(IntrinsicSize.Max)
-            .padding(8.dp)
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        destinations.forEachIndexed { index, _ ->
-            NavigationItem(
-                modifier = Modifier.fillMaxWidth(),
-                navigationItem = destinations[index],
-                visibilityDelay = (index + 1) * 10L,
-                selected = selectedDestinationIndex == index,
-                onClick = {
-                    onDestinationSelected(index)
-                },
-                onFocusing = {
-
-                },
-                colors = colors
-            )
-        }
-
-    }
 
 }
 

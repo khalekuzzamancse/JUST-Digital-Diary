@@ -2,5 +2,5 @@ package com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admi
 
 data class FacultyListState(
     val faculties: List<Faculty> = emptyList(),
-    val selected:Int=-1
+    val selected:Int?=null
 )
