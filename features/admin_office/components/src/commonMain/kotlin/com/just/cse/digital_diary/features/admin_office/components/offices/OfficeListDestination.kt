@@ -17,6 +17,8 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_sub_offices.repoisitory.AdminSubOfficeListRepository
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.destination.destination.AdminOfficeList
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.event.AdminOfficesDestinationEvent
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
 import kotlinx.coroutines.launch
 
 @Composable
@@ -26,6 +28,7 @@ fun AdminOffices(
     subOfficeRepository: AdminSubOfficeListRepository,
     onExitRequest: () -> Unit,
 ) {
+
 
     val scope = rememberCoroutineScope()
     val viewModel = remember {
@@ -39,51 +42,85 @@ fun AdminOffices(
     }
     val officesState = viewModel.state.collectAsState().value.officeState
     val subOfficeState = viewModel.state.collectAsState().value.subOfficeState
-    Box(Modifier.fillMaxSize()) {
-        AdminOfficeList(
-            officeListState = officesState,
-            onEvent = { event ->
-                when (event) {
-                    is AdminOfficesDestinationEvent.AdminOfficesListEvent.AdminOfficesSelected -> {
-                        scope.launch {
-                            viewModel.onOfficeSelected(event.index)
-                        }
-                    }
-                    is AdminOfficesDestinationEvent.ExitRequest-> {
-                       onExitRequest()
-                    }
+    val officeEvent: (AdminOfficesDestinationEvent) -> Unit = { event ->
+        when (event) {
+            is AdminOfficesDestinationEvent.AdminOfficesListEvent.AdminOfficesSelected -> {
+                scope.launch {
+                    viewModel.onOfficeSelected(event.index)
                 }
-
             }
-        )
-        if (viewModel.state.collectAsState().value.showSubOfficeList) {
-            subOfficeState?.let {
-                Box(
-                    Modifier.matchParentSize()
-                        .background(MaterialTheme.colorScheme.primaryContainer)
-                ) {
-                    AdminSubOfficeList(
-                        state = subOfficeState,
-                        onEvent = {event ->
-                            when(event) {
-                                SubOfficeDestinationEvent.ExitRequest->{
-                                    viewModel.dismissSubOfficesDestination()
-                                }
-                                is SubOfficeDestinationEvent.SubOfficeListEvent.SubOfficeSelected->{
-                                    val subOfficeId=viewModel.getSubOfficeId(event.index)
-                                    if (subOfficeId!=null)
-                                        onEmployeeListRequest(subOfficeId)
-                                }
-                            }
 
-                        }
-                    )
-                }
-
+            is AdminOfficesDestinationEvent.ExitRequest -> {
+                onExitRequest()
             }
         }
 
     }
+    val subOfficeEvent: (SubOfficeDestinationEvent) -> Unit = { event ->
+        when (event) {
+            SubOfficeDestinationEvent.ExitRequest -> {
+                viewModel.dismissSubOfficesDestination()
+            }
+
+            is SubOfficeDestinationEvent.SubOfficeListEvent.SubOfficeSelected -> {
+                val subOfficeId = viewModel.getSubOfficeId(event.index)
+                if (subOfficeId != null)
+                    onEmployeeListRequest(subOfficeId)
+            }
+        }
+
+    }
+
+    WindowSizeDecorator(
+        showProgressBar = viewModel.state.collectAsState().value.isLoading,
+        onCompact = {
+            Box(Modifier.fillMaxSize()) {
+                AdminOfficeList(
+                    officeListState = officesState,
+                    onEvent = officeEvent
+                )
+                if (viewModel.state.collectAsState().value.showSubOfficeList) {
+                    subOfficeState?.let {
+                        Box(
+                            Modifier.matchParentSize()
+                                .background(MaterialTheme.colorScheme.primaryContainer)
+                        ) {
+                            AdminSubOfficeList(
+                                state = subOfficeState,
+                                onEvent = subOfficeEvent
+                            )
+                        }
+
+                    }
+                }
+
+            }
+        },
+        onNonCompact = {
+            TwoPaneLayout(
+                secondaryPaneAnimationState = false,
+                showTopOrRightPane = true,
+                leftPane = {
+                    AdminOfficeList(
+                        officeListState = officesState,
+                        onEvent = officeEvent
+                    )
+                },
+                topOrRightPane = {
+                    if (viewModel.state.collectAsState().value.showSubOfficeList) {
+                        subOfficeState?.let {
+                            AdminSubOfficeList(
+                                state = subOfficeState,
+                                onEvent = subOfficeEvent
+                            )
+
+
+                        }
+                    }
+                }
+            )
+        }
+    )
 
 
 }

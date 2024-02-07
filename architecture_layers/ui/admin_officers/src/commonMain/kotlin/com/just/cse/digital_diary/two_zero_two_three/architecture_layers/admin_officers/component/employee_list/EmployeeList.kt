@@ -27,28 +27,30 @@ internal fun ListOfAdminOfficer(
     state: AdminOfficerListState,
     onEvent:(AdminOfficersDestinationEvent)->Unit,
 ) {
-    Surface(
-        shadowElevation = 8.dp
-    ) {
-        AdaptiveList(
-            modifier = modifier,
-            items = state.adminOfficers
-        ) { employee ->
-            AdminOfficerCard(
-                modifier = Modifier.padding(8.dp),
-                adminOfficer = employee,
-                onCallRequest = {
-                    onEvent(AdminEmployeeListEvent.CallRequest(employee.phone))
-                },
-                onMessageRequest = {
-                    onEvent(AdminEmployeeListEvent.MessageRequest(employee.phone))
-                },
-                onEmailRequest = {
-                    onEvent(AdminEmployeeListEvent.EmailRequest(employee.email))
-                }
-            )
-        }
+    if (state.adminOfficers.isNotEmpty()){
+        Surface(
+            shadowElevation = 8.dp
+        ) {
+            AdaptiveList(
+                modifier = modifier,
+                items = state.adminOfficers
+            ) { employee ->
+                AdminOfficerCard(
+                    modifier = Modifier.padding(8.dp),
+                    adminOfficer = employee,
+                    onCallRequest = {
+                        onEvent(AdminEmployeeListEvent.CallRequest(employee.phone))
+                    },
+                    onMessageRequest = {
+                        onEvent(AdminEmployeeListEvent.MessageRequest(employee.phone))
+                    },
+                    onEmailRequest = {
+                        onEvent(AdminEmployeeListEvent.EmailRequest(employee.email))
+                    }
+                )
+            }
 
+        }
     }
 }
 

@@ -81,6 +81,7 @@ class AdminOfficeListViewModel(
     }
 
     private suspend fun loadSubOffices(officeId: String) {
+        startLoading()
         when (val result = subOfficeListRepository.getSubOffices(officeId)) {
             is AdminSubOfficeListResponseModel.Success->{
                 onSubOfficeListChanged(result.data.map {
@@ -93,6 +94,7 @@ class AdminOfficeListViewModel(
 
             }
         }
+        stopLoading()
 
     }
     private fun onSubOfficeListChanged(subOffices:List<SubOffice>){

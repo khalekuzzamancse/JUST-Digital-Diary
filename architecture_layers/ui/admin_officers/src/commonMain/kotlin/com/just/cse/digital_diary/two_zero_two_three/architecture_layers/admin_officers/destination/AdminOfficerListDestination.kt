@@ -9,17 +9,12 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.admin_o
 
 @Composable
 fun AdminOfficerListDestination(
-    subOfficeId: String,
     modifier: Modifier = Modifier,
     viewModel: AdminOfficerListViewModel
 ) {
     ListOfAdminOfficer(
         modifier = modifier,
         state = viewModel.uiState.collectAsState().value.adminOfficerListState,
-        onEvent = viewModel::onEvent,
+        onEvent = {}
     )
-    LaunchedEffect(Unit){
-        viewModel.setDepartmentId(subOfficeId)
-    }
-
 }

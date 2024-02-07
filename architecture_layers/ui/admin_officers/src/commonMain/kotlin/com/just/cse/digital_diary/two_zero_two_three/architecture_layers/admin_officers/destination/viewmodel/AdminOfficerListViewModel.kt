@@ -12,56 +12,46 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class AdminOfficerListViewModel (
-   private val repository: AdminOfficerListRepository
-){
-    private val _uiState= MutableStateFlow(AdminOfficerListDestinationState())
-    val uiState =_uiState.asStateFlow()
-    private val subOfficeId=MutableStateFlow<String?>(null)
-
-    fun onEvent(event:AdminOfficersDestinationEvent){
-
-    }
-    fun setDepartmentId(id:String){
-        subOfficeId.update { id }
-        updateTeacherList()
-
-    }
-    private fun updateTeacherList(){
-        CoroutineScope(Dispatchers.Default).launch {
-            startLoading()
-            subOfficeId.value?.let { subOfficeId->
-                val result =repository.getOfficers(subOfficeId)
-                if(result is AdminOfficersListResponseModel.Success){
-                    _uiState.update {uiState->
-                        val   adminOfficerListState=uiState.adminOfficerListState.copy(adminOfficers =result.data.map { model->
-                            AdminOfficer(
-                                name = model.name,
-                                email=model.email,
-                                additionalEmail = model.additionalEmail,
-                                phone = model.phone?:"",
-                                achievements = model.achievements,
-                                designations = model.designations,
-                                roomNo = model.roomNo
-                            )
-                        } )
-                        uiState.copy(
-                            adminOfficerListState =adminOfficerListState
+class AdminOfficerListViewModel(
+    private val repository: AdminOfficerListRepository,
+    private val subOfficeId: String,
+) {
+    private val _uiState = MutableStateFlow(AdminOfficerListDestinationState())
+    val uiState = _uiState.asStateFlow()
+    suspend fun updateTeacherList() {
+        startLoading()
+        val result = repository.getOfficers(subOfficeId)
+        if (result is AdminOfficersListResponseModel.Success) {
+            _uiState.update { uiState ->
+                val adminOfficerListState =
+                    uiState.adminOfficerListState.copy(adminOfficers = result.data.map { model ->
+                        AdminOfficer(
+                            name = model.name,
+                            email = model.email,
+                            additionalEmail = model.additionalEmail,
+                            phone = model.phone ?: "",
+                            achievements = model.achievements,
+                            designations = model.designations,
+                            roomNo = model.roomNo
                         )
-
-                    }
-                }
-
+                    })
+                uiState.copy(
+                    adminOfficerListState = adminOfficerListState
+                )
 
             }
-            stopLoading()
         }
 
+        stopLoading()
+
+
     }
-    private fun startLoading(){
+
+    private fun startLoading() {
         _uiState.update { it.copy(isLoading = true) }
     }
-    private fun stopLoading(){
+
+    private fun stopLoading() {
         _uiState.update { it.copy(isLoading = false) }
     }
 }
