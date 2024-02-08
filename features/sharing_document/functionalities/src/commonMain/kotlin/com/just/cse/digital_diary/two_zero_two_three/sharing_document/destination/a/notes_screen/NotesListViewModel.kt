@@ -1,0 +1,60 @@
+package com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.a.notes_screen
+
+import com.just.cse.digital_diary.two_zero_two_three.layers.domain.notes.repository.NotesRepository
+import com.just.cse.digital_diary.two_zero_two_three.layers.ui.notes.note_details.Note
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+class NotesListViewModel(
+    private val repository: NotesRepository
+) {
+    private val scope = CoroutineScope(Dispatchers.Default)
+
+    private val _showProgressBar = MutableStateFlow(false)
+    val showProgressBar = _showProgressBar.asStateFlow()
+    private val _snackBarMessage = MutableStateFlow<String?>(null)
+    val snackBarMessage = _snackBarMessage.asStateFlow()
+    private val _notes = MutableStateFlow(emptyList<Note>())
+    val notes = _notes.asStateFlow()
+    private val _openedNote = MutableStateFlow<Note?>(null)
+    val openedNote = _openedNote.asStateFlow()
+
+    suspend fun loadNotes() {
+        val notes = repository.getNotes()
+            .getOrDefault(emptyList())
+            .mapIndexed { index, value ->
+                Note(
+                    id = "$index",
+                    title = value.title,
+                    description = value.description,
+                    timeStamp = value.timeStamp
+                )
+            }
+        _notes.update { notes }
+
+
+    }
+
+    fun onNoteDetailsRequested(noteId: String) {
+        scope.launch {
+            val alreadyNoteOpened = _openedNote.value != null
+            if (alreadyNoteOpened) {
+                onCloseDetailsRequested()
+                delay(100)//delay to clear the old opened note in non expanded mode
+
+            }
+
+
+        }
+    }
+
+    fun onCloseDetailsRequested() {
+        _openedNote.update { null }
+    }
+
+}

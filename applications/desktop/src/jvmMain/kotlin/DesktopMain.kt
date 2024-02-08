@@ -8,7 +8,7 @@ import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.NavigationRoot
-import com.just.cse.digital_diary.two_zero_two_three.root_home.RootModule
+
 
 
 fun main() {

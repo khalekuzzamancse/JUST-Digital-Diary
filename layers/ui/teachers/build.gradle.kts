@@ -24,8 +24,8 @@ kotlin {
                 implementation(compose.materialIconsExtended)
                 implementation(libs.windowSize)
                 implementation(libs.kotlinx.coroutines.core)
-                api(project(modules.versions.domain.teachers.get()))
-                implementation(project(modules.versions.common.ui.get()))
+                api(project(localModules.versions.domain.teachers.get()))
+                implementation(project(localModules.versions.common.ui.get()))
             }
         }
 //        val androidMain by getting{

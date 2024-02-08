@@ -25,7 +25,7 @@ kotlin {
                 implementation(compose.materialIconsExtended)
 
                 implementation(libs.windowSize)
-                implementation(project(modules.versions.common.ui.get()))
+                implementation(project(localModules.versions.common.ui.get()))
                 implementation(project(localModules.versions.feature.others.components.get()))
                 implementation(project(localModules.versions.core.di.get()))
 

@@ -13,47 +13,44 @@ feature-faculty-components=":features:faculty:functionalities"
 #feature Admin Office
 feature-adminOffice-destination=":features:admin_office:navgraph"
 feature-adminOffice-components=":features:admin_office:functionalities"
+#feature Notes
+feature-notes-functionalities=":features:sharing_document:functionalities"
+feature-notes-navgraph=":features:sharing_document:navgraph"
 
 #data layers
 data-otherInfo=":layers:data:other_info"
 data-departments=":layers:data:departments"
 data-faculties=":layers:data:faculties"
 data-teachers=":layers:data:teachers"
-####
+data-login=":layers:data:login"
 data-admin-offices=":layers:data:admin_offices"
 data-admin-subOffices=":layers:data:admin_sub_offices"
 data-admin-officers=":layers:data:admin_officers"
+data-register=":layers:data:register"
+data-notes=":layers:data:notes"
+
 #UI layers
+#UI
 common-ui=":layers:ui:common_ui"
 ui-faculties=":layers:ui:faculties"
 ui-teachers=":layers:ui:teachers"
 ui-departments=":layers:ui:departments"
-###
+ui-otherInfo=":layers:ui:other_info"
 ui-admin-offices=":layers:ui:admin_offices"
 ui-admin-subOffices=":layers:ui:admin_sub_offices"
 ui-admin-officers=":layers:ui:admin_officers"
+ui-login=":layers:ui:login"
+ui-register=":layers:ui:register"
+ui-notes=":layers:ui:notes"
 #Domain  layers
 domain-departments=":layers:domain:departments"
 domain-teachers=":layers:domain:teachers"
 domain-faculties=":layers:domain:faculties"
-###
+domain-otherInfo=":layers:domain:other_info"
 domain-admin-offices=":layers:domain:admin_offices"
 domain-admin-subOffices=":layers:domain:admin_sub_offices"
 domain-admin-officers=":layers:domain:admin_officers"
-
-
 domain-login=":layers:domain:login"
-data-login=":layers:data:login"
-ui-login=":layers:ui:login"
 domain-register=":layers:domain:register"
-data-register=":layers:data:register"
-ui-register=":layers:ui:register"
-
-
-domain-departmentInfo=":layers:domain:department_info"
-data-departmentInfo=":layers:data:department_info"
-
-domain-otherInfo=":layers:domain:other_info"
-
-ui-otherInfo=":layers:ui:other_info"
+domain-notes=":layers:domain:notes"
 

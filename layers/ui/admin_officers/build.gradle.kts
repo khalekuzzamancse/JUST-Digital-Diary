@@ -23,9 +23,9 @@ kotlin {
                 implementation(compose.animation)
                 implementation(compose.animationGraphics)
                 implementation(compose.materialIconsExtended)
-                implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
+                implementation(libs.windowSize)
                 api(project(localModules.versions.domain.admin.officers.get()))
-                implementation(project(modules.versions.common.ui.get()))
+                implementation(project(localModules.versions.common.ui.get()))
             }
         }
 //        val androidMain by getting{

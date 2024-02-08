@@ -10,21 +10,27 @@ import cafe.adriel.voyager.transitions.SlideTransition
 import com.just.cse.digital_diary.two_zero_two_three.auth.destination.nav_graph.AuthenticationFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.RootModuleDrawer
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.ModalDrawerHandler
+import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.a.create_note.CreateNoteDestination
+import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.a.details.NoteDetails
+import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.a.notes_screen.NotesListDestination
 import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
 import kotlinx.coroutines.launch
 
 @Composable
 fun NavigationRoot() {
-//    val signedIn = AuthComponentProvider.observeSignIn()
-    val signOut: () -> Unit = {
-        AuthComponentProvider.signInOut()
-    }
-//    if (!signedIn.collectAsState(true).value) {
-//        AuthOption()
-//    } else {
-//        SignedInUserContent(signOut)
+    NotesListDestination()
+
+
+////    val signedIn = AuthComponentProvider.observeSignIn()
+//    val signOut: () -> Unit = {
+//        AuthComponentProvider.signInOut()
 //    }
-    SignedInUserContent(signOut)
+////    if (!signedIn.collectAsState(true).value) {
+////        AuthOption()
+////    } else {
+////        SignedInUserContent(signOut)
+////    }
+//    SignedInUserContent(signOut)
 }
 
 @Composable

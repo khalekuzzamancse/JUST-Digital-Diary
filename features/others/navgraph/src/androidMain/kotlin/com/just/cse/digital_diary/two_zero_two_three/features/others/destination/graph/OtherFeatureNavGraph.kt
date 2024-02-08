@@ -1,6 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.features.others.destination.graph
 
 import androidx.compose.runtime.collectAsState
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -25,28 +26,44 @@ object OtherFeatureNavGraph {
     private const val ABOUT_US_SCREEN = "AboutUs"
     private const val EVENT_GALLERY_SCREEN = "EventGallery"
     private const val MESSAGE_FROM_VC_SCREEN = "MessageFromVC"
-    private val enableNavigation = MutableStateFlow(true)
-    fun toggleNavigateAbility(enable: Boolean) {
-        enableNavigation.update { enable }
+    private val showNavigationIcon = MutableStateFlow(true)
+    fun enableBackNavigation() {
+        showNavigationIcon.update { true }
+    }
+    fun disableBackNavigation(){
+        showNavigationIcon.update { false }
     }
 
     fun navigateToHome(navController: NavHostController) {
-        navController.navigate(HOME_SCREEN)
+        navigateAsTopMostDestination(HOME_SCREEN,navController)
     }
 
     fun navigateToAboutUs(navController: NavHostController) {
-        navController.navigate(ABOUT_US_SCREEN)
+        navigateAsTopMostDestination(ABOUT_US_SCREEN,navController)
     }
 
     fun navigateToEventGallery(navController: NavHostController) {
-        navController.navigate(EVENT_GALLERY_SCREEN)
+        navigateAsTopMostDestination(EVENT_GALLERY_SCREEN,navController)
     }
 
     fun navigateToMessageFromVC(navController: NavHostController) {
-        navController.navigate(MESSAGE_FROM_VC_SCREEN)
+        navigateAsTopMostDestination(MESSAGE_FROM_VC_SCREEN,navController)
     }
 
-    fun graph(navGraphBuilder: NavGraphBuilder,onExitRequest:()->Unit={}) {
+    private fun navigateAsTopMostDestination(
+        destination: String,
+        navController: NavHostController
+    ) {
+        navController.navigate(destination) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
+    fun graph(navGraphBuilder: NavGraphBuilder, onExitRequest: () -> Unit = {}) {
         with(navGraphBuilder) {
             navigation(
                 route = ROUTE,
@@ -54,7 +71,7 @@ object OtherFeatureNavGraph {
             ) {
                 composable(route = HOME_SCREEN) {
                     TopBarDecorator(
-                        enableNavigation = enableNavigation.collectAsState().value,
+                        enableNavigation = showNavigationIcon.collectAsState().value,
                         onExitRequest = onExitRequest,
                         title = "Home"
                     ) {
@@ -65,7 +82,7 @@ object OtherFeatureNavGraph {
                 }
                 composable(route = ABOUT_US_SCREEN) {
                     TopBarDecorator(
-                        enableNavigation = enableNavigation.collectAsState().value,
+                        enableNavigation = showNavigationIcon.collectAsState().value,
                         onExitRequest = onExitRequest,
                         title = "About Us"
                     ) {
@@ -75,7 +92,7 @@ object OtherFeatureNavGraph {
                 }
                 composable(route = EVENT_GALLERY_SCREEN) {
                     TopBarDecorator(
-                        enableNavigation = enableNavigation.collectAsState().value,
+                        enableNavigation = showNavigationIcon.collectAsState().value,
                         onExitRequest = onExitRequest,
                         title = "Event Gallery"
                     ) {
@@ -85,7 +102,7 @@ object OtherFeatureNavGraph {
                 }
                 composable(route = MESSAGE_FROM_VC_SCREEN) {
                     TopBarDecorator(
-                        enableNavigation = enableNavigation.collectAsState().value,
+                        enableNavigation = showNavigationIcon.collectAsState().value,
                         onExitRequest = onExitRequest,
                         title = "Message From VC"
                     ) {

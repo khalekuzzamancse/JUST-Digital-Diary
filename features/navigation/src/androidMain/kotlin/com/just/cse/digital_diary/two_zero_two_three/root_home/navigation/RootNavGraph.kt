@@ -19,7 +19,7 @@ fun RootNavGraph(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = RootNavGraphRoutes.OTHER_FEATURE
+        startDestination = GraphRoutes.OTHER_FEATURE
     ) {
         FacultyFeatureNavGraph.graph(this, navController)
         AdminOfficeFeatureNavGraph.graph(this, navController)

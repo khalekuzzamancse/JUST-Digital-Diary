@@ -23,7 +23,7 @@ kotlin {
                 implementation(compose.animationGraphics)
                 implementation(compose.materialIconsExtended)
                 implementation(libs.windowSize)
-                implementation(project(modules.versions.common.ui.get()))
+                implementation(project(localModules.versions.common.ui.get()))
                 api(project(localModules.versions.ui.teachers.get()))
                 api(project(localModules.versions.ui.faculties.get()))
                 api(project(localModules.versions.ui.departments.get()))

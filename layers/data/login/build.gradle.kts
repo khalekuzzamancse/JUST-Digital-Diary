@@ -21,7 +21,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project(":core:network"))
                 implementation(libs.ktor.serialization.kotlinx.json)
-                implementation(project(modules.versions.domain.login.get()))
+                implementation(project(localModules.versions.domain.login.get()))
 
             }
         }

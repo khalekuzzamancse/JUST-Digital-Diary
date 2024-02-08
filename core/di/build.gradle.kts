@@ -29,6 +29,9 @@ kotlin {
                 api(project(localModules.versions.data.admin.offices.get()))
                 api(project(localModules.versions.data.admin.subOffices.get()))
                 api(project(localModules.versions.data.admin.officers.get()))
+                //Feature notes
+                api(project(localModules.versions.data.notes.get()))
+
             }
         }
         val androidMain by getting{

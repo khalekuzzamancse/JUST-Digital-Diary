@@ -23,10 +23,10 @@ kotlin {
                 implementation(compose.animation)
                 implementation(compose.animationGraphics)
                 implementation(compose.materialIconsExtended)
-                implementation(project(modules.versions.common.ui.get()))
-                implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
-                api(project(modules.versions.domain.otherInfo.get()))
-                implementation(project(modules.versions.ui.otherInfo.get()))
+                implementation(project(localModules.versions.common.ui.get()))
+                implementation(libs.windowSize)
+                api(project(localModules.versions.domain.otherInfo.get()))
+                implementation(project(localModules.versions.ui.otherInfo.get()))
 
 
 

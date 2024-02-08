@@ -18,14 +18,14 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
-                implementation(compose.ui)
-                implementation(compose.material3)
-                implementation(compose.animation)
-                implementation(compose.animationGraphics)
-                implementation(compose.materialIconsExtended)
-                implementation(compose.preview)
-                implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
-                //network IO
+                api(compose.ui)
+                api(compose.material3)
+                api(compose.animation)
+                api(compose.animationGraphics)
+                api(compose.materialIconsExtended)
+                api(libs.windowSize)
+                //
+                //network IO for image loading
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.okhttp)
                 implementation(libs.ktor.client.content.negotiation)
@@ -33,8 +33,6 @@ kotlin {
                 implementation(libs.coil3)
                 implementation(libs.coil3.core)
                 implementation(libs.ktor.serialization.kotlinx.json)
-
-
             }
         }
         val androidMain by getting{

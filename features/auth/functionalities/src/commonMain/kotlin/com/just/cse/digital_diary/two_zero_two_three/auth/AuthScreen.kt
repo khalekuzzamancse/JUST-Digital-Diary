@@ -18,8 +18,8 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.
 import com.just.cse.digital_diary.two_zero_two_three.domain.register.repository.RegisterRepository
 import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.repoisitory.LoginRepository
 import com.just.cse.digital_diary.two_zero_two_three.auth.functionalities.login.destination.LoginDestination
-import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.event.LoginEvent
 import com.just.cse.digital_diary.two_zero_two_three.auth.functionalities.login.viewmodel.LoginDestinationViewModel
+import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.event.LoginEvent
 import kotlinx.coroutines.launch
 
 

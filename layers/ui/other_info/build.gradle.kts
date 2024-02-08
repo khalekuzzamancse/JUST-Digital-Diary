@@ -24,10 +24,10 @@ kotlin {
                 implementation(compose.animation)
                 implementation(compose.animationGraphics)
                 implementation(compose.materialIconsExtended)
-                implementation("dev.chrisbanes.material3:material3-window-size-class-multiplatform:0.3.1")
+                implementation(libs.windowSize)
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(project(modules.versions.domain.otherInfo.get()))
-                implementation(project(modules.versions.common.ui.get()))
+                implementation(project(localModules.versions.domain.otherInfo.get()))
+                implementation(project(localModules.versions.common.ui.get()))
             }
         }
 //        val androidMain by getting{

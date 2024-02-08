@@ -52,10 +52,10 @@ fun AndroidRootNavigation(
                              OtherFeatureNavGraph.navigateToEventGallery(navHostController)
                          }
                          TopMostDestination.FacultyList->{
-                             navHostController.navigate(RootNavGraphRoutes.FACULTY_FEATURE)
+                             navHostController.navigate(GraphRoutes.FACULTY_FEATURE)
                          }
                          TopMostDestination.AdminOffice->{
-                             navHostController.navigate(RootNavGraphRoutes.ADMIN_OFFICE_FEATURE)
+                             navHostController.navigate(GraphRoutes.ADMIN_OFFICE_FEATURE)
                          }
                          else -> {}
                      }
