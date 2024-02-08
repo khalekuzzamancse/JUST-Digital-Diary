@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import com.just.cse.digital_diary.two_zero_two_three.auth.destination.AuthModuleEntryPoint
+import com.just.cse.digital_diary.two_zero_two_three.auth.destination.nav_graph.AuthenticationFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.RootModuleDrawer
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.ModalDrawerHandler
 import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
@@ -16,16 +16,16 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun NavigationRoot() {
-    val signedIn = AuthComponentProvider.observeSignIn()
+//    val signedIn = AuthComponentProvider.observeSignIn()
     val signOut: () -> Unit = {
         AuthComponentProvider.signInOut()
     }
-    if (!signedIn.collectAsState(true).value) {
-        AuthOption()
-    } else {
-        SignedInUserContent(signOut)
-    }
-
+//    if (!signedIn.collectAsState(true).value) {
+//        AuthOption()
+//    } else {
+//        SignedInUserContent(signOut)
+//    }
+    SignedInUserContent(signOut)
 }
 
 @Composable
@@ -67,9 +67,10 @@ fun AuthOption(
             AuthComponentProvider.saveSignInInfo(username, password)
         }
     }
-    AuthModuleEntryPoint(
-        onLoginSuccess = onLoginSuccess
-    )
+    AuthenticationFeatureNavGraph()
+//    AuthScreen(
+//        onLoginSuccess = onLoginSuccess
+//    )
 
 
 }
@@ -79,12 +80,6 @@ fun AuthOption(
 
  */
 internal object DrawerHost : Screen {
-
     @Composable
-    override fun Content() {
-
-
-    }
-
-
+    override fun Content() {}
 }

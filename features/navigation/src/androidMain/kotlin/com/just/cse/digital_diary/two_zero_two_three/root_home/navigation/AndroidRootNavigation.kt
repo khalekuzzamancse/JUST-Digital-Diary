@@ -9,7 +9,6 @@ import androidx.navigation.compose.rememberNavController
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.NavigationEvent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.RootModuleDrawer
-import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.AuthDestinations
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.Destination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.ModalDrawerHandler
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.TopMostDestinations

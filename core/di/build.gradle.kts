@@ -18,9 +18,9 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project(localModules.versions.core.database.realm.get()))
-                implementation(project(localModules.versions.data.login.get()))
-                implementation(project(localModules.versions.data.register.get()))
-                implementation(project(localModules.versions.data.otherInfo.get()))
+                api(project(localModules.versions.data.login.get()))
+                api(project(localModules.versions.data.register.get()))
+                api(project(localModules.versions.data.otherInfo.get()))
                 //features: faculties
                 api(project(localModules.versions.data.faculties.get()))
                 api(project(localModules.versions.data.departments.get()))

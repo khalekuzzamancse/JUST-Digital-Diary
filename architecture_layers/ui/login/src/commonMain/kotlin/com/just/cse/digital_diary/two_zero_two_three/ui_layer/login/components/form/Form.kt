@@ -8,7 +8,7 @@ import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.f
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.form.state.LoginFormEvent
 
 @Composable
-internal fun LoginForm(
+fun LoginForm(
     fieldModifier: Modifier = Modifier,
     formModifier: Modifier = Modifier,
     data: FormData,

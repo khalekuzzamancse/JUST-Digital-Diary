@@ -2,8 +2,8 @@
 core-database-realm=":core:local_database:realm"
 core-di=":core:di"
 #Module related to Features:Auth
-feature-auth-destination=":features:auth:destination"
-feature-auth-components=":features:auth:components"
+feature-auth-destination=":features:auth:navgraph"
+feature-auth-components=":features:auth:functionalities"
 #Feature:Other features modules
 feature-others-destination=":features:others:destination"
 feature-others-components=":features:others:components"

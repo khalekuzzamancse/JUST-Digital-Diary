@@ -65,7 +65,7 @@ val uiLayerModules = dataLayerModules
     .map { it.replace(":data:", ":ui:") }
 val featureModules = listOf(
     ":features",
-    ":features:auth",":features:auth:components",":features:auth:destination",
+    ":features:auth",":features:auth:functionalities",":features:auth:navgraph",
     ":features:navigation",
     ":features:faculty",":features:faculty:navgraph",":features:faculty:functionalities",
     ":features:others",":features:others:components",":features:others:destination",
@@ -80,13 +80,13 @@ val coreModules = listOf(
     ":core:local_database",
     ":core:local_database:realm"
 )
+val applications= listOf(
+    ":applications",  ":applications:android_app", ":applications:desktop", ":applications:web",
+)
 
 rootProject.name = "JUST Digital Diary"
-include(":android_app")
+include(applications)
 include(":common")
-include(":desktop")
-include(":shared")
-include(":web")
 include(":architecture_layers")
 include(":architecture_layers:ui:common_ui")
 include(featureModules)
