@@ -8,9 +8,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.AboutUsDestination
-import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.EventGalleryDestination
-import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.MessageFromVCDestination
+import com.just.cse.digital_diary.two_zero_two_three.features.others.screens.AboutUsDestination
+import com.just.cse.digital_diary.two_zero_two_three.features.others.screens.EventGalleryDestination
+import com.just.cse.digital_diary.two_zero_two_three.features.others.screens.MessageFromVCDestination
 import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
 
 

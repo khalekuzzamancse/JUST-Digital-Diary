@@ -16,7 +16,7 @@ import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Search
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 
-val rootModuleTopMostDestinations = listOf(
+internal val rootModuleTopMostDestinations = listOf(
     NavigationItemInfo(
         label = "Home",
         unFocusedIcon = Icons.Outlined.Home,
@@ -70,7 +70,7 @@ val rootModuleTopMostDestinations = listOf(
     ),
 )
 
-object RootDestinations {
+internal object RootDestinations {
     const val HOME = 0
     const val FACULTY_LIST = 1
     const val ADMIN_OFFICE = 2
@@ -81,3 +81,4 @@ object RootDestinations {
     const val EventGallery = 7
     const val EXPLORE_JUST = 8
 }
+

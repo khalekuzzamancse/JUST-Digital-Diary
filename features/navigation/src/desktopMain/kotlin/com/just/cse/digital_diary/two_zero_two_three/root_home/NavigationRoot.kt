@@ -1,7 +1,6 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -42,7 +41,7 @@ fun SignedInUserContent(
             RootModuleDrawer(
                 modifier = Modifier,
                 drawerHandler = drawerHandler,
-                navigationEvent = NavigationEvent(),
+                topMostDestinationEvent = TopMostDestinationEvent(),
                 onLogOutRequest = signOut
             ) { destination ->
                 NavigationGraph.NavHost(

@@ -11,8 +11,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.ModalDrawerDecorator
-import com.just.cse.digital_diary.two_zero_two_three.root_home.NavigationEvent
+import com.just.cse.digital_diary.two_zero_two_three.root_home.TopMostDestinationEvent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.RootDestinations
+import com.just.cse.digital_diary.two_zero_two_three.root_home.TopMostDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.ModalDrawerHandler
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.TopMostDestinations
 import com.just.cse.digital_diary.two_zero_two_three.root_home.rootModuleTopMostDestinations
@@ -21,11 +22,11 @@ import com.just.cse.digital_diary.two_zero_two_three.root_home.rootModuleTopMost
 fun RootModuleDrawer(
     modifier: Modifier=Modifier,
     drawerHandler: ModalDrawerHandler,
-    navigationEvent: NavigationEvent,
+    onEvent:(TopMostDestination)->Unit,
     onLogOutRequest:()->Unit={},
     navHost: @Composable() (AnimatedContentScope.(Int) -> Unit)
 ) {
-    val navigateTo = navigationEvent.drawerDestinationNavigationRequest
+    //val navigateTo = topMostDestinationEvent.drawerDestinationNavigationRequest
 //    var userInfo by remember { mutableStateOf(SignedInUser(name = "", department = "")) }
 //    LaunchedEffect(Unit){
 //        userInfo=SignedInUserRepository.getUserInfo()
@@ -34,15 +35,15 @@ fun RootModuleDrawer(
     LaunchedEffect(Unit) {
         drawerHandler.selectedSectionIndex.collect { destination ->
             when (destination) {
-                RootDestinations.HOME -> navigateTo(TopMostDestinations.HOME)
-                RootDestinations.FACULTY_LIST -> navigateTo(TopMostDestinations.FACULTY_LIST)
-                RootDestinations.ADMIN_OFFICE -> navigateTo(TopMostDestinations.ADMIN_OFFICES)
-                RootDestinations.MESSAGE_FROM_VC -> navigateTo(TopMostDestinations.MESSAGE_FROM_VC)
-                RootDestinations.ABOUT_US -> navigateTo(TopMostDestinations.ABOUT_US)
-                RootDestinations.Search -> navigateTo(TopMostDestinations.SEARCH)
-                RootDestinations.NOTE_LIST -> navigateTo(TopMostDestinations.NOTE_LIST)
-                RootDestinations.EventGallery -> navigateTo(TopMostDestinations.EVENT_GALLERY)
-                RootDestinations.EXPLORE_JUST -> navigationEvent.onWebsiteViewRequest("https://www.just.edu.bd")
+                RootDestinations.HOME -> onEvent(TopMostDestination.Home)
+                RootDestinations.FACULTY_LIST -> onEvent(TopMostDestination.FacultyList)
+                RootDestinations.ADMIN_OFFICE -> onEvent(TopMostDestination.AdminOffice)
+                RootDestinations.MESSAGE_FROM_VC -> onEvent(TopMostDestination.MessageFromVC)
+                RootDestinations.ABOUT_US -> onEvent(TopMostDestination.AboutUs)
+                RootDestinations.Search ->onEvent(TopMostDestination.Search)
+                RootDestinations.NOTE_LIST -> onEvent(TopMostDestination.NoteList)
+                RootDestinations.EventGallery ->onEvent(TopMostDestination.EventGallery)
+                RootDestinations.EXPLORE_JUST -> onEvent(TopMostDestination.ExploreJust)
             }
         }
     }

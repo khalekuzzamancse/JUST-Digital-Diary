@@ -6,8 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
+import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.graph.OtherFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
-import com.just.cse.digital_diary.two_zero_two_three.root_home.NavigationEvent
+import com.just.cse.digital_diary.two_zero_two_three.root_home.TopMostDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.RootModuleDrawer
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.Destination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.ModalDrawerHandler
@@ -32,32 +33,47 @@ fun AndroidRootNavigation(
     val onLogOutRequest:() -> Unit ={
         notSignedIn=true
     }
-    if (notSignedIn)
-        AuthDestinations.Auth(
-            onLoginSuccess =onLoginSuccess, onExitRequest = {}
-        )
-    else {
+//    if (notSignedIn)
+//        AuthDestinations.Auth(
+//            onLoginSuccess =onLoginSuccess, onExitRequest = {}
+//        )
+//    else {
         RootModuleDrawer(
             onLogOutRequest = onLogOutRequest,
             drawerHandler = handler,
-            navigationEvent = NavigationEvent(
-                onWebsiteViewRequest = appEvent.onWebsiteViewRequest,
-                drawerDestinationNavigationRequest = navigateTo
-            ),
+            onEvent = {destination->
+                     when(destination){
+                         TopMostDestination.Home->{
+                             OtherFeatureNavGraph.navigateToHome(navHostController)
+                         }
+                         TopMostDestination.MessageFromVC->{
+                             OtherFeatureNavGraph.navigateToMessageFromVC(navHostController)
+                         }
+                         TopMostDestination.AboutUs->{
+                             OtherFeatureNavGraph.navigateToAboutUs(navHostController)
+                         }
+                         TopMostDestination.EventGallery->{
+                             OtherFeatureNavGraph.navigateToEventGallery(navHostController)
+                         }
+                         TopMostDestination.FacultyList->{
+                             navHostController.navigate(RootNavGraphRoutes.FACULTY_FEATURE)
+                         }
+                         TopMostDestination.AdminOffice->{
+                             navHostController.navigate(RootNavGraphRoutes.ADMIN_OFFICE_FEATURE)
+                         }
+                         else -> {}
+                     }
+            },
             navHost = {
-                DrawerNavHost(
+                RootNavGraph(
                     appEvent = appEvent,
                     openDrawerRequest = handler::openDrawer,
                     navController = navHostController,
-                    onNoteCreationRequest = {
-                        navigateTo(TopMostDestinations.NOTE_CREATION)
-                    },
-
                 )
             }
         )
 
-    }
+   // }
 
 
 }
