@@ -11,12 +11,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.ModalDrawerDecorator
-import com.just.cse.digital_diary.two_zero_two_three.root_home.TopMostDestinationEvent
-import com.just.cse.digital_diary.two_zero_two_three.root_home.RootDestinations
-import com.just.cse.digital_diary.two_zero_two_three.root_home.TopMostDestination
-import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.ModalDrawerHandler
-import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.TopMostDestinations
-import com.just.cse.digital_diary.two_zero_two_three.root_home.rootModuleTopMostDestinations
 
 @Composable
 fun RootModuleDrawer(

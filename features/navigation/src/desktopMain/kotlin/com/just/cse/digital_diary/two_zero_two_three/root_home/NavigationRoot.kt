@@ -9,7 +9,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.just.cse.digital_diary.two_zero_two_three.auth.destination.nav_graph.AuthenticationFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.RootModuleDrawer
-import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.ModalDrawerHandler
+import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.ModalDrawerHandler
 import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
 import kotlinx.coroutines.launch
 
@@ -41,7 +41,9 @@ fun SignedInUserContent(
             RootModuleDrawer(
                 modifier = Modifier,
                 drawerHandler = drawerHandler,
-                topMostDestinationEvent = TopMostDestinationEvent(),
+                onEvent = {
+
+                },
                 onLogOutRequest = signOut
             ) { destination ->
                 NavigationGraph.NavHost(

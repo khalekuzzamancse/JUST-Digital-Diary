@@ -1,8 +1,8 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="functionalities-desktop">
-    <output-path>$PROJECT_DIR$/features/faculty/functionalities/build/libs</output-path>
+    <output-path>$PROJECT_DIR$/features/others/functionalities/build/libs</output-path>
     <root id="archive" name="functionalities-desktop.jar">
-      <element id="module-output" name="JUST_Digital_Diary.features.faculty.functionalities.desktopMain" />
+      <element id="module-output" name="JUST_Digital_Diary.features.others.functionalities.desktopMain" />
     </root>
   </artifact>
 </component>

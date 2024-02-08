@@ -2,6 +2,8 @@ package com.just.cse.digital_diary.two_zero_two_three.common_ui
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,7 +20,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.bottom
 @Composable
 fun TopBarDecorator(
     topBarTitle: String="",
-    topNavigationIcon: ImageVector? = null,
+    topNavigationIcon: ImageVector? = Icons.Default.Menu,
     onNavigationIconClick: () -> Unit={},
     content: @Composable (PaddingValues) -> Unit,
 ) {

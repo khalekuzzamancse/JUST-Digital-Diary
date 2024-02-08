@@ -23,12 +23,8 @@ fun RootNavGraph(
     ) {
         FacultyFeatureNavGraph.graph(this, navController)
         AdminOfficeFeatureNavGraph.graph(this, navController)
-        OtherFeatureNavGraph.graph(this)
+        OtherFeatureNavGraph.graph(navGraphBuilder = this, onExitRequest = openDrawerRequest)
+
     }
 
-}
-object RootNavGraphRoutes{
-    const val FACULTY_FEATURE=FacultyFeatureNavGraph.ROUTE
-    const val ADMIN_OFFICE_FEATURE=AdminOfficeFeatureNavGraph.ROUTE
-    const val OTHER_FEATURE=OtherFeatureNavGraph.ROUTE
 }

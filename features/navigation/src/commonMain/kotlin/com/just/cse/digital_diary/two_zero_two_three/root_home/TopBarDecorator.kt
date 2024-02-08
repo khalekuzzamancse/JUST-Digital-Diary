@@ -11,8 +11,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
 @Composable
-fun TopBarDecorator(
-    title: String,
+internal fun TopBarDecorator(
+    title: String?=null,
     navigationIcon:ImageVector=Icons.Default.Menu,
     onExitRequest:()->Unit,
     content:@Composable ()->Unit,
@@ -20,7 +20,7 @@ fun TopBarDecorator(
     Scaffold(
         topBar = {
             SimpleTopBar(
-                title=title,
+                title=title?:"",
                 navigationIcon=navigationIcon,
                 onNavigationIconClick=onExitRequest
             )

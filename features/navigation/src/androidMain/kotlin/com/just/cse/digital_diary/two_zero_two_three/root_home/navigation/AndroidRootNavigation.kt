@@ -8,11 +8,9 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
 import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.graph.OtherFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
-import com.just.cse.digital_diary.two_zero_two_three.root_home.TopMostDestination
+import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.TopMostDestination
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.RootModuleDrawer
-import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.Destination
-import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.ModalDrawerHandler
-import com.just.cse.digital_diary.two_zero_two_three.root_home.navgraph.screens.TopMostDestinations
+import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.ModalDrawerHandler
 
 private val drawerHandler = ModalDrawerHandler()
 
@@ -22,10 +20,8 @@ fun AndroidRootNavigation(
     appEvent: AppEvent,
 ) {
     val navHostController = rememberNavController()
-    val navigator = remember {
-        Navigator(navHostController)
-    }
-    val navigateTo: (Destination) -> Unit = navigator::navigateWithReplacementLastDestination
+
+
     var notSignedIn by remember { mutableStateOf(false) }
     val onLoginSuccess:(String,String)->Unit={_, _ ->
         notSignedIn = false
@@ -68,7 +64,7 @@ fun AndroidRootNavigation(
                 RootNavGraph(
                     appEvent = appEvent,
                     openDrawerRequest = handler::openDrawer,
-                    navController = navHostController,
+                    navController = navHostController
                 )
             }
         )
