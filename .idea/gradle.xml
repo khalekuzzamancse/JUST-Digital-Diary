@@ -10,7 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/applications" />
-            <option value="$PROJECT_DIR$/applications/android_app" />
+            <option value="$PROJECT_DIR$/applications/android" />
             <option value="$PROJECT_DIR$/applications/desktop" />
             <option value="$PROJECT_DIR$/applications/web" />
             <option value="$PROJECT_DIR$/common" />
@@ -35,6 +35,8 @@
             <option value="$PROJECT_DIR$/features/others/functionalities" />
             <option value="$PROJECT_DIR$/features/others/navgraph" />
             <option value="$PROJECT_DIR$/features/sharing_document" />
+            <option value="$PROJECT_DIR$/features/sharing_document/functionalities" />
+            <option value="$PROJECT_DIR$/features/sharing_document/navgraph" />
             <option value="$PROJECT_DIR$/layers" />
             <option value="$PROJECT_DIR$/layers/data" />
             <option value="$PROJECT_DIR$/layers/data/admin_officers" />
@@ -44,6 +46,7 @@
             <option value="$PROJECT_DIR$/layers/data/departments" />
             <option value="$PROJECT_DIR$/layers/data/faculties" />
             <option value="$PROJECT_DIR$/layers/data/login" />
+            <option value="$PROJECT_DIR$/layers/data/notes" />
             <option value="$PROJECT_DIR$/layers/data/other_info" />
             <option value="$PROJECT_DIR$/layers/data/register" />
             <option value="$PROJECT_DIR$/layers/data/teachers" />
@@ -55,6 +58,7 @@
             <option value="$PROJECT_DIR$/layers/domain/departments" />
             <option value="$PROJECT_DIR$/layers/domain/faculties" />
             <option value="$PROJECT_DIR$/layers/domain/login" />
+            <option value="$PROJECT_DIR$/layers/domain/notes" />
             <option value="$PROJECT_DIR$/layers/domain/other_info" />
             <option value="$PROJECT_DIR$/layers/domain/register" />
             <option value="$PROJECT_DIR$/layers/domain/teachers" />
@@ -67,6 +71,7 @@
             <option value="$PROJECT_DIR$/layers/ui/departments" />
             <option value="$PROJECT_DIR$/layers/ui/faculties" />
             <option value="$PROJECT_DIR$/layers/ui/login" />
+            <option value="$PROJECT_DIR$/layers/ui/notes" />
             <option value="$PROJECT_DIR$/layers/ui/other_info" />
             <option value="$PROJECT_DIR$/layers/ui/register" />
             <option value="$PROJECT_DIR$/layers/ui/teachers" />

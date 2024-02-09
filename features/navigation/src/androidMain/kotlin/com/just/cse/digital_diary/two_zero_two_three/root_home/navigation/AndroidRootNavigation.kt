@@ -57,6 +57,9 @@ fun AndroidRootNavigation(
                          TopMostDestination.AdminOffice->{
                              navHostController.navigate(GraphRoutes.ADMIN_OFFICE_FEATURE)
                          }
+                         TopMostDestination.NoteList->{
+                             navHostController.navigate(GraphRoutes.NOTES_FEATURE)
+                         }
                          else -> {}
                      }
             },

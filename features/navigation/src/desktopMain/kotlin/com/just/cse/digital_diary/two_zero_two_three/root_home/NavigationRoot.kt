@@ -8,17 +8,15 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
 import com.just.cse.digital_diary.two_zero_two_three.auth.destination.nav_graph.AuthenticationFeatureNavGraph
+import com.just.cse.digital_diary.two_zero_two_three.notes.navgraph.graph.NotesFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.RootModuleDrawer
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.ModalDrawerHandler
-import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.a.create_note.CreateNoteDestination
-import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.a.details.NoteDetails
-import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.a.notes_screen.NotesListDestination
 import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
 import kotlinx.coroutines.launch
 
 @Composable
 fun NavigationRoot() {
-    NotesListDestination()
+    NotesFeatureNavGraph()
 
 
 ////    val signedIn = AuthComponentProvider.observeSignIn()
@@ -34,9 +32,7 @@ fun NavigationRoot() {
 }
 
 @Composable
-fun SignedInUserContent(
-    signOut: () -> Unit,
-) {
+fun SignedInUserContent(signOut: () -> Unit) {
 
     val drawerHandler = remember { ModalDrawerHandler() }
     Navigator(DrawerHost) { navigator ->

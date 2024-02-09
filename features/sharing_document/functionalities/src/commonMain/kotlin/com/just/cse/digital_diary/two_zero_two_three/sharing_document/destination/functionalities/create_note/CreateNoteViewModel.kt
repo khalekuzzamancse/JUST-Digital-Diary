@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.a.create_note
+package com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.functionalities.create_note
 
 import com.just.cse.digital_diary.two_zero_two_three.layers.ui.notes.create_note.CreateNoteData
 import kotlinx.coroutines.CoroutineScope

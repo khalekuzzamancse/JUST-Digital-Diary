@@ -19,6 +19,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(localModules.versions.common.ui.get()))
+                implementation(project(localModules.versions.feature.notes.functionalities.get()))
             }
         }
         val androidMain by getting{

@@ -22,7 +22,6 @@ import com.just.cse.digital_diary.two_zero_two_three.layers.ui.notes.note_detail
     onDetailsOpen: (String) -> Unit,
 ) {
 
-
             AdaptiveList(
                 modifier = modifier,
                 items = notes

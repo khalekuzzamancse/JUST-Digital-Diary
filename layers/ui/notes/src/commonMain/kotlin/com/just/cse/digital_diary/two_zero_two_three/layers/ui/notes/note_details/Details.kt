@@ -39,10 +39,11 @@ import kotlinx.coroutines.launch
  */
 @Composable
 fun DetailsOfNote(
+    modifier: Modifier=Modifier,
     note: Note,
 ) {
     NoteDetails(
-        modifier = Modifier,
+        modifier = modifier,
         title = note.title,
         description = note.description,
         timeStamp = note.timeStamp,

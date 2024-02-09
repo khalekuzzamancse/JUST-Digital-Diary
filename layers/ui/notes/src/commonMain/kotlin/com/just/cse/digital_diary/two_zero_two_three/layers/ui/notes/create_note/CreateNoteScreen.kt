@@ -35,6 +35,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTop
  */
 @Composable
 fun CreateNote(
+    modifier: Modifier=Modifier,
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
     data: CreateNoteData,
@@ -42,6 +43,7 @@ fun CreateNote(
     onExitRequest: () -> Unit,
 ) {
     WindowSizeDecorator(
+        modifier=Modifier,
         onCompact = {
             Scaffold(
                 floatingActionButtonPosition = FabPosition.Center,

@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.a.notes_screen
+package com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.functionalities.note_list
 
 import com.just.cse.digital_diary.two_zero_two_three.layers.domain.notes.repository.NotesRepository
 import com.just.cse.digital_diary.two_zero_two_three.layers.ui.notes.note_details.Note
@@ -39,14 +39,20 @@ class NotesListViewModel(
 
 
     }
+    fun getNotes(id: String):Note?{
+      return  _notes.value.find { it.id == id }
+    }
 
-    fun onNoteDetailsRequested(noteId: String) {
+    fun onNoteDetailsRequested(id: String) {
         scope.launch {
             val alreadyNoteOpened = _openedNote.value != null
             if (alreadyNoteOpened) {
                 onCloseDetailsRequested()
                 delay(100)//delay to clear the old opened note in non expanded mode
 
+            }
+            _openedNote.update {
+                _notes.value.find { it.id == id }
             }
 
 

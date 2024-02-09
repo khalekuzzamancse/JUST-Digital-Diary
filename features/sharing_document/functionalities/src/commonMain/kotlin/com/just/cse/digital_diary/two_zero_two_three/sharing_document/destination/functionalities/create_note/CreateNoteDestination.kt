@@ -1,8 +1,9 @@
-package com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.a.create_note
+package com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.functionalities.create_note
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.layers.ui.notes.create_note.CreateNote
 
 /**
@@ -12,7 +13,9 @@ import com.just.cse.digital_diary.two_zero_two_three.layers.ui.notes.create_note
  *    be called to exit the from note creation screen
  */
 @Composable
-fun CreateNoteDestination() {
+fun CreateNoteDestination(
+    modifier: Modifier=Modifier,
+) {
     val viewModel= remember { CreateNoteViewModel() }
     CreateNote(
         data = viewModel.data.collectAsState().value,
