@@ -16,6 +16,10 @@ feature-adminOffice-components=":features:admin_office:functionalities"
 #feature Notes
 feature-notes-functionalities=":features:sharing_document:functionalities"
 feature-notes-navgraph=":features:sharing_document:navgraph"
+#Feature Search
+feature-search-functionalities=":features:search:functionalities"
+feature-search-navgraph=":features:search:navgraph"
+
 
 #data layers
 data-otherInfo=":layers:data:other_info"
@@ -28,6 +32,7 @@ data-admin-subOffices=":layers:data:admin_sub_offices"
 data-admin-officers=":layers:data:admin_officers"
 data-register=":layers:data:register"
 data-notes=":layers:data:notes"
+data-employees=":layers:data:employees"
 
 #UI layers
 #UI
@@ -53,4 +58,4 @@ domain-admin-officers=":layers:domain:admin_officers"
 domain-login=":layers:domain:login"
 domain-register=":layers:domain:register"
 domain-notes=":layers:domain:notes"
-
+domain-employees=":layers:domain:employees"

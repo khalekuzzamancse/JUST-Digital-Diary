@@ -27,7 +27,7 @@ class SearchDecoratorState<T>(
 
     }
 
-    private val _showSearch = MutableStateFlow(false)
+    private val _showSearch = MutableStateFlow(true)
     fun onSearchChanged(status: Boolean) {
         _showSearch.value = status
         if (!status) {

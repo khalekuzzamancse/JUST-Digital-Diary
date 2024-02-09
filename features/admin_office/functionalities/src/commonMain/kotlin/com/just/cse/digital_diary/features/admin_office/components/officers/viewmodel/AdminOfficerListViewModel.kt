@@ -2,7 +2,7 @@ package com.just.cse.digital_diary.features.admin_office.components.officers.vie
 
 import com.just.cse.digital_diary.features.admin_office.components.officers.state.AdminOfficerListDestinationState
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.admin_officers.component.employee_list.state.AdminOfficer
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_officers.model.AdminOfficersListResponseModel
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_officers.entity.AdminOfficersListResponseModel
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_officers.repoisitory.AdminOfficerListRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

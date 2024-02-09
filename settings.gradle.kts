@@ -32,11 +32,12 @@ val dataLayerModules = listOf(
     ":layers:data:admin_sub_offices",
     ":layers:data:other_info",
     ":layers:data:notes",
+    ":layers:data:employees",
 
 )
 val domainLayerModules  = dataLayerModules
     .map { it.replace(":data:", ":domain:") }
-val domains= listOf(  ":layers:domain:notes")
+val domains= listOf(  ":layers:domain:notes",":layers:domain:employees")
 
 val uiLayerModules = dataLayerModules
     .map { it.replace(":data:", ":ui:") }
@@ -47,7 +48,7 @@ val featureModules = listOf(
     ":features:faculty",":features:faculty:navgraph",":features:faculty:functionalities",
     ":features:others",":features:others:functionalities",":features:others:navgraph",
     ":features:sharing_document",  ":features:sharing_document:functionalities",  ":features:sharing_document:navgraph",
-    ":features:employee_list",
+    ":features:search", ":features:search:functionalities", ":features:search:navgraph",
     ":features:admin_office",  ":features:admin_office:functionalities",  ":features:admin_office:navgraph",
 )
 val coreModules = listOf(

@@ -1,6 +1,6 @@
 package com.just.cse.digital_diary.two_zero_two_three.data_layer.admin_officers.dto
 
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_officers.model.AboutUsModel
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_officers.entity.AboutUsModel
 
 data class AboutUsDTO(
     val appName: String,

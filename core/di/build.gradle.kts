@@ -31,6 +31,8 @@ kotlin {
                 api(project(localModules.versions.data.admin.officers.get()))
                 //Feature notes
                 api(project(localModules.versions.data.notes.get()))
+                //Feature employees
+                api(project(localModules.versions.data.employees.get()))
 
             }
         }

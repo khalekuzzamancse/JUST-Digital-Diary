@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_officers.model.VCInfoResponseModel
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_officers.entity.VCInfoResponseModel
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_officers.repoisitory.OtherInfoRepository
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.components.message_from_vc.MessageFromVC
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.other_info.components.message_from_vc.VCInfoState

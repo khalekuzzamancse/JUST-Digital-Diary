@@ -62,6 +62,9 @@ fun AndroidRootNavigation(
                 TopMostDestination.AdminOffice -> {
                     navHostController.navigate(GraphRoutes.ADMIN_OFFICE_FEATURE)
                 }
+                TopMostDestination.Search -> {
+                    navHostController.navigate(GraphRoutes.SEARCH)
+                }
 
                 TopMostDestination.NoteList -> {
                     navHostController.navigate(GraphRoutes.NOTES_FEATURE)

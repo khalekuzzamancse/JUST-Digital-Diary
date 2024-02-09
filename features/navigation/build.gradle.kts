@@ -30,8 +30,8 @@ kotlin {
                 implementation(project(localModules.versions.feature.others.destination.get()))
                 implementation(project(localModules.versions.core.di.get()))
                 //for preview
-                implementation(project(localModules.versions.feature.notes.functionalities.get()))
                 implementation(project(localModules.versions.feature.notes.navgraph.get()))
+                implementation(project(localModules.versions.feature.search.navgraph.get()))
             }
         }
         val androidMain by getting{

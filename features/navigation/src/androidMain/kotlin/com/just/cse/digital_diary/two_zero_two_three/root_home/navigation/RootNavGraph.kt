@@ -13,6 +13,7 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.destination.navgraph.A
 import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.graph.OtherFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.notes.navgraph.graph.NotesFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
+import com.just.cse.digital_diary.two_zero_two_three.search.navgraph.graph.SearchFeatureNavGraph
 
 @Composable
 fun RootNavGraph(
@@ -43,6 +44,9 @@ fun RootNavGraph(
         }
         composable(GraphRoutes.NOTES_FEATURE) {
             NotesFeatureNavGraph.Graph()
+        }
+        composable(GraphRoutes.SEARCH) {
+            SearchFeatureNavGraph.Graph()
         }
         composable(GraphRoutes.AUTH) {
             AuthenticationNavGraph.Graph()
@@ -80,4 +84,5 @@ object GraphRoutes {
     const val OTHER_FEATURE = OtherFeatureNavGraph.ROUTE
     const val NOTES_FEATURE = "NotesFeatureNavGraph.ROUTE"
     const val AUTH = "AuthenticationNavGraph.ROUTE"
+    const val SEARCH="Search"
 }
