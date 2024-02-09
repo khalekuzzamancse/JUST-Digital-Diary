@@ -1,8 +1,0 @@
-package com.just.cse.digital_diary.two_zero_two_three.root_home.navigation
-
-import com.just.cse.digital_diary.features.admin_office.destination.AdminOfficeFeatureNavGraph
-import com.just.cse.digital_diary.features.faculty.destination.FacultyFeatureNavGraph
-import com.just.cse.digital_diary.two_zero_two_three.auth.destination.navgraph.AuthenticationNavGraph
-import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.graph.OtherFeatureNavGraph
-import com.just.cse.digital_diary.two_zero_two_three.notes.navgraph.graph.NotesFeatureNavGraph
-

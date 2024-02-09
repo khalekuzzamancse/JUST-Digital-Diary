@@ -5,8 +5,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import com.just.cse.digital_diary.features.admin_office.components.AdminFeatureEvent
 import com.just.cse.digital_diary.features.admin_office.components.officers.viewmodel.AdminOfficerListViewModel
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.admin_officers.component.employee_list.ListOfAdminOfficer
+import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.admin_officers.component.employee_list.event.AdminEmployeeListEvent
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_officers.repoisitory.AdminOfficerListRepository
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.progressbar.ProgressBarNSnackBarDecorator
 
@@ -14,6 +16,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.progressbar.Progr
 fun AdminOfficers(
     subOfficeId: String,
     repository: AdminOfficerListRepository,
+    onEvent: (AdminFeatureEvent)->Unit
 ) {
     val viewModel = remember {
         AdminOfficerListViewModel(
@@ -31,10 +34,26 @@ fun AdminOfficers(
         ListOfAdminOfficer(
             modifier = Modifier,
             state = viewModel.uiState.collectAsState().value.adminOfficerListState,
-            onEvent = {}
+            onEvent = {event->
+               convertEvent(event)?.let { onEvent(it) }
+            }
         )
 
     }
 
+
+}
+private fun convertEvent(event:AdminEmployeeListEvent):AdminFeatureEvent?{
+    val ev: AdminFeatureEvent? = when (event) {
+        is AdminEmployeeListEvent.CallRequest -> AdminFeatureEvent.CallRequest(event.number)
+        is AdminEmployeeListEvent.MessageRequest -> AdminFeatureEvent.MessageRequest(
+            event.number
+        )
+        is AdminEmployeeListEvent.EmailRequest -> AdminFeatureEvent.EmailRequest(event.email)
+        else -> {
+            null
+        }
+    }
+    return ev
 
 }

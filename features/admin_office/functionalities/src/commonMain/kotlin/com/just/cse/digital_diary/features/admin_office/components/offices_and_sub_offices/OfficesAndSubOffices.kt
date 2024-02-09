@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.features.admin_office.components.offices
+package com.just.cse.digital_diary.features.admin_office.components.offices_and_sub_offices
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,6 +8,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import com.just.cse.digital_diary.features.admin_office.components.AdminFeatureEvent
 import com.just.cse.digital_diary.features.admin_office.components.destination.AdminOfficeListViewModel
 import com.just.cse.digital_diary.features.admin_office.components.sub_offices.AdminSubOfficeList
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_sub_offices.event.SubOfficesEvent

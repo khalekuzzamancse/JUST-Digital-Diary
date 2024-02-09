@@ -18,7 +18,6 @@ import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destinatio
 
 
 object NotesFeatureNavGraph {
-    const val ROUTE = "NotesFeatureNavGraph"
     private const val NOTE_CREATION_SCREEN = "NoteCreation"
     private const val NOTE_AND_DETAILS_ROUTE = "NoteListScreen"
 

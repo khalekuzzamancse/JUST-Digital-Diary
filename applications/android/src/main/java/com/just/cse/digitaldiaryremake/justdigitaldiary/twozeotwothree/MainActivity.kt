@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
                 AndroidRootNavigation(
-                    appEvent = eventHandler.appEvent
+                    onEvent = eventHandler::handleEvent
                 )
 
 

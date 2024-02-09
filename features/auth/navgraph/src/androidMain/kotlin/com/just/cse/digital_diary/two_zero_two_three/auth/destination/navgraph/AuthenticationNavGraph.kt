@@ -19,7 +19,6 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.destination.screens.Au
 
  */
 object AuthenticationNavGraph {
-    const val ROUTE="AUTH ROUTE"
     private const val LOGIN_SCREEN="LoginScreen"
     @Composable
     fun  Graph(
