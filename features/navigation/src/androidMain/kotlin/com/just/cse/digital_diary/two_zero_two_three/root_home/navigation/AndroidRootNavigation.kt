@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
+import com.just.cse.digital_diary.two_zero_two_three.auth.destination.navgraph.AuthenticationNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.graph.OtherFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.TopMostDestination
@@ -59,6 +60,9 @@ fun AndroidRootNavigation(
                          }
                          TopMostDestination.NoteList->{
                              navHostController.navigate(GraphRoutes.NOTES_FEATURE)
+                         }
+                         TopMostDestination.Search->{
+                             navHostController.navigate(GraphRoutes.AUTH)
                          }
                          else -> {}
                      }

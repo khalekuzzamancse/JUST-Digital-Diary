@@ -1,5 +1,6 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth.destination.navgraph
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -17,28 +18,34 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.destination.screens.Au
  *
 
  */
+object AuthenticationNavGraph {
+    const val ROUTE="AUTH ROUTE"
+    private const val LOGIN_SCREEN="LoginScreen"
+    @Composable
+    fun  Graph(
+        navController: NavHostController= rememberNavController()
+    ) {
+        NavHost(
+            navController=navController,
+            startDestination = LOGIN_SCREEN
+        ){
+            composable(route=LOGIN_SCREEN){
+                AuthScreen(
+                    onExitRequest = {},
+                    onLoginSuccess = {username,password->
 
-@Composable
-fun AuthenticationNavGraph(
-    navController: NavHostController= rememberNavController()
-) {
-    NavHost(
-        navController=navController,
-        startDestination = Graph.LOGIN_SCREEN
-    ){
-        composable(route=Graph.LOGIN_SCREEN){
-            AuthScreen(
-                onExitRequest = {},
-                onLoginSuccess = {username,password->
+                    },
+                    backHandler = {onBackButtonPress ->
+                        BackHandler(onBack =onBackButtonPress)
 
-                }
-            )
+                    }
+                )
+            }
+
         }
+
 
     }
 
+}
 
-}
-private  object Graph {
-    const val LOGIN_SCREEN="LoginScreen"
-}

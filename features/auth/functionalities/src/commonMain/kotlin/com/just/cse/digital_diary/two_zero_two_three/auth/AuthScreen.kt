@@ -1,5 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.auth
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -7,18 +9,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.two_zero_two_three.auth.functionalities.register.RegisterDestination
-import com.just.cse.digital_diary.two_zero_two_three.auth.functionalities.register.viewmodel.RegisterDestinationViewModel
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.events.RegisterControlEvents
-import com.just.cse.digital_diary.two_zero_two_three.auth.state.AuthScreenState
-import com.just.cse.digital_diary.two_zero_two_three.auth.viewmodel.AuthViewModel
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.CompactModeTopPaneAnimation
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.TwoPaneProps
-import com.just.cse.digital_diary.two_zero_two_three.domain.register.repository.RegisterRepository
-import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.repoisitory.LoginRepository
 import com.just.cse.digital_diary.two_zero_two_three.auth.functionalities.login.destination.LoginDestination
 import com.just.cse.digital_diary.two_zero_two_three.auth.functionalities.login.viewmodel.LoginDestinationViewModel
+import com.just.cse.digital_diary.two_zero_two_three.auth.functionalities.register.RegisterDestination
+import com.just.cse.digital_diary.two_zero_two_three.auth.functionalities.register.viewmodel.RegisterDestinationViewModel
+import com.just.cse.digital_diary.two_zero_two_three.auth.state.AuthScreenState
+import com.just.cse.digital_diary.two_zero_two_three.auth.viewmodel.AuthViewModel
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
+import com.just.cse.digital_diary.two_zero_two_three.domain.register.repository.RegisterRepository
+import com.just.cse.digital_diary.two_zero_two_three.domain_layer.login.repoisitory.LoginRepository
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.event.LoginEvent
 import kotlinx.coroutines.launch
 
@@ -39,7 +39,8 @@ import kotlinx.coroutines.launch
 fun AuthDestination(
     loginRepository: LoginRepository,
     registrationRepository: RegisterRepository,
-    onLoginSuccess: (userName:String,password:String) -> Unit,
+    onLoginSuccess: (userName: String, password: String) -> Unit,
+    backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val authViewModel = remember {
@@ -52,6 +53,10 @@ fun AuthDestination(
     val state = authViewModel.uiState.collectAsState().value
 
     AuthDestination(
+        backHandler = backHandler,
+        onCloseRegisterFormRequest = {
+            authViewModel.closeRegistrationDestination()
+        },
         state = state,
         loginViewModel = authViewModel.loginViewModel,
         registerViewModel = authViewModel.registerViewModel,
@@ -62,12 +67,12 @@ fun AuthDestination(
                 }
 
                 LoginEvent.LoginControlsEvent.LoginRequest -> {
-                  scope.launch {
-                      val responseModel=authViewModel.login()
-                      if (responseModel!=null)
-                          onLoginSuccess(responseModel.username, responseModel.password)
+                    scope.launch {
+                        val responseModel = authViewModel.login()
+                        if (responseModel != null)
+                            onLoginSuccess(responseModel.username, responseModel.password)
 
-                  }
+                    }
 
                 }
             }
@@ -76,7 +81,7 @@ fun AuthDestination(
             when (event) {
                 RegisterControlEvents.RegisterRequest -> {
                     scope.launch {
-                        val success=authViewModel.register()
+                        val success = authViewModel.register()
                         if (success) {
                             authViewModel.closeRegistrationDestination()
                         }
@@ -100,32 +105,57 @@ private fun AuthDestination(
     registerViewModel: RegisterDestinationViewModel,
     onLoginEvent: (LoginEvent) -> Unit,
     onRegisterEvent: (RegisterControlEvents) -> Unit = {},
+    onCloseRegisterFormRequest: () -> Unit,
+    backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit
 ) {
-    TwoPaneLayout(
+    WindowSizeDecorator(
         showProgressBar = state.showProgressBar,
         snackBarMessage = state.snackBarMessage,
-        showTopOrRightPane = state.showRegisterForm,
-        secondaryPaneAnimationState = state.showRegisterForm,
-        props = TwoPaneProps(
-            pane1FillMaxWidth = true,
-            topPaneAnimation = CompactModeTopPaneAnimation()
-        ),
-        leftPane = {
-            LoginDestination(
-                modifier = Modifier,
-                viewModel = loginViewModel,
-                onEvent = onLoginEvent
-            )
+        onCompact = {
+            if (state.showRegisterForm) {
+                RegisterDestination(
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
+                    viewModel = registerViewModel,
+                    onEvent = onRegisterEvent
+                )
+                backHandler {
+                    onCloseRegisterFormRequest()
+                }
+            } else {
+                LoginDestination(
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
+                    viewModel = loginViewModel,
+                    onEvent = onLoginEvent
+                )
+            }
+
         },
-        topOrRightPane = {
-            RegisterDestination(
-                modifier = Modifier.verticalScroll(rememberScrollState()),
-                viewModel = registerViewModel,
-                onEvent = onRegisterEvent
-            )
+        onNonCompact = {
+            Row(modifier = Modifier.fillMaxWidth()) {
+                if (state.showRegisterForm) {
+                    LoginDestination(
+                        modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()),
+                        viewModel = loginViewModel,
+                        onEvent = onLoginEvent
+                    )
+                    RegisterDestination(
+                        modifier = Modifier.weight(1f).verticalScroll(rememberScrollState()),
+                        viewModel = registerViewModel,
+                        onEvent = onRegisterEvent
+                    )
+                    backHandler {
+                        onCloseRegisterFormRequest()
+                    }
+                } else {
+                    LoginDestination(
+                        modifier = Modifier.verticalScroll(rememberScrollState()),
+                        viewModel = loginViewModel,
+                        onEvent = onLoginEvent
+                    )
+                }
+            }
+
         }
     )
-
-
 }
 

@@ -16,12 +16,14 @@ import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvi
 internal fun AuthScreen(
     onLoginSuccess:(String,String)->Unit,
     onExitRequest:()->Unit={},
+    backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit,
 ) {
     AuthModuleTheme {
         AuthDestination(
             loginRepository = AuthComponentProvider.getLoginRepository(),
             registrationRepository = AuthComponentProvider.getRegisterRepository(),
-            onLoginSuccess =onLoginSuccess
+            onLoginSuccess =onLoginSuccess,
+            backHandler=backHandler
         )
 
     }
