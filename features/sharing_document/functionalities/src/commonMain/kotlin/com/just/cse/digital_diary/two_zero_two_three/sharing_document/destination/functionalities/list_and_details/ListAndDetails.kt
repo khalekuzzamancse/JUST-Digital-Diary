@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.notes.navgraph.routes
+package com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.functionalities.list_and_details
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +19,7 @@ fun NotesAndDetailsRoute(
     selectedNoteId: String?,
     onNoteDetailsCloseRequest: () -> Unit,
     onDetailsRequest: (String) -> Unit,
-    backButtonHandler:@Composable (onBack: () -> Unit)->Unit,
+    backButtonHandler:@Composable (onBackButtonPress: () -> Unit)->Unit,
 ) {
     WindowSizeDecorator(
         modifier = modifier,

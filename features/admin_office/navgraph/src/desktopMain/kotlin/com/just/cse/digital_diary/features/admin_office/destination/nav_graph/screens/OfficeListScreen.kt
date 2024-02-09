@@ -3,7 +3,7 @@ package com.just.cse.digital_diary.features.admin_office.destination.nav_graph.s
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.just.cse.digital_diary.features.admin_office.destination.screens.AdminOfficeScreen
+import com.just.cse.digital_diary.features.admin_office.destination.screens.AdminOfficeAndSubOfficeRoute
 
 internal class OfficeListScreen(
     private val onExitRequest: () -> Unit
@@ -11,7 +11,7 @@ internal class OfficeListScreen(
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
-        AdminOfficeScreen(
+        AdminOfficeAndSubOfficeRoute(
             onExitRequest = onExitRequest,
             onEmployeeListRequest = { subOfficeId ->
                 navigator?.push(

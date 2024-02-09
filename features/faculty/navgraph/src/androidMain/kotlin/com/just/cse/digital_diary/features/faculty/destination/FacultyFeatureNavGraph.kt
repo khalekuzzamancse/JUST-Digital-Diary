@@ -1,5 +1,6 @@
 package com.just.cse.digital_diary.features.faculty.destination
 
+import androidx.activity.compose.BackHandler
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -22,6 +23,9 @@ object FacultyFeatureNavGraph {
                     FacultiesScreen(
                         onTeacherListRequest = {
                             navController.navigate(TEACHERS_SCREEN)
+                        },
+                        backHandler = {onBackPress->
+                            BackHandler(onBack = onBackPress)
                         }
                     )
                 }

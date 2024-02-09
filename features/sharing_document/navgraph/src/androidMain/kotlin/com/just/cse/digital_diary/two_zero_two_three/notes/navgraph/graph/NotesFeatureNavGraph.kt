@@ -13,7 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.just.cse.digital_diary.two_zero_two_three.notes.navgraph.routes.NoteListTopBarDecorator
-import com.just.cse.digital_diary.two_zero_two_three.notes.navgraph.routes.NotesAndDetailsRoute
+import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.functionalities.list_and_details.NotesAndDetailsRoute
 import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.functionalities.create_note.CreateNoteDestination
 
 

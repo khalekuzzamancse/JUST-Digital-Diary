@@ -9,11 +9,12 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admi
 
 @Composable
 internal fun CompactModeLayout(
+    modifier: Modifier=Modifier,
     officeListState: OfficeListState,
     onEvent: (AdminOfficesEvent) -> Unit,
 ) {
     OfficeList(
-        modifier = Modifier,
+        modifier = modifier,
         onEvent = onEvent,
         state = officeListState
     )

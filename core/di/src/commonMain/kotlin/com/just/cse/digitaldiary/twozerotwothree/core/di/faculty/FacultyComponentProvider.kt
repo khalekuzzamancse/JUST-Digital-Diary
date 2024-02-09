@@ -12,6 +12,7 @@ import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvi
  * so the client manually handle the lifecycle of the [LoginRepositoryImpl]
  */
 object FacultyComponentProvider {
+
      fun getFacultyRepository(): FacultyListRepositoryImpl{
         return FacultyListRepositoryImpl(AuthComponentProvider.authToken)
     }

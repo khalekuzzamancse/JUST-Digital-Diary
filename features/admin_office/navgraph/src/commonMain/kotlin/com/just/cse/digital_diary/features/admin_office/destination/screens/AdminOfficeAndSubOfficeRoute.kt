@@ -1,18 +1,19 @@
 package com.just.cse.digital_diary.features.admin_office.destination.screens
 
 import androidx.compose.runtime.Composable
-import com.just.cse.digital_diary.features.admin_office.components.offices.AdminOffices
+import com.just.cse.digital_diary.features.admin_office.components.offices.OfficesAndSubOffices
 import com.just.cse.digitaldiary.twozerotwothree.core.di.admin_offices.AdminOfficeComponentProvider
 
 @Composable
-fun AdminOfficeScreen(
+fun AdminOfficeAndSubOfficeRoute(
     onEmployeeListRequest: (String) -> Unit,
-    onExitRequest: () -> Unit,
+    onExitRequest: () -> Unit={},
+    onBackButtonPress:@Composable (onBackButtonPress: () -> Unit)->Unit={},
 ) {
-    AdminOffices(
+    OfficesAndSubOffices(
         onEmployeeListRequest =onEmployeeListRequest,
-        onExitRequest =onExitRequest,
         officeRepository = AdminOfficeComponentProvider.getAdminOfficeRepository(),
-        subOfficeRepository = AdminOfficeComponentProvider.getAdminSubOfficeRepository()
+        subOfficeRepository = AdminOfficeComponentProvider.getAdminSubOfficeRepository(),
+        backHandler=onBackButtonPress
     )
 }

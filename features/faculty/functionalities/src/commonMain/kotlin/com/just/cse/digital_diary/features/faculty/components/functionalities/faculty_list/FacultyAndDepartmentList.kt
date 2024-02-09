@@ -1,9 +1,7 @@
 package com.just.cse.digital_diary.features.faculty.components.functionalities.faculty_list
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -16,14 +14,18 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.depar
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.departments.repoisitory.DepartmentListRepository
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.faculties.repoisitory.FacultyListRepository
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
 
+/**
+ * @param backHandler is to override the back button press functionality
+ * used as composable so that composable and non composable both can be passed
+ */
 @Composable
-fun FacultiesInfoDestination(
-    modifier: Modifier=Modifier,
+fun FacultyAndDepartmentList(
+    modifier: Modifier = Modifier,
     facultyListRepository: FacultyListRepository,
     departmentListRepository: DepartmentListRepository,
     onEmployeeListRequest: (String) -> Unit = {},
+    backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit,
 ) {
     val viewModel = remember {
         FacultiesScreenViewModel(
@@ -49,57 +51,57 @@ fun FacultiesInfoDestination(
         }
 
     }
-
-    val openDepartmentList = viewModel.uiState.collectAsState().value.openDepartmentListDestination
     val facultyState = viewModel.facultyListState.collectAsState().value
     LaunchedEffect(Unit) {
         viewModel.loadFacultyList()
     }
+    val departmentListState = viewModel.departmentListState.collectAsState().value
     WindowSizeDecorator(
-        modifier=modifier,
+        modifier = modifier,
         showProgressBar = viewModel.uiState.collectAsState().value.isLoading,
         onCompact = {
-            Box(Modifier.fillMaxSize()) {
+            if (departmentListState != null) {
+                DepartmentListDestination(
+                    state = departmentListState,
+                    onEvent = onDepartmentListEvent
+                )
+                backHandler {
+                    viewModel.clearFacultySelection()
+                }
+            } else {
                 FacultyListDestination(
                     modifier = Modifier,
                     state = facultyState,
                     onEvent = onFacultyEvent
                 )
-                if (openDepartmentList) {
-                    viewModel.departmentListState.collectAsState().value?.let {
-                        DepartmentListDestination(
-                            modifier = Modifier.matchParentSize()
-                                .background(MaterialTheme.colorScheme.primaryContainer),
-                            state = it,
-                            onEvent = onDepartmentListEvent
-                        )
-                    }
-                }
-
             }
 
         },
         onNonCompact = {
-            TwoPaneLayout(
-                secondaryPaneAnimationState = false,
-                showTopOrRightPane = true,
-                leftPane = {
+            if (departmentListState != null) {
+                Row(Modifier.fillMaxWidth()) {
                     FacultyListDestination(
+                        modifier = Modifier.weight(1f),
                         state = facultyState,
                         onEvent = onFacultyEvent
                     )
-                },
-                topOrRightPane = {
-                    viewModel.departmentListState.collectAsState().value?.let {
-                        DepartmentListDestination(
-                            modifier = Modifier
-                                .background(MaterialTheme.colorScheme.primaryContainer),
-                            state = it,
-                            onEvent = onDepartmentListEvent
-                        )
-                    }
+                    DepartmentListDestination(
+                        Modifier.weight(1f),
+                        state = departmentListState,
+                        onEvent = onDepartmentListEvent
+                    )
                 }
-            )
+                backHandler {
+                    viewModel.clearFacultySelection()
+                }
+            } else {
+                FacultyListDestination(
+                    modifier = Modifier,
+                    state = facultyState,
+                    onEvent = onFacultyEvent
+                )
+            }
+
         }
     )
 
