@@ -64,6 +64,6 @@ fun NotesFeatureNavGraph() {
 private object EmptyScreen : Screen {
     @Composable
     override fun Content() {
-        ListOfNotes(modifier = Modifier)
+       // ListOfNotes(modifier = Modifier)
     }
 }

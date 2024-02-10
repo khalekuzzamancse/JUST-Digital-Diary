@@ -7,35 +7,47 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.search.search_bar.decorator.SearchSection
 import com.just.cse.digital_diary.two_zero_two_three.search.functionalities.employee_list.Employee
+import com.just.cse.digital_diary.two_zero_two_three.search.functionalities.event.SearchFunctionalityEvent
 import com.just.cse.digitaldiary.twozerotwothree.core.di.employees.EmployeesComponentProvider
 
 
 @Composable
-fun SearchableEmployeeList() {
-    val viewModel= remember { EmployeeListViewModel(EmployeesComponentProvider.getEmployeeRepository()) }
-    LaunchedEffect(Unit){
+fun SearchableEmployeeList(
+    barLeadingIcon: @Composable () -> Unit = {},
+    onEvent: (SearchFunctionalityEvent) -> Unit,
+) {
+    val viewModel =
+        remember { EmployeeListViewModel(EmployeesComponentProvider.getEmployeeRepository()) }
+    LaunchedEffect(Unit) {
         viewModel.loadTeacherList()
     }
     SearchableEmployeeList(
         employeeList = viewModel.uiState.collectAsState().value.employee,
-        onEmailRequest = {},
-        onMessageRequest = {},
-        onCallRequest = {},
-        onSearchExitRequest = {}
+        onEmailRequest = {
+            onEvent(SearchFunctionalityEvent.EmailRequest(it))
+        },
+        onMessageRequest = {
+            onEvent(SearchFunctionalityEvent.MessageRequest(it))
+        },
+        onCallRequest = {
+
+            onEvent(SearchFunctionalityEvent.CallRequest(it))
+        },
+        barLeadingIcon = barLeadingIcon
     )
 }
 
 @Composable
 private fun SearchableEmployeeList(
+    barLeadingIcon: @Composable () -> Unit = {},
     employeeList: List<Employee>,
-    onSearchExitRequest: () -> Unit,
     onCallRequest: (String) -> Unit,
     onEmailRequest: (String) -> Unit,
     onMessageRequest: (String) -> Unit,
 ) {
 
     SearchSection(
-        onSearchExitRequest = onSearchExitRequest,
+        barLeadingIcon = barLeadingIcon,
         filterPredicate = { employee, queryText ->
             val filter = (employee.name.contains(queryText, ignoreCase = true)
                     || employee.additionalEmail.contains(queryText, ignoreCase = true)
@@ -48,7 +60,7 @@ private fun SearchableEmployeeList(
         },
         items = employeeList,
         searchedItemDecorator = { employee, queryText ->
-            println("EmployeeLIst:$employeeList")
+
             SearchedEmployeeCard(
                 modifier = Modifier,
                 highLightedText = queryText,

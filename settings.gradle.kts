@@ -47,7 +47,7 @@ val featureModules = listOf(
     ":features:navigation",
     ":features:faculty",":features:faculty:navgraph",":features:faculty:functionalities",
     ":features:others",":features:others:functionalities",":features:others:navgraph",
-    ":features:sharing_document",  ":features:sharing_document:functionalities",  ":features:sharing_document:navgraph",
+    ":features:notes",  ":features:notes:functionalities",  ":features:notes:navgraph",
     ":features:search", ":features:search:functionalities", ":features:search:navgraph",
     ":features:admin_office",  ":features:admin_office:functionalities",  ":features:admin_office:navgraph",
 )
@@ -55,8 +55,8 @@ val coreModules = listOf(
     ":core",
     ":core:network",
     ":core:di",
-    ":core:local_database",
-    ":core:local_database:realm"
+    ":core:database",
+    ":core:database:realm"
 )
 val applications= listOf(
     ":applications",  ":applications:android", ":applications:desktop", ":applications:web",

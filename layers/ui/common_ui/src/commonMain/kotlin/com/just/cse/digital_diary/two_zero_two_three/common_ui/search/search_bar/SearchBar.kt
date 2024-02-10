@@ -14,6 +14,49 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MySearchBar(
+    modifier: Modifier = Modifier,
+    query: String,
+    onQueryChange: (String) -> Unit={},
+    active: Boolean,
+    onActiveChanged: (Boolean)-> Unit,
+    barLeadingIcon: @Composable ()->Unit={},
+    onSearch:(String)->Unit={},
+    content:@Composable ColumnScope.()->Unit={},
+) {
+    SearchBar(
+        modifier = modifier.fillMaxWidth(),
+        query = query,
+        onQueryChange =onQueryChange,
+        onSearch = onSearch,
+        active = active,
+        onActiveChange = onActiveChanged,
+        placeholder = {
+            Text(text = "Type here  to to search")
+        },
+        shape = RectangleShape,
+        leadingIcon = barLeadingIcon, trailingIcon = {
+            if (query.isNotBlank()) {
+                IconButton(
+                    onClick = {
+                        onQueryChange("")
+                    }
+                ){
+                    Icon(
+                        imageVector = Icons.Default.Clear,
+                        null
+                    )
+                }
+            }
+
+        },
+        content = content
+    )
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MySearchBar(
@@ -31,7 +74,7 @@ fun MySearchBar(
         query = query,
         onQueryChange =onQueryChange,
         onSearch = {
-            onActiveChanged(false)
+           // onActiveChanged(false)
         },
         active = active,
         onActiveChange = onActiveChanged,
@@ -42,7 +85,7 @@ fun MySearchBar(
         leadingIcon = {
            IconButton(
                 onClick = {
-                    onActiveChanged(false)
+                   // onActiveChanged(false) #disabling the exits
                     onGoBack()
                 }
             ){

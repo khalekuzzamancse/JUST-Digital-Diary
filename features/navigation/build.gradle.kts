@@ -17,21 +17,19 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
-                implementation(compose.ui)
-                implementation(compose.material3)
-                implementation(compose.animation)
-                implementation(compose.animationGraphics)
-                implementation(compose.materialIconsExtended)
-                implementation(libs.windowSize)
+             
                 implementation(project(localModules.versions.common.ui.get()))
                 implementation(project(localModules.versions.feature.auth.destination.get()))
                 implementation(project(localModules.versions.feature.faculty.destination.get()))
                 implementation(project(localModules.versions.feature.adminOffice.destination.get()))
                 implementation(project(localModules.versions.feature.others.destination.get()))
                 implementation(project(localModules.versions.core.di.get()))
-                //for preview
                 implementation(project(localModules.versions.feature.notes.navgraph.get()))
                 implementation(project(localModules.versions.feature.search.navgraph.get()))
+                //debugging
+               // implementation(project(localModules.versions.feature.search.functionalities.get()))
+
+
             }
         }
         val androidMain by getting{

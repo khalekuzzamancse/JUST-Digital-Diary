@@ -1,8 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="realm-desktop">
-    <output-path>$PROJECT_DIR$/core/local_database/realm/build/libs</output-path>
-    <root id="archive" name="realm-desktop.jar">
-      <element id="module-output" name="JUST_Digital_Diary.core.local_database.realm.desktopMain" />
-    </root>
+    <output-path>$PROJECT_DIR$/core/database/realm/build/libs</output-path>
+    <root id="archive" name="realm-desktop.jar" />
   </artifact>
 </component>

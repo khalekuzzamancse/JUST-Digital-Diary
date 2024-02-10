@@ -8,18 +8,18 @@ internal class FacultyListScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
-        FacultiesScreen(
-            onTeacherListRequest = { deptId ->
-                navigator?.push(
-                    TeacherListScreen(
-                        deptId = deptId,
-                        onExitRequest = {
-                            navigator.pop()
-                        }
-                    )
-                )
-            }
-        )
+//        FacultiesScreen(
+//            onTeacherListRequest = { deptId ->
+//                navigator?.push(
+//                    TeacherListScreen(
+//                        deptId = deptId,
+//                        onExitRequest = {
+//                            navigator.pop()
+//                        }
+//                    )
+//                )
+//            }
+//        )
 
     }
 }

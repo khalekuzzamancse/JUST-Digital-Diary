@@ -11,12 +11,13 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.destination.nav_graph.
 import com.just.cse.digital_diary.two_zero_two_three.notes.navgraph.graph.NotesFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.RootModuleDrawer
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.ModalDrawerHandler
+import com.just.cse.digital_diary.two_zero_two_three.search.functionalities.searchable_employee_list.SearchableEmployeeList
 import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
 import kotlinx.coroutines.launch
 
 @Composable
 fun NavigationRoot() {
-    NotesFeatureNavGraph()
+
 
 
 ////    val signedIn = AuthComponentProvider.observeSignIn()

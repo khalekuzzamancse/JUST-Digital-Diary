@@ -10,9 +10,9 @@ internal class AdminOfficersListScreen(
 ): Screen {
     @Composable
     override fun Content() {
-        AdminOfficersScreen(
-            subOfficeId = subOfficeId,
-            onExitRequest =onExitRequest
-        )
+//        AdminOfficersScreen(
+//            subOfficeId = subOfficeId,
+//            onExitRequest =onExitRequest
+//        )
     }
 }

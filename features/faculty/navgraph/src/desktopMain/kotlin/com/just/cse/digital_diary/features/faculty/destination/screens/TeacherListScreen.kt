@@ -10,9 +10,9 @@ internal class TeacherListScreen(
 ) : Screen {
     @Composable
     override fun Content() {
-        TeachersScreen(
-            deptId = deptId,
-            onExitRequest = onExitRequest
-        )
+//        TeachersScreen(
+//            deptId = deptId,
+//            onExitRequest = onExitRequest
+//        )
     }
 }

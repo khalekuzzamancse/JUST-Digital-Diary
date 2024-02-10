@@ -18,13 +18,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(compose.ui)
-                implementation(compose.material3)
-                implementation(compose.animation)
-                implementation(compose.animationGraphics)
-                implementation(compose.materialIconsExtended)
                 implementation(project(localModules.versions.common.ui.get()))
-                implementation(libs.windowSize)
                 api(project(localModules.versions.domain.otherInfo.get()))
                 implementation(project(localModules.versions.ui.otherInfo.get()))
 

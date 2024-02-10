@@ -37,13 +37,7 @@ kotlin {
 //
 //            }
 //        }
-        //to use expect and actual keywords
-        kotlin {
-            compilerOptions {
-                // Common compiler options applied to all Kotlin source sets
-                freeCompilerArgs.add("-Xmulti-platform")
-            }
-        }
+
     }
 
 

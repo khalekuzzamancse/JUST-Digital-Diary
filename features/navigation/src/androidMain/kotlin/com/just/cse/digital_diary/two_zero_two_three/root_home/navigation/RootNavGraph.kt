@@ -13,6 +13,7 @@ import com.just.cse.digital_diary.two_zero_two_three.auth.destination.navgraph.A
 import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.graph.OtherFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.notes.navgraph.graph.NotesFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
+import com.just.cse.digital_diary.two_zero_two_three.search.navgraph.graph.SearchFeatureEvent
 import com.just.cse.digital_diary.two_zero_two_three.search.navgraph.graph.SearchFeatureNavGraph
 
 @Composable
@@ -37,8 +38,8 @@ fun RootNavGraph(
         }
         composable(GraphRoutes.FACULTY_FEATURE) {
             FacultyFeatureNavGraph.Graph(
-                onEvent = { event ->
-                    onEvent(toAppEvent(event))
+                onEvent = {event->
+                    toAppEvent(event).let(onEvent)
                 }
             )
         }
@@ -46,7 +47,11 @@ fun RootNavGraph(
             NotesFeatureNavGraph.Graph()
         }
         composable(GraphRoutes.SEARCH) {
-            SearchFeatureNavGraph.Graph()
+            SearchFeatureNavGraph.Graph(
+                onEvent ={event->
+                 toAppEvent(event)?.let(onEvent)
+                }
+            )
         }
         composable(GraphRoutes.AUTH) {
             AuthenticationNavGraph.Graph()
@@ -76,6 +81,16 @@ private fun toAppEvent(event: AdminEvent): AppEvent? {
         }
     }
     return ev
+}
+private fun toAppEvent(event: SearchFeatureEvent): AppEvent?{
+    val ev: AppEvent?=when(event){
+        is SearchFeatureEvent.CallRequest-> AppEvent.CallRequest(event.number)
+        is SearchFeatureEvent.MessageRequest-> AppEvent.MessageRequest(event.number)
+        is SearchFeatureEvent.EmailRequest-> AppEvent.EmailRequest(event.email)
+        else ->null
+    }
+    return ev
+
 }
 
 object GraphRoutes {

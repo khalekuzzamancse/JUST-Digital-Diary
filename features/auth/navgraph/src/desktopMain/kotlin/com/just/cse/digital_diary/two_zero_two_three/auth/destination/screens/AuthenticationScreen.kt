@@ -6,7 +6,7 @@ import cafe.adriel.voyager.core.screen.Screen
 internal class AuthenticationScreen : Screen {
     @Composable
     override fun Content() {
-        AuthScreen(onLoginSuccess = { _, _ ->
-        }, onExitRequest = {})
+//        AuthScreen(onLoginSuccess = { _, _ ->
+//        }, onExitRequest = {})
     }
 }

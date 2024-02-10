@@ -22,7 +22,6 @@ kotlin {
                 implementation(project(localModules.versions.common.ui.get()))
                 implementation(project(localModules.versions.ui.notes.get()))
                 implementation(project(localModules.versions.domain.notes.get()))
-                implementation(libs.windowSize)
                 implementation(project(localModules.versions.core.di.get()))
 
 

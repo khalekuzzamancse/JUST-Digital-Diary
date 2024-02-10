@@ -25,6 +25,7 @@ kotlin {
                 api(compose.materialIconsExtended)
                 api(libs.windowSize)
                 //
+                api(libs.kotlinx.coroutines.core)
                 //network IO for image loading
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.okhttp)

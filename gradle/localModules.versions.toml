@@ -1,5 +1,5 @@
 [versions]
-core-database-realm=":core:local_database:realm"
+core-database-realm=":core:database:realm"
 core-di=":core:di"
 #Module related to Features:Auth
 feature-auth-destination=":features:auth:navgraph"
@@ -14,8 +14,8 @@ feature-faculty-components=":features:faculty:functionalities"
 feature-adminOffice-destination=":features:admin_office:navgraph"
 feature-adminOffice-components=":features:admin_office:functionalities"
 #feature Notes
-feature-notes-functionalities=":features:sharing_document:functionalities"
-feature-notes-navgraph=":features:sharing_document:navgraph"
+feature-notes-functionalities=":features:notes:functionalities"
+feature-notes-navgraph=":features:notes:navgraph"
 #Feature Search
 feature-search-functionalities=":features:search:functionalities"
 feature-search-navgraph=":features:search:navgraph"
