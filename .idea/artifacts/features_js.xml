@@ -1,6 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="features-js">
-    <output-path>$PROJECT_DIR$/features/build/libs</output-path>
-    <root id="archive" name="features-js.jar" />
-  </artifact>
-</component>
