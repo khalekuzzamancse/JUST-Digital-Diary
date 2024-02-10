@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="others-desktop">
-    <output-path>$PROJECT_DIR$/features/others/build/libs</output-path>
-    <root id="archive" name="others-desktop.jar">
-      <element id="module-output" name="JUST_Digital_Diary.features.others.desktopMain" />
-    </root>
-  </artifact>
-</component>

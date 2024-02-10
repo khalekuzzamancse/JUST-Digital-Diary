@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="navgraph-desktop">
-    <output-path>$PROJECT_DIR$/features/search/navgraph/build/libs</output-path>
-    <root id="archive" name="navgraph-desktop.jar">
-      <element id="module-output" name="JUST_Digital_Diary.features.search.navgraph.desktopMain" />
-    </root>
-  </artifact>
-</component>

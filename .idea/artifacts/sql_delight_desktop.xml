@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="sql_delight-desktop">
-    <output-path>$PROJECT_DIR$/core/local_database/sql_delight/build/libs</output-path>
-    <root id="archive" name="sql_delight-desktop.jar">
-      <element id="module-output" name="JUST_Digital_Diary.core.local_database.sql_delight.desktopMain" />
-    </root>
-  </artifact>
-</component>

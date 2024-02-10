@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="departments-desktop">
-    <output-path>$PROJECT_DIR$/layers/ui/departments/build/libs</output-path>
-    <root id="archive" name="departments-desktop.jar">
-      <element id="module-output" name="JUST_Digital_Diary.layers.ui.departments.desktopMain" />
-    </root>
-  </artifact>
-</component>

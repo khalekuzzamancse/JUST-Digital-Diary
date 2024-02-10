@@ -1,6 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="realm-desktop">
-    <output-path>$PROJECT_DIR$/core/database/realm/build/libs</output-path>
-    <root id="archive" name="realm-desktop.jar" />
-  </artifact>
-</component>

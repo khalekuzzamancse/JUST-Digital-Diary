@@ -1,11 +1,11 @@
 *.iml
 .gradle
 /local.properties
-/.idea
 .DS_Store
 /build
 /captures
 .externalNativeBuild
+.idea/
 .cxx
 local.properties
 /shared/build/.transforms/8e8ba72d912fb7d0e0427dcbd3696cf4/results.bin

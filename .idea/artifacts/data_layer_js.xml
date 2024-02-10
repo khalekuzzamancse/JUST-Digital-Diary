@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="data_layer-js">
-    <output-path>$PROJECT_DIR$/data_layer/build/libs</output-path>
-    <root id="archive" name="data_layer-js.jar">
-      <element id="module-output" name="JUST_Digital_Diary.data_layer.jsMain" />
-    </root>
-  </artifact>
-</component>
