@@ -1,11 +1,13 @@
 package com.just.cse.digital_diary.features.faculty.components.functionalities.faculty_list
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.features.faculty.components.functionalities.department_list.DepartmentListDestination
 import com.just.cse.digital_diary.features.faculty.components.functionalities.faculty_list.viewmodel.FacultiesScreenViewModel
@@ -13,7 +15,7 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.departments.event.DepartmentListEvent
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.departments.repoisitory.DepartmentListRepository
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.faculties.repoisitory.FacultyListRepository
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
 
 /**
  * @param backHandler is to override the back button press functionality
@@ -24,6 +26,7 @@ fun FacultyAndDepartmentList(
     modifier: Modifier = Modifier,
     facultyListRepository: FacultyListRepository,
     departmentListRepository: DepartmentListRepository,
+    onExitRequest:()->Unit,
     onEmployeeListRequest: (String) -> Unit = {},
     backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit,
 ) {
@@ -56,54 +59,35 @@ fun FacultyAndDepartmentList(
         viewModel.loadFacultyList()
     }
     val departmentListState = viewModel.departmentListState.collectAsState().value
-    WindowSizeDecorator(
-        modifier = modifier,
-        showProgressBar = viewModel.uiState.collectAsState().value.isLoading,
-        onCompact = {
-            if (departmentListState != null) {
-                DepartmentListDestination(
-                    state = departmentListState,
-                    onEvent = onDepartmentListEvent
-                )
-                backHandler {
-                    viewModel.clearFacultySelection()
-                }
-            } else {
+    val showDepartmentList=departmentListState!=null
+    backHandler {
+        if (showDepartmentList)
+        viewModel.clearFacultySelection()
+    }
+        TwoPaneLayout(
+            modifier = modifier,
+            navigationIcon = if (showDepartmentList) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Menu,
+            onNavigationIconClick = if (showDepartmentList) viewModel::clearFacultySelection else onExitRequest,
+            showTopOrRightPane = showDepartmentList,
+            leftPane = {
                 FacultyListDestination(
                     modifier = Modifier,
                     state = facultyState,
                     onEvent = onFacultyEvent
                 )
-            }
-
-        },
-        onNonCompact = {
-            if (departmentListState != null) {
-                Row(Modifier.fillMaxWidth()) {
-                    FacultyListDestination(
-                        modifier = Modifier.weight(1f),
-                        state = facultyState,
-                        onEvent = onFacultyEvent
-                    )
+            },
+            topOrRightPane = {
+                if (departmentListState != null){
                     DepartmentListDestination(
-                        Modifier.weight(1f),
                         state = departmentListState,
                         onEvent = onDepartmentListEvent
                     )
                 }
-                backHandler {
-                    viewModel.clearFacultySelection()
-                }
-            } else {
-                FacultyListDestination(
-                    modifier = Modifier,
-                    state = facultyState,
-                    onEvent = onFacultyEvent
-                )
-            }
+            },
+            alignment = Alignment.TopStart
+        )
 
-        }
-    )
+
 
 
 }

@@ -56,16 +56,18 @@ fun AnimateVisibilityDecorator(
         MutableTransitionState(false).apply {
             targetState = true
         }
+
     }
-    val density = LocalDensity.current
-    AnimatedVisibility(
-        visibleState = state,
-        enter = slideInHorizontally {
-            with(density) { -400.dp.roundToPx() }
-        },
-        exit = slideOutHorizontally(),
-    ) {
-        content()
-    }
+    content()
+//    val density = LocalDensity.current
+//    AnimatedVisibility(
+//        visibleState = state,
+//        enter = slideInHorizontally {
+//            with(density) { -400.dp.roundToPx() }
+//        },
+//        exit = slideOutHorizontally(),
+//    ) {
+//
+//    }
 
 }

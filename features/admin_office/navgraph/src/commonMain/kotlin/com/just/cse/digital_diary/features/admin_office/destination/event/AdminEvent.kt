@@ -8,4 +8,5 @@ interface AdminEvent {
     data class CallRequest(val number: String) : AdminEvent
     data class MessageRequest(val number: String) : AdminEvent
     data class EmailRequest(val email: String) : AdminEvent
+    data object ExitRequest: AdminEvent
 }

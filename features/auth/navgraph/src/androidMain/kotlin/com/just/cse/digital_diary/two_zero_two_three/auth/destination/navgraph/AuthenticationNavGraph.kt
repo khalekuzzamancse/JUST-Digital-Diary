@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.just.cse.digital_diary.two_zero_two_three.auth.destination.screens.AuthScreen
+import com.just.cse.digital_diary.two_zero_two_three.auth.destination.screens.AuthRoute
 
 /**
  * Using Separate navHost so that for multiple screen size refactor the navigation without
@@ -22,18 +22,17 @@ object AuthenticationNavGraph {
     private const val LOGIN_SCREEN="LoginScreen"
     @Composable
     fun  Graph(
-        navController: NavHostController= rememberNavController()
+        navController: NavHostController= rememberNavController(),
+        onLoginSuccess:(String,String)->Unit,
     ) {
         NavHost(
             navController=navController,
             startDestination = LOGIN_SCREEN
         ){
             composable(route=LOGIN_SCREEN){
-                AuthScreen(
+                AuthRoute(
                     onExitRequest = {},
-                    onLoginSuccess = {username,password->
-
-                    },
+                    onLoginSuccess = onLoginSuccess,
                     backHandler = {onBackButtonPress ->
                         BackHandler(onBack =onBackButtonPress)
 

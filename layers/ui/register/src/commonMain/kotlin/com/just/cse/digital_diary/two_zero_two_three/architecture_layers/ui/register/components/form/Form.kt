@@ -1,9 +1,12 @@
 package com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.form
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.form.event.RegisterFormEvent
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.register.components.form.state.RegistrationFormData
@@ -16,6 +19,7 @@ internal fun RegistrationForm(
     data: RegistrationFormData,
     event: RegisterFormEvent,
 ) {
+    val formPadding=8.dp
     WindowSizeDecorator(
         onCompact = {
             Surface(
@@ -23,7 +27,7 @@ internal fun RegistrationForm(
                 shadowElevation = 6.dp,
             ) {
                 CompactModeRegistrationForm(
-                    modifier = Modifier.padding(8.dp),
+                    modifier = Modifier.padding(formPadding).fillMaxWidth(),
                     data = data,
                     fieldModifier = fieldModifier,
                     event = event
@@ -37,9 +41,9 @@ internal fun RegistrationForm(
                 shadowElevation = 6.dp,
             ) {
                 NonCompactModeRegistrationForm(
-                    modifier = Modifier.padding(8.dp),
+                    modifier = Modifier.padding(formPadding).fillMaxWidth(),
                     data = data,
-                    fieldModifier = Modifier,
+                    fieldModifier = Modifier.fillMaxWidth(),
                     event=event
                 )
             }

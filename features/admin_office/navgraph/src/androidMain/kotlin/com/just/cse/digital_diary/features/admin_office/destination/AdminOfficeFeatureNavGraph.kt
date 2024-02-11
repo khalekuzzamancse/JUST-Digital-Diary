@@ -30,6 +30,9 @@ object AdminOfficeFeatureNavGraph {
                     onBackButtonPress = {onBackPress ->
                         BackHandler(onBack = onBackPress)
 
+                    },
+                    onExitRequest = {
+                        onEvent(AdminEvent.ExitRequest)
                     }
                 )
             }

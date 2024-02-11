@@ -39,12 +39,11 @@ fun <T>ModalDrawerDecorator(
 }
 
 
-
 @Composable
 fun <T>ModalDrawerDecorator(
     modifier: Modifier=Modifier,
     destinations: List<NavigationItemInfo<T>>,
-    visibilityDelay:Long = 70L,
+    visibilityDelay:Long = 0L,
     selectedDesertionIndex: Int,
     drawerState: DrawerState,
     onDestinationSelected: (Int) -> Unit = {},

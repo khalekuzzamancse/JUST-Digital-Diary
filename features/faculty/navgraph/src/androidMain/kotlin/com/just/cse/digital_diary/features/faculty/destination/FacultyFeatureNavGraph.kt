@@ -34,6 +34,9 @@ object FacultyFeatureNavGraph {
                     },
                     backHandler = { onBackPress ->
                         BackHandler(onBack = onBackPress)
+                    },
+                    onExitRequest = {
+                        onEvent(FacultyFeatureEvent.ExitRequest)
                     }
                 )
             }
@@ -53,12 +56,14 @@ object FacultyFeatureNavGraph {
 
     }
 }
-private fun toEvent(event:FacultyEvent):FacultyFeatureEvent?{
+
+private fun toEvent(event: FacultyEvent): FacultyFeatureEvent? {
     val ev: FacultyFeatureEvent? = when (event) {
         is FacultyEvent.CallRequest -> FacultyFeatureEvent.CallRequest(event.number)
         is FacultyEvent.MessageRequest -> FacultyFeatureEvent.MessageRequest(
             event.number
         )
+
         is FacultyEvent.EmailRequest -> FacultyFeatureEvent.EmailRequest(event.email)
         else -> {
             null

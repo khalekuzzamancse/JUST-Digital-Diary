@@ -11,4 +11,5 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.teac
         data class CallRequest(val number: String) : FacultyFeatureEvent
         data class MessageRequest(val number: String) : FacultyFeatureEvent
         data class EmailRequest(val email: String) : FacultyFeatureEvent
+        data object ExitRequest:FacultyFeatureEvent
     }

@@ -1,14 +1,16 @@
 package com.just.cse.digital_diary.features.admin_office.components.offices_and_sub_offices
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.features.admin_office.components.AdminFeatureEvent
 import com.just.cse.digital_diary.features.admin_office.components.destination.AdminOfficeListViewModel
 import com.just.cse.digital_diary.features.admin_office.components.sub_offices.AdminSubOfficeList
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layer.ui.admin_sub_offices.event.SubOfficesEvent
@@ -16,8 +18,9 @@ import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_sub_offices.repoisitory.AdminSubOfficeListRepository
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.components.AdminOfficeList
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.admin_offices.event.AdminOfficesEvent
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
 import kotlinx.coroutines.launch
+
 /**
  * @param backHandler is to override the back button press functionality
  * used as composable so that composable and non composable both can be passed
@@ -27,7 +30,8 @@ fun OfficesAndSubOffices(
     onEmployeeListRequest: (String) -> Unit,
     officeRepository: AdminOfficeListRepository,
     subOfficeRepository: AdminSubOfficeListRepository,
-    backHandler:@Composable (onBackButtonPress: () -> Unit)->Unit,
+    onExitRequest: () -> Unit,
+    backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit,
 ) {
 
     val scope = rememberCoroutineScope()
@@ -42,6 +46,7 @@ fun OfficesAndSubOffices(
     }
     val officesState = viewModel.state.collectAsState().value.officeState
     val subOfficeState = viewModel.state.collectAsState().value.subOfficeState
+    val showSubOfficeDestination = subOfficeState != null
 
     val officeEvent: (AdminOfficesEvent) -> Unit = { event ->
         when (event) {
@@ -63,49 +68,31 @@ fun OfficesAndSubOffices(
         }
 
     }
-
-    WindowSizeDecorator(
+    backHandler {
+        if (subOfficeState != null)
+            viewModel.dismissSubOfficesDestination()
+    }
+    TwoPaneLayout(
+        modifier = Modifier,
+        navigationIcon = if (showSubOfficeDestination) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Menu,
+        onNavigationIconClick = if (showSubOfficeDestination) viewModel::dismissSubOfficesDestination else onExitRequest,
         showProgressBar = viewModel.state.collectAsState().value.isLoading,
-        onCompact = {
+        leftPane = {
+            AdminOfficeList(
+                officeListState = officesState,
+                onEvent = officeEvent
+            )
+        },
+        topOrRightPane = {
             if (subOfficeState != null) {
                 AdminSubOfficeList(
                     state = subOfficeState,
                     onEvent = subOfficeEvent
                 )
-                backHandler{
-                    viewModel.dismissSubOfficesDestination()
-                }
-            } else {
-                AdminOfficeList(
-                    officeListState = officesState,
-                    onEvent = officeEvent
-                )
             }
         },
-        onNonCompact = {
-            if (subOfficeState != null) {
-                Row(Modifier.fillMaxWidth()) {
-                    AdminOfficeList(
-                        modifier = Modifier.weight(1f),
-                        officeListState = officesState,
-                        onEvent = officeEvent
-                    )
-                    AdminSubOfficeList(
-                        modifier = Modifier.weight(1f),
-                        state = subOfficeState,
-                        onEvent = subOfficeEvent
-                    )
-                }
-                backHandler{
-                    viewModel.dismissSubOfficesDestination()
-                }
-            } else {
-                AdminOfficeList(
-                    officeListState = officesState,
-                    onEvent = officeEvent
-                )
-            }
-        }
+        alignment = Alignment.TopStart,
+        showTopOrRightPane = subOfficeState != null
     )
 
 

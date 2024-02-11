@@ -16,14 +16,6 @@ fun RegisterDestination(
     viewModel: RegisterDestinationViewModel,
     onEvent: (RegisterControlEvents) -> Unit
 ) {
-
-//    LaunchedEffect(Unit) {
-//        viewModel.shouldExit.collect {
-//            if (it) {
-//                onExitRequest()
-//            }
-//        }
-//    }
     RegisterDestination(
         modifier = modifier,
         onEvent = onEvent,
@@ -41,9 +33,7 @@ private fun RegisterDestination(
 ) {
     RegisterFormNControls(
         modifier = modifier,
-        onLoginRequest = {
-
-        },
+        onLoginRequest = {},
         data = data,
         onRegisterRequest = {
             onEvent(RegisterControlEvents.RegisterRequest)

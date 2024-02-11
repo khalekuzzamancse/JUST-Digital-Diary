@@ -12,7 +12,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Notes
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -25,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.top_bar.SimpleTopBar
 
 /**
  * * It used to create  the Notes
@@ -44,7 +42,7 @@ fun CreateNote(
 ) {
     WindowSizeDecorator(
         modifier=Modifier,
-        onCompact = {
+        onNonExpanded = {
             Scaffold(
                 floatingActionButtonPosition = FabPosition.Center,
                 floatingActionButton = {
@@ -74,7 +72,7 @@ fun CreateNote(
                 )
             }
         },
-        onNonCompact = {
+        onExpanded = {
             Box(Modifier.fillMaxWidth().padding(16.dp).verticalScroll(rememberScrollState())) {
                 Surface(
                     modifier = Modifier.widthIn(max = 500.dp).align(Alignment.TopCenter),

@@ -13,7 +13,7 @@ import com.just.cse.digitaldiary.twozerotwothree.core.local_database.realm.authe
 object AuthComponentProvider {
 
 
-    var authToken: String? = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxOTExMDEuY3NlOGFlNDdkYTdkY2VkIiwicm9sZV9pZCI6MTMsImlhdCI6MTcwNzQ3MDIzOCwiZXhwIjoxNzA3NjQzMDM4fQ.0q8Eh3yBm-5iqK2O570kOIKTTTlvfgb37m_xaSIOt7Y"
+    var authToken: String? = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxOTExMDEuY3NlOGFlNDdkYTdkY2VkIiwicm9sZV9pZCI6MTMsImlhdCI6MTcwNzY2NzYyNiwiZXhwIjoxNzA3ODQwNDI2fQ.-y9SX4r6mnAbtPOdMi_qIrvk5g_7UFsf0634pVw_UN0"
     fun getLoginRepository(): LoginRepositoryImpl {
         return LoginRepositoryImpl()
     }

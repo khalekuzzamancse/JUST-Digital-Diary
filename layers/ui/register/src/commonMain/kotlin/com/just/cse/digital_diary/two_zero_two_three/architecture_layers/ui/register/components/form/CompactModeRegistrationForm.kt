@@ -96,13 +96,13 @@ private fun RegistrationForm(
                leadingIcon = Icons.Default.Person4,
            )
 
-           AuthDropDownMenu(
-               modifier = fieldModifier,
-               label = RegistrationFormLabels.Dept,
-               options = departments,
-               onOptionSelected = onDeptChanged,
-               selected = dept
-           )
+//           AuthDropDownMenu(
+//               modifier = fieldModifier,
+//               label = RegistrationFormLabels.Dept,
+//               options = departments,
+//               onOptionSelected = onDeptChanged,
+//               selected = dept
+//           )
 
            AuthPasswordField(
                modifier = fieldModifier,
