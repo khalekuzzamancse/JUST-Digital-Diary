@@ -51,8 +51,8 @@ fun WindowSizeDecorator(
     modifier: Modifier=Modifier,
     snackBarMessage: String? = null,
     showProgressBar: Boolean = false,
-    onCompact: @Composable () -> Unit,
-    onNonCompact: @Composable () -> Unit) {
+    onNonExpanded: @Composable () -> Unit,
+    onExpanded: @Composable () -> Unit) {
     val windowSize = calculateWindowSizeClass()
     val windowWidth = windowSize.widthSizeClass
     ProgressBarNSnackBarDecorator(
@@ -61,11 +61,11 @@ fun WindowSizeDecorator(
         snackBarMessage = snackBarMessage
     ) {
         when (windowWidth) {
-            WindowWidthSizeClass.Compact -> {
-                onCompact()
+            WindowWidthSizeClass.Compact , WindowWidthSizeClass.Medium-> {
+                onNonExpanded()
             }
-            WindowWidthSizeClass.Expanded, WindowWidthSizeClass.Medium -> {
-                onNonCompact()
+            WindowWidthSizeClass.Expanded-> {
+                onExpanded()
             }
         }
     }

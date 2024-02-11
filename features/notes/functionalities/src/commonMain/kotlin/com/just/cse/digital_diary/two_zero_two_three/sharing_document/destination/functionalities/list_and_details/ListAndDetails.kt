@@ -23,7 +23,7 @@ fun NotesAndDetailsRoute(
 ) {
     WindowSizeDecorator(
         modifier = modifier,
-        onCompact = {
+        onNonExpanded = {
             selectedNoteId.let { id ->
                 if (id != null) {
                     NoteDetails(
@@ -41,7 +41,7 @@ fun NotesAndDetailsRoute(
             }
 
         },
-        onNonCompact = {
+        onExpanded = {
             ListAndDetails(
                 selectedNoteId = selectedNoteId,
                 onDetailsRequest = onDetailsRequest

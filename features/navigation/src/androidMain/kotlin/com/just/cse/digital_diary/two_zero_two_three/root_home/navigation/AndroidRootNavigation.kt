@@ -40,11 +40,13 @@ fun AndroidRootNavigation(
         onEvent = { destination ->
             when (destination) {
                 TopMostDestination.Home -> {
-                    OtherFeatureNavGraph.navigateToHome(navHostController)
+                  //  OtherFeatureNavGraph.navigateToHome(navHostController)
+                    navHostController.navigate(GraphRoutes.AUTH)
                 }
 
                 TopMostDestination.MessageFromVC -> {
-                    OtherFeatureNavGraph.navigateToMessageFromVC(navHostController)
+                    navHostController.navigate(GraphRoutes.AUTH)
+                  //  OtherFeatureNavGraph.navigateToMessageFromVC(navHostController)
                 }
 
                 TopMostDestination.AboutUs -> {

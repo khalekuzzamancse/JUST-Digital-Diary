@@ -1,9 +1,10 @@
 package com.just.cse.digital_diary.two_zero_two_three.common_ui.layout
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.CompactModeLayout
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.NonCompactModeLayout
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.ExpandedModeLayout
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.TwoPaneProps
 
 
@@ -20,39 +21,35 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.two_panes.
  */
 @Composable
 fun TwoPaneLayout(
+    modifier: Modifier,
     snackBarMessage: String? = null,
     showProgressBar: Boolean = false,
-    props:TwoPaneProps=TwoPaneProps(),
+    props: TwoPaneProps = TwoPaneProps(),
     showTopOrRightPane: Boolean,
-    secondaryPaneAnimationState:Any?,
+    secondaryPaneAnimationState: Any?,
     leftPane: @Composable () -> Unit,
     topOrRightPane: @Composable () -> Unit,
 ) {
     WindowSizeDecorator(
+        modifier=modifier,
         snackBarMessage = snackBarMessage,
         showProgressBar = showProgressBar,
-        onCompact = {
+        onNonExpanded = {
             CompactModeLayout(
                 showTopPane = showTopOrRightPane,
                 enter = props.topPaneAnimation.enter,
                 exit = props.topPaneAnimation.exit,
                 pane1 = leftPane,
-                topPane = {
-                        topOrRightPane()
-                        println("Visible")
-                }
+                topPane = topOrRightPane
             )
 
         },
-        onNonCompact = {
-            NonCompactModeLayout(
-                showPane2 = showTopOrRightPane,
-                pane1MaxWithPortion =props.pane1MaxWidthPortion,
+        onExpanded = {
+            ExpandedModeLayout(
+                horizontalSpacing = props.horizontalSpace,
                 pane1 = leftPane,
                 pane2 = topOrRightPane,
-                horizontalSpacing = props.horizontalSpace,
-                pane1FillMaxWidth = props.pane1FillMaxWidth,
-                pane2AnimationState=secondaryPaneAnimationState,
+                showPane2 = showTopOrRightPane,
             )
         }
     )

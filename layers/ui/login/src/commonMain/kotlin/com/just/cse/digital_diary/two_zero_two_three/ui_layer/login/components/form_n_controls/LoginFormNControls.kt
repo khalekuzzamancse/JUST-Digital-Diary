@@ -1,5 +1,6 @@
 package com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.form_n_controls
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.controls.LoginControls
 import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.components.form.LoginForm
@@ -34,16 +36,15 @@ import com.just.cse.digital_diary.two_zero_two_three.ui_layer.login.event.LoginE
     onControlEvent: (LoginEvent.LoginControlsEvent) -> Unit,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LoginHeaderSection()
         Surface(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier,
             shadowElevation = 6.dp,
         ) {
-            Column(modifier = Modifier.padding(12.dp)) {
-                Box(Modifier.widthIn(max = 500.dp).align(Alignment.CenterHorizontally)) {
+            Column(modifier = Modifier.padding(8.dp)) {
+                Box(Modifier.align(Alignment.CenterHorizontally)) {
                     LoginForm(
                         data = data,
                         fieldModifier = Modifier.fillMaxWidth(),

@@ -97,13 +97,13 @@ private fun NonCompactModeRegistrationForm(
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.Person4,
             )
-            Text(text = RegistrationFormLabels.Dept)
-            AuthDropDownMenu(
-                modifier = fieldModifier,
-                options = departments,
-                onOptionSelected = onDeptChanged,
-                selected = dept
-            )
+//            Text(text = RegistrationFormLabels.Dept)
+//            AuthDropDownMenu(
+//                modifier = fieldModifier,
+//                options = departments,
+//                onOptionSelected = onDeptChanged,
+//                selected = dept
+//            )
             Text(text = RegistrationFormLabels.PASSWORD)
             AuthPasswordField(
                 modifier = fieldModifier,

@@ -59,7 +59,7 @@ fun FacultyAndDepartmentList(
     WindowSizeDecorator(
         modifier = modifier,
         showProgressBar = viewModel.uiState.collectAsState().value.isLoading,
-        onCompact = {
+        onNonExpanded = {
             if (departmentListState != null) {
                 DepartmentListDestination(
                     state = departmentListState,
@@ -77,7 +77,7 @@ fun FacultyAndDepartmentList(
             }
 
         },
-        onNonCompact = {
+        onExpanded = {
             if (departmentListState != null) {
                 Row(Modifier.fillMaxWidth()) {
                     FacultyListDestination(

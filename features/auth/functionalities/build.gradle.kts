@@ -24,6 +24,8 @@ kotlin {
                 implementation(project(localModules.versions.ui.register.get()))
                 api(project(localModules.versions.domain.login.get()))
                 api(project(localModules.versions.domain.register.get()))
+                //view-model
+                implementation(libs.voyager.screenmodel)
 
             }
         }

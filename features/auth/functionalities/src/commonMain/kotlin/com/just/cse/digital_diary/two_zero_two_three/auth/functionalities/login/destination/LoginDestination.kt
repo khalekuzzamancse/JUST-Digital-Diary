@@ -35,7 +35,7 @@ private fun LoginDestination(
     onEvent: (LoginEvent) -> Unit,
 ) {
     LoginFormNControls(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         data = data,
         onControlEvent = onEvent,
         formEvent = formEvent

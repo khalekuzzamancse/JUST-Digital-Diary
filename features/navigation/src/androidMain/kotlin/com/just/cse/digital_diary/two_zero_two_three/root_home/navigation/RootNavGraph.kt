@@ -26,7 +26,7 @@ fun RootNavGraph(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = GraphRoutes.OTHER_FEATURE
+        startDestination = GraphRoutes.AUTH
     ) {
         OtherFeatureNavGraph.graph(navGraphBuilder = this, onExitRequest = openDrawerRequest)
         composable(GraphRoutes.ADMIN_OFFICE_FEATURE) {

@@ -9,58 +9,86 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 
 @Composable
-internal fun NonCompactModeLayout(
+internal fun ExpandedModeLayout(
     horizontalSpacing: Dp,
     pane1: @Composable () -> Unit,
     pane2: @Composable () -> Unit,
-    pane1FillMaxWidth: Boolean,
-    pane1MaxWithPortion:Float=0.5f,
-    pane2AnimationState:Any?=false,
     showPane2: Boolean,
 ) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        if (showPane2) {
+            Box(Modifier.weight(1f)) {
+                pane1()
+            }
+            Spacer(Modifier.width(horizontalSpacing))
+            Box(Modifier.weight(1f)) {
+                pane2()
+            }
+        } else {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                pane1()
+            }
 
-    if (showPane2){
-        TwoPanes(
-            horizontalSpacing=horizontalSpacing,
-            pane1=pane1,
-            pane2=pane2,
-            pane1MaxWithPortion=pane1MaxWithPortion,
-            pane2AnimationState = pane2AnimationState
-
-        )
+        }
     }
-    else{
-        SinglePane(
-            pane1=pane1,
-            shouldTakeFullWidth = pane1FillMaxWidth
-        )
-    }
-
 
 
 }
 
+
+//@Composable
+//internal fun NonCompactModeLayout(
+//    horizontalSpacing: Dp,
+//    pane1: @Composable () -> Unit,
+//    pane2: @Composable () -> Unit,
+//    pane1FillMaxWidth: Boolean,
+//    pane1MaxWithPortion: Float = 0.5f,
+//    pane2AnimationState: Any? = false,
+//    showPane2: Boolean,
+//) {
+//
+//    if (showPane2) {
+//        TwoPanes(
+//            horizontalSpacing = horizontalSpacing,
+//            pane1 = pane1,
+//            pane2 = pane2,
+//            pane1MaxWithPortion = pane1MaxWithPortion,
+//            pane2AnimationState = pane2AnimationState
+//
+//        )
+//    } else {
+//        SinglePane(
+//            pane1 = pane1,
+//            shouldTakeFullWidth = pane1FillMaxWidth
+//        )
+//    }
+//
+//
+//}
+
 @Composable
 private fun TwoPanes(
     horizontalSpacing: Dp,
-    pane1MaxWithPortion:Float=0.5f,
-    pane2AnimationState:Any?=false,
+    pane1MaxWithPortion: Float = 0.5f,
+    pane2AnimationState: Any? = false,
     pane1: @Composable () -> Unit,
     pane2: @Composable () -> Unit,
 ) {
 
     BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-        val width=maxWidth
+        val width = maxWidth
         Row {
-            Box(Modifier.widthIn(max = width*pane1MaxWithPortion))
+            Box(Modifier.widthIn(max = width * pane1MaxWithPortion))
             {
                 pane1()
             }
@@ -80,7 +108,7 @@ private fun TwoPanes(
                             )
                         )
                     }
-                ){
+                ) {
                     pane2()
 
                 }
