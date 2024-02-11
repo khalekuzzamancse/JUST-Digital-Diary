@@ -2,9 +2,13 @@ package com.just.cse.digital_diary.two_zero_two_three.sharing_document.destinati
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.WindowSizeDecorator
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
 import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.functionalities.details.NoteDetails
 import com.just.cse.digital_diary.two_zero_two_three.sharing_document.destination.functionalities.note_list.ListOfNotes
 
@@ -19,54 +23,30 @@ fun NotesAndDetailsRoute(
     selectedNoteId: String?,
     onNoteDetailsCloseRequest: () -> Unit,
     onDetailsRequest: (String) -> Unit,
+    onExitRequest:()->Unit,
     backButtonHandler:@Composable (onBackButtonPress: () -> Unit)->Unit,
 ) {
-    WindowSizeDecorator(
-        modifier = modifier,
-        onNonExpanded = {
-            selectedNoteId.let { id ->
-                if (id != null) {
-                    NoteDetails(
-                        modifier = Modifier, id = id
-                    )
-                 backButtonHandler{
-                     onNoteDetailsCloseRequest()
-                 }
-                } else {
-                    ListOfNotes(
-                        modifier = modifier,
-                        onDetailsRequest = onDetailsRequest
-                    )
-                }
-            }
-
-        },
-        onExpanded = {
-            ListAndDetails(
-                selectedNoteId = selectedNoteId,
+    val showDetails=selectedNoteId!= null
+    backButtonHandler{
+        if (showDetails)
+        onNoteDetailsCloseRequest()
+    }
+    TwoPaneLayout(
+        modifier = Modifier,
+        navigationIcon = if (showDetails) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Menu,
+        onNavigationIconClick = if (showDetails) onNoteDetailsCloseRequest else onExitRequest,
+        leftPane = {
+            ListOfNotes(
+                modifier = modifier,
                 onDetailsRequest = onDetailsRequest
             )
-            backButtonHandler{
-                onNoteDetailsCloseRequest()
-            }
-        }
+        },
+        topOrRightPane = {
+            NoteDetails(modifier = Modifier, id = "1")
+        },
+        alignment = Alignment.TopStart,
+        showTopOrRightPane =showDetails
     )
-
-}
-
-@Composable
-private fun ListAndDetails(
-    selectedNoteId: String?,
-    onDetailsRequest: (String) -> Unit,
-) {
-    if (selectedNoteId != null) {
-        Row(Modifier.fillMaxWidth()) {
-            ListOfNotes(modifier = Modifier.weight(1f), onDetailsRequest = {})
-            NoteDetails(modifier = Modifier.weight(1f), id = "1")
-        }
-    } else {
-        ListOfNotes(modifier = Modifier, onDetailsRequest = onDetailsRequest)
-    }
 
 
 }

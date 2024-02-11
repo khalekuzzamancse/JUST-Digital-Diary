@@ -8,7 +8,6 @@ class AdminOfficeListRepositoryImpl(
     private val token: String?
 ) : AdminOfficeListRepository {
 
-
     override suspend fun getAdminOffices(): AdminOfficeListResponseModel {
         val response = AdminOfficeListRemoteDataSource(token).getOffices()
         if (response.isSuccess) {

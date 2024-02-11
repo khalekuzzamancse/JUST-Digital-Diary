@@ -20,11 +20,7 @@ fun RootModuleDrawer(
     onLogOutRequest:()->Unit={},
     navHost: @Composable() (AnimatedContentScope.(Int) -> Unit)
 ) {
-    //val navigateTo = topMostDestinationEvent.drawerDestinationNavigationRequest
-//    var userInfo by remember { mutableStateOf(SignedInUser(name = "", department = "")) }
-//    LaunchedEffect(Unit){
-//        userInfo=SignedInUserRepository.getUserInfo()
-//    }
+
 
     LaunchedEffect(Unit) {
         drawerHandler.selectedSectionIndex.collect { destination ->

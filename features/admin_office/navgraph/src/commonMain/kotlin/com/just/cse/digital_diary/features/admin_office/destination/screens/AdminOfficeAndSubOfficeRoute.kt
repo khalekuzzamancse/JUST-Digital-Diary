@@ -14,6 +14,7 @@ fun AdminOfficeAndSubOfficeRoute(
         onEmployeeListRequest =onEmployeeListRequest,
         officeRepository = AdminOfficeComponentProvider.getAdminOfficeRepository(),
         subOfficeRepository = AdminOfficeComponentProvider.getAdminSubOfficeRepository(),
-        backHandler=onBackButtonPress
+        backHandler=onBackButtonPress,
+        onExitRequest = onExitRequest
     )
 }

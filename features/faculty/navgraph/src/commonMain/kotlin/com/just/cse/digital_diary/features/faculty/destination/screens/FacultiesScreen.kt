@@ -11,6 +11,7 @@ import com.just.cse.digitaldiary.twozerotwothree.core.di.faculty.FacultyComponen
 @Composable
  fun FacultiesScreen(
     onTeacherListRequest: (String) -> Unit = {},
+    onExitRequest:()->Unit,
     backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit,
 ) {
     FacultyAndDepartmentList(
@@ -18,7 +19,8 @@ import com.just.cse.digitaldiary.twozerotwothree.core.di.faculty.FacultyComponen
         facultyListRepository = FacultyComponentProvider.getFacultyRepository(),
         departmentListRepository = FacultyComponentProvider.getDepartListRepository(),
         onEmployeeListRequest = onTeacherListRequest,
-        backHandler=backHandler
+        backHandler=backHandler,
+        onExitRequest = onExitRequest
     )
 
 

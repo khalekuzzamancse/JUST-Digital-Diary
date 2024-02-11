@@ -22,7 +22,10 @@ object NotesFeatureNavGraph {
     private const val NOTE_AND_DETAILS_ROUTE = "NoteListScreen"
 
     @Composable
-    fun Graph(navController: NavHostController = rememberNavController()) {
+    fun Graph(
+        navController: NavHostController = rememberNavController(),
+        onExitRequest:()->Unit,
+    ) {
         var selectedNoteId: String? by remember { mutableStateOf(null) }
         NavHost(
             navController = navController,
@@ -45,7 +48,8 @@ object NotesFeatureNavGraph {
                         selectedNoteId = selectedNoteId,
                         backButtonHandler = { callback ->
                             BackHandler(onBack = callback)
-                        }
+                        },
+                        onExitRequest = onExitRequest
                     )
 
 

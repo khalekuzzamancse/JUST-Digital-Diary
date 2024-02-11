@@ -22,7 +22,8 @@ object AuthenticationNavGraph {
     private const val LOGIN_SCREEN="LoginScreen"
     @Composable
     fun  Graph(
-        navController: NavHostController= rememberNavController()
+        navController: NavHostController= rememberNavController(),
+        onLoginSuccess:(String,String)->Unit,
     ) {
         NavHost(
             navController=navController,
@@ -31,9 +32,7 @@ object AuthenticationNavGraph {
             composable(route=LOGIN_SCREEN){
                 AuthRoute(
                     onExitRequest = {},
-                    onLoginSuccess = {username,password->
-
-                    },
+                    onLoginSuccess = onLoginSuccess,
                     backHandler = {onBackButtonPress ->
                         BackHandler(onBack =onBackButtonPress)
 

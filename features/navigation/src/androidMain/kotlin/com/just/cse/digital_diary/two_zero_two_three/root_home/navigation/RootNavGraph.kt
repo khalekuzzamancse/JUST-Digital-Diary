@@ -21,51 +21,64 @@ fun RootNavGraph(
     modifier: Modifier = Modifier,
     onEvent: (AppEvent) -> Unit,
     openDrawerRequest: () -> Unit,
+    onLoginSuccess:(String,String)->Unit,
     navController: NavHostController,
 ) {
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = GraphRoutes.AUTH
+        startDestination = GraphRoutes.FACULTY_FEATURE
     ) {
         OtherFeatureNavGraph.graph(navGraphBuilder = this, onExitRequest = openDrawerRequest)
         composable(GraphRoutes.ADMIN_OFFICE_FEATURE) {
             AdminOfficeFeatureNavGraph.Graph(
                 onEvent = { event ->
+                    if (event is AdminEvent.ExitRequest)
+                        openDrawerRequest()
                     toAppEvent(event)?.let(onEvent)
                 }
             )
         }
         composable(GraphRoutes.FACULTY_FEATURE) {
             FacultyFeatureNavGraph.Graph(
-                onEvent = {event->
-                    toAppEvent(event).let(onEvent)
+                onEvent = { event ->
+                    if (event is FacultyFeatureEvent.ExitRequest)
+                        openDrawerRequest()
+                    toAppEvent(event)?.let(onEvent)
                 }
             )
         }
         composable(GraphRoutes.NOTES_FEATURE) {
-            NotesFeatureNavGraph.Graph()
+            NotesFeatureNavGraph.Graph(
+                onExitRequest = openDrawerRequest
+            )
         }
         composable(GraphRoutes.SEARCH) {
             SearchFeatureNavGraph.Graph(
-                onEvent ={event->
-                 toAppEvent(event)?.let(onEvent)
+                onEvent = { event ->
+                    if (event is SearchFeatureEvent.ExitRequest)
+                        openDrawerRequest()
+                    toAppEvent(event)?.let(onEvent)
                 }
             )
         }
         composable(GraphRoutes.AUTH) {
-            AuthenticationNavGraph.Graph()
+            AuthenticationNavGraph.Graph(onLoginSuccess=onLoginSuccess)
         }
 
     }
 
 }
 
-private fun toAppEvent(event: FacultyFeatureEvent): AppEvent {
-    val ev: AppEvent = when (event) {
+private fun toAppEvent(event: FacultyFeatureEvent): AppEvent? {
+    val ev: AppEvent? = when (event) {
         is FacultyFeatureEvent.CallRequest -> AppEvent.CallRequest(event.number)
         is FacultyFeatureEvent.MessageRequest -> AppEvent.MessageRequest(event.number)
         is FacultyFeatureEvent.EmailRequest -> AppEvent.EmailRequest(event.email)
+
+        else -> {
+            null
+        }
     }
     return ev
 
@@ -82,12 +95,13 @@ private fun toAppEvent(event: AdminEvent): AppEvent? {
     }
     return ev
 }
-private fun toAppEvent(event: SearchFeatureEvent): AppEvent?{
-    val ev: AppEvent?=when(event){
-        is SearchFeatureEvent.CallRequest-> AppEvent.CallRequest(event.number)
-        is SearchFeatureEvent.MessageRequest-> AppEvent.MessageRequest(event.number)
-        is SearchFeatureEvent.EmailRequest-> AppEvent.EmailRequest(event.email)
-        else ->null
+
+private fun toAppEvent(event: SearchFeatureEvent): AppEvent? {
+    val ev: AppEvent? = when (event) {
+        is SearchFeatureEvent.CallRequest -> AppEvent.CallRequest(event.number)
+        is SearchFeatureEvent.MessageRequest -> AppEvent.MessageRequest(event.number)
+        is SearchFeatureEvent.EmailRequest -> AppEvent.EmailRequest(event.email)
+        else -> null
     }
     return ev
 
@@ -99,5 +113,5 @@ object GraphRoutes {
     const val OTHER_FEATURE = OtherFeatureNavGraph.ROUTE
     const val NOTES_FEATURE = "NotesFeatureNavGraph.ROUTE"
     const val AUTH = "AuthenticationNavGraph.ROUTE"
-    const val SEARCH="Search"
+    const val SEARCH = "Search"
 }

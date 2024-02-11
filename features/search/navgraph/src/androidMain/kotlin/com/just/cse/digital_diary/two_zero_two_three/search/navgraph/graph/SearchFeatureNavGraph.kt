@@ -20,12 +20,17 @@ interface SearchFeatureEvent {
     data class CallRequest(val number: String) : SearchFeatureEvent
     data class MessageRequest(val number: String) : SearchFeatureEvent
     data class EmailRequest(val email: String) : SearchFeatureEvent
+    data object ExitRequest:SearchFeatureEvent
 }
 
 object SearchFeatureNavGraph {
     private const val EMPLOYEES = "NoteListScreen"
+
     @Composable
-    fun Graph(navController: NavHostController = rememberNavController(),onEvent:(SearchFeatureEvent)->Unit) {
+    fun Graph(
+        navController: NavHostController = rememberNavController(),
+        onEvent: (SearchFeatureEvent) -> Unit
+    ) {
         NavHost(
             navController = navController,
             startDestination = EMPLOYEES
@@ -33,14 +38,16 @@ object SearchFeatureNavGraph {
             composable(EMPLOYEES) {
                 SearchableEmployeeList(
                     barLeadingIcon = {
-                        IconButton(onClick = {}) {
+                        IconButton(onClick = {
+                            onEvent(SearchFeatureEvent.ExitRequest)
+                        }) {
                             Icon(
                                 imageVector = Icons.Default.Menu,
                                 contentDescription = "Menu Button"
                             )
                         }
                     },
-                    onEvent = {event->
+                    onEvent = { event ->
                         convertEvent(event)?.let { onEvent(it) }
                     }
                 )
@@ -52,12 +59,12 @@ object SearchFeatureNavGraph {
     }
 }
 
-private fun convertEvent(event: SearchFunctionalityEvent):SearchFeatureEvent?{
-    val ev:SearchFeatureEvent?=when(event){
-        is SearchFunctionalityEvent.CallRequest->SearchFeatureEvent.CallRequest(event.number)
-        is SearchFunctionalityEvent.MessageRequest->SearchFeatureEvent.MessageRequest(event.number)
-        is SearchFunctionalityEvent.EmailRequest->SearchFeatureEvent.EmailRequest(event.email)
-        else ->null
+private fun convertEvent(event: SearchFunctionalityEvent): SearchFeatureEvent? {
+    val ev: SearchFeatureEvent? = when (event) {
+        is SearchFunctionalityEvent.CallRequest -> SearchFeatureEvent.CallRequest(event.number)
+        is SearchFunctionalityEvent.MessageRequest -> SearchFeatureEvent.MessageRequest(event.number)
+        is SearchFunctionalityEvent.EmailRequest -> SearchFeatureEvent.EmailRequest(event.email)
+        else -> null
     }
     return ev
 
