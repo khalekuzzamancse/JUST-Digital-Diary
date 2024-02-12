@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.SearchBar
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -20,16 +21,21 @@ interface SearchFeatureEvent {
     data class CallRequest(val number: String) : SearchFeatureEvent
     data class MessageRequest(val number: String) : SearchFeatureEvent
     data class EmailRequest(val email: String) : SearchFeatureEvent
-    data object ExitRequest:SearchFeatureEvent
+    data object ExitRequest : SearchFeatureEvent
 }
 
 object SearchFeatureNavGraph {
     private const val EMPLOYEES = "NoteListScreen"
-
+    /**
+     * * [SearchBar] active parameter consume the back button handle.
+     * * that is why back button press event is not propagate up to parent.
+     * * that is why notify parent that back button is pressed so that it pop the destination
+     */
     @Composable
     fun Graph(
         navController: NavHostController = rememberNavController(),
-        onEvent: (SearchFeatureEvent) -> Unit
+        onEvent: (SearchFeatureEvent) -> Unit,
+        onBackPress: () -> Unit,
     ) {
         NavHost(
             navController = navController,
@@ -48,8 +54,11 @@ object SearchFeatureNavGraph {
                         }
                     },
                     onEvent = { event ->
-                        convertEvent(event)?.let { onEvent(it) }
-                    }
+                        if (event is SearchFunctionalityEvent.ExitRequest)
+                            onBackPress()
+                        else
+                            convertEvent(event)?.let { onEvent(it) }
+                    },
                 )
             }
 

@@ -14,6 +14,7 @@ fun <T> SearchSection(
     filterPredicate: (T, String) -> Boolean,
     barLeadingIcon: @Composable ()->Unit={},
     onSearch:(String)->Unit={},
+    onExitRequest:()->Unit,
     searchedItemDecorator: @Composable (T, highLightedText: String) -> Unit,
 ) {
     val uiState = remember(items) {
@@ -23,21 +24,19 @@ fun <T> SearchSection(
         )
     }
     val active = uiState.active.collectAsState().value
-    AnimatedVisibility(
-        visible = active
-    ) {
         SearchSection(
             query = uiState.query.collectAsState().value,
             onQueryChanged = uiState::onQueryChanged,
-            active = active,
-            onActiveChanged = uiState::onActiveChanged,
+            onActiveChanged = {
+                if (!it)
+               onExitRequest()
+            },
             result = uiState.results.collectAsState().value,
             searchedItemDecorator = searchedItemDecorator,
             barLeadingIcon = barLeadingIcon,
             onSearch = onSearch
         )
 
-    }
 
 
 }
@@ -46,7 +45,6 @@ fun <T> SearchSection(
 private fun <T> SearchSection(
     query: String,
     onQueryChanged: (String) -> Unit,
-    active: Boolean,
     onActiveChanged: (Boolean) -> Unit,
     result: List<T>,
     barLeadingIcon: @Composable ()->Unit={},
@@ -56,7 +54,7 @@ private fun <T> SearchSection(
     MySearchBar(
         query = query,
         onQueryChange = onQueryChanged,
-        active = active,
+        active = true,
         barLeadingIcon =barLeadingIcon,
         onSearch =onSearch,
         onActiveChanged = onActiveChanged,

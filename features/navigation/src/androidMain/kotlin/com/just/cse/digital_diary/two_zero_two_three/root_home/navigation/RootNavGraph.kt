@@ -64,7 +64,8 @@ fun RootNavGraph(
                     if (event is SearchFeatureEvent.ExitRequest)
                         openDrawerRequest()
                     toAppEvent(event)?.let(onEvent)
-                }
+                },
+                onBackPress = onBackPressed
             )
         }
         composable(GraphRoutes.AUTH) {

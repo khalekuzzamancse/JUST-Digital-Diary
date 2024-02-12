@@ -30,6 +30,7 @@ fun MySearchBar(
     SearchBar(
         modifier = modifier.fillMaxWidth(),
         query = query,
+        enabled = true,
         onQueryChange =onQueryChange,
         onSearch = onSearch,
         active = active,

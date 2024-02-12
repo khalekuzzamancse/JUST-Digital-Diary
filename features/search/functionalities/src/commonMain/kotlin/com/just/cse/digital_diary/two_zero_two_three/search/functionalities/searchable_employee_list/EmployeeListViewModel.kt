@@ -2,7 +2,6 @@ package com.just.cse.digital_diary.two_zero_two_three.search.functionalities.sea
 
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_officers.model.EmployeeModel
 import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.domain.admin_officers.repoisitory.EmployeesRepository
-import com.just.cse.digital_diary.two_zero_two_three.search.functionalities.employee_list.Employee
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

@@ -16,9 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.network_image.ImageLoader
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.search.search_bar.SearcherHighlightedText
-import com.just.cse.digital_diary.two_zero_two_three.search.functionalities.employee_list.CardTypography
-import com.just.cse.digital_diary.two_zero_two_three.search.functionalities.employee_list.Controls
-import com.just.cse.digital_diary.two_zero_two_three.search.functionalities.employee_list.Employee
+
 
 
 @Composable
