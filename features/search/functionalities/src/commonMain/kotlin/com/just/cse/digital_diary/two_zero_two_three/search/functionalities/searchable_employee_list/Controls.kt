@@ -1,5 +1,6 @@
-package com.just.cse.digital_diary.two_zero_two_three.search.functionalities.employee_list
+package com.just.cse.digital_diary.two_zero_two_three.search.functionalities.searchable_employee_list
 
+import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -10,10 +11,8 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Message
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun Controls(

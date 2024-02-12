@@ -1,5 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.search.functionalities.employee_list
-
+package com.just.cse.digital_diary.two_zero_two_three.search.functionalities.searchable_employee_list
 data class Employee(
     val name: String,
     val email: String,

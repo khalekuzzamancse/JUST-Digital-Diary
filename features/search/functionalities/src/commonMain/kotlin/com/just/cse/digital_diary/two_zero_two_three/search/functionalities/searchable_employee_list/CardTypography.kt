@@ -1,10 +1,9 @@
-package com.just.cse.digital_diary.two_zero_two_three.search.functionalities.employee_list
+package com.just.cse.digital_diary.two_zero_two_three.search.functionalities.searchable_employee_list
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-
 internal object  CardTypography{
     val title = TextStyle(
     fontWeight = FontWeight.Bold,
