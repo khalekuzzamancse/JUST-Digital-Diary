@@ -65,6 +65,8 @@ fun FacultyAndDepartmentList(
         viewModel.clearFacultySelection()
     }
         TwoPaneLayout(
+            showProgressBar = viewModel.uiState.collectAsState().value.isLoading,
+            snackBarMessage = viewModel.uiState.collectAsState().value.message,
             modifier = modifier,
             navigationIcon = if (showDepartmentList) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Menu,
             onNavigationIconClick = if (showDepartmentList) viewModel::clearFacultySelection else onExitRequest,
