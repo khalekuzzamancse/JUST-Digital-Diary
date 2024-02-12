@@ -8,7 +8,7 @@ import com.just.cse.digitaldiary.twozerotwothree.core.di.admin_offices.AdminOffi
 fun AdminOfficeAndSubOfficeRoute(
     onEmployeeListRequest: (String) -> Unit,
     onExitRequest: () -> Unit={},
-    onBackButtonPress:@Composable (onBackButtonPress: () -> Unit)->Unit={},
+    onBackButtonPress:@Composable (onBackButtonPress: () -> Boolean)->Unit={},
 ) {
     OfficesAndSubOffices(
         onEmployeeListRequest =onEmployeeListRequest,

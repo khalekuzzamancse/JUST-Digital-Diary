@@ -23,13 +23,16 @@ fun NotesAndDetailsRoute(
     selectedNoteId: String?,
     onNoteDetailsCloseRequest: () -> Unit,
     onDetailsRequest: (String) -> Unit,
-    onExitRequest:()->Unit,
-    backButtonHandler:@Composable (onBackButtonPress: () -> Unit)->Unit,
+    onExitRequest: () -> Unit,
+    backButtonHandler: @Composable (onBackButtonPress: () -> Boolean) -> Unit,
 ) {
-    val showDetails=selectedNoteId!= null
-    backButtonHandler{
-        if (showDetails)
-        onNoteDetailsCloseRequest()
+    val showDetails = selectedNoteId != null
+    backButtonHandler {
+        if (showDetails) {
+            onNoteDetailsCloseRequest()
+            true
+        } else
+            false
     }
     TwoPaneLayout(
         modifier = Modifier,
@@ -45,7 +48,7 @@ fun NotesAndDetailsRoute(
             NoteDetails(modifier = Modifier, id = "1")
         },
         alignment = Alignment.TopStart,
-        showTopOrRightPane =showDetails
+        showTopOrRightPane = showDetails
     )
 
 

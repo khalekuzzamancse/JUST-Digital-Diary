@@ -11,7 +11,6 @@ import com.just.cse.digital_diary.features.faculty.components.event.FacultyEvent
 import com.just.cse.digital_diary.features.faculty.destination.event.FacultyFeatureEvent
 import com.just.cse.digital_diary.features.faculty.destination.screens.FacultiesScreen
 import com.just.cse.digital_diary.features.faculty.destination.screens.TeachersScreen
-import com.just.cse.digital_diary.two_zero_two_three.architecture_layers.ui.teachers.event.TeacherListEvent
 
 object FacultyFeatureNavGraph {
     private const val FACULTY_SCREEN = "FacultyListScreen"
@@ -20,6 +19,7 @@ object FacultyFeatureNavGraph {
     @Composable
     fun Graph(
         navController: NavHostController = rememberNavController(),
+        onBackPressed: () -> Unit,
         onEvent: (FacultyFeatureEvent) -> Unit
     ) {
         NavHost(
@@ -27,13 +27,24 @@ object FacultyFeatureNavGraph {
             navController = navController,
             startDestination = FACULTY_SCREEN
         ) {
+
             composable(route = FACULTY_SCREEN) {
                 FacultiesScreen(
                     onTeacherListRequest = {
                         navController.navigate(TEACHERS_SCREEN)
                     },
                     backHandler = { onBackPress ->
-                        BackHandler(onBack = onBackPress)
+                        //overriding backhander will prevent it parent to notify that back button is
+                        //pressed as a result the parent nav controller may not notify that back button is pressed
+                        //as a result the parent nav controller may unable to pop destination automatically
+                        BackHandler(
+                            onBack = {
+                                val isConsumed = onBackPress()
+                                if (!isConsumed) {
+                                   onBackPressed()
+                                }
+                            },
+                        )
                     },
                     onExitRequest = {
                         onEvent(FacultyFeatureEvent.ExitRequest)

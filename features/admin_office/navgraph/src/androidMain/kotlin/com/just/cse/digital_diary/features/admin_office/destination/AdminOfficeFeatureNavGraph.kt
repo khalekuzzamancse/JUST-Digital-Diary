@@ -16,7 +16,7 @@ object AdminOfficeFeatureNavGraph {
     private const val OFFICERS_SCREEN = "OfficersListScreen"
 
     @Composable
-    fun Graph(navController: NavHostController= rememberNavController(),onEvent:(AdminEvent)->Unit) {
+    fun Graph(navController: NavHostController= rememberNavController(),onEvent:(AdminEvent)->Unit,onBackPress:()->Unit) {
         NavHost(
             modifier = Modifier,
             navController = navController,
@@ -27,8 +27,11 @@ object AdminOfficeFeatureNavGraph {
                     onEmployeeListRequest = { subOffice ->
                         navController.navigate(OFFICERS_SCREEN)
                     },
-                    onBackButtonPress = {onBackPress ->
-                        BackHandler(onBack = onBackPress)
+                    onBackButtonPress = {callback ->
+                        BackHandler(onBack = {
+                           val isConsumed= callback()
+                            if (!isConsumed)onBackPress()
+                        })
 
                     },
                     onExitRequest = {
