@@ -26,11 +26,6 @@ fun RootNavGraph(
     onLoginSuccess: (String, String) -> Unit,
     navController: NavHostController,
 ) {
-    LaunchedEffect(Unit) {
-        navController.currentBackStack.collect {
-            println("RootNavGraph:Stack: ${it.map { it.destination.route }}")
-        }
-    }
 
     NavHost(
         modifier = modifier,

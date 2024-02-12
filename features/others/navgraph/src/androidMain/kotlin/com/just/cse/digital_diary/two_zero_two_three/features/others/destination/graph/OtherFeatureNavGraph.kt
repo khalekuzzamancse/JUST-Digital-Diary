@@ -22,35 +22,37 @@ import kotlinx.coroutines.flow.update
 
 object OtherFeatureNavGraph {
     const val ROUTE = "OtherFeatureNavigation"
-    private const val HOME_SCREEN = "Home"
+    const val HOME_ROUTE = "Home"
     private const val ABOUT_US_SCREEN = "AboutUs"
     private const val EVENT_GALLERY_SCREEN = "EventGallery"
     private const val MESSAGE_FROM_VC_SCREEN = "MessageFromVC"
     private val showNavigationIcon = MutableStateFlow(true)
+
     /**
     Useful for nav rail
      */
     fun enableBackNavigation() {
         showNavigationIcon.update { true }
     }
-    fun disableBackNavigation(){
+
+    fun disableBackNavigation() {
         showNavigationIcon.update { false }
     }
 
     fun navigateToHome(navController: NavHostController) {
-        navigateAsTopMostDestination(HOME_SCREEN,navController)
+        navigateAsTopMostDestination(HOME_ROUTE, navController)
     }
 
     fun navigateToAboutUs(navController: NavHostController) {
-        navigateAsTopMostDestination(ABOUT_US_SCREEN,navController)
+        navigateAsTopMostDestination(ABOUT_US_SCREEN, navController)
     }
 
     fun navigateToEventGallery(navController: NavHostController) {
-        navigateAsTopMostDestination(EVENT_GALLERY_SCREEN,navController)
+        navigateAsTopMostDestination(EVENT_GALLERY_SCREEN, navController)
     }
 
     fun navigateToMessageFromVC(navController: NavHostController) {
-        navigateAsTopMostDestination(MESSAGE_FROM_VC_SCREEN,navController)
+        navigateAsTopMostDestination(MESSAGE_FROM_VC_SCREEN, navController)
     }
 
     private fun navigateAsTopMostDestination(
@@ -70,9 +72,9 @@ object OtherFeatureNavGraph {
         with(navGraphBuilder) {
             navigation(
                 route = ROUTE,
-                startDestination = HOME_SCREEN
+                startDestination = HOME_ROUTE
             ) {
-                composable(route = HOME_SCREEN) {
+                composable(route = HOME_ROUTE) {
                     TopBarDecorator(
                         enableNavigation = showNavigationIcon.collectAsState().value,
                         onExitRequest = onExitRequest,
