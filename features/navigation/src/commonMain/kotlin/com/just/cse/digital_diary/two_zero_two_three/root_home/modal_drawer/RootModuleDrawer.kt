@@ -51,8 +51,6 @@ fun RootModuleDrawerAnimationLess(
         onDestinationSelected = drawerHandler::onSectionSelected,
         header = {
             Header(
-                name = "",
-                department = "",
                 onLogOutRequest = onLogOutRequest,
             )
 
@@ -103,8 +101,6 @@ fun RootModuleDrawer(
         onDestinationSelected = drawerHandler::onSectionSelected,
         header = {
             Header(
-                name = "",
-                department = "",
                 onLogOutRequest = onLogOutRequest,
             )
 

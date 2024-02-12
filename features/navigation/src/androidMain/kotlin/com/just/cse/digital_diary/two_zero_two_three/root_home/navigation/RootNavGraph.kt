@@ -1,7 +1,6 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -23,14 +22,14 @@ fun RootNavGraph(
     onEvent: (AppEvent) -> Unit,
     openDrawerRequest: () -> Unit,
     onBackPressed: () -> Unit,
-    onLoginSuccess: (String, String) -> Unit,
+    startDestination:String,
     navController: NavHostController,
 ) {
 
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = GraphRoutes.OTHER_FEATURE
+        startDestination = startDestination
     ) {
         OtherFeatureNavGraph.graph(navGraphBuilder = this, onExitRequest = openDrawerRequest)
         composable(GraphRoutes.ADMIN_OFFICE_FEATURE) {
@@ -69,7 +68,7 @@ fun RootNavGraph(
             )
         }
         composable(GraphRoutes.AUTH) {
-            AuthenticationNavGraph.Graph(onLoginSuccess = onLoginSuccess)
+            AuthenticationNavGraph.Graph()
         }
 
     }
@@ -116,7 +115,7 @@ private fun toAppEvent(event: SearchFeatureEvent): AppEvent? {
 object GraphRoutes {
     const val FACULTY_FEATURE = "FacultyFeatureNavGraph.ROUTE"
     const val ADMIN_OFFICE_FEATURE = "AdminOfficeFeatureNavGraph.ROUTE"
-    const val OTHER_FEATURE = OtherFeatureNavGraph.ROUTE
+    const val TOPMOST_OTHER_FEATURE = OtherFeatureNavGraph.ROUTE
     const val NOTES_FEATURE = "NotesFeatureNavGraph.ROUTE"
     const val AUTH = "AuthenticationNavGraph.ROUTE"
     const val SEARCH = "Search"

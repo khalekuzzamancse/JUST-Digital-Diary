@@ -2,10 +2,7 @@ package com.just.cse.digital_diary.two_zero_two_three.root_home.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -14,6 +11,7 @@ import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.ModalDrawerHandler
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.RootModuleDrawerAnimationLess
 import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.TopMostDestination
+import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
 
 private val drawerHandler = ModalDrawerHandler()
 
@@ -22,11 +20,10 @@ fun AndroidRootNavigation(
     handler: ModalDrawerHandler = drawerHandler,
     onEvent: (AppEvent) -> Unit,
 ) {
-    val navHostController = rememberNavController()
-    var notSignedIn by remember { mutableStateOf(false) }
-    val onLoginSuccess: (String, String) -> Unit = { _, _ ->
-        notSignedIn = false
-        navHostController.popBackStack()
+    var navHostController = rememberNavController()
+    val isSignedIn = AuthComponentProvider.observeSignIn().collectAsState(true).value
+    val onLogOutRequest: () -> Unit = {
+        AuthComponentProvider.signInOut()
     }
     LaunchedEffect(Unit) {
         navHostController.currentBackStackEntryFlow.collect {
@@ -39,75 +36,91 @@ fun AndroidRootNavigation(
             }
         }
     }
+
     val pop: () -> Unit = {
         navHostController.popBackStack()
     }
-    val onLogOutRequest: () -> Unit = {
-        navHostController.navigate(GraphRoutes.AUTH)
-        notSignedIn = true
-    }
-    // if (notSignedIn)
-    //  navHostController.navigate(GraphRoutes.AUTH)
-
-    RootModuleDrawerAnimationLess(
-        onLogOutRequest = onLogOutRequest,
-        drawerHandler = handler,
-        onEvent = { destination ->
-            when (destination) {
-                TopMostDestination.Home -> {
-                    OtherFeatureNavGraph.navigateToHome(navHostController)
-                }
-
-                TopMostDestination.MessageFromVC -> {
-                    OtherFeatureNavGraph.navigateToMessageFromVC(navHostController)
-                }
-
-                TopMostDestination.AboutUs -> {
-                    OtherFeatureNavGraph.navigateToAboutUs(navHostController)
-                }
-
-                TopMostDestination.EventGallery -> {
-                    OtherFeatureNavGraph.navigateToEventGallery(navHostController)
-                }
-
-                TopMostDestination.FacultyList -> {
-                    navigateAsTopMostDestination(GraphRoutes.FACULTY_FEATURE, navHostController)
-                }
-
-                TopMostDestination.AdminOffice -> {
-                    navigateAsTopMostDestination(
-                        GraphRoutes.ADMIN_OFFICE_FEATURE,
-                        navHostController
-                    )
-                }
-
-                TopMostDestination.Search -> {
-                    navigateAsTopMostDestination(GraphRoutes.SEARCH, navHostController)
-                }
-
-                TopMostDestination.NoteList -> {
-                    navigateAsTopMostDestination(GraphRoutes.NOTES_FEATURE, navHostController)
-                }
-
-                TopMostDestination.ExploreJust -> {
-                    onEvent(AppEvent.WebVisitRequest("https://just.edu.bd/"))
-                }
-
-                else -> {}
+    if (isSignedIn){
+        //clear the old nav controller
+        navHostController= rememberNavController()
+        RootModuleDrawerAnimationLess(
+            onLogOutRequest = onLogOutRequest,
+            drawerHandler = handler,
+            onEvent = { destination ->
+                    navigator(navHostController, destination, onEvent = onEvent)
+            },
+            navHost = {
+                RootNavGraph(
+                    onEvent = onEvent,
+                    openDrawerRequest = handler::openDrawer,
+                    navController = navHostController,
+                    onBackPressed = pop,
+                    startDestination = GraphRoutes.TOPMOST_OTHER_FEATURE
+                )
             }
-        },
-        navHost = {
-            RootNavGraph(
-                onEvent = onEvent,
-                openDrawerRequest = handler::openDrawer,
-                navController = navHostController,
-                onLoginSuccess = onLoginSuccess,
-                onBackPressed = pop
+        )
+    }
+    else{
+        //clear the old nav controller
+        navHostController= rememberNavController()
+        RootNavGraph(
+            onEvent = onEvent,
+            openDrawerRequest = handler::openDrawer,
+            navController = navHostController,
+            onBackPressed = pop,
+            startDestination = GraphRoutes.AUTH
+        )
+    }
+
+}
+
+private fun navigator(
+    navController: NavHostController,
+    destination: TopMostDestination,
+    onEvent: (AppEvent) -> Unit,
+) {
+    when (destination) {
+        TopMostDestination.Home -> {
+            OtherFeatureNavGraph.navigateToHome(navController)
+        }
+
+        TopMostDestination.MessageFromVC -> {
+            OtherFeatureNavGraph.navigateToMessageFromVC(navController)
+        }
+
+        TopMostDestination.AboutUs -> {
+            OtherFeatureNavGraph.navigateToAboutUs(navController)
+        }
+
+        TopMostDestination.EventGallery -> {
+            OtherFeatureNavGraph.navigateToEventGallery(navController)
+        }
+
+        TopMostDestination.FacultyList -> {
+            navigateAsTopMostDestination(GraphRoutes.FACULTY_FEATURE, navController)
+        }
+
+        TopMostDestination.AdminOffice -> {
+            navigateAsTopMostDestination(
+                GraphRoutes.ADMIN_OFFICE_FEATURE,
+                navController
             )
         }
-    )
 
+        TopMostDestination.Search -> {
+            navigateAsTopMostDestination(GraphRoutes.SEARCH, navController)
+        }
 
+        TopMostDestination.NoteList -> {
+            navigateAsTopMostDestination(GraphRoutes.NOTES_FEATURE, navController)
+        }
+
+        TopMostDestination.ExploreJust -> {
+            onEvent(AppEvent.WebVisitRequest("https://just.edu.bd/"))
+        }
+
+        else -> {}
+    }
 }
 
 private fun navigateAsTopMostDestination(
