@@ -10,6 +10,12 @@ data class NavigationGroup(
 )
 
 //use key to uniquely identify
+data class DrawerNavigationItem(
+    val label: String,
+    val unFocusedIcon: ImageVector,
+    val focusedIcon: ImageVector =unFocusedIcon,
+    val badge: String? = null,
+)
 data class NavigationItemInfo<T>(
     val key:T,
     val label: String,

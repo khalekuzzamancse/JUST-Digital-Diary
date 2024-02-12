@@ -8,16 +8,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.DrawerNavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationGroup
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.NavGroupSelectedItem
 
 @Composable
-fun <T> Sheet(
+fun Sheet(
     selectedDestinationIndex: Int = -1,
-    visibilityDelay: Long,
     header: @Composable () -> Unit,
-    destinations: List<NavigationItemInfo<T>>,
+    destinations: List<DrawerNavigationItem>,
     onDestinationSelected: (index: Int) -> Unit,
 ) {
 
@@ -27,9 +27,8 @@ fun <T> Sheet(
         destinations = destinations,
         destinationDecorator = { index ->
             val navigationItem = destinations[index]
-            ItemDecorator(
-                visibilityDelay = index * visibilityDelay,
-                navigationItem = navigationItem,
+            DrawerItemDecorator(
+                item = navigationItem,
                 isSelected = index == selectedDestinationIndex,
                 onClick = {
                     onDestinationSelected(index)
@@ -91,10 +90,10 @@ fun Sheet(
 }
 
 @Composable
-fun <T> DrawerSheet(
+fun DrawerSheet(
     header: (@Composable () -> Unit)? = null,
     footer: (@Composable () -> Unit)? = null,
-    destinations: List<NavigationItemInfo<T>>,
+    destinations: List<DrawerNavigationItem>,
     destinationDecorator: @Composable (index: Int) -> Unit,
 ) {
     ModalDrawerSheet(

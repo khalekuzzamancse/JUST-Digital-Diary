@@ -14,59 +14,60 @@ import androidx.compose.material.icons.outlined.Message
 import androidx.compose.material.icons.outlined.Notes
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Search
+import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.DrawerNavigationItem
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.custom_navigation_item.NavigationItemInfo
 
 internal val rootModuleTopMostDestinations = listOf(
-    NavigationItemInfo(
+    DrawerNavigationItem(
         label = "Home",
         unFocusedIcon = Icons.Outlined.Home,
-        key = ""
+
     ),
 
-    NavigationItemInfo(
+    DrawerNavigationItem(
         label = "Faculty List",
         unFocusedIcon = Icons.Outlined.School,
-        key = ""
+
     ),
-    NavigationItemInfo(
+    DrawerNavigationItem(
         label = "Admin Offices",
         unFocusedIcon = Icons.Outlined.AdminPanelSettings,
-        key = ""
+
     ),
 
-    NavigationItemInfo(
+    DrawerNavigationItem(
         label = "Message(Vice -Chancellor)",
         unFocusedIcon = Icons.Outlined.Message,
-        key = ""
+
     ),
-    NavigationItemInfo(
+    DrawerNavigationItem(
         label = "About Us",
         unFocusedIcon = Icons.Outlined.Info,
-        key = ""
+
     ),
-    NavigationItemInfo(
+    DrawerNavigationItem(
         label = "Search",
         unFocusedIcon = Icons.Outlined.Search,
         focusedIcon = Icons.Filled.Search,
-        key = ""
+
     ),
-    NavigationItemInfo(
+    DrawerNavigationItem(
         label = "Notes",
         unFocusedIcon = Icons.Outlined.Notes,
         focusedIcon = Icons.Filled.Notes,
-        key = ""
+
     ),
-    NavigationItemInfo(
+    DrawerNavigationItem(
         label = "Event Gallery",
         unFocusedIcon = Icons.Outlined.Image,
         focusedIcon = Icons.Filled.Image,
-        key = ""
+
     ),
-    NavigationItemInfo(
+    DrawerNavigationItem(
         label = "Explore JUST",
         unFocusedIcon = Icons.Outlined.Explore,
         focusedIcon = Icons.Filled.Explore,
-        key = ""
+
     ),
 )
 
