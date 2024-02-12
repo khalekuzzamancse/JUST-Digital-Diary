@@ -31,7 +31,7 @@ fun OfficesAndSubOffices(
     officeRepository: AdminOfficeListRepository,
     subOfficeRepository: AdminSubOfficeListRepository,
     onExitRequest: () -> Unit,
-    backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit,
+    backHandler: @Composable (onBackButtonPress: () -> Boolean) -> Unit,
 ) {
 
     val scope = rememberCoroutineScope()
@@ -70,7 +70,11 @@ fun OfficesAndSubOffices(
     }
     backHandler {
         if (subOfficeState != null)
-            viewModel.dismissSubOfficesDestination()
+        { viewModel.dismissSubOfficesDestination()
+            true
+        }
+        else
+            false
     }
     TwoPaneLayout(
         modifier = Modifier,

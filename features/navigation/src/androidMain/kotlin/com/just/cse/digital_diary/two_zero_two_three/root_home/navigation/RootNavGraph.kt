@@ -1,6 +1,7 @@
 package com.just.cse.digital_diary.two_zero_two_three.root_home.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -21,13 +22,20 @@ fun RootNavGraph(
     modifier: Modifier = Modifier,
     onEvent: (AppEvent) -> Unit,
     openDrawerRequest: () -> Unit,
-    onLoginSuccess:(String,String)->Unit,
+    onBackPressed: () -> Unit,
+    onLoginSuccess: (String, String) -> Unit,
     navController: NavHostController,
 ) {
+    LaunchedEffect(Unit) {
+        navController.currentBackStack.collect {
+            println("RootNavGraph:Stack: ${it.map { it.destination.route }}")
+        }
+    }
+
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = GraphRoutes.FACULTY_FEATURE
+        startDestination = GraphRoutes.OTHER_FEATURE
     ) {
         OtherFeatureNavGraph.graph(navGraphBuilder = this, onExitRequest = openDrawerRequest)
         composable(GraphRoutes.ADMIN_OFFICE_FEATURE) {
@@ -36,7 +44,8 @@ fun RootNavGraph(
                     if (event is AdminEvent.ExitRequest)
                         openDrawerRequest()
                     toAppEvent(event)?.let(onEvent)
-                }
+                },
+                onBackPress = onBackPressed
             )
         }
         composable(GraphRoutes.FACULTY_FEATURE) {
@@ -45,12 +54,14 @@ fun RootNavGraph(
                     if (event is FacultyFeatureEvent.ExitRequest)
                         openDrawerRequest()
                     toAppEvent(event)?.let(onEvent)
-                }
+                },
+                onBackPressed = onBackPressed
             )
         }
         composable(GraphRoutes.NOTES_FEATURE) {
             NotesFeatureNavGraph.Graph(
-                onExitRequest = openDrawerRequest
+                onExitRequest = openDrawerRequest,
+                onBackPressed = onBackPressed
             )
         }
         composable(GraphRoutes.SEARCH) {
@@ -63,7 +74,7 @@ fun RootNavGraph(
             )
         }
         composable(GraphRoutes.AUTH) {
-            AuthenticationNavGraph.Graph(onLoginSuccess=onLoginSuccess)
+            AuthenticationNavGraph.Graph(onLoginSuccess = onLoginSuccess)
         }
 
     }

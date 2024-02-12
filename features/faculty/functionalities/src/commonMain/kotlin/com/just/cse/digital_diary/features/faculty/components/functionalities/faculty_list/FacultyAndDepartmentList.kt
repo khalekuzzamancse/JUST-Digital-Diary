@@ -28,7 +28,7 @@ fun FacultyAndDepartmentList(
     departmentListRepository: DepartmentListRepository,
     onExitRequest:()->Unit,
     onEmployeeListRequest: (String) -> Unit = {},
-    backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit,
+    backHandler: @Composable (onBackButtonPress: () -> Boolean) -> Unit,
 ) {
     val viewModel = remember {
         FacultiesScreenViewModel(
@@ -62,7 +62,17 @@ fun FacultyAndDepartmentList(
     val showDepartmentList=departmentListState!=null
     backHandler {
         if (showDepartmentList)
-        viewModel.clearFacultySelection()
+        {
+            viewModel.clearFacultySelection()
+            true
+        //consuming the back event to dismiss department list
+        }
+        else{
+            //since department list closed,so only faculty list is opened
+            //user click on the back button,so we don't need to consume this  back press
+            false
+        }
+
     }
         TwoPaneLayout(
             showProgressBar = viewModel.uiState.collectAsState().value.isLoading,

@@ -20,7 +20,7 @@ fun HomeDestination(
             .padding(start = 16.dp)
             .fillMaxSize()
     ) {
-
+        Text("Welcome  to home")
 
     }
 

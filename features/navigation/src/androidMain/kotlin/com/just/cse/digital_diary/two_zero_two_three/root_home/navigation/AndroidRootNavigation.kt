@@ -5,6 +5,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.graph.OtherFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
@@ -20,13 +22,13 @@ fun AndroidRootNavigation(
     onEvent: (AppEvent) -> Unit,
 ) {
     val navHostController = rememberNavController()
-
-
     var notSignedIn by remember { mutableStateOf(false) }
     val onLoginSuccess: (String, String) -> Unit = { _, _ ->
         notSignedIn = false
         navHostController.popBackStack()
-
+    }
+    val pop:()->Unit={
+        navHostController.popBackStack()
     }
     val onLogOutRequest: () -> Unit = {
         navHostController.navigate(GraphRoutes.AUTH)
@@ -57,19 +59,23 @@ fun AndroidRootNavigation(
                     }
 
                     TopMostDestination.FacultyList -> {
-                        navHostController.navigate(GraphRoutes.FACULTY_FEATURE)
+                        navigateAsTopMostDestination(GraphRoutes.FACULTY_FEATURE,navHostController)
+                       // navHostController.navigate()
                     }
 
                     TopMostDestination.AdminOffice -> {
-                        navHostController.navigate(GraphRoutes.ADMIN_OFFICE_FEATURE)
+                        navigateAsTopMostDestination(GraphRoutes.ADMIN_OFFICE_FEATURE,navHostController)
+                      //  navHostController.navigate(GraphRoutes.ADMIN_OFFICE_FEATURE)
                     }
 
                     TopMostDestination.Search -> {
-                        navHostController.navigate(GraphRoutes.SEARCH)
+                        navigateAsTopMostDestination(GraphRoutes.SEARCH,navHostController)
+                       // navHostController.navigate(GraphRoutes.SEARCH)
                     }
 
                     TopMostDestination.NoteList -> {
-                        navHostController.navigate(GraphRoutes.NOTES_FEATURE)
+                        navigateAsTopMostDestination(GraphRoutes.NOTES_FEATURE,navHostController)
+                        //navHostController.navigate(GraphRoutes.NOTES_FEATURE)
                     }
 
                     TopMostDestination.ExploreJust -> {
@@ -84,7 +90,8 @@ fun AndroidRootNavigation(
                     onEvent = onEvent,
                     openDrawerRequest = handler::openDrawer,
                     navController = navHostController,
-                    onLoginSuccess = onLoginSuccess
+                    onLoginSuccess = onLoginSuccess,
+                    onBackPressed = pop
                 )
             }
         )
@@ -92,4 +99,16 @@ fun AndroidRootNavigation(
     }
 
 
+}
+private fun navigateAsTopMostDestination(
+    destination: String,
+    navController: NavHostController
+) {
+    navController.navigate(destination) {
+        popUpTo(navController.graph.findStartDestination().id) {
+            saveState = true
+        }
+        launchSingleTop = true
+        restoreState = true
+    }
 }

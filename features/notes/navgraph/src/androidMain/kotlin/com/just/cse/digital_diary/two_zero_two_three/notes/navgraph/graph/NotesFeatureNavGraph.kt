@@ -24,6 +24,7 @@ object NotesFeatureNavGraph {
     @Composable
     fun Graph(
         navController: NavHostController = rememberNavController(),
+        onBackPressed:()->Unit,
         onExitRequest:()->Unit,
     ) {
         var selectedNoteId: String? by remember { mutableStateOf(null) }
@@ -47,7 +48,12 @@ object NotesFeatureNavGraph {
                         },
                         selectedNoteId = selectedNoteId,
                         backButtonHandler = { callback ->
-                            BackHandler(onBack = callback)
+                            BackHandler(onBack = {
+                                val isConsumed=callback()
+                                if (!isConsumed){
+                                    onBackPressed()
+                                }
+                            })
                         },
                         onExitRequest = onExitRequest
                     )

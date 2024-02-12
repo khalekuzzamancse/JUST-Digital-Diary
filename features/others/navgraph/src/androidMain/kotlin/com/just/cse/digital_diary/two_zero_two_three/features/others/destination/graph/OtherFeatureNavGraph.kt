@@ -27,6 +27,9 @@ object OtherFeatureNavGraph {
     private const val EVENT_GALLERY_SCREEN = "EventGallery"
     private const val MESSAGE_FROM_VC_SCREEN = "MessageFromVC"
     private val showNavigationIcon = MutableStateFlow(true)
+    /**
+    Useful for nav rail
+     */
     fun enableBackNavigation() {
         showNavigationIcon.update { true }
     }
