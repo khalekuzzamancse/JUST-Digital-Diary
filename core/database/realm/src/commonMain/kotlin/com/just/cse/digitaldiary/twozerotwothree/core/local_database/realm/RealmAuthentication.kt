@@ -12,6 +12,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 
 object RealmAuthentication {
@@ -126,15 +127,22 @@ object RealmAuthentication {
     }
 
     fun observeSignIn(): Flow<Boolean> {
-        val isSignIn = realm.query<SignedInUser>().find().first()
-            .asFlow().map {
-                val user = it.obj
-                if (user == null) false
-                else {
-                    user.username != null && user.password != null
-                }
-            }
-        return isSignIn
+       realm.query<SignedInUser>().find().let {entities->
+           if (entities.isNotEmpty()){
+               return entities.first().asFlow().map {
+                   val user = it.obj
+                   if (user == null) false
+                   else {
+                       user.username != null && user.password != null
+                   }
+               }
+           }
+           else{
+              return MutableStateFlow(false)
+           }
+
+        }
+
     }
 
     fun getToken(): String? {
