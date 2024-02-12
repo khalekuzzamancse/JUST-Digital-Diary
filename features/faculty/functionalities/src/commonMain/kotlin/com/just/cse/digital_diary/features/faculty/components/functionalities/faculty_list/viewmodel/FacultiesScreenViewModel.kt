@@ -27,6 +27,9 @@ class FacultiesScreenViewModel(
     private val _facultyListState = MutableStateFlow(FacultyListState(faculties = emptyList()))
     val facultyListState = _facultyListState.asStateFlow()
 
+    private val _uiState = MutableStateFlow(FacultiesScreenState())
+    val uiState=_uiState.asStateFlow()
+
     fun onFacultySelected(index: Int) {
         CoroutineScope(Dispatchers.Default).launch {
             _facultyListState.update { it.copy(selected = index) }
@@ -132,8 +135,6 @@ class FacultiesScreenViewModel(
         _departmentListState.update { null }
         _uiState.update { it.copy(openDepartmentListDestination = false) }
     }
-
-    private val _uiState = MutableStateFlow(FacultiesScreenState())
 
 
 
