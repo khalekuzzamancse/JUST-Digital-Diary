@@ -1,8 +1,10 @@
 package com.just.cse.digital_diary.features.admin_office.destination.screens
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.just.cse.digital_diary.features.admin_office.components.AdminFeatureEvent
 import com.just.cse.digital_diary.features.admin_office.components.officers.AdminOfficers
 import com.just.cse.digital_diary.features.admin_office.destination.event.AdminEvent
@@ -22,6 +24,7 @@ fun AdminOfficersScreen(
         topBarTitle = "Admin Officers"
     ) {
         AdminOfficers(
+            modifier = Modifier.padding(it),
             subOfficeId=subOfficeId,
             repository = AdminOfficeComponentProvider.getAdminOfficersListRepository(),
             onEvent={event->
