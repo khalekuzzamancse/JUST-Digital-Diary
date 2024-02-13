@@ -14,6 +14,7 @@ import com.just.cse.digital_diary.two_zero_two_three.common_ui.progressbar.Progr
 
 @Composable
 fun AdminOfficers(
+    modifier: Modifier=Modifier,
     subOfficeId: String,
     repository: AdminOfficerListRepository,
     onEvent: (AdminFeatureEvent)->Unit
@@ -29,10 +30,11 @@ fun AdminOfficers(
     }
 
     ProgressBarNSnackBarDecorator(
+        modifier=Modifier,
         showProgressBar = viewModel.uiState.collectAsState().value.isLoading
     ) {
         ListOfAdminOfficer(
-            modifier = Modifier,
+            modifier = modifier,
             state = viewModel.uiState.collectAsState().value.adminOfficerListState,
             onEvent = {event->
                convertEvent(event)?.let { onEvent(it) }

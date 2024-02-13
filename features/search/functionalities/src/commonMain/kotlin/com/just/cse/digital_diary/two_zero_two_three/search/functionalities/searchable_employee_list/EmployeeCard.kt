@@ -1,12 +1,17 @@
 package com.just.cse.digital_diary.two_zero_two_three.search.functionalities.searchable_employee_list
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,12 +43,20 @@ internal fun SearchedEmployeeCard(
             verticalArrangement = Arrangement.spacedBy(4.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            ImageLoader(
-                url = employee.profileImageLink,
+//            ImageLoader(
+//                url = employee.profileImageLink,
+//                modifier = Modifier
+//                    .heightIn(max = 100.dp)
+//                    .widthIn(max = 150.dp)
+//                    .background(Color.Red)
+//                    .align(Alignment.CenterHorizontally),
+//            )
+            Box(
                 modifier = Modifier
-                    .heightIn(max = 100.dp)
-                    .widthIn(max = 150.dp)
-                    .background(Color.Red)
+                    .height( 100.dp)
+                    .width(150.dp)
+                    .border(width = 1.dp, color = MaterialTheme.colorScheme.primary)
+                    .background(MaterialTheme.colorScheme.secondaryContainer)
                     .align(Alignment.CenterHorizontally),
             )
             ExpandAbleInfo(

@@ -115,6 +115,5 @@ object GraphRoutes {
     const val ADMIN_OFFICE_FEATURE = "AdminOfficeFeatureNavGraph.ROUTE"
     const val TOPMOST_OTHER_FEATURE = OtherFeatureNavGraph.ROUTE
     const val NOTES_FEATURE = "NotesFeatureNavGraph.ROUTE"
-    const val AUTH = "AuthenticationNavGraph.ROUTE"
     const val SEARCH = "Search"
 }
