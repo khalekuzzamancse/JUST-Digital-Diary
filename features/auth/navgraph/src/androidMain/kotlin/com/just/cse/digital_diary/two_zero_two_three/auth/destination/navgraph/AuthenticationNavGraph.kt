@@ -21,13 +21,11 @@ import kotlinx.coroutines.launch
  *
 
  */
-object AuthenticationNavGraph {
-    private const val LOGIN_SCREEN = "LoginScreen"
+private const val LOGIN_SCREEN = "LoginScreen"
 
-    @Composable
-    fun Graph(
-        navController: NavHostController = rememberNavController(),
-    ) {
+@Composable
+    fun AuthNavHost() {
+        val navController: NavHostController = rememberNavController()
         val scope = rememberCoroutineScope()
         NavHost(
             navController = navController,
@@ -54,5 +52,5 @@ object AuthenticationNavGraph {
 
     }
 
-}
+
 
