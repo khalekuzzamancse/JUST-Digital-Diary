@@ -28,6 +28,11 @@ fun AndroidRootNavigation(
     val onLogOutRequest: () -> Unit = {
         AuthComponentProvider.signInOut()
     }
+    LaunchedEffect(isSignedIn){
+        if (isSignedIn){
+            AuthComponentProvider.updateAuthToken()
+        }
+    }
 
     LaunchedEffect(Unit) {
         navHostController.currentBackStackEntryFlow.collect {

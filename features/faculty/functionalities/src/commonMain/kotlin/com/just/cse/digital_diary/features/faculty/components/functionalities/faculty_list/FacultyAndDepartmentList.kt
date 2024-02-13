@@ -48,8 +48,10 @@ fun FacultyAndDepartmentList(
         when (event) {
             is DepartmentListEvent.DepartmentSelected -> {
                 val deptId = viewModel.getDepartmentId(event.index)
-                if (deptId != null)
+                if (deptId != null){
                     onEmployeeListRequest(deptId)
+                }
+
             }
         }
 
