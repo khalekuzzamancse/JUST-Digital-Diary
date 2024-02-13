@@ -13,12 +13,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 
 object RealmAuthentication {
     private val configuration = RealmConfiguration.create(
-        schema = setOf(Person::class, Dog::class, SignedInUser::class)
+        schema = setOf(SignedInUser::class)
     )
+    private val _signInFlow = MutableStateFlow(false)
+     val signInFlow = _signInFlow.asStateFlow()
+
     private val realm = Realm.open(configuration)
 
 
@@ -27,11 +33,17 @@ object RealmAuthentication {
     ): SignedInUserResponseModel? {
         val entityAlreadyExistsAndUpdated =
             updateUser(requestModel.username, requestModel.password) != null
-        return if (entityAlreadyExistsAndUpdated)
+        val res = if (entityAlreadyExistsAndUpdated)
             requestModel
         else {
             createEntity(requestModel)
         }
+        val isSaved=res!=null
+        if (isSaved)
+        _signInFlow.update { true }
+        else
+            _signInFlow.update { false }
+        return res
 
     }
 
@@ -105,6 +117,8 @@ object RealmAuthentication {
         response?.let {
             if (it.username == null || it.password == null)
                 return true
+            //
+          _signInFlow.update { false }
         }
         return false
     }
@@ -127,19 +141,18 @@ object RealmAuthentication {
     }
 
     fun observeSignIn(): Flow<Boolean> {
-       realm.query<SignedInUser>().find().let {entities->
-           if (entities.isNotEmpty()){
-               return entities.first().asFlow().map {
-                   val user = it.obj
-                   if (user == null) false
-                   else {
-                       user.username != null && user.password != null
-                   }
-               }
-           }
-           else{
-              return MutableStateFlow(false)
-           }
+        realm.query<SignedInUser>().find().let { entities ->
+            if (entities.isNotEmpty()) {
+                return entities.first().asFlow().map {
+                    val user = it.obj
+                    if (user == null) false
+                    else {
+                        user.username != null && user.password != null
+                    }
+                }
+            } else {
+                return MutableStateFlow(false)
+            }
 
         }
 
