@@ -35,7 +35,7 @@ fun <T> NavigationItem(
     colors: NavigationItemProps = NavigationItemProps(
         focusedColor = MaterialTheme.colorScheme.errorContainer,
         unFocusedColor = MaterialTheme.colorScheme.primaryContainer,
-
+        shape = MaterialTheme.shapes.small
         )
 ) {
     NavigationItem(

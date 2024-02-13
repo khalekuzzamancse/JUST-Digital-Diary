@@ -22,9 +22,10 @@ internal fun VerticalListNavigation(
     destinations: List<NavigationItemInfo2<String>>,
     onDestinationSelected: (Int) -> Unit,
     selectedDestinationIndex: Int,
-    colors: NavigationItemProps = NavigationItemProps(
-        focusedColor = MaterialTheme.colorScheme.errorContainer,
-        unFocusedColor = MaterialTheme.colorScheme.primaryContainer,
+    props: NavigationItemProps = NavigationItemProps(
+        focusedColor = MaterialTheme.colorScheme.primary,
+        unFocusedColor = MaterialTheme.colorScheme.secondary,
+        shape = MaterialTheme.shapes.small
     )
 ) {
     Column(
@@ -46,7 +47,7 @@ internal fun VerticalListNavigation(
                 onFocusing = {
 
                 },
-                colors = colors
+                colors = props
             )
         }
 

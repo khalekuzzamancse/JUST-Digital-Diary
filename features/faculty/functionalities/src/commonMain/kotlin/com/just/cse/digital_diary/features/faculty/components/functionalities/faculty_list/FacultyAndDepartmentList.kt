@@ -1,8 +1,11 @@
 package com.just.cse.digital_diary.features.faculty.components.functionalities.faculty_list
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -26,7 +29,7 @@ fun FacultyAndDepartmentList(
     modifier: Modifier = Modifier,
     facultyListRepository: FacultyListRepository,
     departmentListRepository: DepartmentListRepository,
-    onExitRequest:()->Unit,
+    onExitRequest: () -> Unit,
     onEmployeeListRequest: (String) -> Unit = {},
     backHandler: @Composable (onBackButtonPress: () -> Boolean) -> Unit,
 ) {
@@ -48,7 +51,7 @@ fun FacultyAndDepartmentList(
         when (event) {
             is DepartmentListEvent.DepartmentSelected -> {
                 val deptId = viewModel.getDepartmentId(event.index)
-                if (deptId != null){
+                if (deptId != null) {
                     onEmployeeListRequest(deptId)
                 }
 
@@ -61,47 +64,45 @@ fun FacultyAndDepartmentList(
         viewModel.loadFacultyList()
     }
     val departmentListState = viewModel.departmentListState.collectAsState().value
-    val showDepartmentList=departmentListState!=null
+    val showDepartmentList = departmentListState != null
     backHandler {
-        if (showDepartmentList)
-        {
+        if (showDepartmentList) {
             viewModel.clearFacultySelection()
             true
-        //consuming the back event to dismiss department list
-        }
-        else{
+            //consuming the back event to dismiss department list
+        } else {
             //since department list closed,so only faculty list is opened
             //user click on the back button,so we don't need to consume this  back press
             false
         }
 
     }
-        TwoPaneLayout(
-            showProgressBar = viewModel.uiState.collectAsState().value.isLoading,
-            snackBarMessage = viewModel.uiState.collectAsState().value.message,
-            modifier = modifier,
-            navigationIcon = if (showDepartmentList) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Menu,
-            onNavigationIconClick = if (showDepartmentList) viewModel::clearFacultySelection else onExitRequest,
-            showTopOrRightPane = showDepartmentList,
-            leftPane = {
-                FacultyListDestination(
-                    modifier = Modifier,
-                    state = facultyState,
-                    onEvent = onFacultyEvent
+    TwoPaneLayout(
+        showProgressBar = viewModel.uiState.collectAsState().value.isLoading,
+        snackBarMessage = viewModel.uiState.collectAsState().value.message,
+        modifier = modifier,
+        navigationIcon = if (showDepartmentList) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Menu,
+        onNavigationIconClick = if (showDepartmentList) viewModel::clearFacultySelection else onExitRequest,
+        showTopOrRightPane = showDepartmentList,
+        leftPane = {
+            FacultyListDestination(
+                modifier = Modifier,
+                state = facultyState,
+                onEvent = onFacultyEvent
+            )
+        },
+        topOrRightPane = {
+            if (departmentListState != null) {
+                DepartmentListDestination(
+                    modifier = Modifier.fillMaxSize()
+                        .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f)),
+                    state = departmentListState,
+                    onEvent = onDepartmentListEvent
                 )
-            },
-            topOrRightPane = {
-                if (departmentListState != null){
-                    DepartmentListDestination(
-                        state = departmentListState,
-                        onEvent = onDepartmentListEvent
-                    )
-                }
-            },
-            alignment = Alignment.TopStart
-        )
-
-
+            }
+        },
+        alignment = Alignment.TopStart
+    )
 
 
 }

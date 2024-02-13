@@ -23,6 +23,10 @@ kotlin {
                 api(compose.animation)
                 api(compose.animationGraphics)
                 api(compose.materialIconsExtended)
+                api(compose.foundation)
+                api(compose.runtime)
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                api(compose.components.resources)
                 api(libs.windowSize)
                 //
                 api(libs.kotlinx.coroutines.core)

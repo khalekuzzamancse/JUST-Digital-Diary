@@ -15,8 +15,7 @@ internal fun DepartmentListDestination(
     onEvent: (DepartmentListEvent) -> Unit,
 ) {
     DepartmentsList(
-        modifier = modifier
-            .background(MaterialTheme.colorScheme.primaryContainer),
+        modifier = modifier,
         state = state,
         onEvent = onEvent
     )
