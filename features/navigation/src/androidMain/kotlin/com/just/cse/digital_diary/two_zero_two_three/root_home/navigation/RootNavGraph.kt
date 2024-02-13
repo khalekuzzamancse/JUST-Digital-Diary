@@ -32,7 +32,7 @@ fun RootNavGraph(
     ) {
         OtherFeatureNavGraph.graph(navGraphBuilder = this, onExitRequest = openDrawerRequest)
         composable(GraphRoutes.ADMIN_OFFICE_FEATURE) {
-            AdminOfficeFeatureNavGraph.Graph(
+            AdminOfficeFeatureNavGraph.NavHost(
                 onEvent = { event ->
                     if (event is AdminEvent.ExitRequest)
                         openDrawerRequest()
@@ -42,7 +42,7 @@ fun RootNavGraph(
             )
         }
         composable(GraphRoutes.FACULTY_FEATURE) {
-            FacultyFeatureNavGraph.Graph(
+            FacultyFeatureNavGraph.NavHost(
                 onEvent = { event ->
                     if (event is FacultyFeatureEvent.ExitRequest)
                         openDrawerRequest()

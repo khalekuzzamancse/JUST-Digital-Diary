@@ -4,20 +4,26 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.just.cse.digital_diary.features.faculty.components.event.FacultyEvent
 import com.just.cse.digital_diary.features.faculty.destination.event.FacultyFeatureEvent
 import com.just.cse.digital_diary.features.faculty.destination.screens.FacultiesScreen
 import com.just.cse.digital_diary.features.faculty.destination.screens.TeachersScreen
 
 object FacultyFeatureNavGraph {
+    private const val DEPT_ID = "deptId"
     private const val FACULTY_SCREEN = "FacultyListScreen"
-    private const val TEACHERS_SCREEN = "TeacherListScreen"
+    private const val TEACHER_LIST="TeacherListScreen"
+    private const val TEACHERS_ROUTE = "$TEACHER_LIST/{$DEPT_ID}"
+
+
 
     @Composable
-    fun Graph(
+    fun NavHost(
         navController: NavHostController = rememberNavController(),
         onBackPressed: () -> Unit,
         onEvent: (FacultyFeatureEvent) -> Unit
@@ -30,8 +36,8 @@ object FacultyFeatureNavGraph {
 
             composable(route = FACULTY_SCREEN) {
                 FacultiesScreen(
-                    onTeacherListRequest = {
-                        navController.navigate(TEACHERS_SCREEN)
+                    onTeacherListRequest = {id->
+                        navController.navigate("$TEACHER_LIST/$id")
                     },
                     backHandler = { onBackPress ->
                         //overriding backhander will prevent it parent to notify that back button is
@@ -41,7 +47,7 @@ object FacultyFeatureNavGraph {
                             onBack = {
                                 val isConsumed = onBackPress()
                                 if (!isConsumed) {
-                                   onBackPressed()
+                                    onBackPressed()
                                 }
                             },
                         )
@@ -51,9 +57,13 @@ object FacultyFeatureNavGraph {
                     }
                 )
             }
-            composable(route = TEACHERS_SCREEN) {
+            composable(
+                route = TEACHERS_ROUTE,
+                arguments = listOf(navArgument(DEPT_ID) { type = NavType.StringType })
+            ) { backStackEntry ->
+                val deptID = backStackEntry.arguments?.getString(DEPT_ID)
                 TeachersScreen(
-                    deptId = "01",
+                    deptId = deptID ?: "",
                     onExitRequest = {
                         navController.popBackStack()
                     },
