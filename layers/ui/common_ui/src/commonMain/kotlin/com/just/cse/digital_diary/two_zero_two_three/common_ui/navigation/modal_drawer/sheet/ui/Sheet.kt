@@ -29,10 +29,12 @@ fun DrawerSheet(
         header = header,
         groups = state.groups
     ) { item, serialNo ->
+        val eachItemDelay=state.itemVisibilityDelay
+        val visibilityDelay=if (eachItemDelay==null)null else serialNo*eachItemDelay
         DrawerItemDecorator(
             item = item,
             isSelected = item.id == state.selected.toString(),
-            visibilityDelay = state.itemVisibilityDelay,
+            visibilityDelay = visibilityDelay,
             onClick = {
                 onEvent(DrawerSheetEvent.Selected(item.id))
             }
@@ -44,7 +46,7 @@ fun DrawerSheet(
 private fun DrawerSheet(
     header: @Composable (() -> Unit)? = null,
     groups: List<NavGroup>,
-    itemDecorator: @Composable (NavItem, serialNo: Long) -> Unit,
+    itemDecorator: @Composable (NavItem, serialNo: Int) -> Unit,
 ) {
     val lastIndex=groups.size-1
     ModalDrawerSheet(
@@ -61,8 +63,8 @@ private fun DrawerSheet(
                 header()
             }
             groups.forEachIndexed { groupNo, group ->
-                group.items.forEach { item ->
-                    itemDecorator(item,0L)
+                group.items.forEachIndexed{itemNo, item ->
+                    itemDecorator(item,groupNo*itemNo)
                 }
                 if (groupNo!=lastIndex){
                     HorizontalDivider()
