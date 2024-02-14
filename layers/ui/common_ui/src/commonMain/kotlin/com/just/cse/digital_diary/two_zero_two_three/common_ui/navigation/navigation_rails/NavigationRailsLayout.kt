@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.nav_rail
+package com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.navigation_rails
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi

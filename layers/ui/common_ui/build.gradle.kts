@@ -25,11 +25,9 @@ kotlin {
                 api(compose.materialIconsExtended)
                 api(compose.foundation)
                 api(compose.runtime)
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                api(compose.components.resources)
                 api(libs.windowSize)
                 //
-                api(libs.kotlinx.coroutines.core)
+                implementation(libs.kotlinx.coroutines.core)
                 //network IO for image loading
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.okhttp)
@@ -47,7 +45,7 @@ kotlin {
         val desktopMain by getting{
             dependencies {
                 //dependency to support android coil on desktop
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-swing")
             }
         }
     }
