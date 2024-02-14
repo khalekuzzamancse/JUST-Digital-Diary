@@ -36,8 +36,8 @@ fun DrawerHeader(
         modifier = modifier
             .padding(
                 start = 4.dp,
-                top = 16.dp,
-                bottom =16.dp,
+                top = 32.dp,
+                bottom =32.dp,
                 end = 8.dp
             )
     ) {
