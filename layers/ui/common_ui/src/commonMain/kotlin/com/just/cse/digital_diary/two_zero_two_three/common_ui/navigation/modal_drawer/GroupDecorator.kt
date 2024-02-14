@@ -1,4 +1,4 @@
-package com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer.sheet
+package com.just.cse.digital_diary.two_zero_two_three.common_ui.navigation.modal_drawer
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -77,7 +77,7 @@ fun GroupDecorator(
                 Icon(icon, null)
                 Spacer(Modifier.width(4.dp))
                 Text(text = groupName, style = MaterialTheme.typography.titleMedium)
-                Spacer(modifier = Modifier.weight(1f)) // Spacer at the beginnin
+                Spacer(modifier = Modifier.weight(1f)) // Spacer at the beginning
                 if(isExpandAble){
                     IconButton(
                         onClick = onClick,

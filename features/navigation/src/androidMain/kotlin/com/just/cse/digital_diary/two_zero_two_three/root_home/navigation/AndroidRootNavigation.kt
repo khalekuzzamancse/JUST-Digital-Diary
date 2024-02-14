@@ -3,26 +3,23 @@ package com.just.cse.digital_diary.two_zero_two_three.root_home.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.just.cse.digital_diary.two_zero_two_three.auth.destination.navgraph.AuthNavHost
 import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.graph.OtherFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
-import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.ModalDrawerHandler
-import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.RootModuleDrawerAnimationLess
-import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.TopMostDestination
+import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.TopRoutes
+import com.just.cse.digital_diary.two_zero_two_three.root_home.modal_drawer.TopmostNavigationHost
 import com.just.cse.digitaldiary.twozerotwothree.core.di.auth.AuthComponentProvider
-import kotlinx.coroutines.flow.collect
 
 
 @Composable
 fun AndroidRootNavigation(
     onEvent: (AppEvent) -> Unit,
 ) {
-    var handler = remember {  ModalDrawerHandler() }
     var navHostController = rememberNavController()
+
     val isSignedIn = AuthComponentProvider.isSingedIn.collectAsState().value
             || AuthComponentProvider.observeSignIn().collectAsState(true).value
     val onLogOutRequest: () -> Unit = {
@@ -34,6 +31,7 @@ fun AndroidRootNavigation(
         }
     }
 
+
     LaunchedEffect(Unit) {
         navHostController.currentBackStackEntryFlow.collect {
             val peekRoute = it.destination.route
@@ -41,7 +39,7 @@ fun AndroidRootNavigation(
                 //may be for back press,currently in the home,but the drawer item may be
                 //selected has not changed to home,that is why manually chaining selection item
                 //try to implement a better solution later
-                handler.onSectionSelected(0)
+                TopmostNavigationHost.selectFirst()
             }
         }
     }
@@ -52,17 +50,15 @@ fun AndroidRootNavigation(
     if (isSignedIn) {
         //clear the old nav controller
         navHostController = rememberNavController()
-        handler= ModalDrawerHandler()
-        RootModuleDrawerAnimationLess(
+        TopmostNavigationHost.DrawerHost(
             onLogOutRequest = onLogOutRequest,
-            drawerHandler = handler,
-            onEvent = { destination ->
+            onRouteSelected = { destination ->
                 navigator(navHostController, destination, onEvent = onEvent)
             },
             navHost = {
                 RootNavGraph(
                     onEvent = onEvent,
-                    openDrawerRequest = handler::openDrawer,
+                    openDrawerRequest = TopmostNavigationHost::openDrawer,
                     navController = navHostController,
                     onBackPressed = pop,
                     startDestination = GraphRoutes.TOPMOST_OTHER_FEATURE
@@ -77,46 +73,46 @@ fun AndroidRootNavigation(
 
 private fun navigator(
     navController: NavHostController,
-    destination: TopMostDestination,
+    destination: TopRoutes.NavDestination,
     onEvent: (AppEvent) -> Unit,
 ) {
     when (destination) {
-        TopMostDestination.Home -> {
+        TopRoutes.Home -> {
             OtherFeatureNavGraph.navigateToHome(navController)
         }
 
-        TopMostDestination.MessageFromVC -> {
+        TopRoutes.MessageFromVC -> {
             OtherFeatureNavGraph.navigateToMessageFromVC(navController)
         }
 
-        TopMostDestination.AboutUs -> {
+        TopRoutes.AboutUS -> {
             OtherFeatureNavGraph.navigateToAboutUs(navController)
         }
 
-        TopMostDestination.EventGallery -> {
+        TopRoutes.EventGallery -> {
             OtherFeatureNavGraph.navigateToEventGallery(navController)
         }
 
-        TopMostDestination.FacultyList -> {
+        TopRoutes.Faculties -> {
             navigateAsTopMostDestination(GraphRoutes.FACULTY_FEATURE, navController)
         }
 
-        TopMostDestination.AdminOffice -> {
+        TopRoutes.AdminOffice -> {
             navigateAsTopMostDestination(
                 GraphRoutes.ADMIN_OFFICE_FEATURE,
                 navController
             )
         }
 
-        TopMostDestination.Search -> {
+        TopRoutes.Search -> {
             navigateAsTopMostDestination(GraphRoutes.SEARCH, navController)
         }
 
-        TopMostDestination.NoteList -> {
+        TopRoutes.Notes -> {
             navigateAsTopMostDestination(GraphRoutes.NOTES_FEATURE, navController)
         }
 
-        TopMostDestination.ExploreJust -> {
+        TopRoutes.ExploreJUST -> {
             onEvent(AppEvent.WebVisitRequest("https://just.edu.bd/"))
         }
 
