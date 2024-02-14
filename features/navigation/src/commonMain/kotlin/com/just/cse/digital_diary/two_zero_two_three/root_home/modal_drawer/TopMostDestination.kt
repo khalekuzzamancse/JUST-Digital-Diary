@@ -5,9 +5,9 @@ enum class TopMostDestination {
     FacultyList,
     AdminOffice,
     MessageFromVC,
-    AboutUs,
     Search,
     NoteList,
     EventGallery,
-    ExploreJust
+    ExploreJust,
+    AboutUs,
 }

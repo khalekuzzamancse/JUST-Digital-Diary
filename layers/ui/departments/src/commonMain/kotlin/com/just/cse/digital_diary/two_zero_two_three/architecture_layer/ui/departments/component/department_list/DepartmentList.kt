@@ -58,6 +58,7 @@ private fun DepartmentsList(
             colors = NavigationItemProps(
                 focusedColor = MaterialTheme.colorScheme.secondary,
                 unFocusedColor = MaterialTheme.colorScheme.secondaryContainer,
+                shape = MaterialTheme.shapes.small
             )
         )
 

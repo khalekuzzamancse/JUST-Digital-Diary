@@ -1,9 +1,12 @@
 package com.just.cse.digital_diary.features.admin_office.components.offices_and_sub_offices
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -90,6 +93,10 @@ fun OfficesAndSubOffices(
         topOrRightPane = {
             if (subOfficeState != null) {
                 AdminSubOfficeList(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+                    ,
                     state = subOfficeState,
                     onEvent = subOfficeEvent
                 )

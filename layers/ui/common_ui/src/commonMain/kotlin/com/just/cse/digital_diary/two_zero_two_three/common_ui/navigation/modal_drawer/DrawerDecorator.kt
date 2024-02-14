@@ -54,13 +54,18 @@ fun ModalDrawerDecoratorAnimationLess(
         modifier = modifier,
         drawerState = drawerState,
         sheet = {
-            Sheet(
-                selectedDestinationIndex = selectedDesertionIndex,
-                header = header,
-                destinations = destinations
-            ) { index ->
-                onDestinationSelected(index)
+            AnimatedVisibility(
+                visible = drawerState.currentValue == DrawerValue.Open,
+            ) {
+                Sheet(
+                    selectedDestinationIndex = selectedDesertionIndex,
+                    header = header,
+                    destinations = destinations
+                ) { index ->
+                    onDestinationSelected(index)
+                }
             }
+
         },
         content = content
     )

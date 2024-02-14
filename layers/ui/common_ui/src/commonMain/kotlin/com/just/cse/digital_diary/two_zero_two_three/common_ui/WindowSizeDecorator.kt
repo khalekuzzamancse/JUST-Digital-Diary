@@ -7,7 +7,10 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.progressbar.ProgressBarNSnackBarDecorator
+import org.jetbrains.compose.resources.Font
+
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
@@ -19,6 +22,9 @@ fun WindowSizeDecorator(
     onExpanded: @Composable () -> Unit) {
     val windowSize = calculateWindowSizeClass()
     val compactScreen = windowSize.widthSizeClass
+
+
+
     ProgressBarNSnackBarDecorator(
         modifier = Modifier.fillMaxSize(),
         showProgressBar = showProgressBar,
@@ -42,6 +48,7 @@ fun WindowSizeDecorator(
 
         }
     }
+
 
 
 }
