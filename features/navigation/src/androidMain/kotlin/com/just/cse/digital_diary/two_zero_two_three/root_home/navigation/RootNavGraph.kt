@@ -9,6 +9,7 @@ import com.just.cse.digital_diary.features.admin_office.destination.AdminOfficeF
 import com.just.cse.digital_diary.features.admin_office.destination.event.AdminEvent
 import com.just.cse.digital_diary.features.faculty.destination.FacultyFeatureNavGraph
 import com.just.cse.digital_diary.features.faculty.destination.event.FacultyFeatureEvent
+import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.OtherFeatureEvent
 import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.graph.OtherFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.notes.navgraph.graph.NotesFeatureNavGraph
 import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
@@ -30,7 +31,17 @@ fun RootNavGraph(
         navController = navController,
         startDestination = startDestination
     ) {
-        OtherFeatureNavGraph.graph(navGraphBuilder = this, onExitRequest = openDrawerRequest)
+        OtherFeatureNavGraph.graph(
+            navGraphBuilder = this,
+            onExitRequest = openDrawerRequest,
+            onEvent = {event->
+                when(event){
+                    is OtherFeatureEvent.CalenderRequest->{
+                        onEvent(AppEvent.WebVisitRequest(event.url))
+                    }
+                }
+            }
+        )
         composable(GraphRoutes.ADMIN_OFFICE_FEATURE) {
             AdminOfficeFeatureNavGraph.NavHost(
                 onEvent = { event ->

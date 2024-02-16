@@ -1,12 +1,21 @@
 package com.just.cse.digital_diary.two_zero_two_three.features.others.destination.graph
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.OtherFeatureEvent
+import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.R
 import com.just.cse.digital_diary.two_zero_two_three.features.others.destination.other.TopBarDecorator
+import com.just.cse.digital_diary.two_zero_two_three.features.others.event.OtherFeatureFunctionalityEvent
 import com.just.cse.digital_diary.two_zero_two_three.features.others.screens.AboutUsDestination
 import com.just.cse.digital_diary.two_zero_two_three.features.others.screens.EventGalleryDestination
 import com.just.cse.digital_diary.two_zero_two_three.features.others.screens.HomeScreen
@@ -68,7 +77,10 @@ object OtherFeatureNavGraph {
         }
     }
 
-    fun graph(navGraphBuilder: NavGraphBuilder, onExitRequest: () -> Unit = {}) {
+    fun graph(
+        navGraphBuilder: NavGraphBuilder, onExitRequest: () -> Unit = {},
+        onEvent: (OtherFeatureEvent) -> Unit,
+    ) {
         with(navGraphBuilder) {
             navigation(
                 route = ROUTE,
@@ -80,7 +92,31 @@ object OtherFeatureNavGraph {
                         onExitRequest = onExitRequest,
                         title = "Home"
                     ) {
-                        HomeScreen()
+                        HomeScreen(
+                            universityLogo = {
+                                Image(
+                                    painter = painterResource(R.drawable.just_logo_trans),
+                                    contentDescription = null
+                                )
+
+                            },
+                            university = {
+                                Image(
+                                    painter = painterResource(R.drawable.just_gate),
+                                    contentDescription = null,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+
+                            },
+                            onEvent = {event->
+                                when(event){
+                                    is OtherFeatureFunctionalityEvent.CalenderRequest->onEvent(
+                                        OtherFeatureEvent.CalenderRequest(event.url)
+                                    )
+                                }
+                            }
+
+                        )
                     }
 
 
