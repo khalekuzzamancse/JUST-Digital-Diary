@@ -46,17 +46,23 @@ Project Scope Clarity:
 Briefly describe what the problem it solve 
 -->
 <p align=" justify" >
- Disaster Information System is a  Multiplatform application.It is being developed using Kotlin and Compose Multiplatform technology.
+
+ **JUST Digital Diary**   is a  Multiplatform application.It is being developed using Kotlin and Compose Multiplatform technology.
+ 
 </p>
 
 ### Motivation and Purpose
 <p align=" justify" >
-The existing information about various disasters is not readily available at the user level, and it lacks proper maintenance and analysis. To address this challenge, the Disaster Information System aims to collect information related to recently occurred disasters. This information is presented in various formats, including text, video, and images.
+  
+The **JUST Digital Diary** app addresses the need for centralized access to university information, facilitating direct communication with faculty and staff, and organizing academic schedules and events. It aims to enhance the educational experience by improving accessibility, efficiency, and personal management for students, faculty, and administrative personnel.
+
 </p>
 
 ### Project Scope and Assumptions
-<p align=" justify" >
-This project is intended for use with a high-speed internet connection and requires devices that support Google Maps, location permissions, and device media access permissions.
+
+<p align="justify">
+
+The scope of this project encompasses   students, faculty, and staff of  [JASHORE UNIVERSITY OF SCIENCE AND TECHNOLOGY](https://just.edu.bd/) , offering an enhanced digital experience requiring an internet connection and the use of university-provided email addresses for authentication and communication purposes.
 </p>
 
 <!-- Sections Release Version -->
@@ -72,45 +78,54 @@ This project is intended for use with a high-speed internet connection and requi
 
 
 
+
 <!-- Feature Section Starts-->
 ## FEATURES 
 
 <details>
-  <summary><strong>Multimedia Reporting</strong></summary>
+  <summary><strong>Faculty and Department Directory</strong></summary>
 
-- Users have the ability to upload photos and videos directly from their device’s gallery to report disaster events
+-  Displays list of faculties along with their respective departments. Users can access departmental information and directly contact employees via phone, messaging, or email
 
 </details>
 <details>
-  <summary><strong>Smart Data Shrinkage </strong></summary>
+  <summary><strong>Administrative Office Directory </strong></summary>
 
-- Multimedia files with disproportionately large sizes relative to their duration will be automatically compressed before transmission to the server
-
-</details>
-
-
-<details>
-  <summary><strong>Report Form</strong></summary>
-
-- A detailed submission form that collects essential information about the disaster, including the location, a description, the start date and time, and the end date and time of the disaster
+- Displays a list of administrative and sub-offices along with their details, employee listings, and direct communication options (call, message, email)
 
 </details>
 
 
 <details>
-  <summary><strong>Offline Queueing</strong></summary>
+  <summary><strong>Advanced Search Functionality</strong></summary>
 
-  - Enables users to collect and complete report details even when offline.The information will be  stored locally and automatically uploaded once an internet connection becomes available.
+- Enables users to search for departments, employees, or any relevant information by name, phone number, or text for quick access to contact options
 
 </details>
 
 
 <details>
-  <summary><strong>Historical Insights</strong></summary>
+  <summary><strong>Academic Calendar Access</strong></summary>
 
-  - Have the capability to explore historical disaster data through visual graphs. This feature offers valuable insights into the frequency, geographical distribution, and severity of past disasters
+  - Offers a downloadable academic calendar and an integrated live academic calendar displaying holidays with explanations for each
+
 </details>
 
+
+<details>
+  <summary><strong>Event Gallery</strong></summary>
+
+  - Features a gallery of past and recent events, including names and images, to highlight university activities
+
+</details>
+
+
+<details>
+  <summary><strong>Note-taking </strong></summary>
+
+  - Allows users to take notes and save them within the app for easy reference and organization
+  
+</details>
 
 
 
@@ -133,8 +148,7 @@ This project is intended for use with a high-speed internet connection and requi
 
 - [**Android SDK**](https://www.android.com/)
     - Used to build native Android applications
-- [**Google Map SDK**](https://developers.google.com/maps/documentation/android-sdk/maps-compose)
-    - Enables selection of disaster occurrence locations
+
 - [**Jetpack Compose**](https://developer.android.com/jetpack/compose)
     - To  access to Android-specific UI components, including Google Maps, permissions handling, and media picker
 
@@ -149,8 +163,6 @@ This project is intended for use with a high-speed internet connection and requi
 
 <details> <summary><strong>Libraries</strong></summary>
 
-- [**WorkManager**](https://developer.android.com/develop/background-work/background-tasks/persistent/getting-started)
-    - Utilized for long-running background tasks, such as sending media in the background and media size compression
 - [**Accompanist**](https://github.com/google/accompanist)
     - Handles permissions management, including location access and notification permissions
 - [**Navigation component**](https://developer.android.com/jetpack/compose/navigation)
@@ -181,11 +193,14 @@ This project is intended for use with a high-speed internet connection and requi
 <!-- Ending section-->
 
 ## Project Ownership & Contributors
-Owner:  Dept of [CSE]()   , [JASHORE UNIVERSITY OF SCIENCE AND TECHNOLOGY](https://just.edu.bd/)
+### Owner:  Dept of [CSE]() 
+  - [JASHORE UNIVERSITY OF SCIENCE AND TECHNOLOGY](https://just.edu.bd/)
 
-Server-Side and  Advannce Web Platform Developer : [Sabir Mahhum Sourov](), Dept of [CSE](), [JASHORE UNIVERSITY OF SCIENCE AND TECHNOLOGY](https://just.edu.bd/)
+### Server-Side and  Advannce Web Platform Developer
+- [Sabir Mahhum Sourov]()
+  - Dept of [CSE](), [JASHORE UNIVERSITY OF CIENCE AND TECHNOLOGY](https://just.edu.bd/)
 
 
 
 ##
-**Disaster Information System** is distributed under the terms of the Apache License (Version 2.0). See the [license](LICENSE) for more information.
+**JUST Digital Diary** is distributed under the terms of the Apache License (Version 2.0). See the [license](LICENSE) for more information.
