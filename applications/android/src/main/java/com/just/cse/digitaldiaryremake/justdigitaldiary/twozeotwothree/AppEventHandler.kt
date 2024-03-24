@@ -5,22 +5,21 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
-import com.just.cse.digital_diary.two_zero_two_three.root_home.AppEvent
 
 
 class AppEventHandler(
     private val context: Context,
 ) {
 
-    fun handleEvent(event: AppEvent) {
-        when(event){
-           is AppEvent.CallRequest->makeCall(event.number)
-            is AppEvent.MessageRequest->sendSMS(event.number)
-            is AppEvent.EmailRequest->sentEmail(event.email)
-            is AppEvent.WebVisitRequest->visitWeb(event.url)
-        }
-
-    }
+//    fun handleEvent(event: AppEvent) {
+//        when(event){
+//           is AppEvent.CallRequest->makeCall(event.number)
+//            is AppEvent.MessageRequest->sendSMS(event.number)
+//            is AppEvent.EmailRequest->sentEmail(event.email)
+//            is AppEvent.WebVisitRequest->visitWeb(event.url)
+//        }
+//
+//    }
 
     private fun sendSMS(number: String) {
         val smsIntent = Intent(Intent.ACTION_VIEW)

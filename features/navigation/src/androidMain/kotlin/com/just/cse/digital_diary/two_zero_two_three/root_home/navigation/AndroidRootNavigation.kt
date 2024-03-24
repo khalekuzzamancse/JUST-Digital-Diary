@@ -23,6 +23,13 @@ private var showSlapScreen by mutableStateOf(true)
 @Composable
 fun AndroidRootNavigation(
     onEvent: (AppEvent) -> Unit,
+){
+
+
+}
+@Composable
+fun _AndroidRootNavigation(
+    onEvent: (AppEvent) -> Unit,
 ) {
     var navHostController = rememberNavController()
     LaunchedEffect(Unit) {

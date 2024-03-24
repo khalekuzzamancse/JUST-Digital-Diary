@@ -25,11 +25,11 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.runtime)
                 implementation(libs.windowSize)
-                implementation(compose.components.resources)
+//                implementation(compose.components.resources)
                 //
                 implementation(project(localModules.versions.common.ui.get()))
-                implementation(project(localModules.versions.feature.authentication.domain.get()))
-                implementation(project(localModules.versions.feature.authentication.di.get()))
+                implementation(project(localModules.versions.feature.faculty.domain.get()))
+                implementation(project(localModules.versions.feature.faculty.di.get()))
                 //view-model
                 implementation(libs.kotlinx.coroutines.core)
 
@@ -52,7 +52,7 @@ kotlin {
 
 }
 android {
-    namespace = "auth.ui"
+    namespace = "faculty.ui"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

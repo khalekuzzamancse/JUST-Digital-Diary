@@ -18,8 +18,8 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project(localModules.versions.core.database.realm.get()))
-                api(project(localModules.versions.feature.authentication.domain.get()))
-                api(project(localModules.versions.feature.authentication.data.get()))
+                api(project(localModules.versions.feature.faculty.domain.get()))
+                api(project(localModules.versions.feature.faculty.data.get()))
 
             }
         }
@@ -46,7 +46,7 @@ kotlin {
 
 }
 android {
-    namespace = "auth.di"
+    namespace = "faculty.di"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

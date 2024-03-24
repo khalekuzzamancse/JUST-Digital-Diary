@@ -25,6 +25,7 @@ kotlin {
                 implementation(project(localModules.versions.core.di.get()))
                 implementation(project(localModules.versions.feature.notes.navgraph.get()))
                 implementation(project(localModules.versions.feature.search.navgraph.get()))
+
                 implementation(libs.kotlinx.coroutines.core)
 
                 //debugging
