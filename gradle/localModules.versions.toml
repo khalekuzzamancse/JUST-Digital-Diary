@@ -6,7 +6,12 @@ core-di=":core:di"
 feature-authentication-data=":features:authentication:data"
 feature-authentication-domain=":features:authentication:domain"
 feature-authentication-ui=":features:authentication:ui"
-
+feature-authentication-di=":features:authentication:di"
+## Faculty modules
+feature-faculty-data=":features:faculty_info:data"
+feature-faculty-domain=":features:faculty_info:domain"
+feature-faculty-ui=":features:faculty_info:ui"
+feature-faculty-di=":features:faculty_info:di"
 ##core
 core-netowork=":core:network"
 

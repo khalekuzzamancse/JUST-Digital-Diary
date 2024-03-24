@@ -7,7 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import auth.ui.route.AuthRoute
+import auth.ui.route._AuthRoute
 import kotlinx.coroutines.launch
 
 /**
@@ -23,33 +23,33 @@ import kotlinx.coroutines.launch
 private const val LOGIN_SCREEN = "LoginScreen"
 
 @Composable
-    fun AuthNavHost() {
-        val navController: NavHostController = rememberNavController()
-        val scope = rememberCoroutineScope()
-        NavHost(
-            navController = navController,
-            startDestination = LOGIN_SCREEN
-        ) {
-            composable(route = LOGIN_SCREEN) {
-                AuthRoute(
-                    onExitRequest = {},
-                    onLoginSuccess = { username, password ->
-                        scope.launch {
-                         //  AuthComponentProvider.saveSignInInfo(username, password)
-                        }
-
-                    },
-                    backHandler = { onBackButtonPress ->
-                        BackHandler(onBack = onBackButtonPress)
-
+fun AuthNavHost() {
+    val navController: NavHostController = rememberNavController()
+    val scope = rememberCoroutineScope()
+    NavHost(
+        navController = navController,
+        startDestination = LOGIN_SCREEN
+    ) {
+        composable(route = LOGIN_SCREEN) {
+            _AuthRoute(
+                onExitRequest = {},
+                onLoginSuccess = { username, password ->
+                    scope.launch {
+                        //  AuthComponentProvider.saveSignInInfo(username, password)
                     }
-                )
-            }
 
+                },
+                backHandler = { onBackButtonPress ->
+                    BackHandler(onBack = onBackButtonPress)
+
+                }
+            )
         }
 
-
     }
+
+
+}
 
 
 

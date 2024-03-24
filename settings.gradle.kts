@@ -43,7 +43,8 @@ val uiLayerModules = dataLayerModules
     .map { it.replace(":data:", ":ui:") }
 val featureModules = listOf(
     ":features",
-    ":features:authentication", ":features:authentication:data",  ":features:authentication:domain",":features:authentication:ui",
+    ":features:authentication", ":features:authentication:data",  ":features:authentication:domain",":features:authentication:ui",":features:authentication:di",
+    ":features:faculty_info", ":features:faculty_info:domain",":features:faculty_info:data",":features:faculty_info:ui",":features:faculty_info:di",
     ":features:auth",":features:auth:functionalities",":features:auth:navgraph",
     ":features:navigation",
     ":features:faculty",":features:faculty:navgraph",":features:faculty:functionalities",

@@ -14,6 +14,7 @@ kotlin {
             dependencies {
 //                implementation(project(":features:auth"))
                 implementation(project(":features:navigation"))
+                implementation(project(localModules.versions.feature.authentication.ui.get()))
                 implementation(compose.desktop.common)
                 implementation(compose.desktop.currentOs)
                 val voyagerVersion = "1.0.0"

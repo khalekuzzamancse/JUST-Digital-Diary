@@ -5,8 +5,8 @@ import auth.data.login.data_sources.remote.entity.LoginRequestEntity
 import auth.data.login.data_sources.remote.entity.LoginResponseEntity
 import auth.data.login.dto.LoginResponseDTO
 import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.post.post2
-@PackageLevelAccess
-internal class RemoteDataSource {
+@OptIn(PackageLevelAccess::class)
+ class RemoteDataSource {
     private val loginUrl = "https://diary.rnzgoldenventure.com/api/users/login"
     suspend fun login(username: String, password: String): Result<LoginResponseDTO> {
         val response = post2<LoginResponseEntity>(
@@ -28,13 +28,13 @@ internal class RemoteDataSource {
             Result.success(LoginResponseDTO(response.jwt))
     }
 
+
     private fun onFailure(exception: Throwable?): Result<LoginResponseDTO> {
         return Result.failure(
             exception = exception
                 ?: Throwable("Failure but No Execution found at RemoteDataSource:login()")
         )
     }
-
     suspend fun requestToken(username: String, password: String): String? {
         val response = RemoteDataSource().login(username = username, password = password)
         val result = response.getOrNull()

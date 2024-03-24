@@ -15,6 +15,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import auth.di.ComponentProvider
 import auth.domain.login.repoisitory.LoginRepository
 import auth.domain.register.repository.RegisterRepository
 import auth.ui.login.components.event.LoginEvent
@@ -26,9 +27,32 @@ import auth.ui.register.route.RegisterDestinationViewModel
 import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
 import kotlinx.coroutines.launch
 
+/**
+ * * This is the Only Entry and Exit point to the AuthModule.
+ * * This Composable delegate to to AuthScreen [_AuthRoute]
+ * @param onLoginSuccess (mandatory) will be called when login is successful
+ * @param onExitRequest(mandatory) will be called when want to exit from the AuthModule
+ */
 
 @Composable
-fun AuthRoute(
+fun _AuthRoute(
+    onLoginSuccess:(String,String)->Unit,
+    onExitRequest:()->Unit={},
+    backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit,
+) {
+    _AuthRoute(
+        loginRepository = ComponentProvider.getLoginRepository(),
+        registrationRepository = ComponentProvider.getRegisterRepository(),
+        onLoginSuccess =onLoginSuccess,
+        backHandler=backHandler
+    )
+
+
+
+}
+
+@Composable
+private fun _AuthRoute(
     loginRepository: LoginRepository,
     registrationRepository: RegisterRepository,
     onLoginSuccess: (userName: String, password: String) -> Unit,
@@ -40,7 +64,7 @@ fun AuthRoute(
             registrationRepository = registrationRepository
         )
     }
-        AuthRoute(
+        _AuthRoute(
             modifier = Modifier,
             authViewModel=authViewModel,
             onLoginSuccess = onLoginSuccess,
@@ -61,7 +85,7 @@ fun AuthRoute(
  * @param onLoginSuccess (mandatory) will be called when login is successful
  */
 @Composable
-private fun AuthRoute(
+private fun _AuthRoute(
     modifier: Modifier=Modifier,
     authViewModel:AuthViewModel,
     onLoginSuccess: (userName: String, password: String) -> Unit,
@@ -69,7 +93,7 @@ private fun AuthRoute(
 ) {
     val scope = rememberCoroutineScope()
     val state = authViewModel.uiState.collectAsState().value
-        AuthRoute(
+        _AuthRoute(
             modifier =modifier,
             backHandler = backHandler,
             onCloseRegisterFormRequest = {
@@ -115,7 +139,7 @@ private fun AuthRoute(
 }
 
 @Composable
-private fun AuthRoute(
+private fun _AuthRoute(
     modifier: Modifier = Modifier,
     state: AuthScreenState,
     loginViewModel: LoginDestinationViewModel,
