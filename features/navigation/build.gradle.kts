@@ -19,7 +19,6 @@ kotlin {
             dependencies {
                 implementation(project(localModules.versions.common.ui.get()))
                 implementation(project(localModules.versions.feature.auth.destination.get()))
-                implementation(project(localModules.versions.feature.faculty.destination.get()))
                 implementation(project(localModules.versions.feature.adminOffice.destination.get()))
                 implementation(project(localModules.versions.feature.others.destination.get()))
                 implementation(project(localModules.versions.core.di.get()))

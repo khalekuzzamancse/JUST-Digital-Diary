@@ -21,10 +21,7 @@ kotlin {
                 api(project(localModules.versions.data.login.get()))
                 api(project(localModules.versions.data.register.get()))
                 api(project(localModules.versions.data.otherInfo.get()))
-                //features: faculties
-                api(project(localModules.versions.data.faculties.get()))
-                api(project(localModules.versions.data.departments.get()))
-                api(project(localModules.versions.data.teachers.get()))
+
                 //Feature:Admin office
                 api(project(localModules.versions.data.admin.offices.get()))
                 api(project(localModules.versions.data.admin.subOffices.get()))
