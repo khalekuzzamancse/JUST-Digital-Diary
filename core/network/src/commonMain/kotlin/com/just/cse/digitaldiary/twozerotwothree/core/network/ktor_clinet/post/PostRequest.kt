@@ -25,3 +25,20 @@ suspend inline fun <reified T> post(url: String, body: Any): NetworkResponse<T> 
         NetworkResponse(result = null, reason = "Exception Occurs", isSuccess = false)
     }
 }
+
+suspend inline fun <reified T> post2(url: String, body: Any): Result<T> {
+    val httpClient = HttpClient {
+        install(ContentNegotiation) {
+            json()
+        }
+    }
+    return try {
+        val response: T = httpClient.post(url) {
+            contentType(ContentType.Application.Json)
+            setBody(body)
+        }.body()
+        Result.success(response)
+    } catch (ex: Exception) {
+        Result.failure(ex)
+    }
+}

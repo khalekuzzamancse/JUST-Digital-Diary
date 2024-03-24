@@ -1,6 +1,16 @@
 [versions]
 core-database-realm=":core:database:realm"
 core-di=":core:di"
+
+## Auth modules
+feature-authentication-data=":features:authentication:data"
+feature-authentication-domain=":features:authentication:domain"
+feature-authentication-ui=":features:authentication:ui"
+
+##core
+core-netowork=":core:network"
+
+##
 #Module related to Features:Auth
 feature-auth-destination=":features:auth:navgraph"
 feature-auth-components=":features:auth:functionalities"
