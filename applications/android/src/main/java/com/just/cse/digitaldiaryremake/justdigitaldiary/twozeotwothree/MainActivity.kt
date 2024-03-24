@@ -1,5 +1,6 @@
 package com.just.cse.digitaldiaryremake.justdigitaldiary.twozeotwothree
 
+import administration.navgraph.AdminOfficeFeatureNavGraph
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,9 +13,14 @@ class MainActivity : ComponentActivity() {
         val eventHandler=AppEventHandler(this)
 
         setContent {
-            faculty.navgraph.FacultyFeatureNavGraph.NavHost(
+//            faculty.navgraph.FacultyFeatureNavGraph.NavHost(
+//                navController = rememberNavController(),
+//                onBackPressed = {},
+//                onEvent={}
+//            )
+            AdminOfficeFeatureNavGraph.NavHost(
                 navController = rememberNavController(),
-                onBackPressed = {},
+                onBackPress = {},
                 onEvent={}
             )
 //            AppTheme {

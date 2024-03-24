@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 //   implementation(project(":features:navigation"))
     implementation(project(localModules.versions.feature.faculty.ui.get()))
+    implementation(project(localModules.versions.feature.administration.ui.get()))
     implementation(libs.androidx.navigation.compose)
 
 }

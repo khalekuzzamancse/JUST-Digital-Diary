@@ -12,6 +12,13 @@ feature-faculty-data=":features:faculty_info:data"
 feature-faculty-domain=":features:faculty_info:domain"
 feature-faculty-ui=":features:faculty_info:ui"
 feature-faculty-di=":features:faculty_info:di"
+
+## Admin Office Feature
+feature-administration-data=":features:administration:data"
+feature-administration-domain=":features:administration:domain"
+feature-administration-ui=":features:administration:ui"
+feature-administration-di=":features:administration:di"
+
 ##core
 core-netowork=":core:network"
 
