@@ -1,8 +1,6 @@
 package administration.navgraph
 
-import administration.navgraph.event.AdminEvent
-import administration.navgraph.screens.AdminOfficeAndSubOfficeRoute
-import administration.navgraph.screens.AdminOfficersScreen
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,6 +26,7 @@ object AdminOfficeFeatureNavGraph {
         navController: NavHostController = rememberNavController(),
         onEvent: (AdminEvent) -> Unit, onBackPress: () -> Unit
     ) {
+        Log.d("AdminOfficeFeatureNavGraph:","NavGraph")
 
             NavHost(
                 modifier = Modifier,
@@ -35,8 +34,10 @@ object AdminOfficeFeatureNavGraph {
                 startDestination = OFFICE_AND_SUB_OFFICES_SCREEN
             ) {
                 composable(route = OFFICE_AND_SUB_OFFICES_SCREEN) {
+                    Log.d("AdminOfficeFeatureNavGraph:","OfficeRoute")
                     AdminOfficeAndSubOfficeRoute(
                         onEmployeeListRequest = { subOfficeId ->
+                          //  println("AdminOfficeFeatureNavGraph:subOfficeId-> $subOfficeId")
                             navController.navigate("$ADMIN_OFFICERS_LIST/$subOfficeId")
                         },
                         onBackButtonPress = { callback ->
@@ -56,6 +57,7 @@ object AdminOfficeFeatureNavGraph {
                     arguments = listOf(navArgument(SUB_OFFICE_ID) { type = NavType.StringType })
                 ) { backStackEntry ->
                     val subOffice = backStackEntry.arguments?.getString(SUB_OFFICE_ID)
+
                     AdminOfficersScreen(
                         onExitRequest = {
                             navController.popBackStack()

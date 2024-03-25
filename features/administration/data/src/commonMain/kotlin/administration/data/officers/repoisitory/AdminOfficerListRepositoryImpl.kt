@@ -2,6 +2,7 @@ package administration.data.officers.repoisitory
 
 import admin_office.domain.officers.model.AdminOfficerModel
 import admin_office.domain.officers.repoisitory.AdminOfficerListRepository
+import administration.data.PackageLevelAccess
 import administration.data.officers.data_sources.remote.AdminOfficerListRemoteDataSource
 import administration.data.officers.data_sources.remote.entity.AdminOfficerListEntity
 
@@ -10,6 +11,7 @@ class AdminOfficerListRepositoryImpl(
 ) : AdminOfficerListRepository {
 
 
+    @OptIn(PackageLevelAccess::class) // Permits access to "AdminOfficerListEntity" within this package
     override suspend fun getOfficers(subOfficeId: String): Result<List<AdminOfficerModel>> {
         val response = AdminOfficerListRemoteDataSource(
             token = token,
@@ -21,6 +23,7 @@ class AdminOfficerListRepositoryImpl(
             onFailure(response.exceptionOrNull())
     }
 
+    @OptIn(PackageLevelAccess::class) // Permits access to "AdminOfficerListEntity" within this package
     private fun onSuccess(entity: AdminOfficerListEntity?): Result<List<AdminOfficerModel>> {
         return if (entity == null)
             Result.failure(Throwable("Success but dept list is NULL at , DepartmentListRepositoryImpl:onSuccess()"))

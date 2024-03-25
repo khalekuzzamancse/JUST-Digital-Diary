@@ -2,6 +2,7 @@ package administration.data.offices.repoisitory
 
 import admin_office.domain.offices.model.AdminOfficeModel
 import admin_office.domain.offices.repoisitory.AdminOfficeListRepository
+import administration.data.PackageLevelAccess
 import administration.data.offices.data_sources.remote.AdminOfficeListRemoteDataSource
 import administration.data.offices.data_sources.remote.entity.AdminOfficeListEntity
 
@@ -9,6 +10,7 @@ class AdminOfficeListRepositoryImpl(
     private val token: String?
 ) : AdminOfficeListRepository {
 
+    @OptIn(PackageLevelAccess::class)
     override suspend fun getAdminOffices(): Result<List<AdminOfficeModel>> {
         val response = AdminOfficeListRemoteDataSource(
             token = token,
@@ -18,6 +20,7 @@ class AdminOfficeListRepositoryImpl(
         else
             onFailure(response.exceptionOrNull())
     }
+    @OptIn(PackageLevelAccess::class)
     private fun onSuccess(entity: AdminOfficeListEntity?): Result<List<AdminOfficeModel>> {
         return if (entity == null)
             Result.failure(Throwable("Success but dept list is NULL at , AdminOfficeListRepositoryImpl:onSuccess()"))

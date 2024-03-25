@@ -2,6 +2,7 @@ package administration.data.sub_office.repoisitory
 
 import admin_office.domain.sub_offices.model.AdminSubOfficeModel
 import admin_office.domain.sub_offices.repoisitory.AdminSubOfficeListRepository
+import administration.data.PackageLevelAccess
 import administration.data.sub_office.data_sources.remote.AdminSubOfficeListRemoteDataSource
 import administration.data.sub_office.data_sources.remote.entity.SubOfficeListEntity
 
@@ -10,6 +11,7 @@ class AdminSubOfficeListRepositoryImpl(
 ) : AdminSubOfficeListRepository {
 
 
+    @OptIn(PackageLevelAccess::class) // Permits access to "SubOfficeListEntity" within  this parent package
     override suspend fun getSubOffices(officeId: String): Result<List<AdminSubOfficeModel>> {
         val response = AdminSubOfficeListRemoteDataSource(
             officeId = officeId,
@@ -21,7 +23,7 @@ class AdminSubOfficeListRepositoryImpl(
             onFailure(response.exceptionOrNull())
     }
 
-
+    @OptIn(PackageLevelAccess::class) // Permits access to "SubOfficeListEntity" within  this parent package
     private fun onSuccess(entity: SubOfficeListEntity?): Result<List<AdminSubOfficeModel>> {
         return if (entity == null)
             Result.failure(Throwable("Success but dept list is NULL at , AdminSubOfficeListRepositoryImpl:onSuccess()"))

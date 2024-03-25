@@ -2,11 +2,11 @@ package administration.ui
 
 import admin_office.domain.offices.repoisitory.AdminOfficeListRepository
 import admin_office.domain.sub_offices.repoisitory.AdminSubOfficeListRepository
-import administration.ui.offices.components.components.AdminOfficeList
-import administration.ui.offices.components.event.AdminOfficesEvent
-import administration.ui.offices.route.AdminOfficeListViewModel
-import administration.ui.route.AdminSubOfficeList
-import administration.ui.sub_offices.component.event.SubOfficesEvent
+import administration.ui.offices.officelist.components.AdminOfficeList
+import administration.ui.offices.officelist.components.AdminOfficesEvent
+import administration.ui.offices.officelist.route.AdminOfficeListViewModel
+import administration.ui.suboffice.subofficelist.AdminSubOfficeList
+import administration.ui.suboffice.subofficelist.SubOfficesEvent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons

@@ -3,11 +3,11 @@ package faculty.data.department.data_sources.remote.entity
 import faculty.data.PackageLevelAccess
 import kotlinx.serialization.Serializable
 /**
- * * This will direcly converted to JSON as the same format
- * that the backend receive,if this structure is not matched
- * with backed the then response will be failed
- * * Do not edit it
+ * This class will be directly converted to a JSON format that matches the backend's expectations.
+ * If the structure does not align with the backend's requirements, the response will fail.
+ * Do not modify this class unless there is a change in the backend's JSON format.
  */
+
 //response JSON Format
 @PackageLevelAccess//do not access outside package
 @Serializable
