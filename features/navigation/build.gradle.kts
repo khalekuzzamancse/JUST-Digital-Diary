@@ -18,17 +18,16 @@ kotlin {
         val commonMain by getting{
             dependencies {
                 implementation(project(localModules.versions.common.ui.get()))
-                implementation(project(localModules.versions.feature.auth.destination.get()))
-                implementation(project(localModules.versions.feature.adminOffice.destination.get()))
-                implementation(project(localModules.versions.feature.others.destination.get()))
-                implementation(project(localModules.versions.core.di.get()))
-                implementation(project(localModules.versions.feature.notes.navgraph.get()))
-                implementation(project(localModules.versions.feature.search.navgraph.get()))
-
                 implementation(libs.kotlinx.coroutines.core)
-
-                //debugging
-               // implementation(project(localModules.versions.feature.search.functionalities.get()))
+                //
+                implementation(project(localModules.versions.feature.academic.ui.get()))
+                implementation(project(localModules.versions.feature.administration.ui.get()))
+                implementation(project(localModules.versions.feature.authentication.ui.get()))
+                implementation(project(localModules.versions.feature.miscellaneous.ui.get()))
+                implementation(project(localModules.versions.feature.notebook.ui.get()))
+                implementation(project(localModules.versions.feature.queryservice.ui.get()))
+                //
+                implementation(project(localModules.versions.feature.authentication.di.get()))
 
 
             }
@@ -54,7 +53,7 @@ kotlin {
 
 }
 android {
-    namespace = "com.just.cse.digital_diary.two_zero_two_three.root_home"
+    namespace = "navigation"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

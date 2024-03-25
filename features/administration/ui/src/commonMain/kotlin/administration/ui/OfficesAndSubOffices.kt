@@ -20,7 +20,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.just.cse.digital_diary.two_zero_two_three.common_ui.layout.TwoPaneLayout
+import common.ui.layout.TwoPaneLayout
+
 import kotlinx.coroutines.launch
 
 /**
@@ -28,7 +29,7 @@ import kotlinx.coroutines.launch
  * used as composable so that composable and non composable both can be passed
  */
 @Composable
-fun OfficesAndSubOffices(
+internal fun OfficesAndSubOffices(
     onEmployeeListRequest: (String) -> Unit,
     officeRepository: AdminOfficeListRepository,
     subOfficeRepository: AdminSubOfficeListRepository,

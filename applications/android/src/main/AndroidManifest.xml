@@ -13,7 +13,7 @@
         android:theme="@style/Theme.JUSTDigitalDiary"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name="just.digitaldiary.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.JUSTDigitalDiary">
             <intent-filter>

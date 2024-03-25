@@ -58,9 +58,9 @@ dependencies {
     implementation(compose.material3)
     implementation(compose.materialIconsExtended)
     implementation(libs.kotlinx.coroutines.android)
-//   implementation(project(":features:navigation"))
-    implementation(project(localModules.versions.feature.faculty.ui.get()))
+    implementation(project(localModules.versions.feature.academic.ui.get()))
     implementation(project(localModules.versions.feature.administration.ui.get()))
+    implementation(project(":features:navigation"))
     implementation(libs.androidx.navigation.compose)
 
 }
