@@ -3,6 +3,7 @@ package auth.ui.register.route
 import auth.domain.register.model.RegisterRequestModel
 import auth.domain.register.repository.RegisterRepository
 import auth.ui.register.components.form.RegistrationFormManager
+import common.newui.CustomSnackBarData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -53,14 +54,13 @@ class RegisterDestinationViewModel(
 
     private suspend fun onRegisterFailure(reason: String?) {
         stopLoading()
-        updateSnackBarMessage("Registration failed because of $reason")
-        delay(1500)
-        clearMessages()
+        updateSnackBarMessage(message = "Register Failed",details =reason,isError = true)
+        //let the user to dismiss the snack-bar after show details
     }
 
     private suspend fun onRegisterSuccess() {
         stopLoading()
-        updateSnackBarMessage("Register Successful")
+        updateSnackBarMessage(message = "Register Successful")
         delay(1500)
         clearMessages()
 
@@ -70,8 +70,28 @@ class RegisterDestinationViewModel(
         updateSnackBarMessage(null)
     }
 
-    private fun updateSnackBarMessage(message: String?) {
-        _state.update { it.copy(message = message) }
+    private fun updateSnackBarMessage(
+        message: String?,
+        details: String?=null,
+        isError: Boolean = false
+    ) {
+        if (message != null) {
+            _state.update {
+                it.copy(
+                    snackBarData = CustomSnackBarData(
+                        message = message,
+                        details = details,
+                        isError = isError
+                    )
+                )
+            }
+        } else {
+            _state.update {
+                it.copy(
+                    snackBarData = null
+                )
+            }
+        }
     }
 
     private fun startLoading() {

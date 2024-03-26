@@ -7,8 +7,10 @@ import auth.ui.login.route.LoginDestinationViewModel
 import auth.ui.register.route.RegisterDestinationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -22,66 +24,48 @@ class AuthViewModel(
         repository = loginRepository,
     )
     val registerViewModel = RegisterDestinationViewModel(registrationRepository)
+    private val loginNRegisterState: Flow<AuthScreenState> =
+        combine(loginViewModel.state, registerViewModel.state) { loginState, registerState ->
+            AuthScreenState(
+                showProgressBar = loginState.isLoading || registerState.isLoading,
+                snackBarData = loginState.snackBarData ?: registerState.snackBarData
+            )
+        }
 
-    suspend fun login(): LoginEvent.LoginDestinationEvent.LoginSuccess?{
+    init {
+        CoroutineScope(Dispatchers.Default).launch {
+            loginNRegisterState.collect { state ->
+                _uiState.update { state }
+            }
+        }
+    }
+
+    suspend fun login(): LoginEvent.LoginDestinationEvent.LoginSuccess? {
         return loginViewModel.login()
     }
-    suspend fun register():Boolean{
+
+    suspend fun register(): Boolean {
         return registerViewModel.register()
     }
 
-
-    private suspend fun observeRegisterDestinationState() {
-        registerViewModel.state.collect { registerDestinationState ->
-            _uiState.update {
-                it.copy(
-                    showProgressBar = registerDestinationState.isLoading,
-                    snackBarMessage = registerDestinationState.message,
-                )
-            }
+    fun closeSnackBar() {
+        _uiState.update {
+            it.copy(snackBarData = null)
         }
-
     }
 
 
-    init {
-        //observers parallel
-        CoroutineScope(Dispatchers.Default).launch {
-            observeLoginState()
-        }
-
-        CoroutineScope(Dispatchers.Default).launch {
-            observeRegisterDestinationState()
-        }
-
-
-    }
-
-     fun openRegisterDestination() {
+    fun openRegisterDestination() {
         registerViewModel.clearState()
         _uiState.update {
             it.copy(showRegisterForm = true)
         }
     }
 
-     fun closeRegistrationDestination() {
+    fun closeRegistrationDestination() {
         _uiState.update {
             it.copy(showRegisterForm = false)
         }
-    }
-
-    private suspend fun observeLoginState() {
-        loginViewModel.state.collect { loginState ->
-            _uiState.update {
-                it.copy(
-                    showProgressBar = loginState.isLoading,
-                    snackBarMessage = loginState.message,
-                    snackBarData = loginState.snackBarData
-                )
-            }
-
-        }
-
     }
 
 

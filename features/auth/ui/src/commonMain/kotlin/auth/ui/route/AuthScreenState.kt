@@ -1,10 +1,10 @@
 package auth.ui.route
 
+import common.newui.CustomSnackBarData
 import common.ui.snackbar.SnackBarData
 
 data class AuthScreenState(
     val showProgressBar: Boolean=false,
-    val snackBarMessage: String?=null,
     val showRegisterForm: Boolean=false,
-    val snackBarData: SnackBarData?=null,
+    val snackBarData: CustomSnackBarData?=null,
 )

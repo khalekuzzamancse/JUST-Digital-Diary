@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.dp
  *
  */
 /**
- * Encapsulate the state or proper so adding  or remove or passing thorugh multuple level
+ * Encapsulate the state or proper so adding  or remove or passing through multiple level
  * can done easily
  */
 data class TwoPaneNewUIPros(
@@ -45,6 +45,7 @@ data class TwoPaneNewUIPros(
     val alignment: Alignment = Alignment.Center,
     val navigationIcon: ImageVector? = null
 )
+
 /**
  * Its allow us show the content in pane mode in expanded and the medium screen.
  * in the Compact screen it will show the pane2 top of pane1 as by hiding the pane1
@@ -69,19 +70,7 @@ fun TwoPaneLayout(
     Scaffold(
         modifier = Modifier,
         topBar = {
-            if (props.navigationIcon != null) {
-                IconButton(onClick = {
-                    if (onNavigationIconClick != null) {
-                        onNavigationIconClick()
-                    }
-                }) {
-                    Icon(
-                        imageVector = props.navigationIcon,
-                        contentDescription = "Navigation Icons"
-                    )
-                }
-            }
-
+            TopBar(props.navigationIcon, onNavigationIconClick)
         }
     ) { scaffoldPadding ->
         _TwoPaneLayout(
@@ -92,6 +81,26 @@ fun TwoPaneLayout(
             alignment = props.alignment
         )
     }
+}
+
+@Composable
+private fun TopBar(
+    navigationIcon: ImageVector? = null,
+    onNavigationIconClick: (() -> Unit)? = null,
+) {
+    if (navigationIcon != null) {
+        IconButton(onClick = {
+            if (onNavigationIconClick != null) {
+                onNavigationIconClick()
+            }
+        }) {
+            Icon(
+                imageVector = navigationIcon,
+                contentDescription = "Navigation Icons"
+            )
+        }
+    }
+
 }
 
 @Composable
@@ -132,26 +141,49 @@ private fun _ExpandedLayout(
     leftPane: @Composable () -> Unit,
     topOrRightPane: @Composable () -> Unit,
 ) {
-    Row(modifier = modifier.fillMaxWidth()) {
-        if (showTopOrRightPane) {
-            Box(Modifier.weight(1f), contentAlignment = alignment) {
-                leftPane()
-            }
-            Spacer(Modifier.width(12.dp))
-            Box(Modifier.weight(1f), contentAlignment = alignment) {
-                topOrRightPane()
-            }
-        } else {
-            Box(
-                Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                leftPane()
-            }
-
-        }
+    if (showTopOrRightPane) {
+        _SideBySideLayout(
+            modifier = modifier,
+            leftPane = leftPane,
+            topOrRightPane = topOrRightPane,
+            alignment = alignment
+        )
+    } else {
+        _SingleLayout(modifier, leftPane)
     }
 
+}
+
+@Composable
+private fun _SingleLayout(
+    modifier: Modifier = Modifier,
+    leftPane: @Composable () -> Unit,
+) {
+    Box(
+        modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        leftPane()
+    }
+}
+
+@Composable
+private fun _SideBySideLayout(
+    modifier: Modifier = Modifier,
+    alignment: Alignment,
+    leftPane: @Composable () -> Unit,
+    topOrRightPane: @Composable () -> Unit,
+) {
+    Row(modifier = modifier.fillMaxWidth()) {
+        Box(Modifier.weight(1f), contentAlignment = alignment) {
+            leftPane()
+        }
+        Spacer(Modifier.width(12.dp))
+        Box(Modifier.weight(1f), contentAlignment = alignment) {
+            topOrRightPane()
+        }
+
+    }
 }
 
 /**

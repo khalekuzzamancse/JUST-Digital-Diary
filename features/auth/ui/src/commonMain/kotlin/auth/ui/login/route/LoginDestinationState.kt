@@ -1,9 +1,8 @@
 package auth.ui.login.route
 
-import common.ui.snackbar.SnackBarData
+import common.newui.CustomSnackBarData
 
 data class LoginDestinationState(
-    val isLoading: Boolean=false,
-    val message: String?=null,
-    val snackBarData: SnackBarData?=null,
+    val isLoading: Boolean = false,
+    val snackBarData: CustomSnackBarData? = null,
 )

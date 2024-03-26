@@ -5,12 +5,11 @@ import auth.domain.login.model.LoginResponseModel
 import auth.domain.login.repoisitory.LoginRepository
 import auth.ui.login.components.event.LoginEvent
 import auth.ui.login.components.form.LoginFormManager
-import common.ui.snackbar.SnackBarData
+import common.newui.CustomSnackBarData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import javax.swing.SpinnerNumberModel
 
 
 class LoginDestinationViewModel(
@@ -56,9 +55,9 @@ class LoginDestinationViewModel(
         val reason =
             if (ex == null) "Login Failed with No Reason mentioned:LoginDestinationViewModel:onLoginFailure()"
             else ex.message
-        updateSnackBarMessage(message = "Login Failed",details = reason,isError = true)
-        delay(4_000) //make larger delay to be able to click the action icon to show details
-        clearMessages()
+        updateSnackBarMessage(message = "Login Failed", details = reason, isError = true)
+        //do not clear the message,user will dismiss the dialogue
+//        clearMessages()
     }
 
     private suspend fun onLoginSuccess() {
@@ -77,18 +76,15 @@ class LoginDestinationViewModel(
         details: String? = null,
         isError: Boolean = false
     ) {
-        if (message!=null){
+        if (message != null) {
             _state.update {
                 it.copy(
-                    message = message,
-                    snackBarData = SnackBarData(message, details, isError)
+                    snackBarData = CustomSnackBarData(message, details, isError)
                 )
             }
-        }
-        else{
+        } else {
             _state.update {
                 it.copy(
-                    message = message,
                     snackBarData = null
                 )
             }

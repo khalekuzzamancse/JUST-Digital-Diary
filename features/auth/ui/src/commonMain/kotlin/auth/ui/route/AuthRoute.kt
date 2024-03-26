@@ -24,6 +24,7 @@ import auth.ui.login.route.LoginDestinationViewModel
 import auth.ui.register.components.events.RegisterControlEvents
 import auth.ui.register.route.RegisterDestination
 import auth.ui.register.route.RegisterDestinationViewModel
+import common.newui.SnackNProgressBarDecorator
 import common.newui.TwoPaneLayout
 import common.newui.TwoPaneNewUIPros
 import kotlinx.coroutines.launch
@@ -32,7 +33,6 @@ import kotlinx.coroutines.launch
  * * This is the Only Entry and Exit point to the AuthModule.
  * * This Composable delegate to to AuthScreen [_AuthRoute]
  * @param onLoginSuccess (mandatory) will be called when login is successful
- * @param onExitRequest(mandatory) will be called when want to exit from the AuthModule
  */
 
 @Composable
@@ -101,6 +101,7 @@ private fun _AuthRoute(
         state = state,
         loginViewModel = authViewModel.loginViewModel,
         registerViewModel = authViewModel.registerViewModel,
+        onSnackBarDetailsClosed = authViewModel::closeSnackBar,
         onLoginEvent = { event ->
             when (event) {
                 LoginEvent.LoginControlsEvent.RegisterRequest -> {
@@ -145,10 +146,43 @@ private fun _AuthRoute(
     registerViewModel: RegisterDestinationViewModel,
     onLoginEvent: (LoginEvent) -> Unit,
     onRegisterEvent: (RegisterControlEvents) -> Unit = {},
+    onSnackBarDetailsClosed: () -> Unit,
     onCloseRegisterFormRequest: () -> Unit,
     backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit
 ) {
+    val snackBarData = state.snackBarData
+    backHandler {
+        if (state.showRegisterForm)
+            onCloseRegisterFormRequest()
+    }
+    SnackNProgressBarDecorator(
+        snackBarData = snackBarData,
+        showProgressBar = state.showProgressBar,
+        onSnackBarCloseRequest = onSnackBarDetailsClosed
+    ) {
+        _AuthRawDestination(
+            modifier = modifier,
+            state = state,
+            loginViewModel = loginViewModel,
+            registerViewModel = registerViewModel,
+            onLoginEvent = onLoginEvent,
+            onRegisterEvent = onRegisterEvent,
+            onCloseRegisterFormRequest = onCloseRegisterFormRequest
+        )
+    }
 
+}
+
+@Composable
+private fun _AuthRawDestination(
+    modifier: Modifier = Modifier,
+    state: AuthScreenState,
+    loginViewModel: LoginDestinationViewModel,
+    registerViewModel: RegisterDestinationViewModel,
+    onLoginEvent: (LoginEvent) -> Unit,
+    onRegisterEvent: (RegisterControlEvents) -> Unit = {},
+    onCloseRegisterFormRequest: () -> Unit,
+) {
     val navigationIcon = if (state.showRegisterForm) Icons.AutoMirrored.Filled.ArrowBack else null
     val alignment = Alignment.TopStart
     val props = TwoPaneNewUIPros(
@@ -156,10 +190,7 @@ private fun _AuthRoute(
         alignment = alignment,
         navigationIcon = navigationIcon
     )
-    backHandler {
-        if (state.showRegisterForm)
-            onCloseRegisterFormRequest()
-    }
+
     TwoPaneLayout(
         modifier = modifier,
         props = props,
@@ -186,59 +217,5 @@ private fun _AuthRoute(
         },
 
         )
+
 }
-
-
-//@Composable
-//private fun _AuthRoute(
-//    modifier: Modifier = Modifier,
-//    state: AuthScreenState,
-//    loginViewModel: LoginDestinationViewModel,
-//    registerViewModel: RegisterDestinationViewModel,
-//    onLoginEvent: (LoginEvent) -> Unit,
-//    onRegisterEvent: (RegisterControlEvents) -> Unit = {},
-//    onCloseRegisterFormRequest: () -> Unit,
-//    backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit
-//) {
-//    backHandler {
-//        if (state.showRegisterForm)
-//            onCloseRegisterFormRequest()
-//    }
-//    TwoPaneLayout(
-//        modifier = modifier,
-//        navigationIcon = if (state.showRegisterForm) Icons.AutoMirrored.Filled.ArrowBack else null,
-//        onNavigationIconClick = if (state.showRegisterForm) onCloseRegisterFormRequest else null,
-//        showProgressBar = state.showProgressBar,
-//        snackBarMessage = state.snackBarMessage,
-//        snackBarData =state.snackBarData ,
-//        showTopOrRightPane = state.showRegisterForm,
-//        leftPane = {
-//            LoginDestination(
-//                modifier = Modifier.padding(8.dp)
-//                    .widthIn(max = 700.dp)
-//                    .fillMaxHeight()
-//                    .verticalScroll(rememberScrollState())
-//
-//                ,
-//                viewModel = loginViewModel,
-//                onEvent = onLoginEvent
-//            )
-//        },
-//        topOrRightPane = {
-//            RegisterDestination(
-//                modifier = Modifier
-//                    .padding(8.dp)
-//                    .fillMaxSize()
-//                    .verticalScroll(rememberScrollState())
-////                    .background(Color.Red)
-//                ,
-//                viewModel = registerViewModel,
-//                onEvent = onRegisterEvent
-//            )
-//        },
-//        alignment = Alignment.TopStart
-//    )
-//}
-//
-//
-
