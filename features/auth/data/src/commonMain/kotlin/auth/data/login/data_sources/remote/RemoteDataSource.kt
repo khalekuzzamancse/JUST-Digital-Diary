@@ -4,12 +4,12 @@ import auth.data.PackageLevelAccess
 import auth.data.login.data_sources.remote.entity.LoginRequestEntity
 import auth.data.login.data_sources.remote.entity.LoginResponseEntity
 import auth.data.login.dto.LoginResponseDTO
-import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.post.post2
+import core.network.post.post
 @OptIn(PackageLevelAccess::class)
  class RemoteDataSource {
     private val loginUrl = "https://diary.rnzgoldenventure.com/api/users/login"
     suspend fun login(username: String, password: String): Result<LoginResponseDTO> {
-        val response = post2<LoginResponseEntity>(
+        val response = post<LoginResponseEntity>(
             url = loginUrl,
             body = LoginRequestEntity(identifier = username, password = password)
         )

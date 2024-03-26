@@ -2,8 +2,8 @@ package administration.data.offices.data_sources.remote
 
 import administration.data.PackageLevelAccess
 import administration.data.offices.data_sources.remote.entity.AdminOfficeListEntity
-import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.Header
-import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.getRequest2
+import core.network.get.Header
+import core.network.get.getRequest
 
 internal class AdminOfficeListRemoteDataSource(
     private val token: String?
@@ -14,6 +14,6 @@ internal class AdminOfficeListRemoteDataSource(
         if (token == null)
             return Result.failure(Throwable("Token is Null"))
         val header = Header(key = "Authorization", value = token)
-        return getRequest2<AdminOfficeListEntity>(url = url, header = header)
+        return getRequest<AdminOfficeListEntity>(url = url, header = header)
     }
 }

@@ -1,6 +1,6 @@
 package common.data.token;
 
-import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.post.post2
+import core.network.post.post
 import kotlinx.serialization.Serializable
 
 /**
@@ -35,7 +35,8 @@ private class LoginRequestEntity(
 class TokenRetriever {
     private val loginUrl = "https://diary.rnzgoldenventure.com/api/users/login"
     suspend fun tokenRequest(username: String, password: String): Result<String> {
-        val response = post2<LoginResponseEntity>(
+
+        val response = post<LoginResponseEntity>(
             url = loginUrl,
             body = LoginRequestEntity(identifier = username, password = password)
         )
@@ -56,8 +57,7 @@ class TokenRetriever {
 
     private fun onFailure(exception: Throwable?): Result<String> {
         return Result.failure(
-            exception = exception
-                ?: Throwable("Failure but No Execution found at RemoteDataSource:login()")
+            exception = exception ?: Throwable("Failure but No Execution found at RemoteDataSource:login()")
         )
     }
 }

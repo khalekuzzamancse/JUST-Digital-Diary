@@ -30,30 +30,17 @@ fun main() {
             title = "JUST Digital Diary",
             onCloseRequest = ::exitApplication
         ) {
-            var data by remember {
-                mutableStateOf<CustomSnackBarData?>(
-                    CustomSnackBarData(
-                        message = "Failed", details = "No Internet connect", isError = true
-                    )
-                )
-            }
+
             MaterialTheme {
-//                SnackBarDecoratorNew(
-//                    snackBarData = data,
-//                    onDetailsClosed = {
-//                        data = null
-//                    }
-//                ) {
-//
-//                }
+
 //                NavigationRoot()
 //              AuthNavHostDesktop()
-//                FacultiesScreen(
-//                    onTeacherListRequest = {},
-//                    onExitRequest = {},
-//                    backHandler = {}
-//                )
-                AdminOfficeAndSubOfficeRoute({})
+                FacultiesScreen(
+                    onTeacherListRequest = {},
+                    onExitRequest = {},
+                    backHandler = {}
+                )
+             //   AdminOfficeAndSubOfficeRoute({})
 
             }
         }

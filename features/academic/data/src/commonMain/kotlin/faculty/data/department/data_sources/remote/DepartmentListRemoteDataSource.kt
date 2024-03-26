@@ -1,7 +1,7 @@
 package faculty.data.department.data_sources.remote
 
-import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.Header
-import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.getRequest2
+import core.network.get.Header
+import core.network.get.getRequest
 import faculty.data.PackageLevelAccess
 import faculty.data.department.data_sources.remote.entity.DepartmentInfoEntity
 import faculty.data.department.data_sources.remote.entity.DepartmentListEntity
@@ -17,7 +17,7 @@ internal class DepartmentListRemoteDataSource(
         if (token == null)
             return Result.failure(Throwable("Token is Null"))
         val header = Header(key = "Authorization", value = token)
-        return getRequest2<DepartmentListEntity>(url = baseUrl, header = header)
+        return getRequest<DepartmentListEntity>(url = baseUrl, header = header)
     }
 
 }

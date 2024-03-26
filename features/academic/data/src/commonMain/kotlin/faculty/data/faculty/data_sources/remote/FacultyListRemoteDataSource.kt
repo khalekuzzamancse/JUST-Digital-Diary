@@ -1,7 +1,7 @@
 package faculty.data.faculty.data_sources.remote
 
-import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.Header
-import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.getRequest2
+import core.network.get.Header
+import core.network.get.getRequest
 import faculty.data.faculty.data_sources.remote.entity.FacultyInfoResponseEntity
 import faculty.data.faculty.data_sources.remote.entity.FacultyListResponseEntity
 
@@ -10,10 +10,13 @@ internal class FacultyListRemoteDataSource(
 ) {
     private val url = "https://diary.rnzgoldenventure.com/api/get/faculties"
     suspend fun getFaculties(): Result<FacultyListResponseEntity> {
-        if (token == null)
-            return Result.failure(Throwable("Token is null"))
+        if (token == null){
+            //may be no in
+            return Result.failure(Throwable("Token is null,Check Internet connection"))
+        }
+
         val header = Header(key = "Authorization", value = token)
-        return getRequest2<FacultyListResponseEntity>(url = url, header = header)
+        return getRequest<FacultyListResponseEntity>(url = url, header = header)
     }
 }
 

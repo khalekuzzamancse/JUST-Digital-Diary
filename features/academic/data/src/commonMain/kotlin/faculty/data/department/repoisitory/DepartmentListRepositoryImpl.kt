@@ -1,6 +1,9 @@
 package faculty.data.department.repoisitory
 
 import common.di.AuthTokenFactory
+import core.database.realm.academic.AcademicLocalDataStore
+import core.database.realm.academic.DepartmentEntityLocalModel
+import core.network.netManagerProvider
 import faculty.data.PackageLevelAccess
 import faculty.data.department.data_sources.remote.DepartmentListRemoteDataSource
 import faculty.data.department.data_sources.remote.entity.DepartmentListEntity
@@ -10,6 +13,12 @@ import faculty.domain.department.repoisitory.DepartmentListRepository
 @OptIn(PackageLevelAccess::class)
 class DepartmentListRepositoryImpl : DepartmentListRepository {
     override suspend fun getDepartment(facultyId: String): Result<List<DepartmentListModel>> {
+        if (!netManagerProvider().isInternetAvailable()) {
+            val localData = AcademicLocalDataStore.retrieveDepartments(facultyId).getOrDefault(emptyList()).map { it.toModel() }
+            println(localData)
+            return Result.success(localData)
+
+        }
         val token= AuthTokenFactory.retrieveToken().getOrNull()
 
         val response: Result<DepartmentListEntity> = DepartmentListRemoteDataSource(
@@ -17,28 +26,47 @@ class DepartmentListRepositoryImpl : DepartmentListRepository {
             facultyId = facultyId
         ).getDepartments()
         return if (response.isSuccess)
-            onSuccess(response.getOrNull())
+            onSuccess(facultyId,response.getOrNull())
         else
             onFailure(response.exceptionOrNull())
     }
 
-    private fun onSuccess(entity: DepartmentListEntity?): Result<List<DepartmentListModel>> {
+    private suspend fun onSuccess(facultyId: String,entity: DepartmentListEntity?): Result<List<DepartmentListModel>> {
         return if (entity == null)
             Result.failure(Throwable("Success but dept list is NULL at , DepartmentListRepositoryImpl:onSuccess()"))
-        else
-            Result.success(
-                entity.departments.map {
-                    DepartmentListModel(
-                        id = it.dept_id,
-                        name = it.name,
-                        shortName = it.shortname,
-                    )
-                }
-            )
+        else{
+            val result= entity.departments.map {
+                DepartmentListModel(
+                    id = it.dept_id,
+                    name = it.name,
+                    shortName = it.shortname,
+                )
+            }
+            addToLocalDatabase(facultyId,result)
+            Result.success(result)
+
+        }
+
     }
 
     private fun onFailure(exception: Throwable?): Result<List<DepartmentListModel>> {
         val ex = exception ?: Throwable("Reason is null at ,DepartmentListRepositoryImpl")
         return Result.failure(ex)
     }
+    private suspend fun addToLocalDatabase(facultyId: String,entities: List<DepartmentListModel>) {
+        val  models= entities.map {
+            DepartmentEntityLocalModel(
+                deptId = it.id,
+                employeeCount = it.employeeCount,
+                name = it.name,
+                shortname = it.shortName
+            )
+        }
+        AcademicLocalDataStore.addDepartments(facultyId,models)
+    }
+
 }
+private fun DepartmentEntityLocalModel.toModel()=DepartmentListModel(
+    id=this.deptId, name = name, shortName = shortname, employeeCount = employeeCount
+
+)

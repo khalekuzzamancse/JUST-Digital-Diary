@@ -19,6 +19,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project(localModules.versions.core.netowork.get()))
+                implementation(project(localModules.versions.core.database.realm.get()))
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(project(localModules.versions.feature.academic.domain.get()))
 

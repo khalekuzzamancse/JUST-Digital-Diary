@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 data class TwoPaneNewUIPros(
     val showTopOrRightPane: Boolean,
     val alignment: Alignment = Alignment.Center,
+    val alignmentOnSinglePane: Alignment = Alignment.TopCenter,
     val navigationIcon: ImageVector? = null
 )
 
@@ -78,7 +79,9 @@ fun TwoPaneLayout(
             showTopOrRightPane = props.showTopOrRightPane,
             leftPane = leftPane,
             topOrRightPane = topOrRightPane,
-            alignment = props.alignment
+            alignment = props.alignment,
+            alignmentOnSinglePane = props.alignmentOnSinglePane
+
         )
     }
 }
@@ -108,6 +111,7 @@ private fun _TwoPaneLayout(
     modifier: Modifier,
     showTopOrRightPane: Boolean,
     alignment: Alignment,
+    alignmentOnSinglePane: Alignment,
     leftPane: @Composable () -> Unit,
     topOrRightPane: @Composable () -> Unit,
 ) {
@@ -117,7 +121,7 @@ private fun _TwoPaneLayout(
                 modifier = modifier,
                 showTopPane = showTopOrRightPane,
                 leftPane = leftPane,
-                topPane = topOrRightPane
+                topPane = topOrRightPane,
             )
         },
         onExpanded = {
@@ -126,7 +130,9 @@ private fun _TwoPaneLayout(
                 showTopOrRightPane = showTopOrRightPane,
                 leftPane = leftPane,
                 topOrRightPane = topOrRightPane,
-                alignment = alignment
+                alignment = alignment,
+                alignmentOnSinglePane = alignmentOnSinglePane
+
             )
         }
     )
@@ -139,6 +145,7 @@ private fun _ExpandedLayout(
     showTopOrRightPane: Boolean,
     alignment: Alignment,
     leftPane: @Composable () -> Unit,
+    alignmentOnSinglePane: Alignment,
     topOrRightPane: @Composable () -> Unit,
 ) {
     if (showTopOrRightPane) {
@@ -149,7 +156,7 @@ private fun _ExpandedLayout(
             alignment = alignment
         )
     } else {
-        _SingleLayout(modifier, leftPane)
+        _SingleLayout(modifier,alignmentOnSinglePane, leftPane)
     }
 
 }
@@ -157,11 +164,12 @@ private fun _ExpandedLayout(
 @Composable
 private fun _SingleLayout(
     modifier: Modifier = Modifier,
+    alignmentOnSinglePane: Alignment,
     leftPane: @Composable () -> Unit,
 ) {
     Box(
         modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
+        contentAlignment = alignmentOnSinglePane,
     ) {
         leftPane()
     }

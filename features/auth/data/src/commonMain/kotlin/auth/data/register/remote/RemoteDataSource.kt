@@ -3,7 +3,7 @@ package auth.data.register.remote
 import auth.data.PackageLevelAccess
 import auth.data.register.remote.entity.RegisterRequestEntity
 import auth.data.register.remote.entity.RegisterResponseEntity
-import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.post.post2
+import core.network.post.post
 
 @PackageLevelAccess
 internal class RemoteDataSource {
@@ -13,7 +13,7 @@ internal class RemoteDataSource {
      * return the success message or failure message as String
      */
     suspend fun register(body: RegisterRequestEntity): Result<String> {
-        val response: Result<RegisterResponseEntity> = post2<RegisterResponseEntity>(
+        val response: Result<RegisterResponseEntity> = post<RegisterResponseEntity>(
             url = url,
             body = body
         )

@@ -10,5 +10,5 @@ data class TeacherModel(
     val designations: String,
     val deptName: String,
     val deptSortName: String,
-    val roomNo: String,
+    val roomNo: Int,
 )

@@ -5,7 +5,7 @@ import admin_office.domain.sub_offices.repoisitory.AdminSubOfficeListRepository
 import administration.ui.offices.officelist.components.AdminOfficeList
 import administration.ui.offices.officelist.components.AdminOfficesEvent
 import administration.ui.offices.officelist.components.OfficeListState
-import administration.ui.offices.officelist.route.AdminOfficeListViewModel
+import administration.navgraph.AdminOfficeListViewModel
 import administration.ui.suboffice.subofficelist.AdminSubOfficeList
 import administration.ui.suboffice.subofficelist.SubOfficeListState
 import administration.ui.suboffice.subofficelist.SubOfficesEvent

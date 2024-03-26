@@ -1,7 +1,7 @@
 package faculty.data.teacher.data_sources.remote
 
-import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.Header
-import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.get.getRequest2
+import core.network.get.Header
+import core.network.get.getRequest
 import faculty.data.teacher.entity.TeacherListEntity
 
 class TeacherListRemoteDataSource(
@@ -14,7 +14,7 @@ class TeacherListRemoteDataSource(
         if (token == null)
            return  Result.failure(Throwable("Token is null"))
         val header = Header(key = "Authorization", value = token)
-        return getRequest2<TeacherListEntity>(url = baseUrl, header = header)
+        return getRequest<TeacherListEntity>(url = baseUrl, header = header)
     }
 
 }

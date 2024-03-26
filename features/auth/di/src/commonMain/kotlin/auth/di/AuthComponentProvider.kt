@@ -3,8 +3,8 @@ package auth.di
 import auth.data.login.data_sources.remote.RemoteDataSource
 import auth.data.login.repository.LoginRepositoryImpl
 import auth.data.register.repoisitory.RegisterRepositoryImpl
-import com.just.cse.digitaldiary.twozerotwothree.core.local_database.realm.RealmAuthentication
-import com.just.cse.digitaldiary.twozerotwothree.core.local_database.realm.authentication.responose_model.SignedInUserResponseModel
+import core.database.realm.auth.RealmAuthentication
+import core.database.realm.auth.SignedInUserResponseModel
 
 /**
  ** Instead of storing the resource we are returning it
@@ -14,7 +14,7 @@ object AuthComponentProvider {
 
     var authToken: String?=null
 
-    val isSingedIn=RealmAuthentication.signInFlow
+    val isSingedIn= RealmAuthentication.signInFlow
     fun getLoginRepository(): LoginRepositoryImpl {
         return LoginRepositoryImpl()
     }

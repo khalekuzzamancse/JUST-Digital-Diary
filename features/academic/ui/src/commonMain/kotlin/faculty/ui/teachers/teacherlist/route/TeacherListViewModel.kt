@@ -30,7 +30,7 @@ class TeacherListViewModel(
                             designations = model.designations,
                             deptName = model.deptName,
                             deptSortName = model.deptSortName,
-                            roomNo = model.roomNo
+                            roomNo = model.roomNo.toString()
                         )
                     })
                 uiState.copy(
