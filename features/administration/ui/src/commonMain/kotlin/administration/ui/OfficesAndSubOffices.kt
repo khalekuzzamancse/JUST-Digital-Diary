@@ -4,15 +4,15 @@ import admin_office.domain.offices.repoisitory.AdminOfficeListRepository
 import admin_office.domain.sub_offices.repoisitory.AdminSubOfficeListRepository
 import administration.ui.offices.officelist.components.AdminOfficeList
 import administration.ui.offices.officelist.components.AdminOfficesEvent
+import administration.ui.offices.officelist.components.OfficeListState
 import administration.ui.offices.officelist.route.AdminOfficeListViewModel
 import administration.ui.suboffice.subofficelist.AdminSubOfficeList
+import administration.ui.suboffice.subofficelist.SubOfficeListState
 import administration.ui.suboffice.subofficelist.SubOfficesEvent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -20,7 +20,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import common.ui.layout.TwoPaneLayout
+import common.newui.SnackNProgressBarDecorator
+import common.newui.TwoPaneNewUIPros
 
 import kotlinx.coroutines.launch
 
@@ -47,8 +48,8 @@ internal fun OfficesAndSubOffices(
     LaunchedEffect(Unit) {
         viewModel.loadOffices()
     }
-    val officesState = viewModel.state.collectAsState().value.officeState
-    val subOfficeState = viewModel.state.collectAsState().value.subOfficeState
+    val officesState: OfficeListState = viewModel.uiState.collectAsState().value.officeState
+    val subOfficeState: SubOfficeListState? = viewModel.uiState.collectAsState().value.subOfficeState
     val showSubOfficeDestination = subOfficeState != null
 
     val officeEvent: (AdminOfficesEvent) -> Unit = { event ->
@@ -72,39 +73,72 @@ internal fun OfficesAndSubOffices(
 
     }
     backHandler {
-        if (subOfficeState != null)
-        { viewModel.dismissSubOfficesDestination()
+        if (subOfficeState != null) {
+            viewModel.dismissSubOfficesDestination()
             true
-        }
-        else
+        } else
             false
     }
-    TwoPaneLayout(
-        modifier = Modifier,
-        navigationIcon = if (showSubOfficeDestination) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Menu,
-        onNavigationIconClick = if (showSubOfficeDestination) viewModel::dismissSubOfficesDestination else onExitRequest,
-        showProgressBar = viewModel.state.collectAsState().value.isLoading,
+    SnackNProgressBarDecorator(
+        snackBarData = viewModel.uiState.collectAsState().value.snackBarData,
+        showProgressBar = viewModel.uiState.collectAsState().value.isLoading,
+        onSnackBarCloseRequest = viewModel::clearSnackBarMessages
+    ) {
+        _OfficeNSubOfficeListRaw(
+            modifier = Modifier,
+            officesState = officesState,
+            subOfficeState = subOfficeState,
+            onOfficeEvent = officeEvent,
+            onSubOfficeEvent = subOfficeEvent,
+            onSubOfficeDestinationCloseRequest = viewModel::dismissSubOfficesDestination,
+            onExitRequest = onExitRequest
+        )
+    }
+
+
+}
+
+@Composable
+private fun _OfficeNSubOfficeListRaw(
+    modifier: Modifier = Modifier,
+    officesState: OfficeListState,
+    subOfficeState: SubOfficeListState?,
+    onOfficeEvent: (AdminOfficesEvent) -> Unit,
+    onSubOfficeEvent: (SubOfficesEvent) -> Unit,
+    onSubOfficeDestinationCloseRequest: () -> Unit,
+    onExitRequest: () -> Unit,
+) {
+    val showSubOfficeList = subOfficeState != null
+    val navigationIcon =
+        if (showSubOfficeList) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Menu
+    val alignment = Alignment.TopStart
+    val props = TwoPaneNewUIPros(
+        showTopOrRightPane = showSubOfficeList,
+        alignment = alignment,
+        navigationIcon = navigationIcon
+    )
+    common.newui.TwoPaneLayout(
+        modifier = modifier,
+        props = props,
+        onNavigationIconClick = if (showSubOfficeList) onSubOfficeDestinationCloseRequest else onExitRequest,
         leftPane = {
             AdminOfficeList(
                 officeListState = officesState,
-                onEvent = officeEvent
+                onEvent = onOfficeEvent
             )
         },
         topOrRightPane = {
             if (subOfficeState != null) {
                 AdminSubOfficeList(
                     modifier = Modifier
-                        .fillMaxSize()
-
-                    ,
+                        .fillMaxSize(),
                     state = subOfficeState,
-                    onEvent = subOfficeEvent
+                    onEvent = onSubOfficeEvent
                 )
             }
         },
-        alignment = Alignment.TopStart,
-        showTopOrRightPane = subOfficeState != null
-    )
 
+        )
 
 }
+

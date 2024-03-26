@@ -1,4 +1,7 @@
+import administration.navgraph.AdminOfficeAndSubOfficeRoute
+import administration.navgraph.AdminOfficersScreen
 import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -11,6 +14,7 @@ import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import auth.ui.AuthNavHostDesktop
 import common.newui.CustomSnackBarData
+import faculty.route.FacultiesScreen
 
 
 fun main() {
@@ -43,7 +47,13 @@ fun main() {
 //
 //                }
 //                NavigationRoot()
-              AuthNavHostDesktop()
+//              AuthNavHostDesktop()
+//                FacultiesScreen(
+//                    onTeacherListRequest = {},
+//                    onExitRequest = {},
+//                    backHandler = {}
+//                )
+                AdminOfficeAndSubOfficeRoute({})
 
             }
         }

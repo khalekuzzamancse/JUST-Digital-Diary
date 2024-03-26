@@ -5,6 +5,7 @@ import admin_office.domain.sub_offices.repoisitory.AdminSubOfficeListRepository
 import administration.ui.offices.officelist.components.Offices
 import administration.ui.suboffice.subofficelist.SubOffice
 import administration.ui.suboffice.subofficelist.SubOfficeListState
+import common.newui.CustomSnackBarData
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,14 +20,14 @@ class AdminOfficeListViewModel(
     private val subOfficeListRepository: AdminSubOfficeListRepository
 ) {
 
-    private val _state = MutableStateFlow(AdminOfficesDestinationState())
-    val state = _state.asStateFlow()
+    private val _uiState = MutableStateFlow(AdminOfficesDestinationState())
+    val uiState = _uiState.asStateFlow()
 
 
     suspend fun loadOffices() {
         startLoading()
         val result = repository.getAdminOffices()
-        if (result.isSuccess){
+        if (result.isSuccess) {
             onFacultyListFetchedSuccessfully(result.getOrDefault(emptyList()).map {
                 Offices(
                     name = it.name,
@@ -34,8 +35,7 @@ class AdminOfficeListViewModel(
                     numberOfSubOffices = "${it.subOfficeCnt}"
                 )
             })
-        }
-        else{
+        } else {
             onFacultyListFetchedFailed(result.exceptionOrNull()?.message)
 
         }
@@ -45,14 +45,15 @@ class AdminOfficeListViewModel(
     }
 
     private fun onFacultyListFetchedSuccessfully(faculties: List<Offices>) {
-        _state.update { state ->
+        _uiState.update { state ->
             val facultyListState = state.officeState.copy(offices = faculties)
             state.copy(officeState = facultyListState)
         }
 
     }
-    fun dismissSubOfficesDestination(){
-        _state.update { state ->
+
+    fun dismissSubOfficesDestination() {
+        _uiState.update { state ->
             state.copy(subOfficeState = null, showSubOfficeList = false)
         }
     }
@@ -62,29 +63,31 @@ class AdminOfficeListViewModel(
         updateSnackBarMessage(reason)
 
     }
+
     suspend fun onOfficeSelected(index: Int) {
-        _state.update { state ->
+        _uiState.update { state ->
             val facultyListState = state.officeState.copy(selected = index)
             state.copy(officeState = facultyListState)
         }
-        val officeId=_state.value.officeState.offices[index].id
+        val officeId = _uiState.value.officeState.offices[index].id
         loadSubOffices(officeId)
 
     }
-    fun getSubOfficeId(index: Int):String?{
-        val subOfficeList= _state.value.subOfficeState?.subOffices
+
+    fun getSubOfficeId(index: Int): String? {
+        val subOfficeList = _uiState.value.subOfficeState?.subOffices
         return subOfficeList?.get(index)?.id
     }
 
     private suspend fun loadSubOffices(officeId: String) {
 
         startLoading()
-       val result = subOfficeListRepository.getSubOffices(officeId)
-        if (result.isSuccess){
-          val subOffices=  result.getOrDefault(emptyList()).map {
+        val result = subOfficeListRepository.getSubOffices(officeId)
+        if (result.isSuccess) {
+            val subOffices = result.getOrDefault(emptyList()).map {
                 SubOffice(
                     name = it.name,
-                    id=it.id,
+                    id = it.id,
                     employeeCnt = it.employeeCount.toString()
                 )
             }
@@ -93,34 +96,51 @@ class AdminOfficeListViewModel(
         stopLoading()
 
     }
-    private fun onSubOfficeListChanged(subOffices:List<SubOffice>){
-        _state.update { state ->
-            val subOfficeState = SubOfficeListState(subOffices=subOffices)
+
+    private fun onSubOfficeListChanged(subOffices: List<SubOffice>) {
+        _uiState.update { state ->
+            val subOfficeState = SubOfficeListState(subOffices = subOffices)
             state.copy(subOfficeState = subOfficeState, showSubOfficeList = true)
         }
 
     }
 
-    private fun clearMessages() {
+    fun clearSnackBarMessages() {
         updateSnackBarMessage(null)
     }
 
-    private fun updateSnackBarMessage(message: String?) {
-        CoroutineScope(Dispatchers.Default).launch {
-            _state.update { it.copy(message = message) }
-            delay(1500)
-            clearMessages()
+    private fun updateSnackBarMessage(
+        message: String?,
+        details: String? = null,
+        isError: Boolean = false
+    ) {
+        if (message != null) {
+            _uiState.update {
+                it.copy(
+                    snackBarData = CustomSnackBarData(
+                        message = message, details = details, isError = isError
+                    )
+                )
+            }
+
+        } else {
+            _uiState.update {
+                it.copy(
+                    snackBarData = null
+                )
+            }
         }
+
 
     }
 
     private fun startLoading() {
-        _state.update { it.copy(isLoading = true) }
+        _uiState.update { it.copy(isLoading = true) }
 
     }
 
     private fun stopLoading() {
-        _state.update { it.copy(isLoading = false) }
+        _uiState.update { it.copy(isLoading = false) }
     }
 
 }

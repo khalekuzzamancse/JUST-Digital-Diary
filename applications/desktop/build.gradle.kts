@@ -14,6 +14,8 @@ kotlin {
             dependencies {
                 implementation(project(":features:navigation"))
                 implementation(project(localModules.versions.feature.authentication.ui.get()))
+                implementation(project(localModules.versions.feature.academic.ui.get()))
+                implementation(project(localModules.versions.feature.administration.ui.get()))
                 implementation(project(localModules.versions.common.ui.get()))
                 implementation(compose.desktop.common)
                 implementation(compose.desktop.currentOs)

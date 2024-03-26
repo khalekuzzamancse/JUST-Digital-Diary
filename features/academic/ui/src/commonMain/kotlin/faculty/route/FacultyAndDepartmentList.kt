@@ -1,24 +1,26 @@
 package faculty.route
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import common.ui.layout.TwoPaneLayout
+import common.newui.SnackNProgressBarDecorator
+import common.newui.TwoPaneLayout
+import common.newui.TwoPaneNewUIPros
 import faculty.domain.department.repoisitory.DepartmentListRepository
 import faculty.domain.faculties.repoisitory.FacultyListRepository
 import faculty.ui.department.departmentlist.DepartmentListDestination
 import faculty.ui.department.departmentlist.DepartmentListEvent
+import faculty.ui.department.departmentlist.DepartmentListState
 import faculty.ui.faculty.facultylist.components.FacultyListDestination
 import faculty.ui.faculty.facultylist.components.FacultyListEvent
+import faculty.ui.faculty.facultylist.components.FacultyListState
 
 
 /**
@@ -60,7 +62,7 @@ fun FacultyAndDepartmentList(
         }
 
     }
-    val facultyState = viewModel.facultyListState.collectAsState().value
+    val facultyState: FacultyListState = viewModel.facultyListState.collectAsState().value
     LaunchedEffect(Unit) {
         viewModel.loadFacultyList()
     }
@@ -78,13 +80,47 @@ fun FacultyAndDepartmentList(
         }
 
     }
-    TwoPaneLayout(
+    SnackNProgressBarDecorator(
+        snackBarData = viewModel.uiState.collectAsState().value.snackBarData,
         showProgressBar = viewModel.uiState.collectAsState().value.isLoading,
-        snackBarMessage = viewModel.uiState.collectAsState().value.message,
-        modifier = modifier,
-        navigationIcon = if (showDepartmentList) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Menu,
-        onNavigationIconClick = if (showDepartmentList) viewModel::clearFacultySelection else onExitRequest,
+        onSnackBarCloseRequest = viewModel::clearFacultySelection
+    ) {
+        _FacultyNDepartmentRaw(
+            modifier = modifier,
+            facultyState = facultyState,
+            departmentListState = departmentListState,
+            onDepartmentEvent = onDepartmentListEvent,
+            onFacultyEvent = onFacultyEvent,
+            clearFacultySelection = viewModel::clearFacultySelection,
+            onExitRequest = onExitRequest
+        )
+    }
+
+}
+
+@Composable
+private fun _FacultyNDepartmentRaw(
+    modifier: Modifier = Modifier,
+    facultyState: FacultyListState,
+    departmentListState: DepartmentListState?,
+    onDepartmentEvent: (DepartmentListEvent) -> Unit,
+    clearFacultySelection: () -> Unit,
+    onFacultyEvent: (FacultyListEvent) -> Unit,
+    onExitRequest: () -> Unit,
+) {
+    val showDepartmentList = departmentListState != null
+    val navigationIcon =
+        if (showDepartmentList) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Menu
+    val alignment = Alignment.TopStart
+    val props = TwoPaneNewUIPros(
         showTopOrRightPane = showDepartmentList,
+        alignment = alignment,
+        navigationIcon = navigationIcon
+    )
+ TwoPaneLayout(
+        modifier = modifier,
+        props = props,
+        onNavigationIconClick = if (showDepartmentList) clearFacultySelection else onExitRequest,
         leftPane = {
             FacultyListDestination(
                 modifier = Modifier,
@@ -97,12 +133,12 @@ fun FacultyAndDepartmentList(
                 DepartmentListDestination(
                     modifier = Modifier.fillMaxSize(),
                     state = departmentListState,
-                    onEvent = onDepartmentListEvent
+                    onEvent = onDepartmentEvent
                 )
             }
         },
-        alignment = Alignment.TopStart
-    )
 
+        )
 
 }
+

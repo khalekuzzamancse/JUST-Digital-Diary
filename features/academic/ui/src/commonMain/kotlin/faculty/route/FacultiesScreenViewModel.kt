@@ -1,5 +1,6 @@
 package faculty.route
 
+import common.newui.CustomSnackBarData
 import faculty.domain.department.repoisitory.DepartmentListRepository
 import faculty.domain.faculties.repoisitory.FacultyListRepository
 import faculty.ui.department.departmentlist.Department
@@ -58,17 +59,25 @@ class FacultiesScreenViewModel(
     }
 
     private suspend fun onFailure(reason: String?) {
-        if (reason != null)
-            showErrorMessage(reason)
+        if (reason != null) {
+            _uiState.update {
+                it.copy(
+                    snackBarData = CustomSnackBarData(
+                        message = "Failed to load ",
+                        details = reason,
+                        isError = true
+                    )
+                )
+            }
+        } else
+            clearErrorMessage()
     }
 
-    private suspend fun showErrorMessage(errorMessage: String) {
+    fun clearErrorMessage() {
         _uiState.update {
-            it.copy(message = errorMessage)
-        }
-        delay(1000)
-        _uiState.update {
-            it.copy(message = null)
+            it.copy(
+                snackBarData = null
+            )
         }
     }
 
