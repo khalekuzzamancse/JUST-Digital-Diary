@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import common.ui.WindowSizeDecorator
 import common.ui.layout.two_panes.CompactModeLayout
 import common.ui.layout.two_panes.TwoPaneProps
+import common.ui.snackbar.SnackBarData
 
 /**
  * Its allow us show the content in pane mode in expanded and the medium screen.
@@ -33,6 +34,7 @@ import common.ui.layout.two_panes.TwoPaneProps
 fun TwoPaneLayout(
     modifier: Modifier,
     snackBarMessage: String? = null,
+    snackBarData: SnackBarData?=null,
     showProgressBar: Boolean = false,
     props: TwoPaneProps = TwoPaneProps(),
     showTopOrRightPane: Boolean,
@@ -63,6 +65,7 @@ fun TwoPaneLayout(
     TwoPaneLayout(
         modifier = modifier.padding(scaffoldPadding),
         snackBarMessage = snackBarMessage,
+        snackBarData = snackBarData,
         showProgressBar = showProgressBar,
         props = props,
         showTopOrRightPane = showTopOrRightPane,
@@ -76,7 +79,8 @@ fun TwoPaneLayout(
 @Composable
 fun TwoPaneLayout(
     modifier: Modifier,
-    snackBarMessage: String? = null,
+    snackBarData: SnackBarData?=null,
+    snackBarMessage: String?,
     showProgressBar: Boolean = false,
     props: TwoPaneProps = TwoPaneProps(),
     showTopOrRightPane: Boolean,
@@ -86,6 +90,7 @@ fun TwoPaneLayout(
 ) {
     WindowSizeDecorator(
         modifier = modifier,
+        snackBarData = snackBarData,
         snackBarMessage = snackBarMessage,
         showProgressBar = showProgressBar,
         onNonExpanded = {

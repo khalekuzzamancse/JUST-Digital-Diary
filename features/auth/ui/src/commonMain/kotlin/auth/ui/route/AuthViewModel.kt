@@ -76,6 +76,7 @@ class AuthViewModel(
                 it.copy(
                     showProgressBar = loginState.isLoading,
                     snackBarMessage = loginState.message,
+                    snackBarData = loginState.snackBarData
                 )
             }
 

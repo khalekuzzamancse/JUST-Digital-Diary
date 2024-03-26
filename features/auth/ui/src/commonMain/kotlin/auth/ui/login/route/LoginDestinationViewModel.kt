@@ -5,10 +5,12 @@ import auth.domain.login.model.LoginResponseModel
 import auth.domain.login.repoisitory.LoginRepository
 import auth.ui.login.components.event.LoginEvent
 import auth.ui.login.components.form.LoginFormManager
+import common.ui.snackbar.SnackBarData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import javax.swing.SpinnerNumberModel
 
 
 class LoginDestinationViewModel(
@@ -54,10 +56,11 @@ class LoginDestinationViewModel(
         val reason =
             if (ex == null) "Login Failed with No Reason mentioned:LoginDestinationViewModel:onLoginFailure()"
             else ex.message
-                updateSnackBarMessage(reason)
-        delay(1500)
+        updateSnackBarMessage(message = "Login Failed",details = reason,isError = true)
+        delay(4_000) //make larger delay to be able to click the action icon to show details
         clearMessages()
     }
+
     private suspend fun onLoginSuccess() {
         stopLoading()
         updateSnackBarMessage("Login Successful")
@@ -69,8 +72,28 @@ class LoginDestinationViewModel(
         updateSnackBarMessage(null)
     }
 
-    private fun updateSnackBarMessage(message: String?) {
-        _state.update { it.copy(message = message) }
+    private fun updateSnackBarMessage(
+        message: String?,
+        details: String? = null,
+        isError: Boolean = false
+    ) {
+        if (message!=null){
+            _state.update {
+                it.copy(
+                    message = message,
+                    snackBarData = SnackBarData(message, details, isError)
+                )
+            }
+        }
+        else{
+            _state.update {
+                it.copy(
+                    message = message,
+                    snackBarData = null
+                )
+            }
+        }
+
     }
 
     private fun startLoading() {

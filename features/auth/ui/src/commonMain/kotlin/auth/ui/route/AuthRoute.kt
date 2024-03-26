@@ -24,7 +24,8 @@ import auth.ui.login.route.LoginDestinationViewModel
 import auth.ui.register.components.events.RegisterControlEvents
 import auth.ui.register.route.RegisterDestination
 import auth.ui.register.route.RegisterDestinationViewModel
-import common.ui.layout.TwoPaneLayout
+import common.newui.TwoPaneLayout
+import common.newui.TwoPaneNewUIPros
 import kotlinx.coroutines.launch
 
 /**
@@ -36,18 +37,15 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun _AuthRoute(
-    onLoginSuccess:(String,String)->Unit,
-    onExitRequest:()->Unit={},
+    onLoginSuccess: (String, String) -> Unit,
     backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit,
 ) {
     _AuthRoute(
         loginRepository = AuthComponentProvider.getLoginRepository(),
         registrationRepository = AuthComponentProvider.getRegisterRepository(),
-        onLoginSuccess =onLoginSuccess,
-        backHandler=backHandler
+        onLoginSuccess = onLoginSuccess,
+        backHandler = backHandler
     )
-
-
 
 }
 
@@ -58,21 +56,22 @@ private fun _AuthRoute(
     onLoginSuccess: (userName: String, password: String) -> Unit,
     backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit,
 ) {
-    val authViewModel = remember{
+    val authViewModel = remember {
         AuthViewModel(
             loginRepository = loginRepository,
             registrationRepository = registrationRepository
         )
     }
-        _AuthRoute(
-            modifier = Modifier,
-            authViewModel=authViewModel,
-            onLoginSuccess = onLoginSuccess,
-            backHandler = backHandler
-        )
+    _AuthRoute(
+        modifier = Modifier,
+        authViewModel = authViewModel,
+        onLoginSuccess = onLoginSuccess,
+        backHandler = backHandler
+    )
 
 
 }
+
 /**
  * * This composable is only accessible within this module
  * * It serves as the container for the Login[LoginDestination] and Register[RegisterDestination] Destinations.
@@ -86,54 +85,54 @@ private fun _AuthRoute(
  */
 @Composable
 private fun _AuthRoute(
-    modifier: Modifier=Modifier,
-    authViewModel:AuthViewModel,
+    modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel,
     onLoginSuccess: (userName: String, password: String) -> Unit,
     backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val state = authViewModel.uiState.collectAsState().value
-        _AuthRoute(
-            modifier =modifier,
-            backHandler = backHandler,
-            onCloseRegisterFormRequest = {
-                authViewModel.closeRegistrationDestination()
-            },
-            state = state,
-            loginViewModel = authViewModel.loginViewModel,
-            registerViewModel = authViewModel.registerViewModel,
-            onLoginEvent = { event ->
-                when (event) {
-                    LoginEvent.LoginControlsEvent.RegisterRequest -> {
-                        authViewModel.openRegisterDestination()
-                    }
-
-                    LoginEvent.LoginControlsEvent.LoginRequest -> {
-                        scope.launch {
-                            val responseModel = authViewModel.login()
-                            if (responseModel != null)
-                                onLoginSuccess(responseModel.username, responseModel.password)
-
-                        }
-
-                    }
+    _AuthRoute(
+        modifier = modifier,
+        backHandler = backHandler,
+        onCloseRegisterFormRequest = {
+            authViewModel.closeRegistrationDestination()
+        },
+        state = state,
+        loginViewModel = authViewModel.loginViewModel,
+        registerViewModel = authViewModel.registerViewModel,
+        onLoginEvent = { event ->
+            when (event) {
+                LoginEvent.LoginControlsEvent.RegisterRequest -> {
+                    authViewModel.openRegisterDestination()
                 }
-            },
-            onRegisterEvent = { event ->
-                when (event) {
-                    RegisterControlEvents.RegisterRequest -> {
-                        scope.launch {
-                            val success = authViewModel.register()
-                            if (success) {
-                                authViewModel.closeRegistrationDestination()
-                            }
-                        }
+
+                LoginEvent.LoginControlsEvent.LoginRequest -> {
+                    scope.launch {
+                        val responseModel = authViewModel.login()
+                        if (responseModel != null)
+                            onLoginSuccess(responseModel.username, responseModel.password)
 
                     }
-                }
-            },
 
-            )
+                }
+            }
+        },
+        onRegisterEvent = { event ->
+            when (event) {
+                RegisterControlEvents.RegisterRequest -> {
+                    scope.launch {
+                        val success = authViewModel.register()
+                        if (success) {
+                            authViewModel.closeRegistrationDestination()
+                        }
+                    }
+
+                }
+            }
+        },
+
+        )
 
 
 }
@@ -149,25 +148,28 @@ private fun _AuthRoute(
     onCloseRegisterFormRequest: () -> Unit,
     backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit
 ) {
+
+    val navigationIcon = if (state.showRegisterForm) Icons.AutoMirrored.Filled.ArrowBack else null
+    val alignment = Alignment.TopStart
+    val props = TwoPaneNewUIPros(
+        showTopOrRightPane = state.showRegisterForm,
+        alignment = alignment,
+        navigationIcon = navigationIcon
+    )
     backHandler {
         if (state.showRegisterForm)
             onCloseRegisterFormRequest()
     }
     TwoPaneLayout(
         modifier = modifier,
-        navigationIcon = if (state.showRegisterForm) Icons.AutoMirrored.Filled.ArrowBack else null,
+        props = props,
         onNavigationIconClick = if (state.showRegisterForm) onCloseRegisterFormRequest else null,
-        showProgressBar = state.showProgressBar,
-        snackBarMessage = state.snackBarMessage,
-        showTopOrRightPane = state.showRegisterForm,
         leftPane = {
             LoginDestination(
                 modifier = Modifier.padding(8.dp)
                     .widthIn(max = 700.dp)
                     .fillMaxHeight()
-                    .verticalScroll(rememberScrollState())
-//                    .background(Color.Blue)
-                ,
+                    .verticalScroll(rememberScrollState()),
                 viewModel = loginViewModel,
                 onEvent = onLoginEvent
             )
@@ -177,16 +179,66 @@ private fun _AuthRoute(
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-//                    .background(Color.Red)
-                ,
+                    .verticalScroll(rememberScrollState()),
                 viewModel = registerViewModel,
                 onEvent = onRegisterEvent
             )
         },
-        alignment = Alignment.TopStart
-    )
+
+        )
 }
 
 
+//@Composable
+//private fun _AuthRoute(
+//    modifier: Modifier = Modifier,
+//    state: AuthScreenState,
+//    loginViewModel: LoginDestinationViewModel,
+//    registerViewModel: RegisterDestinationViewModel,
+//    onLoginEvent: (LoginEvent) -> Unit,
+//    onRegisterEvent: (RegisterControlEvents) -> Unit = {},
+//    onCloseRegisterFormRequest: () -> Unit,
+//    backHandler: @Composable (onBackButtonPress: () -> Unit) -> Unit
+//) {
+//    backHandler {
+//        if (state.showRegisterForm)
+//            onCloseRegisterFormRequest()
+//    }
+//    TwoPaneLayout(
+//        modifier = modifier,
+//        navigationIcon = if (state.showRegisterForm) Icons.AutoMirrored.Filled.ArrowBack else null,
+//        onNavigationIconClick = if (state.showRegisterForm) onCloseRegisterFormRequest else null,
+//        showProgressBar = state.showProgressBar,
+//        snackBarMessage = state.snackBarMessage,
+//        snackBarData =state.snackBarData ,
+//        showTopOrRightPane = state.showRegisterForm,
+//        leftPane = {
+//            LoginDestination(
+//                modifier = Modifier.padding(8.dp)
+//                    .widthIn(max = 700.dp)
+//                    .fillMaxHeight()
+//                    .verticalScroll(rememberScrollState())
+//
+//                ,
+//                viewModel = loginViewModel,
+//                onEvent = onLoginEvent
+//            )
+//        },
+//        topOrRightPane = {
+//            RegisterDestination(
+//                modifier = Modifier
+//                    .padding(8.dp)
+//                    .fillMaxSize()
+//                    .verticalScroll(rememberScrollState())
+////                    .background(Color.Red)
+//                ,
+//                viewModel = registerViewModel,
+//                onEvent = onRegisterEvent
+//            )
+//        },
+//        alignment = Alignment.TopStart
+//    )
+//}
+//
+//
 

@@ -9,16 +9,14 @@ import kotlinx.coroutines.launch
 fun AuthNavHostDesktop(){
     val scope = rememberCoroutineScope()
     _AuthRoute(
-        onExitRequest = {},
         onLoginSuccess = { username, password ->
             scope.launch {
                 //  AuthComponentProvider.saveSignInInfo(username, password)
             }
 
-        },
-        backHandler = { onBackButtonPress ->
-
-
         }
-    )
+    ) { onBackButtonPress ->
+
+
+    }
 }
