@@ -8,6 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.compose.AppTheme
 import faculty.ui.teachers.teacherlist.component.TeacherListEvent
 
 object FacultyFeatureNavGraph {
@@ -16,10 +17,20 @@ object FacultyFeatureNavGraph {
     private const val TEACHER_LIST="TeacherListScreen"
     private const val TEACHERS_ROUTE = "$TEACHER_LIST/{$DEPT_ID}"
 
-
-
     @Composable
     fun NavHost(
+        navController: NavHostController = rememberNavController(),
+        onExitRequest: () -> Unit,
+        onEvent: (TeacherListEvent) -> Unit
+    ) {
+        AppTheme {
+            _NavHost(navController, onExitRequest, onEvent)
+        }
+
+    }
+
+    @Composable
+   private fun _NavHost(
         navController: NavHostController = rememberNavController(),
         onExitRequest: () -> Unit,
         onEvent: (TeacherListEvent) -> Unit

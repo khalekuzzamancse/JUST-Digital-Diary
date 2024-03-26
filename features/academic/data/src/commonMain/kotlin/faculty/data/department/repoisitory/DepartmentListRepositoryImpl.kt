@@ -1,5 +1,6 @@
 package faculty.data.department.repoisitory
 
+import common.di.AuthTokenFactory
 import faculty.data.PackageLevelAccess
 import faculty.data.department.data_sources.remote.DepartmentListRemoteDataSource
 import faculty.data.department.data_sources.remote.entity.DepartmentListEntity
@@ -7,8 +8,10 @@ import faculty.domain.department.model.DepartmentListModel
 import faculty.domain.department.repoisitory.DepartmentListRepository
 
 @OptIn(PackageLevelAccess::class)
-class DepartmentListRepositoryImpl(private val token: String?) : DepartmentListRepository {
+class DepartmentListRepositoryImpl : DepartmentListRepository {
     override suspend fun getDepartment(facultyId: String): Result<List<DepartmentListModel>> {
+        val token= AuthTokenFactory.retrieveToken().getOrNull()
+
         val response: Result<DepartmentListEntity> = DepartmentListRemoteDataSource(
             token = token,
             facultyId = facultyId

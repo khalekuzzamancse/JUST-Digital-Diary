@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,10 +29,11 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 @Composable
-internal fun  NavigationItemLayout(
+internal fun NavigationItemLayout(
     modifier: Modifier = Modifier,
-    visibilityDelay:Long=0,
+    visibilityDelay: Long = 0,
     label: String,
     selected: Boolean,
     onClick: () -> Unit,
@@ -39,7 +41,8 @@ internal fun  NavigationItemLayout(
     onFocusing: () -> Unit = {},
     props: NavigationItemProps = NavigationItemProps(
         focusedColor = MaterialTheme.colorScheme.errorContainer,
-        unFocusedColor = MaterialTheme.colorScheme.primaryContainer)
+        unFocusedColor = MaterialTheme.colorScheme.primaryContainer
+    )
 ) {
     var show by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
@@ -65,7 +68,6 @@ internal fun  NavigationItemLayout(
 }
 
 
-
 @Composable
 private fun NavigationItemLayoutCore(
     modifier: Modifier = Modifier,
@@ -78,8 +80,7 @@ private fun NavigationItemLayoutCore(
     props: NavigationItemProps = NavigationItemProps(
         focusedColor = MaterialTheme.colorScheme.errorContainer,
         unFocusedColor = MaterialTheme.colorScheme.primaryContainer,
-
-        )
+    )
 ) {
 
     var focusing by remember { mutableStateOf(false) }
@@ -99,14 +100,15 @@ private fun NavigationItemLayoutCore(
         targetValue = if (focusing) props.focusedColor else props.unFocusedColor
     )
 
-    val selectionColor = MaterialTheme.colorScheme.primary
+    val selectionColor = props.focusedColor
+    val itemColor = if (selected) props.focusedColor else props.unFocusedColor
     Surface(
         shadowElevation = 2.dp,
         selected = selected,
         onClick = onClick,
         modifier = modifier.semantics { role = Role.Tab },
         shape = props.shape,
-        color = if(selected) selectionColor else backgroundColor,
+        color = itemColor,
         interactionSource = interactionSource,
     ) {
         Row(
@@ -122,7 +124,7 @@ private fun NavigationItemLayoutCore(
         ) {
             icon()
             Spacer(Modifier.width(12.dp))
-            Text(text = label)
+            Text(text = label, color = MaterialTheme.colorScheme.contentColorFor(itemColor))
         }
     }
 }

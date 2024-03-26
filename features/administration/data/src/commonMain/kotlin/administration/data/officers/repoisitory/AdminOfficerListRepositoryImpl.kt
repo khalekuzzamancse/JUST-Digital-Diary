@@ -5,14 +5,14 @@ import admin_office.domain.officers.repoisitory.AdminOfficerListRepository
 import administration.data.PackageLevelAccess
 import administration.data.officers.data_sources.remote.AdminOfficerListRemoteDataSource
 import administration.data.officers.data_sources.remote.entity.AdminOfficerListEntity
+import common.di.AuthTokenFactory
 
-class AdminOfficerListRepositoryImpl(
-    private val token: String?
-) : AdminOfficerListRepository {
+class AdminOfficerListRepositoryImpl : AdminOfficerListRepository {
 
 
     @OptIn(PackageLevelAccess::class) // Permits access to "AdminOfficerListEntity" within this package
     override suspend fun getOfficers(subOfficeId: String): Result<List<AdminOfficerModel>> {
+        val token= AuthTokenFactory.retrieveToken().getOrNull()
         val response = AdminOfficerListRemoteDataSource(
             token = token,
             subOfficeId = subOfficeId

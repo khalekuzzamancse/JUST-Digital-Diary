@@ -20,7 +20,6 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project(localModules.versions.core.netowork.get()))
                 implementation(libs.ktor.serialization.kotlinx.json)
-                implementation(project(localModules.versions.feature.academic.domain.get()))
 
             }
         }

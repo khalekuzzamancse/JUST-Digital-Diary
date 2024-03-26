@@ -1,4 +1,4 @@
-package faculty.ui.faculty.facultylist.route
+package faculty.route
 
 import faculty.domain.department.repoisitory.DepartmentListRepository
 import faculty.domain.faculties.repoisitory.FacultyListRepository

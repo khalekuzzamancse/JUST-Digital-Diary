@@ -17,13 +17,22 @@ import navigation.modal_drawer.TopmostNavigationHost
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import miscellaneous.ui.OtherFeatureNavGraph
+import navigation.themes.AppTheme
 
 
 private var showSlapScreen by mutableStateOf(true)
 
-
 @Composable
 fun AndroidRootNavigation(
+    onEvent: (AppEvent) -> Unit,
+){
+    AppTheme {
+        _AndroidRootNavigation(onEvent)
+    }
+
+}
+@Composable
+private fun _AndroidRootNavigation(
     onEvent: (AppEvent) -> Unit,
 ) {
     var navHostController = rememberNavController()

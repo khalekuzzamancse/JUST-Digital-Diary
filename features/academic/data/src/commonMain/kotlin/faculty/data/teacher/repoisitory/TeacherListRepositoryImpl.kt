@@ -1,14 +1,14 @@
 package faculty.data.teacher.repoisitory
 
+import common.di.AuthTokenFactory
 import faculty.data.teacher.data_sources.remote.TeacherListRemoteDataSource
 import faculty.data.teacher.entity.TeacherListEntity
 import faculty.domain.teacher.model.TeacherModel
 import faculty.domain.teacher.repoisitory.TeacherListRepository
 
-class TeacherListRepositoryImpl(
-    private val token: String?
-) : TeacherListRepository {
+class TeacherListRepositoryImpl : TeacherListRepository {
     override suspend fun getTeachers(deptId: String): Result<List<TeacherModel>> {
+        val token= AuthTokenFactory.retrieveToken().getOrNull()
         val response = TeacherListRemoteDataSource(token, deptId).getTeachers()
         return if (response.isSuccess) onSuccess(response.getOrNull()) else onFailure(response.exceptionOrNull())
     }

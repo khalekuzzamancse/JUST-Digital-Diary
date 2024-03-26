@@ -10,16 +10,17 @@ import faculty.data.teacher.repoisitory.TeacherListRepositoryImpl
  * so the client manually handle the lifecycle of the [LoginRepositoryImpl]
  */
 object FacultyComponentProvider {
-    private const val TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJiZDI2ODQ3MC1kMmFhLTQxZmEtOSIsInJvbGVfaWQiOjEsImlhdCI6MTcxMTM0MDUzNCwiZXhwIjoxNzExMzgzNzM0fQ.YjVitfZPY-Lzt8zwD2W9RtYoELLQ0lvNyp0CVA_OdpE"
+    private const val TOKEN="ewIjoxNzExMzgzNzM0fQ.YjVitfZPY-Lzt8zwD2W9RtYoELLQ0lvNyp0CVA_OdpE"
 
      fun getFacultyRepository(): FacultyListRepositoryImpl {
-         return FacultyListRepositoryImpl(TOKEN)
+         return FacultyListRepositoryImpl()
     }
     fun getDepartListRepository(): DepartmentListRepositoryImpl {
-        return DepartmentListRepositoryImpl(TOKEN)
+        return DepartmentListRepositoryImpl()
     }
     fun getTeacherListRepository(): TeacherListRepositoryImpl {
-        return TeacherListRepositoryImpl(TOKEN)
+        return TeacherListRepositoryImpl()
     }
+
 
 }

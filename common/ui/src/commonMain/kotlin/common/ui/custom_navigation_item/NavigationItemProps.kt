@@ -8,5 +8,7 @@ import androidx.compose.ui.unit.dp
 data class NavigationItemProps(
     val focusedColor: Color,
     val unFocusedColor: Color,
-    val shape: Shape = RoundedCornerShape(8.dp)
+    val iconLabelColor:Color= Color.Unspecified,
+    val iconTint:Color= Color.Unspecified,
+    val shape: Shape = RoundedCornerShape(8.dp),
 )

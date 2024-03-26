@@ -1,4 +1,4 @@
-package faculty.ui.faculty.facultylist.route
+package faculty.route
 
 data class FacultiesScreenState(
     val isLoading: Boolean = false,

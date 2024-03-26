@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import common.ui.custom_navigation_item.NavigationItem
 import common.ui.custom_navigation_item.NavigationItemInfo2
@@ -21,7 +22,7 @@ internal fun  VerticalListNavigation(
     onDestinationSelected: (Int) -> Unit,
     selectedDestinationIndex: Int,
     colors: NavigationItemProps = NavigationItemProps(
-        focusedColor = MaterialTheme.colorScheme.errorContainer,
+        focusedColor = MaterialTheme.colorScheme.secondary,
         unFocusedColor = MaterialTheme.colorScheme.primaryContainer,
     )
 ) {

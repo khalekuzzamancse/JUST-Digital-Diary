@@ -14,14 +14,14 @@ object AdminOfficeComponentProvider {
 
     fun getAdminOfficeRepository(): AdminOfficeListRepositoryImpl {
 
-        return AdminOfficeListRepositoryImpl(TOKEN)
+        return AdminOfficeListRepositoryImpl()
     }
 
     fun getAdminSubOfficeRepository(): AdminSubOfficeListRepositoryImpl {
-        return AdminSubOfficeListRepositoryImpl(TOKEN)
+        return AdminSubOfficeListRepositoryImpl()
     }
 
     fun getAdminOfficersListRepository(): AdminOfficerListRepositoryImpl {
-        return AdminOfficerListRepositoryImpl(TOKEN)
+        return AdminOfficerListRepositoryImpl()
     }
 }

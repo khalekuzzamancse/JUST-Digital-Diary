@@ -3,7 +3,6 @@ package faculty.route
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import faculty.di.FacultyComponentProvider
-import faculty.ui.faculty.facultylist.route.FacultyAndDepartmentList
 
 /**
  * @param backHandler is to override the back button press functionality

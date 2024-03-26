@@ -33,7 +33,7 @@ fun <T> NavigationItem(
     onFocusing: () -> Unit = {},
     onClick: () -> Unit,
     colors: NavigationItemProps = NavigationItemProps(
-        focusedColor = MaterialTheme.colorScheme.errorContainer,
+        focusedColor = MaterialTheme.colorScheme.secondary,
         unFocusedColor = MaterialTheme.colorScheme.primaryContainer,
         shape = MaterialTheme.shapes.small
         )
@@ -59,8 +59,8 @@ fun NavigationItem(
     onFocusing: () -> Unit = {},
     visibilityDelay: Long = 0L,
     props: NavigationItemProps = NavigationItemProps(
-        focusedColor = MaterialTheme.colorScheme.errorContainer,
-        unFocusedColor = MaterialTheme.colorScheme.primaryContainer
+        focusedColor = MaterialTheme.colorScheme.secondary,
+        unFocusedColor = MaterialTheme.colorScheme.primaryContainer,
     ),
     iconText: String,
 ) {
@@ -73,9 +73,12 @@ fun NavigationItem(
         onFocusing = onFocusing,
         props = props,
         icon = {
+
             TextToIcon(
                 modifier = Modifier.size(48.dp),
-                text = iconText
+                text = iconText,
+                background = props.iconTint,
+                labelColor = props.iconLabelColor
             )
         }
     )
@@ -87,12 +90,12 @@ private fun TextToIcon(
     modifier: Modifier = Modifier,
     text: String,
     shape: Shape = CircleShape,
-    tint: Color = Color.Red,
-    color: Color = Color.White
+    background: Color,
+    labelColor: Color,
 ) {
     Box(
         modifier = modifier
-            .clip(shape).background(tint),
+            .clip(shape).background(background),
         contentAlignment = Alignment.Center
     )
     {
@@ -102,7 +105,7 @@ private fun TextToIcon(
             style = TextStyle(
                 fontWeight = FontWeight.SemiBold,
             ),
-            color = color,
+            color = labelColor,
             modifier = Modifier.clipToBounds()
 
         )
@@ -117,7 +120,7 @@ fun <T> NavigationItem(
     visibilityDelay: Long = 0,
     onFocusing: () -> Unit = {},
     colors:NavigationItemProps = NavigationItemProps(
-        focusedColor = MaterialTheme.colorScheme.errorContainer ,
+        focusedColor = MaterialTheme.colorScheme.secondary,
         unFocusedColor = MaterialTheme.colorScheme.primaryContainer,
 
         ),
@@ -148,7 +151,7 @@ fun NavigationItem(
     focusedIcon: ImageVector,
     onFocusing: () -> Unit = {},
     props: NavigationItemProps = NavigationItemProps(
-        focusedColor = MaterialTheme.colorScheme.errorContainer,
+        focusedColor = MaterialTheme.colorScheme.secondary,
         unFocusedColor = MaterialTheme.colorScheme.primaryContainer,
 
         )

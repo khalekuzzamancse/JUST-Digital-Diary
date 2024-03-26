@@ -1,9 +1,12 @@
 package faculty.ui.faculty.facultylist.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import common.ui.custom_navigation_item.NavigationItemInfo2
+import common.ui.custom_navigation_item.NavigationItemProps
 import faculty.ui.common.VerticalListNavigation
 
 @Composable
@@ -11,13 +14,14 @@ internal fun FacultyListDestination(
     modifier: Modifier = Modifier,
     state: FacultyListState,
     onEvent: (FacultyListEvent) -> Unit,
-){
+) {
     FacultyList(
         modifier = modifier,
         state = state,
         onEvent = onEvent
     )
 }
+
 /**
  * * It Show the have the List of in Bottom sheet.
  *  * In Compact Window Faculties will be shown in the bottom sheet,in NonCompact Window Faculties will be shown in SIDE_SHEET
@@ -41,14 +45,21 @@ fun FacultyList(
         )
     }
 
-        VerticalListNavigation(
-            modifier = modifier.fillMaxWidth(),
-            destinations = destinations,
-            onDestinationSelected = { index ->
-                onEvent(FacultyListEvent.FacultySelected(index))
-            },
-            selectedDestinationIndex = state.selected?:-1
+    VerticalListNavigation(
+        modifier = modifier.fillMaxWidth(),
+        destinations = destinations,
+        onDestinationSelected = { index ->
+            onEvent(FacultyListEvent.FacultySelected(index))
+        },
+        selectedDestinationIndex = state.selected ?: -1,
+        colors = NavigationItemProps(
+            unFocusedColor = MaterialTheme.colorScheme.tertiaryContainer,
+            focusedColor =MaterialTheme.colorScheme.secondary,
+            iconTint = MaterialTheme.colorScheme.primary,
+            iconLabelColor = MaterialTheme.colorScheme.onPrimary
+
         )
+    )
 
 }
 

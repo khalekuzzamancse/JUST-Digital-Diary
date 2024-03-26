@@ -2,9 +2,11 @@ package administration.ui.offices.officelist.components
 
 import administration.ui.common.VerticalListNavigation
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import common.ui.custom_navigation_item.NavigationItemInfo2
+import common.ui.custom_navigation_item.NavigationItemProps
 
 @Composable
 fun AdminOfficeList(
@@ -61,7 +63,14 @@ internal fun OfficeList(
             onDestinationSelected = {index->
                 onEvent(AdminOfficesEvent.AdminOfficesSelected(index))
             },
-            selectedDestinationIndex = state.selected
+            selectedDestinationIndex = state.selected,
+            colors = NavigationItemProps(
+                unFocusedColor = MaterialTheme.colorScheme.tertiaryContainer,
+                focusedColor = MaterialTheme.colorScheme.secondary,
+                iconTint = MaterialTheme.colorScheme.primary,
+                iconLabelColor = MaterialTheme.colorScheme.onPrimary
+
+            )
         )
 
 }

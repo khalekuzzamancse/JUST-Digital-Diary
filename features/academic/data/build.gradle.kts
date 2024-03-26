@@ -22,6 +22,8 @@ kotlin {
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(project(localModules.versions.feature.academic.domain.get()))
 
+                implementation(project(localModules.versions.common.di.get()))//to retrieve token
+
             }
         }
         val commonTest by getting {

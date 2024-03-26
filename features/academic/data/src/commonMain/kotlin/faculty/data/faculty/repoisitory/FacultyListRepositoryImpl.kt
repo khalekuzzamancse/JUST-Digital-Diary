@@ -1,13 +1,15 @@
 package faculty.data.faculty.repoisitory
 
+import common.di.AuthTokenFactory
 import faculty.data.faculty.data_sources.remote.FacultyListRemoteDataSource
 import faculty.data.faculty.data_sources.remote.entity.FacultyListResponseEntity
 import faculty.domain.faculties.model.FacultyInfoModel
 import faculty.domain.faculties.repoisitory.FacultyListRepository
 
-class FacultyListRepositoryImpl(private val token: String?) : FacultyListRepository {
+class FacultyListRepositoryImpl : FacultyListRepository {
 
     override suspend fun getFaculties(): Result<List<FacultyInfoModel>> {
+        val token=AuthTokenFactory.retrieveToken().getOrNull()
         val response = FacultyListRemoteDataSource(token).getFaculties()
         return if (response.isSuccess)
             onSuccess(response.getOrNull())
@@ -34,4 +36,6 @@ class FacultyListRepositoryImpl(private val token: String?) : FacultyListReposit
         val ex = exception ?: Throwable("Reason is null at ,FacultyListRepositoryImpl")
         return Result.failure(ex)
     }
+
+
 }

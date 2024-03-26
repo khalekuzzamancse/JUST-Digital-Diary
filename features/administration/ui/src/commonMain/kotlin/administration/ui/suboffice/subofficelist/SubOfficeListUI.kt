@@ -45,7 +45,8 @@ fun AdminSubOfficeList(
         onDestinationSelected = {index->
             onEvent(SubOfficesEvent.SubOfficeSelected(index))
         },
-        selectedDestinationIndex = state.selected
+        selectedDestinationIndex = state.selected,
+
     )
 
 }
@@ -69,8 +70,11 @@ private fun SubOfficeListDestination(
             onDestinationSelected = onDestinationSelected,
             selectedDestinationIndex = selectedDestinationIndex,
             colors = NavigationItemProps(
+                unFocusedColor = MaterialTheme.colorScheme.surfaceContainer,
                 focusedColor = MaterialTheme.colorScheme.secondary,
-                unFocusedColor = MaterialTheme.colorScheme.secondaryContainer,
+                iconTint = MaterialTheme.colorScheme.primary,
+                iconLabelColor = MaterialTheme.colorScheme.onPrimary,
+                shape = MaterialTheme.shapes.small
             )
         )
 

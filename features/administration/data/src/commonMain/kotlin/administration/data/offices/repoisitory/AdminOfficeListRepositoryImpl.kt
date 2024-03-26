@@ -5,13 +5,13 @@ import admin_office.domain.offices.repoisitory.AdminOfficeListRepository
 import administration.data.PackageLevelAccess
 import administration.data.offices.data_sources.remote.AdminOfficeListRemoteDataSource
 import administration.data.offices.data_sources.remote.entity.AdminOfficeListEntity
+import common.di.AuthTokenFactory
 
-class AdminOfficeListRepositoryImpl(
-    private val token: String?
-) : AdminOfficeListRepository {
+class AdminOfficeListRepositoryImpl : AdminOfficeListRepository {
 
     @OptIn(PackageLevelAccess::class)
     override suspend fun getAdminOffices(): Result<List<AdminOfficeModel>> {
+        val token= AuthTokenFactory.retrieveToken().getOrNull()
         val response = AdminOfficeListRemoteDataSource(
             token = token,
         ).getOffices()

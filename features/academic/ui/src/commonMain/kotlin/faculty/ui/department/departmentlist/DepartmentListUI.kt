@@ -68,8 +68,10 @@ private fun DepartmentsList(
             onDestinationSelected = onDestinationSelected,
             selectedDestinationIndex = selectedDestinationIndex,
             colors = NavigationItemProps(
+                unFocusedColor = MaterialTheme.colorScheme.surfaceContainer,
                 focusedColor = MaterialTheme.colorScheme.secondary,
-                unFocusedColor = MaterialTheme.colorScheme.secondaryContainer,
+                iconTint = MaterialTheme.colorScheme.primary,
+                iconLabelColor = MaterialTheme.colorScheme.onPrimary,
                 shape = MaterialTheme.shapes.small
             )
         )

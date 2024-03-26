@@ -1,4 +1,4 @@
-package faculty.ui.faculty.facultylist.route
+package faculty.route
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -95,8 +95,7 @@ fun FacultyAndDepartmentList(
         topOrRightPane = {
             if (departmentListState != null) {
                 DepartmentListDestination(
-                    modifier = Modifier.fillMaxSize()
-                        .background(MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f)),
+                    modifier = Modifier.fillMaxSize(),
                     state = departmentListState,
                     onEvent = onDepartmentListEvent
                 )

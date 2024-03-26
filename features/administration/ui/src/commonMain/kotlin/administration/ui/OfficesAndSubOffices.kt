@@ -95,7 +95,7 @@ internal fun OfficesAndSubOffices(
                 AdminSubOfficeList(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+
                     ,
                     state = subOfficeState,
                     onEvent = subOfficeEvent

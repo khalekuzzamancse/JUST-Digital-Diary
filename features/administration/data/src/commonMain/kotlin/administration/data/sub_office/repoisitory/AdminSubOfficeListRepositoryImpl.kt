@@ -5,14 +5,14 @@ import admin_office.domain.sub_offices.repoisitory.AdminSubOfficeListRepository
 import administration.data.PackageLevelAccess
 import administration.data.sub_office.data_sources.remote.AdminSubOfficeListRemoteDataSource
 import administration.data.sub_office.data_sources.remote.entity.SubOfficeListEntity
+import common.di.AuthTokenFactory
 
-class AdminSubOfficeListRepositoryImpl(
-    private val token: String?
-) : AdminSubOfficeListRepository {
+class AdminSubOfficeListRepositoryImpl : AdminSubOfficeListRepository {
 
 
     @OptIn(PackageLevelAccess::class) // Permits access to "SubOfficeListEntity" within  this parent package
     override suspend fun getSubOffices(officeId: String): Result<List<AdminSubOfficeModel>> {
+        val token= AuthTokenFactory.retrieveToken().getOrNull()
         val response = AdminSubOfficeListRemoteDataSource(
             officeId = officeId,
             token = token,

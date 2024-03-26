@@ -36,7 +36,7 @@ import com.just.cse.digitaldiary.twozerotwothree.core.network.ktor_clinet.post.p
         )
     }
     suspend fun requestToken(username: String, password: String): String? {
-        val response = RemoteDataSource().login(username = username, password = password)
+        val response =login(username = username, password = password)
         val result = response.getOrNull()
         return result?.token
     }
