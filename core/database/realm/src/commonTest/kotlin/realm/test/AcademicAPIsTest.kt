@@ -1,25 +1,26 @@
 package realm.test
 
-import core.database.realm.academic.AcademicLocalDataStore
-import core.database.realm.academic.DepartmentEntityLocalModel
-import core.database.realm.academic.DesignationLocalModel
-import core.database.realm.academic.FacultyLocalModel
-import core.database.realm.academic.TeacherLocalModel
+import database.local.api.AcademicAPIs
+import database.local.schema.DepartmentEntityLocal
+import database.local.schema.DesignationEntityLocal
+import database.local.schema.FacultyEntityLocal
+import database.local.schema.TeacherEntityLocal
 import kotlinx.coroutines.runBlocking
+import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class AcademicLocalDataStoreTest {
+class AcademicAPIsTest {
     @Test
     fun `add FacultyEntity test`() {
         //before run it delete the old database or configuration file
         runBlocking {
-            val requestModel = FacultyLocalModel(
+            val requestModel = FacultyEntityLocal(
                 id = 1, facultyId = "1", name = "Test Faculty", deptCount = 1
             )
-            val responseModel = AcademicLocalDataStore.addFaculty(requestModel)
-           // println(responseModel)
+            val responseModel = AcademicAPIs.addFaculty(requestModel)
+           println(responseModel)
             assertEquals(requestModel, responseModel.getOrNull())
         }
 
@@ -28,12 +29,10 @@ class AcademicLocalDataStoreTest {
     @Test
     fun `checking primary key test`() {
         runBlocking {
-            val requestModel = FacultyLocalModel(
+            val requestModel = FacultyEntityLocal(
                 id = 1, facultyId = "1", name = "Test Faculty", deptCount = 1
             )
-
-            AcademicLocalDataStore.addFaculty(requestModel)
-            val result = AcademicLocalDataStore.addFaculty(requestModel)
+            val result = AcademicAPIs.addFaculty(requestModel)
             ///
             println(result)
             assertTrue(result.isFailure)
@@ -44,11 +43,11 @@ class AcademicLocalDataStoreTest {
     @Test
     fun `retrieve all FacultyEntity test`() {
         runBlocking {
-            val requestModel = FacultyLocalModel(
+            val requestModel = FacultyEntityLocal(
                 id = 1, facultyId = "1", name = "Test Faculty", deptCount = 1
             )
-            AcademicLocalDataStore.addFaculty(requestModel)
-            val responseModel = AcademicLocalDataStore.retrieveFaculties()
+            AcademicAPIs.addFaculty(requestModel)
+            val responseModel = AcademicAPIs.retrieveFaculties()
             responseModel.getOrNull()?.let { assertTrue(it.isNotEmpty()) }
             println(responseModel)
         }
@@ -59,40 +58,55 @@ class AcademicLocalDataStoreTest {
     fun `add DepartmentInfoEntity test`() {
         // Before running this test, make sure to delete the old database or configuration file
         runBlocking {
-            val requestModel = DepartmentEntityLocalModel(
+            val requestModel = DepartmentEntityLocal(
                 deptId = "01",
                 employeeCount = 10,
                 name = "Test Department",
-                shortname = "TD"
+                shortname = "TD",
+                id = 1
             )
-            val responseModel = AcademicLocalDataStore.addDepartment("1",requestModel)
+            val responseModel = AcademicAPIs.addDepartment("1",requestModel)
             println(responseModel)
             assertEquals(requestModel, responseModel.getOrNull())
+        }
+    }
+    @Test
+    fun `retrieve department `() {
+        // Before running this test, make sure to delete the old database or configuration file
+        runBlocking {
+            val requestModel = DepartmentEntityLocal(
+                deptId = "01",
+                employeeCount = 10,
+                name = "Test Department",
+                shortname = "TD",
+                id = 1
+            )
+            AcademicAPIs.addDepartment("1",requestModel)
+            val responseModel = AcademicAPIs.retrieveDepartments("1")
+            println(responseModel)
+            responseModel.getOrNull()?.let { assertTrue(it.isNotEmpty()) }
         }
     }
     @Test
     fun `add TeacherEntity test`() {
         // Before running this test, make sure to delete the old database or configuration file
         runBlocking {
-            val requestModel = TeacherLocalModel(
-                uid = "teacherea",
+            val requestModel = TeacherEntityLocal(
+                uid = UUID.randomUUID().toString(),
                 name = "John Doe",
-                username = "john.doe",
                 email = "johndoe@example.com",
                 achievement = "Best Teacher 2020",
                 additionalEmail = "johndoealt@example.com",
                 phone = "1234567890",
                 profileImage = "http://example.com/image.jpg",
                 roomNo = 101,
-                type = 1,
-                designations = listOf(DesignationLocalModel(name = "Professor")),
+                designations = listOf(DesignationEntityLocal(name = "Professor")),
                 deptId = "01",
-                present = 1,
                 departmentName = "Physics",
-                shortName = "PHY"
+                shortName = "PHY",
+                id = 1
             )
-
-            val responseModel = AcademicLocalDataStore.addTeacher(requestModel)
+            val responseModel = AcademicAPIs.addTeacher(requestModel)
             println(responseModel)
             assertEquals(requestModel, responseModel.getOrNull())
         }
@@ -100,7 +114,7 @@ class AcademicLocalDataStoreTest {
     @Test
     fun `retrieve all teacherList test`() {
         runBlocking {
-            val responseModel = AcademicLocalDataStore.retrieveTeachers("01")
+            val responseModel = AcademicAPIs.retrieveTeachers("01")
             println(responseModel)
         }
 

@@ -9,7 +9,6 @@ import faculty.ui.faculty.facultylist.components.Faculty
 import faculty.ui.faculty.facultylist.components.FacultyListState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -108,7 +107,7 @@ class FacultiesScreenViewModel(
             val departments = result.getOrDefault(emptyList()).map {
                 Department(
                     name = it.name,
-                    id = it.id,
+                    id = it.deptId,
                     shortName = it.shortName,
                 )
             }

@@ -1,13 +1,13 @@
 package realm.test
 
-import core.database.realm.auth.RealmAuthentication
-import core.database.realm.auth.SignedInUserResponseModel
+import database.local.api.AuthAPIs
+import database.local.schema.SignedInUserEntityLocal
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test//instead of JUnit.test
 import kotlin.test.assertEquals
 
 class AuthTest {
-    private val database = RealmAuthentication
+    private val database = AuthAPIs
 
     companion object {
         private const val TAG = "AuthTest:: "
@@ -19,7 +19,7 @@ class AuthTest {
     @Test
     fun saveSignInInfoTest() {
         runBlocking {
-            val requestModel = SignedInUserResponseModel(
+            val requestModel = SignedInUserEntityLocal(
                 username = "test",
                 password = "test@123"
             )

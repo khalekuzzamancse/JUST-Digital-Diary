@@ -3,8 +3,9 @@ package auth.di
 import auth.data.login.data_sources.remote.RemoteDataSource
 import auth.data.login.repository.LoginRepositoryImpl
 import auth.data.register.repoisitory.RegisterRepositoryImpl
-import core.database.realm.auth.RealmAuthentication
-import core.database.realm.auth.SignedInUserResponseModel
+import database.local.api.AuthAPIs
+import database.local.schema.SignedInUserEntityLocal
+
 
 /**
  ** Instead of storing the resource we are returning it
@@ -14,7 +15,7 @@ object AuthComponentProvider {
 
     var authToken: String?=null
 
-    val isSingedIn= RealmAuthentication.signInFlow
+    val isSingedIn= AuthAPIs.signInFlow
     fun getLoginRepository(): LoginRepositoryImpl {
         return LoginRepositoryImpl()
     }
@@ -27,21 +28,21 @@ object AuthComponentProvider {
     suspend fun saveSignInInfo(
         username: String, password: String
     ): Boolean {
-        val response = RealmAuthentication.saveSignInInfo(
-            SignedInUserResponseModel(username, password)
+        val response = AuthAPIs.saveSignInInfo(
+            SignedInUserEntityLocal(username, password)
         )
 
         return response != null
 
     }
 
-    fun observeSignIn() = RealmAuthentication.observeSignIn()
+    fun observeSignIn() = AuthAPIs.observeSignIn()
     fun signInOut() {
-        RealmAuthentication.signOut()
+        AuthAPIs.signOut()
     }
 
     suspend fun updateAuthToken() {
-        val response = RealmAuthentication.getSingedInUserInfo()
+        val response = AuthAPIs.getSingedInUserInfo()
         if (response != null) {
             authToken = RemoteDataSource().requestToken(
                 username = response.username, password = response.password

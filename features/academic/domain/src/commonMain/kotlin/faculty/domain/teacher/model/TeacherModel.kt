@@ -1,6 +1,10 @@
 package faculty.domain.teacher.model
 
+/**
+ * @param id for ordering or sorting
+ */
 data class TeacherModel(
+    val id:Int=0,
     val name: String,
     val email: String,
     val additionalEmail: String,

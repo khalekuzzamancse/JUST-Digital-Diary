@@ -1,9 +1,9 @@
 package faculty.data.faculty.repoisitory
 
 import common.di.AuthTokenFactory
-import core.database.realm.academic.AcademicLocalDataStore
-import core.database.realm.academic.FacultyLocalModel
 import core.network.netManagerProvider
+import database.local.api.AcademicAPIs
+import database.local.schema.FacultyEntityLocal
 import faculty.data.faculty.data_sources.remote.FacultyListRemoteDataSource
 import faculty.data.faculty.data_sources.remote.entity.FacultyListResponseEntity
 import faculty.domain.faculties.model.FacultyInfoModel
@@ -13,7 +13,10 @@ class FacultyListRepositoryImpl : FacultyListRepository {
 
     override suspend fun getFaculties(): Result<List<FacultyInfoModel>> {
         if (!netManagerProvider().isInternetAvailable()) {
-            val localData = AcademicLocalDataStore.retrieveFaculties().getOrDefault(emptyList()).map { it.toModel() }
+            val localData = AcademicAPIs
+                .retrieveFaculties()
+                .getOrDefault(emptyList()).map { it.toModel() }
+                .sortedBy { it.id }
             println(localData)
             return Result.success(localData)
 
@@ -50,20 +53,20 @@ class FacultyListRepositoryImpl : FacultyListRepository {
 
     private suspend fun addToLocalDatabase(entities: List<FacultyInfoModel>) {
        val  models= entities.map {
-            FacultyLocalModel(
+           FacultyEntityLocal(
                 id = it.id,
                 facultyId = it.facultyId,
                 name = it.name,
                 deptCount = it.departmentsCount,
             )
         }
-        AcademicLocalDataStore.addFaculties(models)
+        AcademicAPIs.addFaculties(models)
     }
 
 
 }
 
-private fun FacultyLocalModel.toModel() = FacultyInfoModel(
+private fun FacultyEntityLocal.toModel() = FacultyInfoModel(
     id = id,
     name = name,
     facultyId = facultyId,

@@ -1,10 +1,10 @@
 package faculty.data.teacher.repoisitory
 
 import common.di.AuthTokenFactory
-import core.database.realm.academic.AcademicLocalDataStore
-import core.database.realm.academic.DesignationLocalModel
-import core.database.realm.academic.TeacherLocalModel
 import core.network.netManagerProvider
+import database.local.api.AcademicAPIs
+import database.local.schema.DesignationEntityLocal
+import database.local.schema.TeacherEntityLocal
 import faculty.data.teacher.data_sources.remote.TeacherListRemoteDataSource
 import faculty.data.teacher.entity.TeacherListEntity
 import faculty.domain.teacher.model.TeacherModel
@@ -14,9 +14,11 @@ import java.util.UUID
 class TeacherListRepositoryImpl : TeacherListRepository {
     override suspend fun getTeachers(deptId: String): Result<List<TeacherModel>> {
         if (!netManagerProvider().isInternetAvailable()) {
-            val localData =
-                AcademicLocalDataStore.retrieveTeachers(deptId).getOrDefault(emptyList())
-                    .map { it.toModel() }
+            val localData = AcademicAPIs
+                .retrieveTeachers(deptId)
+                .getOrDefault(emptyList())
+                .map { it.toModel() }
+                .sortedBy { it.id }
             println(localData)
             return Result.success(localData)
 
@@ -37,6 +39,7 @@ class TeacherListRepositoryImpl : TeacherListRepository {
         else {
             val result = entity.facultyMembers.map { teacher ->
                 TeacherModel(
+                    id = 0, //update later
                     name = teacher.name,
                     email = teacher.email,
                     additionalEmail = teacher.additional_email ?: "",
@@ -64,7 +67,7 @@ class TeacherListRepositoryImpl : TeacherListRepository {
 
     private suspend fun addToLocalDatabase(deptId: String, entities: List<TeacherModel>) {
         val models = entities.map {
-            TeacherLocalModel(
+            TeacherEntityLocal(
                 uid = UUID.randomUUID().toString(),
                 name = it.name,
                 email = it.email,
@@ -73,16 +76,18 @@ class TeacherListRepositoryImpl : TeacherListRepository {
                 phone = it.phone,
                 profileImage = it.profileImageLink,
                 roomNo = it.roomNo,
-                designations = listOf(DesignationLocalModel(it.designations)),
+                designations = listOf(DesignationEntityLocal(it.designations)),
                 deptId = deptId,
                 departmentName = it.deptName,
-                shortName = it.deptSortName
+                shortName = it.deptSortName,
+                id = it.id
             )
         }
-        AcademicLocalDataStore.addTeachers(models)
+        AcademicAPIs.addTeachers(models)
     }
 }
-private fun TeacherLocalModel.toModel()=   TeacherModel(
+private fun TeacherEntityLocal.toModel()=   TeacherModel(
+    id=this.id,
     name = this.name,
     email = this.email,
     additionalEmail = this.additionalEmail ?: "",

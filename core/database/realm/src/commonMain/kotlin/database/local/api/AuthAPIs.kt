@@ -1,5 +1,7 @@
-package core.database.realm.auth
+package database.local.api
 
+import database.local.schema.SignedInUserEntityLocal
+import database.local.schema.SignedInUserSchema
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.ext.asFlow
@@ -15,9 +17,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 
-object RealmAuthentication {
+object AuthAPIs {
     private val configuration = RealmConfiguration.create(
-        schema = setOf(SignedInUser::class)
+        schema = setOf(SignedInUserSchema::class)
     )
     private val _signInFlow = MutableStateFlow(false)
      val signInFlow = _signInFlow.asStateFlow()
@@ -26,8 +28,8 @@ object RealmAuthentication {
 
 
     suspend fun saveSignInInfo(
-        requestModel: SignedInUserResponseModel
-    ): SignedInUserResponseModel? {
+        requestModel: SignedInUserEntityLocal
+    ): SignedInUserEntityLocal? {
         val entityAlreadyExistsAndUpdated =
             updateUser(requestModel.username, requestModel.password) != null
         val res = if (entityAlreadyExistsAndUpdated)
@@ -48,12 +50,12 @@ object RealmAuthentication {
         return getSingedInUserInfo() != null
     }
 
-    private suspend fun createEntity(requestModel: SignedInUserResponseModel): SignedInUserResponseModel? {
-        val user = SignedInUser().apply {
+    private suspend fun createEntity(requestModel: SignedInUserEntityLocal): SignedInUserEntityLocal? {
+        val user = SignedInUserSchema().apply {
             this.username = requestModel.username
             this.password = requestModel.password
         }
-        val job: Deferred<SignedInUser> = CoroutineScope(Dispatchers.Default).async {
+        val job: Deferred<SignedInUserSchema> = CoroutineScope(Dispatchers.Default).async {
             realm.write {
                 val signedInUser = copyToRealm(user)
                 signedInUser
@@ -63,7 +65,7 @@ object RealmAuthentication {
         val userName = userInfo.username
         val pass = userInfo.password
         return if (userName != null && pass != null) {
-            SignedInUserResponseModel(
+            SignedInUserEntityLocal(
                 username = userName,
                 password = pass
             )
@@ -76,7 +78,7 @@ object RealmAuthentication {
     fun updateToken(token: String?): Boolean {
         if (!isSignedIn())
             return false
-        val response = realm.query<SignedInUser>()
+        val response = realm.query<SignedInUserSchema>()
             .first()
             .find()
             ?.also { user ->
@@ -93,8 +95,8 @@ object RealmAuthentication {
         userName: String?,
         password: String?,
         token: String? = null,
-    ): SignedInUser? {
-        val response = realm.query<SignedInUser>()
+    ): SignedInUserSchema? {
+        val response = realm.query<SignedInUserSchema>()
             .first()
             .find()
             ?.also { user ->
@@ -120,14 +122,14 @@ object RealmAuthentication {
         return false
     }
 
-    fun getSingedInUserInfo(): SignedInUserResponseModel? {
-        val response: RealmResults<SignedInUser> = realm.query<SignedInUser>().find()
+    fun getSingedInUserInfo(): SignedInUserEntityLocal? {
+        val response: RealmResults<SignedInUserSchema> = realm.query<SignedInUserSchema>().find()
         if (response.isNotEmpty()) {
-            val signedInUser: SignedInUser = response.first()
-            val username = signedInUser.username
-            val password = signedInUser.password
+            val signedInUserSchema: SignedInUserSchema = response.first()
+            val username = signedInUserSchema.username
+            val password = signedInUserSchema.password
             if (username != null && password != null) {
-                return SignedInUserResponseModel(
+                return SignedInUserEntityLocal(
                     username = username,
                     password = password
                 )
@@ -138,7 +140,7 @@ object RealmAuthentication {
     }
 
     fun observeSignIn(): Flow<Boolean> {
-        realm.query<SignedInUser>().find().let { entities ->
+        realm.query<SignedInUserSchema>().find().let { entities ->
             if (entities.isNotEmpty()) {
                 return entities.first().asFlow().map {
                     val user = it.obj
@@ -156,13 +158,13 @@ object RealmAuthentication {
     }
 
     fun getToken(): String? {
-        val response: RealmResults<SignedInUser> = realm.query<SignedInUser>().find()
+        val response: RealmResults<SignedInUserSchema> = realm.query<SignedInUserSchema>().find()
         if (response.isNotEmpty()) {
-            val signedInUser: SignedInUser = response.first()
-            val username = signedInUser.username
-            val password = signedInUser.password
+            val signedInUserSchema: SignedInUserSchema = response.first()
+            val username = signedInUserSchema.username
+            val password = signedInUserSchema.password
             if (username != null && password != null) {
-                return signedInUser.authToken
+                return signedInUserSchema.authToken
             }
 
         }
