@@ -43,7 +43,7 @@ object FacultyFeatureNavGraph {
             ) {
 
                 composable(route = FACULTY_SCREEN) {
-                  FacultiesScreen(
+                  FacultyNDepartments(
                         onTeacherListRequest = { id ->
                             navController.navigate("$TEACHER_LIST/$id")
                         },

@@ -1,14 +1,13 @@
-package notebook.ui.note_details.component
+package notebook.ui.notedetails
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,7 +32,6 @@ import kotlinx.coroutines.launch
  * * It take the [Note] and break it down to primitive and delegate to the [Note]
  * * So this is coupled with the [Note]
  * @param note that details is going to show
- * @param onExitRequest will be called to exit the from note creation screen
  */
 @Composable
 fun DetailsOfNote(
@@ -61,9 +59,7 @@ fun DetailsOfNote(
  * @param  title [String]
  * @param description[String]
  * @param timeStamp[String]
- * @param creatorName[String]
- * @param creatorImageUrl[String]
- * @param creatorMoreInfo[String] to show the more information about the creator  such as department name,student or employee,..ete
+
  */
 @Composable
 internal fun NoteDetails(
@@ -95,7 +91,7 @@ internal fun NoteDetails(
         AnimatedVisibility(
             visible = showDivider
         ) {
-            Divider()
+            HorizontalDivider()
             Spacer(Modifier.height(4.dp))
         }
 
@@ -130,8 +126,7 @@ private fun Note(
         delay(delay)
         onFinish()
     }
-    Column(
-    ) {
+    Column {
         TypeWriter(
             text = title,
             delay = 10
@@ -158,7 +153,6 @@ private fun Note(
 
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun CreationDetails(
     timeStamp: String,
@@ -166,19 +160,6 @@ private fun CreationDetails(
     Column(
         modifier = Modifier.wrapContentSize()
     ) {
-//        FlowRow(
-//        ) {
-//            Text(
-//                text = "Created By :",
-//                style = NoteTextStyle.creatorName
-//            )
-//            Spacer(Modifier.width(2.dp))
-//            Text(
-//                text = creatorName,
-//                style = NoteTextStyle.creatorName
-//            )
-//        }
-//        Text(text = creatorMoreInfo, style = NoteTextStyle.creatorName)
 
         Text(text = timeStamp, style = NoteTextStyle.creatorName)
 

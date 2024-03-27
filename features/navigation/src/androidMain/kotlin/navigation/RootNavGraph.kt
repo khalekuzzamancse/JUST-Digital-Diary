@@ -68,9 +68,9 @@ fun RootNavGraph(
             )
         }
         composable(GraphRoutes.SEARCH) {
-            queryservice.ui.navgraph.SearchFeatureNavGraph.Graph(
+            SearchFeatureNavGraph.Graph(
                 onEvent = { event ->
-                    if (event is queryservice.ui.navgraph.SearchFeatureEvent.ExitRequest)
+                    if (event is SearchFeatureEvent.ExitRequest)
                         openDrawerRequest()
                     toAppEvent(event)?.let(onEvent)
                 },
@@ -109,11 +109,11 @@ private fun toAppEvent(event: AdminEmployeeListEvent): AppEvent? {
     return ev
 }
 
-private fun toAppEvent(event: queryservice.ui.navgraph.SearchFeatureEvent): AppEvent? {
+private fun toAppEvent(event: SearchFeatureEvent): AppEvent? {
     val ev: AppEvent? = when (event) {
-        is queryservice.ui.navgraph.SearchFeatureEvent.CallRequest -> AppEvent.CallRequest(event.number)
-        is queryservice.ui.navgraph.SearchFeatureEvent.MessageRequest -> AppEvent.MessageRequest(event.number)
-        is queryservice.ui.navgraph.SearchFeatureEvent.EmailRequest -> AppEvent.EmailRequest(event.email)
+        is SearchFeatureEvent.CallRequest -> AppEvent.CallRequest(event.number)
+        is SearchFeatureEvent.MessageRequest -> AppEvent.MessageRequest(event.number)
+        is SearchFeatureEvent.EmailRequest -> AppEvent.EmailRequest(event.email)
         else -> null
     }
     return ev

@@ -2,8 +2,11 @@ package common.ui.navigation.modal_drawer.sheet.item
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -98,7 +101,8 @@ private fun DecoratorWithAnimation(
         visible = visible
     ) {
         NavigationDrawerItem(
-            modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+            shape = RoundedCornerShape(16.dp),
+            modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, start = 4.dp, end = 4.dp),
             icon = {
                 Icon(
                     navigationItem.unselectedIcon,
@@ -112,6 +116,13 @@ private fun DecoratorWithAnimation(
             },
             selected = isSelected,
             onClick = onClick,
+            colors = NavigationDrawerItemDefaults.colors(
+                selectedContainerColor = MaterialTheme.colorScheme.secondary,
+                selectedTextColor =  MaterialTheme.colorScheme.onSecondary,
+                selectedIconColor =  MaterialTheme.colorScheme.onSecondary,
+                unselectedIconColor = MaterialTheme.colorScheme.primary,
+
+            )
         )
     }
 }

@@ -1,4 +1,4 @@
-package notebook.ui.note_details.component
+package notebook.ui.notedetails
 
 
 data class Note(

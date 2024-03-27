@@ -74,15 +74,18 @@ fun TwoPaneLayout(
             TopBar(props.navigationIcon, onNavigationIconClick)
         }
     ) { scaffoldPadding ->
-        _TwoPaneLayout(
-            modifier = modifier.padding(scaffoldPadding),
-            showTopOrRightPane = props.showTopOrRightPane,
-            leftPane = leftPane,
-            topOrRightPane = topOrRightPane,
-            alignment = props.alignment,
-            alignmentOnSinglePane = props.alignmentOnSinglePane
+        Box(Modifier.padding(scaffoldPadding)){
+            _TwoPaneLayout(
+                modifier =Modifier,
+                showTopOrRightPane = props.showTopOrRightPane,
+                leftPane = leftPane,
+                topOrRightPane = topOrRightPane,
+                alignment = props.alignment,
+                alignmentOnSinglePane = props.alignmentOnSinglePane
 
-        )
+            )
+        }
+
     }
 }
 

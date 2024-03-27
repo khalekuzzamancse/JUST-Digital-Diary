@@ -43,5 +43,5 @@ val featureModules = listOf(
 )
 
 
-rootProject.name = "JUST Digital Diary"
+//rootProject.name = "JUSTDigitalDiary"//do not use whitespace,it may causes build error or DEX
 include(applications+coreModules+common+featureModules)

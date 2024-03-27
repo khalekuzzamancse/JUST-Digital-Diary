@@ -117,7 +117,7 @@ private fun _FacultyNDepartmentRaw(
         alignment = alignment,
         navigationIcon = navigationIcon
     )
- TwoPaneLayout(
+    TwoPaneLayout(
         modifier = modifier,
         props = props,
         onNavigationIconClick = if (showDepartmentList) clearFacultySelection else onExitRequest,

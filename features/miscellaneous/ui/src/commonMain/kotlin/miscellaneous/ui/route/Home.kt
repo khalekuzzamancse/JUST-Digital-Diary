@@ -11,17 +11,13 @@ fun Home(
     university: @Composable () -> Unit = {},
     onEvent:(OtherFeatureFunctionalityEvent)->Unit
 ) {
-    HomeDestination(
-        universityLogo = universityLogo,
-        university = university,
-        onEvent = {event->
-            when(event){
-                is HomeDestinationEvent.CalenderViewRequest->onEvent(
-                    OtherFeatureFunctionalityEvent.CalenderRequest(event.url)
-                )
-            }
+    HomeDestination { event ->
+        when (event) {
+            is HomeDestinationEvent.CalenderViewRequest -> onEvent(
+                OtherFeatureFunctionalityEvent.CalenderRequest(event.url)
+            )
         }
-    )
+    }
 
 
 }

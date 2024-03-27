@@ -25,7 +25,9 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.runtime)
                 implementation(libs.windowSize)
-//                implementation(compose.components.resources)
+                //for resources access
+                implementation(compose.components.resources)
+
                 //
                 implementation(project(localModules.versions.common.ui.get()))
                 implementation(project(localModules.versions.feature.miscellaneous.domain.get()))

@@ -1,6 +1,6 @@
 package miscellaneous.ui.home.home
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,8 +21,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import justdigitaldiary.features.miscellaneous.ui.generated.resources.Res
+import justdigitaldiary.features.miscellaneous.ui.generated.resources.just_gate
+import justdigitaldiary.features.miscellaneous.ui.generated.resources.just_logo_trans
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 /**
  * * Needed refactor
@@ -30,35 +37,36 @@ import androidx.compose.ui.unit.sp
  * the platform to load the image from their own resource and the logo composable.
  * fix it later using "Res" class  of compose multiplatform resource
  */
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun WelcomeToHome(
     modifier: Modifier = Modifier,
-    universityLogo: @Composable () -> Unit = {},
-    university: @Composable () -> Unit = {},
 ) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        Box(
-            Modifier.size(width = 200.dp,
-                height = 100.dp)
-        ) {
-            university()
-        }
+        val res: DrawableResource = Res.drawable.just_gate
+        //after that compile it again to generate Res class, use : .\gradlew generateComposeResClass
+        Image(
+            modifier=Modifier.size(100.dp),
+            painter = painterResource(res),//org.jetbrains.compose.resources.
+            contentDescription = null,
+        )
         Spacer(Modifier.height(8.dp))
-        AppNameLogoSection(modifier = Modifier, universityLogo = universityLogo)
+        AppNameLogoSection(modifier = Modifier, varsityLogoSize = 100.dp)
 
     }
 
 
 }
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun AppNameLogoSection(
     modifier: Modifier = Modifier,
-    universityLogo: @Composable () -> Unit = {},
+    varsityLogoSize:Dp=50.dp
 ) {
 
     val text = buildAnnotatedString {
@@ -68,28 +76,39 @@ private fun AppNameLogoSection(
                 spanStyle = SpanStyle(MaterialTheme.colorScheme.primary)
             )
         )
-        append(AnnotatedString(text = "U", spanStyle = SpanStyle(MaterialTheme.colorScheme.error)))
-        append(AnnotatedString(text = "S", spanStyle = SpanStyle(MaterialTheme.colorScheme.error)))
+        append(AnnotatedString(text = "U", spanStyle = SpanStyle(MaterialTheme.colorScheme.secondary)))
+        append(AnnotatedString(text = "S", spanStyle = SpanStyle(MaterialTheme.colorScheme.primary)))
         append(
             AnnotatedString(
                 text = "T",
+                spanStyle = SpanStyle(MaterialTheme.colorScheme.secondary)
+            )
+        )
+        append(
+            AnnotatedString(
+                text = " Digital",
+                spanStyle = SpanStyle(MaterialTheme.colorScheme.secondary)
+            )
+        )
+        append(
+            AnnotatedString(
+                text = " Diary",
                 spanStyle = SpanStyle(MaterialTheme.colorScheme.primary)
             )
         )
-        append(AnnotatedString(" Digital Diary"))
     }
 
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-
-        Box(
-            Modifier.size(50.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            universityLogo()
-        }
+        val res: DrawableResource = Res.drawable.just_logo_trans
+        //after that compile it again to generate Res class, use : .\gradlew generateComposeResClass
+        Image(
+            modifier=Modifier.size(varsityLogoSize),
+            painter = painterResource(res),//org.jetbrains.compose.resources.
+            contentDescription = null,
+        )
         Spacer(Modifier.width(4.dp))
         Text(
             text = text,
@@ -104,7 +123,7 @@ private fun AppNameLogoSection(
             modifier = Modifier.size(50.dp),
             imageVector = Icons.AutoMirrored.Filled.MenuBook,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary
+            tint = MaterialTheme.colorScheme.tertiary
         )
 
     }

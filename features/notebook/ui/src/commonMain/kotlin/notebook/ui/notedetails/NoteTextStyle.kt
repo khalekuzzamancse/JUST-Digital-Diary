@@ -1,4 +1,4 @@
-package notebook.ui.note_details.component
+package notebook.ui.notedetails
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily

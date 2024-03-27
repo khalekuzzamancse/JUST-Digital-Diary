@@ -14,7 +14,7 @@ import faculty.di.FacultyComponentProvider
  *
  */
 @Composable
- fun FacultiesScreen(
+ fun FacultyNDepartments(
     onTeacherListRequest: (String) -> Unit = {},
     onExitRequest:()->Unit,
     backHandler: @Composable (onBackButtonPress: () -> Boolean) -> Unit,

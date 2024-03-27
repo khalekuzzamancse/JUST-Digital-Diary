@@ -1,4 +1,4 @@
-package notebook.ui.note_list.component
+package notebook.ui.notelist
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import common.ui.list.AdaptiveList
-import notebook.ui.note_details.component.Note
+import notebook.ui.notedetails.Note
 
 @Composable
  fun NoteList(

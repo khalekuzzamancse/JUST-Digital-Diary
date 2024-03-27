@@ -1,17 +1,14 @@
-package notebook.ui.note_list.route
-
+package notebook.ui.route
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import notebook.data.DependencyFactory
 import notebook.domain.model.NoteModel
-import notebook.domain.repository.NotesRepository
-import notebook.ui.note_details.component.Note
+import notebook.ui.notedetails.Note
 
 class NotesListViewModel {
     /**
@@ -62,7 +59,7 @@ class NotesListViewModel {
     }
 
 }
-private fun toNote(model:NoteModel)=Note(
+private fun toNote(model: NoteModel)= Note(
     id =model.id,
     title = model.title,
     description = model.description,

@@ -6,8 +6,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
-import notebook.ui.create_note.route.CreateNoteViewModel
-import notebook.ui.route.NotesAndDetailsRoute
+import miscellaneous.ui.home.home.HomeDestination
+import navigation.themes.AppTheme
 
 
 fun main() {
@@ -27,22 +27,10 @@ fun main() {
             MaterialTheme {
 //                NavigationRoot()
 //              AuthNavHostDesktop()
-//                FacultiesScreen(
-//                    onTeacherListRequest = {},
-//                    onExitRequest = {},
-//                    backHandler = {}
-//                )
-             //  AdminOfficeAndSubOfficeRoute({})
-                val viewModel= remember { CreateNoteViewModel() }
-               // CreateNoteDestination(viewModel=viewModel)
-                    NotesAndDetailsRoute(
-                        modifier = androidx.compose.ui.Modifier,
-                        onExitRequest = {
+                AppTheme {
+                    HomeDestination({})
+                }
 
-                        }
-                    ) { callback ->
-
-                    }
 
             }
         }

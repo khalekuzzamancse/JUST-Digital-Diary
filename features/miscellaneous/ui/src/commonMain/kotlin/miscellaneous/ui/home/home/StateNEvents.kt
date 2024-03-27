@@ -1,9 +1,9 @@
 package miscellaneous.ui.home.home
 
-import miscellaneous.ui.home.calender.CalenderFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import miscellaneous.ui.home.calender.CalenderFactory
 
 class HomeDestinationState {
     private val _calenderBuilder =
@@ -29,4 +29,9 @@ class HomeDestinationState {
     private fun CalenderFactory.MonthCalenderBuilder.updateBuilder() {
         _calenderBuilder.update { this }
     }
+}
+interface HomeDestinationEvent {
+    data class CalenderViewRequest(val url:String) : HomeDestinationEvent
+    data object NavigationRequest : HomeDestinationEvent
+
 }

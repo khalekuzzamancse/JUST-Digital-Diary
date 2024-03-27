@@ -1,10 +1,6 @@
 package miscellaneous.ui
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -88,21 +84,6 @@ object OtherFeatureNavGraph {
                         title = "Home"
                     ) {
                         HomeScreen(
-                            universityLogo = {
-                                Image(
-                                    painter = painterResource(R.drawable.just_logo_trans),
-                                    contentDescription = null
-                                )
-
-                            },
-                            university = {
-                                Image(
-                                    painter = painterResource(R.drawable.just_gate),
-                                    contentDescription = null,
-                                    modifier = Modifier.fillMaxSize()
-                                )
-
-                            },
                             onEvent = {event->
                                 when(event){
                                     is OtherFeatureFunctionalityEvent.CalenderRequest->onEvent(

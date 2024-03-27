@@ -3,17 +3,16 @@ package notebook.ui.navigation
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import notebook.ui.create_note.route.CreateNoteDestination
+import notebook.ui.create_note.route.CreateNoteViewModel
 import notebook.ui.route.NotesAndDetailsRoute
+import notebook.ui.route.NotesListViewModel
 
 
 object NotesFeatureNavGraph {
@@ -26,7 +25,7 @@ object NotesFeatureNavGraph {
         onBackPressed:()->Unit,
         onExitRequest:()->Unit,
     ) {
-        var selectedNoteId: String? by remember { mutableStateOf(null) }
+       val viewModel= remember { NotesListViewModel() }
         NavHost(
             navController = navController,
             startDestination = NOTE_AND_DETAILS_ROUTE
@@ -39,6 +38,7 @@ object NotesFeatureNavGraph {
                 ) { padding ->
                     NotesAndDetailsRoute(
                         modifier = Modifier.padding(padding),
+                        viewModel=viewModel,
                         onExitRequest = onExitRequest
                     ) { callback ->
                         BackHandler(onBack = {
@@ -48,12 +48,11 @@ object NotesFeatureNavGraph {
                             }
                         })
                     }
-
-
                 }
             }
             composable(NOTE_CREATION_SCREEN) {
-                CreateNoteDestination(Modifier)
+                val vm= remember { CreateNoteViewModel() }
+                CreateNoteDestination(Modifier,vm)
             }
         }
 
