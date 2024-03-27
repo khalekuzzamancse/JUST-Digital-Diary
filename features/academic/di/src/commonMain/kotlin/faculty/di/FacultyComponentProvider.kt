@@ -1,8 +1,8 @@
 package faculty.di
 
-import faculty.data.department.repoisitory.DepartmentListRepositoryImpl
-import faculty.data.faculty.repoisitory.FacultyListRepositoryImpl
-import faculty.data.teacher.repoisitory.TeacherListRepositoryImpl
+import academic.data.department.repoisitory.DepartmentListRepositoryImpl
+import academic.data.faculty.repoisitory.FacultyListRepositoryImpl
+import academic.data.teacher.repoisitory.TeacherListRepositoryImpl
 
 
 /**

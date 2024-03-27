@@ -1,10 +1,10 @@
 package realm.test
 
 import database.local.api.AcademicAPIs
-import database.local.schema.DepartmentEntityLocal
-import database.local.schema.DesignationEntityLocal
-import database.local.schema.FacultyEntityLocal
-import database.local.schema.TeacherEntityLocal
+import database.local.schema.academic.DepartmentEntityLocal
+import database.local.schema.academic.DesignationEntityLocal
+import database.local.schema.academic.FacultyEntityLocal
+import database.local.schema.academic.TeacherEntityLocal
 import kotlinx.coroutines.runBlocking
 import java.util.UUID
 import kotlin.test.Test

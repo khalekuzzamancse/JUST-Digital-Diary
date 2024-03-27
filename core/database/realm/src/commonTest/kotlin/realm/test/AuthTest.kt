@@ -1,7 +1,7 @@
 package realm.test
 
 import database.local.api.AuthAPIs
-import database.local.schema.SignedInUserEntityLocal
+import database.local.schema.auth.SignedInUserEntityLocal
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test//instead of JUnit.test
 import kotlin.test.assertEquals

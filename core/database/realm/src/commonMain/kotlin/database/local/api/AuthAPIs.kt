@@ -1,7 +1,7 @@
 package database.local.api
 
-import database.local.schema.SignedInUserEntityLocal
-import database.local.schema.SignedInUserSchema
+import database.local.schema.auth.SignedInUserEntityLocal
+import database.local.schema.auth.SignedInUserSchema
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.ext.asFlow

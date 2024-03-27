@@ -1,6 +1,6 @@
 package faculty.data
 
-import faculty.data.department.repoisitory.DepartmentListRepositoryImpl
+import academic.data.department.repoisitory.DepartmentListRepositoryImpl
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertTrue

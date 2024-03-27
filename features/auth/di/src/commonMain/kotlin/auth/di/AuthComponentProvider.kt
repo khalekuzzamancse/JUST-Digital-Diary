@@ -4,7 +4,7 @@ import auth.data.login.data_sources.remote.RemoteDataSource
 import auth.data.login.repository.LoginRepositoryImpl
 import auth.data.register.repoisitory.RegisterRepositoryImpl
 import database.local.api.AuthAPIs
-import database.local.schema.SignedInUserEntityLocal
+import database.local.schema.auth.SignedInUserEntityLocal
 
 
 /**
