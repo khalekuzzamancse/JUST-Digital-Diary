@@ -37,12 +37,12 @@ fun CreateNote(
     modifier: Modifier=Modifier,
     onTitleChanged: (String) -> Unit,
     onDescriptionChanged: (String) -> Unit,
-    data: CreateNoteData,
+    data: Note,
     onCreate: () -> Unit,
     onExitRequest: () -> Unit,
 ) {
     WindowSizeDecorator(
-        modifier=Modifier,
+        modifier=modifier,
         onNonExpanded = {
             Scaffold(
                 floatingActionButtonPosition = FabPosition.Center,

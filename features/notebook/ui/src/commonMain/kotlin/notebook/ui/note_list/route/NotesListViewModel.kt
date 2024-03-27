@@ -8,12 +8,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import notebook.data.DependencyFactory
+import notebook.domain.model.NoteModel
 import notebook.domain.repository.NotesRepository
 import notebook.ui.note_details.component.Note
 
-class NotesListViewModel(
-    private val repository: NotesRepository
-) {
+class NotesListViewModel {
+    /**
+     * if we passed the repo via constructor then the client need to access Repository,
+     * but we do not want that,also we need to manage single place of instance creation for dependency inversion,
+     * that is why using the Factory pattern
+     */
+    private val repository = DependencyFactory.repository()
     private val scope = CoroutineScope(Dispatchers.Default)
 
     private val _showProgressBar = MutableStateFlow(false)
@@ -26,19 +32,12 @@ class NotesListViewModel(
     val openedNote = _openedNote.asStateFlow()
 
     suspend fun loadNotes() {
+        _showProgressBar.update { true }
         val notes = repository.getNotes()
             .getOrDefault(emptyList())
-            .mapIndexed { index, value ->
-                Note(
-                    id = "$index",
-                    title = value.title,
-                    description = value.description,
-                    timeStamp = value.timeStamp
-                )
-            }
+            .map(::toNote)
         _notes.update { notes }
-
-
+        _showProgressBar.update { false }
     }
     fun getNotes(id: String): Note?{
       return  _notes.value.find { it.id == id }
@@ -49,8 +48,6 @@ class NotesListViewModel(
             val alreadyNoteOpened = _openedNote.value != null
             if (alreadyNoteOpened) {
                 onCloseDetailsRequested()
-                delay(100)//delay to clear the old opened note in non expanded mode
-
             }
             _openedNote.update {
                 _notes.value.find { it.id == id }
@@ -65,3 +62,9 @@ class NotesListViewModel(
     }
 
 }
+private fun toNote(model:NoteModel)=Note(
+    id =model.id,
+    title = model.title,
+    description = model.description,
+    timeStamp = model.timeStamp
+)

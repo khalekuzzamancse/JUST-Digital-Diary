@@ -23,8 +23,7 @@ fun WindowSizeDecorator(
 
     ProgressBarNSnackBarDecorator(
         modifier = Modifier.fillMaxSize(),
-        showProgressBar = showProgressBar,
-        snackBarMessage = snackBarMessage
+        showProgressBar = showProgressBar
     ) {
         AnimatedContent(
             targetState = compactScreen
@@ -62,9 +61,8 @@ fun WindowSizeDecorator(
 
     ProgressBarNSnackBarDecorator(
         modifier = modifier.fillMaxSize(),
-        showProgressBar = showProgressBar,
         snackBarData = snackBarData,
-        snackBarMessage = snackBarMessage
+        showProgressBar = showProgressBar
     ) {
         when (windowWidth) {
             WindowWidthSizeClass.Compact , WindowWidthSizeClass.Medium-> {

@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import common.newui.SnackNProgressBarDecorator
+import common.ui.progressbar.ProgressBarNSnackBarDecorator
 import notebook.ui.create_note.component.CreateNote
 
 /**
@@ -15,15 +17,21 @@ import notebook.ui.create_note.component.CreateNote
 @Composable
 fun CreateNoteDestination(
     modifier: Modifier=Modifier,
+    viewModel: CreateNoteViewModel,
 ) {
-    val viewModel= remember { CreateNoteViewModel() }
-    CreateNote(
-        data = viewModel.data.collectAsState().value,
-        onTitleChanged = viewModel::onTitleChanged,
-        onDescriptionChanged = viewModel::onDescriptionChanged,
-        onCreate = viewModel::onCreateRequest,
-        onExitRequest = {}
-    )
-
+    SnackNProgressBarDecorator(
+        snackBarData = viewModel.snackBarMessage.collectAsState().value,
+        showProgressBar = viewModel.showProgressBar.collectAsState().value,
+        onSnackBarCloseRequest = viewModel::clearSnackBarMessage
+    ) {
+        CreateNote(
+            modifier = modifier,
+            data = viewModel.data.collectAsState().value,
+            onTitleChanged = viewModel::onTitleChanged,
+            onDescriptionChanged = viewModel::onDescriptionChanged,
+            onCreate = viewModel::onCreateRequest,
+            onExitRequest = {}
+        )
+    }
 
 }

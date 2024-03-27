@@ -1,20 +1,13 @@
-import administration.navgraph.AdminOfficeAndSubOfficeRoute
-import administration.navgraph.AdminOfficersScreen
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
-import auth.ui.AuthNavHostDesktop
-import common.newui.CustomSnackBarData
-import faculty.route.FacultiesScreen
+import notebook.ui.create_note.route.CreateNoteViewModel
+import notebook.ui.route.NotesAndDetailsRoute
 
 
 fun main() {
@@ -32,7 +25,6 @@ fun main() {
         ) {
 
             MaterialTheme {
-
 //                NavigationRoot()
 //              AuthNavHostDesktop()
 //                FacultiesScreen(
@@ -40,7 +32,17 @@ fun main() {
 //                    onExitRequest = {},
 //                    backHandler = {}
 //                )
-               AdminOfficeAndSubOfficeRoute({})
+             //  AdminOfficeAndSubOfficeRoute({})
+                val viewModel= remember { CreateNoteViewModel() }
+               // CreateNoteDestination(viewModel=viewModel)
+                    NotesAndDetailsRoute(
+                        modifier = androidx.compose.ui.Modifier,
+                        onExitRequest = {
+
+                        }
+                    ) { callback ->
+
+                    }
 
             }
         }

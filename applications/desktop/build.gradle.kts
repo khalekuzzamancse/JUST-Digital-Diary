@@ -17,6 +17,7 @@ kotlin {
                 implementation(project(localModules.versions.feature.academic.ui.get()))
                 implementation(project(localModules.versions.feature.administration.ui.get()))
                 implementation(project(localModules.versions.common.ui.get()))
+                implementation(project(localModules.versions.feature.notebook.ui.get()))
                 implementation(compose.desktop.common)
                 implementation(compose.desktop.currentOs)
 

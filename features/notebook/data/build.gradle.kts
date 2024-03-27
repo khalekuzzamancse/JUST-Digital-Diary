@@ -21,6 +21,7 @@ kotlin {
                 implementation(project(localModules.versions.core.netowork.get()))
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(project(localModules.versions.feature.notebook.domain.get()))
+                implementation(project(localModules.versions.core.database.realm.get()))
 
             }
         }

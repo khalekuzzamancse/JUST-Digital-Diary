@@ -8,7 +8,7 @@ import common.ui.WindowSizeDecorator
 @Composable
 internal fun CreateNoteForm (
     modifier: Modifier = Modifier,
-    data: CreateNoteData,
+    data: Note,
     onTitleChanged:(String)->Unit,
     onDescriptionChanged:(String)->Unit
 ) {

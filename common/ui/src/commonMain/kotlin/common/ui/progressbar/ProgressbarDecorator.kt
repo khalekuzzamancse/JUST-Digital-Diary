@@ -21,15 +21,13 @@ import common.ui.snackbar.SnackBarData
 @Composable
 fun ProgressBarNSnackBarDecorator(
     modifier: Modifier = Modifier,
-    snackBarMessage: String? = null,
-    snackBarData: SnackBarData?=null,
+    snackBarData: SnackBarData? = null,
     showProgressBar: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-
-    if (snackBarMessage != null) {
+    if (snackBarData != null) {
         SnackBar(
-            message = snackBarMessage,
+            message = snackBarData.message,
             snackBarData=snackBarData,
             content = content
         )

@@ -19,7 +19,7 @@ Description:
 @Composable
 internal fun CompactModeCreateNoteForm(
     modifier: Modifier=Modifier,
-    data: CreateNoteData,
+    data: Note,
     onTitleChanged:(String)->Unit,
     onDescriptionChanged:(String)->Unit
 ) {

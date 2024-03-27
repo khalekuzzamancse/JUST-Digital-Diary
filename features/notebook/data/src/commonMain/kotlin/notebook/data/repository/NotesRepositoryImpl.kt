@@ -1,28 +1,33 @@
 package notebook.data.repository
 
-import notebook.data.data_sources.local.entity.NoteEntity
-import notebook.data.data_sources.local.source.NotesLocalDataSource
+import database.local.schema.notebook.NoteEntityLocal
+import notebook.data.DependencyFactory
 import notebook.domain.model.NoteModel
 import notebook.domain.repository.NotesRepository
 
 class NotesRepositoryImpl : NotesRepository {
-    override suspend fun addNote(model: NoteModel): Result<NoteModel> {
-        val res = NotesLocalDataSource().addNote(
-            NoteEntity(
-                id =model.title, title = model.title,
-                description = model.description,
-                timeStamp = model.timeStamp
-            )
-        )
-        return if (res.isSuccess)
-            Result.success(model)
-        else Result.failure(Throwable(message = "Failed to add"))
+    private val localSource = DependencyFactory.localDataSource()
+    override suspend fun addNote(model: NoteModel): Result<Unit> {
+        return localSource.addNote(model.toEntity())
     }
 
     override suspend fun getNotes(): Result<List<NoteModel>> {
-        val res= NotesLocalDataSource().getNotes()
-        return if (res.isSuccess){
-            Result.success(res.getOrDefault(emptyList()).map { NoteModel(it.title,it.description,it.timeStamp) })
-        } else Result.failure(Throwable("Failed to Load List"))
+        val res = localSource.getNotes()
+        return if (res.isSuccess) Result.success(res.getOrDefault(emptyList()).map(::toModel))
+        else Result.failure(Throwable("Failed to Load List:NotesRepositoryImpl\nContact to developer"))
     }
 }
+
+private fun NoteModel.toEntity() = NoteEntityLocal(
+    id = title + timeStamp,
+    title = title,
+    description = description,
+    timeStamp = timeStamp
+)
+
+private fun toModel(entity: NoteEntityLocal) = NoteModel(
+    title = entity.title,
+    description = entity.description,
+    timeStamp = entity.timeStamp,
+    id = entity.id
+)

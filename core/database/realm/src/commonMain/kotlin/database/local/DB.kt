@@ -7,6 +7,7 @@ import database.local.schema.academic.TeacherSchema
 import database.local.schema.administration.OfficeSchema
 import database.local.schema.administration.AdminOfficerSchema
 import database.local.schema.administration.SubOfficeSchema
+import database.local.schema.notebook.NoteSchema
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.query.RealmResults
@@ -29,6 +30,7 @@ internal object DB {
             OfficeSchema::class,
             SubOfficeSchema::class,
             AdminOfficerSchema::class,
+            NoteSchema::class,
         )
     )
     internal val db= Realm.open(configuration)

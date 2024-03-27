@@ -16,7 +16,7 @@ fun NoteDetails(
     modifier: Modifier = Modifier,
     id: String,
 ) {
-    val viewModel = remember { NotesListViewModel(NotesComponentProvider.getNotesRepository()) }
+    val viewModel = remember { NotesListViewModel() }
     val note = viewModel.getNotes(id)
     DetailsOfNote(modifier = modifier, note = dummyNote)
 

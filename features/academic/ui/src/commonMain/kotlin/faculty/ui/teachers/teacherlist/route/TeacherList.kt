@@ -26,8 +26,7 @@ fun TeacherList(
         viewModel.loadTeacherList()
     }
     ProgressBarNSnackBarDecorator (
-        showProgressBar = viewModel.uiState.collectAsState().value.isLoading,
-        snackBarMessage = viewModel.uiState.collectAsState().value.message
+        showProgressBar = viewModel.uiState.collectAsState().value.isLoading
     ){
         TeacherList(
             modifier = modifier,

@@ -39,23 +39,15 @@ object NotesFeatureNavGraph {
                 ) { padding ->
                     NotesAndDetailsRoute(
                         modifier = Modifier.padding(padding),
-                        onDetailsRequest = { id ->
-                            selectedNoteId = id
-                        },
-                        onNoteDetailsCloseRequest = {
-                            selectedNoteId = null
-                        },
-                        selectedNoteId = selectedNoteId,
-                        backButtonHandler = { callback ->
-                            BackHandler(onBack = {
-                                val isConsumed=callback()
-                                if (!isConsumed){
-                                    onBackPressed()
-                                }
-                            })
-                        },
                         onExitRequest = onExitRequest
-                    )
+                    ) { callback ->
+                        BackHandler(onBack = {
+                            val isConsumed = callback()
+                            if (!isConsumed) {
+                                onBackPressed()
+                            }
+                        })
+                    }
 
 
                 }
