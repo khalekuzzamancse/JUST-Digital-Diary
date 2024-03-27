@@ -5,15 +5,12 @@ import administration.data.sub_office.data_sources.remote.entity.SubOfficeListEn
 import core.network.get.Header
 import core.network.get.getRequest
 
-internal class AdminSubOfficeListRemoteDataSource(
-    officeId: String,
-    private val token: String?
-) {
+internal class SubOfficeRemoteDataSourceImpl(
+    officeId: String
+) :SubOfficeRemoteDataSource{
     private val baseUrl = "https://diary.rnzgoldenventure.com/api/get/sub-offices/$officeId"
-    @OptIn(PackageLevelAccess::class) // Permits access to "SubOfficeListEntity" within  this parent package
-    suspend fun getSubOffices(): Result<SubOfficeListEntity> {
-        if (token == null)
-            return Result.failure(Throwable("Token is Null"))
+    @PackageLevelAccess
+    override suspend fun getSubOffices(token: String, officeId: String,): Result<SubOfficeListEntity> {
         val header = Header(key = "Authorization", value = token)
         return getRequest<SubOfficeListEntity>(url = baseUrl, header = header)
     }

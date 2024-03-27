@@ -1,4 +1,4 @@
-package administration.data.offices.data_sources.remote.entity
+package administration.data.offices.sources.remote.entity
 
 import administration.data.PackageLevelAccess
 import kotlinx.serialization.Serializable
@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  */
 @PackageLevelAccess // Restricts access outside this package
 @Serializable
-internal class AdminOfficeListEntity(
+class AdminOfficeListEntity(
     val offices: List<AdminOfficeInfoEntity>
 )
 
@@ -20,9 +20,10 @@ internal class AdminOfficeListEntity(
  */
 @PackageLevelAccess // Restricts access outside this package
 @Serializable
-internal data class AdminOfficeInfoEntity(
+data class AdminOfficeInfoEntity(
     val id: Int,
     val office_id: String,
     val name: String,
     val sub_offices_count: Int
 )
+

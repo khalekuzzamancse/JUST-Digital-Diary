@@ -1,7 +1,7 @@
 package administration.ui
 
 import admin_office.domain.offices.repoisitory.AdminOfficeListRepository
-import admin_office.domain.sub_offices.repoisitory.AdminSubOfficeListRepository
+import admin_office.domain.sub_offices.repoisitory.SubOfficeListRepository
 import administration.ui.offices.officelist.components.AdminOfficeList
 import administration.ui.offices.officelist.components.AdminOfficesEvent
 import administration.ui.offices.officelist.components.OfficeListState
@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 internal fun OfficesAndSubOffices(
     onEmployeeListRequest: (String) -> Unit,
     officeRepository: AdminOfficeListRepository,
-    subOfficeRepository: AdminSubOfficeListRepository,
+    subOfficeRepository: SubOfficeListRepository,
     onExitRequest: () -> Unit,
     backHandler: @Composable (onBackButtonPress: () -> Boolean) -> Unit,
 ) {
@@ -50,7 +50,7 @@ internal fun OfficesAndSubOffices(
     }
     val officesState: OfficeListState = viewModel.uiState.collectAsState().value.officeState
     val subOfficeState: SubOfficeListState? = viewModel.uiState.collectAsState().value.subOfficeState
-    val showSubOfficeDestination = subOfficeState != null
+    subOfficeState != null
 
     val officeEvent: (AdminOfficesEvent) -> Unit = { event ->
         when (event) {

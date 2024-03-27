@@ -35,12 +35,12 @@ fun main() {
 
 //                NavigationRoot()
 //              AuthNavHostDesktop()
-                FacultiesScreen(
-                    onTeacherListRequest = {},
-                    onExitRequest = {},
-                    backHandler = {}
-                )
-             //   AdminOfficeAndSubOfficeRoute({})
+//                FacultiesScreen(
+//                    onTeacherListRequest = {},
+//                    onExitRequest = {},
+//                    backHandler = {}
+//                )
+               AdminOfficeAndSubOfficeRoute({})
 
             }
         }

@@ -9,8 +9,8 @@ import kotlinx.serialization.Serializable
  */
 @PackageLevelAccess // Restricts access outside this package
 @Serializable
-internal data class SubOfficeListEntity(
-    val sub_offices: List<AdminSubOfficeEntity>
+data class SubOfficeListEntity(
+    val sub_offices: List<SubOfficeEntity>
 )
 
 /**
@@ -20,7 +20,7 @@ internal data class SubOfficeListEntity(
  */
 @PackageLevelAccess // Restricts access outside this package
 @Serializable
-internal data class AdminSubOfficeEntity(
+data class SubOfficeEntity(
     val id: Int,
     val sub_office_id: String,
     val name: String,

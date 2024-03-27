@@ -12,14 +12,14 @@ leading to an undesirable architecture.
 
  */
 
-internal class AdminOfficeSchema : RealmObject {
+internal class OfficeSchema : RealmObject {
     var id: Int = 0 // Used to sort the item so that it appears the same as the back-end
     @PrimaryKey
     var officeId: String = "0"
     var name: String = "0"
     var subOfficesCount: Int = 0
 
-    fun toEntity() = AdminOfficeEntityLocal(
+    fun toEntity() = OfficeEntityLocal(
         id = id,
         officeId = officeId,
         name = name,
@@ -32,7 +32,7 @@ internal class AdminOfficeSchema : RealmObject {
     }
 }
 
-data class AdminOfficeEntityLocal(
+data class OfficeEntityLocal(
     val id: Int, // Used to sort the item so that it appears the same as the back-end
     val officeId: String,
     val name: String,

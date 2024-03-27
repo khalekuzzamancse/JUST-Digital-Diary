@@ -2,7 +2,7 @@ package administration.di
 
 import administration.data.officers.repoisitory.AdminOfficerListRepositoryImpl
 import administration.data.offices.repoisitory.AdminOfficeListRepositoryImpl
-import administration.data.sub_office.repoisitory.AdminSubOfficeListRepositoryImpl
+import administration.data.sub_office.repoisitory.SubOfficeListRepositoryImpl
 
 
 /**
@@ -17,8 +17,8 @@ object AdminOfficeComponentProvider {
         return AdminOfficeListRepositoryImpl()
     }
 
-    fun getAdminSubOfficeRepository(): AdminSubOfficeListRepositoryImpl {
-        return AdminSubOfficeListRepositoryImpl()
+    fun getAdminSubOfficeRepository(): SubOfficeListRepositoryImpl {
+        return SubOfficeListRepositoryImpl()
     }
 
     fun getAdminOfficersListRepository(): AdminOfficerListRepositoryImpl {

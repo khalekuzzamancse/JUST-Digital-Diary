@@ -1,7 +1,7 @@
 package admin_office.domain.sub_offices.model
 
-data class AdminSubOfficeModel(
+data class SubOfficeModel(
     val name:String,
-    val id:String,
+    val officeId:String,
     val employeeCount:Int
 )

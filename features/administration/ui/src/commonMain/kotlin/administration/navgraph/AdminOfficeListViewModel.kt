@@ -1,7 +1,7 @@
 package administration.navgraph
 
 import admin_office.domain.offices.repoisitory.AdminOfficeListRepository
-import admin_office.domain.sub_offices.repoisitory.AdminSubOfficeListRepository
+import admin_office.domain.sub_offices.repoisitory.SubOfficeListRepository
 import administration.ui.offices.officelist.components.Offices
 import administration.ui.suboffice.subofficelist.SubOffice
 import administration.ui.suboffice.subofficelist.SubOfficeListState
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.update
 
 class AdminOfficeListViewModel(
     private val repository: AdminOfficeListRepository,
-    private val subOfficeListRepository: AdminSubOfficeListRepository
+    private val subOfficeListRepository: SubOfficeListRepository
 ) {
 
     private val _uiState = MutableStateFlow(AdminOfficesDestinationState())
@@ -26,8 +26,8 @@ class AdminOfficeListViewModel(
             onFacultyListFetchedSuccessfully(result.getOrDefault(emptyList()).map {
                 Offices(
                     name = it.name,
-                    id = it.id,
-                    numberOfSubOffices = "${it.subOfficeCnt}"
+                    id = it.officeId,
+                    numberOfSubOffices = "${it.subOfficeCount}"
                 )
             })
         } else {
@@ -81,7 +81,7 @@ class AdminOfficeListViewModel(
             val subOffices = result.getOrDefault(emptyList()).map {
                 SubOffice(
                     name = it.name,
-                    id = it.id,
+                    id = it.officeId,
                     employeeCnt = it.employeeCount.toString()
                 )
             }

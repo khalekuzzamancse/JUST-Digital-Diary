@@ -4,9 +4,9 @@ import database.local.schema.academic.DepartmentSchema
 import database.local.schema.academic.DesignationSchema
 import database.local.schema.academic.FacultySchema
 import database.local.schema.academic.TeacherSchema
-import database.local.schema.administration.AdminOfficeSchema
+import database.local.schema.administration.OfficeSchema
 import database.local.schema.administration.AdminOfficerSchema
-import database.local.schema.administration.AdminSubOfficeSchema
+import database.local.schema.administration.SubOfficeSchema
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.query.RealmResults
@@ -26,8 +26,8 @@ internal object DB {
             DepartmentSchema::class,
             TeacherSchema::class,
             DesignationSchema::class,
-            AdminOfficeSchema::class,
-            AdminSubOfficeSchema::class,
+            OfficeSchema::class,
+            SubOfficeSchema::class,
             AdminOfficerSchema::class,
         )
     )

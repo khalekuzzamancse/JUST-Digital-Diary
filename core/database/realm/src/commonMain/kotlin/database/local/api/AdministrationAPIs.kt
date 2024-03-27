@@ -1,12 +1,12 @@
 package database.local.api
 
 import database.local.DB
-import database.local.schema.administration.AdminOfficeEntityLocal
-import database.local.schema.administration.AdminOfficeSchema
+import database.local.schema.administration.OfficeEntityLocal
+import database.local.schema.administration.OfficeSchema
 import database.local.schema.administration.AdminOfficerEntityLocal
 import database.local.schema.administration.AdminOfficerSchema
-import database.local.schema.administration.AdminSubOfficeEntityLocal
-import database.local.schema.administration.AdminSubOfficeSchema
+import database.local.schema.administration.SubOfficeEntityLocal
+import database.local.schema.administration.SubOfficeSchema
 import io.realm.kotlin.ext.query
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,8 +17,8 @@ object AdministrationAPIs {
 
     private val db = DB.db
 
-    suspend fun addAdminOffice(model: AdminOfficeEntityLocal):Result<AdminOfficeEntityLocal> {
-        return DB.addEntity(AdminOfficeSchema().apply {
+    suspend fun addAdminOffice(model: OfficeEntityLocal):Result<OfficeEntityLocal> {
+        return DB.addEntity(OfficeSchema().apply {
              this.id = model.id
              this.officeId = model.officeId
              this.name = model.name
@@ -26,21 +26,21 @@ object AdministrationAPIs {
          }) { this.toEntity() }
     }
 
-    suspend fun addAdminOffices(models: List<AdminOfficeEntityLocal>) {
+    suspend fun addAdminOffices(models: List<OfficeEntityLocal>) {
         models.map { model -> CoroutineScope(Dispatchers.Default).async { addAdminOffice(model) } }
             .awaitAll()
     }
 
     // SubOffice Related APIs
-    suspend fun addSubOffice(model: AdminSubOfficeEntityLocal) =
-        DB.addEntity(AdminSubOfficeSchema().apply {
-            this.id = model.id
-            this.subOfficeId = model.subOfficeId
+    suspend fun addSubOffice(model: SubOfficeEntityLocal) =
+        DB.addEntity(SubOfficeSchema().apply {
+            this.serialNo = model.serialNo
+            this.officeId = model.officeId
             this.name = model.name
             this.officeMembersCount = model.officeMembersCount
         }) { this.toEntity() }
 
-    suspend fun addSubOffices(models: List<AdminSubOfficeEntityLocal>) {
+    suspend fun addSubOffices(models: List<SubOfficeEntityLocal>) {
         models.map { model -> CoroutineScope(Dispatchers.Default).async { addSubOffice(model) } }
             .awaitAll()
     }
@@ -66,18 +66,18 @@ object AdministrationAPIs {
     }
 
     // Retrieve APIs for AdminOffice, SubOffice, and Officers
-    fun retrieveAdminOffices(): Result<List<AdminOfficeEntityLocal>> {
+    fun retrieveAdminOffices(): Result<List<OfficeEntityLocal>> {
         return DB.retrieveEntities(
-            query = { db.query<AdminOfficeSchema>().find() },
-            transform = AdminOfficeSchema::toEntity
+            query = { db.query<OfficeSchema>().find() },
+            transform = OfficeSchema::toEntity
         )
     }
 
 
-    fun retrieveSubOffices(officeId: String): Result<List<AdminSubOfficeEntityLocal>> {
+    fun retrieveSubOffices(officeId: String): Result<List<SubOfficeEntityLocal>> {
         return  DB.retrieveEntities(
-            query = { db.query<AdminSubOfficeSchema>("officeId=$0", officeId).find() },
-            transform = AdminSubOfficeSchema::toEntity
+            query = { db.query<SubOfficeSchema>("officeId=$0", officeId).find() },
+            transform = SubOfficeSchema::toEntity
         )
     }
 
