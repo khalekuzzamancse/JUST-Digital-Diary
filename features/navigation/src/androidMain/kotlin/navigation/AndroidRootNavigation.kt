@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import auth.ui.AuthNavHost
+import miscellaneous.ui.splashscreen.SplashScreen
 import navigation.themes.AppTheme
 
 

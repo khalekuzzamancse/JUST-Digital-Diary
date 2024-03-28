@@ -1,7 +1,9 @@
-package navigation
+package miscellaneous.ui.splashscreen
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -34,7 +37,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import justdigitaldiary.features.miscellaneous.ui.generated.resources.Res
+import justdigitaldiary.features.miscellaneous.ui.generated.resources.just_logo
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 /**
  * * Needed refactor
@@ -42,11 +50,24 @@ import kotlinx.coroutines.delay
  * the platform to load the image from their own resource and the logo composable.
  * fix it later using "Res" class  of compose multiplatform resource
  */
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun SplashScreen(
     modifier: Modifier=Modifier,
-    universityLogo: @Composable () -> Unit = {},
 ) {
+    var finished by remember { mutableStateOf(false) }
+    val logoScale by animateFloatAsState(
+        targetValue = if (finished)1f else 0f, label = ""
+    )
+    LaunchedEffect(Unit){
+        delay(150)
+        finished=true
+    }
+    var showScreen by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit){
+        delay(10)
+        showScreen=true
+    }
 
 
 
@@ -55,10 +76,16 @@ fun SplashScreen(
             modifier = Modifier.padding(16.dp).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Box(Modifier) {
-                universityLogo()
-            }
-
+            val res: DrawableResource = Res.drawable.just_logo
+            //after that compile it again to generate Res class, use : .\gradlew generateComposeResClass
+            Image(
+                modifier=Modifier.size(150.dp).graphicsLayer {
+                    scaleX = logoScale
+                    scaleY = logoScale
+                },
+                painter = painterResource(res),//org.jetbrains.compose.resources.
+                contentDescription = null,
+            )
             Spacer(Modifier.height(32.dp))
             WelcomeSection(Modifier.align(Alignment.CenterHorizontally))
                 AppNameLogoSection(Modifier)
