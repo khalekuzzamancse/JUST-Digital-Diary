@@ -1,4 +1,4 @@
-package administration.ui.officers.employeelist.components
+package common.newui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
@@ -7,18 +7,18 @@ import androidx.compose.animation.expandIn
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkOut
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.Call
@@ -37,73 +37,54 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import common.ui.network_image.ImageLoader
 
 
 @Composable
-internal fun AdminOfficerCard(
+fun GenericEmployeeCard(
     modifier: Modifier,
-    adminOfficer: AdminOfficer,
-    expandMode: Boolean = true,
+    expandMode: Boolean ,
+    name: String,
+    profileImageUrl: String? = null,
     onCallRequest: () -> Unit,
     onEmailRequest: () -> Unit,
     onMessageRequest: () -> Unit,
+    details: @Composable () -> Unit,
 ) {
     Surface(
         modifier = modifier,
         shadowElevation = 2.dp
     ) {
-
         Column(
             modifier = modifier
                 .padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp),
             horizontalAlignment = Alignment.Start
         ) {
-//            ImageLoader(
-//                url = adminOfficer.profileImageLink,
-//                modifier = Modifier
-//                    .heightIn(max = 100.dp)
-//                    .widthIn(max = 150.dp)
-//                    .background(Color.Red)
-//                    .align(Alignment.CenterHorizontally),
-//            )
-            Box(
-                modifier = Modifier
-                    .height( 100.dp)
-                    .width(150.dp)
-                    .border(width = 1.dp, color = MaterialTheme.colorScheme.primary)
-                    .background(MaterialTheme.colorScheme.secondaryContainer)
-                    .align(Alignment.CenterHorizontally),
-            )
+            _ProfileImage(imageURl = profileImageUrl)
             if (expandMode) {
                 ExpandAbleInfo(
-                    adminOfficer = adminOfficer
+                    modifier = Modifier, name = name, details = details
                 )
             } else {
                 EmployeeName(
-                    name = adminOfficer.name,
+                    name = name,
                     modifier = Modifier
                 )
-                EmployeeDetails(
-                    adminOfficer = adminOfficer,
-                    modifier = Modifier
-                )
+                details()
             }
             Spacer(Modifier.height(8.dp))
-            Controls(
-                onCallRequest=onCallRequest,
+            _Controls(
+                onCallRequest = onCallRequest,
                 onMessageRequest = onMessageRequest,
                 onEmailRequest = onEmailRequest
             )
 
-
         }
-
 
     }
 
@@ -114,7 +95,8 @@ internal fun AdminOfficerCard(
 @Composable
 private fun ExpandAbleInfo(
     modifier: Modifier = Modifier,
-    adminOfficer: AdminOfficer
+    name: String,
+    details: @Composable () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -130,7 +112,7 @@ private fun ExpandAbleInfo(
         ) {
             //what if the name doesn't fit into one Row?,then button will be hidden
             EmployeeName(
-                name = adminOfficer.name,
+                name = name,
                 modifier = Modifier
             )
             Icon(
@@ -149,12 +131,9 @@ private fun ExpandAbleInfo(
                     stiffness = Spring.StiffnessLow
                 )
             ),
-            exit= shrinkOut() + fadeOut()
+            exit = shrinkOut() + fadeOut()
         ) {
-            EmployeeDetails(
-                modifier = Modifier,
-                adminOfficer = adminOfficer
-            )
+            details()
         }
 
     }
@@ -169,50 +148,18 @@ private fun EmployeeName(
     Text(
         modifier = modifier,
         text = name,
-        style = CardTypography.title
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
+        fontFamily = FontFamily.Monospace
     )
 
 }
 
-@Composable
-private fun EmployeeDetails(
-    modifier: Modifier,
-    adminOfficer: AdminOfficer
-) {
-    Column(
-        modifier = modifier
-            .padding(8.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-        horizontalAlignment = Alignment.Start
-    ) {
-        Text(
-            text = adminOfficer.achievements,
-            style = CardTypography.subTitle
-        )
-        Text(
-            text = adminOfficer.designations,
-            style = CardTypography.title2
-        )
-        Text(
-            text = adminOfficer.email,
-            style = CardTypography.contactStyle
-        )
-        Text(
-            text = adminOfficer.additionalEmail,
-            style = CardTypography.contactStyle
-        )
-        Text(
-            text = adminOfficer.phone,
-            style = CardTypography.contactStyle
-        )
-
-
-    }
-}
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-internal fun Controls(
+private fun _Controls(
     modifier: Modifier = Modifier,
+    tint: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.primary,
     onCallRequest: () -> Unit,
     onEmailRequest: () -> Unit,
     onMessageRequest: () -> Unit,
@@ -228,7 +175,7 @@ internal fun Controls(
             Icon(
                 imageVector = Icons.Default.Call,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
+                tint = tint
             )
         }
         IconButton(
@@ -237,7 +184,7 @@ internal fun Controls(
             Icon(
                 Icons.Default.Email,
                 null,
-                tint = MaterialTheme.colorScheme.primary
+                tint = tint
             )
 
         }
@@ -247,35 +194,33 @@ internal fun Controls(
             Icon(
                 Icons.AutoMirrored.Filled.Message,
                 null,
-                tint = MaterialTheme.colorScheme.primary
+                tint = tint
             )
 
         }
     }
 
 }
-internal object  CardTypography{
-    val title = TextStyle(
-        fontWeight = FontWeight.Bold,
-        fontSize = 20.sp,
-        fontFamily = FontFamily.Monospace
-    )
-    val subTitle = TextStyle(
-        fontWeight = FontWeight.Normal,
-        fontSize = 18.sp,
-        fontFamily = FontFamily.Monospace
-    )
-    val title2 = TextStyle(
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 16.sp,
-        fontFamily = FontFamily.Default,
-    )
 
-    val contactStyle = TextStyle(
-        fontWeight = FontWeight.Normal,
-        fontSize = 15.sp,
-        fontFamily = FontFamily.Monospace
-    )
-
+@Composable
+private fun ColumnScope._ProfileImage(
+    modifier: Modifier = Modifier,
+    imageURl: String?
+) {
+    if (imageURl != null) {
+        ImageLoader(
+            url = imageURl,
+            modifier = modifier
+                .heightIn(max = 100.dp)
+                .widthIn(max = 150.dp)
+                .align(Alignment.CenterHorizontally),
+        )
+    } else {
+        ProfileImagePlaceHolder(
+            modifier = Modifier
+                .height(100.dp)
+                .width(150.dp).align(Alignment.CenterHorizontally),
+        )
+    }
 
 }

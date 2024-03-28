@@ -18,14 +18,15 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
-                api(compose.ui)
-                api(compose.material3)
-                api(compose.animation)
-                api(compose.animationGraphics)
-                api(compose.materialIconsExtended)
-                api(compose.foundation)
-                api(compose.runtime)
-                api(libs.windowSize)
+                implementation(compose.ui)
+                implementation(compose.material3)
+                implementation(compose.animation)
+                implementation(compose.animationGraphics)
+                implementation(compose.materialIconsExtended)
+                implementation(compose.foundation)
+                implementation(compose.runtime)
+                implementation(libs.windowSize)
+                implementation(compose.components.resources)
                 //
                 implementation(libs.kotlinx.coroutines.core)
                 //network IO for image loading
