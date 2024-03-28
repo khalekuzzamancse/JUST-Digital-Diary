@@ -12,11 +12,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import auth.di.AuthComponentProvider
 import auth.ui.AuthNavHost
-import navigation.modal_drawer.TopRoutes
+import common.newui.Destination
 import navigation.modal_drawer.TopmostNavigationHost
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import miscellaneous.ui.OtherFeatureNavGraph
+import navigation.modal_drawer.NavDestination
 import navigation.themes.AppTheme
 
 
@@ -105,46 +106,45 @@ private fun _AndroidRootNavigation(
 
 private fun navigator(
     navController: NavHostController,
-    destination: TopRoutes.NavDestination,
+    destination: Destination,
     onEvent: (AppEvent) -> Unit,
 ) {
     when (destination) {
-        TopRoutes.Home -> {
+        NavDestination.Home -> {
             OtherFeatureNavGraph.navigateToHome(navController)
         }
 
-        TopRoutes.MessageFromVC -> {
+        NavDestination.MessageFromVC -> {
             OtherFeatureNavGraph.navigateToMessageFromVC(navController)
         }
 
-        TopRoutes.AboutUS -> {
+        NavDestination.AboutUs -> {
             OtherFeatureNavGraph.navigateToAboutUs(navController)
         }
 
-        TopRoutes.EventGallery -> {
+        NavDestination.EventGallery -> {
             OtherFeatureNavGraph.navigateToEventGallery(navController)
         }
 
-        TopRoutes.Faculties -> {
+        NavDestination.FacultyList -> {
             navigateAsTopMostDestination(GraphRoutes.FACULTY_FEATURE, navController)
         }
 
-        TopRoutes.AdminOffice -> {
+        NavDestination.AdminOffice -> {
             navigateAsTopMostDestination(
                 GraphRoutes.ADMIN_OFFICE_FEATURE,
                 navController
             )
         }
 
-        TopRoutes.Search -> {
+        NavDestination.Search -> {
             navigateAsTopMostDestination(GraphRoutes.SEARCH, navController)
         }
 
-        TopRoutes.Notes -> {
+        NavDestination.NoteBook -> {
             navigateAsTopMostDestination(GraphRoutes.NOTES_FEATURE, navController)
         }
-
-        TopRoutes.ExploreJUST -> {
+        NavDestination.ExploreJust -> {
             onEvent(AppEvent.WebVisitRequest("https://just.edu.bd/"))
         }
 

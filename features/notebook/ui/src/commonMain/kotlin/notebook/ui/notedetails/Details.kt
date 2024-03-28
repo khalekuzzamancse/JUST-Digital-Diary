@@ -122,8 +122,7 @@ private fun Note(
     val charDelay = remember { 5L }
     LaunchedEffect(Unit) {
         val n = description.length * charDelay * 1L
-        val delay = n * 2
-        delay(delay)
+        delay(n)
         onFinish()
     }
     Column {

@@ -44,7 +44,7 @@ fun DrawerHeader(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             LogOutButton(onLogOutRequest)
-            Spacer(Modifier.width(2.dp))
+            Spacer(Modifier.width(8.dp))
             AppName()
             Spacer(Modifier.width(4.dp))
             AppLogo()

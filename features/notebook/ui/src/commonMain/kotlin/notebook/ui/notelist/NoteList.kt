@@ -3,6 +3,7 @@ package notebook.ui.notelist
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -21,19 +22,19 @@ import notebook.ui.notedetails.Note
     notes: List<Note>,
     onDetailsOpen: (String) -> Unit,
 ) {
-
             AdaptiveList(
                 modifier = modifier,
-                items = notes
+                items = notes,
+                contentPadding = PaddingValues(4.dp),
+                verticalItemSpacing = 8.dp,
+
             ) {  item ->
                 NoteCard(
-                    modifier = Modifier.padding(8.dp),
-                    title = item.title,
+                    modifier = Modifier,
+                    note=item,
                     onClick = {
                         onDetailsOpen(item.id)
-
                     }
-
                 )
             }
         }
@@ -41,29 +42,3 @@ import notebook.ui.notedetails.Note
 
 
 
-@Composable
-private fun NoteCard(
-    modifier: Modifier,
-    title: String,
-    onClick: () -> Unit,
-) {
-    Surface(
-        modifier = modifier.fillMaxWidth().clickable {
-            onClick()
-        },
-        shadowElevation = 0.dp
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-            horizontalAlignment = Alignment.Start
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium,
-            )
-        }
-    }
-
-}
