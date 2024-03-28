@@ -1,3 +1,5 @@
+import administration.navgraph.AdminOfficeAndSubOfficeRoute
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.DpSize
@@ -6,6 +8,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
+import faculty.route.FacultyNDepartments
+import faculty.ui.faculty.facultylist.components.FacultyCard
 import miscellaneous.ui.home.home.HomeDestination
 import navigation.themes.AppTheme
 
@@ -28,7 +32,11 @@ fun main() {
 //                NavigationRoot()
 //              AuthNavHostDesktop()
                 AppTheme {
-                    HomeDestination({})
+                  //  HomeDestination({})
+//                    FacultyNDepartments(onExitRequest = {}, backHandler = {})
+                    AdminOfficeAndSubOfficeRoute({})
+
+
                 }
 
 

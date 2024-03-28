@@ -1,6 +1,8 @@
 package administration.ui.suboffice.subofficelist
 
 import administration.ui.common.VerticalListNavigation
+import administration.ui.offices.officelist.components.AdminOfficesEvent
+import administration.ui.offices.officelist.components.OfficeCard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import common.newui.generateAcronym
 import common.ui.custom_navigation_item.NavigationItemInfo2
 import common.ui.custom_navigation_item.NavigationItemProps
 
@@ -33,53 +36,19 @@ fun AdminSubOfficeList(
     state: SubOfficeListState,
     onEvent: (SubOfficesEvent) -> Unit,
 ) {
-    SubOfficeListDestination(
-        modifier = modifier,
-        destinations = state.subOffices.map {
-            NavigationItemInfo2(
-                key = it.id,
-                label = it.name,
-                iconText = it.employeeCnt
+    Column(modifier.verticalScroll(rememberScrollState())) {
+        state.subOffices.forEachIndexed {index,subOffice->
+            SubOfficeCard(
+                name = subOffice.name,
+                shortName = generateAcronym(subOffice.name),
+                employeeCount = subOffice.employeeCnt,
+                isSelected = state.selected==index,
+                onSelect = {
+                    onEvent(SubOfficesEvent.SubOfficeSelected(index))
+                }
             )
-        },
-        onDestinationSelected = {index->
-            onEvent(SubOfficesEvent.SubOfficeSelected(index))
-        },
-        selectedDestinationIndex = state.selected,
-
-    )
-
-}
-
-@Composable
-private fun SubOfficeListDestination(
-    modifier: Modifier = Modifier,
-    destinations: List<NavigationItemInfo2<String>>,
-    onDestinationSelected: (Int) -> Unit,
-    selectedDestinationIndex: Int,
-) {
-
-    Column(
-        modifier = modifier.fillMaxWidth()
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        VerticalListNavigation(
-            modifier = Modifier,
-            destinations = destinations,
-            onDestinationSelected = onDestinationSelected,
-            selectedDestinationIndex = selectedDestinationIndex,
-            colors = NavigationItemProps(
-                unFocusedColor = MaterialTheme.colorScheme.surfaceContainer,
-                focusedColor = MaterialTheme.colorScheme.secondary,
-                iconTint = MaterialTheme.colorScheme.primary,
-                iconLabelColor = MaterialTheme.colorScheme.onPrimary,
-                shape = MaterialTheme.shapes.small
-            )
-        )
+        }
 
     }
 
 }
-
-

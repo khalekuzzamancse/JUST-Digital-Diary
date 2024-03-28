@@ -73,7 +73,6 @@ fun NavigationItem(
         onFocusing = onFocusing,
         props = props,
         icon = {
-
             TextToIcon(
                 modifier = Modifier.size(48.dp),
                 text = iconText,

@@ -1,13 +1,10 @@
 package faculty.ui.faculty.facultylist.components
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import common.ui.custom_navigation_item.NavigationItemInfo2
-import common.ui.custom_navigation_item.NavigationItemProps
-import faculty.ui.common.VerticalListNavigation
 
 @Composable
 internal fun FacultyListDestination(
@@ -22,14 +19,6 @@ internal fun FacultyListDestination(
     )
 }
 
-/**
- * * It Show the have the List of in Bottom sheet.
- *  * In Compact Window Faculties will be shown in the bottom sheet,in NonCompact Window Faculties will be shown in SIDE_SHEET
- * @param modifier [Modifier]
- * @param destinations list of [NavigationItemInfo2] to represent the faculties
- * @param onDestinationSelected called when a faculty is selected
- * @param selectedDestinationIndex the destination that is selected.it is used to highlight the selected faculty as [NavigationItemInfo2]
- */
 
 @Composable
 fun FacultyList(
@@ -37,29 +26,19 @@ fun FacultyList(
     state: FacultyListState,
     onEvent: (FacultyListEvent) -> Unit,
 ) {
-    val destinations = state.faculties.map { faculty ->
-        NavigationItemInfo2(
-            label = faculty.name,
-            iconText = faculty.numberOfDepartment,
-            key = faculty.id
-        )
+
+    Column(modifier.verticalScroll(rememberScrollState())) {
+        state.faculties.forEachIndexed {index,faculty->
+            FacultyCard(
+                facultyName = faculty.name,
+                departmentCount = faculty.numberOfDepartment,
+                isSelected = state.selected==index,
+                onSelect = {
+                    onEvent(FacultyListEvent.FacultySelected(index))
+                }
+            )
+        }
+
     }
-
-    VerticalListNavigation(
-        modifier = modifier.fillMaxWidth(),
-        destinations = destinations,
-        onDestinationSelected = { index ->
-            onEvent(FacultyListEvent.FacultySelected(index))
-        },
-        selectedDestinationIndex = state.selected ?: -1,
-        colors = NavigationItemProps(
-            unFocusedColor = MaterialTheme.colorScheme.tertiaryContainer,
-            focusedColor =MaterialTheme.colorScheme.secondary,
-            iconTint = MaterialTheme.colorScheme.primary,
-            iconLabelColor = MaterialTheme.colorScheme.onPrimary
-
-        )
-    )
-
 }
 

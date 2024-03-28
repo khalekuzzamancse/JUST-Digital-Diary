@@ -1,7 +1,10 @@
 package administration.ui.offices.officelist.components
 
 import administration.ui.common.VerticalListNavigation
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -51,27 +54,20 @@ internal fun OfficeList(
     state: OfficeListState,
     onEvent: (AdminOfficesEvent) -> Unit,
 ) {
-        VerticalListNavigation(
-            modifier = modifier.fillMaxWidth(),
-            destinations = state.offices.map { faculty ->
-                NavigationItemInfo2(
-                    label = faculty.name,
-                    iconText = faculty.numberOfSubOffices,
-                    key = faculty.id
-                )
-            },
-            onDestinationSelected = {index->
-                onEvent(AdminOfficesEvent.AdminOfficesSelected(index))
-            },
-            selectedDestinationIndex = state.selected,
-            colors = NavigationItemProps(
-                unFocusedColor = MaterialTheme.colorScheme.tertiaryContainer,
-                focusedColor = MaterialTheme.colorScheme.secondary,
-                iconTint = MaterialTheme.colorScheme.primary,
-                iconLabelColor = MaterialTheme.colorScheme.onPrimary
-
+    Column(modifier.verticalScroll(rememberScrollState())) {
+        state.offices.forEachIndexed {index,faculty->
+            OfficeCard(
+                officeName = faculty.name,
+                subOfficeCount = faculty.numberOfSubOffices,
+                isSelected = state.selected==index,
+                onSelect = {
+                    onEvent(AdminOfficesEvent.AdminOfficesSelected(index))
+                }
             )
-        )
+        }
+
+    }
+
 
 }
 
