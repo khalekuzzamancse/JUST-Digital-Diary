@@ -1,4 +1,4 @@
-package navigation.splash_screen
+package navigation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically

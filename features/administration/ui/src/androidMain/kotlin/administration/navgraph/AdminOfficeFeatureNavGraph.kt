@@ -24,7 +24,7 @@ object AdminOfficeFeatureNavGraph {
     fun NavHost(
         navController: NavHostController = rememberNavController(),
         onEvent: (AdminEmployeeListEvent) -> Unit,
-        onExitRequest: () -> Unit
+        onMenuIconClick: () -> Unit
     ) {
         Log.d("AdminOfficeFeatureNavGraph:", "NavGraph")
 
@@ -43,11 +43,11 @@ object AdminOfficeFeatureNavGraph {
                     onBackButtonPress = { callback ->
                         BackHandler(onBack = {
                             val isConsumed = callback()
-                            if (!isConsumed) onExitRequest()
+                            if (!isConsumed) onMenuIconClick()
                         })
 
                     },
-                    onExitRequest =onExitRequest
+                    onExitRequest =onMenuIconClick
                 )
             }
             composable(

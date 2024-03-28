@@ -16,6 +16,7 @@ import faculty.di.FacultyComponentProvider
 @Composable
  fun FacultyNDepartments(
     onTeacherListRequest: (String) -> Unit = {},
+    isNavRailMode:Boolean,
     onExitRequest:()->Unit,
     backHandler: @Composable (onBackButtonPress: () -> Boolean) -> Unit,
 ) {
@@ -25,7 +26,8 @@ import faculty.di.FacultyComponentProvider
         departmentListRepository = FacultyComponentProvider.getDepartListRepository(),
         onEmployeeListRequest = onTeacherListRequest,
         backHandler=backHandler,
-        onExitRequest = onExitRequest
+        onExitRequest = onExitRequest,
+        isNavRailMode = isNavRailMode
     )
 
 

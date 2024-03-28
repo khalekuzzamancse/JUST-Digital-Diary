@@ -20,18 +20,25 @@ object FacultyFeatureNavGraph {
     @Composable
     fun NavHost(
         navController: NavHostController = rememberNavController(),
-        onExitRequest: () -> Unit,
+        onMenuIconClicked: () -> Unit,
+        isNavRailMode: Boolean,
         onEvent: (TeacherListEvent) -> Unit
     ) {
         AppTheme {
-            _NavHost(navController, onExitRequest, onEvent)
+            _NavHost(
+                navController = navController,
+                isNavRailMode = isNavRailMode,
+                onExitRequest = onMenuIconClicked,
+                onEvent = onEvent
+            )
         }
 
     }
 
     @Composable
-   private fun _NavHost(
+    private fun _NavHost(
         navController: NavHostController = rememberNavController(),
+        isNavRailMode:Boolean,
         onExitRequest: () -> Unit,
         onEvent: (TeacherListEvent) -> Unit
     ) {
@@ -60,7 +67,8 @@ object FacultyFeatureNavGraph {
                                 },
                             )
                         },
-                        onExitRequest =onExitRequest
+                        onExitRequest =onExitRequest,
+                      isNavRailMode = isNavRailMode
                     )
                 }
                 composable(

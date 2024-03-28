@@ -1,8 +1,11 @@
 package common.newui
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -18,10 +21,17 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,11 +51,178 @@ since this is not a library,it is copy-pasting-editing,so to keep the client cod
 define the necessary thing here
  */
 
+
+/*
+ * Manage the own navRail so that does not need to copy-paste or implement the nav-rail file separately
+ * Maintain can calculating the window size manually so that does not copy-paste or implement the window decorator  file separately
+ */
+/**
+ * * Decorate the bottom bar
+ * * It manage it own navRail version so that
+ * * Manage it own Scaffold,since scaffold is sub compose layout so making it parent
+ * as scrabble without defining it size can causes crash.
+ * * But the [content] can be scrollable without any effect
+ * * If you used it inside another sub compose layout such as Scaffold or Lazy List then
+ * and make the parent scrollable then it can causes crash,so use modifier to define it size in that case
+ * @param modifier the scaffold modifier,so that you can control the scaffold
+ * @param selected is Nullable because it might possible that no destination is selected
+ * * mandatory parameters: [destinations],[onDestinationSelected],[content]
+ *
+ */
+
+
+//TODO("Defining state")
+//TODO("Defining state")
+
+/**
+ * * The factory to create easily the [NavState],so that client code
+ * is short and clean enough
+ * * Needed to refactor for coroutine scope
+ */
+class NavigationController {
+    private val _selected = MutableStateFlow<Destination?>(null)
+    val selected = _selected.asStateFlow()
+    private val _drawerState = MutableStateFlow(DrawerState(DrawerValue.Closed))
+    internal val drawerState = _drawerState.asStateFlow()
+
+    fun select(destination: Destination) {
+        _selected.update { destination }
+        closeDrawer()
+    }
+
+    private fun closeDrawer() {
+        _drawerState.update { DrawerState(DrawerValue.Closed) }
+    }
+
+    fun openDrawer() {
+        _drawerState.update { DrawerState(DrawerValue.Open) }
+        //do not create new instance of DrawerState
+        //use drawerState.open, fix the coroutine issue first,then do it
+    }
+}
+
+@Composable
+fun DrawerToNavRailDecorator(
+    modifier: Modifier = Modifier,
+    controller: NavigationController,
+    groups: List<NavGroup>,
+    itemVisibilityDelay: Long? = null,
+    onEvent: (NavigationEvent) -> Unit,
+    topAppbar: @Composable () -> Unit = {},
+    header: @Composable () -> Unit = {},
+    content: @Composable () -> Unit,
+) {
+    DrawerToNavRailDecorator(
+        modifier = modifier,
+        groups = groups,
+        selected = controller.selected.collectAsState().value,
+        drawerState = controller.drawerState.collectAsState().value,
+        itemVisibilityDelay = itemVisibilityDelay,
+        topAppbar = topAppbar,
+        onEvent = onEvent,
+        header = header,
+        content = content
+    )
+}
+
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+@Composable
+private fun DrawerToNavRailDecorator(
+    modifier: Modifier = Modifier,
+    groups: List<NavGroup>,
+    selected: Destination?,
+    itemVisibilityDelay: Long?,
+    drawerState: DrawerState,
+    topAppbar: @Composable () -> Unit = {},
+    onEvent: (NavigationEvent) -> Unit,
+    header: @Composable () -> Unit = {},
+    content: @Composable () -> Unit,
+) {
+    val windowSize = calculateWindowSizeClass().widthSizeClass
+    val compact = WindowWidthSizeClass.Compact
+    val medium = WindowWidthSizeClass.Medium
+    val expanded = WindowWidthSizeClass.Expanded
+
+    AnimatedContent(windowSize) { window ->
+        when (window) {
+            compact -> {
+                onEvent(NavigationEvent.DrawerNavigationMode)
+                _ModalDrawerDecorator(
+                    groups = groups,
+                    selected = selected,
+                    itemVisibilityDelay = itemVisibilityDelay,
+                    header = header,
+                    onEvent = onEvent,
+                    content = content,
+                    drawerState = drawerState
+                )
+            }
+
+            medium, expanded -> {
+                onEvent(NavigationEvent.NavRailNavigationMode)
+                NavRailLayout(
+                    modifier = modifier,
+                    groups = groups,
+                    selected = selected,
+                    itemVisibilityDelay = itemVisibilityDelay,
+                    topAppbar = topAppbar,
+                    onEvent = onEvent,
+                    content = content,
+                    header = header
+                )
+            }
+
+        }
+    }
+
+}
+
+
+/**
+ * @param groups is not state because it does not change over time,that is why taking as
+ * separate param
+ */
+@Composable
+private fun _ModalDrawerDecorator(
+    drawerState: DrawerState,
+    selected: Destination? = null,
+    itemVisibilityDelay: Long? = null,//if null then has no animation
+    groups: List<NavGroup>,
+    onEvent: (NavigationEvent) -> Unit,
+    header: @Composable () -> Unit = {},
+    content: @Composable () -> Unit,
+) {
+    val hasAnimation = itemVisibilityDelay != null
+    if (hasAnimation) {
+        _AnimateAbleDrawer(
+            groups = groups,
+            selected = selected,
+            itemVisibilityDelay = itemVisibilityDelay,
+            drawerState = drawerState,
+            header = header,
+            content = content,
+            onEvent = onEvent
+        )
+    } else {
+        _AnimationLessDrawer(
+            groups = groups,
+            selected = selected,
+            itemVisibilityDelay = itemVisibilityDelay,
+            drawerState = drawerState,
+            header = header,
+            content = content,
+            onEvent = onEvent
+        )
+    }
+}
+
+//TODO
+
 /**
  * This will reduce the complexity for selection and navigate when we have the group
  */
-interface  Destination {
-   data object None:Destination
+interface Destination {
+    data object None : Destination
 }
 
 class NavigationItem(
@@ -66,21 +243,6 @@ data class NavGroup(
 // TODO(Drawer  section  -- Drawer  section -- Drawer  section -Drawer  section)
 // TODO(Drawer  section  -- Drawer  section -- Drawer  section -Drawer  section)
 
-@Immutable
-data class ModalDrawerSheetState(
-    val groups: List<NavGroup>,
-    val selected: Destination? = null,
-    val itemVisibilityDelay: Long? = null//if null then has no animation
-)
-
-/**
- * @param hasAnimation the sheet has animation or not
- */
-data class ModelDrawerState(
-    val sheetState: ModalDrawerSheetState,
-    val drawerState: DrawerState,
-)
-
 
 /**
  * Non-default parameters: [state],[content]
@@ -89,96 +251,15 @@ data class ModelDrawerState(
  *  * It is crucial to exercise caution when dealing with animation APIs to avoid unintended calls or accidental object creation within the animation API, preventing unnecessary object creation.
  * */
 
-/**
- * * The factory to create easily the [ModelDrawerState],so that client code
- * is short and clean enough
- * * Needed to refactor for coroutine scope
- */
-
-class  DrawerController   (
-    group: List<NavGroup>,
-    itemVisibilityDelay: Long? = null,
-) {
-    private val _drawerState = MutableStateFlow(
-      ModelDrawerState(
-            sheetState = ModalDrawerSheetState(
-                groups = group,
-                itemVisibilityDelay = itemVisibilityDelay,
-            ),
-            drawerState = DrawerState(DrawerValue.Closed),
-        )
-    )
-    val drawerState = _drawerState.asStateFlow()
-
-
-    /**
-     * * No Default params
-     * * It a factory method that make the object creation easy
-     */
-    /**
-     * Refactored need later
-     */
-    fun openDrawer() {
-        _drawerState.update {
-            it.copy(
-                drawerState = DrawerState(DrawerValue.Open) //do not create new instance of DrawerState
-                //use drawerState.open, fix the coroutine issue first,then do it
-            )
-        }
-    }
-
-    fun makeSelection(destination: Destination) {
-        val newSheetState = drawerState.value.sheetState.copy(selected = destination)
-        _drawerState.update {
-            it.copy(
-                sheetState = newSheetState,
-                drawerState = DrawerState(DrawerValue.Closed)
-            )
-        }
-//
-//            drawerState.value.drawerState.close()
-        //not replace the state every time close,because this would create new
-        //Drawer State object every time,which might by expensive
-        //but for some reason desktop coroutine is causes crashes,that is why we are direcly
-        //creating new state,refactor it later
-
-    }
-
-
-}
-@Composable
- fun ModalDrawerDecoratorNew(
-    state: ModelDrawerState,
-    onEvent: (DrawerSheetEvent) -> Unit,
-    header: @Composable () -> Unit = {},
-    content: @Composable () -> Unit,
-) {
-    val hasAnimation = state.sheetState.itemVisibilityDelay != null
-    if (hasAnimation) {
-        _DestinationAnimateAbleDrawer(
-            state = state.sheetState,
-            drawerState = state.drawerState,
-            header = header,
-            content = content,
-            onEvent = onEvent
-        )
-    } else {
-        _AnimationLessDrawer(
-            sheetState = state.sheetState,
-            drawerState = state.drawerState,
-            header = header,
-            content = content,
-            onEvent = onEvent
-        )
-    }
-}
 
 @Composable
-private fun _DestinationAnimateAbleDrawer(
+private fun _AnimateAbleDrawer(
     modifier: Modifier = Modifier,
-    state: ModalDrawerSheetState,
     drawerState: DrawerState,
-    onEvent: (DrawerSheetEvent) -> Unit,
+    groups: List<NavGroup>,
+    selected: Destination?,
+    itemVisibilityDelay: Long?,
+    onEvent: (NavigationEvent) -> Unit,
     header: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
@@ -189,8 +270,43 @@ private fun _DestinationAnimateAbleDrawer(
             AnimatedVisibility(
                 visible = drawerState.currentValue == DrawerValue.Open,
             ) {
-                _DrawerSheet(
-                    state = state,
+                ModalDrawerSheet(modifier = Modifier) {
+                    _NavigationSheet(
+                        groups = groups,
+                        selected = selected,
+                        header = header,
+                        onEvent = onEvent,
+                        itemVisibilityDelay = itemVisibilityDelay
+                    )
+                }
+            }
+        },
+        content = content
+    )
+
+}
+
+
+@Composable
+private fun _AnimationLessDrawer(
+    modifier: Modifier = Modifier,
+    groups: List<NavGroup>,
+    selected: Destination?,
+    itemVisibilityDelay: Long?,
+    drawerState: DrawerState,
+    onEvent: (NavigationEvent) -> Unit,
+    header: @Composable () -> Unit = {},
+    content: @Composable () -> Unit,
+) {
+    _ModalDrawer(
+        modifier = modifier,
+        drawerState = drawerState,
+        sheet = {
+            ModalDrawerSheet(modifier = Modifier) {
+                _NavigationSheet(
+                    groups = groups,
+                    selected = selected,
+                    itemVisibilityDelay = itemVisibilityDelay,
                     header = header,
                     onEvent = onEvent
                 )
@@ -202,83 +318,62 @@ private fun _DestinationAnimateAbleDrawer(
 
 }
 
-
-@Composable
-private fun _AnimationLessDrawer(
-    modifier: Modifier = Modifier,
-    sheetState: ModalDrawerSheetState,
-    drawerState: DrawerState,
-    onEvent: (DrawerSheetEvent) -> Unit,
-    header: @Composable () -> Unit = {},
-    content: @Composable () -> Unit,
-) {
-    _ModalDrawer(
-        modifier = modifier,
-        drawerState = drawerState,
-        sheet = {
-            _DrawerSheet(
-                state = sheetState,
-                header = header,
-                onEvent = onEvent
-            )
-        },
-        content = content
-    )
-
-}
-
-// TODO(Drawer SHEET section  -- Drawer SHEET section -- Drawer SHEET section -Drawer SHEET section)
-// TODO(Drawer SHEET section  -- Drawer SHEET section -- Drawer SHEET section -Drawer SHEET section)
-// TODO(Drawer SHEET section  -- Drawer SHEET section -- Drawer SHEET section -Drawer SHEET section)
-// TODO(Drawer SHEET section  -- Drawer SHEET section -- Drawer SHEET section -Drawer SHEET section)
+// TODO(Navigation SHEET section  --  Navigation SHEET section --  Navigation SHEET section  -Navigation SHEET section )
+// TODO(Navigation SHEET section  --  Navigation SHEET section --  Navigation SHEET section  -Navigation SHEET section )
+// TODO(Navigation SHEET section  --  Navigation SHEET section --  Navigation SHEET section  -Navigation SHEET section )
+// TODO(Navigation SHEET section  --  Navigation SHEET section --  Navigation SHEET section  -Navigation SHEET section )
 
 /**
  * * Event for the drawer sheet.
  * * Defining so that number of parameter  is reduced to sheet decorator
  * * Also it easy to add or remove new event easily,and propagate up to the client
  */
-sealed interface DrawerSheetEvent {
-    data class Selected(val destination: Destination) : DrawerSheetEvent
-    data class Hovered(val destination: Destination) : DrawerSheetEvent
+sealed interface NavigationEvent {
+    data class Selected(val destination: Destination) : NavigationEvent
+    data class Hovered(val destination: Destination) : NavigationEvent
+    data object DrawerNavigationMode : NavigationEvent
+    data object NavRailNavigationMode : NavigationEvent
 }
+
 
 /**
  * * Non Default params [state],[onEvent]
  */
 @Composable
-private fun _DrawerSheet(
-    onEvent: (DrawerSheetEvent) -> Unit,
-    state: ModalDrawerSheetState,
+private fun _NavigationSheet(
+    onEvent: (NavigationEvent) -> Unit,
+    groups: List<NavGroup>,
+    selected: Destination?,
+    itemVisibilityDelay: Long?,
     header: (@Composable () -> Unit)? = null,
 ) {
-    val groups = state.groups
     val lastIndex = groups.size - 1
-    ModalDrawerSheet(modifier = Modifier.width(IntrinsicSize.Max)) {
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .verticalScroll(rememberScrollState()),
-        ) {
-            if (header != null) {
-                header()
-            }
-            groups.forEachIndexed { groupNo, group ->
-                group.items.forEach { item ->
-                    _NavItem(
-                        item = item,
-                        isSelected = item.destination == state.selected,
-                        visibilityDelay = state.itemVisibilityDelay,
-                        onClick = {
-                            onEvent(DrawerSheetEvent.Selected(item.destination))
-                        }
-                    )
-                }
-                if (groupNo != lastIndex) {
-                    HorizontalDivider()
-                }
-
-            }
+    Column(
+        modifier = Modifier
+            .width(IntrinsicSize.Max)
+            .fillMaxHeight()
+            .verticalScroll(rememberScrollState()),
+    ) {
+        if (header != null) {
+            header()
         }
+        groups.forEachIndexed { groupNo, group ->
+            group.items.forEach { item ->
+                _NavItem(
+                    item = item,
+                    isSelected = item.destination == selected,
+                    visibilityDelay = itemVisibilityDelay,
+                    onClick = {
+                        onEvent(NavigationEvent.Selected(item.destination))
+                    }
+                )
+            }
+            if (groupNo != lastIndex) {
+                HorizontalDivider()
+            }
+
+        }
+
 
     }
 }
@@ -332,7 +427,7 @@ private fun _NavItem(
         modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, start = 4.dp, end = 4.dp),
         icon = {
             Icon(
-                imageVector = if (isSelected)item.focusedIcon else item.unFocusedIcon,
+                imageVector = if (isSelected) item.focusedIcon else item.unFocusedIcon,
                 contentDescription = "Nav item"
             )
         },
@@ -396,67 +491,11 @@ private fun _ModalDrawer(
 
 }
 
+// TODO("NavRail Section -- NavRail Section -- NavRail Section -NavRail Section")
+// TODO("NavRail Section -- NavRail Section -- NavRail Section -NavRail Section")
+// TODO("NavRail Section -- NavRail Section -- NavRail Section -NavRail Section")
+// TODO("NavRail Section -- NavRail Section -- NavRail Section -NavRail Section")
 
-/*
- * Manage the own navRail so that does not need to copy-paste or implement the nav-rail file separately
- * Maintain can calculating the window size manually so that does not copy-paste or implement the window decorator  file separately
- */
-/**
- * * Decorate the bottom bar
- * * It manage it own navRail version so that
- * * Manage it own Scaffold,since scaffold is sub compose layout so making it parent
- * as scrabble without defining it size can causes crash.
- * * But the [content] can be scrollable without any effect
- * * If you used it inside another sub compose layout such as Scaffold or Lazy List then
- * and make the parent scrollable then it can causes crash,so use modifier to define it size in that case
- * @param modifier the scaffold modifier,so that you can control the scaffold
- * @param selected is Nullable because it might possible that no destination is selected
- * * mandatory parameters: [destinations],[onDestinationSelected],[content]
- *
- */
-//@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-//@Composable
-//fun BottomBarToNavRailDecorator(
-//    modifier: Modifier = Modifier,
-//    destinations: List<NavigationItem>,
-//    onDestinationSelected: (Destination) -> Unit,
-//    selected: Int? = null,
-//    topAppbar: @Composable () -> Unit = {},
-//    content: @Composable () -> Unit,
-//) {
-//    val windowSize = calculateWindowSizeClass().widthSizeClass
-//    val compact = WindowWidthSizeClass.Compact
-//    val medium = WindowWidthSizeClass.Medium
-//    val expanded = WindowWidthSizeClass.Expanded
-//
-//    AnimatedContent(windowSize) { window ->
-//        when (window) {
-//            compact -> {
-//                BottomBarLayout(
-//                    modifier = modifier,
-//                    destinations = destinations,
-//                    onItemSelected = onDestinationSelected,
-//                    selected = selected,
-//                    topAppbar = topAppbar,
-//                    content = content
-//                )
-//            }
-//
-//            medium, expanded -> {
-//                NavRailLayout(
-//                    destinations = destinations,
-//                    onItemSelected = onDestinationSelected,
-//                    selected = selected,
-//                    topAppbar = topAppbar,
-//                    content = content
-//                )
-//            }
-//
-//        }
-//    }
-//
-//
-//}
 
 /*
  * Used to loose coupling,so that direcly this file can be copy -paste without the nav-rail dependency
@@ -469,173 +508,69 @@ private fun _ModalDrawer(
  * which destination is cliecked
  */
 
-//
-//@Composable
-//private fun BottomBarLayout(
-//    modifier: Modifier = Modifier,
-//    destinations: List<NavigationItem>,
-//    onItemSelected: (Destination) -> Unit,
-//    selected: Int? = null,
-//    topAppbar: @Composable () -> Unit = {},
-//    content: @Composable () -> Unit,
-//) {
-//    Scaffold(
-//        modifier = modifier,
-//        topBar = topAppbar,
-//        bottomBar = {
-//            _BottomNavBar(
-//                destinations = destinations,
-//                selected = selected,
-//                onDestinationSelected = onItemSelected
-//            )
-//        }
-//    ) { scaffoldPadding ->
-//        Box(Modifier.padding(scaffoldPadding)) {
-//            content()
-//        }
-//
-//    }
-//}
-//
-//@Composable
-//private fun NavRailLayout(
-//    modifier: Modifier = Modifier,
-//    destinations: List<NavigationItem>,
-//    onItemSelected: (Destination) -> Unit,
-//    selected: Int? = null,
-//    topAppbar: @Composable () -> Unit = {},
-//    content: @Composable () -> Unit,
-//) {
-//    Row(modifier = modifier) {
-//        _NavRail(
-//            destinations = destinations,
-//            selected = selected,
-//            onItemSelected = onItemSelected
-//        )
-//        Scaffold(
-//            modifier = Modifier,
-//            topBar = topAppbar,
-//        ) { scaffoldPadding ->
-//            Box(Modifier.padding(scaffoldPadding)) { content() }//takes the remaining space,after the NavRail takes place
-//        }
-//
-//    }
-//
-//
-//}
-//
-///**
-// * Used to loose coupling,so that direcly this file can be copy -paste without the nav-rail dependency
-// */
-//@Composable
-//private fun _NavRail(
-//    modifier: Modifier = Modifier,
-//    destinations: List<NavigationItem>,
-//    onItemSelected: (Destination) -> Unit,
-//    selected: Int? = null,
-//) {
-//    NavigationRail(
-//        modifier = modifier,
-//        containerColor = MaterialTheme.colorScheme.surface
-//    ) {
-//        Surface(
-//            modifier = Modifier.fillMaxHeight(),
-//            tonalElevation = 3.dp //same as bottom bar elevation
-//        ) {
-//            Column(Modifier.width(IntrinsicSize.Max)) {
-//                destinations.forEachIndexed { index, navigationItem ->
-//                    //Using Drawer item so place the icon and label side by side
-//                    NavigationDrawerItem(
-//                        colors = NavigationDrawerItemDefaults.colors(
-//                            selectedContainerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.7f),
-//                            selectedIconColor = MaterialTheme.colorScheme.secondary,
-//                            selectedTextColor = MaterialTheme.colorScheme.contentColorFor(
-//                                MaterialTheme.colorScheme.tertiary.copy(alpha = 0.7f)
-//                            ),
-//
-//                            unselectedIconColor = MaterialTheme.colorScheme.primary,//because they are clickable button,so high importance
-//
-//
-//                            //   se = MaterialTheme.colorScheme.onSecondary,
-//
-//                        ),
-//                        modifier = Modifier.padding(4.dp),
-//                        icon = {
-//                            Icon(
-//                                navigationItem.focusedIcon,
-//                                contentDescription = null
-//                            )
-//                        },
-//                        label = {
-//                            Text(
-//                                text = navigationItem.label
-//                            )
-//                        },
-//                        selected = selected == index,
-//                        onClick = { onItemSelected(navigationItem.destination) },
-//                        shape = RoundedCornerShape(8.dp)
-//                    )
-//                }
-//            }
-//        }
-//
-//
-//    }
-//}
-//
-///**
-// * Used to loose coupling,so that direcly this file can be copy -paste without BottomBar from another file
-// */
-//
-//@Composable
-//private fun _BottomNavBar(
-//    modifier: Modifier = Modifier,
-//    destinations: List<NavigationItem>,
-//    selected: Int? = null,
-//    onDestinationSelected: (Destination) -> Unit,
-//) {
-//    NavigationBar(
-//        modifier = modifier,
-//    ) {
-//        destinations.forEachIndexed { index, destination ->
-//            NavigationBarItem(
-//                selected = selected == index,
-//                onClick = {
-//                    onDestinationSelected(destination.destination)
-//                },
-//                label = {
-//                    Text(text = destination.label)
-//                },
-//                alwaysShowLabel = false,
-//                icon = {
-//                    BadgedBox(
-//                        badge = {
-//                            if (destination.badge != null) {
-//                                Badge {
-//                                    Text(text = destination.badge.toString())
-//                                }
-//                            }
-//                        }
-//                    ) {
-//                        (if (index == selected) {
-//                            destination.focusedIcon
-//                        } else destination.unFocusedIcon).let {
-//                            Icon(
-//                                imageVector = it,
-//                                contentDescription = destination.label
-//                            )
-//                        }
-//                    }
-//                },
-//                colors = NavigationBarItemDefaults.colors().copy(
-//                    selectedIconColor = MaterialTheme.colorScheme.secondary,
-//                    selectedIndicatorColor = MaterialTheme.colorScheme.onSecondary,
-//                    unselectedIconColor = MaterialTheme.colorScheme.primary,//because they are clickable button,so high importance
-//
-//                )
-//            )
-//        }
-//    }
-//
-//
-//}
+@Composable
+private fun NavRailLayout(
+    modifier: Modifier = Modifier,
+    groups: List<NavGroup>,
+    selected: Destination?,
+    itemVisibilityDelay: Long?,
+    onEvent: (NavigationEvent) -> Unit,
+    header: @Composable () -> Unit,
+    topAppbar: @Composable () -> Unit,
+    content: @Composable () -> Unit,
+) {
+    Row(modifier = modifier) {
+        _NavRailSheet(
+            modifier = modifier,
+            groups = groups,
+            selected = selected,
+            itemVisibilityDelay = itemVisibilityDelay,
+            onEvent = onEvent,
+            header = header,
+        )
+        Scaffold(
+            modifier = Modifier,
+            topBar = topAppbar,
+        ) { scaffoldPadding ->
+            Box(Modifier.padding(scaffoldPadding)) { content() }//takes the remaining space,after the NavRail takes place
+        }
+
+    }
+
+
+}
+
+/**
+ * Used to loose coupling,so that direcly this file can be copy -paste without the nav-rail dependency
+ */
+// TODO("NavRail SHEET Section -- NavRail SHEET Section -- NavRail SHEET Section -NavRail SHEET Section")
+// TODO("NavRail SHEET Section -- NavRail SHEET Section -- NavRail SHEET Section -NavRail SHEET Section")
+// TODO("NavRail SHEET Section -- NavRail SHEET Section -- NavRail SHEET Section -NavRail SHEET Section")
+// TODO("NavRail SHEET Section -- NavRail SHEET Section -- NavRail SHEET Section -NavRail SHEET Section")
+@Composable
+private fun _NavRailSheet(
+    modifier: Modifier = Modifier,
+    groups: List<NavGroup>,
+    selected: Destination?,
+    itemVisibilityDelay: Long?,
+    onEvent: (NavigationEvent) -> Unit,
+    header: @Composable () -> Unit,
+) {
+    NavigationRail(
+        modifier = modifier,
+        containerColor = MaterialTheme.colorScheme.surface
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxHeight(),
+            tonalElevation = 3.dp //same as bottom bar elevation
+        ) {
+            _NavigationSheet(
+                onEvent = onEvent,
+                groups = groups,
+                selected = selected,
+                itemVisibilityDelay = itemVisibilityDelay,
+                header = header,
+            )
+        }
+    }
+}

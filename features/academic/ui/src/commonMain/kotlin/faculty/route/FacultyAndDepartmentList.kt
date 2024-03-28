@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import common.newui.SnackNProgressBarDecorator
 import common.newui.TwoPaneLayout
 import common.newui.TwoPaneNewUIPros
@@ -26,6 +27,7 @@ import faculty.ui.faculty.facultylist.components.FacultyListState
 /**
  * @param backHandler is to override the back button press functionality
  * used as composable so that composable and non composable both can be passed
+ * @param isNavRailMode is nullable because in case of NavRail ,there is no Menu Icon will be at the top bar
  */
 @Composable
 fun FacultyAndDepartmentList(
@@ -33,6 +35,7 @@ fun FacultyAndDepartmentList(
     facultyListRepository: FacultyListRepository,
     departmentListRepository: DepartmentListRepository,
     onExitRequest: () -> Unit,
+    isNavRailMode:Boolean,
     onEmployeeListRequest: (String) -> Unit = {},
     backHandler: @Composable (onBackButtonPress: () -> Boolean) -> Unit,
 ) {
@@ -92,7 +95,8 @@ fun FacultyAndDepartmentList(
             onDepartmentEvent = onDepartmentListEvent,
             onFacultyEvent = onFacultyEvent,
             clearFacultySelection = viewModel::clearFacultySelection,
-            onExitRequest = onExitRequest
+            onExitRequest = onExitRequest,
+            isNavRailMode = isNavRailMode
         )
     }
 
@@ -103,14 +107,16 @@ private fun _FacultyNDepartmentRaw(
     modifier: Modifier = Modifier,
     facultyState: FacultyListState,
     departmentListState: DepartmentListState?,
+    isNavRailMode:Boolean,
     onDepartmentEvent: (DepartmentListEvent) -> Unit,
     clearFacultySelection: () -> Unit,
     onFacultyEvent: (FacultyListEvent) -> Unit,
     onExitRequest: () -> Unit,
 ) {
     val showDepartmentList = departmentListState != null
-    val navigationIcon =
-        if (showDepartmentList) Icons.AutoMirrored.Filled.ArrowBack else Icons.Default.Menu
+    val navigationIcon = if (showDepartmentList) Icons.AutoMirrored.Filled.ArrowBack else {
+        if (isNavRailMode)null else Icons.Default.Menu
+    }
     val alignment = Alignment.TopStart
     val props = TwoPaneNewUIPros(
         showTopOrRightPane = showDepartmentList,

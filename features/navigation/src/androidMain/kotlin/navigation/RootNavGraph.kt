@@ -22,6 +22,7 @@ fun RootNavGraph(
     openDrawerRequest: () -> Unit,
     onBackPressed: () -> Unit,
     startDestination:String,
+    isNavRailMode:Boolean,
     navController: NavHostController,
 ) {
 
@@ -44,21 +45,18 @@ fun RootNavGraph(
         composable(GraphRoutes.ADMIN_OFFICE_FEATURE) {
             AdminOfficeFeatureNavGraph.NavHost(
                 onEvent = { event ->
-//                    if (event is AdminEvent.ExitRequest)
-//                        openDrawerRequest()
                     toAppEvent(event)?.let(onEvent)
                 },
-                onExitRequest = onBackPressed
+                onMenuIconClick = openDrawerRequest
             )
         }
         composable(GraphRoutes.FACULTY_FEATURE) {
             FacultyFeatureNavGraph.NavHost(
                 onEvent = { event ->
-//                    if (event is FacultyFeatureEvent.ExitRequest)
-                        openDrawerRequest()
                     toAppEvent(event)?.let(onEvent)
                 },
-                onExitRequest = onBackPressed
+                onMenuIconClicked =openDrawerRequest,
+                isNavRailMode = isNavRailMode
             )
         }
         composable(GraphRoutes.NOTES_FEATURE) {
