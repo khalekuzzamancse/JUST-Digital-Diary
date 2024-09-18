@@ -1,61 +1,47 @@
 [versions]
 core-database-realm=":core:database:realm"
 core-di=":core:di"
-#Module related to Features:Auth
-feature-auth-destination=":features:auth:navgraph"
-feature-auth-components=":features:auth:functionalities"
-#Feature:Other features modules
-feature-others-destination=":features:others:navgraph"
-feature-others-components=":features:others:functionalities"
-#Feature:Facultis
-feature-faculty-destination=":features:faculty:navgraph"
-feature-faculty-components=":features:faculty:functionalities"
-#feature Admin Office
-feature-adminOffice-destination=":features:admin_office:navgraph"
-feature-adminOffice-components=":features:admin_office:functionalities"
-#feature Notes
-feature-notes-functionalities=":features:notes:functionalities"
-feature-notes-navgraph=":features:notes:navgraph"
-#Feature Search
-feature-search-functionalities=":features:search:functionalities"
-feature-search-navgraph=":features:search:navgraph"
+
+## Common modules
+common-data=":common:data"
+common-domain=":common:domain"
+common-ui=":common:ui"
+common-di=":common:di"
+## Auth modules
+feature-authentication-data=":features:auth:data"
+feature-authentication-domain=":features:auth:domain"
+feature-authentication-ui=":features:auth:ui"
+feature-authentication-di=":features:auth:di"
+## Faculty modules
+feature-academic-data=":features:academic:data"
+feature-academic-domain=":features:academic:domain"
+feature-academic-ui=":features:academic:ui"
+feature-academic-di=":features:academic:di"
+
+## Admin Office Feature
+feature-administration-data=":features:administration:data"
+feature-administration-domain=":features:administration:domain"
+feature-administration-ui=":features:administration:ui"
+feature-administration-di=":features:administration:di"
+## Notebook Office Feature
+feature-notebook-data=":features:notebook:data"
+feature-notebook-domain=":features:notebook:domain"
+feature-notebook-ui=":features:notebook:ui"
+feature-notebook-di=":features:notebook:di"
+
+## Miscellaneous Office Feature
+feature-miscellaneous-data=":features:miscellaneous:data"
+feature-miscellaneous-domain=":features:miscellaneous:domain"
+feature-miscellaneous-ui=":features:miscellaneous:ui"
+feature-miscellaneous-di=":features:miscellaneous:di"
+## queryservice Office Feature
+feature-queryservice-data=":features:queryservice:data"
+feature-queryservice-domain=":features:queryservice:domain"
+feature-queryservice-ui=":features:queryservice:ui"
+feature-queryservice-di=":features:queryservice:di"
 
 
-#data layers
-data-otherInfo=":layers:data:other_info"
-data-departments=":layers:data:departments"
-data-faculties=":layers:data:faculties"
-data-teachers=":layers:data:teachers"
-data-login=":layers:data:login"
-data-admin-offices=":layers:data:admin_offices"
-data-admin-subOffices=":layers:data:admin_sub_offices"
-data-admin-officers=":layers:data:admin_officers"
-data-register=":layers:data:register"
-data-notes=":layers:data:notes"
-data-employees=":layers:data:employees"
+##core
+core-netowork=":core:network"
 
-#UI layers
-#UI
-common-ui=":layers:ui:common_ui"
-ui-faculties=":layers:ui:faculties"
-ui-teachers=":layers:ui:teachers"
-ui-departments=":layers:ui:departments"
-ui-otherInfo=":layers:ui:other_info"
-ui-admin-offices=":layers:ui:admin_offices"
-ui-admin-subOffices=":layers:ui:admin_sub_offices"
-ui-admin-officers=":layers:ui:admin_officers"
-ui-login=":layers:ui:login"
-ui-register=":layers:ui:register"
-ui-notes=":layers:ui:notes"
-#Domain  layers
-domain-departments=":layers:domain:departments"
-domain-teachers=":layers:domain:teachers"
-domain-faculties=":layers:domain:faculties"
-domain-otherInfo=":layers:domain:other_info"
-domain-admin-offices=":layers:domain:admin_offices"
-domain-admin-subOffices=":layers:domain:admin_sub_offices"
-domain-admin-officers=":layers:domain:admin_officers"
-domain-login=":layers:domain:login"
-domain-register=":layers:domain:register"
-domain-notes=":layers:domain:notes"
-domain-employees=":layers:domain:employees"
+

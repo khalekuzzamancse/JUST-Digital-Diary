@@ -24,7 +24,16 @@ kotlin {
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(libs.kotlinx.coroutines.core)
 
+
             }
+        }
+        val commonTest by getting {
+            dependencies{
+                implementation(libs.kotlin.test)
+                implementation(libs.kotlin.test.junit)
+            }
+
+
         }
         val androidMain by getting{
             dependencies {
@@ -43,7 +52,7 @@ kotlin {
 
 }
 android {
-    namespace = "com.just.cse.digitaldiary.twozerotwothree.core.network"
+    namespace = "core.network"
     compileSdk = 34
     defaultConfig {
         minSdk = 27

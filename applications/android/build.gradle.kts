@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.just.cse.digitaldiaryremake.justdigitaldiary.twozeotwothree"
+    namespace = "com.just_diary"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.just.cse.digitaldiaryremake.justdigitaldiary.twozeotwothree"
+        applicationId = "com.just_diary"
         minSdk = 27
         targetSdk = 34
         versionCode = 1
@@ -43,7 +43,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.6"
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
     packaging {
         resources {
@@ -58,6 +58,10 @@ dependencies {
     implementation(compose.material3)
     implementation(compose.materialIconsExtended)
     implementation(libs.kotlinx.coroutines.android)
-   implementation(project(":features:navigation"))
+    implementation(project(localModules.versions.feature.academic.ui.get()))
+    implementation(project(localModules.versions.feature.administration.ui.get()))
+    implementation(project(localModules.versions.core.netowork.get()))
+    implementation(project(":features:navigation"))
+    implementation(libs.androidx.navigation.compose)
 
 }

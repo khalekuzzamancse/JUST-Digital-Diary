@@ -19,57 +19,29 @@ dependencyResolutionManagement {
 }
 
 
-val dataLayerModules = listOf(
-    ":layers:data",
-    ":layers:data:login",
-    ":layers:data:register",
-    ":layers:data:faculties",
-    ":layers:data:departments",
-    ":layers:data:department_info",
-    ":layers:data:teachers",
-    ":layers:data:admin_officers",
-    ":layers:data:admin_offices",
-    ":layers:data:admin_sub_offices",
-    ":layers:data:other_info",
-    ":layers:data:notes",
-    ":layers:data:employees",
 
-)
-val domainLayerModules  = dataLayerModules
-    .map { it.replace(":data:", ":domain:") }
-val domains= listOf(  ":layers:domain:notes",":layers:domain:employees")
-
-val uiLayerModules = dataLayerModules
-    .map { it.replace(":data:", ":ui:") }
-val featureModules = listOf(
-    ":features",
-    ":features:auth",":features:auth:functionalities",":features:auth:navgraph",
-    ":features:navigation",
-    ":features:faculty",":features:faculty:navgraph",":features:faculty:functionalities",
-    ":features:others",":features:others:functionalities",":features:others:navgraph",
-    ":features:notes",  ":features:notes:functionalities",  ":features:notes:navgraph",
-    ":features:search", ":features:search:functionalities", ":features:search:navgraph",
-    ":features:admin_office",  ":features:admin_office:functionalities",  ":features:admin_office:navgraph",
-)
-val coreModules = listOf(
-    ":core",
-    ":core:network",
-    ":core:di",
-    ":core:database",
-    ":core:database:realm"
-)
 val applications= listOf(
     ":applications",  ":applications:android", ":applications:desktop", ":applications:web",
 )
+val common= listOf(":common",":common:data",":common:ui",":common:domain","common:di")
+val coreModules = listOf(
+    ":core",
+    ":core:network",
+    ":core:database",
+    ":core:database:realm"
+)
 
-rootProject.name = "JUST Digital Diary"
-include(applications)
-include(":common")
-include(":layers")
-include(":layers:ui:common_ui")
-include(featureModules)
-include(coreModules)
-include(dataLayerModules)
-include(domainLayerModules)
-include(domains)
-include(uiLayerModules)
+val featureModules = listOf(
+    ":features",
+    ":features:auth", ":features:auth:data",  ":features:auth:domain",":features:auth:ui",":features:auth:di",
+    ":features:academic", ":features:academic:domain",":features:academic:data",":features:academic:ui",":features:academic:di",
+    ":features:administration",":features:administration:data", ":features:administration:domain", ":features:administration:ui", ":features:administration:di",
+    ":features:navigation",
+    ":features:miscellaneous", ":features:miscellaneous:domain",":features:miscellaneous:data",":features:miscellaneous:ui",":features:miscellaneous:di",
+    ":features:notebook",":features:notebook:domain",":features:notebook:data",":features:notebook:ui",":features:notebook:di",
+    ":features:queryservice",  ":features:queryservice:domain",":features:queryservice:data",":features:queryservice:ui",":features:queryservice:di",
+)
+
+
+//rootProject.name = "JUSTDigitalDiary"//do not use whitespace,it may causes build error or DEX
+include(applications+coreModules+common+featureModules)

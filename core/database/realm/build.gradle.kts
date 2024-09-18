@@ -53,7 +53,7 @@ kotlin {
 
 }
 android {
-    namespace = "com.just.cse.digitaldiary.twozerotwothree.core.local_database.realm"
+    namespace = "core.database.realm"
     compileSdk = 34
     defaultConfig {
         minSdk = 27
