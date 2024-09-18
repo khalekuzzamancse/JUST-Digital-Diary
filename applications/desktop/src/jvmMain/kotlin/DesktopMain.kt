@@ -13,6 +13,7 @@ import androidx.compose.ui.window.application
 import faculty.route.FacultyNDepartments
 import faculty.ui.faculty.facultylist.components.FacultyCard
 import miscellaneous.ui.home.home.HomeDestination
+import miscellaneous.ui.home.home.WelcomeToHome
 import navigation.themes.AppTheme
 import notebook.ui.notedetails.Note
 import notebook.ui.notelist.NoteCard
@@ -36,22 +37,23 @@ fun main() {
 //                NavigationRoot()
 //              AuthNavHostDesktop()
                 AppTheme {
-                    //  HomeDestination({})
+                    WelcomeToHome()
+                    // HomeDestination({})
 //                    FacultyNDepartments(onExitRequest = {}, backHandler = {})
 //                    AdminOfficeAndSubOfficeRoute({})
 //
 //
-//                }
-                    val note = Note(
-                        id = "1",
-                        title = "Sample Note",
-                        description = "This is a sample description for a note.",
-                        timeStamp = "2023-04-05T14:30:00Z" // ISO 8601 format
-                    )
-                    NoteCard(
-                        onClick = {},
-                        note = note
-                    )
+////                }
+//                    val note = Note(
+//                        id = "1",
+//                        title = "Sample Note",
+//                        description = "This is a sample description for a note.",
+//                        timeStamp = "2023-04-05T14:30:00Z" // ISO 8601 format
+//                    )
+//                    NoteCard(
+//                        onClick = {},
+//                        note = note
+//                    )
                 }
 
                 }

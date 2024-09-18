@@ -77,7 +77,7 @@ fun HomeDestination(
                 onDayClick = {
                     scope.launch {
                         hostState.showSnackbar(
-                            message = "Because of Friday",
+                            message = "Friday",
                         )
                     }
 

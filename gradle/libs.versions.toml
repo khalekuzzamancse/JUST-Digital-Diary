@@ -39,6 +39,12 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotl
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 #
+
+##For convention plugin building needs them
+android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+compose-gradlePlugin = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "compose-plugin" }
+
 [bundles]
 test = ["kotlin-test", "kotlin-test-junit"]
 
@@ -50,3 +56,8 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 realm={id="io.realm.kotlin", version.ref = "realmVersion"}
 
+#TODO:Convention plugin
+convention-composeMultiplatfrom={id="convention.composeMultiplatform",version="unspecified"}
+convention-kotlinMultiplatform={id="convention.kotlinMultiplatform",version="unspecified"}
+convention-domainModulePlugin={id="convention.DomainModulePlugin",version="unspecified"}
+convention-dataModulePlugin={id="convention.dataModulePlugin",version="unspecified"}

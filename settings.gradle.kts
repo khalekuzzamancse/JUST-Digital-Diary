@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")//build-logic as a Composite Build, for convention plugin
     repositories {
         google()
         mavenCentral()
@@ -18,6 +19,12 @@ dependencyResolutionManagement {
     }
 }
 
+
+/*
+ * Type-Safe Project Accessors, a feature introduced in Gradle 7.0 that allows you to reference project dependencies
+ * in a type-safe manner without relying on string-based project paths like project(":x") as implement(projects.x)
+ */
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 
 val applications= listOf(
@@ -40,8 +47,9 @@ val featureModules = listOf(
     ":features:miscellaneous", ":features:miscellaneous:domain",":features:miscellaneous:data",":features:miscellaneous:ui",":features:miscellaneous:di",
     ":features:notebook",":features:notebook:domain",":features:notebook:data",":features:notebook:ui",":features:notebook:di",
     ":features:queryservice",  ":features:queryservice:domain",":features:queryservice:data",":features:queryservice:ui",":features:queryservice:di",
+    ":features:academic-calender",":features:academic-calender:domain",":features:academic-calender:data",":features:academic-calender:ui",":features:academic-calender:di"
 )
 
 
-//rootProject.name = "JUSTDigitalDiary"//do not use whitespace,it may causes build error or DEX
+rootProject.name = "JUSTDigitalDiary"//do not use whitespace,it may causes build error or DEX
 include(applications+coreModules+common+featureModules)
