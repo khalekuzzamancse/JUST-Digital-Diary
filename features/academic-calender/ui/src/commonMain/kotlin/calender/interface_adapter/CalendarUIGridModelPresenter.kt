@@ -1,8 +1,12 @@
-@file:Suppress("UnUsed", "LocalVariableName")
+@file:Suppress("UnUsed", "LocalVariableName", "FunctionName")
 
-package calender.ui.calender.nedw
+package calender.interface_adapter
+
+import calender.ui.calender.CalenderCellUiModel
+import calender.ui.calender.HolidayUiModel
 import domain.model.DayModel
 import domain.model.MonthModel
+
 /**
  * Builds a calendar grid for a given month.
  *
@@ -32,51 +36,67 @@ import domain.model.MonthModel
  * - Using `currentCellIndex % 35` ensures that no index exceeds the available grid size and that any overflow is properly handled.
  */
 
-class CalendarGridBuilder {
+internal class CalendarUIGridModelPresenter {
 
-    fun buildMonthGrid(monthData: MonthModel): CalendarGrid {
+    fun buildMonthGrid(monthData: MonthModel): List<CalenderCellUiModel> {
         val cells = createEmptyGrid()
         val firstDayCellNo = findFirstDayCell(monthData)
         placeDaysInGrid(cells, monthData, firstDayCellNo)
-        return CalendarGrid(cells)
+        return cells
     }
 
-    private fun createEmptyGrid(): MutableList<Cell> {
+    private fun createEmptyGrid(): MutableList<CalenderCellUiModel> {
         return MutableList(35) { index ->
-            Cell(cellNo = index, day = null)
+            CalenderCellUiModel(
+                cellNo = index,
+                dayName = "",
+            )
         }
     }
 
     /** Cell No for date=1 which is basically the Column no where Column=Day(ex: Sun,Mon...) ordinal in the Calender*/
     private fun findFirstDayCell(monthData: MonthModel): Int {
-        return monthData.days.find { it.date == 1 }?.name?.ordinal ?: 0 // Default to 0 if not found (should not happen for a valid month)
+        return monthData.days.find { it.date == 1 }?.name?.ordinal
+            ?: 0 // Default to 0 if not found (should not happen for a valid month)
     }
 
 
     private fun placeDaysInGrid(
-        cells: MutableList<Cell>,
-        monthData: MonthModel,
+        calenderCellUiModels: MutableList<CalenderCellUiModel>,
+        months: MonthModel,
         firstDayCellNo: Int
     ) {
         var currentCellIndex = firstDayCellNo
-
-        monthData
+        months
             .days
             .sortedBy { it.date }
             .forEach { day ->
-                cells[currentCellIndex % 35] = Cell(cellNo = currentCellIndex % 35, day = day)
+                calenderCellUiModels[currentCellIndex % 35] =
+                    day._toDayUiModel(currentCellIndex % 35)
                 currentCellIndex++
             }
     }
+
+
+
+
+
+    //TODO:Helper methods
+
+    private fun DayModel._toDayUiModel(cellNo: Int): CalenderCellUiModel {
+        val holiday = if (this.holiday != null)
+            HolidayUiModel(
+                reason = this.holiday!!.reason,
+                colorHexCode = this.holiday!!.typeColorCode
+            )
+        else null
+        return CalenderCellUiModel(
+            cellNo = cellNo,
+            dayOrdinal = this.date,
+            holiday = holiday,
+            dayName = this.name.name
+        )
+    }
 }
 
-
-data class CalendarGrid(
-    val cells: List<Cell> // A list of 35 cells
-)
-
-data class Cell(
-    val cellNo: Int,
-    val day: DayModel? = null // Nullable to represent empty cells
-)
 

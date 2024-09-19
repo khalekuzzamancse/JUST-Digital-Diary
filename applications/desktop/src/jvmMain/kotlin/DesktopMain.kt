@@ -6,7 +6,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
-import calender.ui.calender.nedw.AcademicCalender
+import calender.ui.calender.CalenderUI
 import navigation.themes.AppTheme
 
 
@@ -28,7 +28,7 @@ fun main() {
 //                NavigationRoot()
 //              AuthNavHostDesktop()
                 AppTheme {
-                    AcademicCalender()
+                    CalenderUI()
                    // WelcomeToHome()
                     // HomeDestination({})
 //                    FacultyNDepartments(onExitRequest = {}, backHandler = {})

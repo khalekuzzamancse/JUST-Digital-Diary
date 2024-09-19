@@ -1,5 +1,5 @@
 package calender.ui
-import calender.ui.calender.nedw.CalendarGridBuilder
+import calender.interface_adapter.CalendarUIGridModelPresenter
 import di.DIFactory
 import java.time.Month
 import kotlin.test.Test
@@ -12,7 +12,7 @@ class CalenderGridTest {
         useCase.execute(2014)
             .onSuccess {calendar->
                 val january = calendar.months.first { it.month == Month.JANUARY }
-                val januaryGrid =  CalendarGridBuilder().buildMonthGrid(january)
+                val januaryGrid =  CalendarUIGridModelPresenter().buildMonthGrid(january)
 
                 januaryGrid
                     .cells
