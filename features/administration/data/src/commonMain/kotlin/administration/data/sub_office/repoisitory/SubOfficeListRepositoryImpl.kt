@@ -8,7 +8,7 @@ import administration.data.sub_office.data_sources.remote.SubOfficeRemoteDataSou
 import administration.data.sub_office.data_sources.remote.entity.SubOfficeEntity
 import administration.data.sub_office.data_sources.remote.entity.SubOfficeListEntity
 import common.di.AuthTokenFactory
-import _old.network.netManagerProvider
+
 import database.local.schema.administration.SubOfficeEntityLocal
 
 class SubOfficeListRepositoryImpl : SubOfficeListRepository {
@@ -19,7 +19,6 @@ class SubOfficeListRepositoryImpl : SubOfficeListRepository {
     override suspend fun getSubOffices(officeId: String): Result<List<SubOfficeModel>> {
         this.officeId = officeId
         remoteSource = DependencyFactory.subOfficeRemoteDataSource(officeId)
-        if (!netManagerProvider().isInternetAvailable()) return fetchFromLocalDatabase("01")
         val token = AuthTokenFactory.retrieveToken().getOrNull()
         return if (token == null) fetchFromLocalDatabase(officeId) else fetchFromRemoteDatabase(
             token,

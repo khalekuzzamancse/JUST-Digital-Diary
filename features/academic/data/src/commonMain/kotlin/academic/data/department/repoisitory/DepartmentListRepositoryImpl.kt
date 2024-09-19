@@ -1,7 +1,6 @@
 package academic.data.department.repoisitory
 
 import common.di.AuthTokenFactory
-import _old.network.netManagerProvider
 import academic.data.DependencyFactory
 import academic.data.PackageLevelAccess
 import academic.data.department.source.remote.entity.DepartmentListEntity
@@ -16,7 +15,7 @@ class DepartmentListRepositoryImpl : DepartmentListRepository {
     private val localSource = DependencyFactory.departmentLocalDataSource()
     override suspend fun getDepartment(facultyId: String): Result<List<DepartmentListModel>> {
         val remoteSource = DependencyFactory.departmentRemoteDataSource(facultyId)
-        if (!netManagerProvider().isInternetAvailable()) localSource.getDepartments(facultyId)
+//        if (!netManagerProvider().isInternetAvailable()) localSource.getDepartments(facultyId)
         val token = AuthTokenFactory.retrieveToken().getOrNull()
         return if (token == null) localSource.getDepartments(facultyId)
         else {

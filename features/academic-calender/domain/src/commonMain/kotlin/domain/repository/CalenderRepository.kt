@@ -7,6 +7,7 @@ import common.docs.domain_layer.RepositoryDoc
 
 import domain.exception.CalendarFeatureException
 import domain.model.AcademicCalendar
+import domain.model.CalendarModel
 
 /**
  * Further discussion on:
@@ -30,7 +31,7 @@ interface CalenderRepository {
      *  - On failure, return [CalendarFeatureException] instead of throwing generic exceptions to  ensures concrete
      *  classes only throw exceptions defined in the 'domain' module
      * @param year The year for which the calendar is being retrieved
-     * @return [Result] wrapping either the [AcademicCalendar] on success, or a [CalendarFeatureException] on failure
+     * @return [Result] wrapping either the [CalendarModel] on success, or a [CalendarFeatureException] on failure
      */
-    fun retrieveCalender(year: Int): Result<AcademicCalendar>
+    fun retrieveCalender(year: Int): Result<CalendarModel>
 }

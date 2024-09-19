@@ -7,7 +7,6 @@ import administration.data.PackageLevelAccess
 import administration.data.offices.sources.remote.entity.AdminOfficeInfoEntity
 import administration.data.offices.sources.remote.entity.AdminOfficeListEntity
 import common.di.AuthTokenFactory
-import _old.network.netManagerProvider
 import database.local.schema.administration.OfficeEntityLocal
 
 /**
@@ -18,7 +17,6 @@ class AdminOfficeListRepositoryImpl : AdminOfficeListRepository {
     private val remoteSource = DependencyFactory.officeRemoteDataSource()
 
     override suspend fun getAdminOffices(): Result<List<OfficeModel>> {
-        if (!netManagerProvider().isInternetAvailable()) fetchFromLocalDatabase()
         val token = AuthTokenFactory.retrieveToken().getOrNull()
         return if (token == null) fetchFromLocalDatabase()
         else fetchFromRemoteDatabase(token)

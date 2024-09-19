@@ -2,7 +2,7 @@ package data
 
 import component.JsonParser
 import data.data_source.calenderJson
-import data.schema.CalendarWrapper
+import data.schema.CalendarWrapperSchema
 import factory.NetworkFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -16,7 +16,7 @@ class JsonParserTest {
     @Test
     fun testParseCalendar() {
         val fileContent = calenderJson
-        val result = jsonParser.parse(fileContent, CalendarWrapper.serializer())
+        val result = jsonParser.parse(fileContent, CalendarWrapperSchema.serializer())
         result.onSuccess { calendar ->
             println(calendar)
             assertEquals(2024, calendar.academicCalendar.year, "The year should be 2024")

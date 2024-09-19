@@ -1,4 +1,4 @@
-package miscellaneous.ui.home.calender
+package calender.ui.calender
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -55,7 +55,7 @@ fun AcademicCalender(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                CalenderTitle(currentYear)
+                _CalenderTitle(currentYear)
             }
 
         }
@@ -63,7 +63,7 @@ fun AcademicCalender(
         Surface(
             shadowElevation = 0.dp,
         ) {
-            CalenderMonthHeader(
+            _CalenderMonthHeader(
                 modifier = Modifier,
                 monthName = currentMonth,
                 onNext = onNext,
@@ -71,7 +71,7 @@ fun AcademicCalender(
             )
         }
 
-        Calender(
+        _Calender(
             builder = monthBuilder,
             onDayClick = onDayClick
         )
@@ -81,7 +81,7 @@ fun AcademicCalender(
 }
 
 @Composable
-private fun CalenderMonthHeader(
+private fun _CalenderMonthHeader(
     modifier: Modifier,
     monthName: String,
     onNext: () -> Unit,
@@ -91,21 +91,21 @@ private fun CalenderMonthHeader(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        PrevButton(onClick = onPrev)
-        MonthNameDisplayer(
+        _PrevButton(onClick = onPrev)
+        _MonthNameDisplayed(
             modifier = Modifier
                 .padding(4.dp).weight(1f)
                 .align(Alignment.CenterVertically),
             name = monthName,
 
             )
-        NextButton(onClick = onNext)
+        _NextButton(onClick = onNext)
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun CalenderTitle(
+private fun _CalenderTitle(
     currentYear: String
 ) {
     FlowRow {
@@ -117,7 +117,7 @@ private fun CalenderTitle(
 }
 
 @Composable
-private fun PrevButton(
+private fun _PrevButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
@@ -134,7 +134,7 @@ private fun PrevButton(
 }
 
 @Composable
-private fun NextButton(
+private fun _NextButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
@@ -152,7 +152,7 @@ private fun NextButton(
 
 
 @Composable
-private fun MonthNameDisplayer(
+private fun _MonthNameDisplayed(
     modifier: Modifier,
     name: String
 ) {
@@ -167,12 +167,12 @@ private fun MonthNameDisplayer(
 }
 
 @Composable
-fun Calender(builder: CalenderFactory.MonthCalenderBuilder, onDayClick: (day: Int) -> Unit) {
+private fun _Calender(builder: CalenderFactory.MonthCalenderBuilder, onDayClick: (day: Int) -> Unit) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(0.dp)
     ) {
         for (currentColumn in CalenderFactory.FIRST_COLUMN until CalenderFactory.COLUMN_COUNT) {
-            EachColumn(
+            _EachColumn(
                 builder = builder,
                 dayName = CalenderFactory.dayName(currentColumn),
                 currentColumn = currentColumn,
@@ -187,7 +187,7 @@ fun Calender(builder: CalenderFactory.MonthCalenderBuilder, onDayClick: (day: In
 }
 
 @Composable
-fun EachColumn(
+private fun _EachColumn(
     builder: CalenderFactory.MonthCalenderBuilder,
     dayName: String,
     numberOfCells: Int,
@@ -213,7 +213,7 @@ fun EachColumn(
 
         }
         for (cellNo in currentColumn until numberOfCells step numberOfColumns) {
-            Day(
+            _Day(
                 day = builder.dateOnThisCell(cellNo),
                 onDayClick = {
                     if (isHoliday)
@@ -230,7 +230,7 @@ fun EachColumn(
 }
 
 @Composable
-private fun Day(
+private fun _Day(
     elevation: Dp,
     day: Int?,
     isHoliday: Boolean = false,

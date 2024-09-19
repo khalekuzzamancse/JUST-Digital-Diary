@@ -1,7 +1,7 @@
 package academic.data.faculty.repoisitory
 
 import common.di.AuthTokenFactory
-import _old.network.netManagerProvider
+
 import academic.data.DependencyFactory
 import academic.data.faculty.source.local.FacultyLocalDataSourceImpl
 import academic.data.faculty.source.remote.entity.FacultyListResponseEntity
@@ -15,7 +15,6 @@ class FacultyListRepositoryImpl : FacultyListRepository {
     private val localSource= DependencyFactory.facultyLocalDataSource()
     private val remoteSource= DependencyFactory.facultyRemoteDataSource()
     override suspend fun getFaculties(): Result<List<FacultyInfoModel>> {
-        if (!netManagerProvider().isInternetAvailable()) return localSource.getFaculties()
         val token = AuthTokenFactory.retrieveToken().getOrNull()
         return if (token == null) localSource.getFaculties()
         else {

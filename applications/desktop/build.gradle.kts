@@ -19,7 +19,7 @@ kotlin {
                 implementation(project(localModules.versions.common.ui.get()))
                 implementation(project(localModules.versions.feature.notebook.ui.get()))
                 implementation(project(localModules.versions.feature.miscellaneous.ui.get()))
-
+                implementation(projects.features.academicCalender.ui)
 
                 implementation(compose.desktop.common)
                 implementation(compose.desktop.currentOs)

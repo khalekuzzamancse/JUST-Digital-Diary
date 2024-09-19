@@ -4,8 +4,8 @@ package data.schema
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class Holiday(
+internal data class HolidaySchema(
     val day:Int,
-    val holidayType:HolidayType,
+    val holidayType:HolidayTypeSchema,
     val reason:String
 )

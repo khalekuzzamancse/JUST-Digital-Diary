@@ -5,19 +5,19 @@ package data.schema
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class AcademicCalendar(
+internal data class AcademicCalendarSchema(
     val year: Int,
-    val januaryHolidays: List<Holiday>,
-    val februaryHolidays: List<Holiday>,
-    val marchHolidays: List<Holiday>,
-    val aprilHolidays: List<Holiday>,
-    val mayHolidays: List<Holiday>,
-    val juneHolidays: List<Holiday>,
-    val julyHolidays: List<Holiday>,
-    val augustHolidays: List<Holiday>,
-    val septemberHolidays: List<Holiday>,
-    val octoberHolidays: List<Holiday>,
-    val novemberHolidays: List<Holiday>,
-    val decemberHolidays: List<Holiday>
+    val januaryHolidays: List<HolidaySchema>,
+    val februaryHolidays: List<HolidaySchema>,
+    val marchHolidays: List<HolidaySchema>,
+    val aprilHolidays: List<HolidaySchema>,
+    val mayHolidays: List<HolidaySchema>,
+    val juneHolidays: List<HolidaySchema>,
+    val julyHolidays: List<HolidaySchema>,
+    val augustHolidays: List<HolidaySchema>,
+    val septemberHolidays: List<HolidaySchema>,
+    val octoberHolidays: List<HolidaySchema>,
+    val novemberHolidays: List<HolidaySchema>,
+    val decemberHolidays: List<HolidaySchema>
 )
 

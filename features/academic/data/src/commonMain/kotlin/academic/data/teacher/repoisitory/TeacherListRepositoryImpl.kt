@@ -1,7 +1,6 @@
 package academic.data.teacher.repoisitory
 
 import common.di.AuthTokenFactory
-import _old.network.netManagerProvider
 import academic.data.DependencyFactory
 import academic.data.teacher.sources.remote.entity.TeacherListEntity
 import faculty.domain.teacher.model.TeacherModel
@@ -11,7 +10,6 @@ class TeacherListRepositoryImpl : TeacherListRepository {
     private val localSource= DependencyFactory.teacherLocalDataSource()
     override suspend fun getTeachers(deptId: String): Result<List<TeacherModel>> {
         val remoteSource= DependencyFactory.teacherRemoteDataSource(deptId)
-        if (!netManagerProvider().isInternetAvailable()) return  localSource.getTeachers(deptId)
         val token = AuthTokenFactory.retrieveToken().getOrNull()
         return if (token==null) localSource.getTeachers(deptId)
         else{

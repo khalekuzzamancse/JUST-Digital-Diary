@@ -5,7 +5,7 @@ package data.schema
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal enum class HolidayType {
+internal enum class HolidayTypeSchema {
     OnlyClassOff,
     AllOff,
     OnlyOfficeOff,
