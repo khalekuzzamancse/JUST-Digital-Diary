@@ -1,7 +1,5 @@
-@file:Suppress("UnUsed")
-
-package academic_calender_domain.model
-
+package domain.docs
+//Creating this empty just provide the common document comment to the different UseCase
 /**
  * - Represents the `data structure` that will be used to send and receive `data` to and from the `:ui` and `:data` modules
  * - Consumer modules should not directly use this for their own purposes; for example, the `view/UI` should not use it as `viewData`,
@@ -9,9 +7,4 @@ package academic_calender_domain.model
  * - This `model` is for the `domain` module only, where the `domain` module is the implemented version of Clean Architecture's `application` layer
  * - The `:ui` module should convert this `model` to a UI-friendly model via a `Presenter` before using it
  */
-enum class HolidayType {
-    OnlyClassOff,
-    AllOff,
-    OnlyOfficeOff,
-    SpecialDay
-}
+internal class ModelDoc

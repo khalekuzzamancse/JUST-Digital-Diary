@@ -5,5 +5,5 @@ kotlin {
 
 }
 android {
-    namespace = "academic_calender_domain"
+    namespace = "domain"
 }
