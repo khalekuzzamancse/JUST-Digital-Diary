@@ -47,6 +47,9 @@ compose-gradlePlugin = { module = "org.jetbrains.compose:org.jetbrains.compose.g
 
 [bundles]
 test = ["kotlin-test", "kotlin-test-junit"]
+ktorClient=["ktor-client-core","ktor-client-okhttp","ktor-client-content-negotiation","ktor-serialization-kotlinx-json"]
+coil=["coil3-core","coil3-network","coil3"]
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -61,3 +64,4 @@ convention-composeMultiplatfrom={id="convention.composeMultiplatform",version="u
 convention-kotlinMultiplatform={id="convention.kotlinMultiplatform",version="unspecified"}
 convention-domainModulePlugin={id="convention.DomainModulePlugin",version="unspecified"}
 convention-dataModulePlugin={id="convention.dataModulePlugin",version="unspecified"}
+

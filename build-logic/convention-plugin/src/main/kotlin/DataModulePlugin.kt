@@ -7,6 +7,7 @@ class DataModulePlugin : KotlinMultiplatformPlugin() {
         super.apply(project)
         pluginManager.apply {
             //TODO:While using it need not apply(again) multiplatform, androidLibrary and JetBrainsCompose plugin
+            //and also applied to root gradle script
             apply(libs.findPlugin("kotlinxSerialization").get().get().pluginId)
         }
 

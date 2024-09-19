@@ -8,7 +8,7 @@ import administration.data.sub_office.data_sources.remote.SubOfficeRemoteDataSou
 import administration.data.sub_office.data_sources.remote.entity.SubOfficeEntity
 import administration.data.sub_office.data_sources.remote.entity.SubOfficeListEntity
 import common.di.AuthTokenFactory
-import core.network.netManagerProvider
+import _old.network.netManagerProvider
 import database.local.schema.administration.SubOfficeEntityLocal
 
 class SubOfficeListRepositoryImpl : SubOfficeListRepository {

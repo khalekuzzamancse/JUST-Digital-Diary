@@ -2,8 +2,8 @@ package administration.data.sub_office.data_sources.remote
 
 import administration.data.PackageLevelAccess
 import administration.data.sub_office.data_sources.remote.entity.SubOfficeListEntity
-import core.network.get.Header
-import core.network.get.getRequest
+import _old.network.get.Header
+import _old.network.get.getRequest
 
 internal class SubOfficeRemoteDataSourceImpl(
     officeId: String

@@ -2,7 +2,9 @@
 
 package domain.model
 
-import domain.docs.ModelDoc
+
+import common.docs.domain_layer.ModelDoc
+
 
 /**
  * Further discussion on:

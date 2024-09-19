@@ -2,11 +2,11 @@
 
 package domain.service
 
-import domain.docs.ServiceDoc
+import common.docs.domain_layer.ServiceDoc
 import domain.exception.CalendarFeatureException
 import domain.model.AcademicCalendar
 import domain.model.User
-import domain.docs.CustomExceptionDoc
+import common.docs.domain_layer.CustomExceptionDoc
 /**
  *  Further discussion on:
  *  - `Service`: see [ServiceDoc]

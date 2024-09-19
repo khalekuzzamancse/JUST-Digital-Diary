@@ -4,7 +4,7 @@ import auth.data.PackageLevelAccess
 import auth.data.login.data_sources.remote.entity.LoginRequestEntity
 import auth.data.login.data_sources.remote.entity.LoginResponseEntity
 import auth.data.login.dto.LoginResponseDTO
-import core.network.post.post
+import _old.network.post.post
 @OptIn(PackageLevelAccess::class)
  class RemoteDataSource {
     private val loginUrl = "https://diary.rnzgoldenventure.com/api/users/login"

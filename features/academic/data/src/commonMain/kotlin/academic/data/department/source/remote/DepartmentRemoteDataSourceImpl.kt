@@ -1,7 +1,7 @@
 package academic.data.department.source.remote
 
-import core.network.get.Header
-import core.network.get.getRequest
+import _old.network.get.Header
+import _old.network.get.getRequest
 import academic.data.PackageLevelAccess
 import academic.data.department.source.remote.entity.DepartmentListEntity
 

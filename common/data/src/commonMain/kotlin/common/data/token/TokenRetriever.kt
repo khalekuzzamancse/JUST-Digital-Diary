@@ -1,6 +1,6 @@
 package common.data.token;
 
-import core.network.post.post
+import _old.network.post.post
 import kotlinx.serialization.Serializable
 
 /**

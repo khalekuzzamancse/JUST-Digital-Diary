@@ -2,8 +2,8 @@ package administration.data.officers.data_sources.remote
 
 import administration.data.PackageLevelAccess
 import administration.data.officers.data_sources.remote.entity.AdminOfficerListEntity
-import core.network.get.Header
-import core.network.get.getRequest
+import _old.network.get.Header
+import _old.network.get.getRequest
 
 internal class AdminOfficerListRemoteDataSource(
     private val token: String?,

@@ -1,7 +1,7 @@
 @file:Suppress("UnUsed")
 
 package domain.exception
-import domain.docs.CustomExceptionDoc
+import common.docs.domain_layer.CustomExceptionDoc
 
 
 /**

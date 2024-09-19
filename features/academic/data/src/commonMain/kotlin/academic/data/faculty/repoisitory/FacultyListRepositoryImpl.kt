@@ -1,7 +1,7 @@
 package academic.data.faculty.repoisitory
 
 import common.di.AuthTokenFactory
-import core.network.netManagerProvider
+import _old.network.netManagerProvider
 import academic.data.DependencyFactory
 import academic.data.faculty.source.local.FacultyLocalDataSourceImpl
 import academic.data.faculty.source.remote.entity.FacultyListResponseEntity

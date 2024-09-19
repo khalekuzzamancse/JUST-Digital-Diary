@@ -18,7 +18,6 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(project(localModules.versions.core.database.realm.get()))
-                implementation(project(localModules.versions.common.domain.get()))
                 implementation(project(localModules.versions.common.data.get()))
 
             }

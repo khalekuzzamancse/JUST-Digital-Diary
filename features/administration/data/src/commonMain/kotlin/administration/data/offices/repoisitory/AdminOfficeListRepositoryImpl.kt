@@ -7,7 +7,7 @@ import administration.data.PackageLevelAccess
 import administration.data.offices.sources.remote.entity.AdminOfficeInfoEntity
 import administration.data.offices.sources.remote.entity.AdminOfficeListEntity
 import common.di.AuthTokenFactory
-import core.network.netManagerProvider
+import _old.network.netManagerProvider
 import database.local.schema.administration.OfficeEntityLocal
 
 /**

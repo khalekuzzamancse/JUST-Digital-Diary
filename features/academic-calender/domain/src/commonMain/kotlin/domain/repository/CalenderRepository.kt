@@ -1,7 +1,9 @@
 @file:Suppress("UnUsed")
 package domain.repository
-import domain.docs.CustomExceptionDoc
-import domain.docs.RepositoryDoc
+import common.docs.domain_layer.CustomExceptionDoc
+import common.docs.domain_layer.RepositoryDoc
+
+
 
 import domain.exception.CalendarFeatureException
 import domain.model.AcademicCalendar

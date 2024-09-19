@@ -2,15 +2,15 @@
 
 package domain.usecase
 
-import domain.docs.CustomExceptionDoc
+import common.docs.domain_layer.CustomExceptionDoc
 import domain.model.AcademicCalendar
 import domain.repository.CalenderRepository
 import domain.service.CalendarService
 
 import domain.exception.CalendarFeatureException
-import domain.docs.UseCaseDoc
-import domain.docs.RepositoryDoc
-import domain.docs.ServiceDoc
+import common.docs.domain_layer.UseCaseDoc
+import common.docs.domain_layer.RepositoryDoc
+import common.docs.domain_layer.ServiceDoc
 
 /**
  * - Use case for retrieving a calendar to the `Repository`

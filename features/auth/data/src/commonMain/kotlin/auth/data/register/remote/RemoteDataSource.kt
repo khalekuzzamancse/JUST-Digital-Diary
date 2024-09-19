@@ -3,7 +3,7 @@ package auth.data.register.remote
 import auth.data.PackageLevelAccess
 import auth.data.register.remote.entity.RegisterRequestEntity
 import auth.data.register.remote.entity.RegisterResponseEntity
-import core.network.post.post
+import _old.network.post.post
 
 @PackageLevelAccess
 internal class RemoteDataSource {

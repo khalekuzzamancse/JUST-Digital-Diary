@@ -1,7 +1,7 @@
 package academic.data.teacher.repoisitory
 
 import common.di.AuthTokenFactory
-import core.network.netManagerProvider
+import _old.network.netManagerProvider
 import academic.data.DependencyFactory
 import academic.data.teacher.sources.remote.entity.TeacherListEntity
 import faculty.domain.teacher.model.TeacherModel

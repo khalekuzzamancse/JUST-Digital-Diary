@@ -2,14 +2,15 @@
 
 package domain.usecase
 
-import domain.docs.CustomExceptionDoc
+import common.docs.domain_layer.CustomExceptionDoc
+import common.docs.domain_layer.RepositoryDoc
+import common.docs.domain_layer.ServiceDoc
+import common.docs.domain_layer.UseCaseDoc
 import domain.exception.CalendarFeatureException
 import domain.model.AcademicCalendar
+import domain.model.User
 import domain.repository.CalenderRepository
-import domain.service.CalendarService
-import domain.docs.UseCaseDoc
-import domain.docs.RepositoryDoc
-import domain.docs.ServiceDoc
+import domain.service.UserService
 
 
 /**
@@ -22,7 +23,7 @@ import domain.docs.ServiceDoc
  */
 class AddCalendarUseCase(
     private val repository: CalenderRepository,
-    private val validationService: CalendarService
+    private val service: UserService,
 ) {
     /**
      * Executes the use case for adding a calendar
@@ -30,8 +31,8 @@ class AddCalendarUseCase(
      * @param calendar The [AcademicCalendar] to be added
      * @return [CalendarFeatureException]? Returns an exception if validation or adding fails, otherwise `null` on success
      */
-    fun execute(calendar: AcademicCalendar): CalendarFeatureException? {
-        val validationError = validationService.validateCalender(calendar)
+    fun execute(calendar: AcademicCalendar,user: User): CalendarFeatureException? {
+        val validationError = service.validateAuthenticity(user)
         if (validationError != null)
             return validationError
         return repository.addCalender(calendar)

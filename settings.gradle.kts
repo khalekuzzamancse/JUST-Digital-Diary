@@ -30,7 +30,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 val applications= listOf(
     ":applications",  ":applications:android", ":applications:desktop", ":applications:web",
 )
-val common= listOf(":common",":common:data",":common:ui",":common:domain","common:di")
+val common= listOf(":common",":common:data",":common:ui",":common:docs","common:di")
 val coreModules = listOf(
     ":core",
     ":core:network",

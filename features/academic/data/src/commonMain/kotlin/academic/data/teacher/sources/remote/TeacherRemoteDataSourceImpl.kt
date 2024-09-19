@@ -1,7 +1,7 @@
 package academic.data.teacher.sources.remote
 
-import core.network.get.Header
-import core.network.get.getRequest
+import _old.network.get.Header
+import _old.network.get.getRequest
 import academic.data.teacher.sources.remote.entity.TeacherListEntity
 
 class TeacherRemoteDataSourceImpl(
