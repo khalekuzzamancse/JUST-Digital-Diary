@@ -2,7 +2,7 @@
 
 package calender.interface_adapter
 
-import calender.common.CalenderCellUiModel
+import calender.common.CalendarCellUiModel
 import calender.ui.calender.CalendarController
 import di.DIFactory
 import domain.model.CalendarModel
@@ -17,7 +17,7 @@ import java.time.LocalDate
 
 internal class CalenderControllerImpl: CalendarController {
     private var calender: CalendarModel? = null
-    private val _currentMonthCalender = MutableStateFlow<List<CalenderCellUiModel>?>(null)
+    private val _currentMonthCalender = MutableStateFlow<List<CalendarCellUiModel>?>(null)
     override val currentMonthCalender = _currentMonthCalender.asStateFlow()
     private var currentMonthIndex = LocalDate.now().month.ordinal//from jan to dec (0 to 11)
     private val _monthName = MutableStateFlow(LocalDate.now().month.name)

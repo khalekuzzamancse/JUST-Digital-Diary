@@ -2,7 +2,7 @@
 
 package calender.interface_adapter
 
-import calender.common.CalenderCellUiModel
+import calender.common.CalendarCellUiModel
 import calender.common.DayName
 import calender.common.HolidayUiModel
 import domain.model.CalendarModel
@@ -41,28 +41,28 @@ import domain.model.MonthModel
  */
 
 internal class CalendarUIGridModelPresenter {
-    fun buildMonthGrid(model: CalendarModel): List<List<CalenderCellUiModel>> {
+    fun buildMonthGrid(model: CalendarModel): List<MonthDataUiModel> {
         return buildMonthGrid(model.months)
     }
 
-    private fun buildMonthGrid(data: List<MonthModel>): List<List<CalenderCellUiModel>> {
-        val result = mutableListOf<List<CalenderCellUiModel>>()
+    private fun buildMonthGrid(data: List<MonthModel>): List<MonthDataUiModel> {
+        val result = mutableListOf<MonthDataUiModel>()
         data.forEach {
             result.add(buildMonthGrid(it))
         }
         return result
     }
 
-    private fun buildMonthGrid(monthData: MonthModel): List<CalenderCellUiModel> {
+    private fun buildMonthGrid(monthData: MonthModel):MonthDataUiModel {
         val cells = createEmptyGrid()
         val firstDayCellNo = findFirstDayCell(monthData)
         placeDaysInGrid(cells, monthData, firstDayCellNo)
-        return cells
+        return MonthDataUiModel(monthData.month.name,cells)
     }
 
-    private fun createEmptyGrid(): MutableList<CalenderCellUiModel> {
+    private fun createEmptyGrid(): MutableList<CalendarCellUiModel> {
         return MutableList(35) { index ->
-            CalenderCellUiModel(cellNo = index)
+            CalendarCellUiModel(cellNo = index)
         }
     }
 
@@ -74,7 +74,7 @@ internal class CalendarUIGridModelPresenter {
 
 
     private fun placeDaysInGrid(
-        calenderCellUiModels: MutableList<CalenderCellUiModel>,
+        calenderCellUiModels: MutableList<CalendarCellUiModel>,
         months: MonthModel,
         firstDayCellNo: Int
     ) {
@@ -92,7 +92,7 @@ internal class CalendarUIGridModelPresenter {
 
     //TODO:Helper methods
 
-    private fun DayModel._toDayUiModel(cellNo: Int): CalenderCellUiModel {
+    private fun DayModel._toDayUiModel(cellNo: Int): CalendarCellUiModel {
         val holiday = if (this.holiday != null)
             HolidayUiModel(
                 reason = this.holiday!!.reason,
@@ -104,7 +104,7 @@ internal class CalendarUIGridModelPresenter {
 
             )
         else null
-        return CalenderCellUiModel(
+        return CalendarCellUiModel(
             cellNo = cellNo,
             dayOrdinal = this.date,
             holiday = holiday,
@@ -120,5 +120,8 @@ internal class CalendarUIGridModelPresenter {
         )
     }
 }
-
+data class MonthDataUiModel(
+    val name:String,
+    val cells:List<CalendarCellUiModel>
+)
 

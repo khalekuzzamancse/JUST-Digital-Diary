@@ -20,26 +20,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import calender.common.AcademicCalender
-import calender.common.CalenderCellUiModel
+import calender.common.CalendarCellUiModel
 import calender.common.LoadingUI
 import calender.factory.UIFactory
+import calender.interface_adapter.MonthDataUiModel
 import calender.ui.calender.AcademicCalenderUI
 import kotlinx.coroutines.flow.StateFlow
 
 /**
  * - Manage the state and event of the [AcademicCalenderUI]
  * - ViewModel can implement it(optional)
- * @property monthName name of the month that calender is currently showing
  * @property goToNextMonthCalender Update the[currentMonthCalender] with next month
  * @property goToPreviousMonthCalender  Update the [currentMonthCalender] with previous  month
  */
-interface HolidayEditorUiController {
-    val currentMonthCalender: StateFlow<List<CalenderCellUiModel>?>
-    val monthName: StateFlow<String>
+interface EditorUiController {
+    val currentMonthCalender: StateFlow<MonthDataUiModel?>
     val year: StateFlow<Int?>
-    val selected: StateFlow<Set<CalenderCellUiModel>>
+    val selected: StateFlow<Set<CalendarCellUiModel>>
 
-    fun onSelectionRequest(cell: CalenderCellUiModel)
+    fun onSelectionRequest(cell: CalendarCellUiModel)
     fun onHolidayConfirm(reason: String, type: HolidayTypeUiModel)
     fun goToNextMonthCalender()
     fun goToPreviousMonthCalender()
@@ -52,7 +51,7 @@ interface HolidayEditorUiController {
 @Composable
 fun HolidayEditor(
     modifier: Modifier = Modifier,
-    controller: HolidayEditorUiController = remember { UIFactory.createCalenderEditorController() },
+    controller: EditorUiController = remember { UIFactory.createCalenderEditorController() },
     onSnackBarMsgRequest: (reason: String) -> Unit,
 ) {
     /**
@@ -88,10 +87,10 @@ fun HolidayEditor(
         ) {
             AcademicCalender(
                 year = controller.year.collectAsState("").value.toString(),
-                monthName = controller.monthName.collectAsState().value,
+                monthName =cellData.name,
                 onNext = controller::goToNextMonthCalender,
                 onPrev = controller::goToPreviousMonthCalender,
-                cellUiModels = cellData,
+                cellUiModels = cellData.cells,
                 onHolidayClick = onSnackBarMsgRequest,
                 //Using as Editor
                 selected = controller.selected.collectAsState().value,

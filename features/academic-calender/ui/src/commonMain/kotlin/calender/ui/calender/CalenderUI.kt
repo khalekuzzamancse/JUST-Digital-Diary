@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import calender.common.AcademicCalender
-import calender.common.CalenderCellUiModel
+import calender.common.CalendarCellUiModel
 import calender.common.LoadingUI
 import kotlinx.coroutines.flow.StateFlow
 
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
  * - ViewModel can implement it(optional)
  */
 interface CalendarController {
-    val currentMonthCalender: StateFlow<List<CalenderCellUiModel>?>
+    val currentMonthCalender: StateFlow<List<CalendarCellUiModel>?>
 
     /**name of the month that calender is currently showing*/
     val monthName: StateFlow<String>

@@ -2,9 +2,9 @@
 
 package calender.add_calender
 
-import calender.common.CalenderCellUiModel
+import calender.common.CalendarCellUiModel
 import calender.common.HolidayUiModel
-import java.time.Month
+import calender.interface_adapter.MonthDataUiModel
 
 /**
  * - Encapsulate a single operation
@@ -12,21 +12,22 @@ import java.time.Month
  * - Undo is available
  */
 class HolidayAddCommand(
-    private var allMonthData: List<List<CalenderCellUiModel>>,
+    private var yearData: List<MonthDataUiModel>,
     private val dateOrdinals: List<Int>,
     private val reason: String,
     private val type: HolidayTypeUiModel,
     private val monthOrdinal: Int
 ) {
 
-    private var currentMonthData: List<CalenderCellUiModel> = emptyList()
+    private lateinit var currentMonthData: MonthDataUiModel
 
     /**
      * @return updated data for all month
      */
-    fun execute(): List<List<CalenderCellUiModel>> {
-        currentMonthData = allMonthData._dataOf(monthOrdinal)
-        val currentMonthUpdatedData = currentMonthData
+    fun execute(): List<MonthDataUiModel> {
+        currentMonthData = yearData[monthOrdinal]
+        val updatedCell = currentMonthData
+            .cells
             .map { day ->
                 val isSelected = (dateOrdinals.contains(day.dayOrdinal))
                 if (isSelected)
@@ -35,26 +36,23 @@ class HolidayAddCommand(
                     day
 
             }
-        return allMonthData._updateDateOf(monthOrdinal, currentMonthUpdatedData)
+        return yearData._updateDateOf(monthOrdinal, MonthDataUiModel(currentMonthData.name,updatedCell))
     }
 
-    fun undo() = allMonthData
+    fun undo() = yearData
 
     //TODO: Helper method
-    private fun List<List<CalenderCellUiModel>>._updateDateOf(
+    private fun List<MonthDataUiModel>._updateDateOf(
         index: Int,
-        data: List<CalenderCellUiModel>
-    ): List<List<CalenderCellUiModel>> {
+        data: MonthDataUiModel
+    ): List<MonthDataUiModel> {
         val newList = this.map { it }.toMutableList()
         newList[index] = data
-        return newList.toList()
+        return newList
     }
 
-    private fun List<List<CalenderCellUiModel>>._dataOf(index: Int): List<CalenderCellUiModel> {
-        return this[index]
-    }
 
-    private fun CalenderCellUiModel._updateHolidayAndReturn(
+    private fun CalendarCellUiModel._updateHolidayAndReturn(
         reason: String,
         type: HolidayTypeUiModel
     ) =

@@ -8,7 +8,7 @@ package calender.common
  * @param dayName such as Sat,Sun...Fri
  * @param holiday null when this day is not a holiday
  **/
-data class CalenderCellUiModel(
+data class CalendarCellUiModel(
     val cellNo: Int,
     val dayOrdinal: Int? = null,
     val dayName: DayName? = null,

@@ -44,13 +44,13 @@ fun AcademicCalender(
     modifier: Modifier = Modifier,
     year: String,
     monthName: String,
-    cellUiModels: List<CalenderCellUiModel>,
+    cellUiModels: List<CalendarCellUiModel>,
     onHolidayClick: (reason: String) -> Unit,
     onNext: () -> Unit,
     onPrev: () -> Unit,
     //For editor mode
-    selected: Set<CalenderCellUiModel>?,
-    onClick: ((CalenderCellUiModel) -> Unit)?,
+    selected: Set<CalendarCellUiModel>?,
+    onClick: ((CalendarCellUiModel) -> Unit)?,
 ) {
     Column(
         modifier = modifier.width(IntrinsicSize.Min)
@@ -127,11 +127,11 @@ private fun _YearHeader(modifier: Modifier = Modifier, year: String) {
  */
 @Composable
 private fun _CalenderGrid(
-    calenderCellUiModels: List<CalenderCellUiModel>,
+    calenderCellUiModels: List<CalendarCellUiModel>,
     onHolidayClick: (reason: String) -> Unit,
     //For editor mode
-    selected: Set<CalenderCellUiModel>?,
-    onClick: ((CalenderCellUiModel) -> Unit)?,
+    selected: Set<CalendarCellUiModel>?,
+    onClick: ((CalendarCellUiModel) -> Unit)?,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(0.dp)
@@ -171,13 +171,13 @@ private fun _CalenderGrid(
  */
 @Composable
 private fun _EachColumn(
-    calenderCellUiModels: List<CalenderCellUiModel>,
+    calenderCellUiModels: List<CalendarCellUiModel>,
     currentColumn: Int,
     dayName: String,
     onHolidayClick: (reason: String) -> Unit,
 //For editor mode
-    selected: Set<CalenderCellUiModel>?,
-    onClick: ((CalenderCellUiModel) -> Unit)?,
+    selected: Set<CalendarCellUiModel>?,
+    onClick: ((CalendarCellUiModel) -> Unit)?,
 ) {
     val cellElevation = 1.dp
     Column(
@@ -216,12 +216,12 @@ private fun _EachColumn(
 private fun _ColumnContent(
     modifier: Modifier = Modifier,
     currentColumn: Int,
-    cellsInfo: List<CalenderCellUiModel>,
+    cellsInfo: List<CalendarCellUiModel>,
     cellElevation: Dp,
     onHolidayClick: (reason: String) -> Unit,
     //For editor mode
-    selected:Set<CalenderCellUiModel>?,
-    onClick: ((CalenderCellUiModel) -> Unit)?,
+    selected:Set<CalendarCellUiModel>?,
+    onClick: ((CalendarCellUiModel) -> Unit)?,
 ) {
     val fontSize: TextUnit = 20.sp
     val width: Dp = with(LocalDensity.current) { fontSize.toDp() * 2 }//max 2 digit date
