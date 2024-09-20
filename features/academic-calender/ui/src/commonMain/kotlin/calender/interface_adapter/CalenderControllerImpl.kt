@@ -71,9 +71,9 @@ internal class CalenderControllerImpl: CalendarController {
         calender?.let { calender ->
             val month = calender.months[monthOrdinal]
             _monthName.update { month.month.name }
-            _currentMonthCalender.update {
-                CalendarUIGridModelPresenter().buildMonthGrid(month)
-            }
+//            _currentMonthCalender.update {
+//                CalendarUIGridModelPresenter().buildMonthGrid(month)
+//            }
             _year.update { calender.year }
         }
 

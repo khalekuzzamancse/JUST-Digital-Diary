@@ -11,34 +11,36 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ParentComposable(
     onDismiss: () -> Unit,
-    onDone: (reason: String, selectedOption: Option) -> Unit
+    onDone: (reason: String, selectedOption: HolidayTypeUiModel) -> Unit
 ) {
     var reason by remember { mutableStateOf("") }
-    var selectedOption by remember { mutableStateOf<Option?>(null) }
+    var selectedOption by remember { mutableStateOf<HolidayTypeUiModel?>(null) }
 
     ReasonDialog(
         onDismiss = onDismiss,
-        onDone =onDone
+        onDone = onDone
     )
 
 }
 
-// Enum class for the radio button options
-enum class Option {
-    AllOff,
-    OnlyClassOf,
-    SpecialDay
+/**
+ * @param color color hex code
+ */
+enum class HolidayTypeUiModel(val color:String) {
+    AllOff("#FF0000"),    // Red color hex code for AllOff
+    OnlyClassOf("#00FF00"), // Green color hex code for OnlyClassOff
+    SpecialDay("#800080")//Purple color hex code for SpecialDay
 }
 
 // The main dialog composable function
 @Composable
 fun ReasonDialog(
     onDismiss: () -> Unit,
-    onDone: (reason: String, selectedOption: Option) -> Unit
+    onDone: (reason: String, selectedOption: HolidayTypeUiModel) -> Unit
 ) {
     // State variables for reason and selected option
     var reason by remember { mutableStateOf("") }
-    var selectedOption by remember { mutableStateOf<Option?>(null) }
+    var selectedOption by remember { mutableStateOf<HolidayTypeUiModel?>(null) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -81,9 +83,9 @@ fun ReasonTextField(reason: String, onReasonChange: (String) -> Unit) {
 
 // Composable function for the radio buttons
 @Composable
-fun OptionRadioButtons(selectedOption: Option?, onOptionSelected: (Option) -> Unit) {
+fun OptionRadioButtons(selectedOption: HolidayTypeUiModel?, onOptionSelected: (HolidayTypeUiModel) -> Unit) {
     Column {
-        Option.values().forEach { option ->
+        HolidayTypeUiModel.values().forEach { option ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier

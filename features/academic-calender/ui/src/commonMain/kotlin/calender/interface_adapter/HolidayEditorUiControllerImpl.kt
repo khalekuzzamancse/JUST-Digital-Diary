@@ -2,10 +2,10 @@
 
 package calender.interface_adapter
 
+import calender.add_calender.HolidayAddCommand
 import calender.add_calender.HolidayEditorUiController
-import calender.add_calender.Option
+import calender.add_calender.HolidayTypeUiModel
 import calender.common.CalenderCellUiModel
-import calender.common.HolidayUiModel
 import di.DIFactory
 import domain.model.CalendarModel
 import domain.model.DayNameModel
@@ -20,116 +20,68 @@ import java.time.LocalDate
 
 internal class HolidayEditorUiControllerImpl : HolidayEditorUiController {
     private var calender: CalendarModel? = null
-    private val _currentMonthCalender = MutableStateFlow<List<CalenderCellUiModel>?>(null)
-    override val currentMonthCalender = _currentMonthCalender.asStateFlow()
-    private var currentMonthIndex =
+    private val _currentCalender = MutableStateFlow<List<CalenderCellUiModel>?>(null)
+    override val currentMonthCalender = _currentCalender.asStateFlow()
+    private var _currentMonthOrdinal =
         MutableStateFlow(LocalDate.now().month.ordinal) //from jan to dec (0 to 11)
 
     private val _monthName = MutableStateFlow(LocalDate.now().month.name)
     override val monthName = _monthName.asStateFlow()
     private val _year = MutableStateFlow<Int?>(null)
     override val year = _year.asStateFlow()
-    private val _selected = MutableStateFlow<Set<CalenderCellUiModel>>(emptySet())
-    override val selected = _selected.asStateFlow()
-    private val _showDialog = MutableStateFlow(false)
-    override val showDialog = _showDialog.asStateFlow()
-    private var _allMonthData: List<List<CalenderCellUiModel>> = emptyList()
+    private val _selectedDates = MutableStateFlow<Set<CalenderCellUiModel>>(emptySet())
+    override val selected = _selectedDates.asStateFlow()
+
+    private var _yearData: List<List<CalenderCellUiModel>> = emptyList()
 
 
     init {
-
         CoroutineScope(Dispatchers.Default).launch {
             delay(2_000)//pretending loading...
-            loadCalender()
-            _year.update { calender?.year }
-            _updateAllMonthData()
-            _updateCalender(currentMonthIndex.value)
-
+            fetchCalender()
+            calender?.let { calender ->
+                _year.update { calender.year }
+                _updateAllMonthData(calender)
+                _currentCalender._updateBy(_currentMonth())
+            }
         }
         _observeSelectedMonth()
 
     }
 
-    private fun _observeSelectedMonth() {
-        CoroutineScope(Dispatchers.Default).launch {
-            currentMonthIndex.collect { requestMonth ->//Jan-Dec ( 0-11)
-                if (requestMonth._isValidMonth() && requestMonth._hasThisMonthData()) {
-                    _updateCalender(requestMonth)
-                    _updateMonth(requestMonth)
-                }
-            }
-        }
-    }
-
 
     //TODO:Events handler
     override fun onSelectionRequest(cell: CalenderCellUiModel) {
-        val alreadySelected = (_selected.value.find { it == cell } != null)
-        //remove
-        if (alreadySelected) {
-            _selected.update { selected -> selected - cell }
-        }
-        //add
-        else {
-            _selected.update { selected -> selected + cell }
-        }
-        println(selected.value.mapNotNull { it.dayOrdinal })
+        val alreadySelected = (_selectedDates.value.find { it == cell } != null)
+
+        if (alreadySelected)
+            _selectedDates._removeFromSelection(cell)
+        else
+            _selectedDates._addToSelection(cell)
+
     }
 
-    override fun onHolidayAddRequest() {
-        _showDialog.update { true }
+
+    override fun onHolidayConfirm(reason: String, type: HolidayTypeUiModel) {
+        _updateHoliday(_selectedDates.value.mapNotNull { it.dayOrdinal }, reason, type)
+        _selectedDates.update { emptySet() }
     }
 
-    override fun onDialogDismissRequest() {
-        _showDialog.update { false }
-    }
-
-    override fun onHolidayConfirm(reason: String, type: Option) {
-        _showDialog.update { false }
-        _updateHoliday(_selected.value.mapNotNull { it.dayOrdinal }, reason, type)
-        _selected.update { emptySet() }
-    }
-
-    private fun _updateHoliday(dates: List<Int>, reason: String, type: Option) {
+    private fun _updateHoliday(dateOrdinals: List<Int>, reason: String, type: HolidayTypeUiModel) {
         try {
-            calender?.let { calender ->
-                val currentMonthData: List<CalenderCellUiModel> =
-                    _allMonthData[currentMonthIndex.value] //catch exception
+            _yearData = HolidayAddCommand(_yearData, dateOrdinals, reason, type, _currentMonth()).execute()
+            _currentCalender._updateBy(_currentMonth())
 
-                val updatedData = currentMonthData.map { day ->
-                    if (dates.contains(day.dayOrdinal)) {
-                        day.copy(
-                            holiday = HolidayUiModel(
-                                colorHexCode = when (type) {
-                                    Option.AllOff -> "#FF0000"       // Red color hex code for AllOff
-                                    Option.OnlyClassOf -> "#00FF00" // Green color hex code for OnlyClassOff
-                                    Option.SpecialDay -> "#800080"   // Purple color hex code for SpecialDay
-                                },
-                                reason = reason
-                            )
-                        )
-                    } else day
-
-                }
-
-                _currentMonthCalender.update { updatedData }
-                val newList = _allMonthData.map { it }.toMutableList()
-                newList[currentMonthIndex.value] = updatedData
-                _allMonthData = newList
-
-            }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
 
         }
-
-
     }
 
     override fun goToNextMonthCalender() =
-        _updateCalenderCurrentIndexIfValid(currentMonthIndex.value + 1)
+        _updateCalenderCurrentIndexIfValid(_currentMonthOrdinal.value + 1)
 
     override fun goToPreviousMonthCalender() =
-        _updateCalenderCurrentIndexIfValid(currentMonthIndex.value - 1)
+        _updateCalenderCurrentIndexIfValid(_currentMonthOrdinal.value - 1)
 
 
     //TODO: state updated method section----------
@@ -137,10 +89,10 @@ internal class HolidayEditorUiControllerImpl : HolidayEditorUiController {
 
     private fun _updateCalenderCurrentIndexIfValid(requestedMonthOrdinal: Int) {
         if (requestedMonthOrdinal._isValidMonth())
-            currentMonthIndex.update { requestedMonthOrdinal }
+            _currentMonthOrdinal.update { requestedMonthOrdinal }
     }
 
-    private suspend fun loadCalender() {
+    private suspend fun fetchCalender() {
         DIFactory
             .createRawRetrieveCalenderUseCase()
             .execute(2024, weekend = listOf(DayNameModel.THURSDAY, DayNameModel.FRIDAY))
@@ -151,25 +103,39 @@ internal class HolidayEditorUiControllerImpl : HolidayEditorUiController {
                 calender = null
             }
     }
-    private fun _updateAllMonthData() {
-        calender?.let {
-            _allMonthData = CalendarUIGridModelPresenter().buildMonthGrid(
-                it.months
-            )
-        }
+
+    private fun _updateAllMonthData(model: CalendarModel) {
+        _yearData = CalendarUIGridModelPresenter().buildMonthGrid(model)
     }
 
     /*Just update, neither throw exception or check validity*/
-    private fun _updateCalender(monthOrdinal: Int) {
-        _currentMonthCalender.update {
-            _allMonthData[monthOrdinal]
+    private fun MutableStateFlow<List<CalenderCellUiModel>?>._updateBy(monthOrdinal: Int) =
+        this.update { _yearData[monthOrdinal] }
+
+    private fun _observeSelectedMonth() {
+        CoroutineScope(Dispatchers.Default).launch {
+            _currentMonthOrdinal.collect { requestMonth ->//Jan-Dec ( 0-11)
+                if (requestMonth._isValidMonth() && requestMonth._hasThisMonthData()) {
+                    _currentCalender._updateBy(requestMonth)
+                    _updateMonth(requestMonth)
+                }
+            }
         }
     }
 
     //TODO:Helper method section-----------
     //TODO:Helper method section-----------
-    private fun _updateMonth(index: Int)=
+    private fun _updateMonth(index: Int) =
         _monthName.update { calender?.months?.get(index)?.month.toString() }
-    private fun Int._hasThisMonthData() = (_allMonthData.size > this)
+
+    private fun MutableStateFlow<Set<CalenderCellUiModel>>._addToSelection(cell: CalenderCellUiModel) =
+        this.update { it + cell }
+
+    private fun MutableStateFlow<Set<CalenderCellUiModel>>._removeFromSelection(cell: CalenderCellUiModel) =
+        this.update { it - cell }
+
+    private fun _currentMonth() = _currentMonthOrdinal.value
+
+    private fun Int._hasThisMonthData() = (_yearData.size > this)
     private fun Int._isValidMonth() = (this in 0..11)
 }

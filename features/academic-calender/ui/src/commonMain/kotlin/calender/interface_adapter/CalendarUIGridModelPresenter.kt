@@ -5,6 +5,7 @@ package calender.interface_adapter
 import calender.common.CalenderCellUiModel
 import calender.common.DayName
 import calender.common.HolidayUiModel
+import domain.model.CalendarModel
 import domain.model.DayModel
 import domain.model.DayNameModel
 import domain.model.HolidayType
@@ -40,7 +41,11 @@ import domain.model.MonthModel
  */
 
 internal class CalendarUIGridModelPresenter {
-    fun buildMonthGrid(data: List<MonthModel>): List<List<CalenderCellUiModel>> {
+    fun buildMonthGrid(model: CalendarModel): List<List<CalenderCellUiModel>> {
+        return buildMonthGrid(model.months)
+    }
+
+    private fun buildMonthGrid(data: List<MonthModel>): List<List<CalenderCellUiModel>> {
         val result = mutableListOf<List<CalenderCellUiModel>>()
         data.forEach {
             result.add(buildMonthGrid(it))
@@ -48,7 +53,7 @@ internal class CalendarUIGridModelPresenter {
         return result
     }
 
-    fun buildMonthGrid(monthData: MonthModel): List<CalenderCellUiModel> {
+    private fun buildMonthGrid(monthData: MonthModel): List<CalenderCellUiModel> {
         val cells = createEmptyGrid()
         val firstDayCellNo = findFirstDayCell(monthData)
         placeDaysInGrid(cells, monthData, firstDayCellNo)
