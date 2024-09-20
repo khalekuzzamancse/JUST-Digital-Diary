@@ -2,14 +2,17 @@ package miscellaneous.ui.home.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.MenuBook
+import androidx.compose.material.icons.filled.AdminPanelSettings
+import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +28,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import justdigitaldiary.features.miscellaneous.ui.generated.resources.Res
-import justdigitaldiary.features.miscellaneous.ui.generated.resources.just_gate
 import justdigitaldiary.features.miscellaneous.ui.generated.resources.just_logo_trans
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -37,17 +39,19 @@ import org.jetbrains.compose.resources.painterResource
  * the platform to load the image from their own resource and the logo composable.
  * fix it later using "Res" class  of compose multiplatform resource
  */
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun WelcomeToHome(
+fun HomeHeader(
     modifier: Modifier = Modifier,
+    onFacultyListRequest:()->Unit,
+    onAdminOfficeRequest:()->Unit,
 ) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        val res: DrawableResource = Res.drawable.just_gate
+        val res: DrawableResource = Res.drawable.just_logo_trans
         //after that compile it again to generate Res class, use : .\gradlew generateComposeResClass
         Image(
             modifier=Modifier.size(100.dp),
@@ -55,14 +59,57 @@ fun WelcomeToHome(
             contentDescription = null,
         )
         Spacer(Modifier.height(8.dp))
-        AppNameLogoSection(modifier = Modifier, varsityLogoSize = 100.dp)
+        FlowRow {
+            _FacultyListButton(
+                onClick = onFacultyListRequest
+            )
+            AppNameLogoSection(modifier = Modifier, varsityLogoSize = 100.dp)
+            _AdminOfficeListButton(
+                onClick = onAdminOfficeRequest
+            )
+        }
+
 
     }
 
 
 }
 
-@OptIn(ExperimentalResourceApi::class)
+@Composable
+private fun _FacultyListButton(
+    modifier: Modifier = Modifier,
+    onClick:()->Unit,
+) {
+    IconButton(
+        modifier = modifier,
+        onClick = onClick
+    ){
+        Icon(
+            imageVector = Icons.Default.School,
+            contentDescription = "faculty list",
+            tint = MaterialTheme.colorScheme.secondary
+        )
+    }
+}
+@Composable
+private fun _AdminOfficeListButton(
+    modifier: Modifier = Modifier,
+    onClick:()->Unit,
+) {
+    IconButton(
+        modifier = modifier,
+        onClick = onClick
+    ){
+        Icon(
+            imageVector = Icons.Default.AdminPanelSettings,
+            contentDescription = "faculty list",
+            tint = MaterialTheme.colorScheme.secondary
+        )
+    }
+}
+
+
+
 @Composable
 private fun AppNameLogoSection(
     modifier: Modifier = Modifier,
@@ -102,14 +149,6 @@ private fun AppNameLogoSection(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val res: DrawableResource = Res.drawable.just_logo_trans
-        //after that compile it again to generate Res class, use : .\gradlew generateComposeResClass
-        Image(
-            modifier=Modifier.size(varsityLogoSize),
-            painter = painterResource(res),//org.jetbrains.compose.resources.
-            contentDescription = null,
-        )
-        Spacer(Modifier.width(4.dp))
         Text(
             text = text,
             style = TextStyle(
@@ -117,13 +156,6 @@ private fun AppNameLogoSection(
                 fontSize = 16.sp,
                 fontFamily = FontFamily.Cursive
             )
-        )
-        Spacer(Modifier.width(8.dp))
-        Icon(
-            modifier = Modifier.size(50.dp),
-            imageVector = Icons.AutoMirrored.Filled.MenuBook,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.tertiary
         )
 
     }

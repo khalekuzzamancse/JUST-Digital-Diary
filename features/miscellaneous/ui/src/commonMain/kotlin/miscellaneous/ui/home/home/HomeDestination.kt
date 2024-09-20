@@ -52,7 +52,15 @@ fun HomeDestination(
             modifier = Modifier.padding(it).verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            WelcomeToHome(modifier = Modifier.padding(16.dp).fillMaxWidth())
+            HomeHeader(
+                modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                onAdminOfficeRequest = {
+                    onEvent(HomeDestinationEvent.NavigateTAdminOfficeList)
+                },
+                onFacultyListRequest = {
+                    onEvent(HomeDestinationEvent.NavigateToFacultyList)
+                }
+            )
             CalenderUI(
                 onSnackBarMsgRequest = { msg ->
                     snackBarJob?.cancel() // Cancel the previous SnackBar job if it's still active
