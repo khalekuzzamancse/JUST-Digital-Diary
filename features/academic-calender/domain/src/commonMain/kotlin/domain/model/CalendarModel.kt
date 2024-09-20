@@ -2,6 +2,7 @@
 
 package domain.model
 
+import common.docs.domain_layer.ModelDoc
 import java.time.Month
 
 data class CalendarModel(
@@ -27,6 +28,32 @@ data class HolidayModel(
     val reason: String
 )
 
+/**
+ *
+Further discussion on:
+ *  - `Model`: see [ModelDoc]
+ * @param reason reason for the day being holiday
+ * @param day If the month has 30 days, the valid range is [1-30] If the month has 31 days, the valid range is [1-31]
+ */
+data class Holiday(
+    val day: Int,
+    val holidayType: HolidayType,
+    val reason: String
+)
+
+/**
+ * Further discussion on:
+ *  - `Model`: see [ModelDoc]
+ *
+ */
+enum class HolidayType {
+    /** Office open but class closed*/
+    OnlyClassOff,
+    /** both Office and class off such for weekend or other reason*/
+    AllOff,
+    /** Such as University day or other reason*/
+    SpecialDay,
+}
 
 enum class DayNameModel {
     SATURDAY, SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY

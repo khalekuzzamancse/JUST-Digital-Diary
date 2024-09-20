@@ -2,9 +2,9 @@
 
 package calender.interface_adapter
 
-import calender.ui.calender.CalenderCellUiModel
-import calender.ui.calender.DayName
-import calender.ui.calender.HolidayUiModel
+import calender.common.CalenderCellUiModel
+import calender.common.DayName
+import calender.common.HolidayUiModel
 import domain.model.DayModel
 import domain.model.DayNameModel
 import domain.model.HolidayType
@@ -40,6 +40,13 @@ import domain.model.MonthModel
  */
 
 internal class CalendarUIGridModelPresenter {
+    fun buildMonthGrid(data: List<MonthModel>): List<List<CalenderCellUiModel>> {
+        val result = mutableListOf<List<CalenderCellUiModel>>()
+        data.forEach {
+            result.add(buildMonthGrid(it))
+        }
+        return result
+    }
 
     fun buildMonthGrid(monthData: MonthModel): List<CalenderCellUiModel> {
         val cells = createEmptyGrid()
@@ -78,19 +85,14 @@ internal class CalendarUIGridModelPresenter {
     }
 
 
-
-
-
     //TODO:Helper methods
 
     private fun DayModel._toDayUiModel(cellNo: Int): CalenderCellUiModel {
         val holiday = if (this.holiday != null)
             HolidayUiModel(
                 reason = this.holiday!!.reason,
-                colorHexCode = when(this.holiday!!.type) {
-                    HolidayType.Weekend -> "#FF0000"      // Red color hex code for Weekend
+                colorHexCode = when (this.holiday!!.type) {
                     HolidayType.AllOff -> "#FF0000"       // Red color hex code for AllOff
-                    HolidayType.OnlyOfficeOff -> "#FF0000"// Red color hex code for OnlyOfficeOff
                     HolidayType.OnlyClassOff -> "#00FF00" // Green color hex code for OnlyClassOff
                     HolidayType.SpecialDay -> "#800080"   // Purple color hex code for SpecialDay
                 }
@@ -101,7 +103,7 @@ internal class CalendarUIGridModelPresenter {
             cellNo = cellNo,
             dayOrdinal = this.date,
             holiday = holiday,
-            dayName =when (this.name) {
+            dayName = when (this.name) {
                 DayNameModel.SATURDAY -> DayName.Sat
                 DayNameModel.SUNDAY -> DayName.Sun
                 DayNameModel.MONDAY -> DayName.Mon

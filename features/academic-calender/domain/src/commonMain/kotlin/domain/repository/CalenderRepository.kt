@@ -8,6 +8,7 @@ import common.docs.domain_layer.RepositoryDoc
 import domain.exception.CalendarFeatureException
 import domain.model.AcademicCalendar
 import domain.model.CalendarModel
+import domain.model.DayNameModel
 
 /**
  * Further discussion on:
@@ -33,5 +34,7 @@ interface CalenderRepository {
      * @param year The year for which the calendar is being retrieved
      * @return [Result] wrapping either the [CalendarModel] on success, or a [CalendarFeatureException] on failure
      */
-  suspend  fun retrieveCalender(year: Int): Result<CalendarModel>
+  suspend  fun retrieveAcademicCalender(year: Int): Result<CalendarModel>
+  /**Return the raw calender without any holiday*/
+    suspend  fun retrieveRawCalender(year: Int,weekend:List<DayNameModel>): Result<CalendarModel>
 }

@@ -14,9 +14,7 @@ internal object ModelToSchema {
         return when (this) {
             HolidayType.OnlyClassOff -> HolidayTypeSchema.OnlyClassOff
             HolidayType.AllOff -> HolidayTypeSchema.AllOff
-            HolidayType.OnlyOfficeOff -> HolidayTypeSchema.OnlyOfficeOff
             HolidayType.SpecialDay -> HolidayTypeSchema.SpecialDay
-            HolidayType.Weekend -> HolidayTypeSchema.Weekend
         }
     }
 

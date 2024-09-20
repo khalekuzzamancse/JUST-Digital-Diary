@@ -6,9 +6,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal enum class HolidayTypeSchema {
+    /** Office open but class closed*/
     OnlyClassOff,
+    /** both Office and class off such for weekend or other reason*/
     AllOff,
-    OnlyOfficeOff,
+    /** Such as University day or other reason*/
     SpecialDay,
-    Weekend
 }

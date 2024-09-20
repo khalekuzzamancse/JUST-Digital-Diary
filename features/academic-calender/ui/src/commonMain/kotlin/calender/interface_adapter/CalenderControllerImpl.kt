@@ -2,8 +2,8 @@
 
 package calender.interface_adapter
 
+import calender.common.CalenderCellUiModel
 import calender.ui.calender.CalendarController
-import calender.ui.calender.CalenderCellUiModel
 import di.DIFactory
 import domain.model.CalendarModel
 import kotlinx.coroutines.CoroutineScope
@@ -57,7 +57,7 @@ internal class CalenderControllerImpl: CalendarController {
 
     private suspend fun loadCalender() {
         DIFactory
-            .createRetrieveCalenderUseCase()
+            .createAcademicRetrieveCalenderUseCase()
             .execute(2024)
             .onSuccess {
                 calender = it

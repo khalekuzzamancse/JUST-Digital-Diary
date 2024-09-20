@@ -37,6 +37,6 @@ class RetrieveCalendarUseCase(
 //        }
 
         // Retrieve the calendar from the repository
-        return repository.retrieveCalender(year)
+        return repository.retrieveAcademicCalender(year)
     }
 }

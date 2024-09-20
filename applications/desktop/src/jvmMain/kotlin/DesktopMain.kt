@@ -6,7 +6,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
-import miscellaneous.ui.home.home.HomeDestination
+import calender.add_calender.HolidayEditor
 import navigation.themes.AppTheme
 
 
@@ -28,29 +28,16 @@ fun main() {
 //                NavigationRoot()
 //              AuthNavHostDesktop()
                 AppTheme {
-                    HomeDestination {}
-                    // WelcomeToHome()
-                    // HomeDestination({})
-//                    FacultyNDepartments(onExitRequest = {}, backHandler = {})
-//                    AdminOfficeAndSubOfficeRoute({})
-//
-//
-////                }
-//                    val note = Note(
-//                        id = "1",
-//                        title = "Sample Note",
-//                        description = "This is a sample description for a note.",
-//                        timeStamp = "2023-04-05T14:30:00Z" // ISO 8601 format
-//                    )
-//                    NoteCard(
-//                        onClick = {},
-//                        note = note
-//                    )
-                }
+                    HolidayEditor(
+                        onSnackBarMsgRequest = {},
+
+                    )
 
                 }
+
             }
         }
-
     }
+
+}
 

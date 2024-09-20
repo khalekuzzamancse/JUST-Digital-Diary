@@ -1,4 +1,4 @@
-@file:Suppress("UnUsed","FunctionName")
+@file:Suppress("UnUsed", "FunctionName")
 
 package data.repository
 
@@ -25,7 +25,7 @@ class CalenderRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override suspend fun retrieveCalender(year: Int): Result<CalendarModel> {
+    override suspend fun retrieveAcademicCalender(year: Int): Result<CalendarModel> {
         val yearCalender = CalendarBuilder()
             .addWeekend(DayNameModel.THURSDAY)
             .addWeekend(DayNameModel.FRIDAY)
@@ -61,6 +61,16 @@ class CalenderRepositoryImpl(
         //  return Result.success(calendar)
 
 
+    }
+
+    override suspend fun retrieveRawCalender(
+        year: Int, weekend: List<DayNameModel>
+    ): Result<CalendarModel> {
+        var builder = CalendarBuilder()
+        weekend.forEach {
+            builder = builder.addWeekend(it)
+        }
+        return Result.success(builder.build(year))
     }
 }
 
