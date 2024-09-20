@@ -17,3 +17,16 @@ data class Holiday(
     val holidayType:HolidayType,
     val reason:String
 )
+
+/**
+ * Further discussion on:
+ *  - `Model`: see [ModelDoc]
+ */
+enum class HolidayType {
+    OnlyClassOff,
+    AllOff,
+    OnlyOfficeOff,
+    SpecialDay,
+    Weekend
+
+}

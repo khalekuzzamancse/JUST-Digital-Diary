@@ -3,8 +3,11 @@
 package calender.interface_adapter
 
 import calender.ui.calender.CalenderCellUiModel
+import calender.ui.calender.DayName
 import calender.ui.calender.HolidayUiModel
 import domain.model.DayModel
+import domain.model.DayNameModel
+import domain.model.HolidayType
 import domain.model.MonthModel
 
 /**
@@ -47,10 +50,7 @@ internal class CalendarUIGridModelPresenter {
 
     private fun createEmptyGrid(): MutableList<CalenderCellUiModel> {
         return MutableList(35) { index ->
-            CalenderCellUiModel(
-                cellNo = index,
-                dayName = "",
-            )
+            CalenderCellUiModel(cellNo = index)
         }
     }
 
@@ -87,14 +87,29 @@ internal class CalendarUIGridModelPresenter {
         val holiday = if (this.holiday != null)
             HolidayUiModel(
                 reason = this.holiday!!.reason,
-                colorHexCode = this.holiday!!.typeColorCode
+                colorHexCode = when(this.holiday!!.type) {
+                    HolidayType.Weekend -> "#FF0000"      // Red color hex code for Weekend
+                    HolidayType.AllOff -> "#FF0000"       // Red color hex code for AllOff
+                    HolidayType.OnlyOfficeOff -> "#FF0000"// Red color hex code for OnlyOfficeOff
+                    HolidayType.OnlyClassOff -> "#00FF00" // Green color hex code for OnlyClassOff
+                    HolidayType.SpecialDay -> "#800080"   // Purple color hex code for SpecialDay
+                }
+
             )
         else null
         return CalenderCellUiModel(
             cellNo = cellNo,
             dayOrdinal = this.date,
             holiday = holiday,
-            dayName = this.name.name
+            dayName =when (this.name) {
+                DayNameModel.SATURDAY -> DayName.Sat
+                DayNameModel.SUNDAY -> DayName.Sun
+                DayNameModel.MONDAY -> DayName.Mon
+                DayNameModel.TUESDAY -> DayName.Tue
+                DayNameModel.WEDNESDAY -> DayName.Wed
+                DayNameModel.THURSDAY -> DayName.Thu
+                DayNameModel.FRIDAY -> DayName.Fri
+            }
         )
     }
 }

@@ -29,7 +29,7 @@ class RetrieveCalendarUseCase(
      * @param year The year for which the calendar should be retrieved
      * @return [Result] wrapping either the [CalendarModel] on success, or a [CalendarFeatureException] on failure
      */
-    fun execute(year: Int): Result<CalendarModel> {
+    suspend fun execute(year: Int): Result<CalendarModel> {
         // Validate the year before retrieving the calendar
 //        val validationError = validationService.validateYear(year)
 //        if (validationError != null) {

@@ -6,7 +6,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
-import calender.ui.calender.CalenderUI
+import miscellaneous.ui.home.home.HomeDestination
 import navigation.themes.AppTheme
 
 
@@ -28,8 +28,8 @@ fun main() {
 //                NavigationRoot()
 //              AuthNavHostDesktop()
                 AppTheme {
-                    CalenderUI()
-                   // WelcomeToHome()
+                    HomeDestination {}
+                    // WelcomeToHome()
                     // HomeDestination({})
 //                    FacultyNDepartments(onExitRequest = {}, backHandler = {})
 //                    AdminOfficeAndSubOfficeRoute({})

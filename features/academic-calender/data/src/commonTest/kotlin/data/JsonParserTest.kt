@@ -1,7 +1,7 @@
 package data
 
 import component.JsonParser
-import data.data_source.calenderJson
+import data.data_source.holidayJson
 import data.schema.CalendarWrapperSchema
 import factory.NetworkFactory
 import kotlin.test.Test
@@ -15,7 +15,7 @@ class JsonParserTest {
 
     @Test
     fun testParseCalendar() {
-        val fileContent = calenderJson
+        val fileContent = holidayJson
         val result = jsonParser.parse(fileContent, CalendarWrapperSchema.serializer())
         result.onSuccess { calendar ->
             println(calendar)

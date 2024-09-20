@@ -6,9 +6,13 @@ import calender.ui.calender.CalendarController
 import calender.ui.calender.CalenderCellUiModel
 import di.DIFactory
 import domain.model.CalendarModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 internal class CalenderControllerImpl: CalendarController {
@@ -23,8 +27,12 @@ internal class CalenderControllerImpl: CalendarController {
 
 
     init {
-        loadCalender()
-        updateCalender(currentMonthIndex)
+        CoroutineScope(Dispatchers.Default).launch {
+            delay(2_000)//pretending loading...
+            loadCalender()
+            updateCalender(currentMonthIndex)
+        }
+
     }
 
     override fun goToNextMonthCalender() {
@@ -47,7 +55,7 @@ internal class CalenderControllerImpl: CalendarController {
     }
 
 
-    private fun loadCalender() {
+    private suspend fun loadCalender() {
         DIFactory
             .createRetrieveCalenderUseCase()
             .execute(2024)

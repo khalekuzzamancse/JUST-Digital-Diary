@@ -1,10 +1,12 @@
 @file:Suppress("UnUsed")
+
 package data.misc
 
 import domain.model.CalendarModel
 import domain.model.DayModel
 import domain.model.DayNameModel
 import domain.model.HolidayModel
+import domain.model.HolidayType
 import domain.model.MonthModel
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -31,8 +33,11 @@ class CalendarBuilder {
             val date = LocalDate.of(year, month, dayOfMonth)
             val dayName = mapDayOfWeek(date.dayOfWeek)
             // Check if the day is a weekend and mark as holiday if it is
-            val holiday = if (weekends.contains(dayName)) HolidayModel("#FF0000", "Weekend") else null
-            DayModel(dayName,dayOfMonth , holiday)
+            val holiday = if (weekends.contains(dayName)) HolidayModel(
+                HolidayType.Weekend,
+                "Weekend"
+            ) else null
+            DayModel(dayName, dayOfMonth, holiday)
         }
         return MonthModel(month, days)
     }

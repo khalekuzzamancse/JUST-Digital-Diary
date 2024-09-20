@@ -1,4 +1,5 @@
 @file:Suppress("UnUsed")
+
 package domain.model
 
 import java.time.Month
@@ -22,9 +23,10 @@ data class DayModel(
 }
 
 data class HolidayModel(
-    val typeColorCode: String,
+    val type: HolidayType,
     val reason: String
 )
+
 
 enum class DayNameModel {
     SATURDAY, SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY

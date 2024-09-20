@@ -1,6 +1,6 @@
 package data.data_source
 
-val calenderJson="""
+val holidayJson = """
     {
       "academicCalendar": {
         "year": 2024,
@@ -25,7 +25,9 @@ val calenderJson="""
           {"day": 1, "holidayType": "AllOff", "reason": "Labour Day"}
         ],
         "juneHolidays": [
-          {"day": 5, "holidayType": "AllOff", "reason": "Eid-ul-Fitr"}
+          {"day": 3, "holidayType": "AllOff", "reason": "Eid-ul-Fitr"},
+          {"day": 2, "holidayType": "OnlyClassOff", "reason": "Eid-ul-Fitr"}
+          
         ],
         "julyHolidays": [
           {"day": 7, "holidayType": "AllOff", "reason": "Eid-ul-Azha"}
@@ -34,7 +36,11 @@ val calenderJson="""
           {"day": 15, "holidayType": "AllOff", "reason": "National Mourning Day"}
         ],
         "septemberHolidays": [
-          {"day": 6, "holidayType": "AllOff", "reason": "Janmashtami"}
+          {"day": 6, "holidayType": "AllOff", "reason": "Janmashtami"},
+           {"day": 3, "holidayType": "AllOff", "reason": "Eid-ul-Fitr"},
+          {"day": 2, "holidayType": "OnlyClassOff", "reason": "Eid-ul-Fitr"},
+            {"day": 23, "holidayType": "SpecialDay", "reason": "University Day"}
+          
         ],
         "octoberHolidays": [
           {"day": 10, "holidayType": "AllOff", "reason": "Durga Puja"}

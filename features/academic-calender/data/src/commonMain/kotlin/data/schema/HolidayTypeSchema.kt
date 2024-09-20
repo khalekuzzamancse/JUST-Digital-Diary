@@ -9,5 +9,6 @@ internal enum class HolidayTypeSchema {
     OnlyClassOff,
     AllOff,
     OnlyOfficeOff,
-    SpecialDay
+    SpecialDay,
+    Weekend
 }

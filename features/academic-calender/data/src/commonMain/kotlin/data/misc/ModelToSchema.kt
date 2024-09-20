@@ -16,6 +16,7 @@ internal object ModelToSchema {
             HolidayType.AllOff -> HolidayTypeSchema.AllOff
             HolidayType.OnlyOfficeOff -> HolidayTypeSchema.OnlyOfficeOff
             HolidayType.SpecialDay -> HolidayTypeSchema.SpecialDay
+            HolidayType.Weekend -> HolidayTypeSchema.Weekend
         }
     }
 

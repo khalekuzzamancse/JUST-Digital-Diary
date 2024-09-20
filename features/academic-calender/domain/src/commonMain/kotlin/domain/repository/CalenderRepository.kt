@@ -33,5 +33,5 @@ interface CalenderRepository {
      * @param year The year for which the calendar is being retrieved
      * @return [Result] wrapping either the [CalendarModel] on success, or a [CalendarFeatureException] on failure
      */
-    fun retrieveCalender(year: Int): Result<CalendarModel>
+  suspend  fun retrieveCalender(year: Int): Result<CalendarModel>
 }

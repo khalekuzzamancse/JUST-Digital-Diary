@@ -1,4 +1,4 @@
-@file:Suppress("VariableName", "FunctionName")
+@file:Suppress("VariableName", "FunctionName", "UnUsed")
 
 package calender.ui.calender
 
@@ -14,10 +14,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowCircleLeft
 import androidx.compose.material.icons.filled.ArrowCircleRight
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +27,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,17 +35,23 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import calender.interface_adapter.CalenderControllerImpl
 import kotlinx.coroutines.flow.StateFlow
 
-
+/**
+ * - Manage the state and event of the [AcademicCalenderUI]
+ * - ViewModel can implement it(optional)
+ */
 interface CalendarController {
-     val currentMonthCalender: StateFlow<List<CalenderCellUiModel>?>
+    val currentMonthCalender: StateFlow<List<CalenderCellUiModel>?>
+
+    /**name of the month that calender is currently showing*/
     val monthName: StateFlow<String>
     val year: StateFlow<Int?>
 
-    // Methods to navigate between months
+    /**Update the [currentMonthCalender] with next month*/
     fun goToNextMonthCalender()
+
+    /**Update the [currentMonthCalender] with previous  month*/
     fun goToPreviousMonthCalender()
 }
 
@@ -52,59 +59,118 @@ interface CalendarController {
  * @param onSnackBarMsgRequest parent should show the reason via snackBar
  */
 @Composable
-fun CalenderUI(
+fun AcademicCalenderUI(
     modifier: Modifier = Modifier,
-    onSnackBarMsgRequest: (reason: String) -> Unit
+    controller: CalendarController,
+    onSnackBarMsgRequest: (reason: String) -> Unit,
 ) {
-    val controller = remember { CalenderControllerImpl() }
-    val grid = controller.currentMonthCalender.collectAsState().value
-    val year = controller.year.collectAsState("").value
-    val month = controller.monthName.collectAsState().value
-
-    Column(
-        modifier = modifier.width(IntrinsicSize.Min)
-    ) {
-        Surface(
-            shadowElevation = 6.dp,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                _CalenderTitle(year.toString())
-            }
-
-        }
-
-        Surface(
-            shadowElevation = 0.dp,
-        ) {
-            _CalenderMonthHeader(
-                modifier = Modifier,
-                monthName = month,
-                onNext = controller::goToNextMonthCalender,
-                onPrev = controller::goToPreviousMonthCalender
-            )
-        }
-
-        grid?.let {
-            _Calender(
-                calenderCellUiModels = it,
-                onHolidayClick = onSnackBarMsgRequest
-            )
-        }
-
+    /** Calender Grid cell data*/
+    val cellData = controller.currentMonthCalender.collectAsState().value
+    if (cellData == null) {
+        _LoadingUI()
+    } else {
+        _AcademicCalender(
+            year = controller.year.collectAsState("").value.toString(),
+            monthName = controller.monthName.collectAsState().value,
+            onNext = controller::goToNextMonthCalender,
+            onPrev = controller::goToPreviousMonthCalender,
+            cellUiModels = cellData,
+            onHolidayClick = onSnackBarMsgRequest
+        )
     }
 
 
 }
 
+@Composable
+private fun _AcademicCalender(
+    modifier: Modifier = Modifier,
+    year: String,
+    monthName: String,
+    cellUiModels: List<CalenderCellUiModel>,
+    onHolidayClick: (reason: String) -> Unit,
+    onNext: () -> Unit,
+    onPrev: () -> Unit,
+) {
+    Column(
+        modifier = modifier.width(IntrinsicSize.Min)
+    ) {
+        _YearNMonthHeader(
+            modifier = Modifier,
+            year = year,
+            monthName = monthName,
+            onNext = onNext,
+            onPrev = onPrev
+        )
+        _CalenderGrid(
+            calenderCellUiModels = cellUiModels,
+            onHolidayClick = onHolidayClick
+        )
+    }
+}
+
+
+@Composable
+private fun _LoadingUI(modifier: Modifier = Modifier) {
+    Box(Modifier.size(100.dp), contentAlignment = Alignment.Center) {
+        CircularProgressIndicator(modifier = Modifier.size(48.dp))
+    }
+
+}
+
+/**
+ * - Contain the Title of year, Month
+ * - Has next and prev button for navigating between previous month and next month calender
+ */
+@Composable
+private fun _YearNMonthHeader(
+    modifier: Modifier = Modifier,
+    year: String,
+    monthName: String,
+    onNext: () -> Unit,
+    onPrev: () -> Unit,
+) {
+    Column(
+        modifier = modifier
+    ) {
+        _YearHeader(modifier = Modifier, year = year)
+        _MonthHeader(
+            modifier = Modifier,
+            monthName = monthName,
+            onNext = onNext,
+            onPrev = onPrev
+        )
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun _YearHeader(modifier: Modifier = Modifier, year: String) {
+    Surface(
+        shadowElevation = 6.dp,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            FlowRow {
+                Text("Academic Calender ")
+                Text(year)
+            }
+        }
+
+    }
+}
+
+//TODO: Calender Grid section  Section--------------------------
+//TODO: Calender Grid section  Section--------------------------
+
 /**
  * @param onHolidayClick parent should show the reason via snackBar
  */
 @Composable
-private fun _Calender(
+private fun _CalenderGrid(
     calenderCellUiModels: List<CalenderCellUiModel>,
     onHolidayClick: (reason: String) -> Unit
 ) {
@@ -191,13 +257,15 @@ private fun _ColumnContent(
         _GridCell(
             date = {
                 //Put a date on the cell if it has a date associated with
-                if (hasDateAssociatedWithThisCell)
+                if (hasDateAssociatedWithThisCell) {
                     _DateLabel(
                         modifier = it,
-                        dateOrdinal = day?.dayOrdinal ?: 0,
+                        dateOrdinal = day?.dayOrdinal,
                         textColorHex = day?.holiday?.colorHexCode,
                         fontSize = fontSize
                     )
+                }
+
 
             },
             modifier = Modifier.height(width)//height is enough as 2 char width
@@ -241,14 +309,14 @@ private fun _ColumnName(
 @Composable
 private fun _DateLabel(
     modifier: Modifier = Modifier,
-    dateOrdinal: Int,
+    dateOrdinal: Int?,
     textColorHex: String?,
     fontSize: TextUnit,
 ) {
     val color = if (textColorHex != null) _parseColor(textColorHex)
         ?: Color.Unspecified else Color.Unspecified
     Text(
-        text = "$dateOrdinal",
+        text = if (dateOrdinal == null) "" else "$dateOrdinal",
         fontSize = fontSize,
         color = color,
         modifier = modifier
@@ -264,9 +332,16 @@ private fun _DateLabel(
 data class CalenderCellUiModel(
     val cellNo: Int,
     val dayOrdinal: Int? = null,
-    val dayName: String,
+    val dayName: DayName? = null,
     val holiday: HolidayUiModel? = null,
 )
+
+/**
+ * - Using for type safety so that later can be used such as group by name, etc
+ */
+enum class DayName {
+    Sat, Sun, Mon, Tue, Wed, Thu, Fri
+}
 
 /**
  * - Represent the holiday
@@ -321,40 +396,34 @@ private fun _parseColor(hex: String): Color? {
     }
 }
 
+//TODO: Month header Section--------------------------
+//TODO: Month header Section--------------------------
 @Composable
-private fun _CalenderMonthHeader(
+private fun _MonthHeader(
     modifier: Modifier,
     monthName: String,
     onNext: () -> Unit,
     onPrev: () -> Unit,
 ) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+    Surface(
+        shadowElevation = 0.dp,
     ) {
-        _PrevButton(onClick = onPrev)
-        _MonthNameDisplayed(
-            modifier = Modifier
-                .padding(4.dp).weight(1f)
-                .align(Alignment.CenterVertically),
-            name = monthName,
+        Row(
+            modifier = modifier,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            _PrevButton(onClick = onPrev)
+            //Month name
+            Box(
+                modifier = Modifier.padding(4.dp).weight(1f).align(Alignment.CenterVertically),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = monthName)
 
-            )
-        _NextButton(onClick = onNext)
+            }
+            _NextButton(onClick = onNext)
+        }
     }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun _CalenderTitle(
-    currentYear: String
-) {
-    FlowRow {
-        Text("Academic Calender ")
-        Text(currentYear)
-    }
-
-
 }
 
 @Composable
@@ -389,20 +458,4 @@ private fun _NextButton(
             tint = MaterialTheme.colorScheme.secondary
         )
     }
-}
-
-
-@Composable
-private fun _MonthNameDisplayed(
-    modifier: Modifier,
-    name: String
-) {
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
-        Text(
-            text = name
-        )
-
-    }
-
-
 }
