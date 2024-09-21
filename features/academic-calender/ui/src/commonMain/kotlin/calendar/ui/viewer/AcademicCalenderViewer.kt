@@ -1,26 +1,22 @@
 @file:Suppress("VariableName", "FunctionName", "UnUsed")
 
-package calender.ui.calender
+package calendar.ui.viewer
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import calender.common.AcademicCalender
-import calender.common.CalendarCellUiModel
-import calender.common.LoadingUI
+import calendar.ui.common.AcademicCalender
+import calendar.ui.common.ProgressBar
+import calendar.ui.common.model.MonthData
 import kotlinx.coroutines.flow.StateFlow
 
 /**
- * - Manage the state and event of the [AcademicCalenderUI]
+ * - Manage the state and event of the [AcademicCalender]
  * - ViewModel can implement it(optional)
  */
-interface CalendarController {
-    val currentMonthCalender: StateFlow<List<CalendarCellUiModel>?>
-
-    /**name of the month that calender is currently showing*/
-    val monthName: StateFlow<String>
+interface CalendarViewController {
+    val currentMonthCalender: StateFlow<MonthData?>
     val year: StateFlow<Int?>
-
     /**Update the [currentMonthCalender] with next month*/
     fun goToNextMonthCalender()
 
@@ -29,25 +25,27 @@ interface CalendarController {
 }
 
 /**
+ * - Show the academic calender
+ * - It just `Adapter` or `Wrapper` or `Decorator` that wrap the [AcademicCalender] and disable it ef
  * @param onSnackBarMsgRequest parent should show the reason via snackBar
  */
 @Composable
-fun AcademicCalenderUI(
+fun AcademicCalenderViewer(
     modifier: Modifier = Modifier,
-    controller: CalendarController,
+    controller: CalendarViewController,
     onSnackBarMsgRequest: (reason: String) -> Unit,
 ) {
     /** Calender Grid cell data*/
-    val cellData = controller.currentMonthCalender.collectAsState().value
-    if (cellData == null) {
-        LoadingUI()
+    val monthData = controller.currentMonthCalender.collectAsState().value
+    if (monthData == null) {
+        ProgressBar()
     } else {
         AcademicCalender(
             year = controller.year.collectAsState("").value.toString(),
-            monthName = controller.monthName.collectAsState().value,
+            monthName =monthData.name,
             onNext = controller::goToNextMonthCalender,
             onPrev = controller::goToPreviousMonthCalender,
-            cellUiModels = cellData,
+            cellUiModels = monthData.cells,
             onHolidayClick = onSnackBarMsgRequest,
             //use as viewer
             selected = null,

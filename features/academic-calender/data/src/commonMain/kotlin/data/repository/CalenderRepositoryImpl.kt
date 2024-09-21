@@ -11,7 +11,7 @@ import data.schema.CalendarWrapperSchema
 import domain.exception.CalendarFeatureException
 import domain.model.AcademicCalendar
 import domain.model.CalendarModel
-import domain.model.DayNameModel
+import domain.model.DayOfWeek
 import domain.model.Holiday
 import domain.model.HolidayModel
 import domain.repository.CalenderRepository
@@ -27,8 +27,8 @@ class CalenderRepositoryImpl(
 
     override suspend fun retrieveAcademicCalender(year: Int): Result<CalendarModel> {
         val yearCalender = CalendarBuilder()
-            .addWeekend(DayNameModel.THURSDAY)
-            .addWeekend(DayNameModel.FRIDAY)
+            .addWeekend(DayOfWeek.THURSDAY)
+            .addWeekend(DayOfWeek.FRIDAY)
             .build(year)
 
         val json = holidayJson
@@ -64,7 +64,7 @@ class CalenderRepositoryImpl(
     }
 
     override suspend fun retrieveRawCalender(
-        year: Int, weekend: List<DayNameModel>
+        year: Int, weekend: List<DayOfWeek>
     ): Result<CalendarModel> {
         var builder = CalendarBuilder()
         weekend.forEach {

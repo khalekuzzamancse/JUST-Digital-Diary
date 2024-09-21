@@ -4,7 +4,7 @@ package data.misc
 
 import domain.model.CalendarModel
 import domain.model.DayModel
-import domain.model.DayNameModel
+import domain.model.DayOfWeek
 import domain.model.HolidayModel
 import domain.model.HolidayType
 import domain.model.MonthModel
@@ -13,9 +13,9 @@ import java.time.LocalDate
 import java.time.Month
 
 class CalendarBuilder {
-    private val weekends: MutableList<DayNameModel> = mutableListOf()
+    private val weekends: MutableList<domain.model.DayOfWeek> = mutableListOf()
 
-    fun addWeekend(day: DayNameModel): CalendarBuilder {
+    fun addWeekend(day: domain.model.DayOfWeek): CalendarBuilder {
         weekends.add(day)
         return this
     }
@@ -42,15 +42,15 @@ class CalendarBuilder {
         return MonthModel(month, days)
     }
 
-    private fun mapDayOfWeek(dayOfWeek: DayOfWeek): DayNameModel {
+    private fun mapDayOfWeek(dayOfWeek: DayOfWeek): domain.model.DayOfWeek {
         return when (dayOfWeek) {
-            DayOfWeek.SATURDAY -> DayNameModel.SATURDAY
-            DayOfWeek.SUNDAY -> DayNameModel.SUNDAY
-            DayOfWeek.MONDAY -> DayNameModel.MONDAY
-            DayOfWeek.TUESDAY -> DayNameModel.TUESDAY
-            DayOfWeek.WEDNESDAY -> DayNameModel.WEDNESDAY
-            DayOfWeek.THURSDAY -> DayNameModel.THURSDAY
-            DayOfWeek.FRIDAY -> DayNameModel.FRIDAY
+            DayOfWeek.SATURDAY -> DayOfWeek.SATURDAY
+            DayOfWeek.SUNDAY -> DayOfWeek.SUNDAY
+            DayOfWeek.MONDAY -> DayOfWeek.MONDAY
+            DayOfWeek.TUESDAY -> DayOfWeek.TUESDAY
+            DayOfWeek.WEDNESDAY -> DayOfWeek.WEDNESDAY
+            DayOfWeek.THURSDAY -> DayOfWeek.THURSDAY
+            DayOfWeek.FRIDAY -> DayOfWeek.FRIDAY
         }
     }
 

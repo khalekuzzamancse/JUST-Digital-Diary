@@ -1,7 +1,7 @@
-package calender.factory
+package calendar.ui.factory
 
-import calender.add_calender.CalendarViewerController
-import calender.interface_adapter.MonthDataUiModel
+import calendar.ui.common.CalendarViewerController
+import calendar.ui.common.model.MonthData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,19 +10,20 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class CalendarControllerImpl : CalendarViewerController {
-    private var _yearData: List<MonthDataUiModel> = emptyList()
+    private var _yearData: List<MonthData> = emptyList()
 
-    private val _currentCalendar = MutableStateFlow<MonthDataUiModel?>(null)
+
+    private val _currentCalendar = MutableStateFlow<MonthData?>(null)
     override val currentMonthCalendar = _currentCalendar.asStateFlow()
 
     private val _currentMonthOrdinal = MutableStateFlow(LocalDate.now().month.ordinal)
-    override val currentMonthOrdinal: Int
+    override val currentMonthIndex: Int
         get() = _currentMonthOrdinal.value
 
     init {
         observeSelectedMonth()
     }
-    override fun setYearData(yearData: List<MonthDataUiModel>) {
+    override fun setYearData(yearData: List<MonthData>) {
         _yearData = yearData
         _currentCalendar.updateBy(_currentMonthOrdinal.value)
 
@@ -42,7 +43,7 @@ class CalendarControllerImpl : CalendarViewerController {
     }
 
 
-    private fun MutableStateFlow<MonthDataUiModel?>.updateBy(monthOrdinal: Int) {
+    private fun MutableStateFlow<MonthData?>.updateBy(monthOrdinal: Int) {
         this.value = _yearData[monthOrdinal]
     }
 

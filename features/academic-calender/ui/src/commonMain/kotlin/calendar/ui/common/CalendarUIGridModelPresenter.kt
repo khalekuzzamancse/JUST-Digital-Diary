@@ -1,17 +1,18 @@
 @file:Suppress("UnUsed", "LocalVariableName", "FunctionName")
 
-package calender.interface_adapter
+package calendar.ui.common
 
-import calender.common.CalendarCellUiModel
-import calender.common.DayName
-import calender.common.HolidayUiModel
+import calendar.ui.common.model.CalendarGridCell
+import calendar.ui.common.model.Holiday
+import calendar.ui.common.model.MonthData
+import calendar.ui.common.model.DayOfWeek
+import calendar.ui.common.model.HolidayType
 import domain.model.CalendarModel
 import domain.model.DayModel
-import domain.model.DayNameModel
-import domain.model.HolidayType
 import domain.model.MonthModel
 
 /**
+ * - Take data format defined as in `domain` layer and `convert` to `ui` layer format
  * Builds a calendar grid for a given month.
  *
  * Why use a grid size of 35?
@@ -41,40 +42,40 @@ import domain.model.MonthModel
  */
 
 internal class CalendarUIGridModelPresenter {
-    fun buildMonthGrid(model: CalendarModel): List<MonthDataUiModel> {
-        return buildMonthGrid(model.months)
+    fun _buildMonthGrid(model: CalendarModel): List<MonthData> {
+        return _buildMonthGrid(model.months)
     }
 
-    private fun buildMonthGrid(data: List<MonthModel>): List<MonthDataUiModel> {
-        val result = mutableListOf<MonthDataUiModel>()
+    private fun _buildMonthGrid(data: List<MonthModel>): List<MonthData> {
+        val result = mutableListOf<MonthData>()
         data.forEach {
-            result.add(buildMonthGrid(it))
+            result.add(_buildMonthGrid(it))
         }
         return result
     }
 
-    private fun buildMonthGrid(monthData: MonthModel):MonthDataUiModel {
-        val cells = createEmptyGrid()
-        val firstDayCellNo = findFirstDayCell(monthData)
-        placeDaysInGrid(cells, monthData, firstDayCellNo)
-        return MonthDataUiModel(monthData.month.name,cells)
+    private fun _buildMonthGrid(monthData: MonthModel): MonthData {
+        val cells = _createEmptyGrid()
+        val firstDayCellNo = _findFirstDayCell(monthData)
+        _placeDaysInGrid(cells, monthData, firstDayCellNo)
+        return MonthData(monthData.month.name, cells)
     }
 
-    private fun createEmptyGrid(): MutableList<CalendarCellUiModel> {
+    private fun _createEmptyGrid(): MutableList<CalendarGridCell> {
         return MutableList(35) { index ->
-            CalendarCellUiModel(cellNo = index)
+            CalendarGridCell(cellIndex = index)
         }
     }
 
     /** Cell No for date=1 which is basically the Column no where Column=Day(ex: Sun,Mon...) ordinal in the Calender*/
-    private fun findFirstDayCell(monthData: MonthModel): Int {
+    private fun _findFirstDayCell(monthData: MonthModel): Int {
         return monthData.days.find { it.date == 1 }?.name?.ordinal
             ?: 0 // Default to 0 if not found (should not happen for a valid month)
     }
 
 
-    private fun placeDaysInGrid(
-        calenderCellUiModels: MutableList<CalendarCellUiModel>,
+    private fun _placeDaysInGrid(
+        calenderCellUiModels: MutableList<CalendarGridCell>,
         months: MonthModel,
         firstDayCellNo: Int
     ) {
@@ -92,36 +93,45 @@ internal class CalendarUIGridModelPresenter {
 
     //TODO:Helper methods
 
-    private fun DayModel._toDayUiModel(cellNo: Int): CalendarCellUiModel {
+    private fun DayModel._toDayUiModel(cellNo: Int): CalendarGridCell {
         val holiday = if (this.holiday != null)
-            HolidayUiModel(
+            Holiday(
                 reason = this.holiday!!.reason,
-                colorHexCode = when (this.holiday!!.type) {
-                    HolidayType.AllOff -> "#FF0000"       // Red color hex code for AllOff
-                    HolidayType.OnlyClassOff -> "#00FF00" // Green color hex code for OnlyClassOff
-                    HolidayType.SpecialDay -> "#800080"   // Purple color hex code for SpecialDay
-                }
-
+                colorCode = _toUiHolidayType(this.holiday!!.type).color
             )
         else null
-        return CalendarCellUiModel(
-            cellNo = cellNo,
-            dayOrdinal = this.date,
+        return CalendarGridCell(
+            cellIndex = cellNo,
+            dayOfMonth = this.date,
             holiday = holiday,
-            dayName = when (this.name) {
-                DayNameModel.SATURDAY -> DayName.Sat
-                DayNameModel.SUNDAY -> DayName.Sun
-                DayNameModel.MONDAY -> DayName.Mon
-                DayNameModel.TUESDAY -> DayName.Tue
-                DayNameModel.WEDNESDAY -> DayName.Wed
-                DayNameModel.THURSDAY -> DayName.Thu
-                DayNameModel.FRIDAY -> DayName.Fri
-            }
+            dayOfWeek = _toUiDayOfWeek(this.name)
         )
     }
+
+    /**
+     * Maps a `domain.model.DayOfWeek` to a `calendar.common.model.DayOfWeek`.
+     *
+     * @param day The day of the week from the domain model.
+     * @return The corresponding day of the week in the calendar common model.
+     */
+    private fun _toUiDayOfWeek(day: domain.model.DayOfWeek): DayOfWeek {
+        return when (day) {
+            domain.model.DayOfWeek.SATURDAY -> DayOfWeek.Sat
+            domain.model.DayOfWeek.SUNDAY -> DayOfWeek.Sun
+            domain.model.DayOfWeek.MONDAY -> DayOfWeek.Mon
+            domain.model.DayOfWeek.TUESDAY -> DayOfWeek.Tue
+            domain.model.DayOfWeek.WEDNESDAY -> DayOfWeek.Wed
+            domain.model.DayOfWeek.THURSDAY -> DayOfWeek.Thu
+            domain.model.DayOfWeek.FRIDAY -> DayOfWeek.Fri
+        }
+    }
+
+    private fun _toUiHolidayType(type: domain.model.HolidayType): HolidayType {
+        return when (type) {
+            domain.model.HolidayType.AllOff -> HolidayType.AllOff
+            domain.model.HolidayType.OnlyClassOff -> HolidayType.OnlyClassOf
+            domain.model.HolidayType.SpecialDay -> HolidayType.SpecialDay
+        }
+    }
 }
-data class MonthDataUiModel(
-    val name:String,
-    val cells:List<CalendarCellUiModel>
-)
 

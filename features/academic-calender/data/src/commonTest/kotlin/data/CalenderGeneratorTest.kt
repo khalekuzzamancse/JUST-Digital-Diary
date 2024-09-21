@@ -1,7 +1,7 @@
 package data
 
 import data.misc.CalendarBuilder
-import domain.model.DayNameModel
+import domain.model.DayOfWeek
 import kotlin.test.Test
 
 class CalenderGeneratorTest {
@@ -10,8 +10,8 @@ class CalenderGeneratorTest {
 
         val calendarBuilder = CalendarBuilder()
         val calendar = calendarBuilder
-            .addWeekend(DayNameModel.THURSDAY)
-            .addWeekend(DayNameModel.FRIDAY)
+            .addWeekend(DayOfWeek.THURSDAY)
+            .addWeekend(DayOfWeek.FRIDAY)
             .build(2024)
 
         println(calendar)

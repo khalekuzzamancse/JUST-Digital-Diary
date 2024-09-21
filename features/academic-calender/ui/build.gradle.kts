@@ -18,5 +18,5 @@ kotlin {
 
 }
 android {
-    namespace = "calender.ui"
+    namespace = "calendar.ui"
 }

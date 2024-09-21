@@ -1,4 +1,4 @@
-package calender.ui
+package calendar.ui
 import di.DIFactory
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test

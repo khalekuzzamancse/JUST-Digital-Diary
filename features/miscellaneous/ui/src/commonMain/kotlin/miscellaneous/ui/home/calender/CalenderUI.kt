@@ -3,7 +3,8 @@ package miscellaneous.ui.home.calender
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import calender.factory.UIFactory
+import calendar.ui.factory.UIFactory
+import calendar.ui.viewer.AcademicCalenderViewer
 
 @Composable
 internal fun CalenderUI(
@@ -12,7 +13,7 @@ internal fun CalenderUI(
 ) {
     val controller = remember { UIFactory.createCalenderController() }
     //From academic calender module
-    calender.ui.calender.AcademicCalenderUI(
+    AcademicCalenderViewer(
         modifier = Modifier,
         controller = controller,
         onSnackBarMsgRequest = onSnackBarMsgRequest

@@ -1,18 +1,18 @@
 @file:Suppress("VariableName", "FunctionName")
 
-package calender.factory
+package calendar.ui.factory
 
-import calender.add_calender.CalendarViewerController
-import calender.add_calender.HolidayAddCommand
-import calender.add_calender.EditorUiController
-import calender.add_calender.HolidayTypeUiModel
-import calender.add_calender.SelectionController
-import calender.common.CalendarCellUiModel
-import calender.interface_adapter.CalendarUIGridModelPresenter
-import calender.interface_adapter.MonthDataUiModel
+import calendar.ui.common.CalendarViewerController
+import calendar.ui.editor.HolidayAddCommand
+import calendar.ui.editor.HolidayEditorController
+import calendar.ui.editor.HolidayDateSelector
+import calendar.ui.common.model.CalendarGridCell
+import calendar.ui.common.model.HolidayType
+import calendar.ui.common.CalendarUIGridModelPresenter
+import calendar.ui.common.model.MonthData
 import di.DIFactory
 import domain.model.CalendarModel
-import domain.model.DayNameModel
+import domain.model.DayOfWeek
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -23,18 +23,18 @@ import kotlinx.coroutines.launch
 
 
 internal class EditorControllerImpl(
-    private val selectionController: SelectionController,
+    private val selectionController: HolidayDateSelector,
     private val viewerController: CalendarViewerController
-) : EditorUiController {
+) : HolidayEditorController {
     private var calender: CalendarModel? = null
-    override val currentMonthCalender = viewerController.currentMonthCalendar
+    override val currentMonthData = viewerController.currentMonthCalendar
 
     private val _year = MutableStateFlow<Int?>(null)
-    override val year = _year.asStateFlow()
+    override val currentYear = _year.asStateFlow()
 
-    override val selected = selectionController.selectedCells
+    override val selectedDates = selectionController.selectedCalendarCells
 
-    private var _yearData: List<MonthDataUiModel> = emptyList()
+    private var _yearData: List<MonthData> = emptyList()
 
 
     init {
@@ -52,19 +52,19 @@ internal class EditorControllerImpl(
 
 
     //TODO:Events handler
-    override fun onSelectionRequest(cell: CalendarCellUiModel) {
-        selectionController.toggleSelection(cell)
+    override fun onSelectionRequest(cell: CalendarGridCell) {
+        selectionController.toggleDateSelection(cell)
     }
 
 
-    override fun onHolidayConfirm(reason: String, type: HolidayTypeUiModel) {
-        _updateHoliday(selectionController.selectedDates, reason, type)
-        selectionController.clearSelection()
+    override fun onHolidayConfirm(reason: String, type: HolidayType) {
+        _updateHoliday(selectionController.selectedDays, reason, type)
+        selectionController.clearSelections()
     }
 
-    private fun _updateHoliday(dateOrdinals: List<Int>, reason: String, type: HolidayTypeUiModel) {
+    private fun _updateHoliday(dateOrdinals: List<Int>, reason: String, type: HolidayType) {
         try {
-            val currentMonth = viewerController.currentMonthOrdinal
+            val currentMonth = viewerController.currentMonthIndex
             _yearData =
                 HolidayAddCommand(_yearData, dateOrdinals, reason, type, currentMonth).execute()
             viewerController.setYearData(_yearData)
@@ -84,7 +84,7 @@ internal class EditorControllerImpl(
     private suspend fun fetchCalender() {
         DIFactory
             .createRawRetrieveCalenderUseCase()
-            .execute(2024, weekend = listOf(DayNameModel.THURSDAY, DayNameModel.FRIDAY))
+            .execute(2024, weekend = listOf(DayOfWeek.THURSDAY, DayOfWeek.FRIDAY))
             .onSuccess {
                 calender = it
 
@@ -95,7 +95,7 @@ internal class EditorControllerImpl(
     }
 
     private fun _updateYearData(model: CalendarModel) {
-        _yearData = CalendarUIGridModelPresenter().buildMonthGrid(model)
+        _yearData = CalendarUIGridModelPresenter()._buildMonthGrid(model)
     }
 }
 

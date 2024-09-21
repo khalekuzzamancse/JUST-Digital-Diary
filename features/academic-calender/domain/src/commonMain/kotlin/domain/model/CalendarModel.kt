@@ -16,7 +16,7 @@ data class MonthModel(
 )
 
 data class DayModel(
-    val name: DayNameModel,
+    val name: DayOfWeek,
     val date: Int,//such as 1,2,3...31 ; it's represent the dates
     val holiday: HolidayModel? = null
 ) {
@@ -55,7 +55,7 @@ enum class HolidayType {
     SpecialDay,
 }
 
-enum class DayNameModel {
+enum class DayOfWeek {
     SATURDAY, SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY
 }
 

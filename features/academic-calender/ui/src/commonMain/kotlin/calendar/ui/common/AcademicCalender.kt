@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package calender.common
+package calendar.ui.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,8 +32,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import calendar.ui.common.model.CalendarGridCell
 
 /**
+ * - It represent the UI of academic calender,it can either be used as viewer to show the
+ * calender with holiday
+ - It can also be used as Editor to update or add the holiday
  * To Use as Editor:
  * - [onClick] pass non null
  * - [selected] pass the selected(that are clicked), because they need to highlight
@@ -44,13 +48,13 @@ fun AcademicCalender(
     modifier: Modifier = Modifier,
     year: String,
     monthName: String,
-    cellUiModels: List<CalendarCellUiModel>,
+    cellUiModels: List<CalendarGridCell>,
     onHolidayClick: (reason: String) -> Unit,
     onNext: () -> Unit,
     onPrev: () -> Unit,
     //For editor mode
-    selected: Set<CalendarCellUiModel>?,
-    onClick: ((CalendarCellUiModel) -> Unit)?,
+    selected: Set<CalendarGridCell>?,
+    onClick: ((CalendarGridCell) -> Unit)?,
 ) {
     Column(
         modifier = modifier.width(IntrinsicSize.Min)
@@ -127,11 +131,11 @@ private fun _YearHeader(modifier: Modifier = Modifier, year: String) {
  */
 @Composable
 private fun _CalenderGrid(
-    calenderCellUiModels: List<CalendarCellUiModel>,
+    calenderCellUiModels: List<CalendarGridCell>,
     onHolidayClick: (reason: String) -> Unit,
     //For editor mode
-    selected: Set<CalendarCellUiModel>?,
-    onClick: ((CalendarCellUiModel) -> Unit)?,
+    selected: Set<CalendarGridCell>?,
+    onClick: ((CalendarGridCell) -> Unit)?,
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(0.dp)
@@ -171,13 +175,13 @@ private fun _CalenderGrid(
  */
 @Composable
 private fun _EachColumn(
-    calenderCellUiModels: List<CalendarCellUiModel>,
+    calenderCellUiModels: List<CalendarGridCell>,
     currentColumn: Int,
     dayName: String,
     onHolidayClick: (reason: String) -> Unit,
 //For editor mode
-    selected: Set<CalendarCellUiModel>?,
-    onClick: ((CalendarCellUiModel) -> Unit)?,
+    selected: Set<CalendarGridCell>?,
+    onClick: ((CalendarGridCell) -> Unit)?,
 ) {
     val cellElevation = 1.dp
     Column(
@@ -216,20 +220,20 @@ private fun _EachColumn(
 private fun _ColumnContent(
     modifier: Modifier = Modifier,
     currentColumn: Int,
-    cellsInfo: List<CalendarCellUiModel>,
+    cellsInfo: List<CalendarGridCell>,
     cellElevation: Dp,
     onHolidayClick: (reason: String) -> Unit,
     //For editor mode
-    selected:Set<CalendarCellUiModel>?,
-    onClick: ((CalendarCellUiModel) -> Unit)?,
+    selected:Set<CalendarGridCell>?,
+    onClick: ((CalendarGridCell) -> Unit)?,
 ) {
     val fontSize: TextUnit = 20.sp
     val width: Dp = with(LocalDensity.current) { fontSize.toDp() * 2 }//max 2 digit date
 
     //cellNo are, x, x+7,x+7+7,...
     for (cellNo in currentColumn until 35 step 7) {
-        val day = cellsInfo.find { it.cellNo == cellNo }
-        val hasDateAssociatedWithThisCell = (day?.dayOrdinal != null)
+        val day = cellsInfo.find { it.cellIndex == cellNo }
+        val hasDateAssociatedWithThisCell = (day?.dayOfMonth != null)
         val isHoliday = (day?.holiday != null)
         val inEditorMode = (onClick != null)
         val isSelected=(selected?.find { it==day }!=null)
@@ -241,8 +245,8 @@ private fun _ColumnContent(
                 if (hasDateAssociatedWithThisCell) {
                     _DateLabel(
                         modifier = it,
-                        dateOrdinal = day?.dayOrdinal,
-                        textColorHex = day?.holiday?.colorHexCode,
+                        dateOrdinal = day?.dayOfMonth,
+                        textColorHex = day?.holiday?.colorCode,
                         fontSize = fontSize
                     )
                 }

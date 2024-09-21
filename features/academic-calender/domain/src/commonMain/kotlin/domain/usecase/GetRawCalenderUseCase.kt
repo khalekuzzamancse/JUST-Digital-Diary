@@ -5,7 +5,7 @@ import common.docs.domain_layer.RepositoryDoc
 import common.docs.domain_layer.ServiceDoc
 import common.docs.domain_layer.UseCaseDoc
 import domain.model.CalendarModel
-import domain.model.DayNameModel
+import domain.model.DayOfWeek
 import domain.repository.CalenderRepository
 
 /**
@@ -19,7 +19,7 @@ import domain.repository.CalenderRepository
 class GetRawCalenderUseCase(
     private val repository: CalenderRepository
 ) {
-    suspend fun execute(year: Int, weekend: List<DayNameModel>): Result<CalendarModel> {
+    suspend fun execute(year: Int, weekend: List<DayOfWeek>): Result<CalendarModel> {
         return repository.retrieveRawCalender(year, weekend)
     }
 }

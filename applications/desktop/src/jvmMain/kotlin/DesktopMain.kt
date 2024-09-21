@@ -6,7 +6,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
-import calender.add_calender.HolidayEditor
+import calendar.ui.factory.UIFactory
+import calendar.ui.viewer.AcademicCalenderViewer
 import navigation.themes.AppTheme
 
 
@@ -28,10 +29,18 @@ fun main() {
 //                NavigationRoot()
 //              AuthNavHostDesktop()
                 AppTheme {
-                    HolidayEditor(
+//                    HolidayEditorUI(
+//                        onSnackBarMsgRequest = {},
+//                        controller = remember { UIFactory.createCalenderEditorController() }
+//                    )
+                    AcademicCalenderViewer(
+                        controller = remember { UIFactory.createCalenderController() },
                         onSnackBarMsgRequest = {},
-
                     )
+//                    HolidayEditorUI(
+//                        onSnackBarMsgRequest = {},
+//                        controller = remember { UIFactory.createCalenderEditorController() }
+//                    )
 
                 }
 
