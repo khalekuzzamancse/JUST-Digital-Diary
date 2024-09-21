@@ -1,5 +1,6 @@
-package academic.ui
+package academic.ui.other
 
+import academic.ui.factory.UiFactory
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController

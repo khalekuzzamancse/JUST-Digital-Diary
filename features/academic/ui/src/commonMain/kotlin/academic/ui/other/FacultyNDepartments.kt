@@ -1,4 +1,4 @@
-package academic.ui
+package academic.ui.other
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
@@ -12,13 +12,13 @@ import androidx.compose.ui.Modifier
 import common.newui.SnackNProgressBarDecorator
 import common.newui.TwoPaneLayout
 import common.newui.TwoPaneNewUIPros
-import faculty.ui.department.DepartmentListDestination
-import faculty.ui.department.DepartmentListEvent
-import faculty.ui.department.DepartmentListState
+import academic.ui.other.department.DepartmentListDestination
+import academic.ui.other.department.DepartmentListEvent
+import academic.ui.other.department.DepartmentListState
 import faculty.ui.faculty.FacultiesScreenViewModel
-import faculty.ui.faculty.FacultyListDestination
-import faculty.ui.faculty.FacultyListEvent
-import faculty.ui.faculty.FacultyListState
+import academic.ui.other.faculty.FacultyListDestination
+import academic.ui.other.faculty.FacultyListEvent
+import academic.ui.other.faculty.FacultyListState
 
 /**
  * @param backHandler is to override the back button press functionality

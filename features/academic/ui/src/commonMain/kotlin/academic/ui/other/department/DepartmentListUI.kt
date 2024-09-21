@@ -1,4 +1,4 @@
-package faculty.ui.department
+package academic.ui.other.department
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

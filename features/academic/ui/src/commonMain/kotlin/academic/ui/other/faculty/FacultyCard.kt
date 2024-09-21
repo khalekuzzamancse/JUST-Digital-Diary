@@ -1,33 +1,34 @@
-package faculty.ui.department
+package academic.ui.other.faculty
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.filled.School
+import androidx.compose.material.icons.outlined.School
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import common.newui.CardInfoState
 import common.newui.GenericInfoCard
+import common.newui.generateAcronym
 
 @Composable
-fun DepartmentCard(
+fun FacultyCard(
     modifier: Modifier = Modifier,
-    deptName: String,
-    deptShortName: String,
-    numOfTeacher: String,
+    facultyName: String,
+    departmentCount: String,
     isSelected: Boolean,
     onSelect: () -> Unit
 ) {
 
-    val backgroundColorSelected = MaterialTheme.colorScheme.secondary
-    val backgroundColorUnselected = MaterialTheme.colorScheme.surfaceContainer
-    val iconSelected = Icons.Filled.Person
-    val iconUnselected = Icons.Outlined.Person
-    val countLabel = "Teacher(s)"
+    val backgroundColorSelected = MaterialTheme.colorScheme.primaryContainer
+    val backgroundColorUnselected = MaterialTheme.colorScheme.tertiaryContainer
+    val iconSelected = Icons.Filled.School
+    val iconUnselected = Icons.Outlined.School
+    val countLabel = "Departments"
+
     val state = CardInfoState(
-        name = deptName,
-        shortName = deptShortName,
-        count = numOfTeacher,
+        name = facultyName,
+        shortName = generateAcronym(facultyName),
+        count = departmentCount,
         isSelected = isSelected,
         backgroundColorSelected = backgroundColorSelected,
         backgroundColorUnselected = backgroundColorUnselected,

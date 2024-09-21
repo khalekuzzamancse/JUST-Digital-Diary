@@ -1,4 +1,4 @@
-package faculty.ui.department
+package academic.ui.other.department
 
 data class DepartmentListState(
     val title: String? = null,

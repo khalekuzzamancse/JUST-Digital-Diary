@@ -1,10 +1,13 @@
 package faculty.ui.faculty
 
+import academic.ui.other.faculty.FacultiesScreenState
+import academic.ui.other.faculty.Faculty
+import academic.ui.other.faculty.FacultyListState
 import common.newui.CustomSnackBarData
 import faculty.domain.usecase.RetrieveDepartmentsUseCase
 import faculty.domain.usecase.RetrieveFactualityUseCase
-import faculty.ui.department.Department
-import faculty.ui.department.DepartmentListState
+import academic.ui.other.department.Department
+import academic.ui.other.department.DepartmentListState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

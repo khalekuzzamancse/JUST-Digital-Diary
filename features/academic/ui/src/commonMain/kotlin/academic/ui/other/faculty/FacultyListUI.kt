@@ -1,4 +1,4 @@
-package faculty.ui.faculty
+package academic.ui.other.faculty
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState

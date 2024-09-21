@@ -1,4 +1,4 @@
-package faculty.ui.faculty
+package academic.ui.other.faculty
 
 data class FacultyListState(
     val faculties: List<Faculty> = emptyList(),

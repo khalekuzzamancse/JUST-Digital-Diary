@@ -11,6 +11,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
@@ -27,24 +27,17 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 
+/**
+ * - Must override the toSting because to string will be shown as option
+ */
 @Composable
-fun MyDropDownMenu(
+fun DropDown(
     modifier: Modifier = Modifier,
     options: List<String>,
-    selected: String,
+    selected: Int,
+    onOptionSelected: (Int) -> Unit,
     leadingIcon: ImageVector? = null,
-    onOptionSelected: (String) -> Unit,
-) {
-
-}
-
-@Composable
-fun MyDrop(
-    modifier: Modifier,
-    options: List<String>,
-    leadingIcon: ImageVector? = null,
-    selected: String,
-    onOptionSelected: (String) -> Unit
+    color: TextFieldColors = TextFieldDefaults.colors()
 ) {
     var isExpanded by remember {
         mutableStateOf(false)
@@ -53,12 +46,14 @@ fun MyDrop(
 
     Box {
         TextField(
-            modifier =modifier.onGloballyPositioned { coordinates ->
+            modifier = modifier.onGloballyPositioned { coordinates ->
                 textFieldSize = coordinates.size.toSize()
             },
             readOnly = true,
-            value = selected,
-            onValueChange = onOptionSelected,
+            value = options[selected],
+            onValueChange = {
+
+            },
             trailingIcon = {
                 Icon(
                     imageVector = Icons.Default.ArrowDropDown,
@@ -68,18 +63,15 @@ fun MyDrop(
                     }
                 )
             },
-            leadingIcon = {
-                if (leadingIcon != null) {
+            leadingIcon = if (leadingIcon == null) null else {
+                {
                     Icon(
                         imageVector = leadingIcon,
                         contentDescription = null,
                     )
                 }
             },
-            colors = TextFieldDefaults.colors(
-                focusedIndicatorColor = Color.Unspecified,
-                unfocusedIndicatorColor = Color.Unspecified
-            ),
+            colors = color,
             shape = RoundedCornerShape(8.dp)
         )
         DropdownMenu(
@@ -88,19 +80,18 @@ fun MyDrop(
                 isExpanded = false
             },
             modifier = Modifier
-                .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
-            ,
+                .width(with(LocalDensity.current) { textFieldSize.width.toDp() }),
             offset = DpOffset.Zero.copy(
-                y=-((with(LocalDensity.current) { textFieldSize.height.toDp() }))
+                y = -((with(LocalDensity.current) { textFieldSize.height.toDp() }))
             )
         ) {
-            options.forEach {
+            options.forEachIndexed{index,value->
                 DropdownMenuItem(
                     text = {
-                        Text(text = it)
+                        Text(text =value )
                     },
                     onClick = {
-                        onOptionSelected(it)
+                        onOptionSelected(index)
                         isExpanded = false
                     }
                 )

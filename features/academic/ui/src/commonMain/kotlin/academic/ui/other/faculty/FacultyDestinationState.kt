@@ -1,4 +1,4 @@
-package faculty.ui.faculty
+package academic.ui.other.faculty
 
 import common.newui.CustomSnackBarData
 

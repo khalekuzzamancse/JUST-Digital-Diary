@@ -1,5 +1,6 @@
 
 package navigation
+import academic.ui.admin.TeacherFormScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
@@ -22,7 +23,9 @@ fun RootNavHost(
 //    if (slapScreenShowing)
 //        SplashScreen()
 //    else
-        _FeatureSection(mainViewModel, onEvent)
+    TeacherFormScreen()
+
+       // _FeatureSection(mainViewModel, onEvent)
 }
 
 @Composable

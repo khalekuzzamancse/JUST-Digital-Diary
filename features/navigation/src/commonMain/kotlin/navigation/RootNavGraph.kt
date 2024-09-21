@@ -1,6 +1,6 @@
 package navigation
 
-import academic.ui.FacultyFeatureNavGraph
+import academic.ui.other.FacultyFeatureNavGraph
 import administration.ui.officers.employeelist.components.AdminEmployeeListEvent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
