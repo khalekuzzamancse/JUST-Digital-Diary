@@ -6,7 +6,7 @@ import common.docs.domain_layer.ModelDoc
 
 /**
  * Further discussion on:
- *  - `Model`: see [ModelDoc]
+- `Model`: see [ModelDoc]
  */
 
 class AcademicCalendar private constructor(

@@ -10,11 +10,11 @@ import domain.service.UserService
 import factory.NetworkFactory
 
 object DataModuleFactory {
-    fun createRepository(): CalenderRepository =
-        CalenderRepositoryImpl(
+    fun createRepository(): CalenderRepository = CalenderRepositoryImpl(
             apiServiceClient = NetworkFactory.createAPIServiceClient(),
             jsonParser = NetworkFactory.createJsonParser()
         )
+
     fun createCalenderService(): CalendarService = CalendarServiceImpl()
     fun createUserService(): UserService = UserServiceImpl()
 }

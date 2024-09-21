@@ -4,7 +4,6 @@ package data.misc
 
 import domain.model.CalendarModel
 import domain.model.DayModel
-import domain.model.DayOfWeek
 import domain.model.HolidayModel
 import domain.model.HolidayType
 import domain.model.MonthModel
@@ -44,13 +43,13 @@ class CalendarBuilder {
 
     private fun mapDayOfWeek(dayOfWeek: DayOfWeek): domain.model.DayOfWeek {
         return when (dayOfWeek) {
-            DayOfWeek.SATURDAY -> DayOfWeek.SATURDAY
-            DayOfWeek.SUNDAY -> DayOfWeek.SUNDAY
-            DayOfWeek.MONDAY -> DayOfWeek.MONDAY
-            DayOfWeek.TUESDAY -> DayOfWeek.TUESDAY
-            DayOfWeek.WEDNESDAY -> DayOfWeek.WEDNESDAY
-            DayOfWeek.THURSDAY -> DayOfWeek.THURSDAY
-            DayOfWeek.FRIDAY -> DayOfWeek.FRIDAY
+            DayOfWeek.SATURDAY -> domain.model.DayOfWeek.SATURDAY
+            DayOfWeek.SUNDAY -> domain.model.DayOfWeek.SUNDAY
+            DayOfWeek.MONDAY -> domain.model.DayOfWeek.MONDAY
+            DayOfWeek.TUESDAY ->domain.model. DayOfWeek.TUESDAY
+            DayOfWeek.WEDNESDAY -> domain.model.DayOfWeek.WEDNESDAY
+            DayOfWeek.THURSDAY ->domain.model. DayOfWeek.THURSDAY
+            DayOfWeek.FRIDAY -> domain.model.DayOfWeek.FRIDAY
         }
     }
 

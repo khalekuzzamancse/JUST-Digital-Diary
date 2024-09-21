@@ -6,22 +6,15 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(localModules.versions.common.ui.get()))
-                implementation(project(localModules.versions.feature.miscellaneous.domain.get()))
-                implementation(project(localModules.versions.feature.miscellaneous.di.get()))
+                implementation(libs.common.navigation)
+                implementation(libs.common.viewmodel)
+                implementation(projects.common.ui)
+                implementation(projects.features.miscellaneous.domain)
+                implementation(projects.features.miscellaneous.di)
                 implementation(projects.features.academicCalender.ui)
             }
         }
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.androidx.navigation.compose)//navigation graph define
-            }
-        }
-        val desktopMain by getting {
-            dependencies {
 
-            }
-        }
     }
 
 
@@ -29,4 +22,7 @@ kotlin {
 android {
     namespace = "miscellaneous.ui"
 
+}
+dependencies {
+    implementation(project(":features:academic-calender:ui"))
 }

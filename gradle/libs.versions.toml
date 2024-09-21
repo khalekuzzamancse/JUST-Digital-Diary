@@ -12,6 +12,8 @@ realmVersion = "1.13.0"
 windowSize="0.3.1"
 navigationCompose = "2.7.7"
 kotlinxCoroutinesSwing="1.8.0"
+commonNavigationVer = "2.7.0-alpha07"
+commonViewmodelVer="2.8.0"
 [libraries]
 androidx-activity-compose= { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
@@ -45,6 +47,10 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 compose-gradlePlugin = { module = "org.jetbrains.compose:org.jetbrains.compose.gradle.plugin", version.ref = "compose-plugin" }
+## Navigation for multiplatfrom
+common-navigation={module="org.jetbrains.androidx.navigation:navigation-compose",version.ref="commonNavigationVer"}
+##  Navigation for multiplatfrom
+common-viewmodel={module="org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose",version.ref="commonViewmodelVer"}
 
 [bundles]
 test = ["kotlin-test", "kotlin-test-junit"]
