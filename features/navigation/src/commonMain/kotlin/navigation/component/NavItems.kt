@@ -6,17 +6,23 @@ import androidx.compose.material.icons.automirrored.filled.Notes
 import androidx.compose.material.icons.automirrored.outlined.Message
 import androidx.compose.material.icons.automirrored.outlined.Notes
 import androidx.compose.material.icons.filled.AdminPanelSettings
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.AdminPanelSettings
+import androidx.compose.material.icons.outlined.CalendarMonth
+import androidx.compose.material.icons.outlined.CalendarToday
 import androidx.compose.material.icons.outlined.Explore
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Search
 import common.newui.Destination
@@ -34,7 +40,8 @@ sealed interface NavDestination : Destination {
     data object NoteBook : NavDestination
     data object MessageFromVC : NavDestination
     data object AboutUs : NavDestination
-
+    data object ExamSchedule : NavDestination
+    data object ClassSchedule:NavDestination
 }
 
 object NavDestinationBuilder {
@@ -94,11 +101,23 @@ object NavDestinationBuilder {
 
     private fun group4() = NavGroup(
         items = listOf(
+//            NavigationItem(
+//                label = "NoteBook",
+//                unFocusedIcon = Icons.AutoMirrored.Outlined.Notes,
+//                focusedIcon = Icons.AutoMirrored.Filled.Notes,
+//                destination = NavDestination.NoteBook
+//            ),
             NavigationItem(
-                label = "NoteBook",
-                unFocusedIcon = Icons.AutoMirrored.Outlined.Notes,
-                focusedIcon = Icons.AutoMirrored.Filled.Notes,
-                destination = NavDestination.NoteBook
+                label = "Class Schedule",
+                unFocusedIcon =   Icons.Outlined.CalendarMonth,
+                focusedIcon =  Icons.Filled.CalendarMonth,
+                destination = NavDestination.ClassSchedule
+            ),
+            NavigationItem(
+                label = "Exam Schedule",
+                unFocusedIcon = Icons.Outlined.CalendarToday,
+                focusedIcon = Icons.Filled.CalendarToday,
+                destination = NavDestination.ExamSchedule
             ),
         )
     )

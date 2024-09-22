@@ -17,6 +17,7 @@ kotlin {
                 implementation(projects.features.notebook.ui)
                 implementation(projects.features.queryservice.ui)
                 implementation(projects.features.auth.di)
+                implementation(projects.features.schedule.ui)
             }
         }
         val androidMain by getting{

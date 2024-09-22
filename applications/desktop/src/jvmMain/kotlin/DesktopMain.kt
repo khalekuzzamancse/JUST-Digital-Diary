@@ -25,7 +25,7 @@ fun main() {
         ) {
 
             MaterialTheme {
-//                NavigationRoot()
+
 //              AuthNavHostDesktop()
                 AppTheme {
                     RootNavHost{
