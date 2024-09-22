@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import core.network.NetManagerProvider
 import just.digitaldiary.theme.AppTheme
+import navigation.RootNavHost
 
 
 class MainActivity : ComponentActivity() {
@@ -20,10 +21,7 @@ class MainActivity : ComponentActivity() {
         NetManagerProvider.setConnectivityManager(connectivityManager)
         setContent {
             AppTheme {
-                JsonFilePicker{
-                    Log.d("JOSNPICker",it)
-
-                }
+                RootNavHost {}
 //                AndroidRootNavigation(
 //                    onEvent = eventHandler::handleEvent
 //                )
