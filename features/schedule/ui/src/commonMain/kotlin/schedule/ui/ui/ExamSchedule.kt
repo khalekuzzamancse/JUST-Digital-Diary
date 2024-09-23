@@ -1,4 +1,4 @@
-package schedule.ui
+package schedule.ui.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -35,112 +35,111 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import schedule.di.DomainModuleFactory
-import schedule.ui.common.DepartmentSessionHeader
+import schedule.ui.ui.common.DepartmentSessionHeader
+import schedule.ui.ui.common.TextSizeMeasurer
 import schedule.ui.model.ExamDetailsModel
 import schedule.ui.model.ExamScheduleModel
 import schedule.ui.presenter.ExamSchedulePresenter
-
+/**
+ * TODO: Need to Refactor, use a Viewmodel
+ */
 
 @Composable
-fun ExamRSchedule() {
+fun ExamScheduleScreen() {
     var examSchedule by remember { mutableStateOf<ExamScheduleModel?>(null) }
     LaunchedEffect(Unit) {
         val result = DomainModuleFactory.createRetrieveExaScheduleUseCase().execute("")
         result.onSuccess {
             try {
 
-                examSchedule = ExamSchedulePresenter().fromDomainToUIModel(result.getOrThrow().first())
+                examSchedule =
+                    ExamSchedulePresenter().fromDomainToUIModel(result.getOrThrow().first())
 
-            } catch (e: Exception) {
+            } catch (_: Exception) {
 
             }
 
         }
 
     }
-    examSchedule?.let {examSchedule->
-        Surface(
-            modifier = Modifier
-                .horizontalScroll(rememberScrollState())
-                .verticalScroll(rememberScrollState())
-                .padding(8.dp),
-            shadowElevation = 3.dp
-        ) {
-            Column {
-                DepartmentSessionHeader(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally)
-                        .padding(16.dp)
-                        .clip(RoundedCornerShape(8.dp)),
-                    departmentName = examSchedule.dept,
-                    session = examSchedule.session,
-                    year = examSchedule.year,
-                    semester = examSchedule.semester,
-                )
-                _ExamRoutine(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    exams = examSchedule.exams,
-                )
-            }
-
-
-        }
-
+    examSchedule?.let { schedule ->
+        ExamScheduleScreen(schedule)
     }
 
 }
+
+@Composable
+fun ExamScheduleScreen(examSchedule: ExamScheduleModel) {
+    Surface(
+        modifier = Modifier
+            .horizontalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState())
+            .padding(8.dp),
+        shadowElevation = 3.dp
+    ) {
+        Column {
+            DepartmentSessionHeader(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
+                    .padding(16.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                departmentName = examSchedule.dept,
+                session = examSchedule.session,
+                year = examSchedule.year,
+                semester = examSchedule.semester,
+            )
+            _ExamRoutine(
+                modifier = Modifier
+                    .padding(16.dp),
+                //avoid render empty item because text will be measured before layout
+                exams = examSchedule.exams.filter { it.allFieldAvailable() },
+            )
+        }
+
+
+    }
+
+
+}
+
 
 @Composable
 private fun _ExamRoutine(
     modifier: Modifier = Modifier,
     exams: List<ExamDetailsModel>
 ) {
-    val measurer = rememberTextMeasurer()
-    val density = LocalDensity.current
-    val style = MaterialTheme.typography.bodyMedium
-    val verticalGap = 8.dp
+    if (exams.isEmpty()) {
+        Text("No exam found")
+    } else {
+        val measurer = rememberTextMeasurer()
+        val density = LocalDensity.current
+        val style = MaterialTheme.typography.bodyMedium
+        val verticalGap = 8.dp
 
-    // Create a text measurer utility for columns
-    val textMeasurer = remember(exams) { TextSizeMeasurer(measurer, style, density) }
+        // Create a text measurer utility for columns
+        val textMeasurer = remember(exams) { TextSizeMeasurer(measurer, style, density) }
 
-    // Define column labels
-    val labels = listOf("Exam Date", "Course Code", "Course Title", "Time")
+        // Define column labels
+        val labels = listOf("Exam Date", "Course Code", "Course Title", "Time")
 
-    // Calculate max widths for each column
-    val dateColumnWidth = _calculateColumnWidth(exams.map { it.date }, labels[0], textMeasurer)
-    val courseCodeColumnMaxWidth =
-        _calculateColumnWidth(exams.map { it.courseCode }, labels[1], textMeasurer)
-    val courseTitleColumnMaxWidth =
-        _calculateColumnWidth(listOf(labels[2]), labels[2], textMeasurer) + 100.dp
-    val timeColumnMaxWidth =
-        _calculateColumnWidth(exams.map { it.time }, labels[3], textMeasurer)
+        // Calculate max widths for each column
+        val dateColumnWidth = _calculateColumnWidth(exams.map { it.date }, labels[0], textMeasurer)
+        val courseCodeColumnMaxWidth =
+            _calculateColumnWidth(exams.map { it.courseCode }, labels[1], textMeasurer)
+        val courseTitleColumnMaxWidth =
+            _calculateColumnWidth(listOf(labels[2]), labels[2], textMeasurer) + 100.dp
+        val timeColumnMaxWidth =
+            _calculateColumnWidth(exams.map { it.time }, labels[3], textMeasurer)
 
-    // Render the exam schedule
-    Column(
-        modifier = modifier
-    ) {
-        _RenderHeaderRow(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.tertiary),
-            labels = labels,
-            columnWidths = listOf(
-                dateColumnWidth,
-                courseCodeColumnMaxWidth,
-                courseTitleColumnMaxWidth,
-                timeColumnMaxWidth
-            ),
-            style = style,
-            verticalGap = verticalGap
-        )
-
-        Spacer(Modifier.height(verticalGap))
-
-        exams.forEach { exam ->
-            _RenderExamRow(
-                modifier = Modifier.height(IntrinsicSize.Max),
-                exam = exam,
+        // Render the exam schedule
+        Column(
+            modifier = modifier
+        ) {
+            _RenderHeaderRow(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.tertiary),
+                labels = labels,
                 columnWidths = listOf(
                     dateColumnWidth,
                     courseCodeColumnMaxWidth,
@@ -150,9 +149,28 @@ private fun _ExamRoutine(
                 style = style,
                 verticalGap = verticalGap
             )
+
             Spacer(Modifier.height(verticalGap))
+
+            exams.forEach { exam ->
+                _RenderExamRow(
+                    modifier = Modifier.height(IntrinsicSize.Max),
+                    exam = exam,
+                    columnWidths = listOf(
+                        dateColumnWidth,
+                        courseCodeColumnMaxWidth,
+                        courseTitleColumnMaxWidth,
+                        timeColumnMaxWidth
+                    ),
+                    style = style,
+                    verticalGap = verticalGap
+                )
+                Spacer(Modifier.height(verticalGap))
+            }
         }
     }
+
+
 }
 
 // Helper function to calculate the maximum width of a column

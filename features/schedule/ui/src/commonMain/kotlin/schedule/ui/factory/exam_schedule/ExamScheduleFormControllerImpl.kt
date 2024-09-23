@@ -1,12 +1,12 @@
-package schedule.ui.factory.class_schedule
+package schedule.ui.factory.exam_schedule
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import schedule.ui.ui.admin.ClassScheduleFormController
-import schedule.ui.model.ClassDetailModel
-import schedule.ui.model.ClassScheduleModel
+import schedule.ui.ui.admin.ExamScheduleFormController
+import schedule.ui.model.ExamDetailsModel
+import schedule.ui.model.ExamScheduleModel
 
 
 /**
@@ -15,13 +15,13 @@ import schedule.ui.model.ClassScheduleModel
  *  - Additionally, implementing an undo operation in the future will be easier through this command
  */
 
-interface AddCommand {
+interface AddExamToScheduleCommand {
     fun execute(
-        scheduleModel: ClassScheduleModel,
-        day: String,
-        classDetail: ClassDetailModel
-    ): ClassScheduleModel
+        schedule: ExamScheduleModel,
+        exam: ExamDetailsModel
+    ): ExamScheduleModel
 }
+
 /**
  * - Properties are passed as function parameters because the instance will be created via a factory method
  *   If we were to pass them through the constructor, the factory would need to know the properties beforehand,
@@ -29,10 +29,10 @@ interface AddCommand {
  * - This class receives all dependencies via the constructor, making it easy to integrate
 with Dependency Injection (DI)
  */
-class ClassScheduleFormControllerImpl internal constructor(
-    override val validator: ClassScheduleFormController.Validator,
-    private val addCommand: AddCommand,
-) : ClassScheduleFormController {
+class ExamScheduleFormControllerImpl internal constructor(
+    override val validator: ExamScheduleFormController.Validator,
+    private val addCommand: AddExamToScheduleCommand,
+) : ExamScheduleFormController {
     private val _state = MutableStateFlow(toEmpty())
     override val state = _state.asStateFlow()
 
@@ -49,22 +49,24 @@ class ClassScheduleFormControllerImpl internal constructor(
     override val session: StateFlow<String> = _session.asStateFlow()
 
 
-    private val _selectedDayIndex = MutableStateFlow(0)
-    override val selectedDayIndex: StateFlow<Int> = _selectedDayIndex.asStateFlow()
+    private val _courseTitle = MutableStateFlow("")
+    override val courseTitle: StateFlow<String> = _courseTitle.asStateFlow()
 
-    private val _teacherName = MutableStateFlow("")
-    override val teacherName: StateFlow<String> = _teacherName.asStateFlow()
+    private val _time = MutableStateFlow("")
+    override val time: StateFlow<String> = _time.asStateFlow()
 
-    private val _startTime = MutableStateFlow("")
-    override val startTime: StateFlow<String> = _startTime.asStateFlow()
-
-    private val _endTime = MutableStateFlow("")
-    override val endTime: StateFlow<String> = _endTime.asStateFlow()
+    private val _date = MutableStateFlow("")
+    override val date: StateFlow<String> = _date.asStateFlow()
 
     init {
         validator.observeFieldChanges(
-            courseCode, year, semester,
-            session, teacherName, startTime, endTime
+            year = year,
+            semester = semester,
+            session = session,
+            courseCode = courseCode,
+            courseTitle = courseTitle,
+            time = time,
+            date = date
         )
     }
 
@@ -84,23 +86,22 @@ class ClassScheduleFormControllerImpl internal constructor(
         _state.update { it.copy(semester = value) }
         _semester.update { value }
     }
+
     override fun onCourseCodeChanged(value: String) = _courseCode.update { value.uppercase() }
-    override fun onSelectedDayIndexChanged(value: Int) = _selectedDayIndex.update { value }
-    override fun onTeacherNameChanged(value: String) = _teacherName.update { value }
-    override fun onStartTimeChanged(value: String) = _startTime.update { value }
-    override fun onEndTimeChanged(value: String) = _endTime.update { value }
+    override fun onCourseTitleChanged(value: String) = _courseTitle.update { value }
+    override fun onTimeChanged(value: String) = _time.update { value }
+    override fun onDateChanged(value: String) = _date.update { value }
 
 
     override fun onCourseAddRequest(): Boolean {
         _state.update { schedule ->
             addCommand.execute(
-                scheduleModel = schedule,
-                day = days[selectedDayIndex.value],
-                classDetail = ClassDetailModel(
+                schedule = schedule,
+                exam = ExamDetailsModel(
                     courseCode = courseCode.value,
-                    time = "${startTime.value}-${endTime.value}",
-                    teacherShortName = teacherName.value,
-                    durationInHours = 1
+                    time = time.value,
+                    courseTitle = courseTitle.value,
+                    date = date.value
                 )
             )
         }
@@ -109,12 +110,12 @@ class ClassScheduleFormControllerImpl internal constructor(
 
     //TODO helper method section
 
-    private fun toEmpty() = ClassScheduleModel(
+    private fun toEmpty() = ExamScheduleModel(
         dept = "",
         session = "",
         year = "",
         semester = "",
-        routine = emptyList()
+        exams = emptyList()
     )
 
 }

@@ -1,4 +1,4 @@
-package schedule.ui
+package schedule.ui.ui.common
 
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.TextStyle

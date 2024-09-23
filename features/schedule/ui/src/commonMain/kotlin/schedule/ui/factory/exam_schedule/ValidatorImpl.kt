@@ -1,4 +1,5 @@
-package schedule.ui.factory.class_schedule
+@file:Suppress("UnUsed")
+package schedule.ui.factory.exam_schedule
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -8,54 +9,51 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import schedule.ui.ui.admin.ClassScheduleFormController
+import schedule.ui.ui.admin.ExamScheduleFormController
 
-class ValidatorImpl : ClassScheduleFormController.Validator {
-
+class ValidatorImpl : ExamScheduleFormController.Validator {
     private val _areAllFieldsFilled = MutableStateFlow(false)
-    override val areAllFieldsFilled: StateFlow<Boolean> = _areAllFieldsFilled.asStateFlow()
+    override val areAllFieldsFilled = _areAllFieldsFilled.asStateFlow()
 
     private val _errors = MutableStateFlow<List<String>>(emptyList())
-    override val errors: StateFlow<List<String>> = _errors.asStateFlow()
+    override val errors = _errors.asStateFlow()
 
     override fun observeFieldChanges(
-        courseCodeFlow: StateFlow<String>,
-        yearFlow: StateFlow<String>,
-        semesterFlow: StateFlow<String>,
-        sessionFlow: StateFlow<String>,
-        teacherNameFlow: StateFlow<String>,
-        startTimeFlow: StateFlow<String>,
-        endTimeFlow: StateFlow<String>
+        year: StateFlow<String>,
+        semester: StateFlow<String>,
+        session: StateFlow<String>,
+        courseCode: StateFlow<String>,
+        courseTitle: StateFlow<String>,
+        time: StateFlow<String>,
+        date: StateFlow<String>
     ) {
         combine(
-            courseCodeFlow,
-            yearFlow,
-            semesterFlow,
-            sessionFlow,
-            teacherNameFlow,
-            startTimeFlow,
-            endTimeFlow
+            year,
+            semester,
+            session,
+            courseCode,
+            courseTitle,
+            time,
+            date
         ) { fields: Array<String> ->
             fields
         }.onEach { fields ->
             val allFieldsFilled = fields.all { it.isNotBlank() }
             _areAllFieldsFilled.value = allFieldsFilled
+
             val errors = mutableListOf<String>()
-            errors.addAll(validateFields(fields[1], fields[2], fields[5], fields[6]))
+            errors.addAll(validateFields(fields[0], fields[1], fields[5]))
             _errors.value = errors
+
         }.launchIn(CoroutineScope(Dispatchers.Default)) // Launch in the background scope
     }
-
     private fun validateFields(
-        year: String, semester: String, startTime: String, endTime: String
+        year: String, semester: String, time: String,
     ): List<String> {
         val errorMessages = mutableListOf<String?>()
         errorMessages.add(validYearOrError(year))
         errorMessages.add(validateSemesterOrError(semester))
-        errorMessages.add(validateTimeOrError(startTime))
-        errorMessages.add(validateTimeOrError(endTime))
-        if (startTime.isNotBlank() && startTime == endTime)
-            errorMessages.add("Start and end time must be different")
+        errorMessages.add(validateTimeOrError(time))
         return errorMessages.filterNotNull()//error message
     }
 

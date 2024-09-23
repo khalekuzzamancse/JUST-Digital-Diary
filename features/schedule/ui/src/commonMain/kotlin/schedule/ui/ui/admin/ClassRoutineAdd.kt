@@ -1,4 +1,4 @@
-package schedule.ui.admin
+package schedule.ui.ui.admin
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,11 +36,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.StateFlow
-import schedule.ui.ClassSchedule
-import schedule.ui.common.ErrorText
-import schedule.ui.common._CustomTextField
+import schedule.ui.ui.common.ErrorText
+import schedule.ui.ui.common.CustomTextField
 import schedule.ui.factory.Factory
 import schedule.ui.model.ClassScheduleModel
+import schedule.ui.ui.ClassSchedule
 
 
 /**
@@ -297,7 +297,7 @@ private fun _TextField(
     onValueChanged: (String) -> Unit,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
-    _CustomTextField(
+    CustomTextField(
         modifier = modifier,
         label = label,
         value = value,

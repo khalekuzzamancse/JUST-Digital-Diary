@@ -12,8 +12,8 @@ import androidx.navigation.compose.composable
 import faculty.ui.teachers.component.TeacherListEvent
 import miscellaneous.OtherFeatureEvent
 import miscellaneous.OtherFeatureNavGraph
-import schedule.ui.ClassSchedule
-import schedule.ui.ExamRSchedule
+import schedule.ui.ui.ClassScheduleScreen
+import schedule.ui.ui.ExamScheduleScreen
 
 
 @Composable
@@ -71,13 +71,13 @@ fun RootNavGraph(
         }
         composable(GraphRoutes.CLASS_SCHEDULE) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                ClassSchedule()
+                ClassScheduleScreen()
             }
 
         }
         composable(GraphRoutes.EXAM_SCHEDULE) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                ExamRSchedule()
+                ExamScheduleScreen()
             }
 
         }

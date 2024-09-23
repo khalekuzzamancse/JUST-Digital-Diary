@@ -1,4 +1,4 @@
-package schedule.ui.common
+package schedule.ui.ui.common
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.MaterialTheme

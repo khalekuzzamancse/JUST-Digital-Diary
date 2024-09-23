@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName", "ComposableNaming")
 
-package schedule.ui
+package schedule.ui.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -34,12 +34,39 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import schedule.di.DomainModuleFactory
-import schedule.ui.common.DepartmentSessionHeader
+import schedule.ui.ui.common.DepartmentSessionHeader
+import schedule.ui.ui.common.TextSizeMeasurer
 import schedule.ui.model.ClassDetailModel
 import schedule.ui.model.ClassScheduleModel
 import schedule.ui.model.DailyClassScheduleModel
 import schedule.ui.presenter.ClassSchedulePresenter
 
+
+/**
+ * TODO: Need to Refactor, use a Viewmodel
+ */
+@Composable
+fun ClassScheduleScreen() {
+    var classSchedule by remember { mutableStateOf<ClassScheduleModel?>(null) }
+    LaunchedEffect(Unit) {
+        val result = DomainModuleFactory.createRetrieveClassScheduleUseCase().execute("")
+        result.onSuccess {
+            try {
+                classSchedule =
+                    ClassSchedulePresenter().fromDomainToUIModel(result.getOrThrow().first())
+
+            } catch (e: Exception) {
+
+            }
+
+        }
+
+    }
+    classSchedule?.let { schedule ->
+        ClassSchedule(schedule)
+    }
+
+}
 @Composable
 fun ClassSchedule(
     classSchedule: ClassScheduleModel
@@ -68,7 +95,7 @@ fun ClassSchedule(
                     semester = classSchedule.semester,
                 )
 
-                ClassSchedule(
+                _ClassSchedule(
                     schedule = classSchedule.routine
                 )
             }
@@ -79,61 +106,11 @@ fun ClassSchedule(
 
 
 }
-
-@Composable
-fun ClassSchedule() {
-    var classSchedule by remember { mutableStateOf<ClassScheduleModel?>(null) }
-    LaunchedEffect(Unit) {
-        val result = DomainModuleFactory.createRetrieveClassScheduleUseCase().execute("")
-        result.onSuccess {
-            try {
-                classSchedule =
-                    ClassSchedulePresenter().fromDomainToUIModel(result.getOrThrow().first())
-
-            } catch (e: Exception) {
-
-            }
-
-        }
-
-    }
-    classSchedule?.let { classSchedule ->
-        Surface(
-            modifier = Modifier
-                .horizontalScroll(rememberScrollState())
-                .verticalScroll(rememberScrollState())
-                .padding(8.dp),
-            shadowElevation = 3.dp
-        ) {
-            Column {
-                DepartmentSessionHeader(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally)
-                        .padding(16.dp)
-                        .clip(RoundedCornerShape(8.dp)),
-                    departmentName = classSchedule.dept,
-                    session = classSchedule.session,
-                    year = classSchedule.year,
-                    semester = classSchedule.semester,
-                )
-                //string by empty either for editing or other reason so pass only valid data
-
-                ClassSchedule(
-                    schedule = classSchedule.routine.filter { it.dayIsNotBlack() }
-                )
-            }
-
-        }
-    }
-
-}
-
 /**
  * - Every Cell has same size, cell height=Max Of all text height,width=max of all text width
  */
 @Composable
-fun ClassSchedule(schedule: List<DailyClassScheduleModel>) {
+fun _ClassSchedule(schedule: List<DailyClassScheduleModel>) {
 
 
     val measurer = rememberTextMeasurer()
