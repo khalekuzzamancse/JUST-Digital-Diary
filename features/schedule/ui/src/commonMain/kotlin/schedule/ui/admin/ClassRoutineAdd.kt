@@ -22,11 +22,9 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Splitscreen
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -39,24 +37,27 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.StateFlow
 import schedule.ui.ClassSchedule
+import schedule.ui.common.ErrorText
 import schedule.ui.common._CustomTextField
-import schedule.ui.common._ErrorText
-import schedule.ui.factory.ClassScheduleFormControllerImpl
+import schedule.ui.factory.Factory
 import schedule.ui.model.ClassScheduleModel
 
 
 /**
- * Interface that defines the contract for controlling the TeacherForm.
- * It manages the state of TeacherModel and handles events related to form inputs.
- * @property onCourseAddRequest return success or failure so that based on that
- * form can be closed or keep open
+ * - Manages the state and handles events related to form inputs
+ * - Keeps an abstract `validator`, forcing the implementer to provide a separate implementation
+ *   for validation. This ensures single responsibility and separation of concerns, so if any
+ *   validation logic needs to change or need separate implementation for validate, there is no need to modify the `Controller`
+ * - By defining the `validator` here, it also controls which `fields` should be validated
+ * @property onCourseAddRequest Returns success or failure, allowing the form to be closed
+ *   or kept open based on the result
  */
+
 interface ClassScheduleFormController {
     val days: List<String>
         get() = listOf("Sat", "Sun", "Mon", "Tue", "Wed")
     val state: StateFlow<ClassScheduleModel>
-    val areAllFieldsFilled: StateFlow<Boolean>
-    val validationError: StateFlow<String?>
+    val validator: Validator
     val courseCode: StateFlow<String>
     val selectedDayIndex: StateFlow<Int>
     val teacherName: StateFlow<String>
@@ -69,16 +70,33 @@ interface ClassScheduleFormController {
     fun onYearChanged(value: String)
     fun onSemesterChanged(value: String)
     fun onCourseAddRequest(): Boolean
-    fun onCourseCodeChanged(newCode: String)
-    fun onSelectedDayIndexChanged(newIndex: Int)
-    fun onTeacherNameChanged(newName: String)
-    fun onStartTimeChanged(newStartTime: String)
-    fun onEndTimeChanged(newEndTime: String)
+    fun onCourseCodeChanged(value: String)
+    fun onSelectedDayIndexChanged(value: Int)
+    fun onTeacherNameChanged(value: String)
+    fun onStartTimeChanged(value: String)
+    fun onEndTimeChanged(value: String)
+
+    interface Validator {
+        val areAllFieldsFilled: StateFlow<Boolean>
+        val errors: StateFlow<List<String>>
+        fun observeFieldChanges(
+            courseCodeFlow: StateFlow<String>,
+            yearFlow: StateFlow<String>,
+            semesterFlow: StateFlow<String>,
+            sessionFlow: StateFlow<String>,
+            teacherNameFlow: StateFlow<String>,
+            startTimeFlow: StateFlow<String>,
+            endTimeFlow: StateFlow<String>
+        )
+
+    }
+
+
 }
 
 @Composable
 fun InputForm(modifier: Modifier = Modifier) {
-    val controller = remember { ClassScheduleFormControllerImpl() }
+    val controller = remember { Factory.createClassScheduleFormController() }
     var showDialog by remember { mutableStateOf(false) }
     val schedule = controller.state.collectAsState().value
     Column {
@@ -113,8 +131,8 @@ private fun _ReasonDialog(
     onDismiss: () -> Unit,
     onDone: () -> Unit
 ) {
-    val validationError = controller.validationError.collectAsState().value
-    val areAllFieldsFilled = controller.areAllFieldsFilled.collectAsState().value
+    val noError = controller.validator.errors.collectAsState().value.isEmpty()
+    val allFieldsFilled = controller.validator.areAllFieldsFilled.collectAsState().value
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -134,7 +152,7 @@ private fun _ReasonDialog(
                         onDone()
 
                 },
-                enabled = (validationError == null && areAllFieldsFilled)
+                enabled = noError && allFieldsFilled
             ) {
                 Text("Done")
             }
@@ -202,9 +220,12 @@ private fun _InputForm(
             onValueChanged = controller::onEndTimeChanged,
             leadingIcon = Icons.Filled.AccessTime,
         )
-        controller.validationError.collectAsState().value?.let {
-            Spacer(modifier = Modifier.height(16.dp))
-            _ErrorText(modifier = Modifier, it)
+        controller.validator.errors.collectAsState().value.let { error ->
+            if (error.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(16.dp))
+                ErrorText(modifier = Modifier, error)
+            }
+
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -276,10 +297,6 @@ private fun _TextField(
     onValueChanged: (String) -> Unit,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
-    val colors = TextFieldDefaults.colors(
-        focusedContainerColor = MaterialTheme.colorScheme.surface,
-        unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-    )
     _CustomTextField(
         modifier = modifier,
         label = label,
