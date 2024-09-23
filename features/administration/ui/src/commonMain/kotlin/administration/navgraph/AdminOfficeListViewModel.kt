@@ -2,9 +2,9 @@ package administration.navgraph
 
 import admin_office.domain.offices.repoisitory.AdminOfficeListRepository
 import admin_office.domain.sub_offices.repoisitory.SubOfficeListRepository
-import administration.ui.offices.officelist.components.Offices
-import administration.ui.suboffice.subofficelist.SubOffice
-import administration.ui.suboffice.subofficelist.SubOfficeListState
+import administration.ui.model.OfficesModel
+import administration.ui.model.SubOfficeModel
+import administration.ui.suboffice.SubOfficeListState
 import common.newui.CustomSnackBarData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +24,7 @@ class AdminOfficeListViewModel(
         val result = repository.getAdminOffices()
         if (result.isSuccess) {
             onFacultyListFetchedSuccessfully(result.getOrDefault(emptyList()).map {
-                Offices(
+                OfficesModel(
                     name = it.name,
                     id = it.officeId,
                     numberOfSubOffices = "${it.subOfficeCount}"
@@ -39,7 +39,7 @@ class AdminOfficeListViewModel(
 
     }
 
-    private fun onFacultyListFetchedSuccessfully(faculties: List<Offices>) {
+    private fun onFacultyListFetchedSuccessfully(faculties: List<OfficesModel>) {
         _uiState.update { state ->
             val facultyListState = state.officeState.copy(offices = faculties)
             state.copy(officeState = facultyListState)
@@ -79,7 +79,7 @@ class AdminOfficeListViewModel(
         val result = subOfficeListRepository.getSubOffices(officeId)
         if (result.isSuccess) {
             val subOffices = result.getOrDefault(emptyList()).map {
-                SubOffice(
+                SubOfficeModel(
                     name = it.name,
                     id = it.officeId,
                     employeeCnt = it.employeeCount.toString()
@@ -91,7 +91,7 @@ class AdminOfficeListViewModel(
 
     }
 
-    private fun onSubOfficeListChanged(subOffices: List<SubOffice>) {
+    private fun onSubOfficeListChanged(subOffices: List<SubOfficeModel>) {
         _uiState.update { state ->
             val subOfficeState = SubOfficeListState(subOffices = subOffices)
             state.copy(subOfficeState = subOfficeState, showSubOfficeList = true)

@@ -11,8 +11,6 @@ import common.newui.NavigationController
 import common.newui.NavigationEvent
 import navigation.component.DrawerHeader
 import navigation.component.NavDestinationBuilder
-import schedule.ui.ui.admin.ExamScheduleAddForm
-import schedule.ui.ui.admin.InputForm
 
 
 @Composable
@@ -26,6 +24,7 @@ fun RootNavHost(
 //    else
     //TeacherFormScreen()
 //    Routine()
+
     _FeatureSection(mainViewModel, onEvent)
 }
 

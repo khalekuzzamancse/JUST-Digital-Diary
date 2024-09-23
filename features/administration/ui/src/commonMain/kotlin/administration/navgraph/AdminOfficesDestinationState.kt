@@ -1,7 +1,7 @@
 package administration.navgraph
 
-import administration.ui.offices.officelist.components.OfficeListState
-import administration.ui.suboffice.subofficelist.SubOfficeListState
+import administration.ui.offices.OfficeListState
+import administration.ui.suboffice.SubOfficeListState
 import common.newui.CustomSnackBarData
 
 data class AdminOfficesDestinationState(

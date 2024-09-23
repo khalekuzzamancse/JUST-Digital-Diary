@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.StateFlow
 import schedule.ui.ui.common.ErrorText
 import schedule.ui.ui.common.CustomTextField
-import schedule.ui.factory.Factory
+import schedule.ui.factory.UiFactory
 import schedule.ui.model.ClassScheduleModel
 import schedule.ui.ui.ClassSchedule
 
@@ -96,7 +96,7 @@ interface ClassScheduleFormController {
 
 @Composable
 fun InputForm(modifier: Modifier = Modifier) {
-    val controller = remember { Factory.createClassScheduleFormController() }
+    val controller = remember { UiFactory.createClassScheduleFormController() }
     var showDialog by remember { mutableStateOf(false) }
     val schedule = controller.state.collectAsState().value
     Column {

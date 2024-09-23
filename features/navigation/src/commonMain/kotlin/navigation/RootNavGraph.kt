@@ -1,6 +1,7 @@
 package navigation
 
-import academic.ui.other.FacultyFeatureNavGraph
+import academic.ui.non_admin.FacultyFeatureNavGraph
+import academic.ui.non_admin.teachers.TeacherListEvent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -9,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import faculty.ui.teachers.component.TeacherListEvent
 import miscellaneous.OtherFeatureEvent
 import miscellaneous.OtherFeatureNavGraph
 import schedule.ui.ui.ClassScheduleScreen

@@ -1,14 +1,12 @@
 package academic.ui.other.faculty
 
+import academic.ui.model.FacultyModel
+
 data class FacultyListState(
-    val faculties: List<Faculty> = emptyList(),
+    val faculties: List<FacultyModel> = emptyList(),
     val selected:Int?=null
 )
-data class Faculty(
-    val name:String,
-    val numberOfDepartment:String,
-    val id:String,
-)
+
 interface FacultyListEvent {
     data class FacultySelected(val index: Int) : FacultyListEvent
 }

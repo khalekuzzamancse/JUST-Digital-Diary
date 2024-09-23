@@ -5,5 +5,6 @@
 
 ##
 - Add a check box for wee
-- Show the Error and approate error
+- Show the  error
 
+- Add divider in class and exam schedule form

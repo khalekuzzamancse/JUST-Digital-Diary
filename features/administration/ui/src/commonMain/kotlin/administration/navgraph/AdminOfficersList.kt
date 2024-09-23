@@ -1,8 +1,8 @@
 package administration.navgraph
 
 import administration.di.AdminOfficeComponentProvider
-import administration.ui.officers.employeelist.components.AdminEmployeeListEvent
-import administration.ui.officers.employeelist.route.AdminOfficers
+import administration.ui.model.AdminOfficers
+import administration.ui.officers.AdminEmployeeListEvent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack

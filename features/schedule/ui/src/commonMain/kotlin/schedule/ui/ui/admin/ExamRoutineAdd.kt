@@ -32,7 +32,7 @@ import kotlinx.coroutines.flow.StateFlow
 import schedule.ui.ui.ExamScheduleScreen
 import schedule.ui.ui.common.CustomTextField
 import schedule.ui.ui.common.ErrorText
-import schedule.ui.factory.Factory
+import schedule.ui.factory.UiFactory
 import schedule.ui.model.ExamScheduleModel
 
 /**
@@ -88,7 +88,7 @@ interface ExamScheduleFormController {
 
 @Composable
 fun ExamScheduleAddForm(modifier: Modifier = Modifier) {
-    val controller: ExamScheduleFormController = remember { Factory.createExamScheduleFormController() }
+    val controller: ExamScheduleFormController = remember { UiFactory.createExamScheduleFormController() }
     var showDialog by remember { mutableStateOf(false) }
     val schedule = controller.state.collectAsState().value
     Column {

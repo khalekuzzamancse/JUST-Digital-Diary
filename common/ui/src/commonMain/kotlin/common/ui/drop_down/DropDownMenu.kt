@@ -26,6 +26,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import common.newui.CustomTextField
+import java.awt.Label
 
 /**
  * - Must override the toSting because to string will be shown as option
@@ -34,6 +36,7 @@ import androidx.compose.ui.unit.toSize
 fun DropDown(
     modifier: Modifier = Modifier,
     options: List<String>,
+    label: String="",
     selected: Int,
     onOptionSelected: (Int) -> Unit,
     leadingIcon: ImageVector? = null,
@@ -45,13 +48,13 @@ fun DropDown(
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
 
     Box {
-        TextField(
+        CustomTextField(
             modifier = modifier.onGloballyPositioned { coordinates ->
                 textFieldSize = coordinates.size.toSize()
             },
             readOnly = true,
             value = options[selected],
-            onValueChange = {
+            onValueChanged = {
 
             },
             trailingIcon = {
@@ -63,16 +66,8 @@ fun DropDown(
                     }
                 )
             },
-            leadingIcon = if (leadingIcon == null) null else {
-                {
-                    Icon(
-                        imageVector = leadingIcon,
-                        contentDescription = null,
-                    )
-                }
-            },
-            colors = color,
-            shape = RoundedCornerShape(8.dp)
+            leadingIcon = leadingIcon,
+            label = label
         )
         DropdownMenu(
             expanded = isExpanded,

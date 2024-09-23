@@ -1,13 +1,11 @@
-package faculty.ui.faculty
+package academic.ui.other.faculty
 
-import academic.ui.other.faculty.FacultiesScreenState
-import academic.ui.other.faculty.Faculty
-import academic.ui.other.faculty.FacultyListState
+import academic.ui.model.DepartmentModel
+import academic.ui.model.FacultyModel
+import academic.ui.other.department.DepartmentListState
 import common.newui.CustomSnackBarData
 import faculty.domain.usecase.RetrieveDepartmentsUseCase
 import faculty.domain.usecase.RetrieveFactualityUseCase
-import academic.ui.other.department.Department
-import academic.ui.other.department.DepartmentListState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,7 +42,7 @@ class FacultiesScreenViewModel(
         if (result.isSuccess) {
             val facultyList = result.getOrDefault(emptyList())
             onFacultyListFetchedSuccessfully(facultyList.map {
-                Faculty(
+                FacultyModel(
                     name = it.name,
                     id = it.facultyId,
                     numberOfDepartment = "${it.departmentsCount}"
@@ -81,7 +79,7 @@ class FacultiesScreenViewModel(
         }
     }
 
-    private fun onFacultyListFetchedSuccessfully(faculties: List<Faculty>) {
+    private fun onFacultyListFetchedSuccessfully(faculties: List<FacultyModel>) {
         _facultyListState.update { state ->
             state.copy(faculties = faculties)
         }
@@ -106,7 +104,7 @@ class FacultiesScreenViewModel(
         val result = retrieveDeptListUseCase.execute("",facultyId)
         if (result.isSuccess) {
             val departments = result.getOrDefault(emptyList()).map {
-                Department(
+                DepartmentModel(
                     name = it.name,
                     id = it.deptId,
                     shortName = it.shortName,
