@@ -1,5 +1,6 @@
 package navigation
 
+import academic.ui.admin.add_teacher.AddTeacherScreen
 import academic.ui.non_admin.FacultyFeatureNavGraph
 import academic.ui.non_admin.teachers.TeacherListEvent
 import androidx.compose.foundation.layout.Box
@@ -10,10 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import calendar.ui.editor.AddAcademicCalenderScreen
 import miscellaneous.OtherFeatureEvent
 import miscellaneous.OtherFeatureNavGraph
 import schedule.ui.ui.ClassScheduleScreen
 import schedule.ui.ui.ExamScheduleScreen
+import schedule.ui.ui.admin.ClassScheduleAddScreen
+import schedule.ui.ui.admin.ExamScheduleAddScreen
 
 
 @Composable
@@ -36,11 +40,28 @@ fun RootNavGraph(
             navGraphBuilder = this,
             onExitRequest = openDrawerRequest,
             onEvent = { event ->
-                when (event) {
-                    is OtherFeatureEvent.CalenderRequest -> {
-                        onEvent(AppEvent.WebVisitRequest(event.url))
+                try {
+                    when (event) {
+                        is OtherFeatureEvent.CalenderRequest -> {
+                            onEvent(AppEvent.WebVisitRequest(event.url))
+                        }
+                        is OtherFeatureEvent.NavigateToCalendarUpdate -> {
+                            navController.navigate(GraphRoutes.CALENDAR_UPDATE)
+                        }
+                        is OtherFeatureEvent.NavigateToExamRoutineUpdate -> {
+                            navController.navigate(GraphRoutes.EXAM_ROUTINE_UPDATE)
+                        }
+                        is OtherFeatureEvent.NavigateToClassRoutineUpdate -> {
+                            navController.navigate(GraphRoutes.CLASS_ROUTINE_UPDATE)
+                        }
+                        is OtherFeatureEvent.NavigateToTeacherInfoUpdate -> {
+                            navController.navigate(GraphRoutes.TEACHER_INFO_UPDATE)
+                        }
                     }
                 }
+                catch (_:Exception){}
+
+
             }
         )
 //        composable(GraphRoutes.ADMIN_OFFICE_FEATURE) {
@@ -69,18 +90,44 @@ fun RootNavGraph(
                 isNavRailMode = isNavRailMode
             )
         }
-        composable(GraphRoutes.CLASS_SCHEDULE) {
+        composable(GraphRoutes.CLASS_SCHEDULE_VIEWER) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 ClassScheduleScreen()
             }
 
         }
-        composable(GraphRoutes.EXAM_SCHEDULE) {
+        composable(GraphRoutes.EXAM_SCHEDULE_VIEWER) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 ExamScheduleScreen()
             }
 
         }
+        composable(GraphRoutes.EXAM_SCHEDULE_VIEWER) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                ExamScheduleScreen()
+            }
+
+        }
+        composable(GraphRoutes.EXAM_ROUTINE_UPDATE){
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                ExamScheduleAddScreen()
+            }
+        }
+        composable(GraphRoutes.CLASS_ROUTINE_UPDATE){
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                ClassScheduleAddScreen()
+            }
+        }
+        composable(GraphRoutes.TEACHER_INFO_UPDATE){
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            AddTeacherScreen()}
+        }
+        composable(GraphRoutes.CALENDAR_UPDATE){
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                AddAcademicCalenderScreen()
+            }
+        }
+
 
 //        composable(GraphRoutes.NOTES_FEATURE) {
 //            NotesFeatureNavGraph.Graph(
@@ -147,6 +194,11 @@ object GraphRoutes {
     const val TOPMOST_OTHER_FEATURE = OtherFeatureNavGraph.ROUTE
     const val NOTES_FEATURE = "NotesFeatureNavGraph.ROUTE"
     const val SEARCH = "Search"
-    const val CLASS_SCHEDULE = "CLASS_SCHEDULE"
-    const val EXAM_SCHEDULE = "EXAM_SCHEDULE"
+    const val CLASS_SCHEDULE_VIEWER = "CLASS_SCHEDULE"
+    const val EXAM_SCHEDULE_VIEWER = "EXAM_SCHEDULE"
+    // Admin-specific routes
+    const val CALENDAR_UPDATE = "CalendarUpdateFeatureNavGraph.ROUTE"
+    const val TEACHER_INFO_UPDATE = "TeacherInfoUpdateFeatureNavGraph.ROUTE"
+    const val CLASS_ROUTINE_UPDATE = "ClassRoutineUpdateFeatureNavGraph.ROUTE"
+    const val EXAM_ROUTINE_UPDATE = "ExamRoutineUpdateFeatureNavGraph.ROUTE"
 }

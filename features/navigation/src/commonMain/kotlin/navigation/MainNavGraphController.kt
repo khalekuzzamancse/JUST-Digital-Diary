@@ -40,10 +40,10 @@ class MainNavGraphController(
                 navigateAsTopMostDestination(GraphRoutes.NOTES_FEATURE, navController)
             }
             NavDestination.ClassSchedule -> {
-                navigateAsTopMostDestination(GraphRoutes.CLASS_SCHEDULE, navController)
+                navigateAsTopMostDestination(GraphRoutes.CLASS_SCHEDULE_VIEWER, navController)
             }
             NavDestination.ExamSchedule -> {
-                navigateAsTopMostDestination(GraphRoutes.EXAM_SCHEDULE, navController)
+                navigateAsTopMostDestination(GraphRoutes.EXAM_SCHEDULE_VIEWER, navController)
             }
             NavDestination.ExploreJust -> {
                 onEvent(AppEvent.WebVisitRequest("https://just.edu.bd/"))

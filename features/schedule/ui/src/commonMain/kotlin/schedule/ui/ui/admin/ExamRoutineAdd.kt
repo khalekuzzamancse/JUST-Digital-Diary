@@ -87,7 +87,7 @@ interface ExamScheduleFormController {
 }
 
 @Composable
-fun ExamScheduleAddForm(modifier: Modifier = Modifier) {
+fun ExamScheduleAddScreen(modifier: Modifier = Modifier) {
     val controller: ExamScheduleFormController = remember { UiFactory.createExamScheduleFormController() }
     var showDialog by remember { mutableStateOf(false) }
     val schedule = controller.state.collectAsState().value

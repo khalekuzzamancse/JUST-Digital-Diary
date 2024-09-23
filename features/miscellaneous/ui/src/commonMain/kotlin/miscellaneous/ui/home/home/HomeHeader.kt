@@ -1,5 +1,6 @@
 package miscellaneous.ui.home.home
 
+import Dashboard
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -43,8 +44,7 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun HomeHeader(
     modifier: Modifier = Modifier,
-    onFacultyListRequest:()->Unit,
-    onAdminOfficeRequest:()->Unit,
+    onEvent:(HomeDestinationEvent)->Unit,
 ) {
     Column(
         modifier = modifier,
@@ -54,20 +54,22 @@ fun HomeHeader(
         val res: DrawableResource = Res.drawable.just_logo_trans
         //after that compile it again to generate Res class, use : .\gradlew generateComposeResClass
         Image(
-            modifier=Modifier.size(100.dp),
+            modifier=Modifier.size(50.dp),
             painter = painterResource(res),//org.jetbrains.compose.resources.
             contentDescription = null,
         )
+        AppNameLogoSection(modifier = Modifier, varsityLogoSize = 100.dp)
         Spacer(Modifier.height(8.dp))
-        FlowRow {
-            _FacultyListButton(
-                onClick = onFacultyListRequest
-            )
-            AppNameLogoSection(modifier = Modifier, varsityLogoSize = 100.dp)
-            _AdminOfficeListButton(
-                onClick = onAdminOfficeRequest
-            )
-        }
+        Dashboard(
+            isAdmin = true,
+            onFacultyListClick = { onEvent(HomeDestinationEvent.NavigateToFacultyList)},
+            onAdminOfficerListClick = { onEvent(HomeDestinationEvent.NavigateTAdminOfficeList)},
+            onCalendarUpdateClick = { onEvent(HomeDestinationEvent.NavigateToCalendarUpdate)},
+            onExamRoutineUpdateClick = { onEvent(HomeDestinationEvent.NavigateToExamRoutineUpdate)},
+            onClassRoutineUpdateClick = { onEvent(HomeDestinationEvent.NavigateToClassRoutineUpdate)},
+            onTeacherInfoUpdateClick = { onEvent(HomeDestinationEvent.NavigateToTeacherInfoUpdate)},
+        )
+
 
 
     }

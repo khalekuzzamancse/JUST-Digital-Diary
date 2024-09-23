@@ -32,7 +32,15 @@ import androidx.compose.ui.unit.dp
 import calendar.ui.common.AcademicCalender
 import calendar.ui.common.ProgressBar
 import calendar.ui.common.model.HolidayType
+import calendar.ui.factory.UIFactory
 
+@Composable
+fun AddAcademicCalenderScreen(modifier: Modifier = Modifier) {
+    HolidayEditorUI(
+        controller = remember { UIFactory.createCalenderEditorController() },
+        onSnackBarMsgRequest = {}
+    )
+}
 
 /**
  * - It show a calender that is editable

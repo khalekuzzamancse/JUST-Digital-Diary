@@ -1,6 +1,6 @@
 package administration.navgraph
 
-import administration.ui.officers.employeelist.components.AdminEmployeeListEvent
+import administration.ui.officers.AdminEmployeeListEvent
 import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable

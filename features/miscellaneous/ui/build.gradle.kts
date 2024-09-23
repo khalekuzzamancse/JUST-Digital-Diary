@@ -23,6 +23,3 @@ android {
     namespace = "miscellaneous.ui"
 
 }
-dependencies {
-    implementation(project(":features:academic-calender:ui"))
-}

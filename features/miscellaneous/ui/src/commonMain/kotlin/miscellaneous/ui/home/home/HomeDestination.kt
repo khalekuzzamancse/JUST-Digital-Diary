@@ -54,12 +54,7 @@ fun HomeDestination(
         ) {
             HomeHeader(
                 modifier = Modifier.padding(16.dp).fillMaxWidth(),
-                onAdminOfficeRequest = {
-                    onEvent(HomeDestinationEvent.NavigateTAdminOfficeList)
-                },
-                onFacultyListRequest = {
-                    onEvent(HomeDestinationEvent.NavigateToFacultyList)
-                }
+                onEvent=onEvent
             )
             CalenderUI(
                 onSnackBarMsgRequest = { msg ->

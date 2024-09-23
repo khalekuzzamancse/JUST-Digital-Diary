@@ -12,12 +12,20 @@ fun Home(
     onEvent:(OtherFeatureFunctionalityEvent)->Unit
 ) {
     HomeDestination { event ->
-        when (event) {
-            is HomeDestinationEvent.CalenderViewRequest -> onEvent(
-                OtherFeatureFunctionalityEvent.CalenderRequest(event.url)
-            )
-        }
+
+        onEvent(event._toOtherFeatureFunctionalityEvent())
     }
 
-
+}
+fun HomeDestinationEvent._toOtherFeatureFunctionalityEvent(): OtherFeatureFunctionalityEvent {
+    return when (this) {
+        is HomeDestinationEvent.CalenderViewRequest -> OtherFeatureFunctionalityEvent.CalenderRequest(this.url)
+        HomeDestinationEvent.NavigateToFacultyList -> OtherFeatureFunctionalityEvent.NavigateToFacultyList
+        HomeDestinationEvent.NavigateTAdminOfficeList -> OtherFeatureFunctionalityEvent.NavigateTAdminOfficeList
+        HomeDestinationEvent.NavigateToCalendarUpdate -> OtherFeatureFunctionalityEvent.NavigateToCalendarUpdate
+        HomeDestinationEvent.NavigateToExamRoutineUpdate -> OtherFeatureFunctionalityEvent.NavigateToExamRoutineUpdate
+        HomeDestinationEvent.NavigateToClassRoutineUpdate -> OtherFeatureFunctionalityEvent.NavigateToClassRoutineUpdate
+        HomeDestinationEvent.NavigateToTeacherInfoUpdate -> OtherFeatureFunctionalityEvent.NavigateToTeacherInfoUpdate
+        HomeDestinationEvent.NavigationRequest -> error("NavigationRequest is not mappable to OtherFeatureFunctionalityEvent")
+    }
 }

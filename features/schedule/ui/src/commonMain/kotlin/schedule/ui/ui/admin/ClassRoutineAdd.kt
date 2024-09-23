@@ -95,7 +95,7 @@ interface ClassScheduleFormController {
 }
 
 @Composable
-fun InputForm(modifier: Modifier = Modifier) {
+fun ClassScheduleAddScreen(modifier: Modifier = Modifier) {
     val controller = remember { UiFactory.createClassScheduleFormController() }
     var showDialog by remember { mutableStateOf(false) }
     val schedule = controller.state.collectAsState().value

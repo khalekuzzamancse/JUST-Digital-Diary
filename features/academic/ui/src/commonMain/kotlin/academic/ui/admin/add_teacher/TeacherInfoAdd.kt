@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Architecture
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
@@ -44,7 +43,7 @@ import common.ui.drop_down.DropDown
  * - TODO: Need to refactor use viewmodel
  */
 @Composable
-fun TeacherFormScreen() {
+fun AddTeacherScreen() {
     val controller = remember { UiFactory.createTeacherAddForm() }
     val areMandatoryFieldsValid=controller.validator.areMandatoryFieldFilled.collectAsState().value
     Column(

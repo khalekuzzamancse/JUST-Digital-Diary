@@ -12,6 +12,7 @@ import miscellaneous.navgraph.route.AboutUsDestination
 import miscellaneous.navgraph.route.EventGalleryDestination
 import miscellaneous.navgraph.route.HomeScreen
 import miscellaneous.navgraph.route.MessageFromVCDestination
+import miscellaneous.ui.home.home.HomeDestinationEvent
 import miscellaneous.ui.route.OtherFeatureFunctionalityEvent
 
 /**
@@ -87,11 +88,7 @@ object OtherFeatureNavGraph {
                     ) {
                         HomeScreen(
                             onEvent = {event->
-                                when(event){
-                                    is OtherFeatureFunctionalityEvent.CalenderRequest->onEvent(
-                                        miscellaneous.OtherFeatureEvent.CalenderRequest(event.url)
-                                    )
-                                }
+                                onEvent(event._toOtherFeatureFunctionalityEvent())
                             }
 
                         )
@@ -135,3 +132,14 @@ object OtherFeatureNavGraph {
 
 }
 
+fun OtherFeatureFunctionalityEvent._toOtherFeatureFunctionalityEvent(): OtherFeatureEvent {
+    return when (this) {
+        is OtherFeatureFunctionalityEvent.CalenderRequest -> OtherFeatureEvent.CalenderRequest(this.url)
+        OtherFeatureFunctionalityEvent.NavigateToFacultyList -> OtherFeatureEvent.NavigateToFacultyList
+        OtherFeatureFunctionalityEvent.NavigateTAdminOfficeList -> OtherFeatureEvent.NavigateTAdminOfficeList
+        OtherFeatureFunctionalityEvent.NavigateToCalendarUpdate -> OtherFeatureEvent.NavigateToCalendarUpdate
+        OtherFeatureFunctionalityEvent.NavigateToExamRoutineUpdate -> OtherFeatureEvent.NavigateToExamRoutineUpdate
+        OtherFeatureFunctionalityEvent.NavigateToClassRoutineUpdate -> OtherFeatureEvent.NavigateToClassRoutineUpdate
+        OtherFeatureFunctionalityEvent.NavigateToTeacherInfoUpdate -> OtherFeatureEvent.NavigateToTeacherInfoUpdate
+    }
+}
