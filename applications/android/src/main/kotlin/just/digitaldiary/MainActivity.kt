@@ -7,8 +7,14 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Class
+import androidx.compose.material.icons.filled.Event
+import androidx.compose.material.icons.filled.Label
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.filled.Today
 import core.network.NetManagerProvider
 import just.digitaldiary.theme.AppTheme
 import navigation.RootNavHost
@@ -28,7 +34,7 @@ class MainActivity : ComponentActivity() {
 //                AndroidRootNavigation(
 //                    onEvent = eventHandler::handleEvent
 //                )
-                Icons.Filled.CalendarMonth
+                Icons.Filled.Person
             }
         }
     }

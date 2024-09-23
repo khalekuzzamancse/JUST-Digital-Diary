@@ -39,11 +39,15 @@ import schedule.ui.model.ClassDetailModel
 import schedule.ui.model.ClassScheduleModel
 import schedule.ui.model.DailyClassScheduleModel
 import schedule.ui.presenter.ClassSchedulePresenter
+
 @Composable
 fun ClassSchedule(
-    classSchedule:ClassScheduleModel
+    classSchedule: ClassScheduleModel
 ) {
-
+    val inCompleteInfo = classSchedule.routine.isEmpty()
+    if (inCompleteInfo) {
+        Text("Schedule is empty")
+    } else {
         Surface(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
@@ -71,8 +75,11 @@ fun ClassSchedule(
 
         }
 
+    }
+
 
 }
+
 @Composable
 fun ClassSchedule() {
     var classSchedule by remember { mutableStateOf<ClassScheduleModel?>(null) }
@@ -90,7 +97,7 @@ fun ClassSchedule() {
         }
 
     }
-    classSchedule?.let {classSchedule->
+    classSchedule?.let { classSchedule ->
         Surface(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
@@ -110,9 +117,10 @@ fun ClassSchedule() {
                     year = classSchedule.year,
                     semester = classSchedule.semester,
                 )
+                //string by empty either for editing or other reason so pass only valid data
 
                 ClassSchedule(
-                    schedule = classSchedule.routine
+                    schedule = classSchedule.routine.filter { it.dayIsNotBlack() }
                 )
             }
 
@@ -126,6 +134,7 @@ fun ClassSchedule() {
  */
 @Composable
 fun ClassSchedule(schedule: List<DailyClassScheduleModel>) {
+
 
     val measurer = rememberTextMeasurer()
     val density = LocalDensity.current
@@ -156,6 +165,7 @@ fun ClassSchedule(schedule: List<DailyClassScheduleModel>) {
         )
 
         Spacer(Modifier.width(verticalGap))
+        //shown all the content(except day)
         Column(
             Modifier,
         ) {
@@ -186,17 +196,21 @@ private fun _EachRow(
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.Start
     ) {
-        daySchedule.items.forEach { routineItem ->
-            _RoutineItemBox(
-                modifier = Modifier
-                    .width(widthPerHour * routineItem.durationInHours)
-                    .height(height)
-                    .background(MaterialTheme.colorScheme.tertiaryContainer),
-                routineItem = routineItem,
-                style = style
-            )
-            Spacer(Modifier.width(8.dp))
-        }
+
+        daySchedule
+            .items
+            .filter { it.allFieldNotBlank() }  //string by empty either for editing or other reason so pass only valid data for safe rendering
+            .forEach { routineItem ->
+                _RoutineItemBox(
+                    modifier = Modifier
+                        .width(widthPerHour * routineItem.durationInHours)
+                        .height(height)
+                        .background(MaterialTheme.colorScheme.tertiaryContainer),
+                    routineItem = routineItem,
+                    style = style
+                )
+                Spacer(Modifier.width(8.dp))
+            }
     }
 
 }
@@ -209,7 +223,7 @@ private fun _DayColumn(
     labelWidth: Dp,
     labelVerticalGap: Dp,
     style: TextStyle,
-    days:List<String>,
+    days: List<String>,
 ) {
     Column(
         modifier = Modifier.width(labelWidth)

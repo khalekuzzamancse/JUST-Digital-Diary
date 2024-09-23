@@ -1,4 +1,4 @@
-package schedule.ui.admin
+package schedule.ui.factory
 
 class InputValidator {
 
@@ -24,17 +24,11 @@ class InputValidator {
 
     // Method to validate time as a string, examples: "03:30", "3:30", "3", "03", ":30"
     fun validateTime(time: String): Boolean {
-        // Regular expression to match valid time formats: "3", "03", "3:30", "03:30", ":30"
-        val timeRegex = """^(\d{1,2}|)(:[0-5]\d)?$""".toRegex()
+        // Regular expression to match valid time formats: d:d, dd:dd, d, dd
+        val timePattern = """^\d{1,2}(:\d{1,2})?$""".toRegex()
 
-        // Check length constraints (not more than 5 characters)
-        if (time.length > 5) return false
-
-        // Validate the format using regex
-        if (!time.matches(timeRegex)) return false
-
-        // Specific validation: Ensure only one or no ":" is present
-        if (time.count { it == ':' } > 1) return false
+        // Check if the input matches the pattern
+        return timePattern.matches(time)
 
         return true
     }

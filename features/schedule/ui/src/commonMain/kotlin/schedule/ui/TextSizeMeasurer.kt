@@ -18,18 +18,18 @@ class TextSizeMeasurer(
     private val dayLabelPadding = 10.dp
 
     fun calculateWidthPerHour(courses: List<ClassDetailModel>): Dp {
-        val maxMeasuredTextWidth = courses.maxOfOrNull { it.routeItemWidth() }?:80
+        val maxMeasuredTextWidth = courses.maxOfOrNull{ it.routeItemWidth() }?:0
         val maxTextWidthInDp = with(density) { maxMeasuredTextWidth.toDp() }
         return maxTextWidthInDp + safePaddingWidth
     }
 
     fun calculateMaxWidth(texts: List<String>): Dp {
-        val maxWidth = texts.maxOfOrNull { measureWidth(it) }?:80
+        val maxWidth = texts.maxOfOrNull { measureWidth(it) }?:0
         return with(density) { maxWidth.toDp() } + dayLabelPadding
     }
 
     fun calculateMaxHeight(courses: List<ClassDetailModel>): Dp {
-        val maxMeasuredTextHeight = courses.maxOfOrNull { it.measureHeight() }?:80
+        val maxMeasuredTextHeight = courses.maxOfOrNull { it.measureHeight() }?:0
         val maxTextHeightInDp = with(density) { maxMeasuredTextHeight.toDp() }
         return maxTextHeightInDp + safePaddingHeight
     }
@@ -52,7 +52,13 @@ class TextSizeMeasurer(
         return measurer.measure(text = text, style = style).size.width
     }
 
+    /**
+     * A string can be empty or blank, especially during editing. Empty or blank strings can cause rendering issues
+     * because the string is used to measure size before being laid out
+     */
     private fun measureHeight(text: String): Int {
+        if (text.isEmpty()||text.isBlank())
+            return 0
         return measurer.measure(text = text, style = style).size.height
     }
 }

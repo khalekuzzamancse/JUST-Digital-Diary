@@ -1,6 +1,5 @@
 package schedule.ui.admin
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -10,132 +9,97 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Label
+import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.Class
+import androidx.compose.material.icons.filled.Event
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Splitscreen
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import schedule.ui.ClassSchedule
-import schedule.ui.model.ClassDetailModel
+import schedule.ui.common._CustomTextField
+import schedule.ui.common._ErrorText
+import schedule.ui.factory.ClassScheduleFormControllerImpl
 import schedule.ui.model.ClassScheduleModel
-import schedule.ui.model.DailyClassScheduleModel
-
-
-class ClassScheduleInputFormControllerImpl : ClassScheduleInputFormController {
-    private val _state = MutableStateFlow(toEmpty())
-
-    override val state = _state.asStateFlow()
-
-    override fun onSessionChanged(value: String) {
-        _state.update {
-            it.copy(session = value)
-        }
-    }
-
-    override fun onYearChanged(value: String) {
-        _state.update {
-            it.copy(year = value)
-        }
-    }
-
-    override fun onSemesterChanged(value: String) {
-        _state.update {
-            it.copy(semester = value)
-        }
-    }
-
-    override fun onCourseAddRequest(day: String, value: ClassDetailModel) {
-        _state.update { schedule ->
-            val dailyClassScheduleModel = schedule.routine.find { it.day == day }
-            if (dailyClassScheduleModel != null) {
-                val classesOnThisDay: List<ClassDetailModel> = dailyClassScheduleModel.items
-                schedule.copy(
-                    routine = schedule.routine.map {
-                        if (it.day == day)
-                            it.copy(items = classesOnThisDay + value)//adding to existing
-                        else
-                            it
-                    }
-                )
-            } else
-                schedule.copy(
-                    routine = listOf(DailyClassScheduleModel(day, listOf(value)))//newly adding
-                )
-
-        }
-        println(_state.value)
-    }
-
-    private fun toEmpty() = ClassScheduleModel(
-        dept = "",
-        session = "",
-        year = "",
-        semester = "",
-        routine = emptyList()
-    )
-
-}
 
 
 /**
  * Interface that defines the contract for controlling the TeacherForm.
  * It manages the state of TeacherModel and handles events related to form inputs.
+ * @property onCourseAddRequest return success or failure so that based on that
+ * form can be closed or keep open
  */
-interface ClassScheduleInputFormController {
+interface ClassScheduleFormController {
+    val days: List<String>
+        get() = listOf("Sat", "Sun", "Mon", "Tue", "Wed")
     val state: StateFlow<ClassScheduleModel>
+    val areAllFieldsFilled: StateFlow<Boolean>
+    val validationError: StateFlow<String?>
+    val courseCode: StateFlow<String>
+    val selectedDayIndex: StateFlow<Int>
+    val teacherName: StateFlow<String>
+    val startTime: StateFlow<String>
+    val endTime: StateFlow<String>
+    val year: StateFlow<String>
+    val semester: StateFlow<String>
+    val session: StateFlow<String>
     fun onSessionChanged(value: String)
     fun onYearChanged(value: String)
     fun onSemesterChanged(value: String)
-    fun onCourseAddRequest(day: String, value: ClassDetailModel)
+    fun onCourseAddRequest(): Boolean
+    fun onCourseCodeChanged(newCode: String)
+    fun onSelectedDayIndexChanged(newIndex: Int)
+    fun onTeacherNameChanged(newName: String)
+    fun onStartTimeChanged(newStartTime: String)
+    fun onEndTimeChanged(newEndTime: String)
 }
 
 @Composable
 fun InputForm(modifier: Modifier = Modifier) {
-    val controller = remember { ClassScheduleInputFormControllerImpl() }
+    val controller = remember { ClassScheduleFormControllerImpl() }
     var showDialog by remember { mutableStateOf(false) }
-    val schedule=controller.state.collectAsState().value
+    val schedule = controller.state.collectAsState().value
     Column {
         Button(
             onClick = {
-                showDialog=true
+                showDialog = true
             }
-        ){
+        ) {
             Text("Add")
         }
         ClassSchedule(schedule)
     }
 
-    if (showDialog){
+    if (showDialog) {
         _ReasonDialog(
             controller = controller,
             onDismiss = {
-                showDialog=false
+                showDialog = false
             },
             onDone = {
-                showDialog=false
+                showDialog = false
             }
         )
     }
@@ -145,52 +109,32 @@ fun InputForm(modifier: Modifier = Modifier) {
 
 @Composable
 private fun _ReasonDialog(
-    controller: ClassScheduleInputFormController,
+    controller: ClassScheduleFormController,
     onDismiss: () -> Unit,
     onDone: () -> Unit
 ) {
-    val days = remember { listOf("Sat", "Sun", "Mon", "Tue", "Wed") }
-    var courseCode = rememberSaveable { mutableStateOf("") }
-    var selectedDayIndex = rememberSaveable { mutableStateOf(0) }
-    var teacherName = rememberSaveable { mutableStateOf("") }
-    var startTime = rememberSaveable { mutableStateOf("") }
-    var endTime = rememberSaveable { mutableStateOf("") }
+    val validationError = controller.validationError.collectAsState().value
+    val areAllFieldsFilled = controller.areAllFieldsFilled.collectAsState().value
 
     AlertDialog(
         onDismissRequest = onDismiss,
         text = {
             _InputForm(
-                modifier = Modifier.verticalScroll(rememberScrollState()).horizontalScroll(
-                    rememberScrollState()
-                ),
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState()),
                 controller = controller,
-                days = days,
-                courseCode = courseCode,
-                selectedDayIndex = selectedDayIndex,
-                teacherName = teacherName,
-                startTime = startTime,
-                endTime = endTime,
             )
 
         },
         confirmButton = {
             TextButton(
                 onClick = {
-                    onDone()
-                    controller.onCourseAddRequest(
-                        day = days[selectedDayIndex.value],
-                        value = ClassDetailModel(
-                            courseCode = courseCode.value,
-                            time = "${startTime.value}-${endTime.value}",
-                            teacherShortName = teacherName.value,
-                            durationInHours = 1//TODO
-                        )
-                    )
-                    //clear them all
-                    courseCode.value = "";startTime.value = "";endTime.value =
-                    "";teacherName.value = ""
+                    val isAdded = controller.onCourseAddRequest()
+                    if (isAdded)
+                        onDone()
+
                 },
-                enabled = true
+                enabled = (validationError == null && areAllFieldsFilled)
             ) {
                 Text("Done")
             }
@@ -206,92 +150,70 @@ private fun _ReasonDialog(
 @Composable
 private fun _InputForm(
     modifier: Modifier = Modifier,
-    controller: ClassScheduleInputFormController,
-    days: List<String>,
-    courseCode: MutableState<String>,
-    selectedDayIndex: MutableState<Int>,
-    teacherName: MutableState<String>,
-    startTime: MutableState<String>,
-    endTime: MutableState<String>
+    controller: ClassScheduleFormController,
 ) {
-
-    val validator = remember { InputValidator() }
     Column(modifier = modifier.widthIn(max = 600.dp)) {
         _TextField(
             label = "Session",
-            value = controller.state.collectAsState().value.session,
-            onValueChanged = { input ->
-                controller.onSessionChanged(input.filter { it.isDigit() || it == '-' })
-
-            }
+            value = controller.session.collectAsState().value,
+            onValueChanged = controller::onSessionChanged,
+            leadingIcon = Icons.Filled.Event,
         )
         Spacer(modifier = Modifier.height(16.dp))
 
         _TextField(
             label = "Year",
-            value = controller.state.collectAsState().value.year,
-            onValueChanged = { input ->
-                if (validator.validateYear(input))
-                    controller.onYearChanged(input)
-                else
-                    controller.onYearChanged("")
-            }
+            value = controller.year.collectAsState().value,
+            onValueChanged = controller::onYearChanged,
+            leadingIcon = Icons.Filled.Class
         )
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         _TextField(
             label = "Semester",
-            value = controller.state.collectAsState().value.semester,
-            onValueChanged = { input ->
-                if (validator.validateSemester(input))
-                    controller.onSemesterChanged(input)
-                else
-                    controller.onSemesterChanged("")
-            }
+            value = controller.semester.collectAsState().value,
+            onValueChanged = controller::onSemesterChanged,
+            leadingIcon = Icons.Filled.Splitscreen
         )
-
+        Spacer(modifier = Modifier.height(16.dp))
         _TextField(
             label = "Course code",
-            value = courseCode.value,
-            onValueChanged = { courseCode.value = it }
+            value = controller.courseCode.collectAsState().value,
+            onValueChanged = controller::onCourseCodeChanged,
+            leadingIcon = Icons.AutoMirrored.Filled.Label,
         )
         Spacer(modifier = Modifier.height(16.dp))
         _TextField(
             label = "Teacher short name",
-            value = teacherName.value,
-            onValueChanged = { teacherName.value = it }
+            value = controller.teacherName.collectAsState().value,
+            onValueChanged = controller::onTeacherNameChanged,
+            leadingIcon = Icons.Filled.Person,
         )
         Spacer(modifier = Modifier.height(16.dp))
         _TextField(
             label = "Start time",
-            value = startTime.value,
-            onValueChanged = { input ->
-                if (validator.validateTime(input))
-                    startTime.value = input
-                else
-                    startTime.value = ""
-
-            }
+            value = controller.startTime.collectAsState().value,
+            onValueChanged = controller::onStartTimeChanged,
+            leadingIcon = Icons.Filled.AccessTime,
         )
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         _TextField(
             label = "End time",
-            value = endTime.value,
-            onValueChanged = { input ->
-                if (validator.validateTime(input))
-                    endTime.value = input
-                else
-                    endTime.value = ""
-            }
+            value = controller.endTime.collectAsState().value,
+            onValueChanged = controller::onEndTimeChanged,
+            leadingIcon = Icons.Filled.AccessTime,
         )
+        controller.validationError.collectAsState().value?.let {
+            Spacer(modifier = Modifier.height(16.dp))
+            _ErrorText(modifier = Modifier, it)
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
         _DayOptions(
-            options = days,
-            selected = selectedDayIndex.value,
-            onOptionSelected = {
-                selectedDayIndex.value = it
-            }
+            options = controller.days,
+            selected = controller.selectedDayIndex.collectAsState().value,
+            onOptionSelected = controller::onSelectedDayIndexChanged
         )
+
 
     }
 }
@@ -350,6 +272,7 @@ private fun _TextField(
     modifier: Modifier = Modifier.fillMaxWidth(),
     label: String,
     value: String,
+    leadingIcon: ImageVector,
     onValueChanged: (String) -> Unit,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
@@ -357,15 +280,14 @@ private fun _TextField(
         focusedContainerColor = MaterialTheme.colorScheme.surface,
         unfocusedContainerColor = MaterialTheme.colorScheme.surface,
     )
-    TextField(
+    _CustomTextField(
         modifier = modifier,
+        label = label,
         value = value,
-        onValueChange = onValueChanged,
-        label = {
-            Text(label)
-        },
-        colors = colors,
-        keyboardOptions = keyboardOptions
+        leadingIcon = leadingIcon,
+        onValueChanged = onValueChanged
     )
+
+
 }
 
