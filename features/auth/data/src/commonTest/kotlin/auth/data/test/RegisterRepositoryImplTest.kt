@@ -1,10 +1,7 @@
 package auth.data.test
 
-import auth.data.login.repository.LoginRepositoryImpl
-import auth.data.register.repoisitory.RegisterRepositoryImpl
-import auth.domain.login.model.LoginRequestModel
-import auth.domain.login.model.LoginResponseModel
-import auth.domain.register.model.RegisterRequestModel
+import auth.data.repository.RegisterRepositoryImpl
+import auth.domain.model.RegisterModel
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -13,7 +10,7 @@ import kotlin.test.assertTrue
 class RegisterRepositoryImplTest {
     @Test
     fun `register test`() = runBlocking {
-        val userInfo = RegisterRequestModel(
+        val userInfo = RegisterModel(
             name = "Md Khalekuzzaman",
             email = "190142.cse@student.just.edu.bd",
             username = "khalek190142",

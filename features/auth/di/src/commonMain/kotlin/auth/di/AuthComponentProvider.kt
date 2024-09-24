@@ -1,8 +1,8 @@
 package auth.di
 
 import auth.data.login.data_sources.remote.RemoteDataSource
-import auth.data.login.repository.LoginRepositoryImpl
-import auth.data.register.repoisitory.RegisterRepositoryImpl
+import auth.data.repository.LoginRepositoryImpl
+import auth.data.repository.RegisterRepositoryImpl
 import database.local.api.AuthAPIs
 import database.local.schema.auth.SignedInUserEntityLocal
 

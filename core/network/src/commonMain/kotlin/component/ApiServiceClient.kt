@@ -15,4 +15,5 @@ interface ApiServiceClient {
      * @return A [Result] containing the raw JSON response as a string or an error.
      */
     suspend fun retrieveJsonData(url: String): Result<String>
+    suspend fun post(url: String, body: Any): Result<String>
 }

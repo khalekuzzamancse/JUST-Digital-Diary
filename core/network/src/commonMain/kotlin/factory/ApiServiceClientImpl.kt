@@ -1,3 +1,5 @@
+@file:Suppress("unused","functionName")
+
 package factory
 
 import component.ApiServiceClient
@@ -6,14 +8,16 @@ import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 /**- Outer module should not create direct instance of this but can use it by getting
  * instance via `factory method`
  */
-class ApiServiceClientImpl internal constructor(): ApiServiceClient {
-   private val tag: String = this.javaClass.simpleName
+class ApiServiceClientImpl internal constructor() : ApiServiceClient {
+    private val tag: String = this.javaClass.simpleName
     private val client = HttpClient {
         install(ContentNegotiation) {
             json(Json {
@@ -31,15 +35,29 @@ class ApiServiceClientImpl internal constructor(): ApiServiceClient {
         } catch (ex: Exception) {
             Result.failure(ExceptionToError().convert(ex))
         } finally {
-            closeConnection()
+            _closeConnection()
         }
     }
 
-    private fun closeConnection() {
+
+    override suspend fun post(url: String, body: Any): Result<String> {
+        return try {
+            val json = client.post(url) {
+                contentType(ContentType.Application.Json)
+                setBody(body)
+            }.bodyAsText()
+            Result.success(json)
+        } catch (ex: Exception) {
+            Result.failure(ExceptionToError().convert(ex))
+        }
+        finally {
+            _closeConnection()
+        }
+    }
+    private fun _closeConnection() {
         try {
             client.close()
         } catch (_: Exception) {
         }
     }
 }
-

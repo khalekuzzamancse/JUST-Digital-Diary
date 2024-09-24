@@ -1,6 +1,6 @@
-package auth.domain.register.model
+package auth.domain.model
 
-data class RegisterRequestModel(
+data class RegisterModel(
     val name: String,
     val email: String,
     val username:String,

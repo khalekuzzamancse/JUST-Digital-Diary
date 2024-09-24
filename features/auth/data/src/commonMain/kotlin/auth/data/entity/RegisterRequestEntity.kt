@@ -1,6 +1,5 @@
-package auth.data.register.remote.entity
+package auth.data.entity
 
-import auth.data.PackageLevelAccess
 import kotlinx.serialization.Serializable
 
 
@@ -9,15 +8,16 @@ import kotlinx.serialization.Serializable
  * Make sure that it structure is same as the back-end JSON
  *
  * * Back-end JSON :
- * *
- * * {
- *  *   "name":"- -",
- *   *  "username":"- - ",
- *   *  "email":"- - ",
- *   *  "password":"- - "
- * * }
+ * ```
+ *  {
+ *    "name":"- -",
+ *    "username":"- - ",
+ *    "email":"- - ",
+ *    "password":"- - "
+ * }
+ * ```
  */
-@PackageLevelAccess
+
 @Serializable
 internal data class RegisterRequestEntity(
     val name: String,

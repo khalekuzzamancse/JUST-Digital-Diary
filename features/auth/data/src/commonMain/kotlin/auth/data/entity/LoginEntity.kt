@@ -1,5 +1,6 @@
-package auth.data.login.data_sources.remote.entity
+package auth.data.entity
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -12,7 +13,7 @@ import kotlinx.serialization.Serializable
   * }
  */
 @Serializable
-data class LoginRequestEntity(
-    val identifier: String,
+data class LoginEntity(
+    @SerialName("identifier") val email: String,
     val password: String
 )

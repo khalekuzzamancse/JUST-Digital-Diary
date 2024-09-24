@@ -1,4 +1,4 @@
-package auth.data.register.remote.entity
+package auth.data.entity
 
 import auth.data.PackageLevelAccess
 import kotlinx.serialization.Serializable
