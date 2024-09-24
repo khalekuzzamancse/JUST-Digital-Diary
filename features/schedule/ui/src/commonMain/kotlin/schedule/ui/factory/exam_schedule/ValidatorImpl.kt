@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import schedule.ui.ui.admin.ExamScheduleFormController
+import schedule.ui.ui.admin.add_exam_schedule.ExamScheduleFormController
 
 class ValidatorImpl : ExamScheduleFormController.Validator {
     private val _areAllFieldsFilled = MutableStateFlow(false)

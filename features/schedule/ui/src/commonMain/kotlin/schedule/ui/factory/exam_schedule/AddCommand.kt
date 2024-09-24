@@ -1,7 +1,7 @@
-package schedule.ui.factory.class_schedule
+package schedule.ui.factory.exam_schedule
 
-import schedule.ui.model.ClassDetailModel
-import schedule.ui.model.ClassScheduleModel
+import schedule.ui.model.ExamDetailsModel
+import schedule.ui.model.ExamScheduleModel
 
 /**
  * - The controller delegates the responsibility of adding a new class to the schedule to this command
@@ -11,8 +11,7 @@ import schedule.ui.model.ClassScheduleModel
 
 interface AddCommand {
     fun execute(
-        scheduleModel: ClassScheduleModel,
-        day: String,
-        classDetail: ClassDetailModel
-    ): ClassScheduleModel
+        schedule: ExamScheduleModel,
+        exam: ExamDetailsModel
+    ): ExamScheduleModel
 }

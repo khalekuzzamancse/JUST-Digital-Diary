@@ -4,23 +4,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import schedule.ui.ui.admin.ExamScheduleFormController
 import schedule.ui.model.ExamDetailsModel
 import schedule.ui.model.ExamScheduleModel
+import schedule.ui.ui.admin.add_exam_schedule.ExamScheduleFormController
 
-
-/**
- * - The controller delegates the responsibility of adding a new class to the schedule to this command
- *   As a result, the controller's responsibility is reduced, and its code remains concise
- *  - Additionally, implementing an undo operation in the future will be easier through this command
- */
-
-interface AddExamToScheduleCommand {
-    fun execute(
-        schedule: ExamScheduleModel,
-        exam: ExamDetailsModel
-    ): ExamScheduleModel
-}
 
 /**
  * - Properties are passed as function parameters because the instance will be created via a factory method
@@ -31,7 +18,7 @@ with Dependency Injection (DI)
  */
 class ExamScheduleFormControllerImpl internal constructor(
     override val validator: ExamScheduleFormController.Validator,
-    private val addCommand: AddExamToScheduleCommand,
+    private val addCommand: AddCommand,
 ) : ExamScheduleFormController {
     private val _state = MutableStateFlow(toEmpty())
     override val state = _state.asStateFlow()

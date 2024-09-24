@@ -1,8 +1,8 @@
 package navigation
 
-import academic.ui.admin.add_teacher.AddTeacherScreen
-import academic.ui.non_admin.FacultyFeatureNavGraph
-import academic.ui.non_admin.teachers.TeacherListEvent
+import academic.ui.admin.AddTeacherScreen
+import academic.ui.public_.FacultyFeatureNavGraph
+import academic.ui.public_.teachers.TeacherListEvent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -11,13 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import calendar.ui.editor.AddAcademicCalenderScreen
+import calendar.ui.ui.admin.AddAcademicCalenderScreen
 import miscellaneous.OtherFeatureEvent
 import miscellaneous.OtherFeatureNavGraph
-import schedule.ui.ui.ClassScheduleScreen
-import schedule.ui.ui.ExamScheduleScreen
-import schedule.ui.ui.admin.ClassScheduleAddScreen
-import schedule.ui.ui.admin.ExamScheduleAddScreen
+import schedule.ui.ui.public_.ViewClassScheduleScreen
+import schedule.ui.ui.public_.ViewExamScheduleScreen
+import schedule.ui.ui.admin.add_class_schedule.AddClassScheduleScreen
+import schedule.ui.ui.admin.add_exam_schedule.ExamScheduleAddScreen
 
 
 @Composable
@@ -92,19 +92,19 @@ fun RootNavGraph(
         }
         composable(GraphRoutes.CLASS_SCHEDULE_VIEWER) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                ClassScheduleScreen()
+                ViewClassScheduleScreen()
             }
 
         }
         composable(GraphRoutes.EXAM_SCHEDULE_VIEWER) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                ExamScheduleScreen()
+                ViewExamScheduleScreen()
             }
 
         }
         composable(GraphRoutes.EXAM_SCHEDULE_VIEWER) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                ExamScheduleScreen()
+                ViewExamScheduleScreen()
             }
 
         }
@@ -115,12 +115,13 @@ fun RootNavGraph(
         }
         composable(GraphRoutes.CLASS_ROUTINE_UPDATE){
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                ClassScheduleAddScreen()
+                AddClassScheduleScreen()
             }
         }
         composable(GraphRoutes.TEACHER_INFO_UPDATE){
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            AddTeacherScreen()}
+            AddTeacherScreen()
+            }
         }
         composable(GraphRoutes.CALENDAR_UPDATE){
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

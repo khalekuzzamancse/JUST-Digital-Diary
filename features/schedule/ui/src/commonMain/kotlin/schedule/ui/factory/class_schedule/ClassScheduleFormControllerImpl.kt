@@ -4,24 +4,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import schedule.ui.ui.admin.ClassScheduleFormController
+import schedule.ui.ui.admin.add_class_schedule.ClassScheduleFormController
 import schedule.ui.model.ClassDetailModel
 import schedule.ui.model.ClassScheduleModel
 
 
-/**
- * - The controller delegates the responsibility of adding a new class to the schedule to this command
- *   As a result, the controller's responsibility is reduced, and its code remains concise
- *  - Additionally, implementing an undo operation in the future will be easier through this command
- */
 
-interface AddCommand {
-    fun execute(
-        scheduleModel: ClassScheduleModel,
-        day: String,
-        classDetail: ClassDetailModel
-    ): ClassScheduleModel
-}
 /**
  * - Properties are passed as function parameters because the instance will be created via a factory method
  *   If we were to pass them through the constructor, the factory would need to know the properties beforehand,

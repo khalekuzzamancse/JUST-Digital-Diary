@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import schedule.ui.ui.admin.ClassScheduleFormController
+import schedule.ui.ui.admin.add_class_schedule.ClassScheduleFormController
 
 class ValidatorImpl : ClassScheduleFormController.Validator {
 
