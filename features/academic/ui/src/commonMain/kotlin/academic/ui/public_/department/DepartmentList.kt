@@ -16,11 +16,15 @@ import androidx.compose.ui.unit.dp
 import common.newui.CardInfoState
 import common.newui.GenericInfoCard
 import kotlin.random.Random
-
+/**
+ * @param onTeachersRequest This should not handle by controller it should be propagate
+ * to parent so inform that it should navigate
+ */
 @Composable
  internal fun Departments(
     modifier: Modifier = Modifier,
     controller: DepartmentController,
+    onTeachersRequest: (String) -> Unit,
 ) {
      val departments=controller.departments.collectAsState().value
     val selected=controller.selected.collectAsState().value
@@ -39,6 +43,7 @@ import kotlin.random.Random
                 isSelected =selected==index,
                 onSelect = {
                     controller.onSelected(index)
+                    onTeachersRequest(dept.id)
                 }
             )
         }

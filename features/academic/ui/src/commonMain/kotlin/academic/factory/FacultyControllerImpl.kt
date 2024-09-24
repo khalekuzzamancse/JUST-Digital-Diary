@@ -1,6 +1,6 @@
 @file:Suppress("unused", "FunctionName")
 
-package academic.factory.faculty
+package academic.factory
 
 import academic.model.FacultyModel
 import academic.presenter.Presenter

@@ -11,3 +11,9 @@
 - Show the  error
 
 - Add divider in class and exam schedule form
+
+##
+Try to keep the ui layer interface and adapter as much as framework independent
+that is why keeping viewmodel int the `ui` package
+
+- Outer module should not know about the view model

@@ -1,11 +1,18 @@
-package academic.ui.public_.teachers.component
+package academic.ui.public_.teachers
 
+import academic.event.AcademicModuleEvent
+import academic.factory.UiFactory
 import academic.model.TeacherModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -14,10 +21,68 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import common.newui.GenericEmployeeCard
+import common.ui.TopBarDecoratorCommon
+import common.ui.list.AdaptiveList
+import kotlinx.coroutines.flow.StateFlow
 
 
 @Composable
-internal fun EmployeeCard(
+internal fun TeachersScreen(
+    deptId: String,
+    onExitRequest: () -> Unit,
+    onEvent: (AcademicModuleEvent) -> Unit
+    //TODO: event should go out,it should not handle by controller
+) {
+    val viewModel = remember { TeacherListViewModel(UiFactory.createTeachersController()) }
+    val controller = viewModel.controller
+    val teachers = controller.teachers.collectAsState().value
+    LaunchedEffect(Unit) {
+        controller.fetch(deptId)
+    }
+    TopBarDecoratorCommon(
+        topNavigationIcon = Icons.AutoMirrored.Default.ArrowBack,
+        onNavigationIconClick = onExitRequest,
+        topBarTitle = "Teacher List"
+    ) {
+
+        _TeacherList(
+            modifier = Modifier.padding(it),
+            teachers = teachers
+        )
+    }
+
+}
+
+@Composable
+fun _TeacherList(
+    modifier: Modifier = Modifier,
+    teachers: List<TeacherModel>
+) {
+
+    AdaptiveList(
+        modifier = modifier,
+        items = teachers
+    ) { employee ->
+        _EmployeeCard(
+            modifier = Modifier.padding(8.dp),
+            teacher = employee,
+            onCallRequest = {
+
+            },
+            onMessageRequest = {
+
+            },
+            onEmailRequest = {
+
+            }
+        )
+
+
+    }
+}
+
+@Composable
+private fun _EmployeeCard(
     modifier: Modifier,
     teacher: TeacherModel,
     expandMode: Boolean = true,
@@ -27,11 +92,11 @@ internal fun EmployeeCard(
 ) {
 
     GenericEmployeeCard(
-        modifier=modifier,
+        modifier = modifier,
         name = teacher.name,
         profileImageUrl = null,
-        expandMode=expandMode,
-        onCallRequest=onCallRequest,
+        expandMode = expandMode,
+        onCallRequest = onCallRequest,
         onEmailRequest = onEmailRequest,
         onMessageRequest = onMessageRequest,
         details = {
@@ -81,7 +146,7 @@ private fun EmployeeDetails(
     }
 }
 
-internal object  CardTypography{
+internal object CardTypography {
     val subTitle = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp,

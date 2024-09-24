@@ -1,8 +1,8 @@
 package academic.ui.public_
 
+import academic.event.AcademicModuleEvent
 import academic.factory.UiFactory
 import academic.ui.common.AppTheme
-import academic.ui.public_.teachers.TeacherListEvent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -23,7 +23,7 @@ object FacultyFeatureNavGraph {
         navController: NavHostController = rememberNavController(),
         onMenuIconClicked: () -> Unit,
         isNavRailMode: Boolean,
-        onEvent: (TeacherListEvent) -> Unit
+        onEvent: (AcademicModuleEvent) -> Unit
     ) {
         AppTheme {
             _NavHost(
@@ -41,7 +41,7 @@ object FacultyFeatureNavGraph {
         navController: NavHostController = rememberNavController(),
         isNavRailMode:Boolean,
         onExitRequest: () -> Unit,
-        onEvent: (TeacherListEvent) -> Unit
+        onEvent: (AcademicModuleEvent) -> Unit
     ) {
 
             androidx.navigation.compose.NavHost(
@@ -52,7 +52,7 @@ object FacultyFeatureNavGraph {
 
                 composable(route = FACULTY_SCREEN) {
                     FacultyAndDepartmentList(
-                        onEmployeeListRequest = { id ->
+                        onTeachersRequest = { id ->
                             navController.navigate("$TEACHER_LIST/$id")
                         },
                         backHandler = { onBackPress ->

@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
-class ValidatorImpl : TeacherFormController.Validator {
+internal class ValidatorImpl : TeacherFormController.Validator {
     private val _areAllFieldsFilled = MutableStateFlow(false)
     override val areMandatoryFieldFilled: StateFlow<Boolean> = _areAllFieldsFilled.asStateFlow()
 

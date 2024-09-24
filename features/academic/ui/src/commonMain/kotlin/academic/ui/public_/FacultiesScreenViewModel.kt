@@ -14,28 +14,37 @@ class FacultiesScreenViewModel internal constructor(
     internal val departmentController: DepartmentController
 ) {
 
-    private val _showDepartments=MutableStateFlow(false)
-    val showDepartments=_showDepartments.asStateFlow()
-    fun onDeptCloseRequest(){
+    private val _showDepartments = MutableStateFlow(false)
+    val showDepartments = _showDepartments.asStateFlow()
+    fun onDeptCloseRequest() {
         _showDepartments.update { false }
         //clear the faculty selection
         facultyController.onSelected(null)
 
     }
+
     init {
 
         CoroutineScope(Dispatchers.Default).launch {
-            facultyController.selected.collect{facult->
+            facultyController.selected.collect { facultyIndex ->
                 //TODO: a faculty is selected,find the faculty id and load it dept
+                departmentController.departments
                 //Right now just pretending that department is loaded
-                if (facult!=null)
-                    _showDepartments.update { true }
+                if (facultyIndex != null) {
+                    try {
+                        val facultyId = facultyController.faculties.value[facultyIndex].id
+                        departmentController.fetchDepartments(facultyId)
+                        _showDepartments.update { true }
+                    } catch (_: Exception) {
+
+                    }
+
+                }
+
             }
 
         }
     }
-
-
 
 
 //    private val _departmentListState = MutableStateFlow<DepartmentListState?>(null)

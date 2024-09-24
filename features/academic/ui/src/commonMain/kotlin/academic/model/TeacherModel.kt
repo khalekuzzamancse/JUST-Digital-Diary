@@ -4,7 +4,7 @@ package academic.model
  * - Used for admin ....
  *
  */
-data class TeacherModel(
+internal data class TeacherModel(
     val name: String,
     val email: String,
     val additionalEmail: String,

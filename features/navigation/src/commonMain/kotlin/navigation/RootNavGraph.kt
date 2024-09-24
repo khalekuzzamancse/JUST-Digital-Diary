@@ -1,8 +1,8 @@
 package navigation
 
+import academic.event.AcademicModuleEvent
 import academic.ui.admin.AddTeacherScreen
 import academic.ui.public_.FacultyFeatureNavGraph
-import academic.ui.public_.teachers.TeacherListEvent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -152,11 +152,11 @@ fun RootNavGraph(
 
 }
 
-private fun toAppEvent(event: TeacherListEvent): AppEvent? {
+private fun toAppEvent(event: AcademicModuleEvent): AppEvent? {
     val ev: AppEvent? = when (event) {
-        is TeacherListEvent.CallRequest -> AppEvent.CallRequest(event.number)
-        is TeacherListEvent.MessageRequest -> AppEvent.MessageRequest(event.number)
-        is TeacherListEvent.EmailRequest -> AppEvent.EmailRequest(event.email)
+        is AcademicModuleEvent.CallRequest -> AppEvent.CallRequest(event.number)
+        is AcademicModuleEvent.MessageRequest -> AppEvent.MessageRequest(event.number)
+        is AcademicModuleEvent.EmailRequest -> AppEvent.EmailRequest(event.email)
 
         else -> {
             null
