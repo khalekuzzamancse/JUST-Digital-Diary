@@ -8,6 +8,7 @@ The abbreviation SRS might not be immediately clear to all readers. Consider ren
 
 - Use capital letter among all the heading
 - No dot(.) on bullet points text
+-
 
 
 -->
