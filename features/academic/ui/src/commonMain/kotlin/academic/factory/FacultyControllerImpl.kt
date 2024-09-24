@@ -3,7 +3,7 @@
 package academic.factory
 
 import academic.model.FacultyModel
-import academic.presenter.Presenter
+import academic.mapper.ModelMapper
 import academic.ui.public_.faculty.FacultyController
 import faculty.domain.usecase.RetrieveFactualityUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -39,7 +39,7 @@ internal class FacultyControllerImpl(
             onSuccess = { models ->
                 _faculties.update {
                     models
-                        .map { Presenter.toUiFacultyModel(it) }
+                        .map { ModelMapper.toUiFacultyModel(it) }
                 }
             },
             onFailure = {

@@ -5,6 +5,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import auth.ui.AuthRoute
 import common.newui.Destination
 import common.newui.DrawerToNavRailDecorator
 import common.newui.NavigationController
@@ -24,8 +25,10 @@ fun RootNavHost(
 //    else
     //TeacherFormScreen()
 //    Routine()
-
-    _FeatureSection(mainViewModel, onEvent)
+    AuthRoute(
+        onLoginSuccess = {_, _ ->}
+    )
+  //  _FeatureSection(mainViewModel, onEvent)
 }
 
 @Composable

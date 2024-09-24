@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
  * @property onDeptChange Handles the event when the teacher's department changes.
  * @property onRoomNoChange Handles the event when the teacher's room number changes.
  */
-interface TeacherFormController {
+internal interface TeacherFormController {
     val teacherState: StateFlow<TeacherModel>
     val validator: Validator
     val dept:StateFlow<List<Dept>>

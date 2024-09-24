@@ -12,7 +12,7 @@ import academic.ui.public_.faculty.FacultyController
 import academic.ui.public_.teachers.TeacherListViewModel
 import academic.ui.public_.teachers.TeachersController
 
-object UiFactory {
+internal object UiFactory {
     fun createFacultyViewModel() = FacultiesScreenViewModel(
         facultyController = _createFacultyController(),
         departmentController = _createDepartmentsController()

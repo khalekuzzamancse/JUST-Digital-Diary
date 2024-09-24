@@ -54,7 +54,7 @@ internal fun TeachersScreen(
 }
 
 @Composable
-fun _TeacherList(
+private fun _TeacherList(
     modifier: Modifier = Modifier,
     teachers: List<TeacherModel>
 ) {

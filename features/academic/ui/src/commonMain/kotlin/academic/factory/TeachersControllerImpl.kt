@@ -3,7 +3,7 @@
 package academic.factory
 
 import academic.model.TeacherModel
-import academic.presenter.Presenter
+import academic.mapper.ModelMapper
 import academic.ui.public_.teachers.TeachersController
 import faculty.domain.usecase.RetrieveTeachersUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +25,7 @@ internal class TeachersControllerImpl (
             onSuccess = { models ->
                 _teachers.update {
                     models
-                        .map { Presenter.toTeacherUiModel(it) }
+                        .map { ModelMapper.toTeacherUiModel(it) }
                 }
             },
             onFailure = {
