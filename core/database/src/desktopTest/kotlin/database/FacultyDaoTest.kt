@@ -31,14 +31,14 @@ class FacultyDaoTest {
     fun testUpsertAndRetrieveFaculty() = runBlocking {
         val faculty = FacultySchema(
             id = 1,
-            faculty_id = "01",
+            facultyId = "01",
             name = "Faculty of Engineering and Technology",
-            department_count = 7
+            departmentCount = 7
         )
 
         facultyDao.upsertFaculty(faculty)
 
-        val retrievedFaculty = facultyDao.getFacultyById(faculty.id)
+        val retrievedFaculty = facultyDao.getFacultyById(faculty.facultyId)
         println("Inserted faculty: ${faculty.name}")
         println("Retrieved faculty: ${retrievedFaculty?.name}")
 
@@ -49,9 +49,9 @@ class FacultyDaoTest {
     fun testClearFaculties() = runBlocking {
         val faculty = FacultySchema(
             id = 1,
-            faculty_id = "01",
+            facultyId = "01",
             name = "Faculty of Engineering and Technology",
-            department_count = 7
+            departmentCount = 7
         )
 
         facultyDao.upsertFaculty(faculty)
@@ -59,7 +59,7 @@ class FacultyDaoTest {
 
         facultyDao.clearAllFaculties()
 
-        val retrievedFaculty = facultyDao.getFacultyById(faculty.id)
+        val retrievedFaculty = facultyDao.getFacultyById(faculty.facultyId)
         println("Faculty after clearing: ${retrievedFaculty?.name}")
 
         assertNull(retrievedFaculty)
@@ -69,9 +69,9 @@ class FacultyDaoTest {
     fun testUpdateFaculty() = runBlocking {
         val faculty = FacultySchema(
             id = 1,
-            faculty_id = "01",
+            facultyId = "01",
             name = "Faculty of Engineering and Technology",
-            department_count = 7
+            departmentCount = 7
         )
 
         facultyDao.upsertFaculty(faculty)
@@ -81,7 +81,7 @@ class FacultyDaoTest {
         facultyDao.upsertFaculty(updatedFaculty)
         println("Updated faculty: ${updatedFaculty.name}")
 
-        val retrievedFaculty = facultyDao.getFacultyById(faculty.id)
+        val retrievedFaculty = facultyDao.getFacultyById(faculty.facultyId)
         println("Retrieved updated faculty: ${retrievedFaculty?.name}")
 
         assertEquals("Updated Faculty Name", retrievedFaculty?.name)

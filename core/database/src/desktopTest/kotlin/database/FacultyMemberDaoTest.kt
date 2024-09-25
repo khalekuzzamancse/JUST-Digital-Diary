@@ -2,7 +2,7 @@
 package database
 
 import database.dao.FacultyMemberDao
-import database.schema.Department
+import database.schema.DepartmentSubSchema
 import database.schema.FacultyMemberSchema
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
@@ -29,7 +29,7 @@ class FacultyMemberDaoTest {
 
     @Test
     fun testUpsertAndRetrieveFacultyMember() = runBlocking {
-        val department = Department(
+        val department = DepartmentSubSchema(
             name = "Computer Science and Engineering",
             shortname = "CSE",
             designation = "Assistant Professor",
@@ -38,6 +38,7 @@ class FacultyMemberDaoTest {
         )
         val facultyMember = FacultyMemberSchema(
             uid = "02d6adb8-d989-4ac9-a",
+            deptId = "CSE",  // Set deptId for the test
             name = "Monishanker Halder",
             email = "m.halder@just.edu.bd",
             role = "Member",
@@ -60,7 +61,7 @@ class FacultyMemberDaoTest {
 
     @Test
     fun testClearFacultyMembers() = runBlocking {
-        val department = Department(
+        val department = DepartmentSubSchema(
             name = "Computer Science and Engineering",
             shortname = "CSE",
             designation = "Assistant Professor",
@@ -69,6 +70,7 @@ class FacultyMemberDaoTest {
         )
         val facultyMember = FacultyMemberSchema(
             uid = "02d6adb8-d989-4ac9-a",
+            deptId = "CSE",  // Set deptId for the test
             name = "Monishanker Halder",
             email = "m.halder@just.edu.bd",
             role = "Member",
@@ -93,7 +95,7 @@ class FacultyMemberDaoTest {
 
     @Test
     fun testUpdateFacultyMember() = runBlocking {
-        val department = Department(
+        val department = DepartmentSubSchema(
             name = "Computer Science and Engineering",
             shortname = "CSE",
             designation = "Assistant Professor",
@@ -102,6 +104,7 @@ class FacultyMemberDaoTest {
         )
         val facultyMember = FacultyMemberSchema(
             uid = "02d6adb8-d989-4ac9-a",
+            deptId = "CSE",  // Set deptId for the test
             name = "Monishanker Halder",
             email = "m.halder@just.edu.bd",
             role = "Member",
@@ -133,5 +136,39 @@ class FacultyMemberDaoTest {
         println("Faculty members from empty database: $retrievedFacultyMembers")
 
         assertEquals(0, retrievedFacultyMembers.size)
+    }
+
+    @Test
+    fun testRetrieveFacultyMembersByDeptId() = runBlocking {
+        val department = DepartmentSubSchema(
+            name = "Computer Science and Engineering",
+            shortname = "CSE",
+            designation = "Assistant Professor",
+            roomNo = "268",
+            present = 0
+        )
+        val facultyMember = FacultyMemberSchema(
+            uid = "02d6adb8-d989-4ac9-a",
+            deptId = "CSE",  // Set deptId for the test
+            name = "Monishanker Halder",
+            email = "m.halder@just.edu.bd",
+            role = "Member",
+            phone = "01727-653115",
+            achievement = "BSc Engg. and MSc Engg. in CSE (JUST)",
+            profile = null,
+            additionalEmail = null,
+            type = 1,
+            departments = listOf(department)
+        )
+
+        // Insert the faculty member
+        facultyMemberDao.upsertFacultyMember(facultyMember)
+
+        // Query by deptId
+        val retrievedFacultyMembers = facultyMemberDao.getFacultyMembersByDeptId("CSE")
+        println("Faculty members in CSE department: $retrievedFacultyMembers")
+
+        assertEquals(1, retrievedFacultyMembers.size)
+        assertEquals("Monishanker Halder", retrievedFacultyMembers[0].name)
     }
 }

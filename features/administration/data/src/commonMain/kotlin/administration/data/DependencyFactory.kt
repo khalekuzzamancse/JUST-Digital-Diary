@@ -4,8 +4,6 @@ import administration.data.offices.sources.local.OfficeLocalDataSource
 import administration.data.offices.sources.local.OfficeLocalDataSourceImpl
 import administration.data.offices.sources.remote.OfficeListRemoteDataSourceImpl
 import administration.data.offices.sources.remote.OfficeRemoteDataSource
-import administration.data.sub_office.data_sources.local.SubOfficeLocalDataSource
-import administration.data.sub_office.data_sources.local.SubOfficeLocalDataSourceImpl
 import administration.data.sub_office.data_sources.remote.SubOfficeRemoteDataSource
 import administration.data.sub_office.data_sources.remote.SubOfficeRemoteDataSourceImpl
 
@@ -43,6 +41,6 @@ internal object DependencyFactory {
     fun officeRemoteDataSource(): OfficeRemoteDataSource = OfficeListRemoteDataSourceImpl()
     fun officeLocalDataSource(): OfficeLocalDataSource = OfficeLocalDataSourceImpl()
     fun subOfficeRemoteDataSource(officeId:String): SubOfficeRemoteDataSource = SubOfficeRemoteDataSourceImpl(officeId)
-    fun  subOfficeLocalDataSource(): SubOfficeLocalDataSource = SubOfficeLocalDataSourceImpl()
+//    fun  subOfficeLocalDataSource(): SubOfficeLocalDataSource = SubOfficeLocalDataSourceImpl()
 
 }

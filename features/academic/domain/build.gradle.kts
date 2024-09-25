@@ -6,7 +6,7 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
-                implementation(projects.common.docs)//for common docs comment
+                implementation(projects.core.commonDocs)//for common docs comment
 
             }
         }

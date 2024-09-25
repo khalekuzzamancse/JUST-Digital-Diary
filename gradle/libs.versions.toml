@@ -2,8 +2,9 @@
 agp = "8.2.2"
 androidx-activityCompose = "1.8.2"
 coroutines = "1.7.3"
-compose-plugin = "1.6.0"
-kotlin = "1.9.21"
+compose-plugin = "1.6.0" # 1.6.0
+kotlin = "1.9.21"# 1.9.21
+
 junit = "4.13.2"
 voyager = "1.0.0"
 coil3-io = "3.0.0-alpha02"
@@ -22,8 +23,6 @@ sqlite = "2.5.0-SNAPSHOT"
 [libraries]
 androidx-activity-compose= { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-
-
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 
@@ -74,6 +73,7 @@ realm={id="io.realm.kotlin", version.ref = "realmVersion"}
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
 
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version .ref= "kotlin" }
 
 #TODO:Convention plugin
 convention-composeMultiplatfrom={id="convention.composeMultiplatform",version="unspecified"}

@@ -1,12 +1,16 @@
+@file:Suppress("unused")
 package database.schema
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * @property id denote the sorting order,it is not the primary key
+ */
 @Entity(tableName = "faculty_table")
-data class FacultySchema(
-    @PrimaryKey val id: Int,
-    val faculty_id: String,
+internal data class FacultySchema(
+    @PrimaryKey val facultyId: String,
+    val id:Int,
     val name: String,
-    val department_count: Int
+    val departmentCount: Int
 )

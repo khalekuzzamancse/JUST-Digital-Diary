@@ -8,7 +8,7 @@ kotlin {
             dependencies {
                 implementation(libs.common.navigation)
                 implementation(libs.common.viewmodel)
-                implementation(projects.common.ui)
+                implementation(projects.core.commonUi)
                 implementation(projects.features.miscellaneous.domain)
                 implementation(projects.features.miscellaneous.di)
                 implementation(projects.features.academicCalender.ui)

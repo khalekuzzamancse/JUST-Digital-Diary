@@ -21,7 +21,7 @@ kotlin {
                 implementation(project(localModules.versions.core.netowork.get()))
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(project(localModules.versions.feature.administration.domain.get()))
-                implementation(project(localModules.versions.common.di.get()))//to retrieve token
+              //  implementation(project(localModules.versions.common.di.get()))//to retrieve token
 //                implementation(project(localModules.versions.core.database.realm.get()))
             }
         }

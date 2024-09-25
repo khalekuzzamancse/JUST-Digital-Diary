@@ -11,7 +11,7 @@ kotlin {
                // implementation(projects.core.database.realm)
                 implementation(projects.core.network)
                 implementation(projects.features.academic.domain)
-                implementation(projects.common.di)//to retrieve token
+//                implementation(projects.common.di)//to retrieve token
             }
         }
         val commonTest by getting {

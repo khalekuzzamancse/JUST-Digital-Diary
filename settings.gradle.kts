@@ -1,14 +1,28 @@
 pluginManagement {
     includeBuild("build-logic")//build-logic as a Composite Build, for convention plugin
     repositories {
-        google()
+        //google()
+        google {
+            mavenContent {
+                includeGroupAndSubgroups("androidx")
+                includeGroupAndSubgroups("com.android")
+                includeGroupAndSubgroups("com.google")
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
     }
 }
 dependencyResolutionManagement {
     repositories {
-        google()
+     //   google()
+        google {
+            mavenContent {
+                includeGroupAndSubgroups("androidx")
+                includeGroupAndSubgroups("com.android")
+                includeGroupAndSubgroups("com.google")
+            }
+        }
         mavenCentral()
     }
 
@@ -28,13 +42,16 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 
 val applications= listOf(
-    ":applications",  ":applications:android", ":applications:desktop", ":applications:web",
+    ":applications",  ":applications:android", ":applications:desktop",
+    //":applications:web",
 )
-val common= listOf(":common",":common:data",":common:ui",":common:docs","common:di")
+//val common= listOf(":common",":common:data",":common:ui",":common:docs","common:di")
 val coreModules = listOf(
     ":core",
     ":core:network",
     ":core:database",
+    ":core:common-ui",
+    ":core:common-docs",
 )
 
 val featureModules = listOf(
@@ -44,7 +61,7 @@ val featureModules = listOf(
     ":features:administration",":features:administration:data", ":features:administration:domain", ":features:administration:ui", ":features:administration:di",
     ":features:navigation",
     ":features:miscellaneous", ":features:miscellaneous:domain",":features:miscellaneous:data",":features:miscellaneous:ui",":features:miscellaneous:di",
-    ":features:notebook",":features:notebook:domain",":features:notebook:data",":features:notebook:ui",":features:notebook:di",
+    //":features:notebook",":features:notebook:domain",":features:notebook:data",":features:notebook:ui",":features:notebook:di",
 //    ":features:queryservice",  ":features:queryservice:domain",":features:queryservice:data",":features:queryservice:ui",":features:queryservice:di",
     ":features:academic-calender",":features:academic-calender:domain",":features:academic-calender:data",":features:academic-calender:ui",":features:academic-calender:di",
     ":features:schedule",":features:schedule:domain",":features:schedule:data",":features:schedule:ui",":features:schedule:di",
@@ -53,4 +70,4 @@ val featureModules = listOf(
 
 
 rootProject.name = "JUSTDigitalDiary"//do not use whitespace,it may causes build error or DEX
-include(applications+coreModules+common+featureModules)
+include(applications+coreModules+featureModules)

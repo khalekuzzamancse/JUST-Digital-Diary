@@ -7,7 +7,7 @@ kotlin {
             dependencies {
                 implementation(projects.features.schedule.domain)
                 implementation(projects.features.schedule.di)
-                implementation(projects.common.ui)
+                implementation(projects.core.commonUi)
             }
         }
         val commonTest by getting {

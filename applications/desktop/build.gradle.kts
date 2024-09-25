@@ -1,23 +1,23 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-
 plugins {
-    kotlin("multiplatform")
-    id("org.jetbrains.compose")
+    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.kotlinMultiplatform)
 }
 kotlin {
-   jvm{
-       jvmToolchain(17)
-       withJava()
-   }
-    sourceSets{
+    jvm {
+   jvmToolchain(17)
+        withJava()
+    }
+    sourceSets {
+
         val jvmMain by getting{
             dependencies {
                 implementation(project(":features:navigation"))
                 implementation(project(localModules.versions.feature.authentication.ui.get()))
                 implementation(project(localModules.versions.feature.academic.ui.get()))
                 implementation(project(localModules.versions.feature.administration.ui.get()))
-                implementation(project(localModules.versions.common.ui.get()))
-                implementation(project(localModules.versions.feature.notebook.ui.get()))
+                implementation(projects.core.commonUi)
+//                implementation(project(localModules.versions.feature.notebook.ui.get()))
                 implementation(project(localModules.versions.feature.miscellaneous.ui.get()))
                 implementation(projects.features.academicCalender.ui)
 
@@ -31,13 +31,13 @@ kotlin {
 
 
 }
-compose.desktop{
-    application{
-        mainClass="DesktopMainKt"
-        nativeDistributions{
+compose.desktop {
+    application {
+        mainClass = "DesktopMainKt"
+        nativeDistributions {
             targetFormats(TargetFormat.Exe)
-            packageName="justdiarydesktop"
-            version="1.0.0"
+            packageName = "justdiarydesktop"
+            version = "1.0.0"
         }
     }
 }

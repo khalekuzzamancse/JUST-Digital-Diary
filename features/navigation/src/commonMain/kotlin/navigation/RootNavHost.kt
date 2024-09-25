@@ -36,7 +36,6 @@ private fun _FeatureSection(
     viewModel: MainViewModel,
     onEvent: (AppEvent) -> Unit,
 ) {
-    val isSingedIn = viewModel.isSignedIn.collectAsState(false).value
     AppTheme {
         _FeatureNavGraph(viewModel = viewModel, onEvent = onEvent)
 //        if (isSingedIn)
