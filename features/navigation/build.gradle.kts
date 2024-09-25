@@ -15,7 +15,7 @@ kotlin {
                 implementation(projects.features.auth.ui)
                 implementation(projects.features.miscellaneous.ui)
                 implementation(projects.features.notebook.ui)
-                implementation(projects.features.queryservice.ui)
+                //implementation(projects.features.queryservice.ui)
                 implementation(projects.features.auth.di)
                 implementation(projects.features.schedule.ui)
                 implementation(projects.features.academicCalender.ui)

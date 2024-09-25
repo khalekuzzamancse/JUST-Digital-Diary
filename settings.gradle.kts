@@ -35,7 +35,6 @@ val coreModules = listOf(
     ":core",
     ":core:network",
     ":core:database",
-    ":core:database:realm"
 )
 
 val featureModules = listOf(
@@ -46,7 +45,7 @@ val featureModules = listOf(
     ":features:navigation",
     ":features:miscellaneous", ":features:miscellaneous:domain",":features:miscellaneous:data",":features:miscellaneous:ui",":features:miscellaneous:di",
     ":features:notebook",":features:notebook:domain",":features:notebook:data",":features:notebook:ui",":features:notebook:di",
-    ":features:queryservice",  ":features:queryservice:domain",":features:queryservice:data",":features:queryservice:ui",":features:queryservice:di",
+//    ":features:queryservice",  ":features:queryservice:domain",":features:queryservice:data",":features:queryservice:ui",":features:queryservice:di",
     ":features:academic-calender",":features:academic-calender:domain",":features:academic-calender:data",":features:academic-calender:ui",":features:academic-calender:di",
     ":features:schedule",":features:schedule:domain",":features:schedule:data",":features:schedule:ui",":features:schedule:di",
 

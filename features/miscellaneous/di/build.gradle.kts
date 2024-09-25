@@ -17,7 +17,7 @@ kotlin {
         val commonMain by getting{
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(project(localModules.versions.core.database.realm.get()))
+               // implementation(project(localModules.versions.core.database.realm.get()))
                 api(project(localModules.versions.feature.miscellaneous.domain.get()))
                 api(project(localModules.versions.feature.miscellaneous.data.get()))
 

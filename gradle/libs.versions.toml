@@ -14,12 +14,15 @@ navigationCompose = "2.7.7"
 kotlinxCoroutinesSwing="1.8.0"
 commonNavigationVer = "2.7.0-alpha07"
 commonViewmodelVer="2.8.0"
+## For room database
+room = "2.7.0-alpha01"
+ksp = "1.9.23-1.0.19"
+sqlite = "2.5.0-SNAPSHOT"
+
 [libraries]
 androidx-activity-compose= { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-voyager-screenmodel={module="cafe.adriel.voyager:voyager-screenmodel",version.ref="voyager"}
-voyager-navigator = { group = "cafe.adriel.voyager", name = "voyager-navigator", version.ref = "voyager" }
-voyager-transitions = { group = "cafe.adriel.voyager", name = "voyager-transitions", version.ref = "voyager" }
+
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
@@ -34,9 +37,6 @@ coil3-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil3-io" }
 windowSize = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform",version.ref = "windowSize"}
 
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinxCoroutinesSwing" }
-# local database
-database-realm-base={ module = "io.realm.kotlin:library-base", version.ref = "realmVersion" }
-database-realm-sync={ module = "io.realm.kotlin:library-sync", version.ref = "realmVersion" }
 #Test
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
@@ -51,6 +51,11 @@ compose-gradlePlugin = { module = "org.jetbrains.compose:org.jetbrains.compose.g
 common-navigation={module="org.jetbrains.androidx.navigation:navigation-compose",version.ref="commonNavigationVer"}
 ##  Navigation for multiplatfrom
 common-viewmodel={module="org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose",version.ref="commonViewmodelVer"}
+##ROOM
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-runtime-android = { module = "androidx.room:room-runtime-android", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 
 [bundles]
 test = ["kotlin-test", "kotlin-test-junit"]
@@ -65,6 +70,10 @@ jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 realm={id="io.realm.kotlin", version.ref = "realmVersion"}
+##For Room
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+room = { id = "androidx.room", version.ref = "room" }
+
 
 #TODO:Convention plugin
 convention-composeMultiplatfrom={id="convention.composeMultiplatform",version="unspecified"}
