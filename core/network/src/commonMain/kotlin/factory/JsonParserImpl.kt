@@ -3,10 +3,11 @@ package factory
 import component.JsonParser
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
+
 /**- Outer module should not create direct instance of this but can use it by getting
  * instance via `factory method`
  */
-class JsonParserImpl internal constructor(): JsonParser {
+class JsonParserImpl internal constructor() : JsonParser {
     private val jsonParser = Json {
         ignoreUnknownKeys = true // Allows flexibility when the JSON contains unknown keys.
     }
@@ -27,5 +28,9 @@ class JsonParserImpl internal constructor(): JsonParser {
                 )
             )
         }
+    }
+
+    override fun <T> parseOrThrow(json: String, serializer: KSerializer<T>): T {
+        return jsonParser.decodeFromString(serializer, json)
     }
 }

@@ -1,10 +1,12 @@
 package auth.ui.login
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,38 +14,49 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import auth.common.AuthPasswordField
-import auth.factory.UiFactory
 import common.newui.CustomTextField
-import common.ui.network_image.ImageLoader
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
+/**
+ * @param onLoginSuccess notify the parent so that parent can exist it
+ */
 @Composable
-internal fun LoginDestination(
+internal fun LoginScreen(
     modifier: Modifier = Modifier,
-    onNavigateToRegisterRequest: () -> Unit
+    controller: LoginController,
+    navigateToRegisterRequest: () -> Unit,
+    onLoginSuccess: () -> Unit
 ) {
-    val viewModel= remember { LoginDestinationViewModel(UiFactory.createLoginController()) }
-    val controller=viewModel.controller
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         LoginFormNControls(
-            modifier = Modifier,
-            controller =controller,
-            onLoginRequest = {},
-            onRegisterRequest = onNavigateToRegisterRequest,
+            modifier = Modifier.padding(32.dp),
+            controller = controller,
+            onLoginRequest = {
+                CoroutineScope(Dispatchers.Default).launch {
+                    controller.performLogin()
+                }
+
+            },
+            onRegisterRequest = navigateToRegisterRequest,
             onPasswordResetRequest = {}
         )
 
@@ -64,32 +77,40 @@ internal fun LoginFormNControls(
     onPasswordResetRequest: () -> Unit
 ) {
     Column(
-        modifier = modifier.widthIn(max=700.dp).fillMaxWidth(),
+        modifier = modifier
+            .widthIn(max = 500.dp)
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Surface(
-            modifier =Modifier,
-            shadowElevation = 6.dp,
+            modifier = Modifier,
+            shape = RoundedCornerShape(8.dp),
+            shadowElevation = 2.dp,
+            border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.outline)
         ) {
-            Column(modifier = Modifier.padding(
-                vertical = 32.dp,
-                horizontal =16.dp
-            )) {
-                Box(Modifier.align(Alignment.CenterHorizontally)) {
-                    LoginForm(
-                        fieldModifier = Modifier.fillMaxWidth(),
-                        userName =controller.state.collectAsState().value.username,
-                        password =controller.state.collectAsState().value.password,
-                        onUserNameChanged =controller::onUserNameChanged,
-                        onPasswordChanged =controller::onPasswordChanged
-                    )
-                }
+            Column(
+                modifier = Modifier.padding(vertical = 32.dp, horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                _LoginHeaderSection()
+                Spacer(Modifier.height(32.dp))
+                _LoginForm(
+                    fieldModifier = Modifier.fillMaxWidth(),
+                    userName = controller.state.collectAsState().value.username,
+                    password = controller.state.collectAsState().value.password,
+                    onUserNameChanged = controller::onUserNameChanged,
+                    onPasswordChanged = controller::onPasswordChanged
+                )
+                Spacer(Modifier.height(16.dp))
+                _ForgetPassword(
+                    modifier = Modifier.align(Alignment.End),
+                    onPasswordResetRequest = onPasswordResetRequest
+                )
                 Spacer(Modifier.height(16.dp))
                 LoginControls(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     onLoginRequest = onLoginRequest,
                     onRegisterRequest = onRegisterRequest,
-                    onPasswordResetRequest = onPasswordResetRequest
                 )
 
             }
@@ -99,33 +120,13 @@ internal fun LoginFormNControls(
 
 
 @Composable
-internal fun LoginForm(
+private fun _LoginForm(
     fieldModifier: Modifier = Modifier,
     formModifier: Modifier = Modifier,
     userName: String,
     password: String,
     onUserNameChanged: (String) -> Unit,
     onPasswordChanged: (String) -> Unit
-) {
-    CompactScreenLoginForm(
-        fieldModifier = fieldModifier,
-        formModifier = formModifier,
-        userName = userName,
-        onUserNameChanged = onUserNameChanged,
-        password = password,
-        onPasswordChanged = onPasswordChanged
-    )
-}
-
-
-@Composable
-private fun CompactScreenLoginForm(
-    fieldModifier: Modifier = Modifier,
-    formModifier: Modifier = Modifier,
-    userName: String,
-    onUserNameChanged: (String) -> Unit,
-    password: String,
-    onPasswordChanged: (String) -> Unit,
 ) {
     Column(
         modifier = formModifier.fillMaxWidth(),
@@ -139,7 +140,7 @@ private fun CompactScreenLoginForm(
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person,
         )
-
+        Spacer(Modifier.height(8.dp))
         AuthPasswordField(
             modifier = fieldModifier,
             label = "Password",
@@ -149,10 +150,7 @@ private fun CompactScreenLoginForm(
 
 
     }
-
-
 }
-
 
 
 @Composable
@@ -160,30 +158,19 @@ internal fun LoginControls(
     modifier: Modifier,
     onLoginRequest: () -> Unit,
     onRegisterRequest: () -> Unit,
-    onPasswordResetRequest: () -> Unit
 ) {
 
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        ForgetPassword(
-            modifier = Modifier.align(Alignment.End),
-            onPasswordResetRequest = onPasswordResetRequest
-        )
-        VerticalSpacer()
-        LoginOrSignUp(
-            modifier = Modifier.padding(start = 16.dp),
-            onRegisterRequest = onRegisterRequest,
-            onLoginRequest = onLoginRequest
-        )
-
-    }
+    LoginOrSignUp(
+        modifier = Modifier.padding(start = 16.dp),
+        onRegisterRequest = onRegisterRequest,
+        onLoginRequest = onLoginRequest
+    )
 
 
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun LoginOrSignUp(
     modifier: Modifier,
@@ -195,15 +182,19 @@ private fun LoginOrSignUp(
             .width(IntrinsicSize.Max), // add this modifier
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(Modifier.width(16.dp))
-        Row(
-            modifier = Modifier.wrapContentWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+        FlowRow(
+            modifier = Modifier.width(IntrinsicSize.Max),
+            verticalArrangement = Arrangement.Center,
         ) {
-            Text("Don't Have an account ?")
+            Text(
+                text = "Don't Have account ?",
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
             Spacer(Modifier.width(4.dp))
-            TextButton(onClick = onRegisterRequest) {
+            TextButton(
+                onClick = onRegisterRequest,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            ) {
                 Text(
                     text = "Register"
                 )
@@ -222,20 +213,19 @@ private fun LoginOrSignUp(
 }
 
 @Composable
-private fun ForgetPassword(
+private fun _ForgetPassword(
     modifier: Modifier,
     onPasswordResetRequest: () -> Unit,
 ) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.End
+    TextButton(
+        onClick = onPasswordResetRequest,
+        modifier = modifier
     ) {
-        TextButton(onClick = onPasswordResetRequest) {
-            Text(
-                text = "Forget Password ?",
-            )
-        }
+        Text(
+            text = "Forget Password ?",
+        )
     }
+
 }
 
 
@@ -250,19 +240,8 @@ private fun VerticalSpacer() {
 
 
 @Composable
-internal fun LoginHeaderSection() {
-    Surface(
-        modifier = Modifier,
-    ) {
-
-        Column {
-            ImageLoader(
-                url = "https://just.edu.bd/logo/download.png",
-                modifier = Modifier.height(100.dp),
-                onSuccess = {
-                }
-
-            )
-        }
-    }
+private fun _LoginHeaderSection(
+    modifier: Modifier = Modifier
+) {
+    Text(text = "Login", style = MaterialTheme.typography.headlineMedium)
 }

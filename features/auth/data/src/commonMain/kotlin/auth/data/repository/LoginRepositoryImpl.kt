@@ -4,7 +4,7 @@ package auth.data.repository
 
 import auth.data.dto.LoginModelDTO
 import auth.data.entity.LoginResponseEntity
-import auth.data.entity.ServerErrorResponseEntity
+import auth.data.entity.ServerResponseMessageEntity
 import auth.domain.exception.CustomException
 import auth.domain.model.LoginModel
 import auth.domain.repository.LoginRepository
@@ -25,23 +25,28 @@ class LoginRepositoryImpl internal constructor(
             .post(url, LoginModelDTO.loginModelToEntity(model))
             .fold(
                 onSuccess = { json ->
-                    /**
-                     * - 3 possible case:
-                     * - Json  is either LoginResponseSchema upon successful login
-                     * - or Json is ServerResponseSchema upon login failure
+                    /** Execution is here means server sent a response we have to parse it
+                     * - 3 possible cases:
+                     * - We got excepted  json
+                     * - or Json is a server message in format ServerResponseMessageEntity that want to tell us something, there may be some error
                      * - or Server send a json that format is not known yet,may be server change it json format or other
                      */
-                    var response = json._parseAsLoginResponseOrException()
-                    if (response.isSuccess)
-                        return response
-                    response = json._parseAsServerErrorResponseOrException()
-                    if (response.isSuccess)
-                        return response
-                    else
+                    try {
+                        if (json._isLoginResponse())
+                            return Result.success(json._parseAsLoginResponse().token)
+                        else if (json._isServerMessage())
+                            return Result.failure(json._createServerMessageException())
+                        else
+                            return Result.failure(CustomException.JsonParseException(json))
+
+                    } catch (e: Exception) {
                         return Result.failure(CustomException.JsonParseException(json))
+                    }
+
 
                 },
                 onFailure = { exception ->
+                    //Execution is here means we not get any response
                     return Result.failure(
                         CustomException.ServerConnectingException(exception)
                     )
@@ -50,36 +55,21 @@ class LoginRepositoryImpl internal constructor(
 
     }
 
-
-
     //TODO:Helper method section
-    private fun String._parseAsLoginResponseOrException(): Result<String> {
-        val json = this
-        jsonParser.parse(json, LoginResponseEntity.serializer())
-            .fold(
-                onSuccess = { schema ->
-                    return Result.success(schema.token)
-                },
-                onFailure = { exception ->
-                    return Result.failure(exception)
-                }
-            )
+
+    private fun String._createServerMessageException(): CustomException.MessageFromServer {
+        val entity = jsonParser.parse(this, ServerResponseMessageEntity.serializer()).getOrThrow()
+        return CustomException.MessageFromServer(message = entity.message)
     }
 
-    private fun String._parseAsServerErrorResponseOrException(): Result<String> {
-        val json = this
-        jsonParser.parse(json, ServerErrorResponseEntity.serializer())
-            .fold(
-                onSuccess = { schema ->
-                    return Result.failure(
-                        CustomException.ErrorFromServer(error = schema.message)
-                    )
-                },
-                onFailure = { exception ->
-                    return Result.failure(exception)
-                }
-            )
-    }
+    private fun String._isServerMessage() =
+        jsonParser.parse(this, ServerResponseMessageEntity.serializer()).isSuccess
+
+    private fun String._isLoginResponse() =
+        jsonParser.parse(this, LoginResponseEntity.serializer()).isSuccess
+
+    private fun String._parseAsLoginResponse() =
+        jsonParser.parse(this, LoginResponseEntity.serializer()).getOrThrow()
 
 
 }

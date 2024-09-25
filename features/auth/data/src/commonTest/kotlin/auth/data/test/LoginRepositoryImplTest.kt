@@ -1,6 +1,7 @@
 package auth.data.test
 
 import auth.data.factory.DataModuleFactory
+import auth.domain.exception.CustomException
 import auth.domain.model.LoginModel
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
@@ -20,8 +21,16 @@ class LoginRepositoryImplTest {
             onSuccess = {
                 println("Login successful:$it")
             },
-            onFailure = {
-                println("Failed to login:$it")
+            onFailure = { exception ->
+                when(exception) {
+                    is CustomException ->{
+                        println(exception.message)
+                    }
+                    else -> {
+                        println("Something went wrong:$exception")
+                    }
+
+                }
             }
         )
         assertTrue(response.isFailure)

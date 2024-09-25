@@ -37,6 +37,7 @@ class ComposeMultiplatformPlugin : KotlinMultiplatformPlugin() {
                         implementation(jetBrainCompose.dependencies.materialIconsExtended)
                         implementation(jetBrainCompose.dependencies.animation)
                         implementation(jetBrainCompose.dependencies.animationGraphics)
+                        implementation(jetBrainCompose.dependencies.components.uiToolingPreview)
                         implementation(jetBrainCompose.dependencies.components.resources)   //for resources access
                         //make sure "kotlinx-coroutines-core" exits in version catalog libraries
                         implementation(libs.findLibrary("kotlinx-coroutines-core").get().get())

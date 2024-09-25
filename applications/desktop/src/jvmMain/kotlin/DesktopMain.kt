@@ -25,15 +25,10 @@ fun main() {
         ) {
 
             MaterialTheme {
-
-//              AuthNavHostDesktop()
                 AppTheme {
                     RootNavHost{
 
                     }
-//                    HomeScreen(
-//                        onEvent = {}
-//                    )
 
                 }
 

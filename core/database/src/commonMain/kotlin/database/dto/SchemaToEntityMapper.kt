@@ -5,7 +5,6 @@ import database.entity.DepartmentEntity
 import database.entity.DepartmentSubEntity
 import database.entity.FacultyEntity
 import database.entity.FacultyMemberEntity
-import database.entity.TokenEntity
 import database.schema.DepartmentSubSchema
 import database.schema.DepartmentSchema
 import database.schema.FacultyMemberSchema
@@ -15,13 +14,7 @@ import database.schema.TokenSchema
 internal
 object SchemaToEntityMapper {
 
-    // Convert TokenSchema to database.entity.TokenEntity
-    fun fromTokenSchema(schema: TokenSchema): TokenEntity {
-        return TokenEntity(
-            id = schema.id,
-            token = schema.token
-        )
-    }
+
 
     // Convert FacultySchema to database.entity.FacultyEntity
     fun fromFacultySchema(schema: FacultySchema): FacultyEntity {

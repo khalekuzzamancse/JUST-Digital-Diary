@@ -1,3 +1,7 @@
+##Next todo:
+Auth module
+Login problem on multiple try: Unexpected error (parent job is completed)
+
 # Academic Calender
 - Show Loading until data is null
 - Proper Error for not fetching(Json parser, network, ...etc)

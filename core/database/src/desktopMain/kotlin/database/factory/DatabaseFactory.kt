@@ -3,6 +3,7 @@
 package database.factory
 
 import database.apis.AcademicApi
+import database.apis.AuthApi
 import database.getDatabase
 
 actual class DatabaseFactory {
@@ -13,5 +14,11 @@ actual class DatabaseFactory {
             facultyMemberDao = getDatabase().facultyMemberDao()
 
         )
+    }
+
+    actual fun createAuthApi(): AuthApi {
+       return AuthApiImpl(
+           credentialDao = getDatabase().credentialDao()
+       )
     }
 }

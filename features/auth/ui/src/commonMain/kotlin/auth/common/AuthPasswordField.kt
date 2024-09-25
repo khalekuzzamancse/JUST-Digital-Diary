@@ -17,9 +17,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import common.newui.CustomTextField
 
-//Preview is in the below
-//TODO: Auth Filed Section -- Auth Filed Section -- Auth Filed Section
-//TODO: Auth Filed Section -- Auth Filed Section -- Auth Filed Section
+
 @Composable
 internal fun AuthPasswordField(
     modifier: Modifier,

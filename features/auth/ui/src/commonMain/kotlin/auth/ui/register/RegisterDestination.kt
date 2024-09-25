@@ -1,8 +1,12 @@
 package auth.ui.register
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,12 +33,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import auth.common.AuthPasswordField
 import auth.factory.UiFactory
 import common.newui.CustomTextField
-import common.ui.network_image.ImageLoader
 
 
 @Composable
@@ -44,15 +48,36 @@ internal fun RegisterDestination(
 ) {
     val viewModel = remember { RegisterDestinationViewModel(UiFactory.createRegisterController()) }
     val controller = viewModel.controller
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
-        RegisterFormNControls(
-            modifier = modifier.widthIn(max = 700.dp).fillMaxWidth(),
-            controller = controller,
-            onNavigateToLoginRequest = onLoginRequest,
-            onRegisterRequest = {
-            },
-        )
+
+    Box(
+        modifier = Modifier.padding(32.dp).fillMaxWidth().fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Surface(
+            modifier = Modifier,
+            shape = RoundedCornerShape(8.dp),
+            shadowElevation = 2.dp,
+            border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.outline)
+        ) {
+            Column(
+                modifier = Modifier.padding(vertical = 32.dp, horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                _HeaderSection(modifier = Modifier)
+                Spacer(Modifier.height(32.dp))
+                RegisterFormNControls(
+                    modifier = Modifier,
+                    controller = controller,
+                    onNavigateToLoginRequest = onLoginRequest,
+                    onRegisterRequest = {
+                    },
+                )
+            }
+
+        }
+
     }
+
 
 }
 
@@ -66,9 +91,9 @@ internal fun RegisterFormNControls(
 ) {
     Column(
         modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        RegistrationForm(
+        _Form(
             modifier = modifier,
             fieldModifier = Modifier,
             name = controller.state.collectAsState().value.name,
@@ -85,12 +110,12 @@ internal fun RegisterFormNControls(
 
         Spacer(Modifier.height(24.dp))
         Column(Modifier.padding(start = 16.dp).align(Alignment.CenterHorizontally)) {
-            LoginSection(
+            _LoginSection(
                 modifier = Modifier,
                 onLoginRequest = onNavigateToLoginRequest
             )
         }
-        RegistrationControls(
+        _Controls(
             modifier = Modifier.widthIn(min = 200.dp, max = 300.dp)
                 .align(Alignment.CenterHorizontally),
             onRegistrationRequest = onRegisterRequest
@@ -100,7 +125,7 @@ internal fun RegisterFormNControls(
 }
 
 @Composable
-private fun RegistrationForm(
+private fun _Form(
     modifier: Modifier = Modifier,
     fieldModifier: Modifier,
     name: String,
@@ -127,7 +152,7 @@ private fun RegistrationForm(
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person,
         )
-
+        Spacer(Modifier.height(8.dp))
 
         CustomTextField(
             modifier = fieldModifier,
@@ -137,7 +162,7 @@ private fun RegistrationForm(
             keyboardType = KeyboardType.Email,
             leadingIcon = Icons.Default.Email,
         )
-
+        Spacer(Modifier.height(8.dp))
 
         CustomTextField(
             modifier = fieldModifier,
@@ -147,7 +172,7 @@ private fun RegistrationForm(
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person2,
         )
-
+        Spacer(Modifier.height(8.dp))
 
         AuthPasswordField(
             modifier = fieldModifier,
@@ -155,7 +180,7 @@ private fun RegistrationForm(
             value = password,
             onValueChanged = onPasswordChanged,
         )
-
+        Spacer(Modifier.height(8.dp))
         AuthPasswordField(
             modifier = fieldModifier,
             label = "Confirm password",
@@ -170,7 +195,7 @@ private fun RegistrationForm(
 
 
 @Composable
-internal fun RegistrationControls(
+private fun _Controls(
     modifier: Modifier,
     onRegistrationRequest: () -> Unit,
 ) {
@@ -184,54 +209,42 @@ internal fun RegistrationControls(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun LoginSection(
+private fun _LoginSection(
     modifier: Modifier,
     onLoginRequest: () -> Unit,
 ) {
-    Column(
-        modifier = modifier
-            .width(IntrinsicSize.Max), // add this modifier
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row(
-            modifier = Modifier.wrapContentWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+        FlowRow(
+            modifier = Modifier.width(IntrinsicSize.Max),
+            verticalArrangement =Arrangement.Center,
         ) {
-            Text("Already Have an account ?")
+            Text(
+                text = "Have an account ?",
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
             Spacer(Modifier.width(4.dp))
-            TextButton(onClick = onLoginRequest) {
+            TextButton(
+                onClick = onLoginRequest,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            ) {
                 Text(
                     text = "Login"
                 )
             }
         }
 
-    }
 
 
 }
 
 @Composable
-private fun RegistrationHeaderSection(
+private fun _HeaderSection(
     modifier: Modifier,
 ) {
-    Surface(
+    Text(
         modifier = modifier,
-        shape = RoundedCornerShape(bottomStart = 80.dp),
-        color = MaterialTheme.colorScheme.primary
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp),
-        ) {
-            ImageLoader(
-                url = "https://automation.just.edu.bd/images/just-logo.png",
-                modifier = Modifier.height(60.dp).align(Alignment.Center)
-            )
-
-        }
-    }
+        text = "Register",
+        style = MaterialTheme.typography.headlineMedium
+    )
 }

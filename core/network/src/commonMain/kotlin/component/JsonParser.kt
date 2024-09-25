@@ -28,4 +28,9 @@ interface JsonParser {
      *
      */
     fun <T> parse(json: String, serializer: KSerializer<T>): Result<T>
+
+    /**
+     * Throws an exception on parsing errors
+     */
+    fun <T> parseOrThrow(json: String, serializer: KSerializer<T>):T
 }

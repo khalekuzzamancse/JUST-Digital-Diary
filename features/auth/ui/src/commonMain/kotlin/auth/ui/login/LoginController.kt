@@ -10,8 +10,9 @@ import kotlinx.coroutines.flow.StateFlow
  */
 interface LoginController {
     val isLogging: StateFlow<Boolean>
+    val errorMessage: StateFlow<String?>
     val state:StateFlow<LoginModel>
     fun onUserNameChanged(value:String)
     fun onPasswordChanged(value:String)
-    fun performLogin():Boolean
+   suspend fun performLogin():Boolean
 }

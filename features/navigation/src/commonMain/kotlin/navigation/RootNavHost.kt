@@ -20,15 +20,18 @@ fun RootNavHost(
 ) {
     val mainViewModel = viewModel { MainViewModel() }
     val slapScreenShowing = mainViewModel.showSlapScreen.collectAsState().value
+    AppTheme {
+        AuthRoute(
+            onLoginSuccess = { _, _ -> }
+        )
+    }
 //    if (slapScreenShowing)
 //        SplashScreen()
 //    else
     //TeacherFormScreen()
 //    Routine()
-    AuthRoute(
-        onLoginSuccess = {_, _ ->}
-    )
-  //  _FeatureSection(mainViewModel, onEvent)
+
+    //  _FeatureSection(mainViewModel, onEvent)
 }
 
 @Composable

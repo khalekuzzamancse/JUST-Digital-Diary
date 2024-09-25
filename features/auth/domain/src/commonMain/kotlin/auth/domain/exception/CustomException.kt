@@ -49,13 +49,16 @@ sealed class CustomException(override val message: String, val debugMessage: Str
     )
 
     /**
-     * - This Exception should thrown when the server responds with an error message instead of the expected schema or entity
-     * - This typically occurs when the server returns an error response in JSON format, indicating a failure in processing
-     * the request
+     * - This exception is thrown when the server responds with an error message or status,
+     *   instead of the expected data or response schema.
+     * - It typically occurs when the server returns an error response in a non-standard format,
+     *   such as JSON containing a message like "API limit exceeded" or "Email already registered."
+     * - This exception is useful for handling cases where the server indicates a failure or provides
+     *   informational messages rather than structured data.
      */
-    class ErrorFromServer(error: String) : CustomException(
-        message = error,
-        debugMessage = "Server returned an error response: $error"
+    class MessageFromServer(message: String) : CustomException(
+        message = message,
+        debugMessage = "Server returned an message instead of expected response: $message"
     )
 
 }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -62,7 +63,8 @@ private fun _BasicAuthTextField(
     trailingIcon: (@Composable (Modifier) -> Unit)? = null
 ) {
 
-    val borderColor = Color.Gray.copy(alpha = 0.8f)
+    val borderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+    val placeholderColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
     val fontSize = 15.sp
 
     //Why BasicTextField
@@ -71,7 +73,7 @@ private fun _BasicAuthTextField(
     BasicTextField(
         value = value,
         onValueChange = onValueChanged,
-        textStyle = TextStyle(fontSize = fontSize),
+        textStyle = TextStyle(fontSize = fontSize, color = MaterialTheme.colorScheme.onSurface),
         singleLine = true,
         readOnly = readOnly,
         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
@@ -94,7 +96,7 @@ private fun _BasicAuthTextField(
                 Spacer(Modifier.width(12.dp))
                 Box(Modifier.weight(1f)) {
                     if (value.isEmpty()) {
-                        _Placeholder(label, fontSize, borderColor)
+                        _Placeholder(label, fontSize, placeholderColor)
                     }
                     // Call innerText in both cases to ensure the cursor is shown
                     innerText()
@@ -104,19 +106,6 @@ private fun _BasicAuthTextField(
                     trailingIcon(Modifier.padding(end = 8.dp))
                 }
 
-//                if (value.isEmpty()) {
-//                    _Placeholder(label, fontSize, borderColor)
-//                    if (trailingIcon != null) {
-//                        Spacer(Modifier.weight(1f))
-//                        trailingIcon(Modifier.padding(end = 8.dp))
-//                    }
-//                } else {
-//                    innerText()
-//                    if (trailingIcon != null) {
-//                        Spacer(Modifier.weight(1f))
-//                        trailingIcon(Modifier.padding(end = 8.dp))
-//                    }
-//                }
             }
         }
     )
