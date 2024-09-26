@@ -1,4 +1,4 @@
-package auth.common
+package auth.ui.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons

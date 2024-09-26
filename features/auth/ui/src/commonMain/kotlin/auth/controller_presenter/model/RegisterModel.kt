@@ -1,4 +1,4 @@
-package auth.model
+package auth.controller_presenter.model
 
 internal data class RegisterModel(
     val name: String,

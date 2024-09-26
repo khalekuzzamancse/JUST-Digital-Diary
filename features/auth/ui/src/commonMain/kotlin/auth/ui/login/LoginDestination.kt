@@ -24,14 +24,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import auth.common.AuthPasswordField
-import auth.common.LoadingUi
+import auth.controller_presenter.controller.LoginController
+import auth.ui.common.AuthPasswordField
 import common.newui.CustomTextField
 import kotlinx.coroutines.launch
 
@@ -79,7 +78,9 @@ internal fun LoginFormNControls(
     onRegisterRequest: () -> Unit,
     onPasswordResetRequest: () -> Unit
 ) {
-    val enableControls =!(controller.isLogging.collectAsState()).value
+    val isNotLoading =!(controller.isLogging.collectAsState()).value
+    val noError = controller.validator.errors.collectAsState().value.isEmpty()
+    val allFieldsFilled = controller.validator.areAllFieldsFilled.collectAsState().value
     Column(
         modifier = modifier
             .widthIn(max = 500.dp)
@@ -109,14 +110,15 @@ internal fun LoginFormNControls(
                 _ForgetPassword(
                     modifier = Modifier.align(Alignment.End),
                     onPasswordResetRequest = onPasswordResetRequest,
-                    enable = enableControls
+                    enable = isNotLoading
                 )
                 Spacer(Modifier.height(16.dp))
                 LoginControls(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     onLoginRequest = onLoginRequest,
                     onRegisterRequest = onRegisterRequest,
-                    enableControls = enableControls
+                    enableLogin = isNotLoading&&allFieldsFilled&&noError,
+                    enableRegister = isNotLoading
                 )
 
             }
@@ -162,7 +164,8 @@ private fun _LoginForm(
 @Composable
 internal fun LoginControls(
     modifier: Modifier,
-    enableControls: Boolean,
+    enableRegister: Boolean,
+    enableLogin: Boolean,
     onLoginRequest: () -> Unit,
     onRegisterRequest: () -> Unit,
 ) {
@@ -171,7 +174,8 @@ internal fun LoginControls(
         modifier = Modifier.padding(start = 16.dp),
         onRegisterRequest = onRegisterRequest,
         onLoginRequest = onLoginRequest,
-        enableControls = enableControls
+        enableLogin = enableLogin,
+        enableRegister = enableRegister
     )
 
 
@@ -182,7 +186,8 @@ internal fun LoginControls(
 @Composable
 private fun LoginOrSignUp(
     modifier: Modifier,
-    enableControls: Boolean,
+    enableRegister: Boolean,
+    enableLogin: Boolean,
     onRegisterRequest: () -> Unit,
     onLoginRequest: () -> Unit,
 ) {
@@ -201,7 +206,7 @@ private fun LoginOrSignUp(
             )
             Spacer(Modifier.width(4.dp))
             TextButton(
-                enabled = enableControls,
+                enabled = enableRegister,
                 onClick = onRegisterRequest,
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
@@ -213,7 +218,7 @@ private fun LoginOrSignUp(
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = onLoginRequest,
-            enabled = enableControls
+            enabled = enableLogin
         ) {
             Text(text = "Login".uppercase())
         }

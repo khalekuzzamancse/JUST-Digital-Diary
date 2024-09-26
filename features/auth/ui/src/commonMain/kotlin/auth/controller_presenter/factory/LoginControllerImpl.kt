@@ -1,11 +1,11 @@
 @file:Suppress("unused", "functionName")
 
-package auth.factory
+package auth.controller_presenter.factory
 
 import auth.domain.exception.CustomException
 import auth.domain.usecase.LoginUseCase
-import auth.model.LoginModel
-import auth.ui.login.LoginController
+import auth.controller_presenter.model.LoginModel
+import auth.controller_presenter.controller.LoginController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -17,7 +17,9 @@ import kotlinx.coroutines.launch
 typealias LoginDomainModel = auth.domain.model.LoginModel
 
 internal class LoginControllerImpl(
-    private val useCase: LoginUseCase
+    private val useCase: LoginUseCase,
+    override val validator: LoginController.Validator
+
 ) : LoginController {
     private val _state = MutableStateFlow(LoginModel("", ""))
     private val _isLogging = MutableStateFlow(false)
@@ -33,6 +35,10 @@ internal class LoginControllerImpl(
 
     override fun onPasswordChanged(value: String) = _state.update { it.copy(password = value) }
 
+
+    init {
+        validator.observeFieldChanges(state)
+    }
     override suspend fun performLogin(): Boolean {
         startLoading()
         val result = useCase.execute(
@@ -75,7 +81,8 @@ internal class LoginControllerImpl(
             _screenMessage.update { null }
         }
     }
-    private fun _log(msg: String){
+
+    private fun _log(msg: String) {
         println("${this.javaClass.simpleName}:$msg")
     }
 }

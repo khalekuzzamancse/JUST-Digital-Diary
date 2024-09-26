@@ -8,8 +8,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import auth.common.SnackNProgressBarDecorator
-import auth.factory.UiFactory
+import auth.ui.common.SnackNProgressBarDecorator
+import auth.controller_presenter.factory.UiFactory
 import auth.ui.login.LoginDestinationViewModel
 import auth.ui.login.LoginScreen
 import auth.ui.register.RegisterDestination

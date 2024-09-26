@@ -1,7 +1,7 @@
-package auth.factory
+package auth.controller_presenter.factory
 
-import auth.model.RegisterModel
-import auth.ui.register.RegisterController
+import auth.controller_presenter.model.RegisterModel
+import auth.controller_presenter.controller.RegisterController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,8 +21,8 @@ internal class RegisterValidatorImpl : RegisterController.Validator {
 
     override val errors: StateFlow<List<String>> = _errors.asStateFlow()
 
-    override fun observeFieldChanges(inputData: StateFlow<RegisterModel>) {
-        inputData
+    override fun observeFieldChanges(input: StateFlow<RegisterModel>) {
+        input
             .onEach { model ->
                 val errorList = mutableListOf<String>()
 

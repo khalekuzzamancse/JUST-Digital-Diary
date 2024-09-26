@@ -1,11 +1,11 @@
 @file:Suppress("unused", "functionName")
 
-package auth.factory
+package auth.controller_presenter.factory
 
 import auth.domain.exception.CustomException
 import auth.domain.usecase.RegisterUseCase
-import auth.model.RegisterModel
-import auth.ui.register.RegisterController
+import auth.controller_presenter.model.RegisterModel
+import auth.controller_presenter.controller.RegisterController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

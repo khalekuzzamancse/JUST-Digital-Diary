@@ -1,6 +1,7 @@
 package auth.ui.login
 
-import auth.ui.register.RegisterController
+import auth.controller_presenter.controller.LoginController
+import auth.controller_presenter.controller.RegisterController
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 

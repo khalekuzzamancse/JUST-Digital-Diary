@@ -11,6 +11,7 @@ kotlin {
                 implementation(projects.features.auth.di)
                 implementation(libs.common.viewmodel)
                 implementation(libs.common.navigation)
+                implementation(projects.core.commonDocs)
             }
         }
 
