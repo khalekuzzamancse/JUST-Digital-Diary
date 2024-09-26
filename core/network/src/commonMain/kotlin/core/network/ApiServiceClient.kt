@@ -1,4 +1,4 @@
-package component
+package core.network
 
 interface ApiServiceClient {
     /**
@@ -16,4 +16,9 @@ interface ApiServiceClient {
      */
     suspend fun retrieveJsonData(url: String): Result<String>
     suspend fun post(url: String, body: Any): Result<String>
+
+    /**
+     * -It must throws custom exception as [NetworkException] on failure
+     */
+    suspend fun postOrThrow(url: String, body: Any):String
 }

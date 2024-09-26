@@ -46,6 +46,7 @@ internal class LoginControllerImpl(
                 true
             },
             onFailure = { exception ->
+
                 when (exception) {
                     is CustomException -> {
                         _updateErrorMessage(exception.message)
@@ -73,5 +74,8 @@ internal class LoginControllerImpl(
             delay(4_000)
             _screenMessage.update { null }
         }
+    }
+    private fun _log(msg: String){
+        println("${this.javaClass.simpleName}:$msg")
     }
 }

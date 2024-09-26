@@ -1,9 +1,9 @@
-@file:Suppress("unused","functionName")
+@file:Suppress("unused", "functionName")
 
 package factory
 
-import component.ApiServiceClient
-import component.ExceptionToError
+import core.network.ApiServiceClient
+import core.network.ToCustomException
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
@@ -18,46 +18,73 @@ import kotlinx.serialization.json.Json
  */
 class ApiServiceClientImpl internal constructor() : ApiServiceClient {
     private val tag: String = this.javaClass.simpleName
-    private val client = HttpClient {
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true // This will ignore unknown keys in the response
-            })
-        }
-    }
 
 
     override suspend fun retrieveJsonData(url: String): Result<String> {
+        val client=_createClient()
         return try {
+
             val httpResponse = client.get(url)
             val json = httpResponse.bodyAsText()
             Result.success(json)
         } catch (ex: Exception) {
-            Result.failure(ExceptionToError().convert(ex))
+            Result.failure(ToCustomException().convert(ex))
         } finally {
-            _closeConnection()
+            client._closeConnection()
         }
     }
 
 
     override suspend fun post(url: String, body: Any): Result<String> {
+        val client=_createClient()
         return try {
             val json = client.post(url) {
                 contentType(ContentType.Application.Json)
                 setBody(body)
             }.bodyAsText()
             Result.success(json)
+
         } catch (ex: Exception) {
-            Result.failure(ExceptionToError().convert(ex))
-        }
-        finally {
-            _closeConnection()
+            Result.failure(ToCustomException().convert(ex))
+        } finally {
+            client._closeConnection()
         }
     }
-    private fun _closeConnection() {
+
+    override suspend fun postOrThrow(url: String, body: Any): String {
+        val client=_createClient()
         try {
-            client.close()
+            val json = client.post(url) {
+                contentType(ContentType.Application.Json)
+                setBody(body)
+            }.bodyAsText()
+            return json
+
+        } catch (ex: Exception) {
+            throw ToCustomException().convert(ex)
+        } finally {
+            client._closeConnection()
+        }
+    }
+
+
+    //TODO: Helper method
+    private fun HttpClient._closeConnection() {
+        try {
+            this.close()
         } catch (_: Exception) {
+        }
+    }
+
+    /**
+     *  Should not cache HttpClient of CIO in client variable and reuse that is why make sure create
+     *  a new HttpClient for each request to avoid [kotlinx.coroutines.JobCancellationException] or other exceptions
+     */
+    private fun _createClient()=HttpClient {
+        install(ContentNegotiation) {
+            json(Json {
+                ignoreUnknownKeys = true // This will ignore unknown keys in the response
+            })
         }
     }
 }

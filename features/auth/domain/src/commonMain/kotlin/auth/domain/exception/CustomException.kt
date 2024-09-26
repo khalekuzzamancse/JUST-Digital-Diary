@@ -7,10 +7,9 @@ import common.docs.domain_layer.CustomExceptionDoc
 /**
  * Further discussion on:
  *   - `Repository`: see [CustomExceptionDoc]
- * @param debugMessage the message for developer to find the causes or source of error
- * @param message  This represents the message that can be converted to a UI-friendly, short format
+ * @param debugMessage the message for developer to find the causes or source of error for easy debugging
+ * @param message  this will directly shown to end user so make it short enough and user friendly
  **/
-
 sealed class CustomException(override val message: String, val debugMessage: String) :
     Throwable(message = message, cause = Throwable(debugMessage)) {
     override fun toString(): String {
@@ -43,9 +42,9 @@ sealed class CustomException(override val message: String, val debugMessage: Str
      *
      * @param debugMessage A detailed message describing the unexpected error.
      */
-    class UnKnownException(message: String, debugMessage: String) : CustomException(
-        message = message,
-        debugMessage = debugMessage
+    class UnKnownException(exception: Throwable) : CustomException(
+        message = "UnKnown exception",
+        debugMessage = "${exception.printStackTrace()}"
     )
 
     /**
@@ -61,4 +60,11 @@ sealed class CustomException(override val message: String, val debugMessage: Str
         debugMessage = "Server returned an message instead of expected response: $message"
     )
 
+    /**
+     * - This is related to when network engine has thrown an exception either connected with server or other
+     */
+    class NetworkIOException(message: String, debugMessage: String) : CustomException(
+        message = message,
+        debugMessage = debugMessage
+    )
 }

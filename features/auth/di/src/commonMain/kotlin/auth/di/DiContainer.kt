@@ -2,6 +2,7 @@ package auth.di
 
 import auth.data.factory.DataModuleFactory
 import auth.domain.usecase.LoginUseCase
+import auth.domain.usecase.RegisterUseCase
 
 
 /**
@@ -11,6 +12,9 @@ import auth.domain.usecase.LoginUseCase
 object DiContainer {
     fun createLoginUseCase(): LoginUseCase = LoginUseCase(
         repository = DataModuleFactory.createLoginRepository()
+    )
+    fun createRegisterUseCase(): RegisterUseCase = RegisterUseCase(
+        repository = DataModuleFactory.createRegisterRepository()
     )
 
 }

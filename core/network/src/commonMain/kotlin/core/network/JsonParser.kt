@@ -1,4 +1,4 @@
-package component
+package core.network
 
 import kotlinx.serialization.KSerializer
 

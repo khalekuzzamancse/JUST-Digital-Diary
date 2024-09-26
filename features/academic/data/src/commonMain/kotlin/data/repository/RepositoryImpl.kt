@@ -1,7 +1,7 @@
 package data.repository
 
-import component.ApiServiceClient
-import component.JsonParser
+import core.network.ApiServiceClient
+import core.network.JsonParser
 import data.schema.DepartmentListEntity
 import data.schema.FacultyListResponseEntity
 import data.schema.TeacherListEntity
@@ -11,8 +11,12 @@ import faculty.domain.model.TeacherModel
 import faculty.domain.repository.Repository
 
 /**
- * - It instance should be create using factory method
- * - Outside module should not create instance of it
+ * - This class receives all dependencies via the constructor, making it easy to integrate
+ * with Dependency Injection (DI)
+ * - It depends on  abstraction so via the `factory method` any time it dependencies can be altered with different
+ * implementations
+ *- Should not create instances of it via the constructor; instead,
+ * use a factory method or dependency injection (DI) to obtain an instance
  */
 class RepositoryImpl internal constructor(
     private val apiServiceClient: ApiServiceClient,

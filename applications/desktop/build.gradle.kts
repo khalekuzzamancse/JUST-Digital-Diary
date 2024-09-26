@@ -25,6 +25,7 @@ kotlin {
                 implementation(compose.desktop.currentOs)
 
 
+
             }
         }
     }

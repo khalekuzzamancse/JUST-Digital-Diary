@@ -1,4 +1,4 @@
-package component
+package core.network
 
 import io.ktor.client.network.sockets.ConnectTimeoutException
 import io.ktor.client.plugins.ClientRequestException
@@ -39,42 +39,45 @@ import kotlinx.coroutines.TimeoutCancellationException
  * developers with the necessary details to debug any issues effectively.
  */
 
-internal class ExceptionToError {
-    fun convert(e: Exception): Throwable {
+internal class ToCustomException {
+    fun convert(e: Exception): NetworkException {
+        val causeMessage = e.cause?.toString() ?: "No cause available"
+        val stackTrace = e.stackTraceToString()
+
         return when (e) {
-            is RedirectResponseException -> Throwable(
-                message = "Redirection error:",
-                cause = Throwable(e.response.status.description)
+            is RedirectResponseException -> NetworkException.RedirectionException(
+                message = "Redirection error occurred.",
+                debugMessage = "Cause: $causeMessage\nStack Trace:\n$stackTrace"
             )
 
-            is ClientRequestException -> Throwable(
-                message = "Client error:",
-                cause = Throwable(e.response.status.description)
+            is ClientRequestException -> NetworkException.ClientErrorException(
+                message = "Client error occurred.",
+                debugMessage = "Cause: $causeMessage\nStack Trace:\n$stackTrace"
             )
 
-            is ServerResponseException -> Throwable(
-                message = "Server error:",
-                cause = Throwable(e.response.status.description)
+            is ServerResponseException -> NetworkException.ServerErrorException(
+                message = "Server error occurred.",
+                debugMessage = "Cause: $causeMessage\nStack Trace:\n$stackTrace"
             )
 
-            is TimeoutCancellationException -> Throwable(
+            is TimeoutCancellationException -> NetworkException.RequestTimeoutException(
                 message = "Request timeout. Please check your connection.",
-                cause = Throwable("Timeout reached")
+                debugMessage = "Cause: $causeMessage\nStack Trace:\n$stackTrace"
             )
 
-            is ConnectTimeoutException -> Throwable(
+            is ConnectTimeoutException -> NetworkException.ConnectionTimeoutException(
                 message = "Connection timeout. Unable to reach the server.",
-                cause = Throwable("Connection failed")
+                debugMessage = "Cause: $causeMessage\nStack Trace:\n$stackTrace"
             )
 
-            is IOException -> Throwable(
+            is IOException -> NetworkException.NetworkIOException(
                 message = "Network error. Please check your internet connection.",
-                cause = Throwable("I/O failure or no internet connection")
+                debugMessage = "Cause: $causeMessage\nStack Trace:\n$stackTrace"
             )
 
-            else -> Throwable(
-                message = "Unexpected error:",
-                cause = Throwable(e.message ?: "Unknown error")
+            else -> NetworkException.UnknownNetworkException(
+                message = "Unknown NetworkException,contact with developer",
+                debugMessage = "Cause: $causeMessage\nStack Trace:\n$stackTrace"
             )
         }
     }

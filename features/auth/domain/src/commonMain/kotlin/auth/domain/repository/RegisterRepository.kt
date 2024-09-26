@@ -5,7 +5,7 @@ import auth.domain.model.RegisterModel
 
 interface RegisterRepository {
     /**
-     * Return true if success ,otherwise return the Result.failure with causes
+     * @return message from server or CustomException
      */
     suspend fun register(model: RegisterModel): Result<String>
 }

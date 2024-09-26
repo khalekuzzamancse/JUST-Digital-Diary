@@ -2,8 +2,8 @@
 
 package data.repository
 
-import component.ApiServiceClient
-import component.JsonParser
+import core.network.ApiServiceClient
+import core.network.JsonParser
 import data.data_source.holidayJson
 import data.misc.CalendarBuilder
 import data.misc.SchemaToModelConverter

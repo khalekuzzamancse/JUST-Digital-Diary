@@ -1,10 +1,8 @@
 @file:Suppress("UnUsed")
 package factory
 
-import component.ApiServiceClient
-import component.JsonParser
-import factory.ApiServiceClientImpl
-import factory.JsonParserImpl
+import core.network.ApiServiceClient
+import core.network.JsonParser
 
 /**
  * - Contains the `Factory method` ,it ensure `Single source of truth` for object creation which helps centralize

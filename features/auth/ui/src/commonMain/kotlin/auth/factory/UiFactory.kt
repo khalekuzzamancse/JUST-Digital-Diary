@@ -10,6 +10,10 @@ internal object UiFactory {
         LoginControllerImpl(
             useCase = DiContainer.createLoginUseCase()
         )
+
     fun createRegisterController(): RegisterController =
-        RegisterControllerImpl()
+        RegisterControllerImpl(
+            useCase = DiContainer.createRegisterUseCase(),
+            validator = RegisterValidatorImpl()
+        )
 }

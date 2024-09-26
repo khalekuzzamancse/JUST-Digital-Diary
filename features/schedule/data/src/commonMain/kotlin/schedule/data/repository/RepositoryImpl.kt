@@ -1,7 +1,7 @@
 package schedule.data.repository
 
-import component.ApiServiceClient
-import component.JsonParser
+import core.network.ApiServiceClient
+import core.network.JsonParser
 import schedule.data.dto.ClassScheduleMapper
 import schedule.data.dto.ExamScheduleMapper
 import schedule.data.schema.ClassScheduleSchema

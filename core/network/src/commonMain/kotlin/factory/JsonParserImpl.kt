@@ -1,6 +1,6 @@
 package factory
 
-import component.JsonParser
+import core.network.JsonParser
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 

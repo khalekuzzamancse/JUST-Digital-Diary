@@ -1,6 +1,6 @@
 package data
 
-import component.JsonParser
+import core.network.JsonParser
 import data.data_source.holidayJson
 import data.schema.CalendarWrapperSchema
 import factory.NetworkFactory

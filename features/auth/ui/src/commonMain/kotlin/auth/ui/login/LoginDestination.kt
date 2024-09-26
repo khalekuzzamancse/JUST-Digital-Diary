@@ -23,17 +23,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import auth.common.AuthPasswordField
+import auth.common.LoadingUi
 import common.newui.CustomTextField
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
@@ -46,12 +45,13 @@ internal fun LoginScreen(
     navigateToRegisterRequest: () -> Unit,
     onLoginSuccess: () -> Unit
 ) {
+    val coroutineScope = rememberCoroutineScope()
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         LoginFormNControls(
             modifier = Modifier.padding(32.dp),
             controller = controller,
             onLoginRequest = {
-                CoroutineScope(Dispatchers.Default).launch {
+                coroutineScope.launch {
                     controller.performLogin()
                 }
 
@@ -63,6 +63,9 @@ internal fun LoginScreen(
     }
 
 }
+
+
+
 
 /**
  * A [Stateless Component]
@@ -76,6 +79,7 @@ internal fun LoginFormNControls(
     onRegisterRequest: () -> Unit,
     onPasswordResetRequest: () -> Unit
 ) {
+    val enableControls =!(controller.isLogging.collectAsState()).value
     Column(
         modifier = modifier
             .widthIn(max = 500.dp)
@@ -104,13 +108,15 @@ internal fun LoginFormNControls(
                 Spacer(Modifier.height(16.dp))
                 _ForgetPassword(
                     modifier = Modifier.align(Alignment.End),
-                    onPasswordResetRequest = onPasswordResetRequest
+                    onPasswordResetRequest = onPasswordResetRequest,
+                    enable = enableControls
                 )
                 Spacer(Modifier.height(16.dp))
                 LoginControls(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     onLoginRequest = onLoginRequest,
                     onRegisterRequest = onRegisterRequest,
+                    enableControls = enableControls
                 )
 
             }
@@ -156,6 +162,7 @@ private fun _LoginForm(
 @Composable
 internal fun LoginControls(
     modifier: Modifier,
+    enableControls: Boolean,
     onLoginRequest: () -> Unit,
     onRegisterRequest: () -> Unit,
 ) {
@@ -163,7 +170,8 @@ internal fun LoginControls(
     LoginOrSignUp(
         modifier = Modifier.padding(start = 16.dp),
         onRegisterRequest = onRegisterRequest,
-        onLoginRequest = onLoginRequest
+        onLoginRequest = onLoginRequest,
+        enableControls = enableControls
     )
 
 
@@ -174,6 +182,7 @@ internal fun LoginControls(
 @Composable
 private fun LoginOrSignUp(
     modifier: Modifier,
+    enableControls: Boolean,
     onRegisterRequest: () -> Unit,
     onLoginRequest: () -> Unit,
 ) {
@@ -192,6 +201,7 @@ private fun LoginOrSignUp(
             )
             Spacer(Modifier.width(4.dp))
             TextButton(
+                enabled = enableControls,
                 onClick = onRegisterRequest,
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
@@ -202,7 +212,8 @@ private fun LoginOrSignUp(
         }
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = onLoginRequest
+            onClick = onLoginRequest,
+            enabled = enableControls
         ) {
             Text(text = "Login".uppercase())
         }
@@ -215,11 +226,13 @@ private fun LoginOrSignUp(
 @Composable
 private fun _ForgetPassword(
     modifier: Modifier,
+    enable: Boolean,
     onPasswordResetRequest: () -> Unit,
 ) {
     TextButton(
         onClick = onPasswordResetRequest,
-        modifier = modifier
+        modifier = modifier,
+        enabled = enable
     ) {
         Text(
             text = "Forget Password ?",

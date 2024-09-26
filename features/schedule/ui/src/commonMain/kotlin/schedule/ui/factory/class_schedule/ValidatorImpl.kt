@@ -13,9 +13,11 @@ import schedule.ui.ui.admin.add_class_schedule.ClassScheduleFormController
 class ValidatorImpl : ClassScheduleFormController.Validator {
 
     private val _areAllFieldsFilled = MutableStateFlow(false)
+    private val _errors = MutableStateFlow<List<String>>(emptyList())
+
+
     override val areAllFieldsFilled: StateFlow<Boolean> = _areAllFieldsFilled.asStateFlow()
 
-    private val _errors = MutableStateFlow<List<String>>(emptyList())
     override val errors: StateFlow<List<String>> = _errors.asStateFlow()
 
     override fun observeFieldChanges(
