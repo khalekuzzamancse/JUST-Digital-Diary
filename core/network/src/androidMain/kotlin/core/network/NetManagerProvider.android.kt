@@ -1,7 +1,6 @@
 package core.network
 
 
-import _old.network.NetManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 

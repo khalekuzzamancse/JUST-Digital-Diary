@@ -14,7 +14,8 @@ internal object UiFactory {
 
     fun createRegisterController(): RegisterController =
         RegisterControllerImpl(
-            useCase = DiContainer.createRegisterUseCase(),
+            registerUseCase = DiContainer.createRegisterUseCase(),
+            verifyUseCase = DiContainer.createAccountVerifyUseCase(),
             validator = RegisterValidatorImpl()
         )
 }

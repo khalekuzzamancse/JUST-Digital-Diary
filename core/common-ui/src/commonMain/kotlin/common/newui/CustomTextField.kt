@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.sp
     leadingIcon: ImageVector? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     readOnly:Boolean=false,
-    onValueChanged: (String) -> Unit,
+    onValueChange: (String) -> Unit,
     trailingIcon: (@Composable (Modifier) -> Unit)? = null
 ) {
     _BasicAuthTextField(
@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.sp
         visualTransformation = visualTransformation,
         leadingIcon = leadingIcon,
         keyboardType = keyboardType,
-        onValueChanged = onValueChanged,
+        onValueChanged = onValueChange,
         readOnly=readOnly,
         trailingIcon=trailingIcon
     )
@@ -84,18 +84,19 @@ private fun _BasicAuthTextField(
             Row(
                 modifier
                     .border(width = 2.dp, color = borderColor, CircleShape)
-                    .padding(top = 12.dp, bottom = 12.dp),
+                    .padding(vertical = 10.dp, horizontal = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (leadingIcon != null) {
                     Icon(
                         imageVector = leadingIcon,
-                        tint = borderColor,
+                        tint = MaterialTheme.colorScheme.tertiary,
                         contentDescription = "leading icon",
                         modifier = Modifier.padding(start = 12.dp).size(22.dp)
                     )
+                    Spacer(Modifier.width(4.dp))
                 }
-                Spacer(Modifier.width(12.dp))
+
                 Box(Modifier.weight(1f)) {
                     if (value.isEmpty()) {
                         _Placeholder(label, fontSize, placeholderColor)

@@ -80,14 +80,14 @@ private fun _Form(
         CustomTextField(
             label = "Name",
             value = model.name,
-            onValueChanged = controller::onNameChange,
+            onValueChange = controller::onNameChange,
             leadingIcon = Icons.Default.Person
         )
         Spacer(modifier = Modifier.height(16.dp))
         CustomTextField(
             label = "Email",
             value = model.email,
-            onValueChanged = controller::onEmailChange,
+            onValueChange = controller::onEmailChange,
             leadingIcon = Icons.Default.Email
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -95,7 +95,7 @@ private fun _Form(
         CustomTextField(
             label = "Additional Email",
             value = model.additionalEmail,
-            onValueChanged = controller::onAdditionalEmailChange,
+            onValueChange = controller::onAdditionalEmailChange,
             leadingIcon = Icons.Default.Email
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -103,7 +103,7 @@ private fun _Form(
         CustomTextField(
             label = "Achievements",
             value = model.achievements,
-            onValueChanged = controller::onAchievementsChange,
+            onValueChange = controller::onAchievementsChange,
             leadingIcon = Icons.Default.Description
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -111,7 +111,7 @@ private fun _Form(
         CustomTextField(
             label = "Phone",
             value = model.phone,
-            onValueChanged = { newPhone ->
+            onValueChange = { newPhone ->
                 val filteredPhone = newPhone.filter { it.isDigit() }
                 controller.onPhoneChange(filteredPhone)
             },
@@ -124,7 +124,7 @@ private fun _Form(
         CustomTextField(
             label = "Designations",
             value = model.designations,
-            onValueChanged = controller::onDesignationsChange,
+            onValueChange = controller::onDesignationsChange,
             leadingIcon = Icons.Default.Description
         )
 
@@ -133,7 +133,7 @@ private fun _Form(
         CustomTextField(
             label = "Room No",
             value =model.roomNo ,
-            onValueChanged = { newRoomNo ->
+            onValueChange = { newRoomNo ->
                 val intValue = newRoomNo.toIntOrNull() ?: 0
                 controller.onRoomNoChange(intValue)
             },

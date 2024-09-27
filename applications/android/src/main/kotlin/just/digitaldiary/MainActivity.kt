@@ -26,15 +26,15 @@ class MainActivity : ComponentActivity() {
         val eventHandler= AppEventHandler(this)
 //        enableEdgeToEdge()
         //initialize the network manger
-        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        NetManagerProvider.setConnectivityManager(connectivityManager)
+//        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//        NetManagerProvider.setConnectivityManager(connectivityManager)
         setContent {
             AppTheme {
                 RootNavHost {}
 //                AndroidRootNavigation(
 //                    onEvent = eventHandler::handleEvent
 //                )
-                Icons.Filled.Person
+
             }
         }
     }

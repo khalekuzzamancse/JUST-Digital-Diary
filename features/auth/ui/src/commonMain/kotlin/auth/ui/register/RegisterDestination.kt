@@ -18,9 +18,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Person2
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Person2
+import androidx.compose.material.icons.outlined.Security
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -29,9 +31,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import auth.controller_presenter.controller.RegisterController
@@ -48,6 +55,20 @@ internal fun RegisterDestination(
     onLoginRequest: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
+    //Simple state it is okay to define here,need to hoist
+    var showOTPDialog by rememberSaveable { mutableStateOf(false) }
+    if (showOTPDialog) {
+        _OTPDialog(
+            onDismiss = { showOTPDialog = false },
+            onDone = { username, otp ->
+                showOTPDialog = false
+                scope.launch {
+                    controller.verifyAccount(username, otp)
+                }
+            }
+        )
+
+    }
 
 
     Box(
@@ -61,9 +82,14 @@ internal fun RegisterDestination(
             border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.outline)
         ) {
             Column(
-                modifier = Modifier.padding(vertical = 32.dp, horizontal = 16.dp).verticalScroll(
-                    rememberScrollState()
-                ),
+                modifier = Modifier
+                    .widthIn(max = 500.dp)
+                    .padding(
+                        vertical = 32.dp,
+                        horizontal = 16.dp
+                    ).verticalScroll(
+                        rememberScrollState()
+                    ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 _HeaderSection(modifier = Modifier)
@@ -77,7 +103,11 @@ internal fun RegisterDestination(
                             controller.register()
                         }
                     },
+                    onOTPVerifyRequest = {
+                        showOTPDialog = true
+                    }
                 )
+
             }
 
         }
@@ -94,6 +124,7 @@ internal fun RegisterFormNControls(
     controller: RegisterController,
     onRegisterRequest: () -> Unit,
     onNavigateToLoginRequest: () -> Unit,
+    onOTPVerifyRequest: () -> Unit,
 ) {
     val enableControls = !(controller.isRegistering.collectAsState()).value
     val noError = controller.validator.errors.collectAsState().value.isEmpty()
@@ -119,10 +150,11 @@ internal fun RegisterFormNControls(
 
         Spacer(Modifier.height(24.dp))
         Column(Modifier.padding(start = 16.dp).align(Alignment.CenterHorizontally)) {
-            _LoginSection(
+            _LoginAndOTP(
                 enabled = enableControls,
                 modifier = Modifier,
-                onLoginRequest = onNavigateToLoginRequest
+                onLoginRequest = onNavigateToLoginRequest,
+                onOTPVerifyRequest = onOTPVerifyRequest
             )
         }
         controller.validator.errors.collectAsState().value.let { error ->
@@ -136,7 +168,7 @@ internal fun RegisterFormNControls(
                 .widthIn(min = 200.dp, max = 300.dp)
                 .align(Alignment.CenterHorizontally),
             onRegistrationRequest = onRegisterRequest,
-            enabled = enableControls&&noError&&allFieldsFilled
+            enabled = enableControls && noError && allFieldsFilled
         )
 
     }
@@ -166,9 +198,9 @@ private fun _Form(
             modifier = fieldModifier,
             label = "Name",
             value = name,
-            onValueChanged = onNameChanged,
+            onValueChange = onNameChanged,
             keyboardType = KeyboardType.Text,
-            leadingIcon = Icons.Default.Person,
+            leadingIcon = Icons.Outlined.Person,
         )
         Spacer(Modifier.height(8.dp))
 
@@ -176,9 +208,9 @@ private fun _Form(
             modifier = fieldModifier,
             label = "Email",
             value = email,
-            onValueChanged = onEmailChanged,
+            onValueChange = onEmailChanged,
             keyboardType = KeyboardType.Email,
-            leadingIcon = Icons.Default.Email,
+            leadingIcon = Icons.Outlined.Email,
         )
         Spacer(Modifier.height(8.dp))
 
@@ -186,9 +218,9 @@ private fun _Form(
             modifier = fieldModifier,
             label = "Username",
             value = username,
-            onValueChanged = onUserNameChanged,
+            onValueChange = onUserNameChanged,
             keyboardType = KeyboardType.Text,
-            leadingIcon = Icons.Default.Person2,
+            leadingIcon = Icons.Outlined.Person2,
         )
         Spacer(Modifier.height(8.dp))
 
@@ -231,32 +263,56 @@ private fun _Controls(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun _LoginSection(
+private fun _LoginAndOTP(
     modifier: Modifier,
     enabled: Boolean,
     onLoginRequest: () -> Unit,
+    onOTPVerifyRequest: () -> Unit,
 ) {
-    FlowRow(
-        modifier = Modifier.width(IntrinsicSize.Max),
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Text(
-            text = "Have an account ?",
-            modifier = Modifier.align(Alignment.CenterVertically)
-        )
-        Spacer(Modifier.width(4.dp))
-        TextButton(
-            onClick = onLoginRequest,
-            enabled = enabled,
-            modifier = Modifier.align(Alignment.CenterVertically)
+    Column {
+        FlowRow(
+            modifier = Modifier.width(IntrinsicSize.Max),
+            verticalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = "Login"
+                text = "Have an account ?",
+                modifier = Modifier.align(Alignment.CenterVertically)
             )
+            Spacer(Modifier.width(4.dp))
+            TextButton(
+                onClick = onLoginRequest,
+                enabled = enabled,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            ) {
+                Text(
+                    text = "Login",
+                    color =if (enabled) MaterialTheme.colorScheme.secondary else Color.Unspecified
+                )
+            }
         }
+        FlowRow(
+            modifier = Modifier.width(IntrinsicSize.Max),
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = "Already Registered ?",
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+            Spacer(Modifier.width(4.dp))
+            TextButton(
+                onClick = onOTPVerifyRequest,
+                enabled = enabled,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            ) {
+                Text(
+                    text = "Verify",
+                    color =if (enabled) MaterialTheme.colorScheme.tertiary else Color.Unspecified
+                )
+            }
+        }
+
+
     }
-
-
 }
 
 @Composable
@@ -269,3 +325,57 @@ private fun _HeaderSection(
         style = MaterialTheme.typography.headlineMedium
     )
 }
+
+@Composable
+private fun _OTPDialog(
+    onDismiss: () -> Unit,
+    onDone: (username: String, otp: String) -> Unit
+) {
+    // Keep the OTP state within the dialog
+    var otp by rememberSaveable { mutableStateOf("") }
+    var username by rememberSaveable { mutableStateOf("") }
+
+    AlertDialog(
+        onDismissRequest = { onDismiss() },
+        text = {
+            Column {
+                CustomTextField(
+                    value = username,
+                    onValueChange = { input ->
+                        username = input
+                    },
+                    label = "Identifier",
+                    leadingIcon = Icons.Outlined.Email,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Spacer(Modifier.height(8.dp))
+
+                CustomTextField(
+                    value = otp,
+                    onValueChange = { input ->
+                        otp = input
+                    },
+                    label = "OTP",
+                    leadingIcon = Icons.Outlined.Security,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+
+            }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = { onDone(username, otp) },
+                enabled = otp.length >= 3 && username.length >= 3
+            ) {
+                Text(text = "Verify")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { onDismiss() }) {
+                Text(text = "Cancel")
+            }
+        },
+        modifier = Modifier.padding(16.dp)
+    )
+}
+

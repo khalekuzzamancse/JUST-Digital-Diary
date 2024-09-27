@@ -12,10 +12,10 @@ import factory.NetworkFactory
 object DataModuleFactory {
     fun createLoginRepository(): LoginRepository =LoginRepositoryImpl(
         apiServiceClient = NetworkFactory.createAPIServiceClient(),
-        jsonParser = NetworkFactory.createJsonParser()
+        responseHandler = JsonHandlerImpl(NetworkFactory.createJsonParser())
     )
     fun createRegisterRepository(): RegisterRepository = RegisterRepositoryImpl(
         apiServiceClient = NetworkFactory.createAPIServiceClient(),
-        jsonParser = NetworkFactory.createJsonParser()
+        handler = JsonHandlerImpl(NetworkFactory.createJsonParser())
     )
 }

@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -27,6 +27,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import auth.controller_presenter.controller.LoginController
@@ -110,7 +111,7 @@ internal fun LoginFormNControls(
                 _ForgetPassword(
                     modifier = Modifier.align(Alignment.End),
                     onPasswordResetRequest = onPasswordResetRequest,
-                    enable = isNotLoading
+                    enabled = isNotLoading
                 )
                 Spacer(Modifier.height(16.dp))
                 LoginControls(
@@ -144,9 +145,9 @@ private fun _LoginForm(
             modifier = fieldModifier,
             label = "User Name",
             value = userName,
-            onValueChanged = onUserNameChanged,
+            onValueChange = onUserNameChanged,
             keyboardType = KeyboardType.Text,
-            leadingIcon = Icons.Default.Person,
+            leadingIcon = Icons.Outlined.Person,
         )
         Spacer(Modifier.height(8.dp))
         AuthPasswordField(
@@ -211,7 +212,8 @@ private fun LoginOrSignUp(
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Text(
-                    text = "Register"
+                    text = "Register",
+                    color =if (enableRegister) MaterialTheme.colorScheme.secondary else Color.Unspecified
                 )
             }
         }
@@ -231,16 +233,17 @@ private fun LoginOrSignUp(
 @Composable
 private fun _ForgetPassword(
     modifier: Modifier,
-    enable: Boolean,
+    enabled: Boolean,
     onPasswordResetRequest: () -> Unit,
 ) {
     TextButton(
         onClick = onPasswordResetRequest,
         modifier = modifier,
-        enabled = enable
+        enabled = enabled
     ) {
         Text(
             text = "Forget Password ?",
+            color =if (enabled) MaterialTheme.colorScheme.tertiary else Color.Unspecified
         )
     }
 

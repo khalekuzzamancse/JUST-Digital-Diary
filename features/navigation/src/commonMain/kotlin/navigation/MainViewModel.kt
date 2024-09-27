@@ -47,11 +47,7 @@ class MainViewModel : ViewModel() {
     }
 
     private suspend fun startObserverSignIn() {
-//        isSignedIn.collect { signIn ->
-//            if (signIn)
-//               // AuthComponentProvider.updateAuthToken()
-//        }
-        TODO()
+
     }
 
     fun openDrawer() = controller.openDrawer()

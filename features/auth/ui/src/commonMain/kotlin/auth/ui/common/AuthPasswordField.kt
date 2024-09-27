@@ -2,10 +2,11 @@ package auth.ui.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Visibility
+import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,12 +35,13 @@ internal fun AuthPasswordField(
         visualTransformation = if (show) VisualTransformation.None else PasswordVisualTransformation(),
         leadingIcon = Icons.Outlined.Lock,
         keyboardType = KeyboardType.Password,
-        onValueChanged = onValueChanged,
+        onValueChange = onValueChanged,
         trailingIcon = {
             if (enableVisibility) {
                 Icon(
-                    imageVector = if (show) Icons.Default.Visibility else Icons.Default.VisibilityOff,
+                    imageVector = if (show) Icons.Outlined.Visibility else Icons.Outlined.VisibilityOff,
                     contentDescription = "trailing icon",
+                    tint = MaterialTheme.colorScheme.secondary,//because clickable
                     modifier = it.clickable {
                         show = !show
                     }

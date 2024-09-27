@@ -22,6 +22,7 @@ internal interface RegisterController {
     fun onPasswordChanged(value: String)
     fun onConfirmPasswordChanged(value: String)
     suspend fun register()
+    suspend fun  verifyAccount(username:String, otp:String)
 
     interface Validator {
         val areAllFieldsFilled: StateFlow<Boolean>

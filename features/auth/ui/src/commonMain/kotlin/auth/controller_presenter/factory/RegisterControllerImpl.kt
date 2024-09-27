@@ -6,6 +6,8 @@ import auth.domain.exception.CustomException
 import auth.domain.usecase.RegisterUseCase
 import auth.controller_presenter.model.RegisterModel
 import auth.controller_presenter.controller.RegisterController
+import auth.domain.model.AccountVerifyModel
+import auth.domain.usecase.AccountVerifyUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -17,7 +19,8 @@ import kotlinx.coroutines.launch
 
 
 internal class RegisterControllerImpl(
-    private val useCase: RegisterUseCase,
+    private val registerUseCase: RegisterUseCase,
+    private val verifyUseCase: AccountVerifyUseCase,
     override val validator: RegisterController.Validator
 ) : RegisterController {
     private val _state = MutableStateFlow(RegisterModel("", "", "", "", ""))
@@ -47,33 +50,46 @@ internal class RegisterControllerImpl(
     }
 
     override suspend fun register() {
+        _executeAndConsumeResult(
+            useCaseAction = { registerUseCase.execute(_createModel()) }
+        )
+    }
+
+    override suspend fun verifyAccount(username: String, otp: String) {
+        _executeAndConsumeResult(
+            useCaseAction = { verifyUseCase.execute(AccountVerifyModel(username, otp)) }
+        )
+    }
+
+
+
+
+
+
+    private suspend fun <T> _executeAndConsumeResult(
+        useCaseAction: suspend () -> Result<T>,
+        onSuccessMessage: String = "Success"
+    ) {
         startLoading()
-        val result = useCase.execute(_createModel())
+        val result = useCaseAction()
         stopLoading()
 
-        return result.fold(
+        result.fold(
             onSuccess = {
-                //It it hard to denote that success and what message should be shown??
-                //that is why it is user responsibility to navigate back if need
-                _updateErrorMessage("Success")
+                // Handle success, with customizable success message
+                _updateErrorMessage(onSuccessMessage)
             },
-
             onFailure = { exception ->
                 when (exception) {
                     is CustomException -> {
                         _updateErrorMessage(exception.message)
                     }
-
                     else -> {
                         _updateErrorMessage("Something went wrong")
                     }
-
-
                 }
-
             }
         )
-
     }
 
 

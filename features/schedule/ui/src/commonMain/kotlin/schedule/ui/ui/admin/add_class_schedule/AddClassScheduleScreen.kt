@@ -85,7 +85,7 @@ private fun _Form(
         CustomTextField(
             label = "Session",
             value = controller.session.collectAsState().value,
-            onValueChanged = controller::onSessionChanged,
+            onValueChange = controller::onSessionChanged,
             leadingIcon = Icons.Filled.Event,
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -93,42 +93,42 @@ private fun _Form(
         CustomTextField(
             label = "Year",
             value = controller.year.collectAsState().value,
-            onValueChanged = controller::onYearChanged,
+            onValueChange = controller::onYearChanged,
             leadingIcon = Icons.Filled.Class
         )
         Spacer(modifier = Modifier.height(16.dp))
         CustomTextField(
             label = "Semester",
             value = controller.semester.collectAsState().value,
-            onValueChanged = controller::onSemesterChanged,
+            onValueChange = controller::onSemesterChanged,
             leadingIcon = Icons.Filled.Splitscreen
         )
         Spacer(modifier = Modifier.height(16.dp))
         CustomTextField(
             label = "Course code",
             value = controller.courseCode.collectAsState().value,
-            onValueChanged = controller::onCourseCodeChanged,
+            onValueChange = controller::onCourseCodeChanged,
             leadingIcon = Icons.AutoMirrored.Filled.Label,
         )
         Spacer(modifier = Modifier.height(16.dp))
         CustomTextField(
             label = "Teacher short name",
             value = controller.teacherName.collectAsState().value,
-            onValueChanged = controller::onTeacherNameChanged,
+            onValueChange = controller::onTeacherNameChanged,
             leadingIcon = Icons.Filled.Person,
         )
         Spacer(modifier = Modifier.height(16.dp))
         CustomTextField(
             label = "Start time",
             value = controller.startTime.collectAsState().value,
-            onValueChanged = controller::onStartTimeChanged,
+            onValueChange = controller::onStartTimeChanged,
             leadingIcon = Icons.Filled.AccessTime,
         )
         Spacer(modifier = Modifier.height(16.dp))
         CustomTextField(
             label = "End time",
             value = controller.endTime.collectAsState().value,
-            onValueChanged = controller::onEndTimeChanged,
+            onValueChange = controller::onEndTimeChanged,
             leadingIcon = Icons.Filled.AccessTime,
         )
         controller.validator.errors.collectAsState().value.let { error ->
