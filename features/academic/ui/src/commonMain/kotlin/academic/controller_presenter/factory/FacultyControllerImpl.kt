@@ -1,10 +1,10 @@
 @file:Suppress("unused", "FunctionName")
 
-package academic.factory
+package academic.controller_presenter.factory
 
-import academic.model.FacultyModel
-import academic.mapper.ModelMapper
-import academic.ui.public_.faculty.FacultyController
+import academic.controller_presenter.model.FacultyModel
+import academic.controller_presenter.mapper.ModelMapper
+import academic.controller_presenter.controller.FacultyController
 import faculty.domain.usecase.RetrieveFactualityUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

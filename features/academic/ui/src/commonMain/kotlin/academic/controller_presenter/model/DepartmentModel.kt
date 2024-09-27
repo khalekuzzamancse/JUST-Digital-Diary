@@ -1,4 +1,4 @@
-package academic.model
+package academic.controller_presenter.model
 
 internal class DepartmentModel(
     val name: String,

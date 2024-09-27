@@ -1,19 +1,87 @@
 package academic.ui.public_
 
-import academic.ui.public_.department.DepartmentController
+import academic.controller_presenter.controller.DepartmentController
+import academic.controller_presenter.controller.FacultyController
+import academic.controller_presenter.factory.UiFactory
+import academic.ui.AcademicModuleEvent
 import academic.ui.public_.department.Departments
 import academic.ui.public_.faculty.Faculty
-import academic.ui.public_.faculty.FacultyController
+import academic.ui.public_.teachers.TeachersScreen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import common.newui.TwoPaneLayout
 import common.newui.TwoPaneNewUIPros
+
+@Composable
+fun AcademicRoute(
+    modifier: Modifier = Modifier,
+    isNavRailMode: Boolean,
+    onEvent: (AcademicModuleEvent) -> Unit
+) {
+    val navController = rememberNavController()
+
+    val viewModel = remember { UiFactory.createFacultyViewModel() }
+
+    NavHost(
+        navController = navController,
+        startDestination = Route.FACULTY_AND_DEPT,
+        modifier = Modifier
+    ) {
+
+        composable(route = Route.FACULTY_AND_DEPT) {
+
+            FacultyAndDepartmentList(
+                viewModel = viewModel,
+                backHandler = {},
+                isNavRailMode = false,
+                onExitRequest = {},
+                onTeachersRequest = {
+                    try {
+                        navController.navigate("${Route.TEACHER_LIST}/$it")
+                    } catch (_: Exception) {
+
+                    }
+                }
+            )
+        }
+        composable(
+            route = Route.TEACHERS_ROUTE,
+            arguments = listOf(navArgument(Route.DEPT_ID) { type = NavType.StringType })
+        ) {backStackEntry ->
+            val deptID = backStackEntry.arguments?.getString(Route.DEPT_ID)
+            TeachersScreen(
+                deptId = deptID ?: "",
+                onExitRequest = {
+                    navController.popBackStack()
+                },
+                onEvent = onEvent
+            )
+
+        }
+
+    }
+
+}
+
+private object Route {
+    const val TEACHER_LIST = "TeacherListScreen"
+    const val FACULTY_AND_DEPT = "FACULTY_AND_DEPT"
+    const val DEPT_ID = "deptId"
+    const val TEACHERS_ROUTE = "$TEACHER_LIST/{$DEPT_ID}"
+}
+
 
 /**
  * @param backHandler is to override the back button press functionality

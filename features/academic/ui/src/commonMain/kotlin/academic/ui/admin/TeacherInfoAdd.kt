@@ -1,8 +1,9 @@
 package academic.ui.admin
 
+import academic.controller_presenter.controller.TeacherFormController
 import academic.ui.common.CustomTextField
-import academic.factory.UiFactory
-import academic.model.Dept
+import academic.controller_presenter.factory.UiFactory
+import academic.controller_presenter.model.Dept
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize

@@ -1,5 +1,6 @@
 package academic.ui.public_.faculty
 
+import academic.controller_presenter.controller.FacultyController
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll

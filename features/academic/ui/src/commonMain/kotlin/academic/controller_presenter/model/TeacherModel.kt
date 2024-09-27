@@ -1,4 +1,4 @@
-package academic.model
+package academic.controller_presenter.model
 
 /**
  * - Used for admin ....

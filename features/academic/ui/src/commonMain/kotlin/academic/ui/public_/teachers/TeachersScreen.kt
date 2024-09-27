@@ -1,8 +1,8 @@
 package academic.ui.public_.teachers
 
-import academic.event.AcademicModuleEvent
-import academic.factory.UiFactory
-import academic.model.TeacherModel
+import academic.ui.AcademicModuleEvent
+import academic.controller_presenter.factory.UiFactory
+import academic.controller_presenter.model.TeacherModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.sp
 import common.newui.GenericEmployeeCard
 import common.ui.TopBarDecoratorCommon
 import common.ui.list.AdaptiveList
-import kotlinx.coroutines.flow.StateFlow
 
 
 @Composable

@@ -1,8 +1,8 @@
 package navigation
 
-import academic.event.AcademicModuleEvent
+import academic.ui.AcademicModuleEvent
 import academic.ui.admin.AddTeacherScreen
-import academic.ui.public_.FacultyFeatureNavGraph
+import academic.ui.public_.AcademicRoute
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -14,10 +14,10 @@ import androidx.navigation.compose.composable
 import calendar.ui.ui.admin.AddAcademicCalenderScreen
 import miscellaneous.OtherFeatureEvent
 import miscellaneous.OtherFeatureNavGraph
-import schedule.ui.ui.public_.ViewClassScheduleScreen
-import schedule.ui.ui.public_.ViewExamScheduleScreen
 import schedule.ui.ui.admin.add_class_schedule.AddClassScheduleScreen
 import schedule.ui.ui.admin.add_exam_schedule.ExamScheduleAddScreen
+import schedule.ui.ui.public_.ViewClassScheduleScreen
+import schedule.ui.ui.public_.ViewExamScheduleScreen
 
 
 @Composable
@@ -45,21 +45,25 @@ fun RootNavGraph(
                         is OtherFeatureEvent.CalenderRequest -> {
                             onEvent(AppEvent.WebVisitRequest(event.url))
                         }
+
                         is OtherFeatureEvent.NavigateToCalendarUpdate -> {
                             navController.navigate(GraphRoutes.CALENDAR_UPDATE)
                         }
+
                         is OtherFeatureEvent.NavigateToExamRoutineUpdate -> {
                             navController.navigate(GraphRoutes.EXAM_ROUTINE_UPDATE)
                         }
+
                         is OtherFeatureEvent.NavigateToClassRoutineUpdate -> {
                             navController.navigate(GraphRoutes.CLASS_ROUTINE_UPDATE)
                         }
+
                         is OtherFeatureEvent.NavigateToTeacherInfoUpdate -> {
                             navController.navigate(GraphRoutes.TEACHER_INFO_UPDATE)
                         }
                     }
+                } catch (_: Exception) {
                 }
-                catch (_:Exception){}
 
 
             }
@@ -73,22 +77,17 @@ fun RootNavGraph(
 //            )
 //        }
         composable(GraphRoutes.FACULTY_FEATURE) {
-            FacultyFeatureNavGraph.NavHost(
+            AcademicRoute(
                 onEvent = { event ->
                     toAppEvent(event)?.let(onEvent)
                 },
-                onMenuIconClicked = openDrawerRequest,
+                // onMenuIconClicked = openDrawerRequest,
                 isNavRailMode = isNavRailMode
             )
         }
-        composable(GraphRoutes.FACULTY_FEATURE) {
-            FacultyFeatureNavGraph.NavHost(
-                onEvent = { event ->
-                    toAppEvent(event)?.let(onEvent)
-                },
-                onMenuIconClicked = openDrawerRequest,
-                isNavRailMode = isNavRailMode
-            )
+
+        composable(GraphRoutes.ADMIN_OFFICE_FEATURE) {
+
         }
         composable(GraphRoutes.CLASS_SCHEDULE_VIEWER) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -108,22 +107,22 @@ fun RootNavGraph(
             }
 
         }
-        composable(GraphRoutes.EXAM_ROUTINE_UPDATE){
+        composable(GraphRoutes.EXAM_ROUTINE_UPDATE) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 ExamScheduleAddScreen()
             }
         }
-        composable(GraphRoutes.CLASS_ROUTINE_UPDATE){
+        composable(GraphRoutes.CLASS_ROUTINE_UPDATE) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 AddClassScheduleScreen()
             }
         }
-        composable(GraphRoutes.TEACHER_INFO_UPDATE){
+        composable(GraphRoutes.TEACHER_INFO_UPDATE) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            AddTeacherScreen()
+                AddTeacherScreen()
             }
         }
-        composable(GraphRoutes.CALENDAR_UPDATE){
+        composable(GraphRoutes.CALENDAR_UPDATE) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 AddAcademicCalenderScreen()
             }
@@ -197,6 +196,7 @@ object GraphRoutes {
     const val SEARCH = "Search"
     const val CLASS_SCHEDULE_VIEWER = "CLASS_SCHEDULE"
     const val EXAM_SCHEDULE_VIEWER = "EXAM_SCHEDULE"
+
     // Admin-specific routes
     const val CALENDAR_UPDATE = "CalendarUpdateFeatureNavGraph.ROUTE"
     const val TEACHER_INFO_UPDATE = "TeacherInfoUpdateFeatureNavGraph.ROUTE"

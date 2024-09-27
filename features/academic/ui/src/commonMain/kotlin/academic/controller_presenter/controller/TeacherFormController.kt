@@ -1,7 +1,7 @@
-package academic.ui.admin
+package academic.controller_presenter.controller
 
-import academic.model.Dept
-import academic.model.TeacherModel
+import academic.controller_presenter.model.Dept
+import academic.controller_presenter.model.TeacherModel
 import kotlinx.coroutines.flow.StateFlow
 
 /**

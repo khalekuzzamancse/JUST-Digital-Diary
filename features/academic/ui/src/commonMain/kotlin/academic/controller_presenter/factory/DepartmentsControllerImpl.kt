@@ -1,10 +1,10 @@
 @file:Suppress("unused", "FunctionName")
 
-package academic.factory
+package academic.controller_presenter.factory
 
-import academic.model.DepartmentModel
-import academic.mapper.ModelMapper
-import academic.ui.public_.department.DepartmentController
+import academic.controller_presenter.model.DepartmentModel
+import academic.controller_presenter.mapper.ModelMapper
+import academic.controller_presenter.controller.DepartmentController
 import faculty.domain.usecase.RetrieveDepartmentsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

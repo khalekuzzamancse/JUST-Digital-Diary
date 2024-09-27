@@ -1,7 +1,7 @@
 package academic.ui.public_
 
-import academic.ui.public_.department.DepartmentController
-import academic.ui.public_.faculty.FacultyController
+import academic.controller_presenter.controller.DepartmentController
+import academic.controller_presenter.controller.FacultyController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

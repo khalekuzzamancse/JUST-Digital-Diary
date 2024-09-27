@@ -1,4 +1,4 @@
-package academic.model
+package academic.controller_presenter.model
 
 internal data class FacultyModel(
     val name:String,

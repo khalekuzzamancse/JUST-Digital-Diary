@@ -1,6 +1,6 @@
-package academic.ui.public_.department
+package academic.controller_presenter.controller
 
-import academic.model.DepartmentModel
+import academic.controller_presenter.model.DepartmentModel
 import kotlinx.coroutines.flow.StateFlow
 
 internal interface DepartmentController {

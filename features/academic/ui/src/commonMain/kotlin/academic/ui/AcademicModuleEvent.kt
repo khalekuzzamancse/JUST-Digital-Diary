@@ -1,4 +1,4 @@
-package academic.event
+package academic.ui
 
 /**
  * - Defines the events that should be exposed from this module to the consumer module

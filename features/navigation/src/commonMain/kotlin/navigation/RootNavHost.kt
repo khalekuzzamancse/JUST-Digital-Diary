@@ -1,5 +1,6 @@
 package navigation
 
+import academic.ui.public_.AcademicRoute
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
@@ -21,9 +22,10 @@ fun RootNavHost(
     val mainViewModel = viewModel { MainViewModel() }
     val slapScreenShowing = mainViewModel.showSlapScreen.collectAsState().value
     AppTheme {
-        AuthRoute(
-            onLoginSuccess = { _, _ -> }
-        )
+        //AcademicRoute()
+//        AuthRoute(
+//            onLoginSuccess = { _, _ -> }
+//        )
     }
 //    if (slapScreenShowing)
 //        SplashScreen()
@@ -31,7 +33,7 @@ fun RootNavHost(
     //TeacherFormScreen()
 //    Routine()
 
-    //  _FeatureSection(mainViewModel, onEvent)
+     _FeatureSection(mainViewModel, onEvent)
 }
 
 @Composable

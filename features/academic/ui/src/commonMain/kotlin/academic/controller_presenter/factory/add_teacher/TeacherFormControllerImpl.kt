@@ -1,8 +1,8 @@
-package academic.factory.add_teacher
+package academic.controller_presenter.factory.add_teacher
 
-import academic.ui.admin.TeacherFormController
-import academic.model.Dept
-import academic.model.TeacherModel
+import academic.controller_presenter.controller.TeacherFormController
+import academic.controller_presenter.model.Dept
+import academic.controller_presenter.model.TeacherModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
