@@ -1,7 +1,7 @@
 package administration.data.sub_office.data_sources.remote
 
 import administration.data.PackageLevelAccess
-import administration.data.sub_office.data_sources.remote.entity.SubOfficeListEntity
+import administration.data.entity.SubOfficeListEntity
 
 internal class SubOfficeRemoteDataSourceImpl(
     officeId: String

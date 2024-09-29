@@ -28,10 +28,7 @@ class MainNavGraphController(
                 navigateAsTopMostDestination(GraphRoutes.FACULTY_FEATURE, navController)
             }
             NavDestination.AdminOffice -> {
-                navigateAsTopMostDestination(
-                    GraphRoutes.ADMIN_OFFICE_FEATURE,
-                    navController
-                )
+                navController.navigate(GraphRoutes.ADMIN_OFFICE_FEATURE)
             }
             NavDestination.Search -> {
                 navigateAsTopMostDestination(GraphRoutes.SEARCH, navController)

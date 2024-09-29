@@ -1,7 +1,7 @@
 package administration.data.officers.data_sources.remote
 
 import administration.data.PackageLevelAccess
-import administration.data.officers.data_sources.remote.entity.AdminOfficerListEntity
+import administration.data.entity.AdminOfficerListEntity
 
 
 internal class AdminOfficerListRemoteDataSource(

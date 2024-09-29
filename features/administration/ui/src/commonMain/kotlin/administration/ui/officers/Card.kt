@@ -1,5 +1,6 @@
 package administration.ui.officers
 
+import administration.controller_presenter.model.AdminOfficerModel
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring

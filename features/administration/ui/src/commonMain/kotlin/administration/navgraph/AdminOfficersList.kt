@@ -1,7 +1,7 @@
 package administration.navgraph
 
-import administration.di.AdminOfficeComponentProvider
-import administration.ui.model.AdminOfficers
+import administration.di.DiContainer
+import administration.ui.AdminOfficers
 import administration.ui.officers.AdminEmployeeListEvent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -24,7 +24,7 @@ fun AdminOfficersScreen(
         AdminOfficers(
             modifier = Modifier.padding(it),
             subOfficeId=subOfficeId,
-            repository = AdminOfficeComponentProvider.getAdminOfficersListRepository(),
+            repository = DiContainer.getAdminOfficersListRepository(),
             onEvent=onEvent
         )
     }

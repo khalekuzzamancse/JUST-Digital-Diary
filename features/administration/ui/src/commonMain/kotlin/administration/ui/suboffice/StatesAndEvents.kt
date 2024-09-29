@@ -1,6 +1,6 @@
 package administration.ui.suboffice
 
-import administration.ui.model.SubOfficeModel
+import administration.controller_presenter.model.SubOfficeModel
 
 data class SubOfficeListState(
     val title: String? = null,

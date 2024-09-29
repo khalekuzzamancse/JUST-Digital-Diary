@@ -25,7 +25,6 @@ internal class FacultyControllerImpl(
     private val _selected = MutableStateFlow<Int?>(null)
 
     override val errorMessage=_screenMessage.asStateFlow()
-    //
     override val isFetching = _isLoading.asStateFlow()
     override val faculties = _faculties.asStateFlow()
     override val selected = _selected.asStateFlow()

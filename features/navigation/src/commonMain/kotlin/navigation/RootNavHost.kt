@@ -11,6 +11,7 @@ import common.newui.DrawerToNavRailDecorator
 import common.newui.NavigationController
 import common.newui.NavigationEvent
 import navigation.component.DrawerHeader
+import navigation.component.NavDestination
 import navigation.component.NavDestinationBuilder
 
 

@@ -1,9 +1,9 @@
 package administration.ui.offices
 
-import administration.ui.model.OfficesModel
+import administration.controller_presenter.model.OfficeModel
 
 data class OfficeListState(
-    val offices: List<OfficesModel> = emptyList(),
+    val offices: List<OfficeModel> = emptyList(),
     val selected:Int=-1
 )
 

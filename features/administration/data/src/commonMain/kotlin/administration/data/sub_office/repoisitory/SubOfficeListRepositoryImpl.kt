@@ -1,8 +1,8 @@
 package administration.data.sub_office.repoisitory
 
-import admin_office.domain.sub_offices.model.SubOfficeModel
-import admin_office.domain.sub_offices.repoisitory.SubOfficeListRepository
-import administration.data.DependencyFactory
+import admin_office.domain.model.SubOfficeModel
+import admin_office.domain.repository.SubOfficeListRepository
+import administration.data.DataFactory
 import administration.data.PackageLevelAccess
 import administration.data.sub_office.data_sources.remote.SubOfficeRemoteDataSource
 
@@ -13,8 +13,9 @@ class SubOfficeListRepositoryImpl : SubOfficeListRepository {
     private lateinit var officeId: String
 
     override suspend fun getSubOffices(officeId: String): Result<List<SubOfficeModel>> {
-        this.officeId = officeId
-        remoteSource = DependencyFactory.subOfficeRemoteDataSource(officeId)
+//        this.officeId = officeId
+//        remoteSource = DataFactory.subOfficeRemoteDataSource(officeId)
+        TODO()
         //val token = AuthTokenFactory.retrieveToken().getOrNull()
 //        return if (token == null) fetchFromLocalDatabase(officeId) else fetchFromRemoteDatabase(
 //            token,

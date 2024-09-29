@@ -1,5 +1,6 @@
 package administration.ui.officers
 
+import administration.controller_presenter.model.AdminOfficerModel
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable

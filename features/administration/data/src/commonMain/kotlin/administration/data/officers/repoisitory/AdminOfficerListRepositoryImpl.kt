@@ -1,9 +1,9 @@
 package administration.data.officers.repoisitory
 
-import admin_office.domain.officers.model.AdminOfficerModel
-import admin_office.domain.officers.repoisitory.AdminOfficerListRepository
+import admin_office.domain.model.AdminOfficerModel
+import admin_office.domain.repository.AdminOfficerListRepository
 import administration.data.PackageLevelAccess
-import administration.data.officers.data_sources.remote.entity.AdminOfficerListEntity
+import administration.data.entity.AdminOfficerListEntity
 
 
 class AdminOfficerListRepositoryImpl : AdminOfficerListRepository {

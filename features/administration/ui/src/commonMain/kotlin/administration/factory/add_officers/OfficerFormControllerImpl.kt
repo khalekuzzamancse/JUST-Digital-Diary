@@ -1,7 +1,7 @@
 package administration.factory.add_officers
 
 import administration.ui.admin.add_officers.OfficerFormController
-import administration.ui.officers.AdminOfficerModel
+import administration.controller_presenter.model.AdminOfficerModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

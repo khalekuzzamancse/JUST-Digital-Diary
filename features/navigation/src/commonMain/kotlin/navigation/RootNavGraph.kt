@@ -3,6 +3,7 @@ package navigation
 import academic.ui.AcademicModuleEvent
 import academic.ui.admin.AddTeacherScreen
 import academic.ui.public_.AcademicRoute
+import administration.ui.AdministrationRoute
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -50,6 +51,7 @@ fun RootNavGraph(
                             navController.navigate(GraphRoutes.CALENDAR_UPDATE)
                         }
 
+
                         is OtherFeatureEvent.NavigateToExamRoutineUpdate -> {
                             navController.navigate(GraphRoutes.EXAM_ROUTINE_UPDATE)
                         }
@@ -68,14 +70,7 @@ fun RootNavGraph(
 
             }
         )
-//        composable(GraphRoutes.ADMIN_OFFICE_FEATURE) {
-//            AdminOfficeFeatureNavGraph.NavHost(
-//                onEvent = { event ->
-//                    toAppEvent(event)?.let(onEvent)
-//                },
-//                onMenuIconClick = openDrawerRequest
-//            )
-//        }
+
         composable(GraphRoutes.FACULTY_FEATURE) {
             AcademicRoute(
                 onEvent = { event ->
@@ -88,7 +83,11 @@ fun RootNavGraph(
         }
 
         composable(GraphRoutes.ADMIN_OFFICE_FEATURE) {
-
+            AdministrationRoute(
+                token = NavigationFactory.token.value,
+                onEvent = {},
+                onMenuIconClick = {}
+            )
         }
         composable(GraphRoutes.CLASS_SCHEDULE_VIEWER) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

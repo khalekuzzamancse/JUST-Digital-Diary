@@ -1,9 +1,9 @@
 package administration.navgraph
 
-import admin_office.domain.offices.repoisitory.AdminOfficeListRepository
-import admin_office.domain.sub_offices.repoisitory.SubOfficeListRepository
-import administration.ui.model.OfficesModel
-import administration.ui.model.SubOfficeModel
+import admin_office.domain.repository.AdminOfficeListRepository
+import admin_office.domain.repository.SubOfficeListRepository
+import administration.controller_presenter.model.OfficeModel
+import administration.controller_presenter.model.SubOfficeModel
 import administration.ui.suboffice.SubOfficeListState
 import common.newui.CustomSnackBarData
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +24,7 @@ class AdminOfficeListViewModel(
         val result = repository.getAdminOffices()
         if (result.isSuccess) {
             onFacultyListFetchedSuccessfully(result.getOrDefault(emptyList()).map {
-                OfficesModel(
+                OfficeModel(
                     name = it.name,
                     id = it.officeId,
                     numberOfSubOffices = "${it.subOfficeCount}"
@@ -39,7 +39,7 @@ class AdminOfficeListViewModel(
 
     }
 
-    private fun onFacultyListFetchedSuccessfully(faculties: List<OfficesModel>) {
+    private fun onFacultyListFetchedSuccessfully(faculties: List<OfficeModel>) {
         _uiState.update { state ->
             val facultyListState = state.officeState.copy(offices = faculties)
             state.copy(officeState = facultyListState)
@@ -81,7 +81,7 @@ class AdminOfficeListViewModel(
             val subOffices = result.getOrDefault(emptyList()).map {
                 SubOfficeModel(
                     name = it.name,
-                    id = it.officeId,
+                    id = it.subOfficeId,
                     employeeCnt = it.employeeCount.toString()
                 )
             }

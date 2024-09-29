@@ -1,63 +1,36 @@
 package administration.ui.offices
 
+import administration.controller_presenter.controller.OfficeController
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Apartment
+import androidx.compose.material.icons.outlined.Apartment
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import common.newui.CardInfoState
+import common.newui.GenericInfoCard
+import common.newui.generateAcronym
 import common.ui.custom_navigation_item.NavigationItemInfo2
 
 @Composable
-fun AdminOfficeList(
+internal fun AdminOfficeList(
     modifier: Modifier=Modifier,
-    officeListState: OfficeListState,
-    onEvent: (AdminOfficesEvent) -> Unit,
+    controller: OfficeController,
 ) {
-    CompactModeLayout(
-        modifier=modifier,
-        officeListState = officeListState,
-        onEvent =onEvent,
-    )
-
-}
-@Composable
-internal fun CompactModeLayout(
-    modifier: Modifier=Modifier,
-    officeListState: OfficeListState,
-    onEvent: (AdminOfficesEvent) -> Unit,
-) {
-    OfficeList(
-        modifier = modifier,
-        onEvent = onEvent,
-        state = officeListState
-    )
-
-
-}
-
-/**
- * * It Show the have the List of in Bottom sheet.
- *  * In Compact Window Faculties will be shown in the bottom sheet,in NonCompact Window Faculties will be shown in SIDE_SHEET
- * @param modifier [Modifier]
- * @param destinations list of [NavigationItemInfo2] to represent the faculties
- * @param onDestinationSelected called when a faculty is selected
- * @param selectedDestinationIndex the destination that is selected.it is used to highlight the selected faculty as [NavigationItemInfo2]
- */
-
-@Composable
-internal fun OfficeList(
-    modifier: Modifier=Modifier,
-    state: OfficeListState,
-    onEvent: (AdminOfficesEvent) -> Unit,
-) {
+    val offices=controller.offices.collectAsState().value
+    val selected=controller.selected.collectAsState().value
     Column(modifier.verticalScroll(rememberScrollState())) {
-        state.offices.forEachIndexed {index,faculty->
+        offices.forEachIndexed {index,faculty->
             OfficeCard(
                 officeName = faculty.name,
                 subOfficeCount = faculty.numberOfSubOffices,
-                isSelected = state.selected==index,
+                isSelected = selected==index,
                 onSelect = {
-                    onEvent(AdminOfficesEvent.AdminOfficesSelected(index))
+                    controller.onSelected(index)
                 }
             )
         }
@@ -68,4 +41,38 @@ internal fun OfficeList(
 }
 
 
+
+@Composable
+private fun OfficeCard(
+    modifier: Modifier = Modifier,
+    officeName: String,
+    subOfficeCount: String,
+    isSelected: Boolean,
+    onSelect: () -> Unit
+) {
+
+    val backgroundColorSelected = MaterialTheme.colorScheme.primaryContainer
+    val backgroundColorUnselected = MaterialTheme.colorScheme.tertiaryContainer
+    val iconSelected = Icons.Filled.Apartment
+    val iconUnselected = Icons.Outlined.Apartment
+    val countLabel = "SubOffice"
+
+    val state = CardInfoState(
+        name = officeName,
+        shortName = generateAcronym(officeName),
+        count = subOfficeCount,
+        isSelected = isSelected,
+        backgroundColorSelected = backgroundColorSelected,
+        backgroundColorUnselected = backgroundColorUnselected,
+        iconSelected = iconSelected,
+        iconUnselected = iconUnselected,
+        countLabel = countLabel
+    )
+
+    GenericInfoCard(
+        modifier = modifier,
+        state = state,
+        onSelect = onSelect
+    )
+}
 

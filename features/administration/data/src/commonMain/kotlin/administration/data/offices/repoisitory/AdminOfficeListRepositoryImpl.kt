@@ -1,19 +1,18 @@
 package administration.data.offices.repoisitory
 
-import admin_office.domain.offices.model.OfficeModel
-import admin_office.domain.offices.repoisitory.AdminOfficeListRepository
-import administration.data.DependencyFactory
+import admin_office.domain.model.OfficeModel
+import admin_office.domain.repository.AdminOfficeListRepository
+import administration.data.DataFactory
 import administration.data.PackageLevelAccess
-import administration.data.offices.sources.remote.entity.AdminOfficeInfoEntity
-import administration.data.offices.sources.remote.entity.AdminOfficeListEntity
+import administration.data.entity.AdminOfficeListEntity
 
 
 /**
  * Instead of passing via constructor ,using factory to hiding some classes from client
  */
 class AdminOfficeListRepositoryImpl : AdminOfficeListRepository {
-    private val localSource = DependencyFactory.officeLocalDataSource()
-    private val remoteSource = DependencyFactory.officeRemoteDataSource()
+//    private val localSource = DataFactory.officeLocalDataSource()
+//    private val remoteSource = DataFactory.officeRemoteDataSource()
 
     override suspend fun getAdminOffices(): Result<List<OfficeModel>> {
 //        val token = AuthTokenFactory.retrieveToken().getOrNull()
@@ -25,11 +24,12 @@ class AdminOfficeListRepositoryImpl : AdminOfficeListRepository {
 
     @OptIn(PackageLevelAccess::class)
     private suspend fun fetchFromRemoteDatabase(token: String): Result<List<OfficeModel>> {
-        val response = remoteSource.getOffices(token)
-        return if (response.isSuccess)
-            onSuccess(response.getOrNull())
-        else
-            onFailure(response.exceptionOrNull())
+//        val response = remoteSource.getOffices(token)
+//        return if (response.isSuccess)
+//            onSuccess(response.getOrNull())
+//        else
+//            onFailure(response.exceptionOrNull())
+        TODO()
     }
 
     private suspend fun fetchFromLocalDatabase(): Result<List<OfficeModel>> = TODO()
