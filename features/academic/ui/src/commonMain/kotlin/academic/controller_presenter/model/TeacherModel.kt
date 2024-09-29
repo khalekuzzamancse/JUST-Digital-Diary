@@ -12,8 +12,8 @@ internal data class TeacherModel(
     val phone: String,
     val designations: String,
     val dept: Dept, // Use dropdown
-    val roomNo: Int,
-    val profileImageLink: String = "https://static.just.edu.bd/images/public/teachers/1603270274986_900.jpeg",
+    val roomNo: String,
+    val profileImageLink: String? = "https://static.just.edu.bd/images/public/teachers/1603270274986_900.jpeg",
 )
 
 data class Dept(

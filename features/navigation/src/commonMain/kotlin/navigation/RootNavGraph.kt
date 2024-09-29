@@ -82,7 +82,8 @@ fun RootNavGraph(
                     toAppEvent(event)?.let(onEvent)
                 },
                 // onMenuIconClicked = openDrawerRequest,
-                isNavRailMode = isNavRailMode
+                isNavRailMode = isNavRailMode,
+                token = NavigationFactory.token.value
             )
         }
 

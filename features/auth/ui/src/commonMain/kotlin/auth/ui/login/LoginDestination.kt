@@ -43,7 +43,7 @@ internal fun LoginScreen(
     modifier: Modifier = Modifier,
     controller: LoginController,
     navigateToRegisterRequest: () -> Unit,
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: (token:String) -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -52,7 +52,7 @@ internal fun LoginScreen(
             controller = controller,
             onLoginRequest = {
                 coroutineScope.launch {
-                    controller.performLogin()
+                    controller.performLogin()?.let(onLoginSuccess)
                 }
 
             },

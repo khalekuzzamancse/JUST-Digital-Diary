@@ -1,4 +1,4 @@
-package academic.ui.public_.faculty
+package academic.ui.public_.components
 
 import academic.controller_presenter.controller.FacultyController
 import androidx.compose.foundation.layout.Column

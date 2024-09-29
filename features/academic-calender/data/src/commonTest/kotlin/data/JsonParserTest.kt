@@ -2,7 +2,7 @@ package data
 
 import core.network.JsonParser
 import data.data_source.holidayJson
-import data.schema.CalendarWrapperSchema
+import data.entity.CalendarWrapperSchema
 import factory.NetworkFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals

@@ -3,16 +3,25 @@ package faculty.domain.model
 /**
  * @param id for ordering or sorting
  */
+
+
 data class TeacherModel(
-    val id:Int=0,
+    val uid: String,
     val name: String,
     val email: String,
-    val additionalEmail: String,
-    val profileImageLink: String="https://static.just.edu.bd/images/public/teachers/1603270274986_900.jpeg",
-    val achievements: String,
+    val role: String,
     val phone: String,
-    val designations: String,
-    val deptName: String,
-    val deptSortName: String,
-    val roomNo: Int,
+    val achievement: String,
+    val profile: String? = null,
+    val additionalEmail: String? = null,
+    val type: Int,
+    val departments: List<DepartmentSubModel>
 )
+ data class DepartmentSubModel(
+    val name: String,
+    val shortname: String,
+    val designation: String,
+    val roomNo: String,
+    val present: Int
+)
+

@@ -48,7 +48,7 @@ internal class TeacherFormControllerImpl(
     }
 
     override fun onDesignationsChange(value: String) {
-        _teacherState.value = _teacherState.value.copy(designations = value)
+       // _teacherState.value = _teacherState.value.copy(designations = value)
     }
 
     override fun onDeptChange(value: Dept) {
@@ -56,7 +56,7 @@ internal class TeacherFormControllerImpl(
     }
 
     override fun onRoomNoChange(value: Int) {
-        _teacherState.value = _teacherState.value.copy(roomNo = value)
+        _teacherState.value = _teacherState.value.copy(roomNo = value.toString())
     }
 
     init {
@@ -71,8 +71,8 @@ internal class TeacherFormControllerImpl(
         additionalEmail = "",
         achievements = "",
         phone = "",
-        designations = "",
         dept = Dept("", ""),
-        roomNo = 0
+        roomNo = 0.toString(),
+        designations = ""
     )
 }

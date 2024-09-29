@@ -18,7 +18,11 @@ interface LoginController {
 
     fun onUserNameChanged(value: String)
     fun onPasswordChanged(value: String)
-    suspend fun performLogin(): Boolean
+
+    /**
+     * @return token
+     */
+    suspend fun performLogin():String?
     interface Validator {
         val areAllFieldsFilled: StateFlow<Boolean>
         val errors: StateFlow<List<String>>

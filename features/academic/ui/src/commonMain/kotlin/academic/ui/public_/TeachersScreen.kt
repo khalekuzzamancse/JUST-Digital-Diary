@@ -1,8 +1,9 @@
-package academic.ui.public_.teachers
+package academic.ui.public_
 
 import academic.ui.AcademicModuleEvent
 import academic.controller_presenter.factory.UiFactory
 import academic.controller_presenter.model.TeacherModel
+import academic.ui.common.SnackNProgressBarDecorator
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -28,27 +29,34 @@ import common.ui.list.AdaptiveList
 @Composable
 internal fun TeachersScreen(
     deptId: String,
+    token:String?,
     onExitRequest: () -> Unit,
     onEvent: (AcademicModuleEvent) -> Unit
     //TODO: event should go out,it should not handle by controller
 ) {
-    val viewModel = remember { TeacherListViewModel(UiFactory.createTeachersController()) }
+    val viewModel = remember { TeacherListViewModel(UiFactory.createTeachersController(token)) }
     val controller = viewModel.controller
     val teachers = controller.teachers.collectAsState().value
     LaunchedEffect(Unit) {
         controller.fetch(deptId)
     }
-    TopBarDecoratorCommon(
-        topNavigationIcon = Icons.AutoMirrored.Default.ArrowBack,
-        onNavigationIconClick = onExitRequest,
-        topBarTitle = "Teacher List"
-    ) {
+    SnackNProgressBarDecorator(
+        isLoading = viewModel.isLoading.collectAsState(false).value,
+        snackBarMessage = viewModel.screenMessage.collectAsState(null).value
+    ){
+        TopBarDecoratorCommon(
+            topNavigationIcon = Icons.AutoMirrored.Default.ArrowBack,
+            onNavigationIconClick = onExitRequest,
+            topBarTitle = "Teacher List"
+        ) {
 
-        _TeacherList(
-            modifier = Modifier.padding(it),
-            teachers = teachers
-        )
+            _TeacherList(
+                modifier = Modifier.padding(it),
+                teachers = teachers
+            )
+        }
     }
+
 
 }
 
@@ -93,7 +101,7 @@ private fun _EmployeeCard(
     GenericEmployeeCard(
         modifier = modifier,
         name = teacher.name,
-        profileImageUrl = null,
+        profileImageUrl = teacher.profileImageLink,
         expandMode = expandMode,
         onCallRequest = onCallRequest,
         onEmailRequest = onEmailRequest,

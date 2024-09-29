@@ -3,6 +3,7 @@
 package factory
 
 import core.network.ApiServiceClient
+import core.network.Header
 import core.network.ToCustomException
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -21,7 +22,7 @@ class ApiServiceClientImpl internal constructor() : ApiServiceClient {
 
 
     override suspend fun retrieveJsonData(url: String): Result<String> {
-        val client=_createClient()
+        val client = _createClient()
         return try {
 
             val httpResponse = client.get(url)
@@ -36,7 +37,7 @@ class ApiServiceClientImpl internal constructor() : ApiServiceClient {
 
 
     override suspend fun post(url: String, body: Any): Result<String> {
-        val client=_createClient()
+        val client = _createClient()
         return try {
             val json = client.post(url) {
                 contentType(ContentType.Application.Json)
@@ -52,7 +53,7 @@ class ApiServiceClientImpl internal constructor() : ApiServiceClient {
     }
 
     override suspend fun postOrThrow(url: String, body: Any): String {
-        val client=_createClient()
+        val client = _createClient()
         try {
             val json = client.post(url) {
                 contentType(ContentType.Application.Json)
@@ -60,6 +61,21 @@ class ApiServiceClientImpl internal constructor() : ApiServiceClient {
             }.bodyAsText()
             return json
 
+        } catch (ex: Exception) {
+            throw ToCustomException().convert(ex)
+        } finally {
+            client._closeConnection()
+        }
+    }
+
+    override suspend fun retrieveJsonOrThrow(url: String, header: Header): String {
+        val client = _createClient()
+        return try {
+            val httpResponse = client.get(url) {
+                header(key = header.key, value = header.value)
+            }
+            val json = httpResponse.bodyAsText()
+            json
         } catch (ex: Exception) {
             throw ToCustomException().convert(ex)
         } finally {
@@ -80,7 +96,7 @@ class ApiServiceClientImpl internal constructor() : ApiServiceClient {
      *  Should not cache HttpClient of CIO in client variable and reuse that is why make sure create
      *  a new HttpClient for each request to avoid [kotlinx.coroutines.JobCancellationException] or other exceptions
      */
-    private fun _createClient()=HttpClient {
+    private fun _createClient() = HttpClient {
         install(ContentNegotiation) {
             json(Json {
                 ignoreUnknownKeys = true // This will ignore unknown keys in the response

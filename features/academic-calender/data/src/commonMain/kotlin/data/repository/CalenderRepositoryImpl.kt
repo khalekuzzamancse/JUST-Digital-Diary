@@ -7,7 +7,7 @@ import core.network.JsonParser
 import data.data_source.holidayJson
 import data.misc.CalendarBuilder
 import data.misc.SchemaToModelConverter
-import data.schema.CalendarWrapperSchema
+import data.entity.CalendarWrapperSchema
 import domain.exception.CalendarFeatureException
 import domain.model.AcademicCalendar
 import domain.model.CalendarModel

@@ -1,4 +1,4 @@
-package academic.ui.public_.teachers
+package academic.ui.public_
 
 import academic.controller_presenter.controller.TeachersController
 
@@ -8,7 +8,10 @@ import academic.controller_presenter.controller.TeachersController
  */
 class TeacherListViewModel internal  constructor(
    internal  val controller: TeachersController
-)
+){
+   val isLoading = controller.isFetching
+   val screenMessage=controller.errorMessage
+}
 
 
 

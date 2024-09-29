@@ -26,7 +26,7 @@ interface Repository {
      * - If for some reason failed to fetch from api or remote database then try to fetch from local database(cached)
      * @return onFailure return custom exception
      */
-    suspend fun getTeachers(deptId: String): Result<List<TeacherModel>>
+    suspend fun getTeachers(deptId: String, token: String?): Result<List<TeacherModel>>
     suspend fun getDepartment(token: String?, facultyId: String):
             Result<List<DepartmentModel>>
 

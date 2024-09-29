@@ -20,7 +20,7 @@ import auth.ui.register.RegisterDestination
 
 @Composable
 fun AuthRoute(
-    onLoginSuccess: (String, String) -> Unit,
+    onLoginSuccess: (token:String) -> Unit,
 ) {
     val navController: NavHostController = rememberNavController()
 
@@ -57,9 +57,7 @@ fun AuthRoute(
                         }
 
                     },
-                    onLoginSuccess = {
-
-                    }
+                    onLoginSuccess = onLoginSuccess
                 )
             }
             composable(route = Route.REGISTER_SCREEN) {

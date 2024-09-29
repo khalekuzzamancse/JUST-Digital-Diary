@@ -4,12 +4,14 @@ import academic.controller_presenter.controller.DepartmentController
 import academic.controller_presenter.controller.FacultyController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class FacultiesScreenViewModel internal constructor(
+class FacultyScreenViewModel internal constructor(
     internal val facultyController: FacultyController,
     internal val departmentController: DepartmentController
 ) {
@@ -22,6 +24,16 @@ class FacultiesScreenViewModel internal constructor(
         facultyController.onSelected(null)
 
     }
+    val isLoading: Flow<Boolean> =
+        combine(departmentController.isFetching, facultyController.isFetching)
+        { isLogging, isRegistering ->
+            isLogging || isRegistering
+        }
+    val screenMessage: Flow<String?> =
+        combine(departmentController.errorMessage, facultyController.errorMessage)
+        { loginMsg, registerMsg ->
+            loginMsg ?: registerMsg
+        }
 
     init {
 

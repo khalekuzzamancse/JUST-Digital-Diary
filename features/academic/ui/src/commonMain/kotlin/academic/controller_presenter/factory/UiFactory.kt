@@ -7,29 +7,31 @@ import academic.controller_presenter.controller.TeacherFormController
 import academic.controller_presenter.factory.add_teacher.ValidatorImpl
 import academic.controller_presenter.controller.DepartmentController
 import faculty.di.DiContainer
-import academic.ui.public_.FacultiesScreenViewModel
 import academic.controller_presenter.controller.FacultyController
 import academic.controller_presenter.controller.TeachersController
 
 internal object UiFactory {
-    fun createFacultyViewModel() = FacultiesScreenViewModel(
-        facultyController = _createFacultyController(),
-        departmentController = _createDepartmentsController()
-    )
-    internal fun createTeachersController(): TeachersController = TeachersControllerImpl(
-        useCase = DiContainer.retrieveTeacherListUseCase()
+
+
+    internal fun createTeachersController(token:String?): TeachersController =
+        TeachersControllerImpl(
+            useCase = DiContainer.retrieveTeacherListUseCase(),
+            token=token
+
     )
 
     fun createTeacherAddForm(): TeacherFormController =
         TeacherFormControllerImpl(validator = ValidatorImpl())
 
-    private fun _createFacultyController(): FacultyController = FacultyControllerImpl(
+    fun createFacultyController(token:String?): FacultyController = FacultyControllerImpl(
         userCase = DiContainer.retrieveFacultyListUseCase(),
+        token=token
     )
 
-    private fun _createDepartmentsController(): DepartmentController =
+    fun createDepartmentsController(token:String?): DepartmentController =
         DepartmentsControllerImpl(
-            userCase = DiContainer.retrieveDepartListUseCase()
+            userCase = DiContainer.retrieveDepartListUseCase(),
+            token=token
         )
 
 

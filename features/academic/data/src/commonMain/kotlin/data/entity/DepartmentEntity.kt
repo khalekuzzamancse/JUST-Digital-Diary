@@ -1,4 +1,4 @@
-package data.schema
+package data.entity
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -8,11 +8,12 @@ import kotlinx.serialization.Serializable
  * the response will fail.Do not edit.
  */
 @Serializable
-internal data class DepartmentInfoEntity(
+internal data class DepartmentEntity(
     @SerialName("id") val id: Int,
     @SerialName("dept_id") val deptId: String,
     @SerialName("name") val name: String,
-    @SerialName("shortname") val shortName: String
+    @SerialName("shortname") val shortName: String,
+    @SerialName("membersCount") val membersCount: Int
 )
 
 /**
@@ -22,5 +23,5 @@ internal data class DepartmentInfoEntity(
 @Serializable
 internal data class DepartmentListEntity(
     @SerialName("faculty_name") val facultyName: String,
-    @SerialName("departments") val departments: List<DepartmentInfoEntity>
+    @SerialName("departments") val departments: List<DepartmentEntity>
 )

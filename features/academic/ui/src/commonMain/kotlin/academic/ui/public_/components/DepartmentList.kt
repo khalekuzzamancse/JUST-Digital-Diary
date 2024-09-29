@@ -1,4 +1,4 @@
-package academic.ui.public_.department
+package academic.ui.public_.components
 
 import academic.controller_presenter.controller.DepartmentController
 import androidx.compose.foundation.layout.Arrangement

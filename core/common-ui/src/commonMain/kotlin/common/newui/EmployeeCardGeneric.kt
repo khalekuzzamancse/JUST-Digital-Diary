@@ -49,7 +49,7 @@ fun GenericEmployeeCard(
     modifier: Modifier,
     expandMode: Boolean ,
     name: String,
-    profileImageUrl: String? = null,
+    profileImageUrl: String?,
     onCallRequest: () -> Unit,
     onEmailRequest: () -> Unit,
     onMessageRequest: () -> Unit,

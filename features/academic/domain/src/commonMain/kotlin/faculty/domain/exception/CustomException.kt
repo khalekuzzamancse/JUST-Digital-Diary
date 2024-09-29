@@ -1,62 +1,70 @@
 @file:Suppress("UnUsed")
 
 package faculty.domain.exception
-import common.docs.domain_layer.CustomExceptionDoc
 
+import common.docs.domain_layer.CustomExceptionDoc
 
 /**
  * Further discussion on:
  *   - `Repository`: see [CustomExceptionDoc]
- * @param debugMessage the message for developer to find the causes or source of error
- * @param message  This represents the message that can be converted to a UI-friendly, short format
+ * @param debugMessage the message for developer to find the causes or source of error for easy debugging
+ * @param message  this will directly shown to end user so make it short enough and user friendly
  **/
-
 sealed class CustomException(override val message: String, val debugMessage: String) :
     Throwable(message = message, cause = Throwable(debugMessage)) {
     override fun toString(): String {
-        return "CalendarFeatureException: $message\nDebug Message: $debugMessage"
+        return "message:$message\nDebug Message:$debugMessage"
     }
 
+    /**
+     *- This  Exception should thrown when all attempts to parse the server's JSON response have failed.
+     * - This indicates that the response format is unrecognized or doesn't match any expected schema/entity
+     */
+    class JsonParseException(json: String) :
+        CustomException(
+            message = "Unrecognized JSON response from the server",
+            debugMessage = "The server returned a response in an unexpected format:\n$json"
+        )
+
 
     /**
-     * Exception thrown when an invalid year is provided.
-     *
-     * @param year The year that is considered invalid.
+     * Exception thrown when a server connection issue occurs (e.g., unable to connect, server down, or network failure).
+     * This exception is propagated from `core.network` and already contains meaningful information about the failure.
+     * No additional handling is needed beyond passing it up the call chain.
      */
-    class InvalidYearFeatureException(year: Int) : CustomException(
-        message = "The year $year is invalid.",
-        debugMessage = "Attempted to use an invalid year: $year."
+    class ServerConnectingException(exception: Throwable) : CustomException(
+        message = exception.message ?: "Unknown server connection issue",
+        debugMessage = "Server connection problem:\nMessage: ${exception.message}\nCause: ${exception.cause}"
     )
 
     /**
-     * Exception thrown when an invalid day is provided for a specific month.
-     *
-     * @param day The invalid day that was provided.
-     * @param month The name of the month where the invalid day was attempted.
-     */
-    class InvalidDayFeatureException(day: Int, month: String) : CustomException(
-        message = "The day $day is invalid for month $month.",
-        debugMessage = "Attempted to use an invalid day: $day in month: $month."
-    )
-
-    /**
-     * Exception thrown when a user tries to update the calendar without the necessary permissions.
-     *
-     * @param year The year for which the update was attempted without permission.
-     */
-    class CalendarUpdatePermissionFeatureException(year: Int) : CustomException(
-        message = "You do not have permission to update the calendar for the year $year.",
-        debugMessage = "Insufficient permissions for modifying the calendar of the year $year."
-    )
-
-    /**
-     * Exception thrown for any unknown or unexpected calendar-related errors.
+     * Exception thrown for any unknown or unexpected  errors.
      *
      * @param debugMessage A detailed message describing the unexpected error.
      */
-    class MiscException(message: String,debugMessage: String) : CustomException(
+    class UnKnownException(exception: Throwable) : CustomException(
+        message = "UnKnown exception",
+        debugMessage = "${exception.printStackTrace()}"
+    )
+
+    /**
+     * - This exception is thrown when the server responds with an error message or status,
+     *   instead of the expected data or response schema.
+     * - It typically occurs when the server returns an error response in a non-standard format,
+     *   such as JSON containing a message like "API limit exceeded" or "Email already registered."
+     * - This exception is useful for handling cases where the server indicates a failure or provides
+     *   informational messages rather than structured data.
+     */
+    class MessageFromServer(message: String) : CustomException(
+        message = message,
+        debugMessage = "Server returned an message instead of expected response: $message"
+    )
+
+    /**
+     * - This is related to when network engine has thrown an exception either connected with server or other
+     */
+    class NetworkIOException(message: String, debugMessage: String) : CustomException(
         message = message,
         debugMessage = debugMessage
     )
-
 }

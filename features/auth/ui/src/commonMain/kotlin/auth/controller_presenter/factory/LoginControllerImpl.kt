@@ -21,7 +21,7 @@ internal class LoginControllerImpl(
     override val validator: LoginController.Validator
 
 ) : LoginController {
-    private val _state = MutableStateFlow(LoginModel("", ""))
+    private val _state = MutableStateFlow(LoginModel("190142.cse@student.just.edu.bd", "12345678"))
     private val _isLogging = MutableStateFlow(false)
     private val _screenMessage = MutableStateFlow<String?>(null)
 
@@ -39,7 +39,7 @@ internal class LoginControllerImpl(
     init {
         validator.observeFieldChanges(state)
     }
-    override suspend fun performLogin(): Boolean {
+    override suspend fun performLogin(): String? {
         startLoading()
         val result = useCase.execute(
             LoginDomainModel(username = state.value.username, state.value.password)
@@ -47,9 +47,9 @@ internal class LoginControllerImpl(
         stopLoading()
 
         return result.fold(
-            onSuccess = {
+            onSuccess = {token->
                 _updateErrorMessage("Login Success")
-                true
+                token
             },
             onFailure = { exception ->
 
@@ -63,7 +63,7 @@ internal class LoginControllerImpl(
                     }
 
                 }
-                false
+                null
             }
         )
 

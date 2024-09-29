@@ -1,10 +1,10 @@
 @file:Suppress("UnUsed")
 package data.misc
 
-import data.schema.AcademicCalendarSchema
-import data.schema.CalendarWrapperSchema
-import data.schema.HolidaySchema
-import data.schema.HolidayTypeSchema
+import data.entity.AcademicCalendarSchema
+import data.entity.CalendarWrapperSchema
+import data.entity.HolidaySchema
+import data.entity.HolidayTypeSchema
 import domain.model.AcademicCalendar
 import domain.model.Holiday
 import domain.model.HolidayType

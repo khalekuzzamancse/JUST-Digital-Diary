@@ -1,6 +1,6 @@
 @file:Suppress("UnUsed")
 
-package data.schema
+package data.entity
 
 import kotlinx.serialization.Serializable
 

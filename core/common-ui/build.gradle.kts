@@ -9,7 +9,10 @@ kotlin {
                 implementation(libs.bundles.coil)
                 implementation(libs.bundles.ktorClient)
                 implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(compose.components.resources)
+
             }
+
         }
 
     }

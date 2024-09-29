@@ -21,4 +21,5 @@ interface ApiServiceClient {
      * -It must throws custom exception as [NetworkException] on failure
      */
     suspend fun postOrThrow(url: String, body: Any):String
+    suspend fun retrieveJsonOrThrow(url: String,header:Header):String
 }

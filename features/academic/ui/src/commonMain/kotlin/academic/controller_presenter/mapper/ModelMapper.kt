@@ -19,21 +19,22 @@ internal object ModelMapper {
     fun toUiFacultyModel(model: DepartmentModel) =
         academic.controller_presenter.mapper.UiDepartmentModel(
             name = model.name,
-            id = model.id.toString(),
+            id = model.deptId,
             shortName = model.shortName
         )
 
     fun toTeacherUiModel(model: TeacherModel) = academic.controller_presenter.mapper.TeacherUiModel(
         name = model.name,
         email = model.email,
-        additionalEmail = model.additionalEmail,
+        additionalEmail = model.additionalEmail?:"",
         phone = model.phone,
-        achievements = model.achievements,
-        designations = model.designations,
+        achievements = model.achievement,
+        profileImageLink = model.profile,
         dept = Dept(
-            model.deptName,
-            model.deptSortName
+            model.departments.firstOrNull()?.name?:"",
+            model.departments.firstOrNull()?.shortname?:"",
         ),
-        roomNo = model.roomNo
+        roomNo = model.departments.firstOrNull()?.roomNo?:"",
+        designations = model.departments.firstOrNull()?.designation?:"",
     )
 }

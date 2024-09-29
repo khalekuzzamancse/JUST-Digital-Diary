@@ -4,9 +4,9 @@ import academic.controller_presenter.controller.DepartmentController
 import academic.controller_presenter.controller.FacultyController
 import academic.controller_presenter.factory.UiFactory
 import academic.ui.AcademicModuleEvent
-import academic.ui.public_.department.Departments
-import academic.ui.public_.faculty.Faculty
-import academic.ui.public_.teachers.TeachersScreen
+import academic.ui.common.SnackNProgressBarDecorator
+import academic.ui.public_.components.Departments
+import academic.ui.public_.components.Faculty
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -27,51 +27,64 @@ import common.newui.TwoPaneNewUIPros
 @Composable
 fun AcademicRoute(
     modifier: Modifier = Modifier,
+    token: String?,
     isNavRailMode: Boolean,
     onEvent: (AcademicModuleEvent) -> Unit
 ) {
+
     val navController = rememberNavController()
 
-    val viewModel = remember { UiFactory.createFacultyViewModel() }
+    val viewModel = remember {  FacultyScreenViewModel(
+        facultyController = UiFactory.createFacultyController(token),
+        departmentController =UiFactory. createDepartmentsController(token)
+    ) }
 
-    NavHost(
-        navController = navController,
-        startDestination = Route.FACULTY_AND_DEPT,
-        modifier = Modifier
-    ) {
+    SnackNProgressBarDecorator(
+        isLoading = viewModel.isLoading.collectAsState(false).value,
+        snackBarMessage = viewModel.screenMessage.collectAsState(null).value,
+    ){
+        NavHost(
+            navController = navController,
+            startDestination = Route.FACULTY_AND_DEPT,
+            modifier = Modifier
+        ) {
 
-        composable(route = Route.FACULTY_AND_DEPT) {
+            composable(route = Route.FACULTY_AND_DEPT) {
 
-            FacultyAndDepartmentList(
-                viewModel = viewModel,
-                backHandler = {},
-                isNavRailMode = false,
-                onExitRequest = {},
-                onTeachersRequest = {
-                    try {
-                        navController.navigate("${Route.TEACHER_LIST}/$it")
-                    } catch (_: Exception) {
+                FacultyAndDepartmentList(
+                    viewModel = viewModel,
+                    backHandler = {},
+                    isNavRailMode = false,
+                    onExitRequest = {},
+                    onTeachersRequest = {
+                        try {
+                            navController.navigate("${Route.TEACHER_LIST}/$it")
+                        } catch (_: Exception) {
 
+                        }
                     }
-                }
-            )
-        }
-        composable(
-            route = Route.TEACHERS_ROUTE,
-            arguments = listOf(navArgument(Route.DEPT_ID) { type = NavType.StringType })
-        ) {backStackEntry ->
-            val deptID = backStackEntry.arguments?.getString(Route.DEPT_ID)
-            TeachersScreen(
-                deptId = deptID ?: "",
-                onExitRequest = {
-                    navController.popBackStack()
-                },
-                onEvent = onEvent
-            )
+                )
+            }
+            composable(
+                route = Route.TEACHERS_ROUTE,
+                arguments = listOf(navArgument(Route.DEPT_ID) { type = NavType.StringType })
+            ) { backStackEntry ->
+                val deptID = backStackEntry.arguments?.getString(Route.DEPT_ID)
+                TeachersScreen(
+                    deptId = deptID ?: "",
+                    onExitRequest = {
+                        navController.popBackStack()
+                    },
+                    onEvent = onEvent,
+                    token = token
+                )
+
+            }
 
         }
 
     }
+
 
 }
 
@@ -102,7 +115,7 @@ private object Route {
 @Composable
 fun FacultyAndDepartmentList(
     modifier: Modifier = Modifier,
-    viewModel: FacultiesScreenViewModel,
+    viewModel: FacultyScreenViewModel,
     onExitRequest: () -> Unit,
     isNavRailMode: Boolean,
     onTeachersRequest: (String) -> Unit,

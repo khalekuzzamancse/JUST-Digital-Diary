@@ -128,13 +128,13 @@ private fun _TeacherForm(
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        CustomTextField(
-            label = "Designations",
-            value = teacher.designations,
-            onValueChanged = controller::onDesignationsChange,
-            leadingIcon = Icons.Default.Description
-        )
-        Spacer(modifier = Modifier.height(16.dp))
+//        CustomTextField(
+//            label = "Designations",
+//            value = teacher.designations,
+//            onValueChanged = controller::onDesignationsChange,
+//            leadingIcon = Icons.Default.Description
+//        )
+//        Spacer(modifier = Modifier.height(16.dp))
 
         _DeptDropdown(
             modifier = Modifier.fillMaxWidth(),
@@ -148,7 +148,7 @@ private fun _TeacherForm(
 
         CustomTextField(
             label = "Room No",
-            value = if (teacher.roomNo == 0) "" else teacher.roomNo.toString(),
+            value = teacher.roomNo,
             onValueChanged = { newRoomNo ->
                 val intValue = newRoomNo.toIntOrNull() ?: 0
                 controller.onRoomNoChange(intValue)
