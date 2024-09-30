@@ -1,6 +1,5 @@
 package administration.data
 
-import administration.data.offices.repoisitory.AdminOfficeListRepositoryImpl
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.assertTrue

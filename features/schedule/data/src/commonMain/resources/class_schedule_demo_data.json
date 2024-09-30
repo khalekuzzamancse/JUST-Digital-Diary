@@ -1,0 +1,119 @@
+[
+    {
+        "dept": "Computer Science",
+        "session": "2019-20",
+        "year": "4",
+        "semester": "1",
+        "routine": [
+            {
+                "day": "Sat",
+                "items": [
+                    {
+                        "subject": "Math",
+                        "time": "9:00 AM - 10:00 AM",
+                        "room": "Room 101",
+                        "durationInHours": 1
+                    },
+                    {
+                        "subject": "Physics",
+                        "time": "10:00 AM - 12:00 PM",
+                        "room": "Room 102",
+                        "durationInHours": 2
+                    },
+                    {
+                        "subject": "Chemistry",
+                        "time": "1:00 PM - 2:00 PM",
+                        "room": "Room 103",
+                        "durationInHours": 1
+                    }
+                ]
+            },
+            {
+                "day": "Sun",
+                "items": [
+                    {
+                        "subject": "Biology",
+                        "time": "9:00 AM - 11:00 AM",
+                        "room": "Room 201",
+                        "durationInHours": 2
+                    },
+                    {
+                        "subject": "English",
+                        "time": "11:00 AM - 12:00 PM",
+                        "room": "Room 202",
+                        "durationInHours": 1
+                    }
+                ]
+            },
+            {
+                "day": "Mon",
+                "items": [
+                    {
+                        "subject": "Math",
+                        "time": "9:00 AM - 10:00 AM",
+                        "room": "Room 101",
+                        "durationInHours": 1
+                    },
+                    {
+                        "subject": "Physics",
+                        "time": "10:00 AM - 12:00 PM",
+                        "room": "Room 102",
+                        "durationInHours": 2
+                    },
+                    {
+                        "subject": "History",
+                        "time": "1:00 PM - 2:00 PM",
+                        "room": "Room 103",
+                        "durationInHours": 1
+                    }
+                ]
+            },
+            {
+                "day": "Tue",
+                "items": [
+                    {
+                        "subject": "Chemistry",
+                        "time": "9:00 AM - 10:00 AM",
+                        "room": "Room 101",
+                        "durationInHours": 1
+                    },
+                    {
+                        "subject": "Biology",
+                        "time": "10:00 AM - 12:00 PM",
+                        "room": "Room 102",
+                        "durationInHours": 2
+                    },
+                    {
+                        "subject": "English",
+                        "time": "1:00 PM - 2:00 PM",
+                        "room": "Room 103",
+                        "durationInHours": 1
+                    }
+                ]
+            },
+            {
+                "day": "Wed",
+                "items": [
+                    {
+                        "subject": "History",
+                        "time": "9:00 AM - 10:00 AM",
+                        "room": "Room 201",
+                        "durationInHours": 1
+                    },
+                    {
+                        "subject": "Physics",
+                        "time": "10:00 AM - 12:00 PM",
+                        "room": "Room 202",
+                        "durationInHours": 2
+                    },
+                    {
+                        "subject": "Math",
+                        "time": "1:00 PM - 2:00 PM",
+                        "room": "Room 203",
+                        "durationInHours": 1
+                    }
+                ]
+            }
+        ]
+    }
+]

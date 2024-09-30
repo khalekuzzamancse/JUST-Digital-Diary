@@ -27,7 +27,7 @@ kotlin {
                 implementation(libs.windowSize)
 //                implementation(compose.components.resources)
                 //
-                implementation(project(localModules.versions.common.ui.get()))
+                implementation(projects.core.commonUi)
                 implementation(project(localModules.versions.feature.notebook.domain.get()))
                 implementation(project(localModules.versions.feature.notebook.di.get()))
                 //view-model

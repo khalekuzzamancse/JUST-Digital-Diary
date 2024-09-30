@@ -1,0 +1,67 @@
+{
+  "facultyMembers": [
+    {
+      "uid": "1",
+      "name": "Dr. Syed Md. Galib",
+      "username": "syed_galib",
+      "email": "syed@example.com",
+      "achievement": "Professor",
+      "additional_email": null,
+      "phone": "0123456789",
+      "profile_image": "url_to_image",
+      "room_no": 101,
+      "type": 1,
+      "designations": [
+        {
+          "name": "Professor"
+        }
+      ],
+      "dept_id": "CSE001",
+      "present": 1,
+      "department_name": "Computer Science and Engineering",
+      "shortname": "CSE"
+    },
+    {
+      "uid": "2",
+      "name": "Dr. Md. Asif Nashiry",
+      "username": "asif_nashiry",
+      "email": "asif@example.com",
+      "achievement": "Associate Professor",
+      "additional_email": null,
+      "phone": "0123456789",
+      "profile_image": "url_to_image",
+      "room_no": 102,
+      "type": 1,
+      "designations": [
+        {
+          "name": "Associate Professor"
+        }
+      ],
+      "dept_id": "CSE001",
+      "present": 1,
+      "department_name": "Computer Science and Engineering",
+      "shortname": "CSE"
+    },
+    {
+      "uid": "3",
+      "name": "Md. Kamrul Islam",
+      "username": "kamrul_islam",
+      "email": "kamrul@example.com",
+      "achievement": "Associate Professor",
+      "additional_email": null,
+      "phone": "0123456789",
+      "profile_image": "url_to_image",
+      "room_no": 103,
+      "type": 1,
+      "designations": [
+        {
+          "name": "Associate Professor"
+        }
+      ],
+      "dept_id": "CSE001",
+      "present": 1,
+      "department_name": "Computer Science and Engineering",
+      "shortname": "CSE"
+    }
+  ]
+}
