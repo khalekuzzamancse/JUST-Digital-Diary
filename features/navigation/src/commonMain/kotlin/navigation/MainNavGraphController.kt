@@ -3,7 +3,6 @@ package navigation
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import common.newui.Destination
-import miscellaneous.OtherFeatureNavGraph
 import navigation.component.NavDestination
 
 class MainNavGraphController(
@@ -12,18 +11,7 @@ class MainNavGraphController(
 ) {
     internal fun navigator(destination: Destination) {
         when (destination) {
-            NavDestination.Home -> {
-               OtherFeatureNavGraph.navigateToHome(navController)
-            }
-            NavDestination.MessageFromVC -> {
-                OtherFeatureNavGraph.navigateToMessageFromVC(navController)
-            }
-            NavDestination.AboutUs -> {
-                OtherFeatureNavGraph.navigateToAboutUs(navController)
-            }
-            NavDestination.EventGallery -> {
-                OtherFeatureNavGraph.navigateToEventGallery(navController)
-            }
+
             NavDestination.FacultyList -> {
                 navigateAsTopMostDestination(GraphRoutes.FACULTY_FEATURE, navController)
             }

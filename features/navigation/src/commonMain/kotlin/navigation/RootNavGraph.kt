@@ -13,8 +13,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import calendar.ui.ui.admin.AddAcademicCalenderScreen
-import miscellaneous.OtherFeatureEvent
-import miscellaneous.OtherFeatureNavGraph
+import miscellaneous.MiscFeatureEvent
+import miscellaneous.ui.AboutUsRoute
+import miscellaneous.ui.home.HomeRoute
+import miscellaneous.ui.vcmessage.MessageFromVCRoute
 import schedule.ui.ui.admin.add_class_schedule.AddClassScheduleScreen
 import schedule.ui.ui.admin.add_exam_schedule.ExamScheduleAddScreen
 import schedule.ui.ui.public_.ViewClassScheduleScreen
@@ -37,40 +39,70 @@ fun RootNavGraph(
         navController = navController,
         startDestination = startDestination
     ) {
-        OtherFeatureNavGraph.graph(
-            navGraphBuilder = this,
-            onExitRequest = openDrawerRequest,
-            onEvent = { event ->
-                try {
-                    when (event) {
-                        is OtherFeatureEvent.CalenderRequest -> {
-                            onEvent(AppEvent.WebVisitRequest(event.url))
-                        }
 
-                        is OtherFeatureEvent.NavigateToCalendarUpdate -> {
-                            navController.navigate(GraphRoutes.CALENDAR_UPDATE)
-                        }
+        composable(GraphRoutes.HOME) {
+            HomeRoute(
+                onEvent = { event ->
+                    try {
+                        when (event) {
+                            is MiscFeatureEvent.CalenderRequest -> {
+                                onEvent(AppEvent.WebVisitRequest(event.url))
+                            }
+
+                            is MiscFeatureEvent.NavigateToFacultyList -> {
+                                navController.navigate(GraphRoutes.FACULTY_FEATURE)
+                            }
+
+                            is MiscFeatureEvent.NavigateTAdminOfficeList -> {
+                                navController.navigate(GraphRoutes.ADMIN_OFFICE_FEATURE)
+                            }
+
+                            is MiscFeatureEvent.NavigateToCalendarUpdate -> {
+                                navController.navigate(GraphRoutes.CALENDAR_UPDATE)
+                            }
 
 
-                        is OtherFeatureEvent.NavigateToExamRoutineUpdate -> {
-                            navController.navigate(GraphRoutes.EXAM_ROUTINE_UPDATE)
-                        }
+                            is MiscFeatureEvent.NavigateToExamRoutineUpdate -> {
+                                navController.navigate(GraphRoutes.EXAM_ROUTINE_UPDATE)
+                            }
 
-                        is OtherFeatureEvent.NavigateToClassRoutineUpdate -> {
-                            navController.navigate(GraphRoutes.CLASS_ROUTINE_UPDATE)
-                        }
+                            is MiscFeatureEvent.NavigateToClassRoutineUpdate -> {
+                                navController.navigate(GraphRoutes.CLASS_ROUTINE_UPDATE)
+                            }
 
-                        is OtherFeatureEvent.NavigateToTeacherInfoUpdate -> {
-                            navController.navigate(GraphRoutes.TEACHER_INFO_UPDATE)
+                            is MiscFeatureEvent.NavigateToTeacherInfoUpdate -> {
+                                navController.navigate(GraphRoutes.TEACHER_INFO_UPDATE)
+                            }
+
+
                         }
+                    } catch (_: Exception) {
                     }
-                } catch (_: Exception) {
+
                 }
-
-
-            }
-        )
-
+            )
+            AcademicRoute(
+                onEvent = { event ->
+                    toAppEvent(event)?.let(onEvent)
+                },
+                // onMenuIconClicked = openDrawerRequest,
+                isNavRailMode = isNavRailMode,
+                token = NavigationFactory.token.value
+            )
+        }
+        composable(GraphRoutes.VC_MESSAGES) {
+            MessageFromVCRoute(
+                token = NavigationFactory.token.value
+            )
+        }
+        composable(GraphRoutes.EVENT_GALLERY) {
+//            EventsRoute(
+//                token = NavigationFactory.token.value
+//            )
+        }
+        composable(GraphRoutes.ABOUT_US) {
+            AboutUsRoute()
+        }
         composable(GraphRoutes.FACULTY_FEATURE) {
             AcademicRoute(
                 onEvent = { event ->
@@ -191,12 +223,14 @@ private fun toAppEvent(event: AcademicModuleEvent): AppEvent? {
 object GraphRoutes {
     const val FACULTY_FEATURE = "FacultyFeatureNavGraph.ROUTE"
     const val ADMIN_OFFICE_FEATURE = "AdminOfficeFeatureNavGraph.ROUTE"
-    const val TOPMOST_OTHER_FEATURE = OtherFeatureNavGraph.ROUTE
+    const val HOME = "HOME_ROUTE"
+    const val VC_MESSAGES = "VC_MESSAGES_ROUTE"
+    const val ABOUT_US = "About us route"
     const val NOTES_FEATURE = "NotesFeatureNavGraph.ROUTE"
     const val SEARCH = "Search"
     const val CLASS_SCHEDULE_VIEWER = "CLASS_SCHEDULE"
     const val EXAM_SCHEDULE_VIEWER = "EXAM_SCHEDULE"
-
+    const val EVENT_GALLERY="Event Gallery"
     // Admin-specific routes
     const val CALENDAR_UPDATE = "CalendarUpdateFeatureNavGraph.ROUTE"
     const val TEACHER_INFO_UPDATE = "TeacherInfoUpdateFeatureNavGraph.ROUTE"

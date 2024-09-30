@@ -1,6 +1,6 @@
 package administration.ui.public_
 
-import administration.factory.UiFactory
+import administration.controller_presenter.factory.UiFactory
 import administration.ui.common.SnackNProgressBarDecorator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState

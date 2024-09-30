@@ -1,7 +1,7 @@
 package administration.ui.public_
 
 import administration.controller_presenter.model.AdminOfficerModel
-import administration.factory.UiFactory
+import administration.controller_presenter.factory.UiFactory
 import administration.ui.common.SnackNProgressBarDecorator
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring

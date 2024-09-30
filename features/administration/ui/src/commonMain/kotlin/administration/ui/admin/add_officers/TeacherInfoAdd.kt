@@ -1,6 +1,6 @@
 package administration.ui.admin.add_officers
 
-import administration.factory.UiFactory
+import administration.controller_presenter.factory.UiFactory
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize

@@ -11,7 +11,6 @@ import common.newui.DrawerToNavRailDecorator
 import common.newui.NavigationController
 import common.newui.NavigationEvent
 import navigation.component.DrawerHeader
-import navigation.component.NavDestination
 import navigation.component.NavDestinationBuilder
 
 
@@ -60,7 +59,7 @@ private fun _FeatureNavGraph(
                 openDrawerRequest = viewModel::openDrawer,
                 navController = navHostController,
                 onBackPressed = featureNavGraphController::pop,
-                startDestination = GraphRoutes.TOPMOST_OTHER_FEATURE,
+                startDestination = GraphRoutes.HOME,
                 isNavRailMode = false,
             )
         }

@@ -1,10 +1,10 @@
-package miscellaneous.domain.repoisitory
+package miscellaneous.data.source
 
-import miscellaneous.domain.model.AboutUsModel
 import miscellaneous.domain.model.EventGalleryModel
 import miscellaneous.domain.model.VCInfoModel
 
-interface OtherInfoRepository{
+
+interface LocalDataSource {
     suspend fun getVCInfo(): Result<VCInfoModel>
     suspend fun getEvents(): Result<List<EventGalleryModel>>
 }
