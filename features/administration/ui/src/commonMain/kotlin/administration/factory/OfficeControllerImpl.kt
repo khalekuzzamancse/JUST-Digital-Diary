@@ -4,7 +4,7 @@ package administration.factory
 
 import admin_office.domain.exception.CustomException
 import admin_office.domain.usecase.RetrieveOfficeListUseCase
-import administration.Mapper
+import administration.ui.public_.Mapper
 import administration.controller_presenter.controller.OfficeController
 import administration.controller_presenter.model.OfficeModel
 import kotlinx.coroutines.CoroutineScope

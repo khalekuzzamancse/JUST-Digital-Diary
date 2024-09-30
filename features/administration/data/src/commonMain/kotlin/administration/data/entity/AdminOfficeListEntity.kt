@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
  */
 @PackageLevelAccess // Restricts access outside this package
 @Serializable
-class AdminOfficeListEntity(
+internal class AdminOfficeListEntity(
     val offices: List<OfficeEntity>
 )
 
@@ -20,7 +20,7 @@ class AdminOfficeListEntity(
  */
 @PackageLevelAccess // Restricts access outside this package
 @Serializable
-data class OfficeEntity(
+internal data class OfficeEntity(
     val id: Int,
     val office_id: String,
     val name: String,

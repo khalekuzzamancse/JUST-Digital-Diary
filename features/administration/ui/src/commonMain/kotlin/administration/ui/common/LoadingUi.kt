@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
- fun LoadingUi(modifier: Modifier = Modifier) {
+  fun LoadingUi(modifier: Modifier = Modifier) {
     Box(
         modifier = Modifier
             .fillMaxSize()

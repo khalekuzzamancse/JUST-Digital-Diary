@@ -1,10 +1,7 @@
-package administration.ui
+package administration.ui.public_
 
 import administration.factory.UiFactory
-import administration.navgraph.AdminOfficersScreen
 import administration.ui.common.SnackNProgressBarDecorator
-import administration.ui.officers.AdminEmployeeListEvent
-import administration.ui.public_.AdminOfficeAndSubOfficeRoute
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
@@ -61,13 +58,13 @@ fun AdministrationRoute(
                 arguments = listOf(navArgument(SUB_OFFICE_ID) { type = NavType.StringType })
             ) { backStackEntry ->
                 val subOffice = backStackEntry.arguments?.getString(SUB_OFFICE_ID)
-                println("AdminOfficeFeatureNavGraph:subOfficeId-> $subOffice")
                 AdminOfficersScreen(
                     onExitRequest = {
                         navController.popBackStack()
                     },
                     subOfficeId = subOffice ?: "",
-                    onEvent = onEvent
+                    onEvent = onEvent,
+                    token = token
                 )
             }
         }

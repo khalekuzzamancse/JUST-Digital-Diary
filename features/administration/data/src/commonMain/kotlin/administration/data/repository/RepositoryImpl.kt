@@ -7,7 +7,7 @@ import admin_office.domain.model.SubOfficeModel
 import admin_office.domain.repository.Repository
 import administration.data.source.RemoteDataSource
 
-class RepositoryImpl(
+class RepositoryImpl internal  constructor(
     private val token:String?,
     private val remoteSource: RemoteDataSource
 ):Repository {

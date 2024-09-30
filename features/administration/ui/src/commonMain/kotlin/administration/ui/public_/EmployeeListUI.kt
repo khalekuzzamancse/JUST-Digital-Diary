@@ -1,6 +1,8 @@
-package administration.ui.officers
+package administration.ui.public_
 
 import administration.controller_presenter.model.AdminOfficerModel
+import administration.factory.UiFactory
+import administration.ui.common.SnackNProgressBarDecorator
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -21,6 +23,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Email
@@ -32,6 +35,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,10 +48,95 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import common.ui.TopBarDecoratorCommon
+import common.ui.list.AdaptiveList
+
+
+/*
+It this function must be called with a list.
+the user have to choice where to place this composable,
+will it place in a separate screen or it it place in a  pane dependent on the
+client code,but this is responsive enough so it can be used with either separate screen or part of
+another screen such as pane
+ */
+@Composable
+fun AdminOfficersScreen(
+    token: String?,
+    subOfficeId: String,
+    onExitRequest:()->Unit,
+    onEvent:(AdminEmployeeListEvent)->Unit,
+) {
+    val viewModel = remember {
+        EmployeeListViewModel(
+            controller = UiFactory.createEmployeeController(token = token)
+        )
+    }
+    val employees=viewModel.controller.employees.collectAsState().value
+    LaunchedEffect(Unit){
+        viewModel.controller.fetch(subOfficeId)
+    }
+
+    SnackNProgressBarDecorator(
+        isLoading = viewModel.isLoading.collectAsState(false).value,
+        snackBarMessage = viewModel.screenMessage.collectAsState(null).value
+    ){
+        TopBarDecoratorCommon(
+            topNavigationIcon = Icons.AutoMirrored.Default.ArrowBack,
+            onNavigationIconClick = onExitRequest,
+            topBarTitle = "Admin Officers"
+        ) {
+
+            ListOfAdminOfficer(
+                modifier = Modifier,
+                officers = employees,
+                onEvent = onEvent
+            )
+
+        }
+    }
+
+
+}
+
+
+
 
 
 @Composable
-internal fun AdminOfficerCard(
+private fun ListOfAdminOfficer(
+    modifier: Modifier = Modifier,
+    officers: List<AdminOfficerModel>,
+    onEvent:(AdminEmployeeListEvent)->Unit,
+) {
+    if (officers.isNotEmpty()){
+        Surface(
+            shadowElevation = 8.dp
+        ) {
+            AdaptiveList(
+                modifier = modifier,
+                items = officers
+            ) { employee ->
+                AdminOfficerCard(
+                    modifier = Modifier.padding(8.dp),
+                    adminOfficer = employee,
+                    onCallRequest = {
+                        onEvent(AdminEmployeeListEvent.CallRequest(employee.phone))
+                    },
+                    onMessageRequest = {
+                        onEvent(AdminEmployeeListEvent.MessageRequest(employee.phone))
+                    },
+                    onEmailRequest = {
+                        onEvent(AdminEmployeeListEvent.EmailRequest(employee.email))
+                    }
+                )
+            }
+
+        }
+    }
+}
+
+@Composable
+private fun AdminOfficerCard(
     modifier: Modifier,
     adminOfficer: AdminOfficerModel,
     expandMode: Boolean = true,
@@ -212,7 +302,7 @@ private fun EmployeeDetails(
 }
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-internal fun Controls(
+private fun Controls(
     modifier: Modifier = Modifier,
     onCallRequest: () -> Unit,
     onEmailRequest: () -> Unit,

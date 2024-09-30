@@ -2,17 +2,12 @@ package administration.ui.public_
 
 import administration.controller_presenter.controller.OfficeController
 import administration.controller_presenter.controller.SubOfficeController
-import administration.factory.UiFactory
-import administration.ui.OfficeScreenViewModel
-import administration.ui.offices.AdminOfficeList
-import administration.ui.suboffice.AdminSubOfficeList
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import common.newui.TwoPaneNewUIPros

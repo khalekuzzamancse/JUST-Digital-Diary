@@ -1,4 +1,4 @@
-package administration.ui.officers
+package administration.ui.public_
 
 interface AdminEmployeeListEvent {
     data class CallRequest(val number:String): AdminEmployeeListEvent

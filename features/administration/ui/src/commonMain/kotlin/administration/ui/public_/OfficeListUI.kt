@@ -1,4 +1,4 @@
-package administration.ui.offices
+package administration.ui.public_
 
 import administration.controller_presenter.controller.OfficeController
 import androidx.compose.foundation.layout.Column
@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import common.newui.CardInfoState
 import common.newui.GenericInfoCard
 import common.newui.generateAcronym
-import common.ui.custom_navigation_item.NavigationItemInfo2
 
 @Composable
 internal fun AdminOfficeList(

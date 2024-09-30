@@ -1,10 +1,11 @@
-package administration.data.service
+package administration.data.factory
 
 
 import core.network.JsonParser
 import core.network.NetworkException
 import admin_office.domain.exception.CustomException
 import administration.data.entity.ServerResponseMessageEntity
+import administration.data.service.JsonHandler
 
 /**
  * - See[JsonHandler] docs

@@ -3,7 +3,7 @@ package navigation
 import academic.ui.AcademicModuleEvent
 import academic.ui.admin.AddTeacherScreen
 import academic.ui.public_.AcademicRoute
-import administration.ui.AdministrationRoute
+import administration.ui.public_.AdministrationRoute
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable

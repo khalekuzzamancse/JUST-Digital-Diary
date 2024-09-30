@@ -1,16 +1,16 @@
 @file:Suppress("FunctionName")
 
-package administration.data.source
+package administration.data.factory
 
 import admin_office.domain.model.AdminOfficerModel
 import admin_office.domain.model.OfficeModel
 import admin_office.domain.model.SubOfficeModel
-import administration.data.Mapper
 import administration.data.PackageLevelAccess
 import administration.data.entity.AdminOfficeListEntity
 import administration.data.entity.AdminOfficerListEntity
 import administration.data.entity.SubOfficeListEntity
 import administration.data.service.JsonHandler
+import administration.data.source.RemoteDataSource
 import core.network.ApiServiceClient
 import core.network.Header
 import core.network.JsonParser

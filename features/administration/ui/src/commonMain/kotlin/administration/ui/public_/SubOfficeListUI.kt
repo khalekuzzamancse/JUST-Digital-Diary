@@ -1,4 +1,4 @@
-package administration.ui.suboffice
+package administration.ui.public_
 
 import administration.controller_presenter.controller.SubOfficeController
 import androidx.compose.foundation.layout.Column

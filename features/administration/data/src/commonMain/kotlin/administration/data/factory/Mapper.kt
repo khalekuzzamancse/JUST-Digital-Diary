@@ -1,8 +1,9 @@
-package administration.data
+package administration.data.factory
 
 import admin_office.domain.model.AdminOfficerModel
 import admin_office.domain.model.OfficeModel
 import admin_office.domain.model.SubOfficeModel
+import administration.data.PackageLevelAccess
 import administration.data.entity.AdminOfficerEntity
 import administration.data.entity.OfficeEntity
 import administration.data.entity.SubOfficeEntity
@@ -38,10 +39,10 @@ internal object Mapper {
                 email = it.email,
                 additionalEmail = it.additional_email,
                 phone = it.phone,
-                profileImage = it.profile_image,
+                profileImage =it.offices.firstOrNull()?.designation ?:"",
                 achievements = it.achievement,
-                designations = it.designations,
-                roomNo = it.room_no
+                designations = it.offices.firstOrNull()?.designation ?:"",
+                roomNo = it.offices.firstOrNull()?.room_no ?:"",
             )
         }
     }

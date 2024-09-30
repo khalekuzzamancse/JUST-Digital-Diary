@@ -1,12 +1,10 @@
 @file:Suppress("functionName")
 
-package administration.data
+package administration.data.factory
 
 import admin_office.domain.repository.Repository
 import administration.data.repository.RepositoryImpl
-import administration.data.service.JsonHandlerImpl
 import administration.data.source.RemoteDataSource
-import administration.data.source.RemoteDataSourceImpl
 import factory.NetworkFactory
 
 

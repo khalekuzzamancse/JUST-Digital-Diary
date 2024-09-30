@@ -1,8 +1,9 @@
+@file:Suppress("FunctionName")
 package administration.factory
 
 import admin_office.domain.exception.CustomException
 import admin_office.domain.usecase.RetrieveOfficersUseCase
-import administration.Mapper
+import administration.ui.public_.Mapper
 import administration.controller_presenter.controller.EmployeeListController
 import administration.controller_presenter.model.AdminOfficerModel
 import kotlinx.coroutines.CoroutineScope
@@ -19,7 +20,6 @@ class EmployeeListControllerImpl(
     private val _screenMessage = MutableStateFlow<String?>(null)
     private val _employees = MutableStateFlow<List<AdminOfficerModel>>(emptyList())
     private val _isLoading = MutableStateFlow(false)
-    private val _selected = MutableStateFlow<Int?>(null)
 
     override val errorMessage=_screenMessage.asStateFlow()
     override val isFetching = _isLoading.asStateFlow()
