@@ -2,7 +2,10 @@ package navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import auth.ui.AuthRoute
@@ -43,33 +46,39 @@ private fun _FeatureNavGraph(
     onEvent: (AppEvent) -> Unit,
 ) {
     val navHostController = rememberNavController()
-    val featureNavGraphController = remember { MainNavGraphController(navHostController, onEvent) }
-    NavigationHost(
+    val navigator = remember { Navigator(navHostController, onEvent) }
+    var isNavRailMode by remember { mutableStateOf(false) }
+    NavItemDecorator(
         controller = viewModel.controller,
         onLogOutRequest = viewModel::logOut,
         onSelectionRequest = { destination ->
             //notify the controller that a destination is selected
             //so that it highlight it and close the drawer(if needed)
             viewModel.select(destination)
-            featureNavGraphController.navigator(destination)
+            navigator.navigator(destination)
+        },
+        onNavModeChange = {
+            isNavRailMode=it
         },
         contentHost = {
-            RootNavGraph(
+            NavGraph(
                 onEvent = onEvent,
                 openDrawerRequest = viewModel::openDrawer,
                 navController = navHostController,
-                onBackPressed = featureNavGraphController::pop,
+                onBackPressed = navigator::pop,
                 startDestination = GraphRoutes.HOME,
-                isNavRailMode = false,
+                isNavRailMode = isNavRailMode,
+                onMiscFeatureEvent = navigator::onMiscFeatureEvent
             )
         }
     )
 }
 
 @Composable
-fun NavigationHost(
+fun NavItemDecorator(
     controller: NavigationController,
     onSelectionRequest: (Destination) -> Unit,
+    onNavModeChange:(isNavRailMode:Boolean)->Unit,
     onLogOutRequest: () -> Unit = {},
     contentHost: @Composable () -> Unit,
 ) {
@@ -80,6 +89,10 @@ fun NavigationHost(
             if (event is NavigationEvent.Selected) {
                 onSelectionRequest(event.destination)
             }
+            if (event is NavigationEvent.NavRailNavigationMode)
+                onNavModeChange(true)
+            if (event is NavigationEvent.DrawerNavigationMode)
+                onNavModeChange(false)
         },
         header = {
             DrawerHeader(

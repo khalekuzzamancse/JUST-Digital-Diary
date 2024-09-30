@@ -29,6 +29,7 @@ fun AcademicRoute(
     modifier: Modifier = Modifier,
     token: String?,
     isNavRailMode: Boolean,
+    onExitRequest: () -> Unit,
     onEvent: (AcademicModuleEvent) -> Unit
 ) {
 
@@ -54,8 +55,8 @@ fun AcademicRoute(
                 FacultyAndDepartmentList(
                     viewModel = viewModel,
                     backHandler = {},
-                    isNavRailMode = false,
-                    onExitRequest = {},
+                    isNavRailMode = isNavRailMode,
+                    onExitRequest = onExitRequest,
                     onTeachersRequest = {
                         try {
                             navController.navigate("${Route.TEACHER_LIST}/$it")

@@ -15,39 +15,8 @@ class MainViewModel : ViewModel() {
     private val _showSlapScreen = MutableStateFlow(true)
     val showSlapScreen = _showSlapScreen.asStateFlow()
     val controller = NavigationController()
-//    val isSignedIn = combine(
-//        AuthComponentProvider.isSingedIn,
-//        AuthComponentProvider.observeSignIn()
-//    ) { alreadySignIn, newLogin ->
-//        alreadySignIn || newLogin
-//    }
-
     fun logOut() {
        // AuthComponentProvider.signInOut()
-    }
-
-    private fun stopSlapScreen() {
-        _showSlapScreen.update { false }
-    }
-
-    fun onLoginSuccess(username: String, password: String) {
-//        CoroutineScope(Dispatchers.Default).launch {
-//            AuthComponentProvider.saveSignInInfo(username, password)
-//        }
-    }
-
-    init {
-        CoroutineScope(Dispatchers.Default).launch {
-            startObserverSignIn()
-        }
-        CoroutineScope(Dispatchers.Default).launch {
-            delay(4000)
-            stopSlapScreen()
-        }
-    }
-
-    private suspend fun startObserverSignIn() {
-
     }
 
     fun openDrawer() = controller.openDrawer()

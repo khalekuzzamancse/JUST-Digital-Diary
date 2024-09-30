@@ -1,6 +1,5 @@
 package miscellaneous.ui.home
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -57,7 +55,7 @@ import org.jetbrains.compose.resources.painterResource
  * the platform to load the image from their own resource and the logo composable.
  * fix it later using "Res" class  of compose multiplatform resource
  */
-@OptIn(ExperimentalResourceApi::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun HomeHeader(
     modifier: Modifier = Modifier,
@@ -190,7 +188,7 @@ data class DashboardItemData(
 )
 
 // Root Dashboard Function with default lambdas for each event
-@OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Dashboard(
     isAdmin: Boolean = false,
@@ -234,21 +232,20 @@ fun Dashboard(
             )
             add(
                 DashboardItemData(
-                    "Teacher Info Update",
-                    Icons.Default.Person,
-                    onTeacherInfoUpdateClick
+                    text = "Teacher Info Update",
+                    icon = Icons.Default.Person,
+                    onClick = onTeacherInfoUpdateClick
                 )
             )
         }
     }
     FlowRow(
         modifier = Modifier
-            .fillMaxSize()
             .padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        dashboardItems.forEachIndexed { index, item ->
+        dashboardItems.forEachIndexed { _, item ->
             DashboardItem(
                 modifier = Modifier
                     .weight(1f)

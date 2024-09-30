@@ -6,6 +6,14 @@ import academic.ui.public_.AcademicRoute
 import administration.ui.public_.AdministrationRoute
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,6 +23,7 @@ import androidx.navigation.compose.composable
 import calendar.ui.ui.admin.AddAcademicCalenderScreen
 import miscellaneous.MiscFeatureEvent
 import miscellaneous.ui.AboutUsRoute
+import miscellaneous.ui.eventGallery.EventsRoute
 import miscellaneous.ui.home.HomeRoute
 import miscellaneous.ui.vcmessage.MessageFromVCRoute
 import schedule.ui.ui.admin.add_class_schedule.AddClassScheduleScreen
@@ -24,7 +33,7 @@ import schedule.ui.ui.public_.ViewExamScheduleScreen
 
 
 @Composable
-fun RootNavGraph(
+fun NavGraph(
     modifier: Modifier = Modifier,
     onEvent: (AppEvent) -> Unit,
     openDrawerRequest: () -> Unit,
@@ -32,6 +41,7 @@ fun RootNavGraph(
     startDestination: String,
     isNavRailMode: Boolean,
     navController: NavHostController,
+    onMiscFeatureEvent: (MiscFeatureEvent) -> Unit,
 ) {
 
     NavHost(
@@ -41,74 +51,23 @@ fun RootNavGraph(
     ) {
 
         composable(GraphRoutes.HOME) {
-            HomeRoute(
-                onEvent = { event ->
-                    try {
-                        when (event) {
-                            is MiscFeatureEvent.CalenderRequest -> {
-                                onEvent(AppEvent.WebVisitRequest(event.url))
-                            }
+            _DrawerIconDecorator(
+                onMenuIconClick = openDrawerRequest,
+                isNavRailMode = isNavRailMode
+            ) {
+                HomeRoute(
+                    onEvent = onMiscFeatureEvent
+                )
+            }
 
-                            is MiscFeatureEvent.NavigateToFacultyList -> {
-                                navController.navigate(GraphRoutes.FACULTY_FEATURE)
-                            }
+        }
 
-                            is MiscFeatureEvent.NavigateTAdminOfficeList -> {
-                                navController.navigate(GraphRoutes.ADMIN_OFFICE_FEATURE)
-                            }
-
-                            is MiscFeatureEvent.NavigateToCalendarUpdate -> {
-                                navController.navigate(GraphRoutes.CALENDAR_UPDATE)
-                            }
-
-
-                            is MiscFeatureEvent.NavigateToExamRoutineUpdate -> {
-                                navController.navigate(GraphRoutes.EXAM_ROUTINE_UPDATE)
-                            }
-
-                            is MiscFeatureEvent.NavigateToClassRoutineUpdate -> {
-                                navController.navigate(GraphRoutes.CLASS_ROUTINE_UPDATE)
-                            }
-
-                            is MiscFeatureEvent.NavigateToTeacherInfoUpdate -> {
-                                navController.navigate(GraphRoutes.TEACHER_INFO_UPDATE)
-                            }
-
-
-                        }
-                    } catch (_: Exception) {
-                    }
-
-                }
-            )
+        composable(GraphRoutes.ACADEMIC_FEATURES) {
             AcademicRoute(
                 onEvent = { event ->
                     toAppEvent(event)?.let(onEvent)
                 },
-                // onMenuIconClicked = openDrawerRequest,
-                isNavRailMode = isNavRailMode,
-                token = NavigationFactory.token.value
-            )
-        }
-        composable(GraphRoutes.VC_MESSAGES) {
-            MessageFromVCRoute(
-                token = NavigationFactory.token.value
-            )
-        }
-        composable(GraphRoutes.EVENT_GALLERY) {
-//            EventsRoute(
-//                token = NavigationFactory.token.value
-//            )
-        }
-        composable(GraphRoutes.ABOUT_US) {
-            AboutUsRoute()
-        }
-        composable(GraphRoutes.FACULTY_FEATURE) {
-            AcademicRoute(
-                onEvent = { event ->
-                    toAppEvent(event)?.let(onEvent)
-                },
-                // onMenuIconClicked = openDrawerRequest,
+                onExitRequest = openDrawerRequest,
                 isNavRailMode = isNavRailMode,
                 token = NavigationFactory.token.value
             )
@@ -118,48 +77,92 @@ fun RootNavGraph(
             AdministrationRoute(
                 token = NavigationFactory.token.value,
                 onEvent = {},
-                onMenuIconClick = {}
+                onMenuIconClick = openDrawerRequest
             )
         }
         composable(GraphRoutes.CLASS_SCHEDULE_VIEWER) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            _DrawerIconDecorator(
+                isNavRailMode = isNavRailMode,
+                onMenuIconClick = openDrawerRequest,
+            ) {
                 ViewClassScheduleScreen()
             }
 
         }
         composable(GraphRoutes.EXAM_SCHEDULE_VIEWER) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            _DrawerIconDecorator(
+                onMenuIconClick = openDrawerRequest,
+                isNavRailMode = isNavRailMode
+            ) {
                 ViewExamScheduleScreen()
             }
-
         }
-        composable(GraphRoutes.EXAM_SCHEDULE_VIEWER) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                ViewExamScheduleScreen()
-            }
 
-        }
         composable(GraphRoutes.EXAM_ROUTINE_UPDATE) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            _DrawerIconDecorator(
+                onMenuIconClick = openDrawerRequest,
+                isNavRailMode = isNavRailMode
+            ) {
                 ExamScheduleAddScreen()
             }
         }
         composable(GraphRoutes.CLASS_ROUTINE_UPDATE) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            _DrawerIconDecorator(
+                onMenuIconClick = openDrawerRequest,
+                isNavRailMode = isNavRailMode
+            ) {
                 AddClassScheduleScreen()
             }
         }
         composable(GraphRoutes.TEACHER_INFO_UPDATE) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            _DrawerIconDecorator(
+                onMenuIconClick = openDrawerRequest,
+                isNavRailMode = isNavRailMode
+            ) {
                 AddTeacherScreen()
+
             }
         }
         composable(GraphRoutes.CALENDAR_UPDATE) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            _DrawerIconDecorator(
+                onMenuIconClick = openDrawerRequest,
+                isNavRailMode = isNavRailMode
+            ) {
                 AddAcademicCalenderScreen()
             }
-        }
 
+        }
+        composable(GraphRoutes.VC_MESSAGES) {
+            _DrawerIconDecorator(
+                onMenuIconClick = openDrawerRequest,
+                isNavRailMode = isNavRailMode
+            ) {
+                MessageFromVCRoute(
+                    token = NavigationFactory.token.value
+                )
+            }
+
+        }
+        composable(GraphRoutes.EVENT_GALLERY) {
+            _DrawerIconDecorator(
+                onMenuIconClick = openDrawerRequest,
+                isNavRailMode = isNavRailMode
+            ) {
+                EventsRoute(
+                    token = NavigationFactory.token.value
+                )
+            }
+
+        }
+        composable(GraphRoutes.ABOUT_US) {
+            _DrawerIconDecorator(
+                onMenuIconClick = openDrawerRequest,
+                isNavRailMode = isNavRailMode
+            ) {
+                AboutUsRoute()
+            }
+
+        }
 
 //        composable(GraphRoutes.NOTES_FEATURE) {
 //            NotesFeatureNavGraph.Graph(
@@ -221,7 +224,7 @@ private fun toAppEvent(event: AcademicModuleEvent): AppEvent? {
 //}
 
 object GraphRoutes {
-    const val FACULTY_FEATURE = "FacultyFeatureNavGraph.ROUTE"
+    const val ACADEMIC_FEATURES = "FacultyFeatureNavGraph.ROUTE"
     const val ADMIN_OFFICE_FEATURE = "AdminOfficeFeatureNavGraph.ROUTE"
     const val HOME = "HOME_ROUTE"
     const val VC_MESSAGES = "VC_MESSAGES_ROUTE"
@@ -230,10 +233,51 @@ object GraphRoutes {
     const val SEARCH = "Search"
     const val CLASS_SCHEDULE_VIEWER = "CLASS_SCHEDULE"
     const val EXAM_SCHEDULE_VIEWER = "EXAM_SCHEDULE"
-    const val EVENT_GALLERY="Event Gallery"
+    const val EVENT_GALLERY = "Event Gallery"
+
     // Admin-specific routes
     const val CALENDAR_UPDATE = "CalendarUpdateFeatureNavGraph.ROUTE"
     const val TEACHER_INFO_UPDATE = "TeacherInfoUpdateFeatureNavGraph.ROUTE"
     const val CLASS_ROUTINE_UPDATE = "ClassRoutineUpdateFeatureNavGraph.ROUTE"
     const val EXAM_ROUTINE_UPDATE = "ExamRoutineUpdateFeatureNavGraph.ROUTE"
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun _DrawerIconDecorator(
+    isNavRailMode: Boolean,
+    onMenuIconClick: () -> Unit,
+    content: @Composable () -> Unit,
+) {
+    if (isNavRailMode) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            content()
+        }
+    } else {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {},
+                    navigationIcon = {
+                        IconButton(
+                            onClick = onMenuIconClick
+                        ) {
+                            Icon(Icons.Default.Menu, contentDescription = "Drawer Icon")
+                        }
+                    }
+                )
+            }
+        ) {
+            Box(
+                modifier = Modifier.padding(it).fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                content()
+            }
+        }
+
+    }
 }

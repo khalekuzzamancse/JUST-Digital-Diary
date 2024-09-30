@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -103,7 +103,7 @@ private fun LogOutButton(
     onClick: () -> Unit,
 ) {
     Icon(
-        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+        imageVector = Icons.AutoMirrored.Filled.Logout,
         contentDescription = "logout button",
         tint = MaterialTheme.colorScheme.secondary,
         modifier = Modifier.clickable { onClick() }

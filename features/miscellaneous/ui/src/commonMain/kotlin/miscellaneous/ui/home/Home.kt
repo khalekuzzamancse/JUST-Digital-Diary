@@ -35,7 +35,7 @@ fun HomeRoute(
 ) {
     HomeDestination { event ->
 
-        //onEvent(event._toOtherFeatureFunctionalityEvent())
+        onEvent(event._toOtherFeatureFunctionalityEvent())
     }
 
 }

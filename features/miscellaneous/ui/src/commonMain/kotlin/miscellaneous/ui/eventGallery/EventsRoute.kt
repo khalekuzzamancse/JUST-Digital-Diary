@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,6 +29,9 @@ fun EventsRoute(
     val viewmodel =
         remember { EventGalleryViewmodel(UiFactory.createEventGalleryController(token)) }
     val controller = viewmodel.controller
+    LaunchedEffect(Unit){
+        controller.fetch()
+    }
 
     EventGallery(
         events = controller.events.collectAsState().value,

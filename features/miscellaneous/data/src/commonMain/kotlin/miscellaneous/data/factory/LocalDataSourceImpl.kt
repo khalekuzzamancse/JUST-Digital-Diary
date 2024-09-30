@@ -8,7 +8,7 @@ internal class LocalDataSourceImpl : LocalDataSource {
     override suspend fun getVCInfo(): Result<VCInfoModel> {
         return Result.success(
             VCInfoModel(
-                name = "Professor Dr. Md. Anwar Hossain",
+                name = "",
                 details = "Vice Chancellor\n" +
                         "Jashore University of Science and Technology\n" +
                         "Jashore, Bangladesh",
@@ -17,7 +17,7 @@ internal class LocalDataSourceImpl : LocalDataSource {
                         "Our focus is also on promoting intellectual leadership through innovation and outcome-based education, and fostering social commitment through community affiliation. It gives me immense pleasure that the concerted efforts of the faculty members and students both from home and abroad have added feathers in our cap.\n" +
                         "\n" +
                         "In order to achieve the rest of the noble goals and turn our country into the golden Bengal envisioned by the Father of the Nation Bangabandhu Sheikh Mujibur Rahman, we all have to work together relentlessly and wholeheartedly.",
-                imageUrl = "https://just.edu.bd/images/vc2.jpg"
+                imageUrl = "https://just.edu.bd/images/vc3.jpg"
             )
         )
     }

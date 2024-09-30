@@ -11,6 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -29,6 +30,10 @@ import miscellaneous.controller_presenter.UiFactory
 fun MessageFromVCRoute(token: String?) {
     val viewModel = remember { VCMessageViewmodel(UiFactory.createVCMessageController(token)) }
     val state = viewModel.controller.events.collectAsState().value
+
+    LaunchedEffect(Unit){
+        viewModel.controller.fetch()
+    }
     state?.let {
         MessageFromVC(
             messageText = it.message,
