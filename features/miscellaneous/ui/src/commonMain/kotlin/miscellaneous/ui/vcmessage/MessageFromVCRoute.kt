@@ -11,9 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -21,19 +19,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import common.ui.WindowSizeDecorator
-import common.ui.animation.TypeWriter
-import common.ui.network_image.ImageLoader
-import miscellaneous.controller_presenter.UiFactory
+import androidx.lifecycle.viewmodel.compose.viewModel
+import common.ui.ImageLoader
+import common.ui.TypeWriter
+import miscellaneous.presentationlogic.UiFactory
 
 @Composable
 fun MessageFromVCRoute(token: String?) {
-    val viewModel = remember { VCMessageViewmodel(UiFactory.createVCMessageController(token)) }
+    val viewModel = viewModel { VCMessageViewmodel(UiFactory.createVCMessageController(token)) }
     val state = viewModel.controller.events.collectAsState().value
 
-    LaunchedEffect(Unit){
-        viewModel.controller.fetch()
-    }
     state?.let {
         MessageFromVC(
             messageText = it.message,
@@ -63,84 +58,40 @@ private fun MessageFromVC(
         color = Color.Gray
     )
 
-    WindowSizeDecorator(
-        onCompact = {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        ) {
+            ViceChancellorImage(imageUrl)
 
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                ) {
-                    ViceChancellorImage(imageUrl)
+            Spacer(modifier = Modifier.height(16.dp))
 
-                    Spacer(modifier = Modifier.height(16.dp))
+            NameOfVC(info = vcName)
 
-                    NameOfVC(info = vcName)
+            Spacer(modifier = Modifier.height(8.dp))
 
-                    Spacer(modifier = Modifier.height(8.dp))
+            MoreInfoOnVC(info = moreInfoOfVC)
 
-                    MoreInfoOnVC(info = moreInfoOfVC)
-
-                    Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
 
-                    Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-                    MessageSection(
-                        titleStyle = titleStyle,
-                        bodyStyle = bodyStyle,
-                        messageText = messageText
-                    )
-                }
-
-            }
-
-        },
-        onNonCompact = {
-            Column(
-                modifier = Modifier
-                    .padding(48.dp)
-                    .fillMaxSize()
-
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                ) {
-                    ViceChancellorImage(imageUrl)
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    NameOfVC(info = vcName)
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    MoreInfoOnVC(info = moreInfoOfVC)
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    MessageSection(
-                        titleStyle = titleStyle,
-                        bodyStyle = bodyStyle,
-                        messageText = messageText
-                    )
-                }
-
-            }
-
+            MessageSection(
+                titleStyle = titleStyle,
+                bodyStyle = bodyStyle,
+                messageText = messageText
+            )
         }
-    )
+
+    }
 
 
 }

@@ -48,8 +48,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import common.ui.TopBarDecoratorCommon
-import common.ui.list.AdaptiveList
+import common.ui.AdaptiveList
 
 
 /*
@@ -66,7 +67,7 @@ fun AdminOfficersScreen(
     onExitRequest:()->Unit,
     onEvent:(AdminEmployeeListEvent)->Unit,
 ) {
-    val viewModel = remember {
+    val viewModel = viewModel {
         EmployeeListViewModel(
             controller = UiFactory.createEmployeeController(token = token)
         )

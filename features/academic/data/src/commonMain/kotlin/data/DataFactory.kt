@@ -8,15 +8,14 @@ import factory.NetworkFactory
 import faculty.domain.repository.Repository
 
 object DataFactory {
-    fun createFacultyListRepository(): Repository =
+    fun createFacultyListRepository( token: String?,): Repository =
         RepositoryImpl(
-            apiServiceClient = _createApiClient(),
-            jsonParser = _createJsonParser(),
             remoteSource = RemoteDataSourceImpl(
                 apiServiceClient = _createApiClient(),
                 jsonParser =_createJsonParser(),
                 jsonHandler = JsonHandlerImpl(_createJsonParser())
-            )
+            ),
+            token = token,
         )
 
 

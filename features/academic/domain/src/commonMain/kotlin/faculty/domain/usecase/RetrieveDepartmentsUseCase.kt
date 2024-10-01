@@ -18,7 +18,7 @@ import faculty.domain.repository.Repository
 class RetrieveDepartmentsUseCase(
     private val repository: Repository
 ) {
-    suspend fun execute(token:String?,facultyId:String):  Result<List<DepartmentModel>> {
-        return repository.getDepartment(token,facultyId)
+    suspend fun execute(facultyId:String):  Result<List<DepartmentModel>> {
+        return repository.getDepartment(facultyId)
     }
 }

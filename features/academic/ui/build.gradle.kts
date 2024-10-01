@@ -13,6 +13,11 @@ kotlin {
                 implementation(libs.common.navigation)
             }
         }
+        val jvmMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.8.1")
+            }
+        }
 
     }
 

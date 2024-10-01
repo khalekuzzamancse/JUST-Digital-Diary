@@ -24,7 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import common.newui.CustomTextField
+import common.ui.CustomTextField
 import schedule.ui.ui.public_.ExamScheduleScreen
 import schedule.ui.ui.common.ErrorText
 import schedule.ui.factory.UiFactory

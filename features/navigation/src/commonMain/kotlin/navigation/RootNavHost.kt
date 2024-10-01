@@ -6,13 +6,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import auth.ui.AuthRoute
-import common.newui.Destination
-import common.newui.DrawerToNavRailDecorator
-import common.newui.NavigationController
-import common.newui.NavigationEvent
+import common.ui.Destination
+import common.ui.DrawerToNavRailDecorator
+import common.ui.NavigationController
+import common.ui.NavigationEvent
 import navigation.component.DrawerHeader
 import navigation.component.NavDestinationBuilder
 
@@ -64,10 +65,10 @@ private fun _FeatureNavGraph(
             NavGraph(
                 onEvent = onEvent,
                 openDrawerRequest = viewModel::openDrawer,
-                navController = navHostController,
                 onBackPressed = navigator::pop,
                 startDestination = GraphRoutes.HOME,
                 isNavRailMode = isNavRailMode,
+                navController = navHostController,
                 onMiscFeatureEvent = navigator::onMiscFeatureEvent
             )
         }

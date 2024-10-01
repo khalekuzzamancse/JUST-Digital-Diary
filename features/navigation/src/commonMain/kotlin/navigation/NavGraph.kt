@@ -1,13 +1,15 @@
 package navigation
 
 import academic.ui.AcademicModuleEvent
-import academic.ui.admin.AddTeacherScreen
 import academic.ui.public_.AcademicRoute
+import administration.ui.public_.AdminEmployeeListEvent
 import administration.ui.public_.AdministrationRoute
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,14 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import calendar.ui.ui.admin.AddAcademicCalenderScreen
 import miscellaneous.MiscFeatureEvent
 import miscellaneous.ui.AboutUsRoute
 import miscellaneous.ui.eventGallery.EventsRoute
 import miscellaneous.ui.home.HomeRoute
 import miscellaneous.ui.vcmessage.MessageFromVCRoute
-import schedule.ui.ui.admin.add_class_schedule.AddClassScheduleScreen
-import schedule.ui.ui.admin.add_exam_schedule.ExamScheduleAddScreen
+import profile.ui.ProfileNavHost
 import schedule.ui.ui.public_.ViewClassScheduleScreen
 import schedule.ui.ui.public_.ViewExamScheduleScreen
 
@@ -53,7 +53,20 @@ fun NavGraph(
         composable(GraphRoutes.HOME) {
             _DrawerIconDecorator(
                 onMenuIconClick = openDrawerRequest,
-                isNavRailMode = isNavRailMode
+                isNavRailMode = isNavRailMode,
+                actions = {
+                    IconButton(
+                        onClick = {
+                            try {
+                                navController.navigate(GraphRoutes.PROFILE)
+                            } catch (_: Exception) {
+
+                            }
+                        }
+                    ) {
+                        Icon(Icons.Default.AccountCircle, contentDescription = "Profile")
+                    }
+                }
             ) {
                 HomeRoute(
                     onEvent = onMiscFeatureEvent
@@ -67,8 +80,11 @@ fun NavGraph(
                 onEvent = { event ->
                     toAppEvent(event)?.let(onEvent)
                 },
-                onExitRequest = openDrawerRequest,
-                isNavRailMode = isNavRailMode,
+                navigationIcon =if (!isNavRailMode) {
+                    {
+                        _MenuIcon(openDrawerRequest)
+                    }
+                } else null,
                 token = NavigationFactory.token.value
             )
         }
@@ -76,8 +92,24 @@ fun NavGraph(
         composable(GraphRoutes.ADMIN_OFFICE_FEATURE) {
             AdministrationRoute(
                 token = NavigationFactory.token.value,
-                onEvent = {},
-                onMenuIconClick = openDrawerRequest
+                onEvent = {
+                    it.toAppEvent()?.let { it1 -> onEvent(it1) }
+                },
+                navigationIcon =if (!isNavRailMode) {
+                    {
+                        _MenuIcon(openDrawerRequest)
+                    }
+                } else null
+            )
+        }
+        composable(GraphRoutes.PROFILE) {
+            ProfileNavHost(
+                token = NavigationFactory.token.value,
+                navigationIcon = if (!isNavRailMode) {
+                    {
+                        _MenuIcon(openDrawerRequest)
+                    }
+                } else null
             )
         }
         composable(GraphRoutes.CLASS_SCHEDULE_VIEWER) {
@@ -98,40 +130,7 @@ fun NavGraph(
             }
         }
 
-        composable(GraphRoutes.EXAM_ROUTINE_UPDATE) {
-            _DrawerIconDecorator(
-                onMenuIconClick = openDrawerRequest,
-                isNavRailMode = isNavRailMode
-            ) {
-                ExamScheduleAddScreen()
-            }
-        }
-        composable(GraphRoutes.CLASS_ROUTINE_UPDATE) {
-            _DrawerIconDecorator(
-                onMenuIconClick = openDrawerRequest,
-                isNavRailMode = isNavRailMode
-            ) {
-                AddClassScheduleScreen()
-            }
-        }
-        composable(GraphRoutes.TEACHER_INFO_UPDATE) {
-            _DrawerIconDecorator(
-                onMenuIconClick = openDrawerRequest,
-                isNavRailMode = isNavRailMode
-            ) {
-                AddTeacherScreen()
 
-            }
-        }
-        composable(GraphRoutes.CALENDAR_UPDATE) {
-            _DrawerIconDecorator(
-                onMenuIconClick = openDrawerRequest,
-                isNavRailMode = isNavRailMode
-            ) {
-                AddAcademicCalenderScreen()
-            }
-
-        }
         composable(GraphRoutes.VC_MESSAGES) {
             _DrawerIconDecorator(
                 onMenuIconClick = openDrawerRequest,
@@ -186,6 +185,7 @@ fun NavGraph(
 
 }
 
+
 private fun toAppEvent(event: AcademicModuleEvent): AppEvent? {
     val ev: AppEvent? = when (event) {
         is AcademicModuleEvent.CallRequest -> AppEvent.CallRequest(event.number)
@@ -200,17 +200,17 @@ private fun toAppEvent(event: AcademicModuleEvent): AppEvent? {
 
 }
 
-//private fun toAppEvent(event: AdminEmployeeListEvent): AppEvent? {
-//    val ev: AppEvent? = when (event) {
-//        is AdminEmployeeListEvent.CallRequest -> AppEvent.CallRequest(event.number)
-//        is AdminEmployeeListEvent.MessageRequest -> AppEvent.MessageRequest(event.number)
-//        is AdminEmployeeListEvent.EmailRequest -> AppEvent.EmailRequest(event.email)
-//        else -> {
-//            null
-//        }
-//    }
-//    return ev
-//}
+private fun AdminEmployeeListEvent.toAppEvent(): AppEvent? {
+    val ev: AppEvent? = when (this) {
+        is AdminEmployeeListEvent.CallRequest -> AppEvent.CallRequest(this.number)
+        is AdminEmployeeListEvent.MessageRequest -> AppEvent.MessageRequest(this.number)
+        is AdminEmployeeListEvent.EmailRequest -> AppEvent.EmailRequest(this.email)
+        else -> {
+            null
+        }
+    }
+    return ev
+}
 
 //private fun toAppEvent(event: SearchFeatureEvent): AppEvent? {
 //    val ev: AppEvent? = when (event) {
@@ -234,12 +234,19 @@ object GraphRoutes {
     const val CLASS_SCHEDULE_VIEWER = "CLASS_SCHEDULE"
     const val EXAM_SCHEDULE_VIEWER = "EXAM_SCHEDULE"
     const val EVENT_GALLERY = "Event Gallery"
+    const val PROFILE = "ProfileRoute"
 
-    // Admin-specific routes
-    const val CALENDAR_UPDATE = "CalendarUpdateFeatureNavGraph.ROUTE"
-    const val TEACHER_INFO_UPDATE = "TeacherInfoUpdateFeatureNavGraph.ROUTE"
-    const val CLASS_ROUTINE_UPDATE = "ClassRoutineUpdateFeatureNavGraph.ROUTE"
-    const val EXAM_ROUTINE_UPDATE = "ExamRoutineUpdateFeatureNavGraph.ROUTE"
+}
+
+@Composable
+private fun _MenuIcon(
+    onClick: () -> Unit
+) {
+    IconButton(onClick = onClick) {
+        Icon(Icons.Filled.Menu, contentDescription = "back")
+    }
+
+
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -247,6 +254,7 @@ object GraphRoutes {
 private fun _DrawerIconDecorator(
     isNavRailMode: Boolean,
     onMenuIconClick: () -> Unit,
+    actions: @Composable RowScope.() -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     if (isNavRailMode) {
@@ -267,6 +275,9 @@ private fun _DrawerIconDecorator(
                         ) {
                             Icon(Icons.Default.Menu, contentDescription = "Drawer Icon")
                         }
+                    },
+                    actions = {
+                        actions()
                     }
                 )
             }

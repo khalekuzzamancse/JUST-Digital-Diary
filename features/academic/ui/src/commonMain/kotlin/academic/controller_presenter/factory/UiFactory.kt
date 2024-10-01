@@ -15,8 +15,7 @@ internal object UiFactory {
 
     internal fun createTeachersController(token:String?): TeachersController =
         TeachersControllerImpl(
-            useCase = DiContainer.retrieveTeacherListUseCase(),
-            token=token
+            useCase = DiContainer.retrieveTeacherListUseCase(token),
 
     )
 
@@ -24,14 +23,12 @@ internal object UiFactory {
         TeacherFormControllerImpl(validator = ValidatorImpl())
 
     fun createFacultyController(token:String?): FacultyController = FacultyControllerImpl(
-        userCase = DiContainer.retrieveFacultyListUseCase(),
-        token=token
+        userCase = DiContainer.retrieveFacultyListUseCase(token),
     )
 
     fun createDepartmentsController(token:String?): DepartmentController =
         DepartmentsControllerImpl(
-            userCase = DiContainer.retrieveDepartListUseCase(),
-            token=token
+            userCase = DiContainer.retrieveDepartListUseCase(token),
         )
 
 

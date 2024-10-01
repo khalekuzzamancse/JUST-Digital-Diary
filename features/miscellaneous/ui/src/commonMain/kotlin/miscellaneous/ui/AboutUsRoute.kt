@@ -1,3 +1,4 @@
+
 package miscellaneous.ui
 
 import androidx.compose.foundation.layout.Column
@@ -11,8 +12,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,65 +22,47 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import common.ui.WindowSizeDecorator
-import common.ui.animation.TypeWriter
-import miscellaneous.controller_presenter.model.AboutUsModel
+import common.ui.TypeWriter
+import miscellaneous.presentationlogic.model.AboutUsModel
 
 @Composable
- fun AboutUsRoute() {
+fun AboutUsRoute() {
     val state: AboutUsModel = remember {
-            AboutUsModel(
-                appName = "JUST DIGITAL DIARY",
-                developedDepartmentName = "Computer Science and Engineering",
-                universityName = "Jashore University of Sciences and Technology(JUST)",
-                otherInfo = ""
-            )
+        AboutUsModel(
+            appName = "JUST DIGITAL DIARY",
+            developedDepartmentName = "Computer Science and Engineering",
+            universityName = "Jashore University of Sciences and Technology(JUST)",
+            otherInfo = ""
+        )
 
     }
     _AboutUsState(state = state)
 
 
 }
+
 @Composable
 private fun _AboutUsState(
     state: AboutUsModel,
 ) {
-    WindowSizeDecorator(
-        onCompact = {
-            Column(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxSize()
+    Column(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxSize()
 
-                    .verticalScroll(rememberScrollState())
-            ) {
-                AppName(state.appName)
-                DeptAndUniversityName(
-                    deptName = state.developedDepartmentName,
-                    universityName = state.universityName
-                )
-            }
-
-        },
-        onNonCompact = {
-            Column(
-                modifier = Modifier
-                    .padding(48.dp)
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-            ) {
-                AppName(state.appName)
-                DeptAndUniversityName(
-                    deptName = state.developedDepartmentName,
-                    universityName = state.universityName
-                )
-            }
-
-        },
-    )
+            .verticalScroll(rememberScrollState())
+    ) {
+        AppName(state.appName)
+        Spacer(modifier = Modifier.height(8.dp))
+        DeptAndUniversityName(
+            deptName = state.developedDepartmentName,
+            universityName = state.universityName
+        )
+    }
 
 
 }
+
 @Composable
 private fun ColumnScope.AppName(
     name: String
@@ -91,7 +72,7 @@ private fun ColumnScope.AppName(
         style = MaterialTheme.typography.headlineLarge,
         modifier = Modifier.align(Alignment.CenterHorizontally)
     )
-    Spacer(modifier = Modifier.height(8.dp))
+
 }
 
 @Composable
@@ -105,7 +86,7 @@ internal fun DeptAndUniversityName(
             style = SpanStyle(
                 fontWeight = FontWeight.Bold,
 
-            )
+                )
         ) {
             append("Developed by\n")
         }
@@ -117,6 +98,7 @@ internal fun DeptAndUniversityName(
         ) {
             append(deptName)
         }
+        append(" ")
         withStyle(
             style = SpanStyle(
                 fontWeight = FontWeight.Bold,
@@ -129,8 +111,9 @@ internal fun DeptAndUniversityName(
     }
 
     TypeWriter(
-        text=text,
-        delay = 10){
+        text = text,
+        delay = 10
+    ) {
         Text(
             text = it,
             style = MaterialTheme.typography.bodyMedium,

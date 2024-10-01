@@ -26,11 +26,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 
-    versionCatalogs {
-        create("localModules") {
-            from(files("gradle/localModules.versions.toml"))
-        }
-    }
 }
 
 
@@ -65,6 +60,7 @@ val featureModules = listOf(
 //    ":features:queryservice",  ":features:queryservice:domain",":features:queryservice:data",":features:queryservice:ui",":features:queryservice:di",
     ":features:academic-calender",":features:academic-calender:domain",":features:academic-calender:data",":features:academic-calender:ui",":features:academic-calender:di",
     ":features:schedule",":features:schedule:domain",":features:schedule:data",":features:schedule:ui",":features:schedule:di",
+    ":features:profile",":features:profile:domain",":features:profile:data",":features:profile:ui",":features:profile:di",
 
 )
 

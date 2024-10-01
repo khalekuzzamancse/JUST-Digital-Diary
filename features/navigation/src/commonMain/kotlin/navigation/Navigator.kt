@@ -2,9 +2,10 @@ package navigation
 
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import common.newui.Destination
+import common.ui.Destination
 import miscellaneous.MiscFeatureEvent
 import navigation.component.NavDestination
+import profile.presentationlogic.ProfileEvent
 
 class Navigator(
     private val navController: NavHostController,
@@ -76,22 +77,6 @@ class Navigator(
                     navController.navigate(GraphRoutes.ADMIN_OFFICE_FEATURE)
                 }
 
-                is MiscFeatureEvent.NavigateToCalendarUpdate -> {
-                    navController.navigate(GraphRoutes.CALENDAR_UPDATE)
-                }
-
-
-                is MiscFeatureEvent.NavigateToExamRoutineUpdate -> {
-                    navController.navigate(GraphRoutes.EXAM_ROUTINE_UPDATE)
-                }
-
-                is MiscFeatureEvent.NavigateToClassRoutineUpdate -> {
-                    navController.navigate(GraphRoutes.CLASS_ROUTINE_UPDATE)
-                }
-
-                is MiscFeatureEvent.NavigateToTeacherInfoUpdate -> {
-                    navController.navigate(GraphRoutes.TEACHER_INFO_UPDATE)
-                }
 
 
             }
@@ -99,6 +84,7 @@ class Navigator(
         }
 
     }
+
 
 
 

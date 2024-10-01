@@ -18,7 +18,7 @@ import faculty.domain.repository.Repository
 class RetrieveFactualityUseCase(
     private val repository: Repository
 ) {
-    suspend fun execute(token:String?): Result<List<FacultyModel>> {
-        return repository.getFaculties(token)
+    suspend fun execute(): Result<List<FacultyModel>> {
+        return repository.getFaculties()
     }
 }

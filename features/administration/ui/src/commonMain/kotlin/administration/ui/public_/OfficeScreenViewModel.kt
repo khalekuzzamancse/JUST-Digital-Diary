@@ -2,6 +2,8 @@ package administration.ui.public_
 
 import administration.controller_presenter.controller.OfficeController
 import administration.controller_presenter.controller.SubOfficeController
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -14,10 +16,10 @@ import kotlinx.coroutines.launch
 internal class OfficeScreenViewModel internal constructor(
     val officeController: OfficeController,
     val subOfficeController: SubOfficeController
-) {
+) :ViewModel(){
 
     init {
-        CoroutineScope(Dispatchers.Default).launch {
+        viewModelScope.launch {
             officeController.fetch()
         }
     }

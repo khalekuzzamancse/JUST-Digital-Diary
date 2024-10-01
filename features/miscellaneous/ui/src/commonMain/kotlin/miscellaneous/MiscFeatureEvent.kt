@@ -7,8 +7,4 @@ sealed interface MiscFeatureEvent {
     data class CalenderRequest(val url:String): MiscFeatureEvent
     data object NavigateToFacultyList: MiscFeatureEvent
     data object NavigateTAdminOfficeList: MiscFeatureEvent
-    data object NavigateToCalendarUpdate : MiscFeatureEvent
-    data object NavigateToExamRoutineUpdate : MiscFeatureEvent
-    data object NavigateToClassRoutineUpdate : MiscFeatureEvent
-    data object NavigateToTeacherInfoUpdate : MiscFeatureEvent
 }

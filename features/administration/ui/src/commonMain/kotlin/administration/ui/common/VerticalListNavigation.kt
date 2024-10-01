@@ -7,9 +7,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import common.ui.custom_navigation_item.NavigationItem
-import common.ui.custom_navigation_item.NavigationItemInfo2
-import common.ui.custom_navigation_item.NavigationItemProps
+import common.ui.navigation.NavigationItem
+import common.ui.navigation.NavigationItemInfo2
+import common.ui.navigation.NavigationItemProps
 
 
 @Composable

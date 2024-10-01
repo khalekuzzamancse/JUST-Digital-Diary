@@ -8,7 +8,7 @@ kotlin {
         val commonMain by getting{
             dependencies {
                 implementation(projects.core.network)
-                implementation(project(localModules.versions.feature.administration.domain.get()))
+                implementation(projects.features.administration.domain)
                 implementation(libs.common.viewmodel)
                 implementation(libs.common.navigation)
             }

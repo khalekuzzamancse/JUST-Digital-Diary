@@ -29,7 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import common.newui.CustomTextField
+import common.ui.CustomTextField
 import schedule.ui.factory.UiFactory
 import schedule.ui.ui.common.ErrorText
 import schedule.ui.ui.common.InputDialog

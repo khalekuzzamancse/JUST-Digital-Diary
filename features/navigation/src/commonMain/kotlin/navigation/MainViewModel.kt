@@ -1,15 +1,10 @@
 package navigation
 
 import androidx.lifecycle.ViewModel
-import common.newui.Destination
-import common.newui.NavigationController
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import common.ui.Destination
+import common.ui.NavigationController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
     private val _showSlapScreen = MutableStateFlow(true)

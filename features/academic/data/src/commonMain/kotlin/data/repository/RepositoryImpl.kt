@@ -20,13 +20,12 @@ import faculty.domain.repository.Repository
  * use a factory method or dependency injection (DI) to obtain an instance
  */
 class RepositoryImpl internal constructor(
-    private val apiServiceClient: ApiServiceClient,
-    private val jsonParser: JsonParser,
+   private val  token: String?,
     private val remoteSource: RemoteDataSource
 
 ) : Repository {
 
-    override suspend fun getFaculties(token: String?): Result<List<FacultyModel>> {
+    override suspend fun getFaculties(): Result<List<FacultyModel>> {
         return if (token != null)
             remoteSource.getFaculties(token)
         else
@@ -34,16 +33,15 @@ class RepositoryImpl internal constructor(
     }
 
     override suspend fun getDepartment(
-        token: String?,
         facultyId: String
     ): Result<List<DepartmentModel>> {
         return if (token != null)
-            remoteSource.getDepartment(token = token, facultyId = facultyId)
+            remoteSource.getDepartment(facultyId = facultyId, token = token)
         else
             Result.failure(CustomException.UnKnownException(Throwable("Token is null")))
     }
 
-    override suspend fun getTeachers(deptId: String, token: String?): Result<List<TeacherModel>> {
+    override suspend fun getTeachers(deptId: String): Result<List<TeacherModel>> {
         return if (token != null)
             remoteSource.getTeachers(token = token, deptId = deptId)
         else
@@ -52,4 +50,3 @@ class RepositoryImpl internal constructor(
 
 
 }
-

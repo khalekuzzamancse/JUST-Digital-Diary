@@ -2,9 +2,7 @@ package navigation.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Message
-import androidx.compose.material.icons.automirrored.filled.Notes
 import androidx.compose.material.icons.automirrored.outlined.Message
-import androidx.compose.material.icons.automirrored.outlined.Notes
 import androidx.compose.material.icons.filled.AdminPanelSettings
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.CalendarToday
@@ -12,7 +10,6 @@ import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.AdminPanelSettings
@@ -22,12 +19,11 @@ import androidx.compose.material.icons.outlined.Explore
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Search
-import common.newui.Destination
-import common.newui.NavGroup
-import common.newui.NavigationItem
+import common.ui.Destination
+import common.ui.NavGroup
+import common.ui.NavigationItem
 
 
 sealed interface NavDestination : Destination {
@@ -76,30 +72,9 @@ object NavDestinationBuilder {
         )
     )
 
-    private fun group3() = NavGroup(
-        items = listOf(
-            NavigationItem(
-                label = "Search",
-                unFocusedIcon = Icons.Outlined.Search,
-                focusedIcon = Icons.Filled.Search,
-                destination = NavDestination.Search
-            ),
-            NavigationItem(
-                label = "Event Gallery",
-                unFocusedIcon = Icons.Outlined.Image,
-                focusedIcon = Icons.Filled.Image,
-                destination = NavDestination.EventGallery
-            ),
-            NavigationItem(
-                label = "Explore JUST",
-                unFocusedIcon = Icons.Outlined.Explore,
-                focusedIcon = Icons.Filled.Explore,
-                destination = NavDestination.ExploreJust
-            ),
-        )
-    )
 
-    private fun group4() = NavGroup(
+
+    private fun group3() = NavGroup(
         items = listOf(
 //            NavigationItem(
 //                label = "NoteBook",
@@ -121,7 +96,28 @@ object NavDestinationBuilder {
             ),
         )
     )
-
+    private fun group4() = NavGroup(
+        items = listOf(
+//            NavigationItem(
+//                label = "Search",
+//                unFocusedIcon = Icons.Outlined.Search,
+//                focusedIcon = Icons.Filled.Search,
+//                destination = NavDestination.Search
+//            ),
+            NavigationItem(
+                label = "Event Gallery",
+                unFocusedIcon = Icons.Outlined.Image,
+                focusedIcon = Icons.Filled.Image,
+                destination = NavDestination.EventGallery
+            ),
+            NavigationItem(
+                label = "Explore JUST",
+                unFocusedIcon = Icons.Outlined.Explore,
+                focusedIcon = Icons.Filled.Explore,
+                destination = NavDestination.ExploreJust
+            ),
+        )
+    )
     private fun group5() = NavGroup(
         items = listOf(
             NavigationItem(

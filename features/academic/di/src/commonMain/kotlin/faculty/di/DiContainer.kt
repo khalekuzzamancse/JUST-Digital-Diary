@@ -9,15 +9,15 @@ import faculty.domain.usecase.RetrieveTeachersUseCase
 
 object DiContainer {
 
-    fun retrieveFacultyListUseCase():RetrieveFactualityUseCase= RetrieveFactualityUseCase(
-        repository = DataFactory.createFacultyListRepository()
+    fun retrieveFacultyListUseCase( token: String?,):RetrieveFactualityUseCase= RetrieveFactualityUseCase(
+        repository = DataFactory.createFacultyListRepository(token)
     )
-    fun retrieveDepartListUseCase():RetrieveDepartmentsUseCase= RetrieveDepartmentsUseCase(
-        repository = DataFactory.createFacultyListRepository()
+    fun retrieveDepartListUseCase( token: String?,):RetrieveDepartmentsUseCase= RetrieveDepartmentsUseCase(
+        repository = DataFactory.createFacultyListRepository(token)
     )
 
-    fun retrieveTeacherListUseCase():RetrieveTeachersUseCase= RetrieveTeachersUseCase(
-        repository = DataFactory.createFacultyListRepository()
+    fun retrieveTeacherListUseCase( token: String?,):RetrieveTeachersUseCase= RetrieveTeachersUseCase(
+        repository = DataFactory.createFacultyListRepository(token )
     )
 
 }

@@ -19,11 +19,7 @@ kotlin {
                 implementation(projects.features.auth.di)
                 implementation(projects.features.schedule.ui)
                 implementation(projects.features.academicCalender.ui)
-            }
-        }
-        val androidMain by getting{
-            dependencies {
-                implementation(libs.kotlinx.coroutines.android)
+                implementation(projects.features.profile.ui)
             }
         }
 

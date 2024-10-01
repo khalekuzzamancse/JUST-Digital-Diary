@@ -32,7 +32,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import auth.controller_presenter.controller.LoginController
 import auth.ui.common.AuthPasswordField
-import common.newui.CustomTextField
+import common.ui.CustomTextField
 import kotlinx.coroutines.launch
 
 /**
