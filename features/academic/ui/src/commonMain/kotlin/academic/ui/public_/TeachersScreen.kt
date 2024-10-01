@@ -21,9 +21,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import common.newui.GenericEmployeeCard
+import common.ui.AdaptiveList
+import common.ui.GenericEmployeeCard
 import common.ui.TopBarDecoratorCommon
-import common.ui.list.AdaptiveList
 
 
 @Composable
