@@ -1,6 +1,8 @@
 ##Next todo:
-Auth module
-Add register otp verification   
+
+#Academic module
+- Add theme
+- 
 
 # Academic Calender
 - Show Loading until data is null

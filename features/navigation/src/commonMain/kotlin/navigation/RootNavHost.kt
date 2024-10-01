@@ -9,10 +9,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import auth.ui.AuthRoute
-import common.newui.Destination
-import common.newui.DrawerToNavRailDecorator
-import common.newui.NavigationController
-import common.newui.NavigationEvent
+import common.ui.Destination
+import common.ui.DrawerToNavRailDecorator
+import common.ui.NavigationController
+import common.ui.NavigationEvent
 import navigation.component.DrawerHeader
 import navigation.component.NavDestinationBuilder
 

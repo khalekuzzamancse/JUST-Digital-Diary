@@ -11,8 +11,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,8 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import common.ui.WindowSizeDecorator
-import common.ui.animation.TypeWriter
+import common.ui.TypeWriter
 import miscellaneous.controller_presenter.model.AboutUsModel
 
 @Composable
@@ -46,39 +43,19 @@ import miscellaneous.controller_presenter.model.AboutUsModel
 private fun _AboutUsState(
     state: AboutUsModel,
 ) {
-    WindowSizeDecorator(
-        onCompact = {
-            Column(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxSize()
+    Column(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxSize()
 
-                    .verticalScroll(rememberScrollState())
-            ) {
-                AppName(state.appName)
-                DeptAndUniversityName(
-                    deptName = state.developedDepartmentName,
-                    universityName = state.universityName
-                )
-            }
-
-        },
-        onNonCompact = {
-            Column(
-                modifier = Modifier
-                    .padding(48.dp)
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-            ) {
-                AppName(state.appName)
-                DeptAndUniversityName(
-                    deptName = state.developedDepartmentName,
-                    universityName = state.universityName
-                )
-            }
-
-        },
-    )
+            .verticalScroll(rememberScrollState())
+    ) {
+        AppName(state.appName)
+        DeptAndUniversityName(
+            deptName = state.developedDepartmentName,
+            universityName = state.universityName
+        )
+    }
 
 
 }

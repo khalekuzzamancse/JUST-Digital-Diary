@@ -1,93 +1,92 @@
 package academic.ui.public_
 
-import academic.controller_presenter.controller.DepartmentController
-import academic.controller_presenter.controller.FacultyController
 import academic.controller_presenter.factory.UiFactory
 import academic.ui.AcademicModuleEvent
 import academic.ui.common.SnackNProgressBarDecorator
 import academic.ui.public_.components.Departments
 import academic.ui.public_.components.Faculty
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkOut
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import common.newui.TwoPaneLayout
-import common.newui.TwoPaneNewUIPros
 
 @Composable
 fun AcademicRoute(
     modifier: Modifier = Modifier,
     token: String?,
-    isNavRailMode: Boolean,
-    onExitRequest: () -> Unit,
+    navigationIcon: (@Composable () -> Unit)? = null,
     onEvent: (AcademicModuleEvent) -> Unit
 ) {
 
     val navController = rememberNavController()
 
-    val viewModel = remember {  FacultyScreenViewModel(
-        facultyController = UiFactory.createFacultyController(token),
-        departmentController =UiFactory. createDepartmentsController(token)
-    ) }
 
-    SnackNProgressBarDecorator(
-        isLoading = viewModel.isLoading.collectAsState(false).value,
-        snackBarMessage = viewModel.screenMessage.collectAsState(null).value,
-    ){
-        NavHost(
-            navController = navController,
-            startDestination = Route.FACULTY_AND_DEPT,
-            modifier = Modifier
-        ) {
+    NavHost(
+        navController = navController,
+        startDestination = Route.FACULTY_AND_DEPT,
+        modifier = Modifier
+    ) {
 
-            composable(route = Route.FACULTY_AND_DEPT) {
+        composable(route = Route.FACULTY_AND_DEPT) {
+            _FacultyNDeptRoute(
+                token = token,
+                navigationIcon = navigationIcon,
+                onTeachersRequest = {
+                    try {
+                        navController.navigate("${Route.TEACHER_LIST}/$it")
+                    } catch (_: Exception) {
 
-                FacultyAndDepartmentList(
-                    viewModel = viewModel,
-                    backHandler = {},
-                    isNavRailMode = isNavRailMode,
-                    onExitRequest = onExitRequest,
-                    onTeachersRequest = {
-                        try {
-                            navController.navigate("${Route.TEACHER_LIST}/$it")
-                        } catch (_: Exception) {
-
-                        }
                     }
-                )
-            }
-            composable(
-                route = Route.TEACHERS_ROUTE,
-                arguments = listOf(navArgument(Route.DEPT_ID) { type = NavType.StringType })
-            ) { backStackEntry ->
-                val deptID = backStackEntry.arguments?.getString(Route.DEPT_ID)
-                TeachersScreen(
-                    deptId = deptID ?: "",
-                    onExitRequest = {
-                        navController.popBackStack()
-                    },
-                    onEvent = onEvent,
-                    token = token
-                )
+                }
+            )
 
-            }
+        }
+        composable(
+            route = Route.TEACHERS_ROUTE,
+            arguments = listOf(navArgument(Route.DEPT_ID) { type = NavType.StringType })
+        ) { backStackEntry ->
+            val deptID = backStackEntry.arguments?.getString(Route.DEPT_ID)
+            TeachersRoute(
+                deptId = deptID ?: "",
+                onExitRequest = {
+                    navController.popBackStack()
+                },
+                onEvent = onEvent,
+                token = token
+            )
 
         }
 
     }
 
-
 }
+
 
 private object Route {
     const val TEACHER_LIST = "TeacherListScreen"
@@ -96,6 +95,40 @@ private object Route {
     const val TEACHERS_ROUTE = "$TEACHER_LIST/{$DEPT_ID}"
 }
 
+
+@Composable
+private fun _FacultyNDeptRoute(
+    modifier: Modifier = Modifier,
+    token: String?,
+    onTeachersRequest: (String) -> Unit,
+    navigationIcon: (@Composable () -> Unit)? = null,
+) {
+    val viewModel = remember {
+        FacultyScreenViewModel(
+            facultyController = UiFactory.createFacultyController(token),
+            departmentController = UiFactory.createDepartmentsController(token)
+        )
+    }
+    val notShowingDepartment = !(viewModel.showDepartments.collectAsState().value)
+    SnackNProgressBarDecorator(
+        isLoading = viewModel.isLoading.collectAsState(false).value,
+        snackBarMessage = viewModel.screenMessage.collectAsState(null).value,
+        navigationIcon = if (notShowingDepartment) navigationIcon else {
+            {
+                IconButton(onClick = viewModel::onDeptCloseRequest) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "back")
+                }
+            }
+        },
+        content = {
+            FacultyAndDepartmentList(
+                viewModel = viewModel,
+                backHandler = {},
+                onTeachersRequest = onTeachersRequest
+            )
+        }
+    )
+}
 
 /**
  * @param backHandler is to override the back button press functionality
@@ -107,21 +140,19 @@ private object Route {
 
  * @param backHandler is to override the back button press functionality
  * used as composable so that composable and non composable both can be passed
- * @param isNavRailMode is nullable because in case of NavRail ,there is no Menu Icon will be at the top bar
- *
  *   @param onTeachersRequest This should not handle by controller it should be propagate
  *   to parent so inform that it should navigate
  *
  */
 @Composable
-fun FacultyAndDepartmentList(
+private fun FacultyAndDepartmentList(
     modifier: Modifier = Modifier,
     viewModel: FacultyScreenViewModel,
-    onExitRequest: () -> Unit,
-    isNavRailMode: Boolean,
     onTeachersRequest: (String) -> Unit,
     backHandler: @Composable (onBackButtonPress: () -> Boolean) -> Unit,
 ) {
+    val departmentController = viewModel.departmentController
+    val facultyController = viewModel.facultyController
     val showDepartments = viewModel.showDepartments.collectAsState().value
     backHandler {
         if (showDepartments) {
@@ -135,63 +166,80 @@ fun FacultyAndDepartmentList(
         }
 
     }
-    _FacultyNDepartmentRaw(
-        modifier = modifier,
-        facultyController = viewModel.facultyController,
-        departmentController = viewModel.departmentController,
-        clearFacultySelection = viewModel::onDeptCloseRequest,
-        showDepartmentList = viewModel.showDepartments.collectAsState().value,
-        onExitRequest = onExitRequest,
-        isNavRailMode = isNavRailMode,
-        onTeachersRequest = onTeachersRequest
-    )
 
-}
-
-/**
- * @param onTeachersRequest This should not handle by controller it should be propagate
- * to parent so inform that it should navigate
- */
-@Composable
-private fun _FacultyNDepartmentRaw(
-    modifier: Modifier = Modifier,
-    facultyController: FacultyController,
-    departmentController: DepartmentController,
-    onTeachersRequest: (String) -> Unit,
-    showDepartmentList: Boolean,
-    isNavRailMode: Boolean,
-    clearFacultySelection: () -> Unit,
-    onExitRequest: () -> Unit,
-) {
-    val navigationIcon = if (showDepartmentList) Icons.AutoMirrored.Filled.ArrowBack else {
-        if (isNavRailMode) null else Icons.Default.Menu
-    }
-
-    val props = TwoPaneNewUIPros(
-        showTopOrRightPane = showDepartmentList,
-        alignment = Alignment.TopStart,
-        navigationIcon = navigationIcon
-    )
-    TwoPaneLayout(
-        modifier = modifier,
-        props = props,
-        onNavigationIconClick = if (showDepartmentList) clearFacultySelection else onExitRequest,
-        leftPane = {
+    _Layout(
+        showDepartments = showDepartments,
+        departmentList = {
+            Departments(
+                modifier = Modifier.fillMaxSize(),
+                controller = departmentController,
+                onTeachersRequest = onTeachersRequest
+            )
+        },
+        facultyList = {
             Faculty(
                 modifier = Modifier,
                 controller = facultyController
             )
-        },
-        topOrRightPane = {
-            if (showDepartmentList) {
-                Departments(
-                    modifier = Modifier.fillMaxSize(),
-                    controller = departmentController,
-                    onTeachersRequest = onTeachersRequest
-                )
-            }
-        },
-
-        )
+        }
+    )
 
 }
+
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+@Composable
+private fun _Layout(
+    modifier: Modifier = Modifier,
+    showDepartments: Boolean,
+    facultyList: @Composable () -> Unit,
+    departmentList: @Composable () -> Unit
+) {
+
+
+    val windowSize = calculateWindowSizeClass().widthSizeClass
+    val compact = WindowWidthSizeClass.Compact
+    val medium = WindowWidthSizeClass.Medium
+    val expanded = WindowWidthSizeClass.Expanded
+
+
+    AnimatedContent(windowSize) { window ->
+        when (window) {
+            compact, medium -> {
+                if (showDepartments) {
+                    departmentList()
+                } else {
+                    AnimatedVisibility(
+                        modifier = modifier.fillMaxWidth(),
+                        enter = fadeIn() + expandIn(),
+                        exit = shrinkOut() + fadeOut(), //TODO: fix the animation transition later
+                        visible = true
+                    ) {
+                        facultyList()
+                    }
+                }
+
+
+            }
+
+
+            expanded -> {
+                Row(modifier = modifier.fillMaxWidth()) {
+                    Box(Modifier.weight(1f), contentAlignment = Alignment.TopCenter) {
+                        facultyList()
+                    }
+                    if (showDepartments) {
+                        Spacer(Modifier.width(12.dp))
+                        Box(Modifier.weight(1f), contentAlignment = Alignment.TopCenter) {
+                            departmentList()
+                        }
+
+                    }
+
+                }
+            }
+        }
+    }
+
+
+}
+

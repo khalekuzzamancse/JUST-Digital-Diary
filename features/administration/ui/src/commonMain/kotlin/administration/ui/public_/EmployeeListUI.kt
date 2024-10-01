@@ -49,7 +49,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import common.ui.TopBarDecoratorCommon
-import common.ui.list.AdaptiveList
+import common.ui.AdaptiveList
 
 
 /*

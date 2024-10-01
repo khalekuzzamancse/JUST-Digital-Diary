@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 
 internal class TeachersControllerImpl(
     private val useCase: RetrieveTeachersUseCase,
-    private val token: String?,
 ) : TeachersController {
     private val _isFetching = MutableStateFlow(false)
     private val _screenMessage = MutableStateFlow<String?>(null)
@@ -30,7 +29,7 @@ internal class TeachersControllerImpl(
 
     override suspend fun fetch(deptId: String) {
         _startLoading()
-        val result = useCase.execute(deptId, token = token)
+        val result = useCase.execute(deptId)
         result.fold(
             onSuccess = { models ->
                 _teachers.update {

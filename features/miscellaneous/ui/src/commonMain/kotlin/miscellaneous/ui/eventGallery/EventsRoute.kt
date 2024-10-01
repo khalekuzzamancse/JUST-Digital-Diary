@@ -16,8 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import common.ui.list.AdaptiveList
-import common.ui.network_image.ImageLoader
+import common.ui.AdaptiveList
+import common.ui.ImageLoader
 import miscellaneous.controller_presenter.UiFactory
 import miscellaneous.controller_presenter.model.GalleryEventModel
 

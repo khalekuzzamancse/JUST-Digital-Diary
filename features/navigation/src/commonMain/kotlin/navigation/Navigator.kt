@@ -2,7 +2,7 @@ package navigation
 
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import common.newui.Destination
+import common.ui.Destination
 import miscellaneous.MiscFeatureEvent
 import navigation.component.NavDestination
 

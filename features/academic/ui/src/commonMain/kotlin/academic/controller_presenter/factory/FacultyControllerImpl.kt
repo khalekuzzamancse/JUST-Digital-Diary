@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 
 internal class FacultyControllerImpl(
     private val userCase: RetrieveFactualityUseCase,
-    private val token: String?
 ) : FacultyController {
     private val _screenMessage = MutableStateFlow<String?>(null)
     private val _faculties = MutableStateFlow<List<FacultyModel>>(emptyList())
@@ -41,7 +40,7 @@ internal class FacultyControllerImpl(
 
     private suspend fun fetchFaculty() {
         _startLoading()
-        val result = userCase.execute(token = token)
+        val result = userCase.execute()
         result.fold(
             onSuccess = { models ->
                 _faculties.update {

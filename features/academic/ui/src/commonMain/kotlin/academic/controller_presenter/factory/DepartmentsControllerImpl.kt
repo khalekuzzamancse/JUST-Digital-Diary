@@ -2,23 +2,21 @@
 
 package academic.controller_presenter.factory
 
-import academic.controller_presenter.model.DepartmentModel
-import academic.controller_presenter.mapper.ModelMapper
 import academic.controller_presenter.controller.DepartmentController
+import academic.controller_presenter.mapper.ModelMapper
+import academic.controller_presenter.model.DepartmentModel
 import faculty.domain.exception.CustomException
 import faculty.domain.usecase.RetrieveDepartmentsUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class DepartmentsControllerImpl(
     private val userCase: RetrieveDepartmentsUseCase,
-    private val token: String?
 ) : DepartmentController {
     private val _screenMessage = MutableStateFlow<String?>(null)
     private val _isLoading = MutableStateFlow(false)
@@ -38,7 +36,7 @@ internal class DepartmentsControllerImpl(
 
     override suspend fun fetchDepartments(facultyId: String) {
         _startLoading()
-        val result = userCase.execute(token = token, facultyId = facultyId)
+        val result = userCase.execute(facultyId = facultyId)
         result.fold(
             onSuccess = { models ->
                 _departments.update {

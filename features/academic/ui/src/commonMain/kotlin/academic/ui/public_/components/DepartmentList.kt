@@ -14,8 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import common.newui.CardInfoState
-import common.newui.GenericInfoCard
+import common.ui.CardInfoState
+import common.ui.GenericInfoCard
 import kotlin.random.Random
 /**
  * @param onTeachersRequest This should not handle by controller it should be propagate

@@ -1,10 +1,6 @@
 package administration.ui.public_
 
-import administration.controller_presenter.factory.UiFactory
-import administration.ui.common.SnackNProgressBarDecorator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -20,20 +16,11 @@ private const val OFFICERS_ROUTE = "$ADMIN_OFFICERS_LIST/{$SUB_OFFICE_ID}"
 @Composable
 fun AdministrationRoute(
     token:String?,
+    navigationIcon: (@Composable () -> Unit)? = null,
     onEvent: (AdminEmployeeListEvent) -> Unit,
-    onMenuIconClick: () -> Unit
 ) {
     val navController = rememberNavController()
-    val viewModel = remember {
-        OfficeScreenViewModel(
-            officeController = UiFactory.createOfficerController(token),
-            subOfficeController = UiFactory.createSubOfficeController(token)
-        )
-    }
-    SnackNProgressBarDecorator(
-        isLoading = viewModel.isLoading.collectAsState(false).value,
-        snackBarMessage = viewModel.screenMessage.collectAsState(null).value,
-    ) {
+
         NavHost(
             modifier = Modifier,
             navController = navController,
@@ -42,15 +29,15 @@ fun AdministrationRoute(
             composable(route = OFFICE_AND_SUB_OFFICES_SCREEN) {
                 AdminOfficeAndSubOfficeRoute(
                     onEmployeeListRequest = { subOfficeId ->
-                        navController.navigate("$ADMIN_OFFICERS_LIST/$subOfficeId")
+                       try {
+                           navController.navigate("$ADMIN_OFFICERS_LIST/$subOfficeId")
+                       }
+                       catch (_:Exception) {}
                     },
-                    onBackButtonPress = {
-
-
-                    },
-                    onExitRequest = onMenuIconClick,
+                    navigationIcon = navigationIcon,
+                    onBackButtonPress = {},
                     token =token,
-                    viewModel = viewModel
+
                 )
             }
             composable(
@@ -69,7 +56,7 @@ fun AdministrationRoute(
             }
         }
 
-    }
+
 
 
 }

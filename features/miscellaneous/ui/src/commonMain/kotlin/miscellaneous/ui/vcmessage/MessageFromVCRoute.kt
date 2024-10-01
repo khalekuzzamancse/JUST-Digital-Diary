@@ -21,9 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import common.ui.WindowSizeDecorator
-import common.ui.animation.TypeWriter
-import common.ui.network_image.ImageLoader
+import common.ui.TypeWriter
+import common.ui.ImageLoader
 import miscellaneous.controller_presenter.UiFactory
 
 @Composable
@@ -63,84 +62,40 @@ private fun MessageFromVC(
         color = Color.Gray
     )
 
-    WindowSizeDecorator(
-        onCompact = {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        ) {
+            ViceChancellorImage(imageUrl)
 
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                ) {
-                    ViceChancellorImage(imageUrl)
+            Spacer(modifier = Modifier.height(16.dp))
 
-                    Spacer(modifier = Modifier.height(16.dp))
+            NameOfVC(info = vcName)
 
-                    NameOfVC(info = vcName)
+            Spacer(modifier = Modifier.height(8.dp))
 
-                    Spacer(modifier = Modifier.height(8.dp))
+            MoreInfoOnVC(info = moreInfoOfVC)
 
-                    MoreInfoOnVC(info = moreInfoOfVC)
-
-                    Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
 
-                    Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-                    MessageSection(
-                        titleStyle = titleStyle,
-                        bodyStyle = bodyStyle,
-                        messageText = messageText
-                    )
-                }
-
-            }
-
-        },
-        onNonCompact = {
-            Column(
-                modifier = Modifier
-                    .padding(48.dp)
-                    .fillMaxSize()
-
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                ) {
-                    ViceChancellorImage(imageUrl)
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    NameOfVC(info = vcName)
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    MoreInfoOnVC(info = moreInfoOfVC)
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    MessageSection(
-                        titleStyle = titleStyle,
-                        bodyStyle = bodyStyle,
-                        messageText = messageText
-                    )
-                }
-
-            }
-
+            MessageSection(
+                titleStyle = titleStyle,
+                bodyStyle = bodyStyle,
+                messageText = messageText
+            )
         }
-    )
+
+    }
 
 
 }

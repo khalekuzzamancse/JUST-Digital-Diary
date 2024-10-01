@@ -67,8 +67,13 @@ fun NavGraph(
                 onEvent = { event ->
                     toAppEvent(event)?.let(onEvent)
                 },
-                onExitRequest = openDrawerRequest,
-                isNavRailMode = isNavRailMode,
+                navigationIcon = if (!isNavRailMode) {
+                    {
+                        IconButton(onClick = openDrawerRequest) {
+                            Icon(Icons.Filled.Menu, contentDescription = "back")
+                        }
+                    }
+                } else null,
                 token = NavigationFactory.token.value
             )
         }
@@ -77,7 +82,13 @@ fun NavGraph(
             AdministrationRoute(
                 token = NavigationFactory.token.value,
                 onEvent = {},
-                onMenuIconClick = openDrawerRequest
+                navigationIcon = if (!isNavRailMode) {
+                    {
+                        IconButton(onClick = openDrawerRequest) {
+                            Icon(Icons.Filled.Menu, contentDescription = "back")
+                        }
+                    }
+                } else null
             )
         }
         composable(GraphRoutes.CLASS_SCHEDULE_VIEWER) {

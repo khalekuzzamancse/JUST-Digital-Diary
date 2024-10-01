@@ -43,8 +43,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import auth.controller_presenter.controller.RegisterController
 import auth.ui.common.AuthPasswordField
-import common.newui.CustomTextField
-import common.newui.ErrorText
+import common.ui.CustomTextField
+import common.ui.ErrorText
 import kotlinx.coroutines.launch
 
 
