@@ -28,5 +28,5 @@ kotlin {
 
 }
 android {
-    namespace = "data"
+    namespace = "profile.data"
 }

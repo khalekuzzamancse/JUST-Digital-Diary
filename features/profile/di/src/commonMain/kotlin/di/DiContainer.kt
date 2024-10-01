@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 package di
 
-import data.factory.DataFactory
+import profile.data.factory.DataFactory
 import domain.usecase.GetProfileUseCase
 
 object DiContainer {

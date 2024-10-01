@@ -28,37 +28,21 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import miscellaneous.MiscFeatureEvent
-import miscellaneous.ui.profile.ProfileScreen
 
 @Composable
 fun HomeRoute(
     onEvent: (MiscFeatureEvent) -> Unit
 ) {
-//    HomeDestination { event ->
-//
-//        onEvent(event._toOtherFeatureFunctionalityEvent())
-//    }
-    ProfileScreen()
+    HomeDestination { event ->
+        onEvent(event)
+    }
+
 }
 
-private fun HomeRouteEvent._toOtherFeatureFunctionalityEvent(): MiscFeatureEvent {
-    return when (this) {
-        is HomeRouteEvent.CalenderViewRequest -> MiscFeatureEvent.CalenderRequest(
-            this.url
-        )
-        HomeRouteEvent.NavigateToFacultyList -> MiscFeatureEvent.NavigateToFacultyList
-        HomeRouteEvent.NavigateTAdminOfficeList -> MiscFeatureEvent.NavigateTAdminOfficeList
-        HomeRouteEvent.NavigateToCalendarUpdate -> MiscFeatureEvent.NavigateToCalendarUpdate
-        HomeRouteEvent.NavigateToExamRoutineUpdate -> MiscFeatureEvent.NavigateToExamRoutineUpdate
-        HomeRouteEvent.NavigateToClassRoutineUpdate -> MiscFeatureEvent.NavigateToClassRoutineUpdate
-        HomeRouteEvent.NavigateToTeacherInfoUpdate -> MiscFeatureEvent.NavigateToTeacherInfoUpdate
-        HomeRouteEvent.NavigationRequest -> error("NavigationRequest is not mappable to OtherFeatureFunctionalityEvent")
-    }
-}
 
 @Composable
 private fun HomeDestination(
-    onEvent: (HomeRouteEvent) -> Unit,
+    onEvent: (MiscFeatureEvent) -> Unit,
 ) {
     val hostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -71,7 +55,7 @@ private fun HomeDestination(
         floatingActionButton = {
             CalenderDownloadButton {
                 onEvent(
-                    HomeRouteEvent.CalenderViewRequest("https://drive.google.com/file/d/1Ar0xjbA6H_rMAPrBDPzjjqqW1ainIOmU/view?usp=sharing")
+                    MiscFeatureEvent.CalenderRequest("https://drive.google.com/file/d/1Ar0xjbA6H_rMAPrBDPzjjqqW1ainIOmU/view?usp=sharing")
                 )
             }
         }

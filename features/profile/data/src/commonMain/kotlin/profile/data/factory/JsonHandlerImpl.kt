@@ -1,10 +1,10 @@
-package data.factory
+package profile.data.factory
 
 
 import core.network.JsonParser
 import core.network.NetworkException
-import data.entity.ServerResponseMessageEntity
-import data.services.JsonHandler
+import profile.data.entity.ServerResponseMessageEntity
+import profile.data.services.JsonHandler
 import domain.execption.CustomException
 
 

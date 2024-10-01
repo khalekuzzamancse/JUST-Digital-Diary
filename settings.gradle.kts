@@ -26,11 +26,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 
-    versionCatalogs {
-        create("localModules") {
-            from(files("gradle/localModules.versions.toml"))
-        }
-    }
 }
 
 

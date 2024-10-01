@@ -1,12 +1,12 @@
 @file:Suppress("functionName","unused")
-package data.repository
+package profile.data.repository
 
 import core.network.ApiServiceClient
 import core.network.Header
 import core.network.JsonParser
-import data.entity.EntityMapper
-import data.entity.ProfileEntity
-import data.services.JsonHandler
+import profile.data.entity.EntityMapper
+import profile.data.entity.ProfileEntity
+import profile.data.services.JsonHandler
 import domain.model.ProfileModel
 import domain.repository.Repository
 
@@ -17,7 +17,7 @@ class RepositoryImpl internal constructor(
     private val jsonHandler: JsonHandler
 ) : Repository {
     override suspend fun retrieveProfile(): Result<ProfileModel> {
-        val url=""
+        val url="https://backend.rnzgoldenventure.com/api/users/me"
         try {
             val json = apiServiceClient.retrieveJsonOrThrow(url, Header(key = "Authorization", value = token))
             /** Execution is here means server sent a response we have to parse it

@@ -1,4 +1,4 @@
-package data.entity
+package profile.data.entity
 
 import kotlinx.serialization.Serializable
 

@@ -1,8 +1,8 @@
 @file:Suppress("functionName","unused")
-package data.factory
+package profile.data.factory
 
-import data.repository.RepositoryImpl
-import data.services.JsonHandler
+import profile.data.repository.RepositoryImpl
+import profile.data.services.JsonHandler
 import domain.repository.Repository
 import factory.NetworkFactory
 

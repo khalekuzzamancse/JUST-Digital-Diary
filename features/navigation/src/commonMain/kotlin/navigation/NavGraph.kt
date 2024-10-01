@@ -5,9 +5,11 @@ import academic.ui.admin.AddTeacherScreen
 import academic.ui.public_.AcademicRoute
 import administration.ui.public_.AdministrationRoute
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -26,6 +28,8 @@ import miscellaneous.ui.AboutUsRoute
 import miscellaneous.ui.eventGallery.EventsRoute
 import miscellaneous.ui.home.HomeRoute
 import miscellaneous.ui.vcmessage.MessageFromVCRoute
+import profile.presentationlogic.ProfileEvent
+import profile.ui.ProfileRoute
 import schedule.ui.ui.admin.add_class_schedule.AddClassScheduleScreen
 import schedule.ui.ui.admin.add_exam_schedule.ExamScheduleAddScreen
 import schedule.ui.ui.public_.ViewClassScheduleScreen
@@ -42,6 +46,7 @@ fun NavGraph(
     isNavRailMode: Boolean,
     navController: NavHostController,
     onMiscFeatureEvent: (MiscFeatureEvent) -> Unit,
+    onProfileEvent: (ProfileEvent) -> Unit,
 ) {
 
     NavHost(
@@ -53,7 +58,21 @@ fun NavGraph(
         composable(GraphRoutes.HOME) {
             _DrawerIconDecorator(
                 onMenuIconClick = openDrawerRequest,
-                isNavRailMode = isNavRailMode
+                isNavRailMode = isNavRailMode,
+                actions = {
+                    IconButton(
+                        onClick = {
+                          try {
+                              navController.navigate(GraphRoutes.PROFILE)
+                          }
+                          catch (_: Exception){
+
+                          }
+                        }
+                    ) {
+                        Icon(Icons.Default.AccountCircle, contentDescription = "Profile")
+                    }
+                }
             ) {
                 HomeRoute(
                     onEvent = onMiscFeatureEvent
@@ -90,6 +109,11 @@ fun NavGraph(
                     }
                 } else null
             )
+        }
+        composable(GraphRoutes.PROFILE) {
+            ProfileRoute(
+                token = NavigationFactory.token.value,
+                onEvent=onProfileEvent)
         }
         composable(GraphRoutes.CLASS_SCHEDULE_VIEWER) {
             _DrawerIconDecorator(
@@ -245,6 +269,7 @@ object GraphRoutes {
     const val CLASS_SCHEDULE_VIEWER = "CLASS_SCHEDULE"
     const val EXAM_SCHEDULE_VIEWER = "EXAM_SCHEDULE"
     const val EVENT_GALLERY = "Event Gallery"
+    const val PROFILE = "ProfileRoute"
 
     // Admin-specific routes
     const val CALENDAR_UPDATE = "CalendarUpdateFeatureNavGraph.ROUTE"
@@ -258,6 +283,7 @@ object GraphRoutes {
 private fun _DrawerIconDecorator(
     isNavRailMode: Boolean,
     onMenuIconClick: () -> Unit,
+    actions:@Composable RowScope.() -> Unit={},
     content: @Composable () -> Unit,
 ) {
     if (isNavRailMode) {
@@ -278,6 +304,9 @@ private fun _DrawerIconDecorator(
                         ) {
                             Icon(Icons.Default.Menu, contentDescription = "Drawer Icon")
                         }
+                    },
+                    actions = {
+                        actions()
                     }
                 )
             }

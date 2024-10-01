@@ -68,7 +68,8 @@ private fun _FeatureNavGraph(
                 onBackPressed = navigator::pop,
                 startDestination = GraphRoutes.HOME,
                 isNavRailMode = isNavRailMode,
-                onMiscFeatureEvent = navigator::onMiscFeatureEvent
+                onMiscFeatureEvent = navigator::onMiscFeatureEvent,
+                onProfileEvent = navigator::onProfileEvent
             )
         }
     )
