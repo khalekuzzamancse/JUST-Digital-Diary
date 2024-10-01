@@ -16,6 +16,7 @@ import common.ui.GenericInfoCard
 import common.ui.generateAcronym
 
 
+
 @Composable
 internal fun Faculty(
     modifier: Modifier = Modifier,

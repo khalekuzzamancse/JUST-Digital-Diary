@@ -1,4 +1,6 @@
+
 package miscellaneous.presentationlogic.model
+
 
 internal data class AboutUsModel(
     val appName: String,

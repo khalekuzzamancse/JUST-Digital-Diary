@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import common.ui.ImageLoader
 import common.ui.TypeWriter
+
 import miscellaneous.presentationlogic.UiFactory
 
 @Composable
