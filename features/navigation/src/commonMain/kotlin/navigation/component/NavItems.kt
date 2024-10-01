@@ -72,30 +72,9 @@ object NavDestinationBuilder {
         )
     )
 
-    private fun group3() = NavGroup(
-        items = listOf(
-            NavigationItem(
-                label = "Search",
-                unFocusedIcon = Icons.Outlined.Search,
-                focusedIcon = Icons.Filled.Search,
-                destination = NavDestination.Search
-            ),
-            NavigationItem(
-                label = "Event Gallery",
-                unFocusedIcon = Icons.Outlined.Image,
-                focusedIcon = Icons.Filled.Image,
-                destination = NavDestination.EventGallery
-            ),
-            NavigationItem(
-                label = "Explore JUST",
-                unFocusedIcon = Icons.Outlined.Explore,
-                focusedIcon = Icons.Filled.Explore,
-                destination = NavDestination.ExploreJust
-            ),
-        )
-    )
 
-    private fun group4() = NavGroup(
+
+    private fun group3() = NavGroup(
         items = listOf(
 //            NavigationItem(
 //                label = "NoteBook",
@@ -117,7 +96,28 @@ object NavDestinationBuilder {
             ),
         )
     )
-
+    private fun group4() = NavGroup(
+        items = listOf(
+//            NavigationItem(
+//                label = "Search",
+//                unFocusedIcon = Icons.Outlined.Search,
+//                focusedIcon = Icons.Filled.Search,
+//                destination = NavDestination.Search
+//            ),
+            NavigationItem(
+                label = "Event Gallery",
+                unFocusedIcon = Icons.Outlined.Image,
+                focusedIcon = Icons.Filled.Image,
+                destination = NavDestination.EventGallery
+            ),
+            NavigationItem(
+                label = "Explore JUST",
+                unFocusedIcon = Icons.Outlined.Explore,
+                focusedIcon = Icons.Filled.Explore,
+                destination = NavDestination.ExploreJust
+            ),
+        )
+    )
     private fun group5() = NavGroup(
         items = listOf(
             NavigationItem(

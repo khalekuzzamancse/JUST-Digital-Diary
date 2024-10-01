@@ -28,16 +28,17 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import miscellaneous.MiscFeatureEvent
+import miscellaneous.ui.profile.ProfileScreen
 
 @Composable
 fun HomeRoute(
     onEvent: (MiscFeatureEvent) -> Unit
 ) {
-    HomeDestination { event ->
-
-        onEvent(event._toOtherFeatureFunctionalityEvent())
-    }
-
+//    HomeDestination { event ->
+//
+//        onEvent(event._toOtherFeatureFunctionalityEvent())
+//    }
+    ProfileScreen()
 }
 
 private fun HomeRouteEvent._toOtherFeatureFunctionalityEvent(): MiscFeatureEvent {

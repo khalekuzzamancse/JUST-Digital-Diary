@@ -17,13 +17,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AdminPanelSettings
-import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.People
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.School
-import androidx.compose.material.icons.filled.SupervisorAccount
-import androidx.compose.material.icons.filled.Timer
+import androidx.compose.material.icons.outlined.CalendarToday
+import androidx.compose.material.icons.outlined.People
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Schedule
+import androidx.compose.material.icons.outlined.SupervisorAccount
+import androidx.compose.material.icons.outlined.Timer
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -40,7 +40,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import justdigitaldiary.features.miscellaneous.ui.generated.resources.Res
@@ -59,7 +58,7 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun HomeHeader(
     modifier: Modifier = Modifier,
-    onEvent:(HomeRouteEvent)->Unit,
+    onEvent: (HomeRouteEvent) -> Unit,
 ) {
     Column(
         modifier = modifier,
@@ -69,22 +68,22 @@ fun HomeHeader(
         val res: DrawableResource = Res.drawable.just_logo_trans
         //after that compile it again to generate Res class, use : .\gradlew generateComposeResClass
         Image(
-            modifier=Modifier.size(50.dp),
+            modifier = Modifier.size(50.dp)
+                .background(Color.White),//will work for both dark and light
             painter = painterResource(res),//org.jetbrains.compose.resources.
-            contentDescription = null,
+            contentDescription = "JUST",
         )
-        AppNameLogoSection(modifier = Modifier, varsityLogoSize = 100.dp)
+        AppNameLogoSection(modifier = Modifier)
         Spacer(Modifier.height(8.dp))
         Dashboard(
             isAdmin = true,
-            onFacultyListClick = { onEvent(HomeRouteEvent.NavigateToFacultyList)},
-            onAdminOfficerListClick = { onEvent(HomeRouteEvent.NavigateTAdminOfficeList)},
-            onCalendarUpdateClick = { onEvent(HomeRouteEvent.NavigateToCalendarUpdate)},
-            onExamRoutineUpdateClick = { onEvent(HomeRouteEvent.NavigateToExamRoutineUpdate)},
-            onClassRoutineUpdateClick = { onEvent(HomeRouteEvent.NavigateToClassRoutineUpdate)},
-            onTeacherInfoUpdateClick = { onEvent(HomeRouteEvent.NavigateToTeacherInfoUpdate)},
+            onFacultyListClick = { onEvent(HomeRouteEvent.NavigateToFacultyList) },
+            onAdminOfficerListClick = { onEvent(HomeRouteEvent.NavigateTAdminOfficeList) },
+            onCalendarUpdateClick = { onEvent(HomeRouteEvent.NavigateToCalendarUpdate) },
+            onExamRoutineUpdateClick = { onEvent(HomeRouteEvent.NavigateToExamRoutineUpdate) },
+            onClassRoutineUpdateClick = { onEvent(HomeRouteEvent.NavigateToClassRoutineUpdate) },
+            onTeacherInfoUpdateClick = { onEvent(HomeRouteEvent.NavigateToTeacherInfoUpdate) },
         )
-
 
 
     }
@@ -95,12 +94,12 @@ fun HomeHeader(
 @Composable
 private fun _FacultyListButton(
     modifier: Modifier = Modifier,
-    onClick:()->Unit,
+    onClick: () -> Unit,
 ) {
     IconButton(
         modifier = modifier,
         onClick = onClick
-    ){
+    ) {
         Icon(
             imageVector = Icons.Default.School,
             contentDescription = "faculty list",
@@ -108,15 +107,16 @@ private fun _FacultyListButton(
         )
     }
 }
+
 @Composable
 private fun _AdminOfficeListButton(
     modifier: Modifier = Modifier,
-    onClick:()->Unit,
+    onClick: () -> Unit,
 ) {
     IconButton(
         modifier = modifier,
         onClick = onClick
-    ){
+    ) {
         Icon(
             imageVector = Icons.Default.AdminPanelSettings,
             contentDescription = "faculty list",
@@ -126,11 +126,9 @@ private fun _AdminOfficeListButton(
 }
 
 
-
 @Composable
 private fun AppNameLogoSection(
-    modifier: Modifier = Modifier,
-    varsityLogoSize:Dp=50.dp
+    modifier: Modifier = Modifier
 ) {
 
     val text = buildAnnotatedString {
@@ -140,8 +138,18 @@ private fun AppNameLogoSection(
                 spanStyle = SpanStyle(MaterialTheme.colorScheme.primary)
             )
         )
-        append(AnnotatedString(text = "U", spanStyle = SpanStyle(MaterialTheme.colorScheme.secondary)))
-        append(AnnotatedString(text = "S", spanStyle = SpanStyle(MaterialTheme.colorScheme.primary)))
+        append(
+            AnnotatedString(
+                text = "U",
+                spanStyle = SpanStyle(MaterialTheme.colorScheme.secondary)
+            )
+        )
+        append(
+            AnnotatedString(
+                text = "S",
+                spanStyle = SpanStyle(MaterialTheme.colorScheme.primary)
+            )
+        )
         append(
             AnnotatedString(
                 text = "T",
@@ -181,7 +189,7 @@ private fun AppNameLogoSection(
 
 //TODO:Dashboard section
 
-data class DashboardItemData(
+private data class DashboardItemData(
     val text: String,
     val icon: ImageVector,
     val onClick: () -> Unit
@@ -200,40 +208,44 @@ fun Dashboard(
     onTeacherInfoUpdateClick: () -> Unit = {}
 ) {
     val dashboardItems = mutableListOf<DashboardItemData>().apply {
-        add(DashboardItemData("Faculty List", Icons.Default.People, onFacultyListClick))
+        add(DashboardItemData(
+            text = "Faculty List",
+            icon = Icons.Outlined.People,
+            onClick = onFacultyListClick
+        ))
         add(
             DashboardItemData(
-                "Admin Officer List",
-                Icons.Default.SupervisorAccount,
-                onAdminOfficerListClick
+                text = "Admin Officer List",
+                icon = Icons.Outlined.SupervisorAccount,
+                onClick = onAdminOfficerListClick
             )
         )
         if (isAdmin) {
             add(
                 DashboardItemData(
-                    "Calendar Update",
-                    Icons.Default.CalendarToday,
-                    onCalendarUpdateClick
+                    text = "Calendar Update",
+                    icon = Icons.Outlined.CalendarToday,
+                    onClick = onCalendarUpdateClick
                 )
             )
             add(
                 DashboardItemData(
-                    "Exam Routine Update",
-                    Icons.Default.Schedule,
-                    onExamRoutineUpdateClick
+                    text = "Exam Routine Update",
+                    icon = Icons.Outlined.Schedule,
+                    onClick = onExamRoutineUpdateClick
                 )
             )
             add(
                 DashboardItemData(
-                    "Class Routine Update",
-                    Icons.Default.Timer,
-                    onClassRoutineUpdateClick
+                    text = "Class Routine Update",
+                    icon = Icons.Outlined.Timer,
+                    onClick = onClassRoutineUpdateClick
                 )
             )
             add(
                 DashboardItemData(
                     text = "Teacher Info Update",
-                    icon = Icons.Default.Person,
+                    icon = Icons.Outlined.Person,
                     onClick = onTeacherInfoUpdateClick
                 )
             )
@@ -246,14 +258,14 @@ fun Dashboard(
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         dashboardItems.forEachIndexed { _, item ->
-            DashboardItem(
+            _DashboardItem(
                 modifier = Modifier
                     .weight(1f)
                     .clickable { item.onClick() }
                     .shadow(8.dp, RoundedCornerShape(12.dp))
                     .background(
-                        Color.White,
-                        RoundedCornerShape(12.dp)
+                        color = Color.White,
+                        shape = RoundedCornerShape(12.dp)
                     )
                     .padding(16.dp),
                 text = item.text,
@@ -267,34 +279,34 @@ fun Dashboard(
 }
 
 @Composable
-private fun DashboardItem(
+private fun _DashboardItem(
     modifier: Modifier = Modifier,
     text: String, icon: ImageVector,
 ) {
+    val color=MaterialTheme.colorScheme.secondary //clickable so importance is high
     Box(
         modifier = modifier,
         contentAlignment = Alignment.CenterStart
     ) {
-        _DashboardItem(
-            text, icon
-        )
+        Row(
+            modifier = Modifier
+                .padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = "dashboard item",
+                tint =color
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = text,
+                style = MaterialTheme.typography.labelSmall,
+                color = color
+            )
+        }
     }
 }
 
-// Reusable composable for displaying dashboard items
-@Composable
-private fun _DashboardItem(
-    text: String, icon: ImageVector,
-) {
-    Row(
-        modifier = Modifier
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(imageVector = icon, contentDescription = null)
-        Spacer(modifier = Modifier.width(16.dp))
-        Text(text = text, style = MaterialTheme.typography.labelSmall)
-    }
-}
 
 

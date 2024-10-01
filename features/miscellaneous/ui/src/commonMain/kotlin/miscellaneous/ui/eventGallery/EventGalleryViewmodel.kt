@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 package miscellaneous.ui.eventGallery
 
-import miscellaneous.controller_presenter.controller.EventGalleryController
+import miscellaneous.presentationlogic.controller.EventGalleryController
 
  class EventGalleryViewmodel internal  constructor(
     internal val controller: EventGalleryController

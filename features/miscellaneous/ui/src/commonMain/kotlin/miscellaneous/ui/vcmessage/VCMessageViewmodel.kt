@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 package miscellaneous.ui.vcmessage
 
-import miscellaneous.controller_presenter.controller.VCMessageController
+import miscellaneous.presentationlogic.controller.VCMessageController
 
 internal class VCMessageViewmodel(
      val controller: VCMessageController

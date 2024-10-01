@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import common.ui.TypeWriter
 import common.ui.ImageLoader
-import miscellaneous.controller_presenter.UiFactory
+import miscellaneous.presentationlogic.UiFactory
 
 @Composable
 fun MessageFromVCRoute(token: String?) {

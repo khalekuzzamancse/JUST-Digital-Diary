@@ -18,8 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import common.ui.AdaptiveList
 import common.ui.ImageLoader
-import miscellaneous.controller_presenter.UiFactory
-import miscellaneous.controller_presenter.model.GalleryEventModel
+import miscellaneous.presentationlogic.UiFactory
 
 
 @Composable
@@ -29,36 +28,27 @@ fun EventsRoute(
     val viewmodel =
         remember { EventGalleryViewmodel(UiFactory.createEventGalleryController(token)) }
     val controller = viewmodel.controller
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         controller.fetch()
     }
 
-    EventGallery(
-        events = controller.events.collectAsState().value,
-    )
-
-
-}
-
-@Composable
-private fun EventGallery(
-    events: List<GalleryEventModel>,
-) {
     AdaptiveList(
         modifier = Modifier,
-        items = events
+        items = viewmodel.controller.events.collectAsState().value
     ) { event ->
-        EventCard(
+        _EventCard(
             eventName = event.name,
             eventDetails = event.details,
             eventImageLink = event.imageLink
         )
     }
 
+
 }
 
+
 @Composable
-private fun EventCard(
+private fun _EventCard(
     eventName: String,
     eventDetails: String,
     eventImageLink: String
