@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import common.ui.TypeWriter
+import common.ui.animation.TypeWriter
 import miscellaneous.presentationlogic.model.AboutUsModel
 
 @Composable

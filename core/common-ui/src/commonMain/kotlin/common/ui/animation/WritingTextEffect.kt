@@ -1,4 +1,4 @@
-package common.ui
+package common.ui.animation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

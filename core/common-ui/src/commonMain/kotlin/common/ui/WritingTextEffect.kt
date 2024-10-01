@@ -16,10 +16,10 @@ fun TypeWriter(
     delay:Long,
     decorator:@Composable (text: String) ->Unit,
 ) {
-    TypeWriter(
-        text= AnnotatedString(text),
-        delay=delay,
-        decorator={
+    common.ui.animation.TypeWriter(
+        text = AnnotatedString(text),
+        delay = delay,
+        decorator = {
             decorator(it.text)
         }
     )
