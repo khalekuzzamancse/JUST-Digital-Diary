@@ -3,11 +3,15 @@ package miscellaneous.ui.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AdminPanelSettings
-import androidx.compose.material.icons.filled.School
+import androidx.compose.material.icons.outlined.AdminPanelSettings
+import androidx.compose.material.icons.outlined.School
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,7 +41,7 @@ import org.jetbrains.compose.resources.painterResource
  * the platform to load the image from their own resource and the logo composable.
  * fix it later using "Res" class  of compose multiplatform resource
  */
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun HomeHeader(
     modifier: Modifier = Modifier,
@@ -56,7 +60,22 @@ fun HomeHeader(
             painter = painterResource(res),//org.jetbrains.compose.resources.
             contentDescription = "JUST",
         )
-        AppNameLogoSection(modifier = Modifier)
+        FlowRow {
+            _FacultyListButton(
+                onClick ={
+                    onEvent(MiscFeatureEvent.NavigateToFacultyList)
+                }
+            )
+            Spacer(Modifier.width(4.dp))
+            AppNameLogoSection(modifier = Modifier)
+            Spacer(Modifier.width(4.dp))
+            _AdminOfficeListButton(
+                onClick ={
+                    onEvent(MiscFeatureEvent.NavigateTAdminOfficeList)
+                }
+            )
+        }
+
 
     }
 
@@ -73,7 +92,7 @@ private fun _FacultyListButton(
         onClick = onClick
     ) {
         Icon(
-            imageVector = Icons.Default.School,
+            imageVector = Icons.Outlined.School,
             contentDescription = "faculty list",
             tint = MaterialTheme.colorScheme.secondary
         )
@@ -90,7 +109,7 @@ private fun _AdminOfficeListButton(
         onClick = onClick
     ) {
         Icon(
-            imageVector = Icons.Default.AdminPanelSettings,
+            imageVector = Icons.Outlined.AdminPanelSettings,
             contentDescription = "faculty list",
             tint = MaterialTheme.colorScheme.secondary
         )

@@ -32,13 +32,8 @@ internal class FacultyControllerImpl(
 
     }
 
-    init {
-        CoroutineScope(Dispatchers.Default).launch {
-            fetchFaculty()
-        }
-    }
 
-    private suspend fun fetchFaculty() {
+    override suspend fun fetchFaculty() {
         _startLoading()
         val result = userCase.execute()
         result.fold(

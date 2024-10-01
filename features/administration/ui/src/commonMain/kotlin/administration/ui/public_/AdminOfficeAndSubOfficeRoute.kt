@@ -27,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 internal fun AdminOfficeAndSubOfficeRoute(
@@ -35,7 +36,7 @@ internal fun AdminOfficeAndSubOfficeRoute(
     navigationIcon: (@Composable () -> Unit)? = null,
     onBackButtonPress: @Composable (onBackButtonPress: () -> Boolean) -> Unit = {},
 ) {
-    val viewModel = remember {
+    val viewModel = viewModel {
         OfficeScreenViewModel(
             officeController = UiFactory.createOfficerController(token),
             subOfficeController = UiFactory.createSubOfficeController(token)

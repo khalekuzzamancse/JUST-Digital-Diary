@@ -11,9 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -21,18 +19,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import common.ui.TypeWriter
+import androidx.lifecycle.viewmodel.compose.viewModel
 import common.ui.ImageLoader
+import common.ui.TypeWriter
 import miscellaneous.presentationlogic.UiFactory
 
 @Composable
 fun MessageFromVCRoute(token: String?) {
-    val viewModel = remember { VCMessageViewmodel(UiFactory.createVCMessageController(token)) }
+    val viewModel = viewModel { VCMessageViewmodel(UiFactory.createVCMessageController(token)) }
     val state = viewModel.controller.events.collectAsState().value
 
-    LaunchedEffect(Unit){
-        viewModel.controller.fetch()
-    }
     state?.let {
         MessageFromVC(
             messageText = it.message,

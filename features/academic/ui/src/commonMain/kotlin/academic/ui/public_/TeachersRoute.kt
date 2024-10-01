@@ -1,8 +1,8 @@
 package academic.ui.public_
 
-import academic.ui.AcademicModuleEvent
 import academic.controller_presenter.factory.UiFactory
 import academic.controller_presenter.model.TeacherModel
+import academic.ui.AcademicModuleEvent
 import academic.ui.common.SnackNProgressBarDecorator
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -21,9 +20,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import common.ui.AdaptiveList
 import common.ui.GenericEmployeeCard
 import common.ui.TopBarDecoratorCommon
-import common.ui.AdaptiveList
 
 
 @Composable
@@ -34,7 +34,7 @@ internal fun TeachersRoute(
     onEvent: (AcademicModuleEvent) -> Unit
     //TODO: event should go out,it should not handle by controller
 ) {
-    val viewModel = remember { TeacherListViewModel(UiFactory.createTeachersController(token)) }
+    val viewModel = viewModel { TeacherListViewModel(UiFactory.createTeachersController(token)) }
     val controller = viewModel.controller
     val teachers = controller.teachers.collectAsState().value
     LaunchedEffect(Unit) {

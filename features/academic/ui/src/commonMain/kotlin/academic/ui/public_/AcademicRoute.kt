@@ -1,3 +1,4 @@
+@file:Suppress("ClassName")
 package academic.ui.public_
 
 import academic.controller_presenter.factory.UiFactory
@@ -26,10 +27,10 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -46,20 +47,25 @@ fun AcademicRoute(
 
     val navController = rememberNavController()
 
-
     NavHost(
         navController = navController,
-        startDestination = Route.FACULTY_AND_DEPT,
+        startDestination = _Route.FACULTY_AND_DEPT,
         modifier = Modifier
     ) {
 
-        composable(route = Route.FACULTY_AND_DEPT) {
+        composable(route = _Route.FACULTY_AND_DEPT) {
+            val viewModel = viewModel {
+                FacultyScreenViewModel(
+                    facultyController = UiFactory.createFacultyController(token),
+                    departmentController = UiFactory.createDepartmentsController(token)
+                )
+            }
             _FacultyNDeptRoute(
-                token = token,
+                viewModel = viewModel,
                 navigationIcon = navigationIcon,
                 onTeachersRequest = {
                     try {
-                        navController.navigate("${Route.TEACHER_LIST}/$it")
+                        navController.navigate("${_Route.TEACHER_LIST}/$it")
                     } catch (_: Exception) {
 
                     }
@@ -68,10 +74,10 @@ fun AcademicRoute(
 
         }
         composable(
-            route = Route.TEACHERS_ROUTE,
-            arguments = listOf(navArgument(Route.DEPT_ID) { type = NavType.StringType })
+            route = _Route.TEACHERS_ROUTE,
+            arguments = listOf(navArgument(_Route.DEPT_ID) { type = NavType.StringType })
         ) { backStackEntry ->
-            val deptID = backStackEntry.arguments?.getString(Route.DEPT_ID)
+            val deptID = backStackEntry.arguments?.getString(_Route.DEPT_ID)
             TeachersRoute(
                 deptId = deptID ?: "",
                 onExitRequest = {
@@ -88,7 +94,7 @@ fun AcademicRoute(
 }
 
 
-private object Route {
+private object _Route {
     const val TEACHER_LIST = "TeacherListScreen"
     const val FACULTY_AND_DEPT = "FACULTY_AND_DEPT"
     const val DEPT_ID = "deptId"
@@ -99,17 +105,13 @@ private object Route {
 @Composable
 private fun _FacultyNDeptRoute(
     modifier: Modifier = Modifier,
-    token: String?,
+    viewModel: FacultyScreenViewModel,
     onTeachersRequest: (String) -> Unit,
     navigationIcon: (@Composable () -> Unit)? = null,
 ) {
-    val viewModel = remember {
-        FacultyScreenViewModel(
-            facultyController = UiFactory.createFacultyController(token),
-            departmentController = UiFactory.createDepartmentsController(token)
-        )
-    }
+
     val notShowingDepartment = !(viewModel.showDepartments.collectAsState().value)
+
     SnackNProgressBarDecorator(
         isLoading = viewModel.isLoading.collectAsState(false).value,
         snackBarMessage = viewModel.screenMessage.collectAsState(null).value,

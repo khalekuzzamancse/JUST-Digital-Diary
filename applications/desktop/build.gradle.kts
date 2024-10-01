@@ -15,9 +15,7 @@ kotlin {
                 implementation(project(":features:navigation"))
                 implementation(compose.desktop.common)
                 implementation(compose.desktop.currentOs)
-
-
-
+                implementation(libs.kotlinx.coroutines.swing)
             }
         }
     }

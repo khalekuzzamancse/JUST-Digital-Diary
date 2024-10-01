@@ -8,5 +8,6 @@ internal interface FacultyController {
     val faculties: StateFlow<List<FacultyModel>>
     val errorMessage: StateFlow<String?>
     val selected: StateFlow<Int?>
+  suspend fun  fetchFaculty()
     fun onSelected(index: Int?)
 }
