@@ -84,35 +84,7 @@ class Navigator(
         }
 
     }
-    fun onProfileEvent(event: ProfileEvent){
-            try {
-                when (event) {
 
-                    is ProfileEvent.NavigateToCalendarUpdate -> {
-                        navController.navigate(GraphRoutes.CALENDAR_UPDATE)
-                    }
-
-
-                    is ProfileEvent.NavigateToExamRoutineUpdate -> {
-                        navController.navigate(GraphRoutes.EXAM_ROUTINE_UPDATE)
-                    }
-
-                    is ProfileEvent.NavigateToClassRoutineUpdate -> {
-                        navController.navigate(GraphRoutes.CLASS_ROUTINE_UPDATE)
-                    }
-
-                    is ProfileEvent.NavigateToTeacherInfoUpdate -> {
-                        navController.navigate(GraphRoutes.TEACHER_INFO_UPDATE)
-                    }
-
-
-                }
-            } catch (_: Exception) {
-            }
-
-
-
-    }
 
 
 

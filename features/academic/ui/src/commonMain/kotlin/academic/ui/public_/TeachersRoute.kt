@@ -52,7 +52,8 @@ internal fun TeachersRoute(
 
             _TeacherList(
                 modifier = Modifier.padding(it),
-                teachers = teachers
+                teachers = teachers,
+                onEvent = onEvent
             )
         }
     }
@@ -63,7 +64,8 @@ internal fun TeachersRoute(
 @Composable
 private fun _TeacherList(
     modifier: Modifier = Modifier,
-    teachers: List<TeacherModel>
+    teachers: List<TeacherModel>,
+    onEvent: (AcademicModuleEvent) -> Unit
 ) {
 
     AdaptiveList(
@@ -74,13 +76,13 @@ private fun _TeacherList(
             modifier = Modifier.padding(8.dp),
             teacher = employee,
             onCallRequest = {
-
+                onEvent(AcademicModuleEvent.CallRequest(employee.phone))
             },
             onMessageRequest = {
-
+                onEvent(AcademicModuleEvent.MessageRequest(employee.phone))
             },
             onEmailRequest = {
-
+                onEvent(AcademicModuleEvent.EmailRequest(employee.email))
             }
         )
 

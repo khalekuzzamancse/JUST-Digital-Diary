@@ -9,10 +9,11 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarToday
@@ -25,41 +26,42 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import profile.presentationlogic.ProfileEvent
 import profile.presentationlogic.factory.UiFactory
 import profile.presentationlogic.model.ProfileModel
 import profile.ui.common.SnackNProgressBarDecorator
 
-
 @Composable
-fun ProfileRoute(
+internal fun ProfileRoute(
     token: String?,
-    onEvent: (ProfileEvent)->Unit,
+    onEvent:( ProfileEvent)->Unit
 ) {
 
     if (token == null) {
-        Text("Please re Logged in")
-    } else {
-        val viewModel = remember { ProfileViewModel(UiFactory.createProfileController(token)) }
-        LaunchedEffect(Unit) {
-            viewModel.controller.fetch()
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+            Text(text = "Something is wrong,Please Log in again")
         }
+
+    } else {
+        val viewModel = viewModel { ProfileViewModel(UiFactory.createProfileController(token)) }
+
         SnackNProgressBarDecorator(
             isLoading = viewModel.isLoading.collectAsState().value,
             snackBarMessage = viewModel.screenMessage.collectAsState().value
         ) {
             val model = viewModel.controller.profile.collectAsState().value
             if (!model.isEmpty()) {
-                Column {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                     ProfileCard(profile = model)
                     Spacer(Modifier.height(8.dp))
                     Dashboard(
@@ -84,7 +86,7 @@ private fun ProfileCard(profile: ProfileModel) {
     Card(
         modifier = Modifier
             .padding(16.dp)
-            .fillMaxWidth(),
+            .wrapContentWidth(),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)

@@ -10,17 +10,16 @@ import navigation.RootNavHost
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val eventHandler= AppEventHandler(this)
-//        enableEdgeToEdge()
-        //initialize the network manger
-//        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-//        NetManagerProvider.setConnectivityManager(connectivityManager)
+        val eventHandler = AppEventHandler(this)
+        //  enableEdgeToEdge()
         setContent {
             AppTheme {
-                RootNavHost {}
-
+                RootNavHost(
+                    onEvent = eventHandler::handleEvent
+                )
 
             }
+
         }
     }
 }
