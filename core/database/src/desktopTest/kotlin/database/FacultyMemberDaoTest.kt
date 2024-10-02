@@ -1,7 +1,8 @@
 @file:Suppress("SpellCheckingInspection")
 package database
 
-import database.dao.FacultyMemberDao
+import core.database.db.Database
+import core.database.getDatabase
 import database.schema.DepartmentSubSchema
 import database.schema.FacultyMemberSchema
 import junit.framework.TestCase.assertEquals
@@ -14,7 +15,7 @@ import kotlin.test.assertNull
 class FacultyMemberDaoTest {
 
     private lateinit var db: Database
-    private lateinit var facultyMemberDao: FacultyMemberDao
+    private lateinit var facultyMemberDao: core.database.dao.FacultyMemberDao
 
     @Before
     fun createDb() {

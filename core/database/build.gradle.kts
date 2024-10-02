@@ -26,7 +26,7 @@ kotlin {
 
 }
 android {
-    namespace = "database"
+    namespace = "core.database"
 }
 room {
     schemaDirectory("$projectDir/schemas")

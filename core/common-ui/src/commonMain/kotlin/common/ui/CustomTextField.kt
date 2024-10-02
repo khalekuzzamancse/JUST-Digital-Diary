@@ -1,4 +1,5 @@
 package common.ui
+
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -27,27 +28,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
- fun CustomTextField(
-    modifier: Modifier=Modifier,
+fun CustomTextField(
+    modifier: Modifier = Modifier,
     label: String,
     value: String,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     leadingIcon: ImageVector? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
-    readOnly:Boolean=false,
+    readOnly: Boolean = false,
+    enabled: Boolean = true,
     onValueChange: (String) -> Unit,
     trailingIcon: (@Composable (Modifier) -> Unit)? = null
 ) {
     _BasicAuthTextField(
         modifier = modifier,
+        enabled = enabled,
         label = label,
         value = value,
         visualTransformation = visualTransformation,
         leadingIcon = leadingIcon,
         keyboardType = keyboardType,
         onValueChanged = onValueChange,
-        readOnly=readOnly,
-        trailingIcon=trailingIcon
+        readOnly = readOnly,
+        trailingIcon = trailingIcon
     )
 }
 
@@ -60,39 +63,54 @@ private fun _BasicAuthTextField(
     leadingIcon: ImageVector?,
     keyboardType: KeyboardType,
     onValueChanged: (String) -> Unit,
-    readOnly:Boolean=false,
+    readOnly: Boolean = false,
+    enabled: Boolean = true,
     trailingIcon: (@Composable (Modifier) -> Unit)? = null
 ) {
 
-    val borderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
-    val placeholderColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+    val borderColor = if (enabled) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+    else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+
+    val placeholderColor = if (enabled) MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+    else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
+
+    val textColor = if (enabled) MaterialTheme.colorScheme.onSurface
+    else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+
+    val iconTint = if (enabled) MaterialTheme.colorScheme.tertiary
+    else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+
     val fontSize = 15.sp
 
-    //Why BasicTextField
-    //Less height,no default inner padding,leading icon can be centred for custom height
-
     BasicTextField(
+        enabled = enabled,
         value = value,
         onValueChange = onValueChanged,
-        textStyle = TextStyle(fontSize = fontSize, color = MaterialTheme.colorScheme.onSurface),
+        textStyle = TextStyle(fontSize = fontSize, color = textColor),
         singleLine = true,
         readOnly = readOnly,
         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
         visualTransformation = visualTransformation,
-        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),//make sure cursor visible in dark mode also
+        cursorBrush = if (enabled) SolidColor(MaterialTheme.colorScheme.primary) else SolidColor(Color.Transparent), // Hide cursor when disabled
         decorationBox = { innerText ->
             Row(
                 modifier
-                    .border(width = 2.dp, color = borderColor, CircleShape)
+                    .border(
+                        width = 2.dp,
+                        color = borderColor,
+                        shape = CircleShape
+                    )
                     .padding(vertical = 10.dp, horizontal = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if (leadingIcon != null) {
                     Icon(
                         imageVector = leadingIcon,
-                        tint = MaterialTheme.colorScheme.tertiary,
+                        tint = iconTint,
                         contentDescription = "leading icon",
-                        modifier = Modifier.padding(start = 12.dp).size(22.dp)
+                        modifier = Modifier
+                            .padding(start = 12.dp)
+                            .size(22.dp)
                     )
                     Spacer(Modifier.width(4.dp))
                 }
@@ -101,20 +119,28 @@ private fun _BasicAuthTextField(
                     if (value.isEmpty()) {
                         _Placeholder(label, fontSize, placeholderColor)
                     }
-                    // Call innerText in both cases to ensure the cursor is shown
+                    // Call innerText in both cases to ensure the cursor is shown (if enabled)
                     innerText()
                 }
+
                 if (trailingIcon != null) {
                     Spacer(Modifier.width(8.dp))
                     trailingIcon(Modifier.padding(end = 8.dp))
                 }
-
             }
         }
     )
-
-
 }
+
+@Composable
+fun _Placeholder(text: String, fontSize: TextUnit, placeholderColor: Color) {
+    Text(
+        text = text,
+        fontSize = fontSize,
+        color = placeholderColor
+    )
+}
+
 
 @Composable
 private fun _Placeholder(

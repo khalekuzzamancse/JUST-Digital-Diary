@@ -24,13 +24,18 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import auth.controller_presenter.controller.LoginController
+import auth.presentationlogic.controller.LoginController
+import auth.ui.ResetPasswordRoute
 import auth.ui.common.AuthPasswordField
 import common.ui.CustomTextField
 import kotlinx.coroutines.launch
@@ -43,9 +48,11 @@ internal fun LoginScreen(
     modifier: Modifier = Modifier,
     controller: LoginController,
     navigateToRegisterRequest: () -> Unit,
-    onLoginSuccess: (token:String) -> Unit
+    onLoginSuccess: (token: String) -> Unit,
+    onPasswordResetRequest: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
+
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         LoginFormNControls(
             modifier = Modifier.padding(32.dp),
@@ -57,14 +64,12 @@ internal fun LoginScreen(
 
             },
             onRegisterRequest = navigateToRegisterRequest,
-            onPasswordResetRequest = {}
+            onPasswordResetRequest = onPasswordResetRequest
         )
 
     }
 
 }
-
-
 
 
 /**
@@ -79,7 +84,7 @@ internal fun LoginFormNControls(
     onRegisterRequest: () -> Unit,
     onPasswordResetRequest: () -> Unit
 ) {
-    val isNotLoading =!(controller.isLogging.collectAsState()).value
+    val isNotLoading = !(controller.isLogging.collectAsState()).value
     val noError = controller.validator.errors.collectAsState().value.isEmpty()
     val allFieldsFilled = controller.validator.areAllFieldsFilled.collectAsState().value
     Column(
@@ -118,7 +123,7 @@ internal fun LoginFormNControls(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     onLoginRequest = onLoginRequest,
                     onRegisterRequest = onRegisterRequest,
-                    enableLogin = isNotLoading&&allFieldsFilled&&noError,
+                    enableLogin = isNotLoading && allFieldsFilled && noError,
                     enableRegister = isNotLoading
                 )
 
@@ -213,7 +218,7 @@ private fun LoginOrSignUp(
             ) {
                 Text(
                     text = "Register",
-                    color =if (enableRegister) MaterialTheme.colorScheme.secondary else Color.Unspecified
+                    color = if (enableRegister) MaterialTheme.colorScheme.secondary else Color.Unspecified
                 )
             }
         }
@@ -243,7 +248,7 @@ private fun _ForgetPassword(
     ) {
         Text(
             text = "Forget Password ?",
-            color =if (enabled) MaterialTheme.colorScheme.tertiary else Color.Unspecified
+            color = if (enabled) MaterialTheme.colorScheme.tertiary else Color.Unspecified
         )
     }
 

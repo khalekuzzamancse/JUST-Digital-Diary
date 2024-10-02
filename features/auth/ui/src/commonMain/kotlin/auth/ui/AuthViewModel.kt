@@ -1,8 +1,9 @@
 package auth.ui
 
 import androidx.lifecycle.ViewModel
-import auth.controller_presenter.controller.LoginController
-import auth.controller_presenter.controller.RegisterController
+import auth.presentationlogic.controller.LoginController
+import auth.presentationlogic.controller.PasswordResetController
+import auth.presentationlogic.controller.RegisterController
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 
@@ -12,16 +13,25 @@ import kotlinx.coroutines.flow.combine
  */
 internal class AuthViewModel(
     val loginController: LoginController,
-    val registerController: RegisterController
-) :ViewModel(){
+    val registerController: RegisterController,
+    val resetController: PasswordResetController
+) : ViewModel() {
     val isLoading: Flow<Boolean> =
-        combine(loginController.isLogging, registerController.isRegistering)
-        { isLogging, isRegistering ->
-            isLogging || isRegistering
+        combine(
+            loginController.isLogging,
+            registerController.isRegistering,
+            resetController.isRequestSending
+        )
+        { isLogging, isRegistering, isResetSending ->
+            isLogging || isRegistering || isResetSending
         }
     val screenMessage: Flow<String?> =
-        combine(loginController.errorMessage, registerController.errorMessage)
-        { loginMsg, registerMsg ->
-            loginMsg ?: registerMsg
+        combine(
+            loginController.errorMessage,
+            registerController.errorMessage,
+            resetController.errorMessage
+        )
+        { loginMsg, registerMsg ,resetMsg->
+            loginMsg ?: registerMsg?:resetMsg
         }
 }

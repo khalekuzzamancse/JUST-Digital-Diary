@@ -26,10 +26,13 @@ internal fun AuthPasswordField(
     value: String,
     onValueChanged: (String) -> Unit,
     enableVisibility: Boolean = true,
+    enabled: Boolean = true,
 ) {
     var show by remember { mutableStateOf(false) }
+
     CustomTextField(
         modifier = modifier,
+        enabled = enabled,
         label = label,
         value = value,
         visualTransformation = if (show) VisualTransformation.None else PasswordVisualTransformation(),
@@ -41,14 +44,17 @@ internal fun AuthPasswordField(
                 Icon(
                     imageVector = if (show) Icons.Outlined.Visibility else Icons.Outlined.VisibilityOff,
                     contentDescription = "trailing icon",
-                    tint = MaterialTheme.colorScheme.secondary,//because clickable
-                    modifier = it.clickable {
-                        show = !show
+                    tint = if (enabled) MaterialTheme.colorScheme.secondary else
+                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
+                    modifier = if (enabled) {
+                        it.clickable {
+                            show = !show
+                        }
+                    } else {
+                        it // no clickable modifier when disabled
                     }
                 )
             }
-
         }
     )
-
 }

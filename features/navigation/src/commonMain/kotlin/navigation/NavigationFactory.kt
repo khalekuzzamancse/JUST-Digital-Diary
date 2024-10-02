@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.update
 internal object NavigationFactory {
     private val _token = MutableStateFlow<String?>(null)
     val token = _token.asStateFlow()
-    fun updateToken(token: String) {
+    fun updateToken(token: String?) {
      _token.update { token }
     }
 

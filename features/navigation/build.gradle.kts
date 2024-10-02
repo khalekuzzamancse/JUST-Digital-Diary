@@ -20,8 +20,10 @@ kotlin {
                 implementation(projects.features.schedule.ui)
                 implementation(projects.features.academicCalender.ui)
                 implementation(projects.features.profile.ui)
+                implementation(project(":core:database"))
             }
         }
+
 
     }
 
@@ -31,3 +33,4 @@ android {
     namespace = "navigation"
 
 }
+

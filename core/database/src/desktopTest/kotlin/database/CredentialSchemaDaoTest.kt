@@ -1,6 +1,7 @@
 package database
 
-import database.dao.CredentialDao
+import core.database.db.Database
+import core.database.getDatabase
 import database.schema.CredentialSchema
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
@@ -12,7 +13,7 @@ import kotlin.test.assertNull
 class CredentialSchemaDaoTest {
 
     private lateinit var db: Database
-    private lateinit var credentialDao: CredentialDao
+    private lateinit var credentialDao: core.database.dao.CredentialDao
 
     @Before
     fun createDb() {

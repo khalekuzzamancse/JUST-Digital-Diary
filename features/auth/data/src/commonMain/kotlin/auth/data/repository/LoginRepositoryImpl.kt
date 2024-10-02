@@ -3,7 +3,10 @@
 package auth.data.repository
 
 import auth.data.dto.LoginModelDTO
+import auth.data.entity.ResetPasswordConfirmEntity
+import auth.data.entity.ResetPasswordRequestEntity
 import auth.domain.model.LoginModel
+import auth.domain.model.ResetPasswordModel
 import auth.domain.repository.LoginRepository
 import core.network.ApiServiceClient
 
@@ -39,6 +42,32 @@ class LoginRepositoryImpl internal constructor(
         } catch (exception: Throwable) {
             //Execution is here means  not get any response most probably failed to connect with server
             responseHandler.handleFailure(exception)
+        }
+    }
+
+    override suspend fun sendResetPasswordRequest(email: String): Result<Unit> {
+        val url = "https://backend.rnzgoldenventure.com/api/users/forgot-password"
+        try {
+            val json = apiServiceClient.postOrThrow(url, ResetPasswordRequestEntity(email))
+            return Result.failure(responseHandler.parseAsServerMessageOrThrowCustomException(json))
+
+        } catch (exception: Throwable) {
+            return Result.failure(responseHandler.createCustomException(exception))
+        }
+    }
+
+    override suspend fun resetPassword(model: ResetPasswordModel): Result<Unit> {
+        val url = "https://backend.rnzgoldenventure.com/api/users/set-new-password"
+        try {
+            val json = apiServiceClient.postOrThrow(
+                url, ResetPasswordConfirmEntity(
+                    email = model.email, password = model.newPassword, code = model.code
+                )
+            )
+            return Result.failure(responseHandler.parseAsServerMessageOrThrowCustomException(json))
+
+        } catch (exception: Throwable) {
+            return Result.failure(responseHandler.createCustomException(exception))
         }
     }
 }

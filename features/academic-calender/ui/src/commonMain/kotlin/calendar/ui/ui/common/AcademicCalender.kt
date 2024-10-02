@@ -114,7 +114,7 @@ private fun _YearHeader(modifier: Modifier = Modifier, year: String) {
         ) {
             FlowRow {
                 Text("Academic Calender ")
-                Text(year)
+                //Text(year)
             }
         }
 

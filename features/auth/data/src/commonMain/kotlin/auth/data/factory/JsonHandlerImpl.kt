@@ -30,6 +30,24 @@ internal class JsonHandlerImpl(private val jsonParser: JsonParser) : JsonHandler
             else -> Result.failure(CustomException.UnKnownException(exception))
         }
     }
+    override fun parseAsServerMessageOrThrowCustomException(json: String): CustomException {
+        return if (json.isServerMessage())
+            json.createServerMessageException()
+        else
+            CustomException.JsonParseException(json)
+    }
+
+    override fun createCustomException(exception: Throwable): CustomException {
+        return when (exception) {
+            is NetworkException ->
+                CustomException.NetworkIOException(
+                    message = exception.message,
+                    debugMessage = exception.debugMessage
+                )
+
+            else -> CustomException.UnKnownException(exception)
+        }
+    }
 
     // Helper methods to process JSON strings
     private fun String.createServerMessageException(): CustomException.MessageFromServer {

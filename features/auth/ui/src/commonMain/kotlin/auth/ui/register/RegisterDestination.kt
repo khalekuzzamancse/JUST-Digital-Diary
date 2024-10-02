@@ -41,7 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import auth.controller_presenter.controller.RegisterController
+import auth.presentationlogic.controller.RegisterController
 import auth.ui.common.AuthPasswordField
 import common.ui.CustomTextField
 import common.ui.ErrorText

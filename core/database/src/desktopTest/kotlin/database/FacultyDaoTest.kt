@@ -2,7 +2,8 @@
 
 package database
 
-import database.dao.FacultyDao
+import core.database.db.Database
+import core.database.getDatabase
 import database.schema.FacultySchema
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
@@ -14,7 +15,7 @@ import kotlin.test.assertNull
 class FacultyDaoTest {
 
     private lateinit var db: Database
-    private lateinit var facultyDao: FacultyDao
+    private lateinit var facultyDao: core.database.dao.FacultyDao
 
     @Before
     fun createDb() {

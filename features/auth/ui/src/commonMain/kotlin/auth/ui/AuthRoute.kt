@@ -8,7 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import auth.controller_presenter.factory.UiFactory
+import auth.presentationlogic.factory.UiFactory
 import auth.ui.common.SnackNProgressBarDecorator
 import auth.ui.login.LoginScreen
 import auth.ui.register.RegisterDestination
@@ -32,7 +32,8 @@ fun AuthRoute(
     val authViewModel = viewModel {
         AuthViewModel(
             loginController = UiFactory.createLoginController(),
-            registerController = UiFactory.createRegisterController()
+            registerController = UiFactory.createRegisterController(),
+            resetController = UiFactory.createForgetController()
         )
     }
 
@@ -57,14 +58,32 @@ fun AuthRoute(
                         }
 
                     },
-                    onLoginSuccess = onLoginSuccess
+                    onLoginSuccess = onLoginSuccess,
+                    onPasswordResetRequest = {
+                        try {
+                            navController.navigate(Route.RESET_PASSWORD_SCREEN)
+                        } catch (_: Exception) {
+
+                        }
+                    }
                 )
             }
             composable(route = Route.REGISTER_SCREEN) {
-
                 RegisterDestination(
                     controller = authViewModel.registerController,
                     onLoginRequest = {
+                        try {
+                            navController.popBackStack()
+                        } catch (_: Exception) {
+
+                        }
+                    }
+                )
+            }
+            composable(route = Route.RESET_PASSWORD_SCREEN) {
+                ResetPasswordRoute(
+                    controller = authViewModel.resetController,
+                    onExitRequest = {
                         try {
                             navController.popBackStack()
                         } catch (_: Exception) {
@@ -85,6 +104,7 @@ fun AuthRoute(
 private object Route {
     const val LOGIN_SCREEN = "LoginScreen"
     const val REGISTER_SCREEN = "RegisterScreen"
+    const val RESET_PASSWORD_SCREEN = "ResetPasswordScreen"
 }
 
 

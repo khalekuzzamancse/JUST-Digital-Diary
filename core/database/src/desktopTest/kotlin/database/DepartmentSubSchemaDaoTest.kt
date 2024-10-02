@@ -2,8 +2,8 @@
 
 package database
 
-import database.dao.DepartmentDao
-import database.dao.FacultyDao
+import core.database.db.Database
+import core.database.getDatabase
 import database.schema.DepartmentSchema
 import database.schema.FacultySchema
 import junit.framework.TestCase.assertEquals
@@ -16,8 +16,8 @@ import kotlin.test.assertNull
 class DepartmentSubSchemaDaoTest {
 
     private lateinit var db: Database
-    private lateinit var departmentDao: DepartmentDao
-    private lateinit var facultyDao: FacultyDao
+    private lateinit var departmentDao: core.database.dao.DepartmentDao
+    private lateinit var facultyDao: core.database.dao.FacultyDao
 
     // Provided sample departments data
     private val sampleDepartments = listOf(

@@ -1,11 +1,16 @@
 package navigation
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
@@ -24,16 +29,22 @@ fun RootNavHost(
 ) {
     val mainViewModel = viewModel { MainViewModel() }
     val slapScreenShowing = mainViewModel.showSlapScreen.collectAsState().value
-    val token = NavigationFactory.token.collectAsState().value
+    val token = mainViewModel.token.collectAsState(null).value
+    val scope = rememberCoroutineScope()
     AppTheme {
-        if (token == null) {
-            AuthRoute(
-                onLoginSuccess = {
-                    NavigationFactory.updateToken(it)
-                }
-            )
+        if (mainViewModel.isTokenRefreshing.collectAsState().value) {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
+
         } else {
-            _FeatureNavGraph(viewModel = mainViewModel, onEvent = onEvent)
+            if (token == null) {
+                AuthRoute(
+                    onLoginSuccess = mainViewModel::onLoginSuccess
+                )
+            } else {
+                _FeatureNavGraph(viewModel = mainViewModel, onEvent = onEvent)
+            }
         }
 
 
@@ -59,7 +70,7 @@ private fun _FeatureNavGraph(
             navigator.navigator(destination)
         },
         onNavModeChange = {
-            isNavRailMode=it
+            isNavRailMode = it
         },
         contentHost = {
             NavGraph(
@@ -79,7 +90,7 @@ private fun _FeatureNavGraph(
 fun NavItemDecorator(
     controller: NavigationController,
     onSelectionRequest: (Destination) -> Unit,
-    onNavModeChange:(isNavRailMode:Boolean)->Unit,
+    onNavModeChange: (isNavRailMode: Boolean) -> Unit,
     onLogOutRequest: () -> Unit = {},
     contentHost: @Composable () -> Unit,
 ) {
