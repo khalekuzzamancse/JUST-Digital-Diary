@@ -40,7 +40,7 @@ import kotlin.random.Random
                 modifier=Modifier,
                 deptName = dept.name,
                 deptShortName = dept.shortName,
-                numOfTeacher = Random.nextInt(10,30).toString(),
+                numOfTeacher = dept.membersCount,
                 isSelected =selected==index,
                 onSelect = {
                     controller.onSelected(index)

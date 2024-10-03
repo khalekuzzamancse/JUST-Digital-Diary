@@ -21,6 +21,7 @@ import core.database.schema.TokenSchema
     ],
     version = 1
 )
+
 @TypeConverters(DepartmentConverter::class)
 internal abstract class Database : RoomDatabase() {
     abstract fun credentialDao(): core.database.dao.CredentialDao

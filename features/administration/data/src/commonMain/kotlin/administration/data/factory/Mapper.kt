@@ -39,7 +39,7 @@ internal object Mapper {
                 email = it.email,
                 additionalEmail = it.additional_email,
                 phone = it.phone,
-                profileImage =it.offices.firstOrNull()?.designation ?:"",
+                profileImage =it.profile,
                 achievements = it.achievement,
                 designations = it.offices.firstOrNull()?.designation ?:"",
                 roomNo = it.offices.firstOrNull()?.room_no ?:"",

@@ -41,12 +41,16 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
+import coil3.compose.AsyncImagePainter
+import coil3.compose.LocalPlatformContext
+import coil3.request.ImageRequest
 
 
 @Composable
 fun GenericEmployeeCard(
     modifier: Modifier,
-    expandMode: Boolean ,
+    expandMode: Boolean,
     name: String,
     profileImageUrl: String?,
     onCallRequest: () -> Unit,
@@ -70,11 +74,7 @@ fun GenericEmployeeCard(
                     modifier = Modifier, name = name, details = details
                 )
             } else {
-                EmployeeName(
-                    name = name,
-                    modifier = Modifier
-                )
-                details()
+                _NonExpandableInfo(name = name, details = details)
             }
             Spacer(Modifier.height(8.dp))
             _Controls(
@@ -89,6 +89,19 @@ fun GenericEmployeeCard(
 
 }
 
+@Composable
+private fun ColumnScope._NonExpandableInfo(
+    modifier: Modifier = Modifier,
+    name: String,
+    details: @Composable () -> Unit,
+) {
+    EmployeeName(
+        name = name,
+        modifier = Modifier
+    )
+    details()
+}
+
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -97,7 +110,7 @@ private fun ExpandAbleInfo(
     name: String,
     details: @Composable () -> Unit
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(true) }
 
     Column(
         modifier = modifier
@@ -200,26 +213,53 @@ private fun _Controls(
     }
 
 }
-
 @Composable
 private fun ColumnScope._ProfileImage(
     modifier: Modifier = Modifier,
     imageURl: String?
 ) {
-    if (imageURl != null) {
-        ImageLoader(
-            url = imageURl,
-            modifier = modifier
-                .heightIn(max = 100.dp)
-                .widthIn(max = 150.dp)
-                .align(Alignment.CenterHorizontally),
-        )
+    if (!imageURl.isNullOrBlank()) {
+        var loadFailed by remember { mutableStateOf(false) } // Track load failure
+
+        if (loadFailed) {
+            // If the load failed, show the placeholder
+            ProfileImagePlaceHolder(
+                modifier = Modifier
+                    .height(100.dp)
+                    .width(150.dp)
+                    .align(Alignment.CenterHorizontally),
+            )
+        } else {
+            // Attempt to load the image using AsyncImage
+            AsyncImage(
+                model = ImageRequest.Builder(LocalPlatformContext.current)
+                    .data(imageURl)
+                    .build(),
+                contentDescription = null,
+                onState = { state ->
+                    when (state) {
+                        is AsyncImagePainter.State.Error -> {
+                            // If loading fails, mark loadFailed as true to show the placeholder
+                            loadFailed = true
+                        }
+                        else -> {
+                            // Do nothing, allow the image to load
+                        }
+                    }
+                },
+                modifier = modifier
+                    .heightIn(max = 100.dp)
+                    .widthIn(max = 150.dp)
+                    .align(Alignment.CenterHorizontally),
+            )
+        }
     } else {
+        // Show the placeholder if the URL is null or blank
         ProfileImagePlaceHolder(
             modifier = Modifier
                 .height(100.dp)
-                .width(150.dp).align(Alignment.CenterHorizontally),
+                .width(150.dp)
+                .align(Alignment.CenterHorizontally),
         )
     }
-
 }

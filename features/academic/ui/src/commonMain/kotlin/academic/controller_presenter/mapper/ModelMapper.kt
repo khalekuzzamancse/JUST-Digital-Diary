@@ -20,7 +20,8 @@ internal object ModelMapper {
         academic.controller_presenter.mapper.UiDepartmentModel(
             name = model.name,
             id = model.deptId,
-            shortName = model.shortName
+            shortName = model.shortName,
+            membersCount = model.employeeCount.toString()
         )
 
     fun toTeacherUiModel(model: TeacherModel) = academic.controller_presenter.mapper.TeacherUiModel(

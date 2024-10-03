@@ -1,20 +1,17 @@
 package navigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import auth.ui.AuthRoute
+import common.newui.EmptyContentScreen
 import common.ui.Destination
 import common.ui.DrawerToNavRailDecorator
 import common.ui.NavigationController
@@ -24,28 +21,43 @@ import navigation.component.NavDestinationBuilder
 
 
 @Composable
-fun RootNavHost(
+ fun RootNavHost(
     onEvent: (AppEvent) -> Unit,
 ) {
     val mainViewModel = viewModel { MainViewModel() }
     val slapScreenShowing = mainViewModel.showSlapScreen.collectAsState().value
-    val token = mainViewModel.token.collectAsState(null).value
-    val scope = rememberCoroutineScope()
-    AppTheme {
-        if (mainViewModel.isTokenRefreshing.collectAsState().value) {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
-            }
 
-        } else {
+    val scope = rememberCoroutineScope()
+    var token by rememberSaveable{ mutableStateOf<String?>(null) }
+    AppTheme {
+//        if (mainViewModel.isTokenRefreshing.collectAsState().value) {
+//            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//                CircularProgressIndicator()
+//            }
+//
+//        } else {
+//            if (token == null) {
+//                AuthRoute(
+//                    onLoginSuccess = mainViewModel::onLoginSuccess
+//                )
+//            } else {
+//                _FeatureNavGraph(viewModel = mainViewModel, onEvent = onEvent)
+//            }
+//        }
+
+     //   EmptyContentScreen()
+
             if (token == null) {
                 AuthRoute(
-                    onLoginSuccess = mainViewModel::onLoginSuccess
+                    onLoginSuccess = {
+                        token=it
+                        NavigationFactory.updateToken(it)
+                    }
                 )
             } else {
                 _FeatureNavGraph(viewModel = mainViewModel, onEvent = onEvent)
             }
-        }
+
 
 
     }

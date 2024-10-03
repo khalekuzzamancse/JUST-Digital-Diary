@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.convention.dataModulePlugin)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    alias(libs.plugins.jetbrainsCompose)//for accessing context android
 }
 kotlin {
 
@@ -10,6 +11,7 @@ kotlin {
             dependencies {
                 implementation(libs.room.runtime)
                 implementation(libs.sqlite.bundled)
+                implementation(compose.ui) //for accessing context android
             }
         }
 
@@ -19,6 +21,11 @@ kotlin {
             }
 
 
+        }
+        val androidMain by getting{
+            dependencies{
+
+            }
         }
 
     }
@@ -32,6 +39,3 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
-dependencies {
-    ksp(libs.room.compiler)
-}

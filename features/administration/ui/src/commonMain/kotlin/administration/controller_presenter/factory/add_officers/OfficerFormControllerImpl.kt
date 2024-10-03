@@ -58,6 +58,7 @@ internal class OfficerFormControllerImpl(
         achievements = "",
         phone = "",
         designations = "",
-        roomNo = ""
+        roomNo = "",
+        profileImageLink = null
     )
 }

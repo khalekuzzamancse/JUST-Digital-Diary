@@ -31,7 +31,7 @@ object Mapper {
             name = model.name,
             email = model.email,
             additionalEmail = model.additionalEmail ?: "",
-            profileImageLink = model.profileImage ?: "",
+            profileImageLink = model.profileImage,
             achievements = model.achievements,
             designations = model.designations,
             phone = model.phone ?: "",

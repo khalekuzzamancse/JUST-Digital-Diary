@@ -15,7 +15,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import common.ui.AdaptiveList
 import common.ui.GenericEmployeeCard
@@ -79,7 +83,8 @@ private fun _TeacherList(
             },
             onEmailRequest = {
                 onEvent(AcademicModuleEvent.EmailRequest(employee.email))
-            }
+            },
+            expandMode = true
         )
 
 
@@ -90,7 +95,7 @@ private fun _TeacherList(
 private fun _EmployeeCard(
     modifier: Modifier,
     teacher: TeacherModel,
-    expandMode: Boolean = true,
+    expandMode: Boolean,
     onCallRequest: () -> Unit,
     onEmailRequest: () -> Unit,
     onMessageRequest: () -> Unit,
@@ -151,3 +156,23 @@ private fun EmployeeDetails(
     }
 }
 
+internal object CardTypography {
+    val subTitle = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp,
+        fontFamily = FontFamily.Monospace
+    )
+    val title2 = TextStyle(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
+        fontFamily = FontFamily.Default,
+    )
+
+    val contactStyle = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 15.sp,
+        fontFamily = FontFamily.Monospace
+    )
+
+
+}

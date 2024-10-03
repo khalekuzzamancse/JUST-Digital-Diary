@@ -58,6 +58,7 @@ dependencies {
     implementation(compose.material3)
     implementation(compose.materialIconsExtended)
     implementation(libs.kotlinx.coroutines.android)
+    implementation (libs.androidx.datastore.preferences)
     implementation(project(":features:navigation"))
 
 
