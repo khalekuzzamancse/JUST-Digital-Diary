@@ -1,4 +1,4 @@
-package just.digitaldiary
+package common.newui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

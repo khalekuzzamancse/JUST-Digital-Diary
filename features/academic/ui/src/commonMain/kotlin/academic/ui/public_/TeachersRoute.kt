@@ -13,6 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -21,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import common.newui.ContactSelectionDialog
 import common.newui.EmptyContentScreen
 import common.ui.AdaptiveList
 import common.ui.GenericEmployeeCard
@@ -30,7 +35,7 @@ import common.ui.TopBarDecoratorCommon
 @Composable
 internal fun TeachersRoute(
     deptId: String,
-    token:String?,
+    token: String?,
     onExitRequest: () -> Unit,
     onEvent: (AcademicModuleEvent) -> Unit
     //TODO: event should go out,it should not handle by controller
@@ -38,7 +43,7 @@ internal fun TeachersRoute(
     val viewModel = viewModel { TeacherListViewModel(UiFactory.createTeachersController(token)) }
     val controller = viewModel.controller
     val teachers = controller.teachers.collectAsState().value
-    val isNotFetching =!(controller.isFetching.collectAsState().value)
+    val isNotFetching = !(controller.isFetching.collectAsState().value)
 
 
     LaunchedEffect(Unit) {
@@ -47,16 +52,15 @@ internal fun TeachersRoute(
     SnackNProgressBarDecorator(
         isLoading = viewModel.isLoading.collectAsState(false).value,
         snackBarMessage = viewModel.screenMessage.collectAsState(null).value
-    ){
+    ) {
         TopBarDecoratorCommon(
             topNavigationIcon = Icons.AutoMirrored.Default.ArrowBack,
             onNavigationIconClick = onExitRequest,
             topBarTitle = "Teacher List"
         ) {
-            if (teachers.isEmpty()&&isNotFetching){
+            if (teachers.isEmpty() && isNotFetching) {
                 EmptyContentScreen(message = "No teacher found")
-            }
-            else{
+            } else {
                 _TeacherList(
                     modifier = Modifier.padding(it),
                     teachers = teachers,
@@ -77,34 +81,85 @@ private fun _TeacherList(
     onEvent: (AcademicModuleEvent) -> Unit
 ) {
 
+    var selectedEvent by rememberSaveable { mutableStateOf<AcademicModuleEvent?>(null) }
+
     AdaptiveList(
         modifier = modifier,
         items = teachers
     ) { employee ->
+
         _EmployeeCard(
             modifier = Modifier.padding(8.dp),
             teacher = employee,
             onCallRequest = {
-                onEvent(AcademicModuleEvent.CallRequest(employee.phone))
+                selectedEvent = AcademicModuleEvent.CallRequest(employee.phone)
             },
             onMessageRequest = {
-                onEvent(AcademicModuleEvent.MessageRequest(employee.phone))
+                selectedEvent = AcademicModuleEvent.MessageRequest(employee.phone)
             },
             onEmailRequest = {
-                onEvent(AcademicModuleEvent.EmailRequest(employee.email))
+                selectedEvent = AcademicModuleEvent.EmailRequest(employee.email)
             },
-            expandMode = true
         )
 
 
     }
+
+    selectedEvent?.let { event ->
+        when (event) {
+            is AcademicModuleEvent.CallRequest -> {
+                ContactSelectionDialog(
+                    contactString = event.number,
+                    onDismissRequest = {
+                        selectedEvent = null
+                    },
+                    onItemSelected = { selectedPhoneNo ->
+                        onEvent(AcademicModuleEvent.CallRequest(selectedPhoneNo))
+                        selectedEvent = null
+                    }
+                )
+            }
+
+            is AcademicModuleEvent.MessageRequest -> {
+                ContactSelectionDialog(
+                    contactString = event.number,
+                    onDismissRequest = {
+                        selectedEvent = null
+
+                    },
+                    onItemSelected = { selectedPhoneNo ->
+                        onEvent(AcademicModuleEvent.MessageRequest(selectedPhoneNo))
+                        selectedEvent = null
+                    }
+                )
+
+            }
+
+            is AcademicModuleEvent.EmailRequest -> {
+                ContactSelectionDialog(
+                    contactString = event.email,
+                    onDismissRequest = {
+                        selectedEvent = null
+                    },
+                    onItemSelected = { email ->
+                        onEvent(AcademicModuleEvent.EmailRequest(email))
+                        selectedEvent = null
+                    }
+                )
+
+            }
+        }
+
+    }
+
+
 }
+
 
 @Composable
 private fun _EmployeeCard(
     modifier: Modifier,
     teacher: TeacherModel,
-    expandMode: Boolean,
     onCallRequest: () -> Unit,
     onEmailRequest: () -> Unit,
     onMessageRequest: () -> Unit,
@@ -114,7 +169,6 @@ private fun _EmployeeCard(
         modifier = modifier,
         name = teacher.name,
         profileImageUrl = teacher.profileImageLink,
-        expandMode = expandMode,
         onCallRequest = onCallRequest,
         onEmailRequest = onEmailRequest,
         onMessageRequest = onMessageRequest,

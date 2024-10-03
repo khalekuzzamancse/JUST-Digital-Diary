@@ -20,6 +20,8 @@ import navigation.component.NavDestinationBuilder
 @Composable
 fun RootNavHost(
     token: String?,
+    onTokenSaveRequest:(String)->Unit={},
+    onTokenDeleteRequest:()->Unit={},
     onEvent: (AppEvent) -> Unit,
 ) {
     val mainViewModel = viewModel { MainViewModel() }
@@ -31,7 +33,7 @@ fun RootNavHost(
         if (token == null) {
             AuthRoute(
                 onLoginSuccess = {
-                    onEvent(AppEvent.LoginSuccess(it))
+                 onTokenSaveRequest(it)
                 }
             )
         } else {
@@ -39,7 +41,7 @@ fun RootNavHost(
                 viewModel = mainViewModel,
                 onEvent = onEvent,
                 onLogOutRequest = {
-                    onEvent(AppEvent.LogOut)
+                    onTokenDeleteRequest()
                 }
             )
         }

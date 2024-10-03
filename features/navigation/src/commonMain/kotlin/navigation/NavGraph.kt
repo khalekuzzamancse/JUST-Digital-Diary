@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -54,16 +55,30 @@ fun NavGraph(
         navController = navController,
         startDestination = startDestination,
         enterTransition = {
-            scaleIn(initialScale = 0.8f, animationSpec = tween(700)) + fadeIn(animationSpec = tween(700))
+            scaleIn(initialScale = 0.8f, animationSpec = tween(700)) + fadeIn(
+                animationSpec = tween(
+                    700
+                )
+            )
         },
         exitTransition = {
-            scaleOut(targetScale = 1.1f, animationSpec = tween(700)) + fadeOut(animationSpec = tween(700))
+            scaleOut(
+                targetScale = 1.1f,
+                animationSpec = tween(700)
+            ) + fadeOut(animationSpec = tween(700))
         },
         popEnterTransition = {
-            scaleIn(initialScale = 1.2f, animationSpec = tween(700)) + fadeIn(animationSpec = tween(700))
+            scaleIn(initialScale = 1.2f, animationSpec = tween(700)) + fadeIn(
+                animationSpec = tween(
+                    700
+                )
+            )
         },
         popExitTransition = {
-            scaleOut(targetScale = 0.8f, animationSpec = tween(700)) + fadeOut(animationSpec = tween(700))
+            scaleOut(
+                targetScale = 0.8f,
+                animationSpec = tween(700)
+            ) + fadeOut(animationSpec = tween(700))
         }
     ) {
 
@@ -81,7 +96,11 @@ fun NavGraph(
                             }
                         }
                     ) {
-                        Icon(Icons.Default.AccountCircle, contentDescription = "Profile")
+                        Icon(
+                            imageVector = Icons.Default.AccountCircle,
+                            contentDescription = "Profile",
+                            tint = MaterialTheme.colorScheme.secondary
+                        )
                     }
                 }
             ) {
@@ -97,7 +116,7 @@ fun NavGraph(
                 onEvent = { event ->
                     toAppEvent(event)?.let(onEvent)
                 },
-                navigationIcon =if (!isNavRailMode) {
+                navigationIcon = if (!isNavRailMode) {
                     {
                         _MenuIcon(openDrawerRequest)
                     }
@@ -112,7 +131,7 @@ fun NavGraph(
                 onEvent = {
                     it.toAppEvent()?.let { it1 -> onEvent(it1) }
                 },
-                navigationIcon =if (!isNavRailMode) {
+                navigationIcon = if (!isNavRailMode) {
                     {
                         _MenuIcon(openDrawerRequest)
                     }
@@ -274,32 +293,32 @@ private fun _DrawerIconDecorator(
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable () -> Unit,
 ) {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {},
-                    navigationIcon = {
-                        if(!isNavRailMode){
-                            IconButton(
-                                onClick = onMenuIconClick
-                            ) {
-                                Icon(Icons.Default.Menu, contentDescription = "Drawer Icon")
-                            }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {},
+                navigationIcon = {
+                    if (!isNavRailMode) {
+                        IconButton(
+                            onClick = onMenuIconClick
+                        ) {
+                            Icon(Icons.Default.Menu, contentDescription = "Drawer Icon")
                         }
-
-                    },
-                    actions = {
-                        actions()
                     }
-                )
-            }
+
+                },
+                actions = {
+                    actions()
+                }
+            )
+        }
+    ) {
+        Box(
+            modifier = Modifier.padding(it).fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
-            Box(
-                modifier = Modifier.padding(it).fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                content()
-            }
+            content()
+        }
 
     }
 }

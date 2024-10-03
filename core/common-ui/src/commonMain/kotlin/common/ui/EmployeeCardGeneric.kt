@@ -50,7 +50,7 @@ import coil3.request.ImageRequest
 @Composable
 fun GenericEmployeeCard(
     modifier: Modifier,
-    expandMode: Boolean,
+    expandMode: Boolean=false,
     name: String,
     profileImageUrl: String?,
     onCallRequest: () -> Unit,

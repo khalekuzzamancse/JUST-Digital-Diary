@@ -22,7 +22,7 @@ internal class LoginControllerImpl(
     override val validator: LoginController.Validator,
 
     ) : LoginController {
-//        private val _state = MutableStateFlow(LoginModel("190142.cse@student.just.edu.bd", "12345678"))
+       // private val _state = MutableStateFlow(LoginModel("190142.cse@student.just.edu.bd", "12345678"))
     private val _state = MutableStateFlow(LoginModel("", ""))
     private val _isLogging = MutableStateFlow(false)
     private val _screenMessage = MutableStateFlow<String?>(null)
