@@ -5,14 +5,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import auth.ui.AuthRoute
-import common.ui.Destination
-import common.ui.DrawerToNavRailDecorator
-import common.ui.NavigationController
-import common.ui.NavigationEvent
+import kotlinx.coroutines.launch
 import navigation.component.DrawerHeader
 import navigation.component.NavDestinationBuilder
 
@@ -20,8 +18,8 @@ import navigation.component.NavDestinationBuilder
 @Composable
 fun RootNavHost(
     token: String?,
-    onTokenSaveRequest:(String)->Unit={},
-    onTokenDeleteRequest:()->Unit={},
+    onTokenSaveRequest: (String) -> Unit = {},
+    onTokenDeleteRequest: () -> Unit = {},
     onEvent: (AppEvent) -> Unit,
 ) {
     val mainViewModel = viewModel { MainViewModel() }
@@ -33,7 +31,7 @@ fun RootNavHost(
         if (token == null) {
             AuthRoute(
                 onLoginSuccess = {
-                 onTokenSaveRequest(it)
+                    onTokenSaveRequest(it)
                 }
             )
         } else {
@@ -57,17 +55,21 @@ private fun _FeatureNavGraph(
     onLogOutRequest: () -> Unit,
     onEvent: (AppEvent) -> Unit,
 ) {
-    val navHostController = rememberNavController()
-    val navigator = remember { Navigator(navHostController, onEvent) }
+    val navController = rememberNavController()
+    val scope = rememberCoroutineScope()
+
+    val navigator = remember { Navigator(navController, onEvent) }
     var isNavRailMode by remember { mutableStateOf(false) }
     NavItemDecorator(
         controller = viewModel.controller,
         onLogOutRequest = onLogOutRequest,
         onSelectionRequest = { destination ->
-            //notify the controller that a destination is selected
-            //so that it highlight it and close the drawer(if needed)
-            viewModel.select(destination)
-            navigator.navigator(destination)
+            scope.launch {
+                val navigationSuccess = navigator.navigator(destination)
+                if (navigationSuccess)
+                    viewModel.select(destination)
+            }
+
         },
         onNavModeChange = {
             isNavRailMode = it
@@ -79,7 +81,7 @@ private fun _FeatureNavGraph(
                 onBackPressed = navigator::pop,
                 startDestination = GraphRoutes.HOME,
                 isNavRailMode = isNavRailMode,
-                navController = navHostController,
+                navController = navController,
                 onMiscFeatureEvent = navigator::onMiscFeatureEvent
             )
         }
@@ -88,7 +90,7 @@ private fun _FeatureNavGraph(
 
 @Composable
 fun NavItemDecorator(
-    controller: NavigationController,
+    controller: NavigationDrawerController,
     onSelectionRequest: (Destination) -> Unit,
     onNavModeChange: (isNavRailMode: Boolean) -> Unit,
     onLogOutRequest: () -> Unit = {},

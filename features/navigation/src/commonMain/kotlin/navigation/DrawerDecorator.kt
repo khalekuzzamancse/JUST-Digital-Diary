@@ -1,4 +1,5 @@
-package common.ui
+@file:Suppress("unused")
+package navigation
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -45,7 +46,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 /*
- * Used to loose coupling,so that direcly this file can be copy -paste without the nav-rail dependency
+ * Used to loose coupling,so that directly this file can be copy -paste without the nav-rail dependency
 Copy-paste and edit this file directly according to requirement.
 since this is not a library,it is copy-pasting-editing,so to keep the client code simpler and easy to use
 define the necessary thing here
@@ -61,12 +62,10 @@ define the necessary thing here
  * * It manage it own navRail version so that
  * * Manage it own Scaffold,since scaffold is sub compose layout so making it parent
  * as scrabble without defining it size can causes crash.
- * * But the [content] can be scrollable without any effect
+ * * But the  can be scrollable without any effect
  * * If you used it inside another sub compose layout such as Scaffold or Lazy List then
  * and make the parent scrollable then it can causes crash,so use modifier to define it size in that case
- * @param modifier the scaffold modifier,so that you can control the scaffold
- * @param selected is Nullable because it might possible that no destination is selected
- * * mandatory parameters: [destinations],[onDestinationSelected],[content]
+
  *
  */
 
@@ -75,11 +74,10 @@ define the necessary thing here
 //TODO("Defining state")
 
 /**
- * * The factory to create easily the [NavState],so that client code
  * is short and clean enough
  * * Needed to refactor for coroutine scope
  */
-class NavigationController {
+class NavigationDrawerController {
     private val _selected = MutableStateFlow<Destination?>(null)
     val selected = _selected.asStateFlow()
     private val _drawerState = MutableStateFlow(DrawerState(DrawerValue.Closed))
@@ -104,7 +102,7 @@ class NavigationController {
 @Composable
 fun DrawerToNavRailDecorator(
     modifier: Modifier = Modifier,
-    controller: NavigationController,
+    controller: NavigationDrawerController,
     groups: List<NavGroup>,
     itemVisibilityDelay: Long? = null,
     onEvent: (NavigationEvent) -> Unit,
@@ -216,15 +214,12 @@ private fun _ModalDrawerDecorator(
     }
 }
 
-//TODO
-
 /**
  * This will reduce the complexity for selection and navigate when we have the group
  */
 interface Destination {
     data object None : Destination
 }
-
 class NavigationItem(
     val label: String,
     val focusedIcon: ImageVector,
@@ -245,7 +240,6 @@ data class NavGroup(
 
 
 /**
- * Non-default parameters: [state],[content]
  *  * has a distinct composable for drawer items without animation.
  *  * Handling both animated and non-animated scenarios within the same composable may inadvertently invoke the Animation API unnecessarily, leading to unwanted effects as the animation API executes on every frame.
  *  * It is crucial to exercise caution when dealing with animation APIs to avoid unintended calls or accidental object creation within the animation API, preventing unnecessary object creation.
@@ -336,9 +330,6 @@ sealed interface NavigationEvent {
 }
 
 
-/**
- * * Non Default params [state],[onEvent]
- */
 @Composable
 private fun _NavigationSheet(
     onEvent: (NavigationEvent) -> Unit,
@@ -498,14 +489,13 @@ private fun _ModalDrawer(
 
 
 /*
- * Used to loose coupling,so that direcly this file can be copy -paste without the nav-rail dependency
+ * Used to loose coupling,so that directly this file can be copy -paste without the nav-rail dependency
  */
 /**
  * * It does only the information that need to NavigationItem
  * * It does not hold any extra information
- * * Mandatory params : [label] , [focusedIcon]
  * Storing the destination here,to reduce the client reprehensibly to figure out
- * which destination is cliecked
+ * which destination is clicked
  */
 
 @Composable
@@ -541,7 +531,7 @@ private fun NavRailLayout(
 }
 
 /**
- * Used to loose coupling,so that direcly this file can be copy -paste without the nav-rail dependency
+ * Used to loose coupling,so that directly this file can be copy -paste without the nav-rail dependency
  */
 // TODO("NavRail SHEET Section -- NavRail SHEET Section -- NavRail SHEET Section -NavRail SHEET Section")
 // TODO("NavRail SHEET Section -- NavRail SHEET Section -- NavRail SHEET Section -NavRail SHEET Section")

@@ -260,12 +260,12 @@ private fun AdminEmployeeListEvent.toAppEvent(): AppEvent? {
 //}
 
 object GraphRoutes {
-    const val ACADEMIC_FEATURES = "FacultyFeatureNavGraph.ROUTE"
-    const val ADMIN_OFFICE_FEATURE = "AdminOfficeFeatureNavGraph.ROUTE"
+    const val ACADEMIC_FEATURES = "FacultyFeatureNavGraph"
+    const val ADMIN_OFFICE_FEATURE = "AdminOfficeFeatureNavGraph"
     const val HOME = "HOME_ROUTE"
     const val VC_MESSAGES = "VC_MESSAGES_ROUTE"
     const val ABOUT_US = "About us route"
-    const val NOTES_FEATURE = "NotesFeatureNavGraph.ROUTE"
+    const val NOTES_FEATURE = "NotesFeatureNavGraph"
     const val SEARCH = "Search"
     const val CLASS_SCHEDULE_VIEWER = "CLASS_SCHEDULE"
     const val EXAM_SCHEDULE_VIEWER = "EXAM_SCHEDULE"

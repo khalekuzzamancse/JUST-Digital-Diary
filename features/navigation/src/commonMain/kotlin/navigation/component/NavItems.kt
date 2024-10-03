@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.School
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.AdminPanelSettings
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.CalendarToday
@@ -20,10 +19,12 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.School
-import androidx.compose.material.icons.outlined.Search
-import common.ui.Destination
-import common.ui.NavGroup
-import common.ui.NavigationItem
+import navigation.Destination
+import navigation.NavGroup
+import navigation.NavigationItem
+
+//TODO
+
 
 
 sealed interface NavDestination : Destination {

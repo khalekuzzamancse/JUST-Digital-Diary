@@ -2,10 +2,11 @@ package navigation
 
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import common.ui.Destination
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withTimeoutOrNull
 import miscellaneous.MiscFeatureEvent
 import navigation.component.NavDestination
-import profile.presentationlogic.ProfileEvent
 
 class Navigator(
     private val navController: NavHostController,
@@ -13,56 +14,60 @@ class Navigator(
 ) {
 
 
-    internal fun navigator(destination: Destination) {
-        when (destination) {
+    internal suspend fun navigator(destination: Destination): Boolean {
+        return when (destination) {
             NavDestination.Home -> {
-                navigateAsTopMostDestination(GraphRoutes.HOME, navController)
+                navigateAsTopMostDestination(GraphRoutes.HOME)
             }
 
             NavDestination.FacultyList -> {
-                navigateAsTopMostDestination(GraphRoutes.ACADEMIC_FEATURES, navController)
+                navigateAsTopMostDestination(GraphRoutes.ACADEMIC_FEATURES)
             }
 
             NavDestination.AdminOffice -> {
-                navController.navigate(GraphRoutes.ADMIN_OFFICE_FEATURE)
+                navigateAsTopMostDestination(GraphRoutes.ADMIN_OFFICE_FEATURE)
             }
 
             NavDestination.Search -> {
-                navigateAsTopMostDestination(GraphRoutes.SEARCH, navController)
+                navigateAsTopMostDestination(GraphRoutes.SEARCH)
             }
 
             NavDestination.NoteBook -> {
-                navigateAsTopMostDestination(GraphRoutes.NOTES_FEATURE, navController)
+                navigateAsTopMostDestination(GraphRoutes.NOTES_FEATURE)
             }
 
             NavDestination.ClassSchedule -> {
-                navigateAsTopMostDestination(GraphRoutes.CLASS_SCHEDULE_VIEWER, navController)
+                navigateAsTopMostDestination(GraphRoutes.CLASS_SCHEDULE_VIEWER)
             }
 
             NavDestination.ExamSchedule -> {
-                navigateAsTopMostDestination(GraphRoutes.EXAM_SCHEDULE_VIEWER, navController)
+                navigateAsTopMostDestination(GraphRoutes.EXAM_SCHEDULE_VIEWER)
             }
 
             NavDestination.ExploreJust -> {
                 onEvent(AppEvent.WebVisitRequest("https://just.edu.bd/"))
+                true
             }
 
             NavDestination.AboutUs -> {
-                navigateAsTopMostDestination(GraphRoutes.ABOUT_US, navController)
+                navigateAsTopMostDestination(GraphRoutes.ABOUT_US)
             }
 
             NavDestination.EventGallery -> {
-                navigateAsTopMostDestination(GraphRoutes.EVENT_GALLERY, navController)
+                navigateAsTopMostDestination(GraphRoutes.EVENT_GALLERY)
             }
 
             NavDestination.MessageFromVC -> {
-                navigateAsTopMostDestination(GraphRoutes.VC_MESSAGES, navController)
+                navigateAsTopMostDestination(GraphRoutes.VC_MESSAGES)
             }
 
-            else -> {}
+            else -> {
+                false
+            }
         }
     }
-    fun onMiscFeatureEvent(event:MiscFeatureEvent){
+
+    fun onMiscFeatureEvent(event: MiscFeatureEvent) {
         try {
             when (event) {
                 is MiscFeatureEvent.CalenderRequest -> {
@@ -77,8 +82,9 @@ class Navigator(
                     navController.navigate(GraphRoutes.ADMIN_OFFICE_FEATURE)
                 }
 
+                else -> {
 
-
+                }
             }
         } catch (_: Exception) {
         }
@@ -86,26 +92,45 @@ class Navigator(
     }
 
 
-
-
     fun pop() {
         navController.popBackStack()
     }
 
-    private fun navigateAsTopMostDestination(
-        destination: String,
-        navController: NavHostController
-    ) {
-        navController.navigate(destination) {
-            navController.graph.findStartDestination().route?.let {
-                popUpTo(it) {
-                    saveState = true
+    private suspend fun navigateAsTopMostDestination(destination: String): Boolean {
+        return try {
+
+            navController.navigate(destination) {
+                navController.graph.findStartDestination().route?.let {
+                    popUpTo(it) {
+                        saveState = true
+                    }
                 }
+                launchSingleTop = true
+                restoreState = true
+
             }
-            launchSingleTop = true
-            restoreState = true
+            withTimeoutOrNull(5000L) { // Timeout after 5 seconds
+                navController.currentBackStackEntryFlow
+                    .filter { backStackEntry ->
+                        backStackEntry.destination.route == destination
+                    }
+                    .first() // Suspend until the destination matches
+//                println("Navigation to $destination was successful")
+                true
+            } ?: run {
+//                println("Failed to navigate to $destination within timeout")
+                false
+            }
+
+        } catch (_: Exception) {
+            false
         }
     }
 
 
 }
+
+
+
+
+

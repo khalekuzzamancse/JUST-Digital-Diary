@@ -10,7 +10,6 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
-import navigation.AppEvent
 import navigation.AppTheme
 import navigation.RootNavHost
 
@@ -28,16 +27,18 @@ fun main() {
             title = "JUST Digital Diary",
             onCloseRequest = ::exitApplication
         ) {
-            var token by rememberSaveable{ mutableStateOf<String?>(null) }
+            var token by rememberSaveable { mutableStateOf<String?>(null) }
 
             MaterialTheme {
                 AppTheme {
                     RootNavHost(
-                        token = token
-                    ){
-                        if (it is AppEvent.LoginSuccess)
-                            token=it.token
-                    }
+                        token = token,
+                        onTokenSaveRequest = {
+                            token = it
+                        },
+                        onTokenDeleteRequest = {},
+                        onEvent = {}
+                    )
 
                 }
 
