@@ -1,6 +1,7 @@
 [versions]
 agp = "8.2.2"
 androidx-activityCompose = "1.8.2"
+coreSplashscreen = "1.0.1"
 coroutines = "1.7.3"
 compose-plugin = "1.6.0" # 1.6.0
 datastorePreferences = "1.1.1"
@@ -24,6 +25,7 @@ roomCommonJvm = "2.7.0-alpha08"
 
 [libraries]
 androidx-activity-compose= { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }

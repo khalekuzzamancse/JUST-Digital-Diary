@@ -4,101 +4,141 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.viewmodel.compose.viewModel
 import just.digitaldiary.theme.AppTheme
+import kotlinx.coroutines.CoroutineScope
 import navigation.AppEvent
 import navigation.RootNavHost
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Inbox
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.graphics.vector.ImageVector
+
+// MainActivity.kt
 
 class MainActivity : ComponentActivity() {
+    private lateinit var eventHandler: AppEventHandler
+    private var isTokenReady = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val eventHandler = AppEventHandler(this)
+        installSplashScreen()
 
-        setContent {
-            AppTheme {
+        initializeDependencies()
+        initializeSplashScreen()
 
-                var showDialog by remember { mutableStateOf(false) }
-                var contactString by remember { mutableStateOf("") }
-                var currentEvent: AppEvent? by remember { mutableStateOf(null) }
+        setContent { BuildContent() }
+    }
 
-                // RootNavHost receives events and processes them
-                RootNavHost(
-                    onEvent = { event ->
-                        when (event) {
-                            is AppEvent.CallRequest -> {
-                                // If there's a number or multiple numbers, show dialog
-                                contactString = event.number
-                                currentEvent = event
-                                showDialog = true
-                            }
+    private fun initializeDependencies() {
+        eventHandler = AppEventHandler(this)
+    }
 
-                            is AppEvent.MessageRequest -> {
-                                // If there's a number or multiple numbers, show dialog
-                                contactString = event.number
-                                currentEvent = event
-                                showDialog = true
-                            }
+    private fun initializeSplashScreen() {
+        val splashScreen = installSplashScreen()
+        splashScreen.setKeepOnScreenCondition { !isTokenReady }
+    }
 
-                            is AppEvent.EmailRequest -> {
-                                // If there's an email or multiple emails, show dialog
-                                contactString = event.email
-                                currentEvent = event
-                                showDialog = true
-                            }
+    @Composable
+    private fun BuildContent() {
+        val tokenViewModel: TokenViewModel = viewModel()
+        val token by tokenViewModel.token.collectAsState()
+        val isTokenLoaded by tokenViewModel.isTokenLoaded.collectAsState()
 
-                            else -> {
-                                // Handle other events directly (such as WebVisitRequest)
-                                eventHandler.handleEvent(event)
-                            }
-                        }
-                    }
-                )
+        // Update isTokenReady once the token loading is complete
+        LaunchedEffect(isTokenLoaded) {
+            if (isTokenLoaded) {
+                isTokenReady = true
+            }
+        }
 
-                // Show the contact selection dialog if necessary
-                if (showDialog) {
-                    ContactSelectionDialog(
-                        contactString = contactString,
-                        onDismissRequest = { showDialog = false },
-                        onItemSelected = { selectedItem ->
-                            // Modify the current event with the selected item and pass it to the handler
-                            currentEvent?.let { event ->
-                                when (event) {
-                                    is AppEvent.CallRequest -> {
-                                        eventHandler.handleEvent(event.copy(number = selectedItem))
-                                    }
-                                    is AppEvent.MessageRequest -> {
-                                        eventHandler.handleEvent(event.copy(number = selectedItem))
-                                    }
-                                    is AppEvent.EmailRequest -> {
-                                        eventHandler.handleEvent(event.copy(email = selectedItem))
-                                    }
-                                }
-                            }
-                            showDialog = false // Close the dialog after selection
-                        }
+        AppTheme {
+            val scope = rememberCoroutineScope()
+            var showDialog by rememberSaveable { mutableStateOf(false) }
+            var contactString by rememberSaveable { mutableStateOf("") }
+            var currentEvent by rememberSaveable { mutableStateOf<AppEvent?>(null) }
+
+            RootNavHost(
+                token = token,
+                onEvent = { event ->
+                    handleEvent(
+                        event,
+                        scope,
+                        tokenViewModel,
+                        { showDialog = it },
+                        { contactString = it },
+                        { currentEvent = it }
                     )
                 }
+            )
+
+            if (showDialog) {
+                ContactSelectionDialog(
+                    contactString = contactString,
+                    onDismissRequest = { showDialog = false },
+                    onItemSelected = { selectedItem ->
+                        handleContactSelection(selectedItem, currentEvent)
+                        showDialog = false
+                    }
+                )
+            }
+        }
+    }
+
+    private fun handleEvent(
+        event: AppEvent,
+        scope: CoroutineScope,
+        tokenViewModel: TokenViewModel,
+        setShowDialog: (Boolean) -> Unit,
+        setContactString: (String) -> Unit,
+        setCurrentEvent: (AppEvent?) -> Unit
+    ) {
+        when (event) {
+            is AppEvent.CallRequest -> {
+                setContactString(event.number)
+                setCurrentEvent(event)
+                setShowDialog(true)
+            }
+            is AppEvent.MessageRequest -> {
+                setContactString(event.number)
+                setCurrentEvent(event)
+                setShowDialog(true)
+            }
+            is AppEvent.EmailRequest -> {
+                setContactString(event.email)
+                setCurrentEvent(event)
+                setShowDialog(true)
+            }
+            is AppEvent.LoginSuccess -> {
+                tokenViewModel.saveToken(event.token)
+            }
+            is AppEvent.LogOut -> {
+                tokenViewModel.clearToken()
+            }
+            else -> {
+                eventHandler.handleEvent(event)
+            }
+        }
+    }
+
+    private fun handleContactSelection(selectedItem: String, currentEvent: AppEvent?) {
+        currentEvent?.let { event ->
+            when (event) {
+                is AppEvent.CallRequest -> {
+                    eventHandler.handleEvent(event.copy(number = selectedItem))
+                }
+                is AppEvent.MessageRequest -> {
+                    eventHandler.handleEvent(event.copy(number = selectedItem))
+                }
+                is AppEvent.EmailRequest -> {
+                    eventHandler.handleEvent(event.copy(email = selectedItem))
+                }
+                else -> {}
             }
         }
     }
 }
-

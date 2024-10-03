@@ -66,16 +66,17 @@ fun GenericEmployeeCard(
             modifier = modifier
                 .padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp),
-            horizontalAlignment = Alignment.Start
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             _ProfileImage(imageURl = profileImageUrl)
-            if (expandMode) {
-                ExpandAbleInfo(
-                    modifier = Modifier, name = name, details = details
-                )
-            } else {
-                _NonExpandableInfo(name = name, details = details)
-            }
+            _NonExpandableInfo(name = name, details = details)
+//            if (expandMode) {
+//                ExpandAbleInfo(
+//                    modifier = Modifier, name = name, details = details
+//                )
+//            } else {
+//                _NonExpandableInfo(name = name, details = details)
+//            }
             Spacer(Modifier.height(8.dp))
             _Controls(
                 onCallRequest = onCallRequest,
@@ -97,7 +98,7 @@ private fun ColumnScope._NonExpandableInfo(
 ) {
     EmployeeName(
         name = name,
-        modifier = Modifier
+        modifier = Modifier.align(Alignment.CenterHorizontally)
     )
     details()
 }

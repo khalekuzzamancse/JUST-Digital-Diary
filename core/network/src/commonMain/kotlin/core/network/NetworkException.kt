@@ -43,4 +43,9 @@ sealed class NetworkException(override val message: String, val debugMessage: St
         message = message,
         debugMessage = debugMessage
     )
+    /**New UnauthorizedException for HTTP 401 errors, such as for token is not valid*/
+    class UnauthorizedException(message: String, debugMessage: String) : NetworkException(
+        message = message,
+        debugMessage = debugMessage
+    )
 }

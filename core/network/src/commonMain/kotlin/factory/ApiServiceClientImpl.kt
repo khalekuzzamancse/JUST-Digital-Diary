@@ -24,9 +24,10 @@ class ApiServiceClientImpl internal constructor() : ApiServiceClient {
     override suspend fun retrieveJsonData(url: String): Result<String> {
         val client = _createClient()
         return try {
+            val response = client.get(url)
+            ToCustomException().throwCustomExceptionIfAny(code = response.status, body = response.bodyAsText())
 
-            val httpResponse = client.get(url)
-            val json = httpResponse.bodyAsText()
+            val json = response.bodyAsText()
             Result.success(json)
         } catch (ex: Exception) {
             Result.failure(ToCustomException().convert(ex))
@@ -39,12 +40,14 @@ class ApiServiceClientImpl internal constructor() : ApiServiceClient {
     override suspend fun post(url: String, body: Any): Result<String> {
         val client = _createClient()
         return try {
-            val json = client.post(url) {
+            val response = client.post(url) {
                 contentType(ContentType.Application.Json)
                 setBody(body)
-            }.bodyAsText()
-            Result.success(json)
+            }
+            ToCustomException().throwCustomExceptionIfAny(code = response.status, body = response.bodyAsText())
 
+            val json = response.bodyAsText()
+            Result.success(json)
         } catch (ex: Exception) {
             Result.failure(ToCustomException().convert(ex))
         } finally {
@@ -52,13 +55,16 @@ class ApiServiceClientImpl internal constructor() : ApiServiceClient {
         }
     }
 
+
     override suspend fun postOrThrow(url: String, body: Any): String {
         val client = _createClient()
         try {
-            val json = client.post(url) {
+            val response = client.post(url) {
                 contentType(ContentType.Application.Json)
                 setBody(body)
-            }.bodyAsText()
+            }
+            ToCustomException().throwCustomExceptionIfAny(code = response.status, body = response.bodyAsText())
+            val json = response.bodyAsText()
             return json
 
         } catch (ex: Exception) {
@@ -71,10 +77,11 @@ class ApiServiceClientImpl internal constructor() : ApiServiceClient {
     override suspend fun retrieveJsonOrThrow(url: String, header: Header): String {
         val client = _createClient()
         return try {
-            val httpResponse = client.get(url) {
+            val response = client.get(url) {
                 header(key = header.key, value = header.value)
             }
-            val json = httpResponse.bodyAsText()
+            ToCustomException().throwCustomExceptionIfAny(code = response.status, body = response.bodyAsText())
+            val json = response.bodyAsText()
             json
         } catch (ex: Exception) {
             throw ToCustomException().convert(ex)

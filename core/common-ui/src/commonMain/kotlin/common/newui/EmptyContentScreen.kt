@@ -19,7 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun EmptyContentScreen() {
+fun EmptyContentScreen(
+    message:String="No content found",
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -37,9 +39,8 @@ fun EmptyContentScreen() {
                 tint = Color.Gray
             )
             Spacer(modifier = Modifier.height(16.dp))
-
             Text(
-                text = "No content found",
+                text = message,
                 fontSize = 20.sp,
                 color = Color.Gray,
                 fontWeight = FontWeight.Bold

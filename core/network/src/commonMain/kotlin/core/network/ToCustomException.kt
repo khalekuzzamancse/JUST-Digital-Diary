@@ -4,8 +4,10 @@ import io.ktor.client.network.sockets.ConnectTimeoutException
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.RedirectResponseException
 import io.ktor.client.plugins.ServerResponseException
+import io.ktor.http.HttpStatusCode
 import io.ktor.utils.io.errors.IOException
 import kotlinx.coroutines.TimeoutCancellationException
+
 /**
  * The ExceptionHandler class is responsible for handling various types of exceptions
  * that may occur during HTTP requests and providing user-friendly error messages.
@@ -80,5 +82,22 @@ internal class ToCustomException {
                 debugMessage = "Cause: $causeMessage\nStack Trace:\n$stackTrace"
             )
         }
+
     }
+
+    fun throwCustomExceptionIfAny(code: HttpStatusCode,body: String?=null) {
+        when (code) {
+            HttpStatusCode.Unauthorized -> {
+                throw NetworkException.UnauthorizedException(
+                    message = "Session expired. Please sign in again.",
+                    debugMessage = "Unauthorized access (401),server response is\n$body"
+                )
+            }
+
+            else -> {
+
+            }
+        }
+    }
+
 }

@@ -11,34 +11,39 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import common.newui.EmptyContentScreen
 import common.ui.CardInfoState
 import common.ui.GenericInfoCard
 import common.ui.generateAcronym
 
 @Composable
 internal fun AdminOfficeList(
-    modifier: Modifier=Modifier,
+    modifier: Modifier = Modifier,
     controller: OfficeController,
 ) {
-    val offices=controller.offices.collectAsState().value
-    val selected=controller.selected.collectAsState().value
-    Column(modifier.verticalScroll(rememberScrollState())) {
-        offices.forEachIndexed {index,faculty->
-            OfficeCard(
-                officeName = faculty.name,
-                subOfficeCount = faculty.numberOfSubOffices,
-                isSelected = selected==index,
-                onSelect = {
-                    controller.onSelected(index)
-                }
-            )
-        }
+    val offices = controller.offices.collectAsState().value
+    val selected = controller.selected.collectAsState().value
+    val isNotFetching =!(controller.isFetching.collectAsState().value)
+    if (offices.isEmpty()&&isNotFetching) {
+        EmptyContentScreen(message =  "No office found")
+    } else {
+        Column(modifier.verticalScroll(rememberScrollState())) {
+            offices.forEachIndexed { index, faculty ->
+                OfficeCard(
+                    officeName = faculty.name,
+                    subOfficeCount = faculty.numberOfSubOffices,
+                    isSelected = selected == index,
+                    onSelect = {
+                        controller.onSelected(index)
+                    }
+                )
+            }
 
+        }
     }
 
 
 }
-
 
 
 @Composable

@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import common.newui.EmptyContentScreen
 
 @Composable
 fun <T> AdaptiveList(
@@ -21,20 +22,23 @@ fun <T> AdaptiveList(
     itemContent: @Composable (T) -> Unit,
 ) {
     val state = rememberLazyStaggeredGridState()
-    LazyVerticalStaggeredGrid(
-        modifier = modifier,
-        columns = StaggeredGridCells.Adaptive(300.dp),
-        contentPadding = contentPadding,
-        horizontalArrangement = horizontalArrangement,
-        verticalItemSpacing = verticalItemSpacing,
-        state = state,
-    ){
-        items(
-            items =items,
-            itemContent = {item->
-                itemContent(item)
-            }
-        )
-    }
+
+        LazyVerticalStaggeredGrid(
+            modifier = modifier,
+            columns = StaggeredGridCells.Adaptive(300.dp),
+            contentPadding = contentPadding,
+            horizontalArrangement = horizontalArrangement,
+            verticalItemSpacing = verticalItemSpacing,
+            state = state,
+        ){
+            items(
+                items =items,
+                itemContent = {item->
+                    itemContent(item)
+                }
+            )
+        }
+
+
 
 }

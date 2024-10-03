@@ -1,5 +1,10 @@
 package administration.ui.public_
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
@@ -24,7 +29,19 @@ fun AdministrationRoute(
         NavHost(
             modifier = Modifier,
             navController = navController,
-            startDestination = OFFICE_AND_SUB_OFFICES_SCREEN
+            startDestination = OFFICE_AND_SUB_OFFICES_SCREEN,
+            enterTransition = {
+                scaleIn(initialScale = 0.8f, animationSpec = tween(700)) + fadeIn(animationSpec = tween(700))
+            },
+            exitTransition = {
+                scaleOut(targetScale = 1.1f, animationSpec = tween(700)) + fadeOut(animationSpec = tween(700))
+            },
+            popEnterTransition = {
+                scaleIn(initialScale = 1.2f, animationSpec = tween(700)) + fadeIn(animationSpec = tween(700))
+            },
+            popExitTransition = {
+                scaleOut(targetScale = 0.8f, animationSpec = tween(700)) + fadeOut(animationSpec = tween(700))
+            }
         ) {
             composable(route = OFFICE_AND_SUB_OFFICES_SCREEN) {
                 AdminOfficeAndSubOfficeRoute(

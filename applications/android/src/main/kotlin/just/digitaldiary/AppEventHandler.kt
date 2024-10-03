@@ -18,6 +18,9 @@ class AppEventHandler(
             is AppEvent.MessageRequest->sendSMS(event.number)
             is AppEvent.EmailRequest->sentEmail(event.email)
             is AppEvent.WebVisitRequest->visitWeb(event.url)
+            else->{
+
+            }
         }
 
     }

@@ -47,6 +47,7 @@ internal class FacultyControllerImpl(
 
                 when (exception) {
                     is CustomException -> {
+                        println("Debug exception:${exception.debugMessage}")
                         _updateErrorMessage(exception.message)
                     }
 

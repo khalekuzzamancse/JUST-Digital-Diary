@@ -34,6 +34,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import common.newui.EmptyContentScreen
 import schedule.di.DomainModuleFactory
 import schedule.ui.ui.common.DepartmentSessionHeader
 import schedule.ui.ui.common.TextSizeMeasurer
@@ -70,6 +71,9 @@ fun ViewExamScheduleScreen() {
                 .horizontalScroll(rememberScrollState())
                 .verticalScroll(rememberScrollState())
         )
+    }
+    if(examSchedule==null){
+        EmptyContentScreen(message = "No exam schedule found")
     }
 
 }

@@ -59,7 +59,10 @@ dependencies {
     implementation(compose.materialIconsExtended)
     implementation(libs.kotlinx.coroutines.android)
     implementation (libs.androidx.datastore.preferences)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.common.viewmodel)
     implementation(project(":features:navigation"))
+
 
 
 }

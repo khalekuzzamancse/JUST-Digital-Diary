@@ -14,41 +14,47 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import common.newui.EmptyContentScreen
 import common.ui.CardInfoState
 import common.ui.GenericInfoCard
 import kotlin.random.Random
+
 /**
  * @param onTeachersRequest This should not handle by controller it should be propagate
  * to parent so inform that it should navigate
  */
 @Composable
- internal fun Departments(
+internal fun Departments(
     modifier: Modifier = Modifier,
     controller: DepartmentController,
     onTeachersRequest: (String) -> Unit,
 ) {
-     val departments=controller.departments.collectAsState().value
-    val selected=controller.selected.collectAsState().value
+    val departments = controller.departments.collectAsState().value
+    val selected = controller.selected.collectAsState().value
+    val isNotFetching =!(controller.isFetching.collectAsState().value)
+    if (departments.isEmpty()&&isNotFetching) {
+        EmptyContentScreen(message = "No department found")
+    } else {
 
-    Column(
-        modifier = modifier.fillMaxWidth()
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ){
-       departments.forEachIndexed{index, dept ->
-            _DepartmentCard(
-                modifier=Modifier,
-                deptName = dept.name,
-                deptShortName = dept.shortName,
-                numOfTeacher = dept.membersCount,
-                isSelected =selected==index,
-                onSelect = {
-                    controller.onSelected(index)
-                    onTeachersRequest(dept.id)
-                }
-            )
+        Column(
+            modifier = modifier.fillMaxWidth()
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            departments.forEachIndexed { index, dept ->
+                _DepartmentCard(
+                    modifier = Modifier,
+                    deptName = dept.name,
+                    deptShortName = dept.shortName,
+                    numOfTeacher = dept.membersCount,
+                    isSelected = selected == index,
+                    onSelect = {
+                        controller.onSelected(index)
+                        onTeachersRequest(dept.id)
+                    }
+                )
+            }
         }
-
     }
 
 }

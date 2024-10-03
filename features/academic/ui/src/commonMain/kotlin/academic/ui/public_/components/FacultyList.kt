@@ -11,10 +11,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import common.newui.EmptyContentScreen
 import common.ui.CardInfoState
 import common.ui.GenericInfoCard
 import common.ui.generateAcronym
-
 
 
 @Composable
@@ -24,18 +24,22 @@ internal fun Faculty(
 ) {
     val faculties = controller.faculties.collectAsState().value
     val selected = controller.selected.collectAsState().value
-    Column(modifier.verticalScroll(rememberScrollState())) {
-        faculties.forEachIndexed { index, faculty ->
-            _FacultyCard(
-                facultyName = faculty.name,
-                departmentCount = faculty.numberOfDepartment,
-                isSelected = selected == index,
-                onSelect = {
-                    controller.onSelected(index)
-                }
-            )
+    val isNotFetching =!(controller.isFetching.collectAsState().value)
+    if (faculties.isEmpty()&&isNotFetching) {
+        EmptyContentScreen(message = "No faculty found")
+    } else {
+        Column(modifier.verticalScroll(rememberScrollState())) {
+            faculties.forEachIndexed { index, faculty ->
+                _FacultyCard(
+                    facultyName = faculty.name,
+                    departmentCount = faculty.numberOfDepartment,
+                    isSelected = selected == index,
+                    onSelect = {
+                        controller.onSelected(index)
+                    }
+                )
+            }
         }
-
     }
 }
 

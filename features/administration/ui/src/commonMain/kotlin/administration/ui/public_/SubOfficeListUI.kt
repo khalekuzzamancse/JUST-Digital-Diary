@@ -11,34 +11,40 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import common.newui.EmptyContentScreen
 import common.ui.CardInfoState
 import common.ui.GenericInfoCard
 import common.ui.generateAcronym
 
 @Composable
 internal fun AdminSubOfficeList(
-    modifier: Modifier=Modifier,
-    controller:SubOfficeController,
-    onEmployeeListRequest:(subOfficeId:String)->Unit,
+    modifier: Modifier = Modifier,
+    controller: SubOfficeController,
+    onEmployeeListRequest: (subOfficeId: String) -> Unit,
 ) {
-    val subOffices=controller.sobOffices.collectAsState().value
-    val selected=controller.selected.collectAsState().value
+    val subOffices = controller.sobOffices.collectAsState().value
+    val selected = controller.selected.collectAsState().value
+    val isNotFetching =!(controller.isFetching.collectAsState().value)
+    if (subOffices.isEmpty()&&isNotFetching) {
+        EmptyContentScreen(message = "No sub office found")
+    } else {
+        Column(modifier.verticalScroll(rememberScrollState())) {
+            subOffices.forEachIndexed { index, subOffice ->
+                SubOfficeCard(
+                    name = subOffice.name,
+                    shortName = generateAcronym(subOffice.name),
+                    employeeCount = subOffice.employeeCnt,
+                    isSelected = selected == index,
+                    onSelect = {
+                        controller.onSelected(index)
+                        onEmployeeListRequest(subOffice.id)
+                    }
+                )
+            }
 
-    Column(modifier.verticalScroll(rememberScrollState())) {
-       subOffices.forEachIndexed {index,subOffice->
-            SubOfficeCard(
-                name = subOffice.name,
-                shortName = generateAcronym(subOffice.name),
-                employeeCount = subOffice.employeeCnt,
-                isSelected = selected==index,
-                onSelect = {
-                    controller.onSelected(index)
-                    onEmployeeListRequest(subOffice.id)
-                }
-            )
         }
-
     }
+
 
 }
 

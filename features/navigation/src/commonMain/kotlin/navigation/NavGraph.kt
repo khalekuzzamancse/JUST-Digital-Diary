@@ -4,6 +4,11 @@ import academic.ui.AcademicModuleEvent
 import academic.ui.public_.AcademicRoute
 import administration.ui.public_.AdminEmployeeListEvent
 import administration.ui.public_.AdministrationRoute
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,7 +52,19 @@ fun NavGraph(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
+        enterTransition = {
+            scaleIn(initialScale = 0.8f, animationSpec = tween(700)) + fadeIn(animationSpec = tween(700))
+        },
+        exitTransition = {
+            scaleOut(targetScale = 1.1f, animationSpec = tween(700)) + fadeOut(animationSpec = tween(700))
+        },
+        popEnterTransition = {
+            scaleIn(initialScale = 1.2f, animationSpec = tween(700)) + fadeIn(animationSpec = tween(700))
+        },
+        popExitTransition = {
+            scaleOut(targetScale = 0.8f, animationSpec = tween(700)) + fadeOut(animationSpec = tween(700))
+        }
     ) {
 
         composable(GraphRoutes.HOME) {
@@ -257,24 +274,19 @@ private fun _DrawerIconDecorator(
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable () -> Unit,
 ) {
-    if (isNavRailMode) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            content()
-        }
-    } else {
         Scaffold(
             topBar = {
                 TopAppBar(
                     title = {},
                     navigationIcon = {
-                        IconButton(
-                            onClick = onMenuIconClick
-                        ) {
-                            Icon(Icons.Default.Menu, contentDescription = "Drawer Icon")
+                        if(!isNavRailMode){
+                            IconButton(
+                                onClick = onMenuIconClick
+                            ) {
+                                Icon(Icons.Default.Menu, contentDescription = "Drawer Icon")
+                            }
                         }
+
                     },
                     actions = {
                         actions()
@@ -288,7 +300,6 @@ private fun _DrawerIconDecorator(
             ) {
                 content()
             }
-        }
 
     }
 }

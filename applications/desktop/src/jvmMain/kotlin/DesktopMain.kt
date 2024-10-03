@@ -1,11 +1,16 @@
 import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
+import navigation.AppEvent
 import navigation.AppTheme
 import navigation.RootNavHost
 
@@ -23,11 +28,15 @@ fun main() {
             title = "JUST Digital Diary",
             onCloseRequest = ::exitApplication
         ) {
+            var token by rememberSaveable{ mutableStateOf<String?>(null) }
 
             MaterialTheme {
                 AppTheme {
-                    RootNavHost{
-
+                    RootNavHost(
+                        token = token
+                    ){
+                        if (it is AppEvent.LoginSuccess)
+                            token=it.token
                     }
 
                 }

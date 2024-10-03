@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import common.newui.EmptyContentScreen
 import common.ui.AdaptiveList
 import common.ui.GenericEmployeeCard
 import common.ui.TopBarDecoratorCommon
@@ -37,6 +38,9 @@ internal fun TeachersRoute(
     val viewModel = viewModel { TeacherListViewModel(UiFactory.createTeachersController(token)) }
     val controller = viewModel.controller
     val teachers = controller.teachers.collectAsState().value
+    val isNotFetching =!(controller.isFetching.collectAsState().value)
+
+
     LaunchedEffect(Unit) {
         controller.fetch(deptId)
     }
@@ -49,12 +53,17 @@ internal fun TeachersRoute(
             onNavigationIconClick = onExitRequest,
             topBarTitle = "Teacher List"
         ) {
+            if (teachers.isEmpty()&&isNotFetching){
+                EmptyContentScreen(message = "No teacher found")
+            }
+            else{
+                _TeacherList(
+                    modifier = Modifier.padding(it),
+                    teachers = teachers,
+                    onEvent = onEvent
+                )
+            }
 
-            _TeacherList(
-                modifier = Modifier.padding(it),
-                teachers = teachers,
-                onEvent = onEvent
-            )
         }
     }
 

@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import common.newui.EmptyContentScreen
 import common.ui.AdaptiveList
 import common.ui.GenericEmployeeCard
 import common.ui.TopBarDecoratorCommon
@@ -49,6 +50,7 @@ fun AdminOfficersScreen(
     LaunchedEffect(Unit){
         viewModel.controller.fetch(subOfficeId)
     }
+    val isNotFetching =!(viewModel.controller.isFetching.collectAsState().value)
 
     SnackNProgressBarDecorator(
         isLoading = viewModel.isLoading.collectAsState(false).value,
@@ -59,12 +61,18 @@ fun AdminOfficersScreen(
             onNavigationIconClick = onExitRequest,
             topBarTitle = "Admin Officers"
         ) {
+            if (isNotFetching&&employees.isEmpty()){
+                EmptyContentScreen()
+            }
+            else{
 
-            ListOfAdminOfficer(
-                modifier = Modifier.padding(it),
-                officers = employees,
-                onEvent = onEvent
-            )
+                ListOfAdminOfficer(
+                    modifier = Modifier.padding(it),
+                    officers = employees,
+                    onEvent = onEvent
+                )
+            }
+
 
         }
     }

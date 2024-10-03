@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import common.newui.EmptyContentScreen
 import profile.presentationlogic.ProfileEvent
 import profile.presentationlogic.factory.UiFactory
 import profile.presentationlogic.model.ProfileModel
@@ -42,42 +43,45 @@ import profile.ui.common.SnackNProgressBarDecorator
 @Composable
 internal fun ProfileRoute(
     token: String?,
-    onEvent:( ProfileEvent)->Unit
+    onEvent: (ProfileEvent) -> Unit
 ) {
 
     if (token == null) {
-        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-            Text(text = "Something is wrong,Please Log in again")
-        }
-
+        EmptyContentScreen(
+            message = "Something is wrong,Please Log in again"
+        )
     } else {
         val viewModel = viewModel { ProfileViewModel(UiFactory.createProfileController(token)) }
-
+        val isNotFetching = !(viewModel.controller.isFetching.collectAsState().value)
         SnackNProgressBarDecorator(
             isLoading = viewModel.isLoading.collectAsState().value,
             snackBarMessage = viewModel.screenMessage.collectAsState().value
         ) {
             val model = viewModel.controller.profile.collectAsState().value
-            if (!model.isEmpty()) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    ProfileCard(profile = model)
-                    Spacer(Modifier.height(8.dp))
-                    Dashboard(
-                        isAdmin = true,
-                        onCalendarUpdateClick = { onEvent(ProfileEvent.NavigateToCalendarUpdate) },
-                        onExamRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToExamRoutineUpdate) },
-                        onClassRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToClassRoutineUpdate) },
-                        onTeacherInfoUpdateClick = { onEvent(ProfileEvent.NavigateToTeacherInfoUpdate) },
-                    )
+            if (model.isEmpty() && isNotFetching) {
+                EmptyContentScreen()
+            } else {
+                if (!model.isEmpty()) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        ProfileCard(profile = model)
+                        Spacer(Modifier.height(8.dp))
+                        Dashboard(
+                            isAdmin = true,
+                            onCalendarUpdateClick = { onEvent(ProfileEvent.NavigateToCalendarUpdate) },
+                            onExamRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToExamRoutineUpdate) },
+                            onClassRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToClassRoutineUpdate) },
+                            onTeacherInfoUpdateClick = { onEvent(ProfileEvent.NavigateToTeacherInfoUpdate) },
+                        )
+                    }
                 }
 
 
             }
-
         }
     }
+
 
 }
 

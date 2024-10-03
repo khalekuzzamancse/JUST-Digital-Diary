@@ -1,4 +1,6 @@
 ##Next todo:
+- Bug: After calling , app navigation is start from home again
+- Bug: Showing rotating screen from employee then again control comes to faculty or office list
 
 #Academic module
 - Add theme

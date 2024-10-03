@@ -33,6 +33,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import common.newui.EmptyContentScreen
 import schedule.di.DomainModuleFactory
 import schedule.ui.ui.common.DepartmentSessionHeader
 import schedule.ui.ui.common.TextSizeMeasurer
@@ -62,8 +63,12 @@ fun ViewClassScheduleScreen() {
         }
 
     }
+
     classSchedule?.let { schedule ->
         ClassSchedule(schedule)
+    }
+    if(classSchedule==null){
+        EmptyContentScreen(message = "No class schedule found")
     }
 
 }

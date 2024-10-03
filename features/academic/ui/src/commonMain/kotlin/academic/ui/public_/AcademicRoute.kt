@@ -8,9 +8,12 @@ import academic.ui.public_.components.Departments
 import academic.ui.public_.components.Faculty
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -50,7 +53,19 @@ fun AcademicRoute(
     NavHost(
         navController = navController,
         startDestination = _Route.FACULTY_AND_DEPT,
-        modifier = Modifier
+        modifier = Modifier,
+        enterTransition = {
+            scaleIn(initialScale = 0.8f, animationSpec = tween(700)) + fadeIn(animationSpec = tween(700))
+        },
+        exitTransition = {
+            scaleOut(targetScale = 1.1f, animationSpec = tween(700)) + fadeOut(animationSpec = tween(700))
+        },
+        popEnterTransition = {
+            scaleIn(initialScale = 1.2f, animationSpec = tween(700)) + fadeIn(animationSpec = tween(700))
+        },
+        popExitTransition = {
+            scaleOut(targetScale = 0.8f, animationSpec = tween(700)) + fadeOut(animationSpec = tween(700))
+        }
     ) {
 
         composable(route = _Route.FACULTY_AND_DEPT) {
