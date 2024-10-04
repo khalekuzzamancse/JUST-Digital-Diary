@@ -33,6 +33,7 @@ import miscellaneous.ui.AboutUsRoute
 import miscellaneous.ui.eventGallery.EventsRoute
 import miscellaneous.ui.home.HomeRoute
 import miscellaneous.ui.vcmessage.MessageFromVCRoute
+import navigation.component.NavDestination
 import profile.ui.ProfileNavHost
 import schedule.ui.ui.public_.ViewClassScheduleScreen
 import schedule.ui.ui.public_.ViewExamScheduleScreen
@@ -47,6 +48,7 @@ fun NavGraph(
     startDestination: String,
     isNavRailMode: Boolean,
     navController: NavHostController,
+    navigateToProfile:()->Unit,
     onMiscFeatureEvent: (MiscFeatureEvent) -> Unit,
 ) {
 
@@ -82,19 +84,13 @@ fun NavGraph(
         }
     ) {
 
-        composable(GraphRoutes.HOME) {
+        composable(NavDestination.Home.route) {
             _DrawerIconDecorator(
                 onMenuIconClick = openDrawerRequest,
                 isNavRailMode = isNavRailMode,
                 actions = {
                     IconButton(
-                        onClick = {
-                            try {
-                                navController.navigate(GraphRoutes.PROFILE)
-                            } catch (_: Exception) {
-
-                            }
-                        }
+                        onClick = navigateToProfile
                     ) {
                         Icon(
                             imageVector = Icons.Default.AccountCircle,
@@ -111,7 +107,7 @@ fun NavGraph(
 
         }
 
-        composable(GraphRoutes.ACADEMIC_FEATURES) {
+        composable(NavDestination.FacultyList.route) {
             AcademicRoute(
                 onEvent = { event ->
                     toAppEvent(event)?.let(onEvent)
@@ -125,7 +121,7 @@ fun NavGraph(
             )
         }
 
-        composable(GraphRoutes.ADMIN_OFFICE_FEATURE) {
+        composable(NavDestination.AdminOffice.route) {
             AdministrationRoute(
                 token = NavigationFactory.token.value,
                 onEvent = {
@@ -138,7 +134,7 @@ fun NavGraph(
                 } else null
             )
         }
-        composable(GraphRoutes.PROFILE) {
+        composable(NavDestination.Profile.route) {
             ProfileNavHost(
                 token = NavigationFactory.token.value,
                 navigationIcon = if (!isNavRailMode) {
@@ -148,7 +144,7 @@ fun NavGraph(
                 } else null
             )
         }
-        composable(GraphRoutes.CLASS_SCHEDULE_VIEWER) {
+        composable(NavDestination.ClassSchedule.route) {
             _DrawerIconDecorator(
                 isNavRailMode = isNavRailMode,
                 onMenuIconClick = openDrawerRequest,
@@ -157,7 +153,7 @@ fun NavGraph(
             }
 
         }
-        composable(GraphRoutes.EXAM_SCHEDULE_VIEWER) {
+        composable(NavDestination.ExamSchedule.route) {
             _DrawerIconDecorator(
                 onMenuIconClick = openDrawerRequest,
                 isNavRailMode = isNavRailMode
@@ -167,7 +163,7 @@ fun NavGraph(
         }
 
 
-        composable(GraphRoutes.VC_MESSAGES) {
+        composable(NavDestination.MessageFromVC.route) {
             _DrawerIconDecorator(
                 onMenuIconClick = openDrawerRequest,
                 isNavRailMode = isNavRailMode
@@ -178,7 +174,7 @@ fun NavGraph(
             }
 
         }
-        composable(GraphRoutes.EVENT_GALLERY) {
+        composable(NavDestination.EventGallery.route) {
             _DrawerIconDecorator(
                 onMenuIconClick = openDrawerRequest,
                 isNavRailMode = isNavRailMode
@@ -189,7 +185,7 @@ fun NavGraph(
             }
 
         }
-        composable(GraphRoutes.ABOUT_US) {
+        composable(NavDestination.AboutUs.route) {
             _DrawerIconDecorator(
                 onMenuIconClick = openDrawerRequest,
                 isNavRailMode = isNavRailMode
@@ -259,20 +255,6 @@ private fun AdminEmployeeListEvent.toAppEvent(): AppEvent? {
 //
 //}
 
-object GraphRoutes {
-    const val ACADEMIC_FEATURES = "FacultyFeatureNavGraph"
-    const val ADMIN_OFFICE_FEATURE = "AdminOfficeFeatureNavGraph"
-    const val HOME = "HOME_ROUTE"
-    const val VC_MESSAGES = "VC_MESSAGES_ROUTE"
-    const val ABOUT_US = "About us route"
-    const val NOTES_FEATURE = "NotesFeatureNavGraph"
-    const val SEARCH = "Search"
-    const val CLASS_SCHEDULE_VIEWER = "CLASS_SCHEDULE"
-    const val EXAM_SCHEDULE_VIEWER = "EXAM_SCHEDULE"
-    const val EVENT_GALLERY = "Event Gallery"
-    const val PROFILE = "ProfileRoute"
-
-}
 
 @Composable
 private fun _MenuIcon(

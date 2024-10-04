@@ -56,7 +56,7 @@ internal fun TeachersRoute(
         TopBarDecoratorCommon(
             topNavigationIcon = Icons.AutoMirrored.Default.ArrowBack,
             onNavigationIconClick = onExitRequest,
-            topBarTitle = "Teacher List"
+            topBarTitle = "Members"
         ) {
             if (teachers.isEmpty() && isNotFetching) {
                 EmptyContentScreen(message = "No teacher found")

@@ -218,7 +218,11 @@ private fun _ModalDrawerDecorator(
  * This will reduce the complexity for selection and navigate when we have the group
  */
 interface Destination {
-    data object None : Destination
+    val route: String
+    data object None : Destination {
+        override val route: String
+            get() = "None"
+    }
 }
 class NavigationItem(
     val label: String,

@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import auth.ui.AuthRoute
 import kotlinx.coroutines.launch
 import navigation.component.DrawerHeader
+import navigation.component.NavDestination
 import navigation.component.NavDestinationBuilder
 
 
@@ -60,14 +61,28 @@ private fun _FeatureNavGraph(
 
     val navigator = remember { Navigator(navController, onEvent) }
     var isNavRailMode by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        navController.currentBackStack.collect { entries ->
+            val lastDestinationRoute =
+                entries.lastOrNull { entry -> entry.destination.route != null }?.destination?.route
+            val selected: Destination? =
+                NavDestinationBuilder.allDestinations.find { it.route == lastDestinationRoute }
+            if (selected != null)
+                viewModel.select(selected)
+            else
+                viewModel.select(Destination.None)
+
+        }
+    }
+
+
     NavItemDecorator(
         controller = viewModel.controller,
         onLogOutRequest = onLogOutRequest,
         onSelectionRequest = { destination ->
             scope.launch {
-                val navigationSuccess = navigator.navigator(destination)
-                if (navigationSuccess)
-                    viewModel.select(destination)
+                navigator.navigator(destination)
             }
 
         },
@@ -79,10 +94,11 @@ private fun _FeatureNavGraph(
                 onEvent = onEvent,
                 openDrawerRequest = viewModel::openDrawer,
                 onBackPressed = navigator::pop,
-                startDestination = GraphRoutes.HOME,
+                startDestination = NavDestination.Home.route,
                 isNavRailMode = isNavRailMode,
                 navController = navController,
-                onMiscFeatureEvent = navigator::onMiscFeatureEvent
+                onMiscFeatureEvent = navigator::onMiscFeatureEvent,
+                navigateToProfile = {navigator.navigator(NavDestination.Profile)}
             )
         }
     )

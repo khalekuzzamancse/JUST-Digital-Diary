@@ -28,22 +28,53 @@ import navigation.NavigationItem
 
 
 sealed interface NavDestination : Destination {
-    data object Home : NavDestination
-    data object FacultyList : NavDestination
-    data object AdminOffice : NavDestination
-    data object Search : NavDestination
-    data object EventGallery : NavDestination
-    data object ExploreJust : NavDestination
-    data object NoteBook : NavDestination
-    data object MessageFromVC : NavDestination
-    data object AboutUs : NavDestination
-    data object ExamSchedule : NavDestination
-    data object ClassSchedule:NavDestination
+    data object Home : NavDestination {
+        override val route = "Home"
+    }
+    data object Profile : NavDestination {
+        override val route = "Profile"
+    }
+    data object FacultyList : NavDestination {
+        override val route = "FacultyList"
+    }
+    data object AdminOffice : NavDestination {
+        override val route = "AdminOffice"
+    }
+    data object Search : NavDestination {
+        override val route = "Search"
+    }
+    data object EventGallery : NavDestination {
+        override val route = "EventGallery"
+    }
+    data object ExploreJust : NavDestination {
+        override val route = "ExploreJust"
+    }
+    data object NoteBook : NavDestination {
+        override val route = "NoteBook"
+    }
+    data object MessageFromVC : NavDestination {
+        override val route = "MessageFromVC"
+    }
+    data object AboutUs : NavDestination {
+        override val route = "AboutUs"
+    }
+    data object ExamSchedule : NavDestination {
+        override val route = "ExamSchedule"
+    }
+    data object ClassSchedule : NavDestination {
+        override val route = "ClassSchedule"
+    }
 }
+
 
 object NavDestinationBuilder {
 
     val navGroups = listOf(group1(), group2(), group3(), group4(), group5())
+
+    val allDestinations: List<Destination> = navGroups.flatMap { group ->
+        group.items.map { it.destination }
+    }
+
 
     private fun group1() = NavGroup(
         items = listOf(
