@@ -70,7 +70,7 @@ internal fun ProfileRoute(
                         ProfileCard(profile = model)
                         Spacer(Modifier.height(8.dp))
                         Dashboard(
-                            isAdmin = false,
+                            isAdmin = true,
                             onCalendarUpdateClick = { onEvent(ProfileEvent.NavigateToCalendarUpdate) },
                             onExamRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToExamRoutineUpdate) },
                             onClassRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToClassRoutineUpdate) },

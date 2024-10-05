@@ -1,12 +1,15 @@
 
 package miscellaneous.ui
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -15,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -24,8 +28,13 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 
 import common.ui.TypeWriter
+import justdigitaldiary.features.miscellaneous.ui.generated.resources.Res
+import justdigitaldiary.features.miscellaneous.ui.generated.resources.just_logo_trans
 
 import miscellaneous.presentationlogic.model.AboutUsModel
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun AboutUsRoute() {
@@ -43,6 +52,7 @@ fun AboutUsRoute() {
 
 }
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun _AboutUsState(
     state: AboutUsModel,
@@ -51,9 +61,19 @@ private fun _AboutUsState(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxSize()
-
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val res: DrawableResource = Res.drawable.just_logo_trans
+        //after that compile it again to generate Res class, use : .\gradlew generateComposeResClass
+        Image(
+            modifier = Modifier.size(150.dp)
+                .background(Color.White),//will work for both dark and light
+            painter = painterResource(res),//org.jetbrains.compose.resources.
+            contentDescription = "JUST",
+        )
+        Spacer(modifier = Modifier.height(16.dp))
         AppName(state.appName)
         Spacer(modifier = Modifier.height(8.dp))
         DeptAndUniversityName(
@@ -71,7 +91,15 @@ private fun ColumnScope.AppName(
 ) {
     Text(
         text = name,
-        style = MaterialTheme.typography.headlineLarge,
+        style = MaterialTheme.typography.headlineLarge.copy(
+            brush = Brush.linearGradient(
+                colors = listOf(
+                    MaterialTheme.colorScheme.primary,
+                    MaterialTheme.colorScheme.secondary,
+                    MaterialTheme.colorScheme.tertiary
+                )
+            )
+        ),
         modifier = Modifier.align(Alignment.CenterHorizontally)
     )
 
@@ -95,16 +123,16 @@ internal fun DeptAndUniversityName(
         withStyle(
             style = SpanStyle(
                 fontWeight = FontWeight.Bold,
-                color = Color.Green
+                color = MaterialTheme.colorScheme.secondary
             )
         ) {
             append(deptName)
         }
-        append(" ")
+        append(", ")
         withStyle(
             style = SpanStyle(
                 fontWeight = FontWeight.Bold,
-                color = Color.Blue
+                color =  MaterialTheme.colorScheme.tertiary
             )
         ) {
             append(universityName)

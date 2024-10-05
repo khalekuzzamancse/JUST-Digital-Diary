@@ -2,6 +2,10 @@ package common.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
@@ -21,14 +25,13 @@ fun <T> AdaptiveList(
     items: List<T>,
     itemContent: @Composable (T) -> Unit,
 ) {
-    val state = rememberLazyStaggeredGridState()
+    val state = rememberLazyGridState()
 
-        LazyVerticalStaggeredGrid(
+        LazyVerticalGrid(
             modifier = modifier,
-            columns = StaggeredGridCells.Adaptive(300.dp),
+            columns = GridCells.Adaptive(300.dp),
             contentPadding = contentPadding,
             horizontalArrangement = horizontalArrangement,
-            verticalItemSpacing = verticalItemSpacing,
             state = state,
         ){
             items(

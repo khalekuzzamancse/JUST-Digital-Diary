@@ -39,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import auth.presentationlogic.controller.RegisterController
@@ -55,12 +56,14 @@ internal fun RegisterDestination(
     onLoginRequest: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
+    val keyboardController = LocalSoftwareKeyboardController.current
     //Simple state it is okay to define here,need to hoist
     var showOTPDialog by rememberSaveable { mutableStateOf(false) }
     if (showOTPDialog) {
         _OTPDialog(
             onDismiss = { showOTPDialog = false },
             onDone = { username, otp ->
+               keyboardController?.hide()
                 showOTPDialog = false
                 scope.launch {
                     controller.verifyAccount(username, otp)
@@ -99,6 +102,7 @@ internal fun RegisterDestination(
                     controller = controller,
                     onNavigateToLoginRequest = onLoginRequest,
                     onRegisterRequest = {
+                        keyboardController?.hide()
                         scope.launch {
                             controller.register()
                         }

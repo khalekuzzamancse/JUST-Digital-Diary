@@ -48,6 +48,7 @@ internal class PasswordRestControllerImpl(
 
 
     override suspend fun sendResetRequest() {
+        _isSendResetRequestSuccessful.update { true } //TODO: for debugging purposes
         startLoading()
         requestUseCase.execute(email.value).fold(
             onSuccess = {

@@ -34,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import auth.presentationlogic.controller.LoginController
@@ -54,13 +55,14 @@ internal fun LoginScreen(
     onPasswordResetRequest: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
-
+    val keyboardController = LocalSoftwareKeyboardController.current
     Box(modifier = Modifier.verticalScroll(rememberScrollState()).fillMaxSize(), contentAlignment = Alignment.Center) {
         LoginFormNControls(
             modifier = Modifier.padding(32.dp),
             controller = controller,
             onLoginRequest = {
                 coroutineScope.launch {
+                    keyboardController?.hide()
                     controller.performLogin()?.let(onLoginSuccess)
                 }
 
@@ -89,6 +91,7 @@ internal fun LoginFormNControls(
     val isNotLoading = !(controller.isLogging.collectAsState()).value
     val noError = controller.validator.errors.collectAsState().value.isEmpty()
     val allFieldsFilled = controller.validator.areAllFieldsFilled.collectAsState().value
+
     Column(
         modifier = modifier
             .widthIn(max = 500.dp)

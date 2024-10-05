@@ -30,6 +30,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import auth.presentationlogic.controller.PasswordResetController
 import auth.ui.common.AuthPasswordField
@@ -99,7 +100,8 @@ private fun _ResetForm(
     modifier: Modifier = Modifier,
     controller: PasswordResetController,
 ) {
-    val enabled = controller.isSendResetRequestSuccessful.collectAsState().value
+ val enabled = controller.isSendResetRequestSuccessful.collectAsState().value
+
     CustomTextField(
         enabled = enabled,
         value = controller.code.collectAsState().value,
@@ -126,6 +128,7 @@ private fun _Controls(
     controller: PasswordResetController
 ) {
     val enabled = controller.isSendResetRequestSuccessful.collectAsState().value
+    val keyboardController= LocalSoftwareKeyboardController.current
     val scope = rememberCoroutineScope()
     FlowRow(
         modifier = Modifier.fillMaxWidth(),
@@ -133,6 +136,7 @@ private fun _Controls(
     ) {
         Button(
             onClick = {
+                keyboardController?.hide()
                 scope.launch {
                     controller.sendResetRequest()
                 }
@@ -149,6 +153,7 @@ private fun _Controls(
 
         Button(
             onClick = {
+                keyboardController?.hide()
                 scope.launch {
                     controller.resetPassword()
                 }
