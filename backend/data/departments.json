@@ -1,0 +1,52 @@
+{
+  "FBST003": {
+    "departments": [
+      {
+        "id": 1,
+        "dept_id": "BIO001",
+        "name": "Department of Microbiology",
+        "shortname": "MB"
+      },
+      {
+        "id": 2,
+        "dept_id": "BIO002",
+        "name": "Department of Fisheries and Marine Bioscience",
+        "shortname": "FMB"
+      },
+      {
+        "id": 3,
+        "dept_id": "BIO003",
+        "name": "Department of Genetic Engineering and Biotechnology",
+        "shortname": "GEB"
+      },
+      {
+        "id": 4,
+        "dept_id": "BIO004",
+        "name": "Department of Pharmacy",
+        "shortname": "PH"
+      },
+      {
+        "id": 56,
+        "dept_id": "09",
+        "name": "Civil Engineering",
+        "shortname": "CIV"
+      }
+    ]
+  },
+  "FAST002": {
+    "departments": [
+      {
+        "id": 1,
+        "dept_id": "AST001",
+        "name": "Department of Applied Physics",
+        "shortname": "AP"
+      },
+      {
+        "id": 2,
+        "dept_id": "AST002",
+        "name": "Department of Applied Chemistry",
+        "shortname": "AC"
+      }
+    ]
+  }
+}

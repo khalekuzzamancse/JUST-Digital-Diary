@@ -24,7 +24,7 @@ internal class PasswordRestControllerImpl(
     private val _email = MutableStateFlow("")
     private val _password = MutableStateFlow("")
     private val _code = MutableStateFlow("")
-    private val _isSendResetRequestSuccessful = MutableStateFlow(false)
+    private val _isSendResetRequestSuccessful = MutableStateFlow(true)//TODO:For debugging
 
     //
     override val errorMessage = _screenMessage.asStateFlow()

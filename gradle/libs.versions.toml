@@ -11,6 +11,7 @@ junit = "4.13.2"
 voyager = "1.0.0"
 coil3-io = "3.0.0-alpha02"
 ktor = "2.3.7"
+
 realmVersion = "1.13.0"
 windowSize="0.3.1"
 navigationCompose = "2.7.7"
@@ -22,6 +23,10 @@ room = "2.7.0-alpha01"
 ksp = "1.9.23-1.0.19"
 sqlite = "2.5.0-SNAPSHOT"
 roomCommonJvm = "2.7.0-alpha08"
+
+## For server
+logback = "1.2.11"
+ktorServer = "2.0.0"
 
 [libraries]
 androidx-activity-compose= { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -62,10 +67,33 @@ room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 androidx-room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
 
+
+##
+#----------------------------------------------------------------
+#----------------------------------------------------------------
+#For server
+
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktorServer" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktorServer" }
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+
+
+
 [bundles]
 test = ["kotlin-test", "kotlin-test-junit"]
 ktorClient=["ktor-client-core","ktor-client-okhttp","ktor-client-content-negotiation","ktor-serialization-kotlinx-json"]
 coil=["coil3-core","coil3-network","coil3"]
+#----------------------------------------------------------------
+#----------------------------------------------------------------
+
+
+ktor-server = [
+    "ktor-server-core",
+    "ktor-server-netty",
+    "ktor-server-content-negotiation",
+    "ktor-serialization-kotlinx-json"
+]
 
 
 [plugins]

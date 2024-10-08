@@ -67,3 +67,4 @@ val featureModules = listOf(
 
 rootProject.name = "JUSTDigitalDiary"//do not use whitespace,it may causes build error or DEX
 include(applications+coreModules+featureModules)
+include(":backend")
