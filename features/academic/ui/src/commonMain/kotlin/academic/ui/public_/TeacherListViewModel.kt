@@ -1,10 +1,7 @@
 package academic.ui.public_
 
-import academic.controller_presenter.controller.TeachersController
+import academic.presentationlogic.controller.public_.TeachersController
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 /**

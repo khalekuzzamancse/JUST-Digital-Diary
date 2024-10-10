@@ -10,9 +10,9 @@ import data.entity.DepartmentListEntity
 import data.entity.FacultyEntity
 import data.entity.TeacherListEntity
 import data.service.JsonHandler
-import faculty.domain.model.DepartmentModel
-import faculty.domain.model.FacultyModel
-import faculty.domain.model.TeacherModel
+import faculty.domain.model.public_.DepartmentModel
+import faculty.domain.model.public_.FacultyModel
+import faculty.domain.model.public_.TeacherModel
 import kotlinx.serialization.builtins.ListSerializer
 
 class RemoteDataSourceImpl internal constructor(

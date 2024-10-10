@@ -1,9 +1,9 @@
 package academic.ui.admin
 
-import academic.controller_presenter.controller.TeacherFormController
-import academic.ui.common.CustomTextField
-import academic.controller_presenter.factory.UiFactory
-import academic.controller_presenter.model.Dept
+import academic.presentationlogic.controller.admin.TeacherFormController
+
+import academic.presentationlogic.factory.UiFactory
+import academic.presentationlogic.model.public_.Dept
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import common.ui.CustomTextField
 import common.ui.DropDown
 
 

@@ -1,7 +1,7 @@
 package academic.ui.public_
 
-import academic.controller_presenter.factory.UiFactory
-import academic.controller_presenter.model.TeacherModel
+import academic.presentationlogic.factory.UiFactory
+import academic.presentationlogic.model.public_.TeacherModel
 import academic.ui.AcademicModuleEvent
 import academic.ui.common.SnackNProgressBarDecorator
 import androidx.compose.foundation.layout.Arrangement

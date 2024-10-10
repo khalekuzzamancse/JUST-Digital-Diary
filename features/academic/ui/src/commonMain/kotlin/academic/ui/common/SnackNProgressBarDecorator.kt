@@ -1,6 +1,7 @@
 package academic.ui.common
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,8 +22,8 @@ fun SnackNProgressBarDecorator(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
     snackBarMessage: String?,
-    navigationIcon:(@Composable ()->Unit)?=null,
-    content: @Composable () -> Unit,
+    navigationIcon: (@Composable () -> Unit)? = null,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     val hostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -38,7 +39,7 @@ fun SnackNProgressBarDecorator(
             SnackbarHost(hostState = hostState)
         },
         topBar = {
-            if (navigationIcon!=null){
+            if (navigationIcon != null) {
                 TopAppBar(
                     title = {},
                     navigationIcon = navigationIcon

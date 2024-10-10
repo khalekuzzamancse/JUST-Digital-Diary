@@ -50,7 +50,7 @@ fun DropDown(
             },
             readOnly = true,
             value = options[selected],
-            onValueChange = {
+            onValueChanged = {
 
             },
             trailingIcon = {

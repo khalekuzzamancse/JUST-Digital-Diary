@@ -1,5 +1,9 @@
 package navigation
 
+import academic.ui.admin.AddDeptRoute
+import academic.ui.admin.AddFacultyRoute
+import academic.ui.admin.UpdateDeptRoute
+import academic.ui.admin.UpdateFacultyRoute
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -15,9 +19,21 @@ import navigation.component.DrawerHeader
 import navigation.component.NavDestination
 import navigation.component.NavDestinationBuilder
 
-
 @Composable
 fun RootNavHost(
+    token: String?,
+    onTokenSaveRequest: (String) -> Unit = {},
+    onTokenDeleteRequest: () -> Unit = {},
+    onEvent: (AppEvent) -> Unit,
+) {
+    // AddFacultyRoute()
+    // UpdateFacultyRoute()
+    //  UpdateDeptRoute()
+    AddDeptRoute()
+}
+
+@Composable
+private fun _RootNavHost(
     token: String?,
     onTokenSaveRequest: (String) -> Unit = {},
     onTokenDeleteRequest: () -> Unit = {},
@@ -98,7 +114,7 @@ private fun _FeatureNavGraph(
                 isNavRailMode = isNavRailMode,
                 navController = navController,
                 onMiscFeatureEvent = navigator::onMiscFeatureEvent,
-                navigateToProfile = {navigator.navigator(NavDestination.Profile)}
+                navigateToProfile = { navigator.navigator(NavDestination.Profile) }
             )
         }
     )

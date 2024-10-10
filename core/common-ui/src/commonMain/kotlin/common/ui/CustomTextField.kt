@@ -37,7 +37,7 @@ fun CustomTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     readOnly: Boolean = false,
     enabled: Boolean = true,
-    onValueChange: (String) -> Unit,
+    onValueChanged: (String) -> Unit,
     trailingIcon: (@Composable (Modifier) -> Unit)? = null
 ) {
     _BasicAuthTextField(
@@ -48,7 +48,7 @@ fun CustomTextField(
         visualTransformation = visualTransformation,
         leadingIcon = leadingIcon,
         keyboardType = keyboardType,
-        onValueChanged = onValueChange,
+        onValueChanged = onValueChanged,
         readOnly = readOnly,
         trailingIcon = trailingIcon
     )

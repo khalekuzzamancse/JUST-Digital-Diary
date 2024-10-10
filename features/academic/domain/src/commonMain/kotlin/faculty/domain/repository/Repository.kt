@@ -2,9 +2,9 @@ package faculty.domain.repository
 
 import common.docs.domain_layer.CustomExceptionDoc
 import common.docs.domain_layer.RepositoryDoc
-import faculty.domain.model.DepartmentModel
-import faculty.domain.model.FacultyModel
-import faculty.domain.model.TeacherModel
+import faculty.domain.model.public_.DepartmentModel
+import faculty.domain.model.public_.FacultyModel
+import faculty.domain.model.public_.TeacherModel
 
 /**
  * Further discussion on:

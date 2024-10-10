@@ -1,7 +1,7 @@
 @file:Suppress("ClassName")
 package academic.ui.public_
 
-import academic.controller_presenter.factory.UiFactory
+import academic.presentationlogic.factory.UiFactory
 import academic.ui.AcademicModuleEvent
 import academic.ui.common.SnackNProgressBarDecorator
 import academic.ui.public_.components.Departments

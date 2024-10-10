@@ -1,7 +1,7 @@
 package academic.ui.public_
 
-import academic.controller_presenter.controller.DepartmentController
-import academic.controller_presenter.controller.FacultyController
+import academic.presentationlogic.controller.public_.DepartmentController
+import academic.presentationlogic.controller.public_.FacultyController
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope

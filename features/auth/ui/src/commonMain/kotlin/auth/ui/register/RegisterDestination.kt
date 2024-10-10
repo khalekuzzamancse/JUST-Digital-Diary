@@ -202,7 +202,7 @@ private fun _Form(
             modifier = fieldModifier,
             label = "Name",
             value = name,
-            onValueChange = onNameChanged,
+            onValueChanged = onNameChanged,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Outlined.Person,
         )
@@ -212,7 +212,7 @@ private fun _Form(
             modifier = fieldModifier,
             label = "Email",
             value = email,
-            onValueChange = onEmailChanged,
+            onValueChanged = onEmailChanged,
             keyboardType = KeyboardType.Email,
             leadingIcon = Icons.Outlined.Email,
         )
@@ -222,7 +222,7 @@ private fun _Form(
             modifier = fieldModifier,
             label = "Username",
             value = username,
-            onValueChange = onUserNameChanged,
+            onValueChanged = onUserNameChanged,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Outlined.Person2,
         )
@@ -345,7 +345,7 @@ private fun _OTPDialog(
             Column {
                 CustomTextField(
                     value = username,
-                    onValueChange = { input ->
+                    onValueChanged = { input ->
                         username = input
                     },
                     label = "Identifier",
@@ -356,7 +356,7 @@ private fun _OTPDialog(
 
                 CustomTextField(
                     value = otp,
-                    onValueChange = { input ->
+                    onValueChanged = { input ->
                         otp = input
                     },
                     label = "OTP",

@@ -71,7 +71,7 @@ fun ResetPasswordRoute(
             ) {
                 CustomTextField(
                     value = controller.email.collectAsState().value,
-                    onValueChange = controller::onEmailChanged,
+                    onValueChanged = controller::onEmailChanged,
                     label = "Email",
                     leadingIcon = Icons.Outlined.Email,
                     modifier = Modifier.fillMaxWidth(),
@@ -105,7 +105,7 @@ private fun _ResetForm(
     CustomTextField(
         enabled = enabled,
         value = controller.code.collectAsState().value,
-        onValueChange = controller::onCodeChanged,
+        onValueChanged = controller::onCodeChanged,
         label = "Code",
         leadingIcon = Icons.Outlined.Security,
         modifier = Modifier.fillMaxWidth(),

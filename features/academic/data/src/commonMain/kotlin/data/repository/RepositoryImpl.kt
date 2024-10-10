@@ -1,14 +1,10 @@
 package data.repository
 
-import core.network.ApiServiceClient
-import core.network.JsonParser
-import data.entity.DepartmentListEntity
-import data.entity.TeacherListEntity
 import data.source.RemoteDataSource
 import faculty.domain.exception.CustomException
-import faculty.domain.model.DepartmentModel
-import faculty.domain.model.FacultyModel
-import faculty.domain.model.TeacherModel
+import faculty.domain.model.public_.DepartmentModel
+import faculty.domain.model.public_.FacultyModel
+import faculty.domain.model.public_.TeacherModel
 import faculty.domain.repository.Repository
 
 /**

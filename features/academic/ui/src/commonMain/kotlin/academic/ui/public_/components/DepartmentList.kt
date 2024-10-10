@@ -1,6 +1,6 @@
 package academic.ui.public_.components
 
-import academic.controller_presenter.controller.DepartmentController
+import academic.presentationlogic.controller.public_.DepartmentController
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import common.newui.EmptyContentScreen
 import common.ui.CardInfoState
 import common.ui.GenericInfoCard
-import kotlin.random.Random
 
 /**
  * @param onTeachersRequest This should not handle by controller it should be propagate

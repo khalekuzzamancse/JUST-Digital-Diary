@@ -38,7 +38,7 @@ internal fun AuthPasswordField(
         visualTransformation = if (show) VisualTransformation.None else PasswordVisualTransformation(),
         leadingIcon = Icons.Outlined.Lock,
         keyboardType = KeyboardType.Password,
-        onValueChange = onValueChanged,
+        onValueChanged = onValueChanged,
         trailingIcon = {
             if (enableVisibility) {
                 Icon(

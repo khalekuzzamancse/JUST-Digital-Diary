@@ -1,8 +1,8 @@
 package data.source
 
-import faculty.domain.model.DepartmentModel
-import faculty.domain.model.FacultyModel
-import faculty.domain.model.TeacherModel
+import faculty.domain.model.public_.DepartmentModel
+import faculty.domain.model.public_.FacultyModel
+import faculty.domain.model.public_.TeacherModel
 
 interface RemoteDataSource {
     suspend fun getFaculties(token: String): Result<List<FacultyModel>>

@@ -5,10 +5,10 @@ import data.entity.DepartmentListEntity
 import data.entity.FacultyEntity
 import data.entity.TeacherEntity
 import data.entity.TeacherListEntity
-import faculty.domain.model.DepartmentModel
-import faculty.domain.model.DepartmentSubModel
-import faculty.domain.model.FacultyModel
-import faculty.domain.model.TeacherModel
+import faculty.domain.model.public_.DepartmentModel
+import faculty.domain.model.public_.DepartmentSubModel
+import faculty.domain.model.public_.FacultyModel
+import faculty.domain.model.public_.TeacherModel
 import java.lang.Integer.min
 
 internal object Mapper {
