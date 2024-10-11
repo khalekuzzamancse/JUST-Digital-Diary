@@ -1,10 +1,16 @@
 @file:Suppress("SpellChecking")
 package data
 
-import data.entity.DepartmentListEntity
-import data.entity.FacultyEntity
-import data.entity.TeacherEntity
-import data.entity.TeacherListEntity
+import data.entity.admin.DepartmentEntryEntity
+import data.entity.admin.FacultyEntryEntity
+import data.entity.admin.TeacherEntryEntity
+import data.entity.public_.DepartmentListEntity
+import data.entity.public_.FacultyEntity
+import data.entity.public_.TeacherEntity
+import data.entity.public_.TeacherListEntity
+import faculty.domain.model.admin.DepartmentEntryModel
+import faculty.domain.model.admin.FacultyEntryModel
+import faculty.domain.model.admin.TeacherEntryModel
 import faculty.domain.model.public_.DepartmentModel
 import faculty.domain.model.public_.DepartmentSubModel
 import faculty.domain.model.public_.FacultyModel
@@ -27,7 +33,7 @@ internal object Mapper {
     fun toDeptModels(entity: DepartmentListEntity): List<DepartmentModel> {
         return entity.departments.map {
             DepartmentModel(
-                id = it.id,
+                priority = it.id,
                 deptId = it.deptId,
                 name = it.name,
                 shortName = it.shortName,
@@ -60,6 +66,31 @@ internal object Mapper {
                 uid = it.uid,
             )
         }
+    }
+
+    fun toFacultyEntryEntity(model: FacultyEntryModel)= FacultyEntryEntity(
+        priority=model.priority,
+        name=model.name,
+    )
+    fun toDepartmentEntryEntity(model: DepartmentEntryModel)= DepartmentEntryEntity(
+        priority=model.priority,
+        name=model.name,
+        shortName=model.shortName,
+        facultyId =  model.facultyId,
+
+    )
+    fun convertModelToEntity(model: TeacherEntryModel): TeacherEntryEntity {
+        return TeacherEntryEntity(
+            deptId = model.deptId,
+            id = model.priority,
+            name = model.name,
+            email = model.email,
+            additionalEmail = model.additionalEmail,
+            achievements = model.achievements,
+            phone = model.phone,
+            designations = model.designations,
+            roomNo = model.roomNo
+        )
     }
 }
 internal class DesignationSorter {

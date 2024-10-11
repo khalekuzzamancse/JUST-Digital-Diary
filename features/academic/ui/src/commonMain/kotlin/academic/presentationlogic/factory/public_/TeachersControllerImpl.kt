@@ -3,8 +3,8 @@
 package academic.presentationlogic.factory.public_
 
 import academic.presentationlogic.model.public_.TeacherModel
-import academic.presentationlogic.ModelMapper
 import academic.presentationlogic.controller.public_.TeachersController
+import academic.presentationlogic.mapper.ModelMapper
 import faculty.domain.exception.CustomException
 import faculty.domain.usecase.public_.RetrieveTeachersUseCase
 import kotlinx.coroutines.CoroutineScope

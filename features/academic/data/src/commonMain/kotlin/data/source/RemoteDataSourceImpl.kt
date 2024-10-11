@@ -6,9 +6,9 @@ import core.network.ApiServiceClient
 import core.network.Header
 import core.network.JsonParser
 import data.Mapper
-import data.entity.DepartmentListEntity
-import data.entity.FacultyEntity
-import data.entity.TeacherListEntity
+import data.entity.public_.DepartmentListEntity
+import data.entity.public_.FacultyEntity
+import data.entity.public_.TeacherListEntity
 import data.service.JsonHandler
 import faculty.domain.model.public_.DepartmentModel
 import faculty.domain.model.public_.FacultyModel

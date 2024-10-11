@@ -3,7 +3,7 @@
 package academic.presentationlogic.factory.public_
 
 import academic.presentationlogic.controller.public_.DepartmentController
-import academic.presentationlogic.ModelMapper
+import academic.presentationlogic.mapper.ModelMapper
 import academic.presentationlogic.model.public_.DepartmentModel
 import faculty.domain.exception.CustomException
 import faculty.domain.usecase.public_.RetrieveDepartmentsUseCase

@@ -1,4 +1,4 @@
-package data.entity
+package data.entity.public_
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.toSize
 fun DropDown(
     modifier: Modifier = Modifier,
     options: List<String>,
-    label: String="",
-    selected: Int,
+    label: String = "",
+    selected: Int?,
     onOptionSelected: (Int) -> Unit,
     leadingIcon: ImageVector? = null,
     color: TextFieldColors = TextFieldDefaults.colors()
@@ -49,7 +49,7 @@ fun DropDown(
                 textFieldSize = coordinates.size.toSize()
             },
             readOnly = true,
-            value = options[selected],
+            value = if (selected == null) "" else options[selected],
             onValueChanged = {
 
             },
@@ -76,10 +76,10 @@ fun DropDown(
                 y = -((with(LocalDensity.current) { textFieldSize.height.toDp() }))
             )
         ) {
-            options.forEachIndexed{index,value->
+            options.forEachIndexed { index, value ->
                 DropdownMenuItem(
                     text = {
-                        Text(text =value )
+                        Text(text = value)
                     },
                     onClick = {
                         onOptionSelected(index)

@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Sort
 import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Update
 import androidx.compose.material3.Button
@@ -29,16 +28,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import common.ui.CustomTextField
+import common.ui.DropDown
 
 @Composable
 fun UpdateDeptRoute(
     modifier: Modifier = Modifier,
     navigationIcon: (@Composable () -> Unit)? = null
 ) {
-    val model = DepartmentEntryModel("cse", "Computer Science and Engineering", "CSE","")
+    val model = DepartmentEntryModel("cse", "Computer Science and Engineering", "CSE", "")
     val controller = remember { UiFactory.createDepartEntryController() }
     LaunchedEffect(Unit) {
-        controller.onIdChanged(model.id)
+        controller.onPriorityChanged(model.priority)
         controller.onNameChanged(model.name)
         controller.onShortNameChanged(model.shortName)
     }
@@ -105,11 +105,14 @@ private fun _FormAndControl(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CustomTextField(
-            label = "Id",
-            value = controller.dept.collectAsState().value.id,
-            onValueChanged = controller::onIdChanged,
-            leadingIcon = Icons.Outlined.Badge
+
+        DropDown(
+            modifier = modifier,
+            options = controller.faculties.collectAsState().value.map { it.name },
+            selected = controller.selectedFacultyIndex.collectAsState().value,
+            label = "Select a faculty",
+            leadingIcon = Icons.Outlined.School,
+            onOptionSelected = controller::onFacultySelected,
         )
         Spacer(Modifier.height(8.dp))
         CustomTextField(
@@ -128,9 +131,9 @@ private fun _FormAndControl(
 
         Spacer(Modifier.height(8.dp))
         CustomTextField(
-            label = "Sorting Order",
-            value = controller.dept.collectAsState().value.order,
-            onValueChanged = controller::onOrderChanged,
+            label = "Priority",
+            value = controller.dept.collectAsState().value.priority,
+            onValueChanged = controller::onPriorityChanged,
             leadingIcon = Icons.AutoMirrored.Outlined.Sort
         )
 
@@ -148,3 +151,4 @@ private fun _FormAndControl(
     }
 
 }
+

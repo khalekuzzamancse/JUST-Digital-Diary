@@ -17,11 +17,3 @@ data class TeacherModel(
     val type: Int,
     val departments: List<DepartmentSubModel>
 )
- data class DepartmentSubModel(
-    val name: String,
-    val shortname: String,
-    val designation: String,
-    val roomNo: String,
-    val present: Int
-)
-

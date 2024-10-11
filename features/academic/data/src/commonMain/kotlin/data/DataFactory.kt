@@ -1,14 +1,16 @@
 @file:Suppress("functionName")
 package data
 
+import data.repository.AdminRepositoryImpl
 import data.repository.RepositoryImpl
 import data.service.JsonHandlerImpl
 import data.source.RemoteDataSourceImpl
 import factory.NetworkFactory
+import faculty.domain.repository.AdminRepository
 import faculty.domain.repository.Repository
 
 object DataFactory {
-    fun createFacultyListRepository( token: String?,): Repository =
+    fun createPublicRepository(token: String?,): Repository =
         RepositoryImpl(
             remoteSource = RemoteDataSourceImpl(
                 apiServiceClient = _createApiClient(),
@@ -17,6 +19,10 @@ object DataFactory {
             ),
             token = token,
         )
+    fun createAdminRepository(): AdminRepository = AdminRepositoryImpl(
+        apiService = _createApiClient(),
+        jsonHandler =  JsonHandlerImpl(_createJsonParser())
+    )
 
 
     private fun _createJsonParser()=NetworkFactory.createJsonParser()

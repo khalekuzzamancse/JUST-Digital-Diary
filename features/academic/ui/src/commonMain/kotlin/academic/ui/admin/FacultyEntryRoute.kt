@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.Sort
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.School
@@ -35,10 +34,10 @@ fun UpdateFacultyRoute(
     modifier: Modifier = Modifier,
     navigationIcon: (@Composable () -> Unit)? = null
 ) {
-    val model = FacultyEntryModel("FET", "Faculty of Engineering and Technology","")
+    val model = FacultyEntryModel("FET", "Faculty of Engineering and Technology")
     val controller = remember { UiFactory.createAddFacultyController() }
     LaunchedEffect(Unit) {
-        controller.onIdChanged(model.id)
+        controller.onPriorityChanged(model.priority)
         controller.onNameChanged(model.name)
     }
     SnackNProgressBarDecorator(
@@ -104,12 +103,7 @@ private fun _FormAndControl(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CustomTextField(
-            label = "Faculty Id",
-            value = controller.faculty.collectAsState().value.id,
-            onValueChanged = controller::onIdChanged,
-            leadingIcon = Icons.Outlined.Badge
-        )
+
         Spacer(Modifier.height(8.dp))
         CustomTextField(
             label = "Faculty Name",
@@ -119,10 +113,10 @@ private fun _FormAndControl(
         )
         Spacer(Modifier.height(8.dp))
         CustomTextField(
-            label = "Sorting Order",
-            value = controller.faculty.collectAsState().value.order.toString(),
-            onValueChanged = controller::onOrderChanged,
-            leadingIcon = Icons.AutoMirrored.Outlined.Sort
+            label = "Priority",
+            value = controller.faculty.collectAsState().value.priority,
+            onValueChanged = controller::onPriorityChanged,
+            leadingIcon = Icons.Outlined.Badge
         )
         Spacer(Modifier.height(32.dp))
         Button(

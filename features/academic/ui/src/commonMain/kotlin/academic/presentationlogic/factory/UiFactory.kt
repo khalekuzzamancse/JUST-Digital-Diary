@@ -3,8 +3,8 @@
 package academic.presentationlogic.factory
 
 import academic.presentationlogic.controller.admin.FacultyEntryController
-import academic.presentationlogic.factory.admin.TeacherFormControllerImpl
-import academic.presentationlogic.controller.admin.TeacherFormController
+import academic.presentationlogic.factory.admin.TeacherEntryControllerImpl
+import academic.presentationlogic.controller.admin.TeacherEntryController
 import academic.presentationlogic.factory.admin.TeacherEntryValidatorImpl
 import academic.presentationlogic.controller.public_.DepartmentController
 import academic.presentationlogic.controller.admin.DepartmentEntryController
@@ -26,8 +26,8 @@ internal object UiFactory {
 
     )
 
-    fun createTeacherAddForm(): TeacherFormController =
-        TeacherFormControllerImpl(validator = TeacherEntryValidatorImpl())
+    fun createTeacherAddForm(): TeacherEntryController =
+        TeacherEntryControllerImpl(validator = TeacherEntryValidatorImpl())
 
     fun createFacultyController(token:String?): FacultyController = FacultyControllerImpl(
         userCase = DiContainer.retrieveFacultyListUseCase(token),

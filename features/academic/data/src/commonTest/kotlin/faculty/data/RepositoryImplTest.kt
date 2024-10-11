@@ -10,7 +10,7 @@ class RepositoryImplTest {
     @Test
     fun `test for faculty list valid token`() {
         runBlocking {
-            val response = DataFactory.createFacultyListRepository().getFaculties("")
+            val response = DataFactory.createPublicRepository().getFaculties("")
             response.onSuccess {
                 println(response.getOrNull())
             }.onFailure {

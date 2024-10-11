@@ -23,9 +23,8 @@ internal interface FacultyEntryController {
      * Named in a way that is independent of any UI concerns to ensure framework-independence.
      */
     val statusMessage: StateFlow<String?>
-    fun onIdChanged(value: String)
+    fun onPriorityChanged(value: String)
     fun onNameChanged(value: String)
-    fun  onOrderChanged(value: String)
 
     //same can be used as for addFaculty or update existing faculty,that is why giving default implementation
     suspend fun onAddRequest() {

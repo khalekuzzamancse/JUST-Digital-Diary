@@ -1,6 +1,7 @@
 package academic.presentationlogic.factory.admin
 
-import academic.presentationlogic.controller.admin.TeacherFormController
+import academic.presentationlogic.controller.admin.TeacherEntryController
+import academic.presentationlogic.model.admin.TeacherEntryModel
 import academic.presentationlogic.model.public_.TeacherModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,14 +13,14 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
-internal class TeacherEntryValidatorImpl : TeacherFormController.Validator {
+internal class TeacherEntryValidatorImpl : TeacherEntryController.Validator {
     private val _areAllFieldsFilled = MutableStateFlow(false)
     override val areMandatoryFieldFilled: StateFlow<Boolean> = _areAllFieldsFilled.asStateFlow()
 
     private val _errors = MutableStateFlow<List<String>>(emptyList())
     override val errors: StateFlow<List<String>> = _errors.asStateFlow()
 
-    override fun observeFieldChanges(state: StateFlow<TeacherModel>) {
+    override fun observeFieldChanges(state: StateFlow<TeacherEntryModel>) {
         combine(state) {
             it.first()
         }.onEach { model ->

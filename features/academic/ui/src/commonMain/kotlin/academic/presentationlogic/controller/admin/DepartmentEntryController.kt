@@ -1,6 +1,7 @@
 package academic.presentationlogic.controller.admin
 
 import academic.presentationlogic.model.admin.DepartmentEntryModel
+import academic.presentationlogic.model.public_.FacultyModel
 import kotlinx.coroutines.flow.StateFlow
 
 internal interface DepartmentEntryController {
@@ -12,21 +13,31 @@ internal interface DepartmentEntryController {
     val networkIOInProgress: StateFlow<Boolean>
     val validator: Validator
 
-    /**
-     * Represents the current state of the faculty being added.
-     * Uses a model that is decoupled from any specific UI implementation to maintain abstraction.
-     */
     val dept: StateFlow<DepartmentEntryModel>
+
+    /**- Help to admin, under which faculty the department is going to add
+     *- The `Implementer` should fetch the faculty list
+     **/
+    val faculties: StateFlow<List<FacultyModel>>
+
+    /**
+     * - Since UI has access teh faculty list so need to store the selected faculty instead index is enough,
+     * the UI can figure out the faculty by this index,
+     * This will help(not force) to UI to implement a dropdown,but since this layer is UI independent,so UI can use
+     * other UI components also by getting the selected faculty by index
+     */
+    val selectedFacultyIndex: StateFlow<Int?>
 
     /**
      * A message indicating the status of the operation (success or failure).
      * Named in a way that is independent of any UI concerns to ensure framework-independence.
      */
     val statusMessage: StateFlow<String?>
-    fun onIdChanged(value: String)
     fun onNameChanged(value: String)
     fun onShortNameChanged(value: String)
-    fun  onOrderChanged(value: String)
+    fun onPriorityChanged(value: String)
+    fun onFacultySelected(index: Int)
+
 
     //same can be used as for add or update existing ,that is why giving default implementation
     suspend fun onAddRequest() {

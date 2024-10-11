@@ -16,13 +16,15 @@ import kotlinx.coroutines.flow.update
 
 internal class FacultyEntryControllerImpl : FacultyEntryController {
     private val _networkIOInProgress = MutableStateFlow(false)
-    private val _faculty = MutableStateFlow(FacultyEntryModel("", "", ""))
     private val _statusMessage = MutableStateFlow<String?>(null)
 
+    private val _faculty = MutableStateFlow(FacultyEntryModel("", ""))
 
+
+    override val statusMessage = _statusMessage.asStateFlow()
     override val networkIOInProgress = _networkIOInProgress.asStateFlow()
     override val faculty = _faculty.asStateFlow()
-    override val statusMessage = _statusMessage.asStateFlow()
+
 
 
     override val validator: FacultyEntryController.Validator =
@@ -37,7 +39,7 @@ internal class FacultyEntryControllerImpl : FacultyEntryController {
                     it.first()
                 }.onEach { model ->
                     val name = model.name
-                    val id = model.id
+                    val id = model.priority
                     //Right now Need not  validation ,just check all mandatory field are filled or not
                     _fieldsFilled.update {
                         id.isNotBlank() && name.isNotBlank()
@@ -52,12 +54,11 @@ internal class FacultyEntryControllerImpl : FacultyEntryController {
         validator.observeFieldChanges(faculty)
     }
 
-    override fun onIdChanged(value: String) = _faculty.update { it.copy(id = value) }
-    override fun onNameChanged(value: String) = _faculty.update { it.copy(name = value) }
-    override fun onOrderChanged(value: String) {
 
+    override fun onNameChanged(value: String) = _faculty.update { it.copy(name = value) }
+    override fun onPriorityChanged(value: String) {
         val order = value.filter { it.isDigit() }
-        _faculty.update { it.copy(order = order) }
+        _faculty.update { it.copy(priority = order) }
 
 
     }

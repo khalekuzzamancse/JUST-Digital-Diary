@@ -2,6 +2,7 @@ package navigation
 
 import academic.ui.admin.AddDeptRoute
 import academic.ui.admin.AddFacultyRoute
+import academic.ui.admin.AddTeacherScreen
 import academic.ui.admin.UpdateDeptRoute
 import academic.ui.admin.UpdateFacultyRoute
 import androidx.compose.runtime.Composable
@@ -26,10 +27,11 @@ fun RootNavHost(
     onTokenDeleteRequest: () -> Unit = {},
     onEvent: (AppEvent) -> Unit,
 ) {
-    // AddFacultyRoute()
-    // UpdateFacultyRoute()
+    //  AddFacultyRoute()
+   // UpdateFacultyRoute()
     //  UpdateDeptRoute()
-    AddDeptRoute()
+  //  AddDeptRoute()
+      AddTeacherScreen()
 }
 
 @Composable
