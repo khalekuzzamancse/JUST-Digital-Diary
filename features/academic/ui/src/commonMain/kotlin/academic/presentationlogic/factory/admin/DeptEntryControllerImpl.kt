@@ -92,7 +92,7 @@ internal class DeptEntryControllerImpl(
     override suspend fun onAddRequest() {
         _onNetworkIOStart()
         addDepartmentUseCase
-            .execute(with(ModelMapper) { _dept.value.toDomainModel() })
+            .execute(with(ModelMapper) { _dept.value.toDomainModelOrThrow() })
             .fold(
                 onSuccess = {
                     _updateErrorMessage("Added Successfully")

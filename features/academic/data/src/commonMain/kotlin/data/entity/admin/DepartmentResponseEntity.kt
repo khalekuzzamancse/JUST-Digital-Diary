@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * - It maintain the  he format of admin api
  */
 @Serializable
-data class DepartmentEntity(
+data class DepartmentResponseEntity(
     @SerialName("priority") val priority: Int,
     @SerialName("dept_id") val deptId: String,
     @SerialName("name") val name: String,

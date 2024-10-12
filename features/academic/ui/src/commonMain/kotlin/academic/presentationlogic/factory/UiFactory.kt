@@ -20,26 +20,32 @@ import academic.presentationlogic.factory.public_.TeachersControllerImpl
 internal object UiFactory {
 
 
-    internal fun createTeachersController(token:String?): TeachersController =
+    internal fun createTeachersController(token: String?): TeachersController =
         TeachersControllerImpl(
             useCase = DiContainer.retrieveTeacherListUseCase(token),
 
-    )
+            )
 
     fun createTeacherAddForm(): TeacherEntryController =
-        TeacherEntryControllerImpl(validator = TeacherEntryValidatorImpl(), allDeptUseCase = DiContainer.getAllDeptUseCase())
+        TeacherEntryControllerImpl(
+            validator = TeacherEntryValidatorImpl(),
+            allDeptUseCase = DiContainer.getAllDeptUseCase(),
+            addTeacherUser = DiContainer.addTeacherUseCase()
+        )
 
-    fun createFacultyController(token:String?): FacultyController = FacultyControllerImpl(
+    fun createFacultyController(token: String?): FacultyController = FacultyControllerImpl(
         userCase = DiContainer.retrieveFacultyListUseCase(token),
     )
 
-    fun createDepartmentsController(token:String?): DepartmentController =
+    fun createDepartmentsController(token: String?): DepartmentController =
         DepartmentsControllerImpl(
             userCase = DiContainer.retrieveDepartListUseCase(token),
         )
+
     fun createAddFacultyController(): FacultyEntryController = FacultyEntryControllerImpl(
         DiContainer.addFacultyUseCase()
     )
+
     fun createDepartEntryController(): DepartmentEntryController = DeptEntryControllerImpl(
         DiContainer.retrieveFacultyListUseCase(null),
         DiContainer.addDepartmentUseCase()

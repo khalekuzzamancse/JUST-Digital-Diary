@@ -9,12 +9,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class TeacherEntryEntity(
     val deptId: String,
-    val priority: String,
+    val priority: Int,
     val name: String,
     val email: String,
-    val additionalEmail: String,
+    val additionalEmail: String?,
     val achievements: String,
     val phone: String,
     val designations: String,
-    val roomNo: String,
+    val roomNo: String?,
 )

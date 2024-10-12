@@ -2,10 +2,11 @@
 
 package data
 
-import data.entity.admin.DepartmentEntity
+import data.entity.admin.DepartmentResponseEntity
 import data.entity.admin.DepartmentEntryEntity
 import data.entity.admin.FacultyEntryEntity
 import data.entity.admin.TeacherEntryEntity
+import data.entity.admin.TeacherResponseEntity
 import data.entity.public_.DepartmentListEntity
 import data.entity.public_.FacultyEntity
 import data.entity.public_.TeacherEntity
@@ -47,25 +48,17 @@ internal object Mapper {
     fun toTeacherModels(entity: TeacherListEntity): List<TeacherModel> {
         val sorter = DesignationSorter()
         return sorter.sortTeachers(entity.facultyMembers).map {
+            val dept= it.departments.firstOrNull()
             TeacherModel(
                 name = it.name,
                 email = it.email,
                 additionalEmail = it.additional_email,
+                achievements = it.achievement,
                 phone = it.phone,
-                departments = it.departments.map { dept ->
-                    DepartmentSubModel(
-                        name = dept.name,
-                        designation = dept.designation,
-                        roomNo = dept.room_no,
-                        present = dept.present,
-                        shortname = dept.shortname
-                    )
-                },
-                role = it.role,
-                achievement = it.achievement,
+                designations = dept?.designation?:"",
+                roomNo = dept?.room_no?:"",
                 profile = it.profile,
-                type = it.type,
-                uid = it.uid,
+                id = it.uid,
             )
         }
     }
@@ -112,13 +105,23 @@ internal object Mapper {
         priority = priority,
         name = name,
         email = email,
-        additionalEmail = additionalEmail,
+        additionalEmail = additionalEmail.ifBlank { null },
+        achievements = achievements,
+        phone = phone,
+        designations = designations,
+        roomNo = roomNo.ifBlank { null }
+    )
+    fun TeacherResponseEntity.toModel()=TeacherModel(
+        id = id,
+        name = name,
+        email = email,
+        additionalEmail = additionalEmail?.ifBlank { null },
         achievements = achievements,
         phone = phone,
         designations = designations,
         roomNo = roomNo
     )
-    fun DepartmentEntity.toModel()=DepartmentModel(
+    fun DepartmentResponseEntity.toModel()=DepartmentModel(
         deptId = deptId,
         name = name,
         shortname = shortname,

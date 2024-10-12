@@ -70,7 +70,7 @@ internal class FacultyEntryControllerImpl(
     }
 
     override suspend fun onAddRequest() {
-        val model = with(ModelMapper) { faculty.value.toDomainModel() }
+        val model = with(ModelMapper) { faculty.value.toDomainModelOrThrow() }
         _onNetworkIOStart()
         val result = useCase.execute(model)
         result.fold(

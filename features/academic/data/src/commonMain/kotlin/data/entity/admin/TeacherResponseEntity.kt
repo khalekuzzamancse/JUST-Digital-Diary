@@ -1,14 +1,14 @@
-package core.database.monggodb.entity
+package data.entity.admin
 
 import kotlinx.serialization.Serializable
 
 /**
- * - Used for both add and update
+ * - Designed as Json format of  the `database:api` module
  * @property priority will be used to sorting
  */
 @Serializable
-internal data class TeacherEntryEntity(
-    val deptId: String,
+internal data class TeacherResponseEntity(
+    val id: String,
     val priority: Int,
     val name: String,
     val email: String,

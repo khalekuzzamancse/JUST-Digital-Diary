@@ -59,4 +59,8 @@ interface AcademicAdminApi {
      */
     suspend fun addTeacher(json: String): String
 
+    /**
+     * A Json array of all dept all teacher
+     */
+    suspend fun getTeachers():String
 }

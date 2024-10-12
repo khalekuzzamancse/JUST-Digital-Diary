@@ -18,4 +18,9 @@ interface TeacherApi {
      * ```
      */
     suspend fun add(json: String): String
+
+    /**
+     * @return All teacher of all departments as Json array
+     */
+    suspend fun read(): String
 }

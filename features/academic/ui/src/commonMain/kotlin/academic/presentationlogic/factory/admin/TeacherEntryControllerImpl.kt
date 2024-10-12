@@ -2,10 +2,10 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.TeacherEntryController
 import academic.presentationlogic.mapper.ModelMapper
-import academic.presentationlogic.mapper.ModelMapper.toUiModel
 import academic.presentationlogic.model.admin.TeacherEntryModel
 import academic.presentationlogic.model.public_.DepartmentModel
 import faculty.domain.exception.CustomException
+import faculty.domain.usecase.admin.AddTeacherUseCase
 import faculty.domain.usecase.admin.GetAllDepartmentUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +23,8 @@ import kotlinx.coroutines.launch
  */
 internal class TeacherEntryControllerImpl(
     override val validator: TeacherEntryController.Validator,
-    private val allDeptUseCase: GetAllDepartmentUseCase
+    private val allDeptUseCase: GetAllDepartmentUseCase,
+    private val addTeacherUser:AddTeacherUseCase,
 ) : TeacherEntryController {
     private val _networkIOInProgress = MutableStateFlow(false)
     private val _statusMessage = MutableStateFlow<String?>(null)
@@ -78,7 +79,40 @@ internal class TeacherEntryControllerImpl(
     }
 
     override fun onIdChange(value: String) {
-        _teacherState.value = _teacherState.value.copy(id = value)
+
+            _teacherState.value = _teacherState.value.copy(priority = value.filter { it.isDigit() })
+
+
+    }
+
+    override suspend fun add() {
+        //Can throw exception when try to convert string to integer in model mapper
+        try {
+            _onNetworkIOStart()
+            addTeacherUser
+                .execute(with(ModelMapper) { _teacherState.value.toDomainModelOrThrow() })
+                .fold(
+                    onSuccess = {
+                        _updateErrorMessage("Added Successfully")
+                    },
+                    onFailure = { exception ->
+                        when (exception) {
+                            is CustomException -> {
+                                _updateErrorMessage(exception.message)
+                            }
+
+                            else -> {
+                                _updateErrorMessage("Failed to load faculties")
+                            }
+
+                        }
+                    }
+                )
+            _onNetworkIOStop()
+        }
+        catch (_: Exception){
+            _updateErrorMessage("Failed,Make sure priority field as integer")
+        }
     }
 
     init {
@@ -125,7 +159,7 @@ internal class TeacherEntryControllerImpl(
         deptId = "",
         roomNo ="",
         designations = "",
-        id = ""
+        priority = ""
     )
     private fun _onNetworkIOStart() = _networkIOInProgress.update { true }
     private fun _onNetworkIOStop() = _networkIOInProgress.update { false }

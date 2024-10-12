@@ -11,4 +11,5 @@ class MongoAcademicAdminApi internal  constructor():AcademicAdminApi{
     override suspend fun addDepartment(json: String)=DBFactory.departmentApi().add(json)
     override suspend fun getDepartments()=DBFactory.departmentApi().read()
     override suspend fun addTeacher(json: String)=DBFactory.teacherApi().add(json)
+    override suspend fun getTeachers()=DBFactory.teacherApi().read()
 }

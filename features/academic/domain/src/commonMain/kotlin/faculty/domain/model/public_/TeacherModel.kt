@@ -6,14 +6,13 @@ package faculty.domain.model.public_
 
 
 data class TeacherModel(
-    val uid: String,
+    val id: String,
     val name: String,
     val email: String,
-    val role: String,
     val phone: String,
-    val achievement: String,
+    val achievements: String,
+    val designations: String,
     val profile: String? = null,
     val additionalEmail: String? = null,
-    val type: Int,
-    val departments: List<DepartmentSubModel>
+    val roomNo: String?,
 )

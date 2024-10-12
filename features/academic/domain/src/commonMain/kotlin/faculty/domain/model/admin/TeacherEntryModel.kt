@@ -5,7 +5,7 @@ package faculty.domain.model.admin
  */
  data class TeacherEntryModel(
    val deptId:String,
-   val priority:String,
+   val priority:Int,
    val name: String,
    val email: String,
    val additionalEmail: String,

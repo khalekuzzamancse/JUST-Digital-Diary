@@ -32,6 +32,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +42,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import common.ui.CustomTextField
 import common.ui.DropDown
+import kotlinx.coroutines.launch
 
 
 /**
@@ -56,6 +58,8 @@ fun AddTeacherScreen(
     val controller = remember { UiFactory.createTeacherAddForm() }
     val areMandatoryFieldsValid =
         controller.validator.areMandatoryFieldFilled.collectAsState().value
+
+    val scope= rememberCoroutineScope()
     SnackNProgressBarDecorator(
         isLoading = controller.networkIOInProgress.collectAsState().value,
         snackBarMessage = controller.statusMessage.collectAsState(null).value,
@@ -80,10 +84,14 @@ fun AddTeacherScreen(
                 enabled = areMandatoryFieldsValid,
                 onClick = {
                     keyboard?.hide()
+                    scope.launch {
+                        controller.add()
+                    }
+
                 }
             ) {
 
-                Text("Done")
+                Text("Add")
             }
 
         }
@@ -147,7 +155,7 @@ private fun _TeacherForm(
             label = "Phone",
             value = teacher.phone,
             onValueChanged = { newPhone ->
-                val filteredPhone = newPhone.filter { it.isDigit() }
+                val filteredPhone = newPhone.filter { it.isDigit()||it==',' }
                 controller.onPhoneChange(filteredPhone)
             },
             modifier = Modifier.fillMaxWidth(),
@@ -177,7 +185,7 @@ private fun _TeacherForm(
 
         CustomTextField(
             label = "Sorting order",
-            value = teacher.id,
+            value = teacher.priority,
             onValueChanged = { id ->
                 controller.onIdChange(id.filter { it.isDigit() })
             },

@@ -7,8 +7,8 @@ import kotlinx.serialization.Serializable
  * @property priority will be used to sorting
  */
 @Serializable
-internal data class TeacherEntryEntity(
-    val deptId: String,
+internal data class TeacherResponseEntity(
+    val id: String,
     val priority: Int,
     val name: String,
     val email: String,

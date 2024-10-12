@@ -4,8 +4,7 @@ import core.database.api.ApiFactory
 import core.network.ApiServiceClient
 import core.network.JsonParser
 import data.Mapper
-import data.entity.admin.DepartmentEntity
-import data.entity.public_.FacultyEntity
+import data.entity.admin.DepartmentResponseEntity
 import data.service.JsonHandler
 import faculty.domain.model.admin.DepartmentEntryModel
 import faculty.domain.model.admin.FacultyEntryModel
@@ -82,7 +81,7 @@ class AdminRepositoryImpl internal constructor(
             val json = ApiFactory.academicAdminApi().getDepartments()
 
             if (json._isDepartmentListEntity()) {
-                val entities= jsonParser.parseOrThrow(json, ListSerializer(DepartmentEntity.serializer()))
+                val entities= jsonParser.parseOrThrow(json, ListSerializer(DepartmentResponseEntity.serializer()))
                 return Result.success(
                     with(Mapper){
                         entities.sortedBy { it.priority }.map { it.toModel()}
@@ -97,5 +96,5 @@ class AdminRepositoryImpl internal constructor(
 
     }
     private fun String._isDepartmentListEntity() =
-        jsonParser.parse(this, ListSerializer(DepartmentEntity.serializer())).isSuccess
+        jsonParser.parse(this, ListSerializer(DepartmentResponseEntity.serializer())).isSuccess
 }

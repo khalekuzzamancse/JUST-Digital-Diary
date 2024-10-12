@@ -2,10 +2,12 @@ package academic.presentationlogic.mapper
 
 import academic.presentationlogic.model.admin.DepartmentEntryModel
 import academic.presentationlogic.model.admin.FacultyEntryModel
+import academic.presentationlogic.model.admin.TeacherEntryModel
 import academic.presentationlogic.model.public_.Dept
 import faculty.domain.model.public_.DepartmentModel
 import faculty.domain.model.public_.FacultyModel
 import faculty.domain.model.public_.TeacherModel
+import kotlin.jvm.Throws
 
 private typealias UiFacultyModel = academic.presentationlogic.model.public_.FacultyModel
 private typealias UiDepartmentModel = academic.presentationlogic.model.public_.DepartmentModel
@@ -33,31 +35,44 @@ internal object ModelMapper {
         )
 
     fun toTeacherUiModel(model: TeacherModel) = TeacherUiModel(
+        id=model.id,
         name = model.name,
         email = model.email,
         additionalEmail = model.additionalEmail ?: "",
         phone = model.phone,
-        achievements = model.achievement,
+        achievements = model.achievements,
         profileImageLink = model.profile,
-        dept = Dept(
-            model.departments.firstOrNull()?.name ?: "",
-            model.departments.firstOrNull()?.shortname ?: "",
-        ),
-        roomNo = model.departments.firstOrNull()?.roomNo ?: "",
-        designations = model.departments.firstOrNull()?.designation ?: "",
+        roomNo = model.roomNo?:"",
+        designations = model.designations,
     )
 
-    fun FacultyEntryModel.toDomainModel() =
+
+    fun FacultyEntryModel.toDomainModelOrThrow() =
         faculty.domain.model.admin.FacultyEntryModel(
             priority = this.priority,
             name = this.name,
         )
 
-    fun DepartmentEntryModel.toDomainModel() = faculty.domain.model.admin.DepartmentEntryModel(
-        priority = this.priority,
+    fun DepartmentEntryModel.toDomainModelOrThrow() =
+        faculty.domain.model.admin.DepartmentEntryModel(
+            priority = this.priority,
+            name = this.name,
+            shortname = this.shortName,
+            facultyId = this.facultyId
+        )
+
+    @Throws
+    fun TeacherEntryModel.toDomainModelOrThrow() = faculty.domain.model.admin.TeacherEntryModel(
+        deptId = deptId,
+        priority = this.priority.toInt(),
         name = this.name,
-        shortname = this.shortName,
-        facultyId = this.facultyId
+        email = this.email,
+        additionalEmail = this.additionalEmail,
+        achievements = this.achievements,
+        phone = phone,
+        designations = designations,
+        roomNo = roomNo
+
     )
 
 

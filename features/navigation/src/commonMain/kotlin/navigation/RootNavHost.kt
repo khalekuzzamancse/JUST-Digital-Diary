@@ -29,15 +29,15 @@ fun RootNavHost(
     // UpdateFacultyRoute()
     //  UpdateDeptRoute()
    // AddDeptRoute()
-    AddTeacherScreen()
-//    val mainViewModel = viewModel { MainViewModel() }
-//    _FeatureNavGraph(
-//        viewModel = mainViewModel,
-//        onEvent = onEvent,
-//        onLogOutRequest = {
-//            onTokenDeleteRequest()
-//        }
-//    )
+//    AddTeacherScreen()
+    val mainViewModel = viewModel { MainViewModel() }
+    _FeatureNavGraph(
+        viewModel = mainViewModel,
+        onEvent = onEvent,
+        onLogOutRequest = {
+            onTokenDeleteRequest()
+        }
+    )
 }
 
 @Composable
