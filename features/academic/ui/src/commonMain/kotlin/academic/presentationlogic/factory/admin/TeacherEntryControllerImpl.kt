@@ -1,15 +1,20 @@
 package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.TeacherEntryController
+import academic.presentationlogic.mapper.ModelMapper
+import academic.presentationlogic.mapper.ModelMapper.toUiModel
 import academic.presentationlogic.model.admin.TeacherEntryModel
-import academic.presentationlogic.model.public_.Dept
-import academic.presentationlogic.model.public_.FacultyModel
-import academic.presentationlogic.model.public_.TeacherModel
-import faculty.domain.model.public_.DepartmentModel
+import academic.presentationlogic.model.public_.DepartmentModel
+import faculty.domain.exception.CustomException
+import faculty.domain.usecase.admin.GetAllDepartmentUseCase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 
 /**
@@ -17,12 +22,13 @@ import kotlinx.coroutines.flow.update
  * Manages the state of TeacherModel using MutableStateFlow and responds to events.
  */
 internal class TeacherEntryControllerImpl(
-    override val validator: TeacherEntryController.Validator
+    override val validator: TeacherEntryController.Validator,
+    private val allDeptUseCase: GetAllDepartmentUseCase
 ) : TeacherEntryController {
     private val _networkIOInProgress = MutableStateFlow(false)
     private val _statusMessage = MutableStateFlow<String?>(null)
     private val _teacherState = MutableStateFlow(_emptyState())
-    private val _departments = MutableStateFlow(_dummyDept())
+    private val _departments = MutableStateFlow<List<DepartmentModel>>(emptyList())
     private val _selectedDeptIndex=MutableStateFlow<Int?>(null)
 
 
@@ -60,7 +66,7 @@ internal class TeacherEntryControllerImpl(
     override fun onDeptChange(index: Int) {
         _selectedDeptIndex.update { index }
         try {//Since accessing index, taking double safety
-            _teacherState.update { it.copy(deptId = dept.value[index].deptId) }
+            _teacherState.update { it.copy(deptId = dept.value[index].id) }
         } catch (_: Exception) {
 
         }
@@ -78,6 +84,35 @@ internal class TeacherEntryControllerImpl(
     init {
         validator.observeFieldChanges(state = teacherState)
     }
+    init {
+        CoroutineScope(Dispatchers.Default).launch {
+            _retrieveFaculties()
+        }
+    }
+    private suspend fun _retrieveFaculties() {
+        _onNetworkIOStart()
+        allDeptUseCase
+            .execute()
+            .fold(
+                onSuccess = { models ->
+                    _departments.update { models.map { ModelMapper.toUiFacultyModel(it) } }
+                },
+                onFailure = { exception ->
+                    when (exception) {
+                        is CustomException -> {
+                            _updateErrorMessage(exception.message)
+                        }
+
+                        else -> {
+                            _updateErrorMessage("Failed to load faculties")
+                        }
+
+                    }
+                }
+            )
+        _onNetworkIOStop()
+    }
+
 
 
     //TODO:Helper methods section
@@ -92,10 +127,14 @@ internal class TeacherEntryControllerImpl(
         designations = "",
         id = ""
     )
-    private fun _dummyDept()=listOf(
-        DepartmentModel(name = "Computer Science", shortName = "CS", deptId = "1", employeeCount = 0),
-        DepartmentModel(name = "Mathematics", shortName = "Math", deptId = "2", employeeCount = 0),
-        DepartmentModel(name = "Physics", shortName = "Phys", deptId = "3", employeeCount = 0),
-        DepartmentModel(name = "Chemistry", shortName = "Chem", deptId = "4", employeeCount = 0)
-    )
+    private fun _onNetworkIOStart() = _networkIOInProgress.update { true }
+    private fun _onNetworkIOStop() = _networkIOInProgress.update { false }
+    private fun _updateErrorMessage(msg: String) {
+        CoroutineScope(Dispatchers.Default).launch {
+            _statusMessage.update { msg }
+            //clear after 4 seconds
+            delay(4_000)
+            _statusMessage.update { null }
+        }
+    }
 }

@@ -1,10 +1,8 @@
 package academic.presentationlogic.controller.admin
 
 import academic.presentationlogic.model.admin.TeacherEntryModel
-import academic.presentationlogic.model.public_.Dept
-import academic.presentationlogic.model.public_.FacultyModel
+import academic.presentationlogic.model.public_.DepartmentModel
 import academic.presentationlogic.model.public_.TeacherModel
-import faculty.domain.model.public_.DepartmentModel
 import kotlinx.coroutines.flow.StateFlow
 
 /**

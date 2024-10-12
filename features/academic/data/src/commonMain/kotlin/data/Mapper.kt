@@ -1,6 +1,8 @@
 @file:Suppress("SpellChecking")
+
 package data
 
+import data.entity.admin.DepartmentEntity
 import data.entity.admin.DepartmentEntryEntity
 import data.entity.admin.FacultyEntryEntity
 import data.entity.admin.TeacherEntryEntity
@@ -33,16 +35,16 @@ internal object Mapper {
     fun toDeptModels(entity: DepartmentListEntity): List<DepartmentModel> {
         return entity.departments.map {
             DepartmentModel(
-                priority = it.id,
                 deptId = it.deptId,
                 name = it.name,
-                shortName = it.shortName,
+                shortname = it.shortName,
                 employeeCount = it.membersCount
             )
 
         }
     }
-    fun  toTeacherModels(entity: TeacherListEntity): List<TeacherModel> {
+
+    fun toTeacherModels(entity: TeacherListEntity): List<TeacherModel> {
         val sorter = DesignationSorter()
         return sorter.sortTeachers(entity.facultyMembers).map {
             TeacherModel(
@@ -50,7 +52,7 @@ internal object Mapper {
                 email = it.email,
                 additionalEmail = it.additional_email,
                 phone = it.phone,
-                departments = it.departments.map { dept->
+                departments = it.departments.map { dept ->
                     DepartmentSubModel(
                         name = dept.name,
                         designation = dept.designation,
@@ -68,21 +70,23 @@ internal object Mapper {
         }
     }
 
-    fun toFacultyEntryEntity(model: FacultyEntryModel)= FacultyEntryEntity(
-        priority=model.priority,
-        name=model.name,
+    fun toFacultyEntryEntity(model: FacultyEntryModel) = FacultyEntryEntity(
+        priority = model.priority,
+        name = model.name,
     )
-    fun toDepartmentEntryEntity(model: DepartmentEntryModel)= DepartmentEntryEntity(
-        priority=model.priority,
-        name=model.name,
-        shortName=model.shortName,
-        facultyId =  model.facultyId,
 
-    )
+    fun toDepartmentEntryEntity(model: DepartmentEntryModel) = DepartmentEntryEntity(
+        priority = model.priority.toIntOrNull()?: 0,
+        name = model.name,
+        shortName = model.shortname,
+        facultyId = model.facultyId,
+
+        )
+
     fun convertModelToEntity(model: TeacherEntryModel): TeacherEntryEntity {
         return TeacherEntryEntity(
             deptId = model.deptId,
-            id = model.priority,
+            priority = model.priority,
             name = model.name,
             email = model.email,
             additionalEmail = model.additionalEmail,
@@ -92,7 +96,36 @@ internal object Mapper {
             roomNo = model.roomNo
         )
     }
+    fun FacultyEntryModel.toEntity() = FacultyEntryEntity(
+        priority = this.priority,
+        name = this.name,
+    )
+    fun DepartmentEntryModel.toEntity() = DepartmentEntryEntity(
+        priority = this.priority.toIntOrNull()?:0,
+        name = this.name,
+        shortName=this.shortname,
+        facultyId=this.facultyId,
+    )
+
+    fun TeacherEntryModel.toEntity() = TeacherEntryEntity(
+        deptId = deptId,
+        priority = priority,
+        name = name,
+        email = email,
+        additionalEmail = additionalEmail,
+        achievements = achievements,
+        phone = phone,
+        designations = designations,
+        roomNo = roomNo
+    )
+    fun DepartmentEntity.toModel()=DepartmentModel(
+        deptId = deptId,
+        name = name,
+        shortname = shortname,
+        employeeCount = 0//TODO:Fix it later
+    )
 }
+
 internal class DesignationSorter {
     // A predefined map that ranks the designations
     private val rankMap = mapOf(
@@ -161,4 +194,6 @@ internal class DesignationSorter {
             getRank(firstDesignation)
         }
     }
+
+
 }

@@ -19,4 +19,5 @@ interface AdminRepository {
     suspend fun updateDepartment(model:DepartmentEntryModel):Result<Unit>
     suspend fun addTeacher(model:TeacherEntryModel):Result<Unit>
     suspend fun updateTeacher(model:TeacherEntryModel):Result<Unit>
+    suspend fun getAllDept():Result<List<DepartmentModel>>
 }

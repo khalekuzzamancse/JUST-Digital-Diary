@@ -17,6 +17,15 @@ internal data class TeacherEntity(
 )
 
 @Serializable
+internal data class DepartmentSubEntity(
+    val name: String,
+    val shortname: String,
+    val designation: String,
+    val room_no: String,
+    val present: Int
+)
+
+@Serializable
 internal data class TeacherListEntity(
     val facultyMembers: List<TeacherEntity>
 )

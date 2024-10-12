@@ -44,7 +44,7 @@ internal fun Departments(
                 _DepartmentCard(
                     modifier = Modifier,
                     deptName = dept.name,
-                    deptShortName = dept.shortName,
+                    deptShortName = dept.shortname,
                     numOfTeacher = dept.membersCount,
                     isSelected = selected == index,
                     onSelect = {

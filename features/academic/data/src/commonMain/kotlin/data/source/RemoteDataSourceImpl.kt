@@ -2,6 +2,7 @@
 
 package data.source
 
+import core.database.api.ApiFactory
 import core.network.ApiServiceClient
 import core.network.Header
 import core.network.JsonParser
@@ -27,10 +28,11 @@ class RemoteDataSourceImpl internal constructor(
 //        val json = classLoader?.getResource("faculty_list.json")?.readText()//resource/faculty_list.json
 
         try {
-            val json = apiServiceClient.retrieveJsonOrThrow(
-                url,
-                Header(key = "Authorization", value = token)
-            )
+//            val json = apiServiceClient.retrieveJsonOrThrow(
+//                url,
+//                Header(key = "Authorization", value = token)
+//            )
+            val json = ApiFactory.academicAdminApi().getAllFaculties()
             /** Execution is here means server sent a response we have to parse it
              * - 3 possible cases: We got excepted  json or Json is a server message in format ServerResponseMessageEntity  or  Server send a json that format is not known yet,may be server change it json format or other
              */

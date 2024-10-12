@@ -105,7 +105,7 @@ private fun _TeacherForm(
     Column(modifier = modifier.widthIn(max = 600.dp)) {
         DropDown(
             modifier = modifier,
-            options = controller.dept.collectAsState().value.map { "${it.name}(${it.shortName})" },
+            options = controller.dept.collectAsState().value.map { "${it.name}(${it.shortname})" },
             selected = controller.selectedDeptIndex.collectAsState().value,
             label = "Select a department",
             leadingIcon = Icons.Outlined.School,

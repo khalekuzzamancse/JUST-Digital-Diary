@@ -22,10 +22,11 @@ class RepositoryImpl internal constructor(
 ) : Repository {
 
     override suspend fun getFaculties(): Result<List<FacultyModel>> {
-        return if (token != null)
-            remoteSource.getFaculties(token)
-        else
-            Result.failure(CustomException.UnKnownException(Throwable("Token is null")))
+      return  remoteSource.getFaculties("token")
+//        return if (token != null)
+//            remoteSource.getFaculties(token)
+//        else
+//            Result.failure(CustomException.UnKnownException(Throwable("Token is null")))
     }
 
     override suspend fun getDepartment(

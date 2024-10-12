@@ -1,5 +1,7 @@
 package academic.presentationlogic.mapper
 
+import academic.presentationlogic.model.admin.DepartmentEntryModel
+import academic.presentationlogic.model.admin.FacultyEntryModel
 import academic.presentationlogic.model.public_.Dept
 import faculty.domain.model.public_.DepartmentModel
 import faculty.domain.model.public_.FacultyModel
@@ -16,11 +18,17 @@ internal object ModelMapper {
         numberOfDepartment = "${model.departmentsCount}"
     )
 
+    fun FacultyModel.toUiModel() = UiFacultyModel(
+        name = this.name,
+        id = this.facultyId,
+        numberOfDepartment = this.departmentsCount.toString()
+    )
+
     fun toUiFacultyModel(model: DepartmentModel) =
         UiDepartmentModel(
             name = model.name,
             id = model.deptId,
-            shortName = model.shortName,
+            shortname = model.shortname,
             membersCount = model.employeeCount.toString()
         )
 
@@ -38,4 +46,19 @@ internal object ModelMapper {
         roomNo = model.departments.firstOrNull()?.roomNo ?: "",
         designations = model.departments.firstOrNull()?.designation ?: "",
     )
+
+    fun FacultyEntryModel.toDomainModel() =
+        faculty.domain.model.admin.FacultyEntryModel(
+            priority = this.priority,
+            name = this.name,
+        )
+
+    fun DepartmentEntryModel.toDomainModel() = faculty.domain.model.admin.DepartmentEntryModel(
+        priority = this.priority,
+        name = this.name,
+        shortname = this.shortName,
+        facultyId = this.facultyId
+    )
+
+
 }

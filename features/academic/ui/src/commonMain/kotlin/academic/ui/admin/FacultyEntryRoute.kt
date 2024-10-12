@@ -23,11 +23,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import common.ui.CustomTextField
+import kotlinx.coroutines.launch
 
 @Composable
 fun UpdateFacultyRoute(
@@ -97,6 +99,7 @@ private fun _FormAndControl(
     val keyboard = LocalSoftwareKeyboardController.current
     val isLoading = controller.networkIOInProgress.collectAsState().value
     val isInputValid = controller.validator.areMandatoryFieldFilled.collectAsState().value
+    val scope = rememberCoroutineScope()
     Column(
         modifier = modifier
             .widthIn(max = 600.dp)
@@ -124,6 +127,9 @@ private fun _FormAndControl(
             enabled = !isLoading && isInputValid,
             onClick = {
                 keyboard?.hide()
+                scope.launch {
+                    controller.onAddRequest()
+                }
             }
         ) {
             buttonContent()

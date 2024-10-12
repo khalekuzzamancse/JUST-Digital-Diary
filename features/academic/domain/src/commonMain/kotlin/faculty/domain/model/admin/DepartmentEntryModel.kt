@@ -7,6 +7,6 @@ package faculty.domain.model.admin
  data class DepartmentEntryModel(
     val priority: String,
     val name: String,
-    val shortName: String,
+    val shortname: String,
     val facultyId: String
 )

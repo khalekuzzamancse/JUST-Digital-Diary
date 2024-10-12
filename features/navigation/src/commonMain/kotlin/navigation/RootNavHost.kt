@@ -1,10 +1,7 @@
 package navigation
 
 import academic.ui.admin.AddDeptRoute
-import academic.ui.admin.AddFacultyRoute
 import academic.ui.admin.AddTeacherScreen
-import academic.ui.admin.UpdateDeptRoute
-import academic.ui.admin.UpdateFacultyRoute
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,11 +24,20 @@ fun RootNavHost(
     onTokenDeleteRequest: () -> Unit = {},
     onEvent: (AppEvent) -> Unit,
 ) {
-    //  AddFacultyRoute()
-   // UpdateFacultyRoute()
+
+    //AddFacultyRoute()
+    // UpdateFacultyRoute()
     //  UpdateDeptRoute()
-  //  AddDeptRoute()
-      AddTeacherScreen()
+   // AddDeptRoute()
+    AddTeacherScreen()
+//    val mainViewModel = viewModel { MainViewModel() }
+//    _FeatureNavGraph(
+//        viewModel = mainViewModel,
+//        onEvent = onEvent,
+//        onLogOutRequest = {
+//            onTokenDeleteRequest()
+//        }
+//    )
 }
 
 @Composable

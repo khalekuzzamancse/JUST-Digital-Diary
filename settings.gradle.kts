@@ -44,7 +44,7 @@ val applications= listOf(
 val coreModules = listOf(
     ":core",
     ":core:network",
-    ":core:database",
+    ":core:database",":core:database:mongodb",":core:database:api",
     ":core:common-ui",
     ":core:common-docs",
 )

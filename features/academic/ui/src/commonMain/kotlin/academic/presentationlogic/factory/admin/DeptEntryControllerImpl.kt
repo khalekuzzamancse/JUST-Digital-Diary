@@ -3,10 +3,15 @@
 package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.DepartmentEntryController
+import academic.presentationlogic.mapper.ModelMapper
 import academic.presentationlogic.model.admin.DepartmentEntryModel
 import academic.presentationlogic.model.public_.FacultyModel
+import faculty.domain.exception.CustomException
+import faculty.domain.usecase.admin.AddDepartmentUseCase
+import faculty.domain.usecase.public_.RetrieveFactualityUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,13 +19,19 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-internal class DeptEntryControllerImpl : DepartmentEntryController {
+internal class DeptEntryControllerImpl(
+    private val retrieveFactualityUseCase: RetrieveFactualityUseCase,
+    private val addDepartmentUseCase: AddDepartmentUseCase,
+) : DepartmentEntryController {
     private val _networkIOInProgress = MutableStateFlow(false)
     private val _dept = MutableStateFlow(DepartmentEntryModel("", "", "", ""))
     private val _statusMessage = MutableStateFlow<String?>(null)
-//    private val _faculty = MutableStateFlow<List<FacultyModel>>(emptyList())
-private val _faculty = MutableStateFlow(_dummyList())
+
+
+    //    private val _faculty = MutableStateFlow<List<FacultyModel>>(emptyList())
+    private val _faculty = MutableStateFlow<List<FacultyModel>>(emptyList())
     private val _selectedFaculty = MutableStateFlow<Int?>(null)
 
 
@@ -72,38 +83,74 @@ private val _faculty = MutableStateFlow(_dummyList())
 
     }
 
+    init {
+        CoroutineScope(Dispatchers.Default).launch {
+            _retrieveFaculties()
+        }
+    }
+
     override suspend fun onAddRequest() {
         _onNetworkIOStart()
+        addDepartmentUseCase
+            .execute(with(ModelMapper) { _dept.value.toDomainModel() })
+            .fold(
+                onSuccess = {
+                    _updateErrorMessage("Added Successfully")
+                },
+                onFailure = { exception ->
+                    when (exception) {
+                        is CustomException -> {
+                            _updateErrorMessage(exception.message)
+                        }
 
+                        else -> {
+                            _updateErrorMessage("Failed to load faculties")
+                        }
+
+                    }
+                }
+            )
+        _onNetworkIOStop()
+    }
+
+    private suspend fun _retrieveFaculties() {
+        _onNetworkIOStart()
+        retrieveFactualityUseCase
+            .execute()
+            .fold(
+                onSuccess = { models ->
+                    _faculty.update { models.map { with(ModelMapper) { it.toUiModel() } } }
+                    //  _updateErrorMessage("Added Successfully")
+
+                },
+                onFailure = { exception ->
+                    when (exception) {
+                        is CustomException -> {
+                            _updateErrorMessage(exception.message)
+                        }
+
+                        else -> {
+                            _updateErrorMessage("Failed to load faculties")
+                        }
+
+                    }
+                }
+            )
         _onNetworkIOStop()
     }
 
     override suspend fun onUpdateRequest() {
-        _onNetworkIOStart()
 
-        _onNetworkIOStop()
     }
 
     private fun _onNetworkIOStart() = _networkIOInProgress.update { true }
     private fun _onNetworkIOStop() = _networkIOInProgress.update { false }
-    private fun _dummyList() = listOf(
-        FacultyModel(
-            name = "Faculty of Engineering & Technology",
-            id = "1",
-            numberOfDepartment = ""
-        ),
-        FacultyModel(
-            name = "Faculty of Applied Science & Technology",
-            id = "2",
-            numberOfDepartment = ""
-        ),
-        FacultyModel(
-            name = "Faculty of Biological Science & Technology",
-            id = "3",
-            numberOfDepartment = ""
-        ),
-        FacultyModel(name = "Faculty of Health Science", id = "4", numberOfDepartment = ""),
-        FacultyModel(name = "Faculty of Business Studies", id = "5", numberOfDepartment = ""),
-        FacultyModel(name = "Faculty of Social Science & Arts", id = "6", numberOfDepartment = "")
-    )
+    private fun _updateErrorMessage(msg: String) {
+        CoroutineScope(Dispatchers.Default).launch {
+            _statusMessage.update { msg }
+            //clear after 4 seconds
+            delay(4_000)
+            _statusMessage.update { null }
+        }
+    }
 }
