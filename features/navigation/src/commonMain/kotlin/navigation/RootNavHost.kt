@@ -24,11 +24,7 @@ fun RootNavHost(
     onEvent: (AppEvent) -> Unit,
 ) {
 
-    //AddFacultyRoute()
-    // UpdateFacultyRoute()
-    //  UpdateDeptRoute()
-  // AddDeptRoute()
-//  AddTeacherScreen()
+
     val mainViewModel = viewModel { MainViewModel() }
     _FeatureNavGraph(
         viewModel = mainViewModel,

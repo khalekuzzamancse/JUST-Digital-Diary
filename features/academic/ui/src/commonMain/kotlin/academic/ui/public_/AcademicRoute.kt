@@ -114,6 +114,9 @@ private object _Route {
     const val FACULTY_AND_DEPT = "FACULTY_AND_DEPT"
     const val DEPT_ID = "deptId"
     const val TEACHERS_ROUTE = "$TEACHER_LIST/{$DEPT_ID}"
+    const val FACULTY_INSERT_ROUTE = "FACULTY_INSERT_ROUTE"
+    const val DEPARTMENT_INSERT_ROUTE = "DEPARTMENT_INSERT_ROUTE"
+    const val TEACHER_INSERT_ROUTE = "TEACHER_INSERT_ROUTE"
 }
 
 

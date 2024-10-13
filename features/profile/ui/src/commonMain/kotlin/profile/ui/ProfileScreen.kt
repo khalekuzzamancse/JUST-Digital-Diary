@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -20,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarToday
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Schedule
+import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Timer
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -27,19 +26,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import common.newui.EmptyContentScreen
 import profile.presentationlogic.ProfileEvent
-import profile.presentationlogic.factory.UiFactory
 import profile.presentationlogic.model.ProfileModel
-import profile.ui.common.SnackNProgressBarDecorator
 
 @Composable
 internal fun ProfileRoute(
@@ -47,42 +41,66 @@ internal fun ProfileRoute(
     onEvent: (ProfileEvent) -> Unit
 ) {
 
-    if (token == null) {
-        EmptyContentScreen(
-            message = "Something is wrong,Please Log in again"
-        )
-    } else {
-        val viewModel = viewModel { ProfileViewModel(UiFactory.createProfileController(token)) }
-        val isNotFetching = !(viewModel.controller.isFetching.collectAsState().value)
-        SnackNProgressBarDecorator(
-            isLoading = viewModel.isLoading.collectAsState().value,
-            snackBarMessage = viewModel.screenMessage.collectAsState().value
-        ) {
-            val model = viewModel.controller.profile.collectAsState().value
-            if (model.isEmpty() && isNotFetching) {
-                EmptyContentScreen()
-            } else {
-                if (!model.isEmpty()) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        ProfileCard(profile = model)
-                        Spacer(Modifier.height(8.dp))
-                        Dashboard(
-                            isAdmin = true,
-                            onCalendarUpdateClick = { onEvent(ProfileEvent.NavigateToCalendarUpdate) },
-                            onExamRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToExamRoutineUpdate) },
-                            onClassRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToClassRoutineUpdate) },
-                            onTeacherInfoUpdateClick = { onEvent(ProfileEvent.NavigateToTeacherInfoUpdate) },
-                        )
-                    }
-                }
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Dashboard(
+            isAdmin = true,
+            onCalendarUpdateClick = { onEvent(ProfileEvent.NavigateToCalendarUpdate) },
+            onExamRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToExamRoutineUpdate) },
+            onClassRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToClassRoutineUpdate) },
+            onTeacherInfoUpdateClick = { onEvent(ProfileEvent.NavigateToTeacherInfoUpdate) },
+            onFacultyInsertRequest = {
+                onEvent(ProfileEvent.FacultyInsertRequest)
+            },
+            onDeptInsertRequest = {
+                onEvent(ProfileEvent.DepartmentInsertRequest)
+            },
+            onTeacherInsertRequest = {
+                onEvent(ProfileEvent.TeacherInsertRequest)
+            },
 
-
-            }
-        }
+            )
     }
+
+
+//    if (token == null) {
+//        EmptyContentScreen(
+//            message = "Something is wrong,Please Log in again"
+//        )
+//    } else {
+//        val viewModel = viewModel { ProfileViewModel(UiFactory.createProfileController(token)) }
+//        val isNotFetching = !(viewModel.controller.isFetching.collectAsState().value)
+//        SnackNProgressBarDecorator(
+//            isLoading = viewModel.isLoading.collectAsState().value,
+//            snackBarMessage = viewModel.screenMessage.collectAsState().value
+//        ) {
+//            val model = viewModel.controller.profile.collectAsState().value
+//            if (model.isEmpty() && isNotFetching) {
+//                EmptyContentScreen()
+//            } else {
+//                if (!model.isEmpty()) {
+//                    Column(
+//                        modifier = Modifier.fillMaxWidth(),
+//                        horizontalAlignment = Alignment.CenterHorizontally
+//                    ) {
+//                        ProfileCard(profile = model)
+//                        Spacer(Modifier.height(8.dp))
+//                        Dashboard(
+//                            isAdmin = true,
+//                            onCalendarUpdateClick = { onEvent(ProfileEvent.NavigateToCalendarUpdate) },
+//                            onExamRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToExamRoutineUpdate) },
+//                            onClassRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToClassRoutineUpdate) },
+//                            onTeacherInfoUpdateClick = { onEvent(ProfileEvent.NavigateToTeacherInfoUpdate) },
+//                        )
+//                    }
+//                }
+//
+//
+//            }
+//        }
+//    }
 
 
 }
@@ -137,10 +155,34 @@ fun Dashboard(
     onCalendarUpdateClick: () -> Unit = {},
     onExamRoutineUpdateClick: () -> Unit = {},
     onClassRoutineUpdateClick: () -> Unit = {},
-    onTeacherInfoUpdateClick: () -> Unit = {}
+    onTeacherInfoUpdateClick: () -> Unit = {},
+    onTeacherInsertRequest: () -> Unit,
+    onDeptInsertRequest: () -> Unit,
+    onFacultyInsertRequest: () -> Unit,
 ) {
     val dashboardItems = mutableListOf<DashboardItemData>().apply {
         if (isAdmin) {
+            add(
+                DashboardItemData(
+                    text = "Insert Faculty",
+                    icon = Icons.Outlined.School,
+                    onClick = onFacultyInsertRequest
+                )
+            )
+            add(
+                DashboardItemData(
+                    text = "Insert Department",
+                    icon = Icons.Outlined.School,
+                    onClick = onDeptInsertRequest
+                )
+            )
+            add(
+                DashboardItemData(
+                    text = "Insert Teacher",
+                    icon = Icons.Outlined.Person,
+                    onClick = onTeacherInsertRequest
+                )
+            )
             add(
                 DashboardItemData(
                     text = "Calendar Update",

@@ -2,7 +2,11 @@
 
 package profile.ui
 
+import academic.ui.admin.AddDeptRoute
+import academic.ui.admin.AddFacultyRoute
 import academic.ui.admin.AddTeacherScreen
+import academic.ui.admin.UpdateDeptRoute
+import academic.ui.admin.UpdateFacultyRoute
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -95,6 +99,26 @@ fun ProfileNavHost(
             }
 
         }
+        composable(route = Routes.FACULTY_INSERT) {
+            AddFacultyRoute { }
+        }
+        composable(route = Routes.DEPARTMENT_INSERT) {
+            AddDeptRoute { }
+
+        }
+        composable(route = Routes.TEACHER_INSERT) {
+            AddTeacherScreen()
+        }
+        composable(route = Routes.FACULTY_UPDATE) {
+            UpdateFacultyRoute { }
+        }
+        composable(route = Routes.DEPARTMENT_UPDATE) {
+            UpdateDeptRoute { }
+        }
+        composable(route = Routes.TEACHER_UPDATE) {
+
+        }
+
     }
 }
 
@@ -126,6 +150,15 @@ private fun _onNavigationEvent(event: ProfileEvent, navController: NavHostContro
             is ProfileEvent.NavigateToTeacherInfoUpdate -> {
                 navController.navigate(Routes.TEACHER_INFO_UPDATE)
             }
+            is ProfileEvent.FacultyInsertRequest->{
+                navController.navigate(Routes.FACULTY_INSERT)
+            }
+            is ProfileEvent.DepartmentInsertRequest->{
+                navController.navigate(Routes.DEPARTMENT_INSERT)
+            }
+            is ProfileEvent.TeacherInsertRequest->{
+                navController.navigate(Routes.TEACHER_INSERT)
+            }
 
 
         }
@@ -142,6 +175,14 @@ private object Routes {
     const val TEACHER_INFO_UPDATE = "TeacherInfoUpdateFeatureNavGraph.ROUTE"
     const val CLASS_ROUTINE_UPDATE = "ClassRoutineUpdateFeatureNavGraph.ROUTE"
     const val EXAM_ROUTINE_UPDATE = "ExamRoutineUpdateFeatureNavGraph.ROUTE"
+    const val FACULTY_INSERT = "faculty_insert"
+    const val FACULTY_UPDATE = "faculty_update"
+
+    const val DEPARTMENT_INSERT = "department_insert"
+    const val DEPARTMENT_UPDATE = "department_update"
+
+    const val TEACHER_INSERT = "teacher_insert"
+    const val TEACHER_UPDATE = "teacher_update"
 }
 
 @Composable
