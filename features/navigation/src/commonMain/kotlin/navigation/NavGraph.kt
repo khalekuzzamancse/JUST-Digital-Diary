@@ -1,6 +1,11 @@
 package navigation
 
 import academic.ui.AcademicModuleEvent
+import academic.ui.admin.AddDeptRoute
+import academic.ui.admin.AddFacultyRoute
+import academic.ui.admin.AddTeacherScreen
+import academic.ui.admin.UpdateDeptRoute
+import academic.ui.admin.UpdateFacultyRoute
 import academic.ui.public_.AcademicRoute
 import administration.ui.public_.AdminEmployeeListEvent
 import administration.ui.public_.AdministrationRoute
@@ -28,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import calendar.ui.ui.admin.AddAcademicCalenderScreen
 import miscellaneous.MiscFeatureEvent
 import miscellaneous.ui.AboutUsRoute
 import miscellaneous.ui.eventGallery.EventsRoute
@@ -35,6 +41,8 @@ import miscellaneous.ui.home.HomeRoute
 import miscellaneous.ui.vcmessage.MessageFromVCRoute
 import navigation.component.NavDestination
 import profile.ui.ProfileNavHost
+import schedule.ui.ui.admin.add_class_schedule.AddClassScheduleScreen
+import schedule.ui.ui.admin.add_exam_schedule.ExamScheduleAddScreen
 import schedule.ui.ui.public_.ViewClassScheduleScreen
 import schedule.ui.ui.public_.ViewExamScheduleScreen
 
@@ -48,7 +56,7 @@ fun NavGraph(
     startDestination: String,
     isNavRailMode: Boolean,
     navController: NavHostController,
-    navigateToProfile:()->Unit,
+    navigateToProfile: () -> Unit,
     onMiscFeatureEvent: (MiscFeatureEvent) -> Unit,
 ) {
 
@@ -83,7 +91,10 @@ fun NavGraph(
             ) + fadeOut(animationSpec = tween(700))
         }
     ) {
+//        navController.adminNavGraph()
 
+
+        ///
         composable(NavDestination.Home.route) {
             _DrawerIconDecorator(
                 onMenuIconClick = openDrawerRequest,
@@ -110,6 +121,18 @@ fun NavGraph(
         composable(NavDestination.FacultyList.route) {
             AcademicRoute(
                 onEvent = { event ->
+                    when(event){
+                        is AcademicModuleEvent.EditFacultyRequest->{
+                            try {
+                                navController.navigate(Routes.FACULTY_UPDATE)
+                            }
+                            catch (e: Exception){
+
+                            }
+                        }
+
+                        else -> {}
+                    }
                     toAppEvent(event)?.let(onEvent)
                 },
                 navigationIcon = if (!isNavRailMode) {
@@ -141,7 +164,11 @@ fun NavGraph(
                     {
                         _MenuIcon(openDrawerRequest)
                     }
-                } else null
+                } else null, onEvent = {
+                    println("Event:$it")
+                    adminNavigationRequest(event = it, navController = navController)
+
+                }
             )
         }
         composable(NavDestination.ClassSchedule.route) {
@@ -192,6 +219,55 @@ fun NavGraph(
             ) {
                 AboutUsRoute()
             }
+
+        }
+// TODO:Admin NavGraph
+        composable(Routes.EXAM_ROUTINE_UPDATE) {
+            _BackIconDecorator(
+                onBackRequest = navController::_goBack,
+            ) {
+                ExamScheduleAddScreen()
+            }
+        }
+        composable(Routes.CLASS_ROUTINE_UPDATE) {
+            _BackIconDecorator(
+                onBackRequest = navController::_goBack,
+            ) {
+                AddClassScheduleScreen()
+            }
+        }
+        composable(Routes.TEACHER_INFO_UPDATE) {
+            _BackIconDecorator(
+                onBackRequest = navController::_goBack,
+            ) {
+                AddTeacherScreen()
+            }
+        }
+        composable(Routes.CALENDAR_UPDATE) {
+            _BackIconDecorator(
+                onBackRequest = navController::_goBack,
+            ) {
+                AddAcademicCalenderScreen()
+            }
+
+        }
+        composable(route = Routes.FACULTY_INSERT) {
+            AddFacultyRoute { }
+        }
+        composable(route = Routes.DEPARTMENT_INSERT) {
+            AddDeptRoute { }
+
+        }
+        composable(route = Routes.TEACHER_INSERT) {
+            AddTeacherScreen()
+        }
+        composable(route = Routes.FACULTY_UPDATE) {
+            UpdateFacultyRoute { }
+        }
+        composable(route = Routes.DEPARTMENT_UPDATE) {
+            UpdateDeptRoute { }
+        }
+        composable(route = Routes.TEACHER_UPDATE) {
 
         }
 

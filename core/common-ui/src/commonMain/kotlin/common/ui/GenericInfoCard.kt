@@ -9,13 +9,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,7 +51,11 @@ data class CardInfoState(
 fun GenericInfoCard(
     modifier: Modifier=Modifier,
     state: CardInfoState,
-    onSelect: () -> Unit
+    onSelect: () -> Unit,
+    showEditButton: Boolean=false,
+    showDeleteButton: Boolean=false,
+    onEditRequest: () -> Unit={},
+    onDeleteRequest: () -> Unit={},
 ) {
     val backgroundColor = if (state.isSelected) state.backgroundColorSelected else state.backgroundColorUnselected
     val contentColor = MaterialTheme.colorScheme.contentColorFor(backgroundColor)
@@ -72,7 +86,11 @@ fun GenericInfoCard(
                 isSelected = state.isSelected,
                 iconSelected = state.iconSelected,
                 iconUnselected = state.iconUnselected,
-                countLabel = state.countLabel
+                countLabel = state.countLabel,
+                showEditButton = showEditButton,
+                showDeleteButton = showDeleteButton,
+                onEditRequest = onEditRequest,
+                onDeleteRequest = onDeleteRequest
             )
         }
     }
@@ -85,7 +103,11 @@ private fun _GenericInfoRow(
     isSelected: Boolean,
     iconSelected: ImageVector,
     iconUnselected: ImageVector,
-    countLabel: String
+    countLabel: String,
+    showEditButton: Boolean,
+    showDeleteButton: Boolean,
+    onEditRequest: () -> Unit,
+    onDeleteRequest: () -> Unit,
 ) {
     val icon = if (isSelected) iconSelected else iconUnselected
     val iconTint = if (!isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
@@ -121,5 +143,58 @@ private fun _GenericInfoRow(
                 color = textColor
             )
         }
+        if (showEditButton) {
+            _ControlIconWithConfirmationDialog(
+                onConfirmRequest = onEditRequest,
+                icon = Icons.Outlined.Edit,
+                tint = MaterialTheme.colorScheme.secondary,
+                message = "Are you sure you want to edit?"
+            )
+        }
+        if (showDeleteButton) {
+            _ControlIconWithConfirmationDialog(
+                onConfirmRequest = onDeleteRequest,
+                icon = Icons.Outlined.Delete,
+                tint =  MaterialTheme.colorScheme.secondary,
+                message = "Are you sure you want to delete?"
+            )
+        }
+    }
+}
+
+@Composable
+private fun _ControlIconWithConfirmationDialog(
+    onConfirmRequest: () -> Unit,
+    icon: ImageVector,
+    tint: Color,
+    message: String
+) {
+    /**
+     * - This just for confirmation, so it make sense  to not hoist the state
+     */
+    var showDialog by rememberSaveable { mutableStateOf(false) }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    showDialog = false
+                    onConfirmRequest() // Perform the confirmed action
+                }) {
+                    Text("Confirm")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("Cancel")
+                }
+            },
+            text = { Text(message) }
+        )
+    }
+
+    IconButton(onClick = { showDialog = true }) {
+        Icon(imageVector = icon, contentDescription = null, tint = tint)
     }
 }

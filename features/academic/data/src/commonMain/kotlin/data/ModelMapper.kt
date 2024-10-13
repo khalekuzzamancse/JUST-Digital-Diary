@@ -17,7 +17,7 @@ import faculty.domain.model.public_.FacultyModel
 import faculty.domain.model.public_.TeacherModel
 import java.lang.Integer.min
 
-internal object Mapper {
+internal object ModelMapper {
     fun toFacultyModel(entities: List<FacultyEntity>): List<FacultyModel> {
         return entities.map {
             FacultyModel(
@@ -28,11 +28,18 @@ internal object Mapper {
 
         }
     }
-    fun FacultyEntryEntity.toModel()=
+
+    fun FacultyEntryEntity.toModel() =
         FacultyModel(
             facultyId = facultyId,
             name = name,
             departmentsCount = numberOfDept,
+        )
+
+    fun FacultyEntryEntity.toEntryModel() =
+        FacultyEntryModel(
+            priority = priority,
+            name = name,
         )
 
     fun toDeptModels(entity: DepartmentListEntity): List<DepartmentModel> {
@@ -50,15 +57,15 @@ internal object Mapper {
     fun toTeacherModels(entity: TeacherListEntity): List<TeacherModel> {
         val sorter = DesignationSorter()
         return sorter.sortTeachers(entity.facultyMembers).map {
-            val dept= it.departments.firstOrNull()
+            val dept = it.departments.firstOrNull()
             TeacherModel(
                 name = it.name,
                 email = it.email,
                 additionalEmail = it.additional_email,
                 achievements = it.achievement,
                 phone = it.phone,
-                designations = dept?.designation?:"",
-                roomNo = dept?.room_no?:"",
+                designations = dept?.designation ?: "",
+                roomNo = dept?.room_no ?: "",
                 profile = it.profile,
                 id = it.uid,
             )
@@ -71,7 +78,7 @@ internal object Mapper {
     )
 
     fun toDepartmentEntryEntity(model: DepartmentEntryModel) = DepartmentEntryEntity(
-        priority = model.priority.toIntOrNull()?: 0,
+        priority = model.priority.toIntOrNull() ?: 0,
         name = model.name,
         shortname = model.shortname,
 
@@ -90,14 +97,16 @@ internal object Mapper {
             roomNo = model.roomNo
         )
     }
+
     fun FacultyEntryModel.toEntity() = FacultyEntryEntity(
         priority = this.priority,
         name = this.name,
     )
+
     fun DepartmentEntryModel.toEntity() = DepartmentEntryEntity(
-        priority = this.priority.toIntOrNull()?:0,
+        priority = this.priority.toIntOrNull() ?: 0,
         name = this.name,
-        shortname=this.shortname,
+        shortname = this.shortname,
     )
 
     fun TeacherEntryModel.toEntity() = TeacherEntryEntity(
@@ -111,7 +120,8 @@ internal object Mapper {
         designations = designations,
         roomNo = roomNo.ifBlank { null }
     )
-    fun TeacherEntryEntity.toModel()=TeacherModel(
+
+    fun TeacherEntryEntity.toModel() = TeacherModel(
         id = id,
         name = name,
         email = email,
@@ -121,7 +131,8 @@ internal object Mapper {
         designations = designations,
         roomNo = roomNo
     )
-    fun DepartmentEntryEntity.toModel()=DepartmentModel(
+
+    fun DepartmentEntryEntity.toModel() = DepartmentModel(
         deptId = deptId,
         name = name,
         shortname = shortname,

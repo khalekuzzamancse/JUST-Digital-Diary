@@ -37,6 +37,7 @@ internal fun TeachersRoute(
     deptId: String,
     token: String?,
     onExitRequest: () -> Unit,
+    isAdmin: Boolean = true,
     onEvent: (AcademicModuleEvent) -> Unit
     //TODO: event should go out,it should not handle by controller
 ) {
@@ -64,7 +65,9 @@ internal fun TeachersRoute(
                 _TeacherList(
                     modifier = Modifier.padding(it),
                     teachers = teachers,
-                    onEvent = onEvent
+                    onEvent = onEvent,
+                    showEditButton =isAdmin,
+                    showDeleteButton =isAdmin
                 )
             }
 
@@ -78,6 +81,8 @@ internal fun TeachersRoute(
 private fun _TeacherList(
     modifier: Modifier = Modifier,
     teachers: List<TeacherModel>,
+    showEditButton: Boolean ,
+    showDeleteButton: Boolean ,
     onEvent: (AcademicModuleEvent) -> Unit
 ) {
 
@@ -91,6 +96,8 @@ private fun _TeacherList(
         _EmployeeCard(
             modifier = Modifier.padding(8.dp),
             teacher = employee,
+            showEditButton = showEditButton,
+            showDeleteButton = showDeleteButton,
             onCallRequest = {
                 selectedEvent = AcademicModuleEvent.CallRequest(employee.phone)
             },
@@ -100,10 +107,20 @@ private fun _TeacherList(
             onEmailRequest = {
                 selectedEvent = AcademicModuleEvent.EmailRequest(employee.email)
             },
+            onEditRequest = {id->
+                onEvent(AcademicModuleEvent.TeacherEditRequest(id))
+            },
+            onDeleteRequest = {id->
+                onEvent(AcademicModuleEvent.TeacherDeleteRequest(id))
+            }
         )
 
 
     }
+
+
+
+
 
     selectedEvent?.let { event ->
         when (event) {
@@ -148,6 +165,10 @@ private fun _TeacherList(
                 )
 
             }
+            else->{
+                //Never will execute this block
+            }
+
         }
 
     }
@@ -160,9 +181,13 @@ private fun _TeacherList(
 private fun _EmployeeCard(
     modifier: Modifier,
     teacher: TeacherModel,
+    showEditButton: Boolean ,
+    showDeleteButton: Boolean ,
     onCallRequest: () -> Unit,
     onEmailRequest: () -> Unit,
     onMessageRequest: () -> Unit,
+    onEditRequest: (id:String) -> Unit,
+    onDeleteRequest: (id:String) -> Unit,
 ) {
 
     GenericEmployeeCard(
@@ -172,6 +197,14 @@ private fun _EmployeeCard(
         onCallRequest = onCallRequest,
         onEmailRequest = onEmailRequest,
         onMessageRequest = onMessageRequest,
+        showEditButton = showEditButton,
+        showDeleteButton = showDeleteButton,
+        onEditRequest = {
+            onEditRequest(teacher.id)
+        },
+        onDeleteRequest = {
+            onDeleteRequest(teacher.id)
+        },
         details = {
             EmployeeDetails(
                 teacher = teacher,

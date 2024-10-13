@@ -1,6 +1,7 @@
-package academic.ui.public_.components
+package academic.ui.public_
 
 import academic.presentationlogic.controller.public_.FacultyController
+import academic.ui.AcademicModuleEvent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -21,6 +22,8 @@ import common.ui.generateAcronym
 internal fun Faculty(
     modifier: Modifier = Modifier,
     controller: FacultyController,
+    isAdmin: Boolean = true,
+    onEvent: (AcademicModuleEvent) -> Unit,
 ) {
     val faculties = controller.faculties.collectAsState().value
     val selected = controller.selected.collectAsState().value
@@ -36,6 +39,14 @@ internal fun Faculty(
                     isSelected = selected == index,
                     onSelect = {
                         controller.onSelected(index)
+                    },
+                    showDeleteButton = isAdmin,
+                    showEditButton = isAdmin,
+                    onEditRequest = {
+                        onEvent(AcademicModuleEvent.EditFacultyRequest(faculty.id))
+                    },
+                    onDeleteRequest = {
+                        onEvent(AcademicModuleEvent.DeleteFacultyRequest(faculty.id))
                     }
                 )
             }
@@ -50,7 +61,11 @@ private fun _FacultyCard(
     facultyName: String,
     departmentCount: String,
     isSelected: Boolean,
-    onSelect: () -> Unit
+    onSelect: () -> Unit,
+    showEditButton: Boolean,
+    showDeleteButton: Boolean,
+    onEditRequest: () -> Unit,
+    onDeleteRequest: () -> Unit,
 ) {
 
     val backgroundColorSelected = MaterialTheme.colorScheme.primaryContainer
@@ -74,6 +89,10 @@ private fun _FacultyCard(
     GenericInfoCard(
         modifier = modifier,
         state = state,
-        onSelect = onSelect
+        onSelect = onSelect,
+        showEditButton = showEditButton,
+        showDeleteButton = showDeleteButton,
+        onEditRequest = onEditRequest,
+        onDeleteRequest = onDeleteRequest
     )
 }

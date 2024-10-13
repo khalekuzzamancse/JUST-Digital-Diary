@@ -6,6 +6,7 @@ import faculty.domain.model.admin.DepartmentEntryModel
 import faculty.domain.model.admin.FacultyEntryModel
 import faculty.domain.model.admin.TeacherEntryModel
 import faculty.domain.model.public_.DepartmentModel
+import faculty.domain.model.public_.FacultyModel
 
 /**
  * Further discussion on:
@@ -14,6 +15,8 @@ import faculty.domain.model.public_.DepartmentModel
  */
 interface AdminRepository {
     suspend fun addFaculty(model:FacultyEntryModel):Result<Unit>
+    /**Useful for updating a faculty, need only the entry info,do need faculty id because consumer already knew it*/
+    suspend fun readFaculty(id:String):Result<FacultyEntryModel>
     suspend fun updateFaculty(model:FacultyEntryModel):Result<Unit>
     suspend fun addDepartment(model:DepartmentEntryModel):Result<Unit>
     suspend fun updateDepartment(model:DepartmentEntryModel):Result<Unit>

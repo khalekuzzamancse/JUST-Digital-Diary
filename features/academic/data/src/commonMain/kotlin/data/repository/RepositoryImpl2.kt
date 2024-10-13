@@ -4,11 +4,10 @@ package data.repository
 
 import core.database.api.ApiFactory
 import core.network.JsonParser
-import data.Mapper
+import data.ModelMapper
 import data.entity.admin.DepartmentEntryEntity
 import data.entity.admin.FacultyEntryEntity
 import data.entity.admin.TeacherEntryEntity
-import data.entity.public_.FacultyEntity
 import data.service.JsonHandler
 import data.service.withExceptionHandle
 import faculty.domain.model.public_.DepartmentModel
@@ -42,7 +41,7 @@ class RepositoryImpl2 internal constructor(
                 if (json._isFacultyListEntity()) {
                     val entity = json.parseOrThrow(ListSerializer(FacultyEntryEntity.serializer()))
                     return Result.success(
-                        with(Mapper) {
+                        with(ModelMapper) {
                             entity.sortedBy { it.priority }.map { it.toModel() }
                         }
                     )
@@ -63,7 +62,7 @@ class RepositoryImpl2 internal constructor(
                     val entities =
                         json.parseOrThrow(ListSerializer(TeacherEntryEntity.serializer()))
                     return Result.success(
-                        with(Mapper) {
+                        with(ModelMapper) {
                             entities.sortedBy { it.priority }.map { it.toModel() }
                         }
                     )
@@ -85,7 +84,7 @@ class RepositoryImpl2 internal constructor(
                     val entities =
                         json.parseOrThrow(ListSerializer(DepartmentEntryEntity.serializer()))
                     return Result.success(
-                        with(Mapper) {
+                        with(ModelMapper) {
                             entities.sortedBy { it.priority }.map { it.toModel() }
                         }
                     )

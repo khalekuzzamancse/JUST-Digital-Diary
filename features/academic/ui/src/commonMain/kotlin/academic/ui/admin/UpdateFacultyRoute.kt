@@ -1,6 +1,5 @@
 package academic.ui.admin
-
-import academic.presentationlogic.controller.admin.InsertFacultyController
+import academic.presentationlogic.controller.admin.UpdateFacultyController
 import academic.presentationlogic.factory.UiFactory
 import academic.ui.common.SnackNProgressBarDecorator
 import androidx.compose.foundation.layout.Column
@@ -11,9 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.School
+import androidx.compose.material.icons.outlined.Update
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -28,41 +27,31 @@ import androidx.compose.ui.unit.dp
 import common.ui.CustomTextField
 import kotlinx.coroutines.launch
 
-
 @Composable
-fun AddFacultyRoute(
+fun UpdateFacultyRoute(
     modifier: Modifier = Modifier,
     navigationIcon: (@Composable () -> Unit)? = null
 ) {
-    val controller = remember { UiFactory.createAddFacultyController() }
+
+    val controller = remember { UiFactory.createUpdateFacultyController("yytt") }
+
     SnackNProgressBarDecorator(
         isLoading = controller.networkIOInProgress.collectAsState().value,
         snackBarMessage = controller.statusMessage.collectAsState(null).value,
         navigationIcon = navigationIcon
     ) {
-        FacultyEntryForm(
+        _FacultyEntryForm(
             modifier = Modifier.align(Alignment.TopCenter),
             controller = controller,
-            buttonContent = {
-                Icon(Icons.Outlined.Add, contentDescription = "add")
-                Spacer(Modifier.width(6.dp))
-                Text("Add")
-            }
         )
 
     }
 
 }
-
-
-/**
- * Will be used for both add and update
- */
 @Composable
-internal fun FacultyEntryForm(
+private fun _FacultyEntryForm(
     modifier: Modifier = Modifier,
-    controller: InsertFacultyController,
-    buttonContent: @Composable () -> Unit
+    controller: UpdateFacultyController,
 ) {
     val keyboard = LocalSoftwareKeyboardController.current
     val isLoading = controller.networkIOInProgress.collectAsState().value
@@ -96,11 +85,13 @@ internal fun FacultyEntryForm(
             onClick = {
                 keyboard?.hide()
                 scope.launch {
-                    controller.onAddRequest()
+                    controller.update()
                 }
             }
         ) {
-            buttonContent()
+            Icon(Icons.Outlined.Update, contentDescription = "add")
+            Spacer(Modifier.width(6.dp))
+            Text("Update")
         }
 
     }

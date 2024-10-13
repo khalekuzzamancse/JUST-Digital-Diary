@@ -4,8 +4,6 @@ package academic.ui.public_
 import academic.presentationlogic.factory.UiFactory
 import academic.ui.AcademicModuleEvent
 import academic.ui.common.SnackNProgressBarDecorator
-import academic.ui.public_.components.Departments
-import academic.ui.public_.components.Faculty
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -84,7 +82,8 @@ fun AcademicRoute(
                     } catch (_: Exception) {
 
                     }
-                }
+                },
+                onEvent = onEvent
             )
 
         }
@@ -125,6 +124,7 @@ private fun _FacultyNDeptRoute(
     modifier: Modifier = Modifier,
     viewModel: FacultyScreenViewModel,
     onTeachersRequest: (String) -> Unit,
+    onEvent: (AcademicModuleEvent) -> Unit,
     navigationIcon: (@Composable () -> Unit)? = null,
 ) {
 
@@ -141,10 +141,11 @@ private fun _FacultyNDeptRoute(
             }
         },
         content = {
-            FacultyAndDepartmentList(
+            _FacultyAndDepartmentList(
                 viewModel = viewModel,
                 backHandler = {},
-                onTeachersRequest = onTeachersRequest
+                onTeachersRequest = onTeachersRequest,
+                onEvent = onEvent
             )
         }
     )
@@ -165,10 +166,11 @@ private fun _FacultyNDeptRoute(
  *
  */
 @Composable
-private fun FacultyAndDepartmentList(
+private fun _FacultyAndDepartmentList(
     modifier: Modifier = Modifier,
     viewModel: FacultyScreenViewModel,
     onTeachersRequest: (String) -> Unit,
+    onEvent: (AcademicModuleEvent) -> Unit,
     backHandler: @Composable (onBackButtonPress: () -> Boolean) -> Unit,
 ) {
     val departmentController = viewModel.departmentController
@@ -199,7 +201,8 @@ private fun FacultyAndDepartmentList(
         facultyList = {
             Faculty(
                 modifier = Modifier,
-                controller = facultyController
+                controller = facultyController,
+                onEvent = onEvent
             )
         }
     )

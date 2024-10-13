@@ -132,6 +132,10 @@ private fun AdminOfficerCard(
         onCallRequest = onCallRequest,
         onEmailRequest = onEmailRequest,
         onMessageRequest = onMessageRequest,
+        showEditButton = false,
+        showDeleteButton = false,
+        onEditRequest = {},
+        onDeleteRequest = {},
         details = {
             EmployeeDetails(
                 adminOfficer = adminOfficer,

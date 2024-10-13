@@ -6,7 +6,7 @@ import core.database.api.ApiFactory
 import core.network.ApiServiceClient
 import core.network.Header
 import core.network.JsonParser
-import data.Mapper
+import data.ModelMapper
 import data.entity.public_.DepartmentListEntity
 import data.entity.public_.FacultyEntity
 import data.entity.public_.TeacherListEntity
@@ -39,7 +39,7 @@ class RemoteDataSourceImpl internal constructor(
             if (json._isFacultyListEntity()) {
                 val entity =
                     jsonParser.parseOrThrow(json, ListSerializer(FacultyEntity.serializer()))
-                return Result.success(Mapper.toFacultyModel(entity))
+                return Result.success(ModelMapper.toFacultyModel(entity))
             } else
                 return Result.failure(jsonHandler.parseAsServerMessageOrThrowCustomException(json))
 
@@ -63,7 +63,7 @@ class RemoteDataSourceImpl internal constructor(
             val json = apiServiceClient.retrieveJsonOrThrow(url, Header(key = "Authorization", value = token))
             if (json._isDeptListEntity()) {
                 val entity = jsonParser.parseOrThrow(json, DepartmentListEntity.serializer())
-                return Result.success(Mapper.toDeptModels(entity))
+                return Result.success(ModelMapper.toDeptModels(entity))
             } else
                 return Result.failure(jsonHandler.parseAsServerMessageOrThrowCustomException(json))
 
@@ -79,7 +79,7 @@ class RemoteDataSourceImpl internal constructor(
             if (json._isTeacherListEntity()) {
                 println("TeacherListEntity")
                 val entity = jsonParser.parseOrThrow(json, TeacherListEntity.serializer())
-                return Result.success(Mapper.toTeacherModels(entity))
+                return Result.success(ModelMapper.toTeacherModels(entity))
             } else
                 return Result.failure(jsonHandler.parseAsServerMessageOrThrowCustomException(json))
 

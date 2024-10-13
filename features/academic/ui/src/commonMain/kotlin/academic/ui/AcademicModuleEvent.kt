@@ -9,6 +9,10 @@ sealed interface AcademicModuleEvent {
     data class CallRequest(val number: String) : AcademicModuleEvent
     data class MessageRequest(val number: String) : AcademicModuleEvent
     data class EmailRequest(val email: String) : AcademicModuleEvent
+    data class EditFacultyRequest(val id: String):AcademicModuleEvent
+    data class DeleteFacultyRequest(val id: String) : AcademicModuleEvent
+    data class TeacherEditRequest (val id:String): AcademicModuleEvent
+    data class TeacherDeleteRequest(val id:String) : AcademicModuleEvent
 //
 
 }

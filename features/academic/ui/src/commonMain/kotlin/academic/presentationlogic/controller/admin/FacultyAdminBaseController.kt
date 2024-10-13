@@ -3,7 +3,10 @@ package academic.presentationlogic.controller.admin
 import academic.presentationlogic.model.admin.FacultyEntryModel
 import kotlinx.coroutines.flow.StateFlow
 
-internal interface FacultyEntryController {
+/**
+ * - The common part that can be used for both insert and update
+ */
+internal interface FacultyAdminBaseController {
     /**
      * Indicates whether a network operation is currently in progress.
      * Uses a name that is independent of any UI framework, ensuring that this layer remains framework-agnostic,
@@ -26,16 +29,6 @@ internal interface FacultyEntryController {
     fun onPriorityChanged(value: String)
     fun onNameChanged(value: String)
 
-    //same can be used as for addFaculty or update existing faculty,that is why giving default implementation
-    suspend fun onAddRequest() {
-        TODO("If you are adder then implement this method")
-    }
-
-    //same can be used as for addFaculty or update existing faculty,that is why giving default implementation
-    suspend fun onUpdateRequest() {
-        TODO("If you are updater then implement this method")
-    }
-
 
     interface Validator {
         /**
@@ -45,7 +38,6 @@ internal interface FacultyEntryController {
          */
         val areMandatoryFieldFilled: StateFlow<Boolean>
         val errors: StateFlow<List<String>>
-        fun observeFieldChanges(state: StateFlow<FacultyEntryModel>)
-
+        fun activate(state: StateFlow<FacultyEntryModel>)
     }
 }
