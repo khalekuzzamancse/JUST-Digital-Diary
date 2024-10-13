@@ -18,7 +18,6 @@ import faculty.domain.repository.Repository
 class RepositoryImpl internal constructor(
    private val  token: String?,
     private val remoteSource: RemoteDataSource
-
 ) : Repository {
 
     override suspend fun getFaculties(): Result<List<FacultyModel>> {

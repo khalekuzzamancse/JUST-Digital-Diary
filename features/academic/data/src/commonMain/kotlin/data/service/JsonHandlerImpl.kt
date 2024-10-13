@@ -5,6 +5,7 @@ import core.network.JsonParser
 import core.network.NetworkException
 import data.entity.ServerResponseMessageEntity
 import faculty.domain.exception.CustomException
+import kotlinx.serialization.KSerializer
 
 /**
  * - See[JsonHandler] docs
@@ -12,15 +13,23 @@ import faculty.domain.exception.CustomException
 
 internal class JsonHandlerImpl(private val jsonParser: JsonParser) : JsonHandler {
 
-    override fun parseAsServerMessageOrThrowCustomException(json: String):CustomException{
+    override fun parseAsServerMessageOrThrowCustomException(json: String): CustomException {
         return if (json.isServerMessage())
-           json.createServerMessageException()
-        else
-          CustomException.JsonParseException(json)
+            json.createServerMessageException()
+        else{
+           CustomException.JsonParseException(json)
 
+        }
 
 
     }
+
+    override fun String.parseAsServerMessageOrThrow(): CustomException =
+        parseAsServerMessageOrThrowCustomException(this)
+
+    override fun <T> String.parseOrThrow(serializer: KSerializer<T>) =
+        jsonParser.parseOrThrow(this, serializer)
+
 
     override fun createCustomException(exception: Throwable): CustomException {
         return when (exception) {
@@ -33,6 +42,7 @@ internal class JsonHandlerImpl(private val jsonParser: JsonParser) : JsonHandler
             else -> CustomException.UnKnownException(exception)
         }
     }
+
 
     // Helper methods to process JSON strings
     private fun String.createServerMessageException(): CustomException.MessageFromServer {

@@ -1,7 +1,6 @@
 package navigation
 
 import academic.ui.admin.AddDeptRoute
-import academic.ui.admin.AddTeacherScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -28,8 +27,8 @@ fun RootNavHost(
     //AddFacultyRoute()
     // UpdateFacultyRoute()
     //  UpdateDeptRoute()
-   // AddDeptRoute()
-//    AddTeacherScreen()
+  // AddDeptRoute()
+//  AddTeacherScreen()
     val mainViewModel = viewModel { MainViewModel() }
     _FeatureNavGraph(
         viewModel = mainViewModel,

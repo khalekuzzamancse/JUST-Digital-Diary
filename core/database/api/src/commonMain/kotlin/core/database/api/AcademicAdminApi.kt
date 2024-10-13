@@ -20,7 +20,7 @@ interface AcademicAdminApi {
      * }
      * ```
      */
-    suspend fun getAllFaculties():String
+    suspend fun readAllFaculty():String
     /**
      * @param json Pass the Json in the format
      * ```
@@ -37,10 +37,12 @@ interface AcademicAdminApi {
      * }
      * ```
      */
-    suspend fun addFaculty(json: String):String
-
-    suspend fun addDepartment(json: String):String
+    suspend fun insertFaculty(json: String):String
+    suspend fun readFacultyById(id: String):String
+    suspend fun insertDept(facultyId: String,json: String):String
     suspend fun getDepartments():String
+    suspend fun deptUnderFaculty(facultyId: String): String
+    suspend fun readDeptById(id: String): String
     /**
      * ```
      * {
@@ -57,10 +59,11 @@ interface AcademicAdminApi {
      *
      * ```
      */
-    suspend fun addTeacher(json: String): String
-
-    /**
-     * A Json array of all dept all teacher
-     */
+    suspend fun insertTeacher(deptId: String,json: String): String
+    /**A Json array of all dept all teacher*/
     suspend fun getTeachers():String
+    suspend fun readTeachersUnderDept(deptId:String):String
+    suspend fun readTeacherById(teacherId:String):String
+
+
 }

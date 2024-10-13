@@ -1,11 +1,13 @@
+@file:Suppress("functionName")
+
 package data.repository
 
 import core.database.api.ApiFactory
-import core.network.ApiServiceClient
 import core.network.JsonParser
 import data.Mapper
-import data.entity.admin.DepartmentResponseEntity
+import data.entity.admin.DepartmentEntryEntity
 import data.service.JsonHandler
+import data.service.withExceptionHandle
 import faculty.domain.model.admin.DepartmentEntryModel
 import faculty.domain.model.admin.FacultyEntryModel
 import faculty.domain.model.admin.TeacherEntryModel
@@ -16,22 +18,22 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 class AdminRepositoryImpl internal constructor(
-    private val apiService: ApiServiceClient,
-    private val jsonHandler: JsonHandler,
+    private val handler: JsonHandler,
     private val jsonParser: JsonParser,
 ) : AdminRepository {
     private val jsonConverter = Json { prettyPrint = true }
     override suspend fun addFaculty(model: FacultyEntryModel): Result<Unit> {
-        try {
-            val entity = with(Mapper) { model.toEntity() }
-            val dataJson=jsonConverter.encodeToString(entity)
-            val responseJson = ApiFactory.academicAdminApi().addFaculty(dataJson)
-            /** Execution is here means server sent a response we have to parse it
-             * - 2 possible cases: We got excepted  json or Json is a server message in format ServerResponseMessageEntity  or  Server send a json that format is not known yet,may be server change it json format or other
-             */
-            return Result.failure(jsonHandler.parseAsServerMessageOrThrowCustomException(responseJson))
-        } catch (exception: Throwable) {
-            return Result.failure(jsonHandler.createCustomException(exception))
+        return with(handler) {
+            withExceptionHandle {
+                val entity = with(Mapper) { model.toEntity() }
+                val dataJson = jsonConverter.encodeToString(entity)
+
+                /** Execution is here means server sent a response we have to parse it
+                 * - 2 possible cases: We got excepted  json or Json is a server message in format ServerResponseMessageEntity  or  Server send a json that format is not known yet,may be server change it json format or other
+                 */
+                val responseJson = ApiFactory.academicAdminApi().insertFaculty(dataJson)
+                return Result.failure(responseJson.parseAsServerMessageOrThrow())
+            }
         }
     }
 
@@ -40,16 +42,13 @@ class AdminRepositoryImpl internal constructor(
     }
 
     override suspend fun addDepartment(model: DepartmentEntryModel): Result<Unit> {
-        try {
-            val entity = with(Mapper) { model.toEntity() }
-            val dataJson=jsonConverter.encodeToString(entity)
-            val responseJson = ApiFactory.academicAdminApi().addDepartment(dataJson)
-            /** Execution is here means server sent a response we have to parse it
-             * - 2 possible cases: We got excepted  json or Json is a server message in format ServerResponseMessageEntity  or  Server send a json that format is not known yet,may be server change it json format or other
-             */
-            return Result.failure(jsonHandler.parseAsServerMessageOrThrowCustomException(responseJson))
-        } catch (exception: Throwable) {
-            return Result.failure(jsonHandler.createCustomException(exception))
+        return with(handler) {
+            withExceptionHandle {
+                val entity = with(Mapper) { model.toEntity() }
+                val dataJson = jsonConverter.encodeToString(entity)
+                val responseJson = ApiFactory.academicAdminApi().insertDept(model.facultyId,dataJson)
+                return Result.failure(responseJson.parseAsServerMessageOrThrow())
+            }
         }
     }
 
@@ -58,16 +57,16 @@ class AdminRepositoryImpl internal constructor(
     }
 
     override suspend fun addTeacher(model: TeacherEntryModel): Result<Unit> {
-        try {
-            val entity = with(Mapper) { model.toEntity() }
-            val dataJson=jsonConverter.encodeToString(entity)
-            val responseJson = ApiFactory.academicAdminApi().addTeacher(dataJson)
-            /** Execution is here means server sent a response we have to parse it
-             * - 2 possible cases: We got excepted  json or Json is a server message in format ServerResponseMessageEntity  or  Server send a json that format is not known yet,may be server change it json format or other
-             */
-            return Result.failure(jsonHandler.parseAsServerMessageOrThrowCustomException(responseJson))
-        } catch (exception: Throwable) {
-            return Result.failure(jsonHandler.createCustomException(exception))
+        return with(handler) {
+            withExceptionHandle {
+                val entity = with(Mapper) { model.toEntity() }
+                val dataJson = jsonConverter.encodeToString(entity)
+                val responseJson = ApiFactory.academicAdminApi().insertTeacher(model.deptId,dataJson)
+
+                return Result.failure(
+                    responseJson.parseAsServerMessageOrThrow()
+                )
+            }
         }
     }
 
@@ -76,25 +75,26 @@ class AdminRepositoryImpl internal constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getAllDept():Result< List<DepartmentModel>> {
-        try {
-            val json = ApiFactory.academicAdminApi().getDepartments()
+    override suspend fun getAllDept(): Result<List<DepartmentModel>> {
+        return with(handler) {
+            withExceptionHandle {
+                val json = ApiFactory.academicAdminApi().getDepartments()
 
-            if (json._isDepartmentListEntity()) {
-                val entities= jsonParser.parseOrThrow(json, ListSerializer(DepartmentResponseEntity.serializer()))
-                return Result.success(
-                    with(Mapper){
-                        entities.sortedBy { it.priority }.map { it.toModel()}
-                    }
-                )
-            } else
-                return Result.failure(jsonHandler.parseAsServerMessageOrThrowCustomException(json))
+                if (json._isDepartmentListEntity()) {
+                    val entities = json.parseOrThrow(ListSerializer(DepartmentEntryEntity.serializer()))
+                    return Result.success(
+                        with(Mapper) {
+                            entities.sortedBy { it.priority }.map { it.toModel() }
+                        }
+                    )
+                } else
+                    return Result.failure(json.parseAsServerMessageOrThrow())
 
-        } catch (exception: Throwable) {
-            return Result.failure(jsonHandler.createCustomException(exception))
+            }
         }
 
     }
+
     private fun String._isDepartmentListEntity() =
-        jsonParser.parse(this, ListSerializer(DepartmentResponseEntity.serializer())).isSuccess
+        jsonParser.parse(this, ListSerializer(DepartmentEntryEntity.serializer())).isSuccess
 }

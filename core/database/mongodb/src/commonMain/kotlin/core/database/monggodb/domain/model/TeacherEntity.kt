@@ -1,11 +1,8 @@
-package data.entity.admin
+package core.database.monggodb.domain.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-
 /**
- * According to database schema documentation
- *
  * - Can be used for both insert,read and update
  * - In case of insert consumer will not decide the [id] that is why it has default value
  *
@@ -18,7 +15,7 @@ import kotlinx.serialization.Serializable
  *
  */
 @Serializable
-internal data class TeacherEntryEntity(
+internal data class TeacherEntity(
     @SerialName("id") val id: String="not decided",
     @SerialName("dept_id") val deptId: String="not decided",
     @SerialName("priority") val priority: Int,

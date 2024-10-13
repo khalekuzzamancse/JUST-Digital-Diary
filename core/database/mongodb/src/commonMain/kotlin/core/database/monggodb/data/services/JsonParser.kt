@@ -1,4 +1,4 @@
-package core.network
+package core.database.monggodb.data.services
 
 import kotlinx.serialization.KSerializer
 
@@ -28,7 +28,6 @@ interface JsonParser {
      *
      */
     fun <T> parse(json: String, serializer: KSerializer<T>): Result<T>
-
 
     /**
      * Throws an exception on parsing errors

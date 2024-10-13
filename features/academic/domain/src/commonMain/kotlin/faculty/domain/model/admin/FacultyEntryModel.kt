@@ -5,6 +5,6 @@ package faculty.domain.model.admin
  * @property priority will be used to sorting
  */
  data class FacultyEntryModel(
-    val priority: String,
+    val priority: Int,
     val name:String,
 )

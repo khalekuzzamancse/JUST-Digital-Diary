@@ -1,9 +1,9 @@
-package data.entity.admin
+package core.database.monggodb.domain.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-/** According to database schema documentation
+/**
  * - Can be used for both create,read and update
  * - In case of create consumer will not decide the [facultyId] that is why it has default value
  *
@@ -15,8 +15,9 @@ import kotlinx.serialization.Serializable
  *   - Fetch the number of departments and fill the [numberOfDept] field, for testing purposes allowed ignore it
  *
  */
+
 @Serializable
-internal data class FacultyEntryEntity(
+internal data class FacultyEntity(
     @SerialName("priority") val priority: Int,
     @SerialName("faculty_id") val facultyId: String = "not_decided yet",
     @SerialName("name") val name: String,

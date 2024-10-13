@@ -2,11 +2,9 @@
 
 package data
 
-import data.entity.admin.DepartmentResponseEntity
 import data.entity.admin.DepartmentEntryEntity
 import data.entity.admin.FacultyEntryEntity
 import data.entity.admin.TeacherEntryEntity
-import data.entity.admin.TeacherResponseEntity
 import data.entity.public_.DepartmentListEntity
 import data.entity.public_.FacultyEntity
 import data.entity.public_.TeacherEntity
@@ -15,7 +13,6 @@ import faculty.domain.model.admin.DepartmentEntryModel
 import faculty.domain.model.admin.FacultyEntryModel
 import faculty.domain.model.admin.TeacherEntryModel
 import faculty.domain.model.public_.DepartmentModel
-import faculty.domain.model.public_.DepartmentSubModel
 import faculty.domain.model.public_.FacultyModel
 import faculty.domain.model.public_.TeacherModel
 import java.lang.Integer.min
@@ -27,11 +24,16 @@ internal object Mapper {
                 facultyId = it.facultyId,
                 name = it.name,
                 departmentsCount = it.departmentCount,
-                id = it.id,
             )
 
         }
     }
+    fun FacultyEntryEntity.toModel()=
+        FacultyModel(
+            facultyId = facultyId,
+            name = name,
+            departmentsCount = numberOfDept,
+        )
 
     fun toDeptModels(entity: DepartmentListEntity): List<DepartmentModel> {
         return entity.departments.map {
@@ -71,8 +73,7 @@ internal object Mapper {
     fun toDepartmentEntryEntity(model: DepartmentEntryModel) = DepartmentEntryEntity(
         priority = model.priority.toIntOrNull()?: 0,
         name = model.name,
-        shortName = model.shortname,
-        facultyId = model.facultyId,
+        shortname = model.shortname,
 
         )
 
@@ -96,8 +97,7 @@ internal object Mapper {
     fun DepartmentEntryModel.toEntity() = DepartmentEntryEntity(
         priority = this.priority.toIntOrNull()?:0,
         name = this.name,
-        shortName=this.shortname,
-        facultyId=this.facultyId,
+        shortname=this.shortname,
     )
 
     fun TeacherEntryModel.toEntity() = TeacherEntryEntity(
@@ -111,7 +111,7 @@ internal object Mapper {
         designations = designations,
         roomNo = roomNo.ifBlank { null }
     )
-    fun TeacherResponseEntity.toModel()=TeacherModel(
+    fun TeacherEntryEntity.toModel()=TeacherModel(
         id = id,
         name = name,
         email = email,
@@ -121,11 +121,11 @@ internal object Mapper {
         designations = designations,
         roomNo = roomNo
     )
-    fun DepartmentResponseEntity.toModel()=DepartmentModel(
+    fun DepartmentEntryEntity.toModel()=DepartmentModel(
         deptId = deptId,
         name = name,
         shortname = shortname,
-        employeeCount = 0//TODO:Fix it later
+        employeeCount = numOfEmployee
     )
 }
 

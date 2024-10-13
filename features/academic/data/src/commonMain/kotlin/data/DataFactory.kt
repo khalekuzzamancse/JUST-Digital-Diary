@@ -4,6 +4,7 @@ package data
 
 import data.repository.AdminRepositoryImpl
 import data.repository.RepositoryImpl2
+import data.service.JsonHandler
 import data.service.JsonHandlerImpl
 import factory.NetworkFactory
 import faculty.domain.repository.AdminRepository
@@ -22,18 +23,19 @@ object DataFactory {
     fun createPublicRepository(token: String?): Repository =
         RepositoryImpl2(
             jsonParser = _createJsonParser(),
-            jsonHandler = JsonHandlerImpl(_createJsonParser()),
+            handler = JsonHandlerImpl(_createJsonParser()),
         )
 
     fun createAdminRepository(): AdminRepository = AdminRepositoryImpl(
-        apiService = _createApiClient(),
-        jsonHandler = JsonHandlerImpl(_createJsonParser()),
+        handler = JsonHandlerImpl(_createJsonParser()),
         jsonParser = _createJsonParser()
     )
 
 
+    internal  fun jsonHandler():JsonHandler=JsonHandlerImpl(_createJsonParser())
     private fun _createJsonParser() = NetworkFactory.createJsonParser()
     private fun _createApiClient() = NetworkFactory.createAPIServiceClient()
+
 
 
 }

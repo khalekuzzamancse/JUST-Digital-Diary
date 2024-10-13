@@ -49,7 +49,7 @@ internal object ModelMapper {
 
     fun FacultyEntryModel.toDomainModelOrThrow() =
         faculty.domain.model.admin.FacultyEntryModel(
-            priority = this.priority,
+            priority = this.priority.toInt(),
             name = this.name,
         )
 
