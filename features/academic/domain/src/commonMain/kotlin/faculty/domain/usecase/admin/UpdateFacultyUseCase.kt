@@ -6,5 +6,5 @@ import faculty.domain.repository.AdminRepository
 class UpdateFacultyUseCase(
     private val repository: AdminRepository
 ) {
-    suspend fun execute(model: FacultyEntryModel) = repository.updateFaculty(model)
+    suspend fun execute(facultyId:String,model: FacultyEntryModel) = repository.updateFaculty(facultyId,model)
 }

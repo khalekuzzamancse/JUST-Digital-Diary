@@ -4,7 +4,8 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.DeptEntryController
 import academic.presentationlogic.controller.core.CoreControllerImpl
-import academic.presentationlogic.mapper.ModelMapper
+import academic.presentationlogic.mapper.AdminModelMapper
+import academic.presentationlogic.mapper.PublicModelMapper.toUiModel
 import academic.presentationlogic.model.admin.DepartmentEntryModel
 import academic.presentationlogic.model.public_.FacultyModel
 import faculty.domain.exception.CustomException
@@ -23,7 +24,6 @@ internal open  class DeptEntryControllerImpl(
 
     protected val _dept = MutableStateFlow(DepartmentEntryModel("", "", "", ""))
 
-    //    private val _faculty = MutableStateFlow<List<FacultyModel>>(emptyList())
     private val _faculty = MutableStateFlow<List<FacultyModel>>(emptyList())
     private val _selectedFaculty = MutableStateFlow<Int?>(null)
 
@@ -36,7 +36,7 @@ internal open  class DeptEntryControllerImpl(
 
 
     override fun onNameChanged(value: String) = _dept.update { it.copy(name = value) }
-    override fun onShortNameChanged(value: String) = _dept.update { it.copy(shortName = value) }
+    override fun onShortNameChanged(value: String) = _dept.update { it.copy(shortname = value) }
     override fun onPriorityChanged(value: String) = _dept.update { it.copy(priority = value) }
     override fun onFacultySelected(index: Int) {
         _selectedFaculty.update { index }
@@ -61,9 +61,9 @@ internal open  class DeptEntryControllerImpl(
             .execute()
             .fold(
                 onSuccess = { models ->
-                    _faculty.update { models.map { with(ModelMapper) { it.toUiModel() } } }
-                    //  _updateErrorMessage("Added Successfully")
-
+                    with(AdminModelMapper){
+                        _faculty.update { models.map { it.toUiModel()} }
+                    }
                 },
                 onFailure = { exception ->
                     when (exception) {

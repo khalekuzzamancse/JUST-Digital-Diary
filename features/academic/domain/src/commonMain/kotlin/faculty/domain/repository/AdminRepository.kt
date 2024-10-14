@@ -14,16 +14,20 @@ import faculty.domain.model.public_.FacultyModel
  *  - return `Custom Exception` instead of `throwing` : see [CustomExceptionDoc]
  */
 interface AdminRepository {
-    suspend fun addFaculty(model:FacultyEntryModel):Result<Unit>
+    suspend fun insertFaculty(model: FacultyEntryModel): Result<Unit>
+
     /**Useful for updating a faculty, need only the entry info,do need not faculty id because consumer already knew it*/
-    suspend fun readFaculty(id:String):Result<FacultyEntryModel>
-    suspend fun updateFaculty(model:FacultyEntryModel):Result<Unit>
+    suspend fun readFaculty(id: String): Result<FacultyEntryModel>
+
     /**Useful for updating a department, need only the entry info,do need not faculty id because consumer/client already knew it*/
-    suspend fun readDept(id:String):Result<DepartmentEntryModel>
-    suspend fun addDepartment(model:DepartmentEntryModel):Result<Unit>
-    suspend fun updateDepartment(model:DepartmentEntryModel):Result<Unit>
-    suspend fun readTeacher(id:String):Result<TeacherEntryModel>
-    suspend fun addTeacher(model:TeacherEntryModel):Result<Unit>
-    suspend fun updateTeacher(model:TeacherEntryModel):Result<Unit>
-    suspend fun getAllDept():Result<List<DepartmentModel>>
+    suspend fun readDept(id: String): Result<DepartmentEntryModel>
+    suspend fun insertDept(model: DepartmentEntryModel): Result<Unit>
+    suspend fun readTeacher(id: String): Result<TeacherEntryModel>
+    suspend fun insertTeacher(model: TeacherEntryModel): Result<Unit>
+    suspend fun getAllDept(): Result<List<DepartmentModel>>
+
+    //TODO: UPDATE OPERATIONS
+    suspend fun updateFaculty(facultyId:String,model: FacultyEntryModel): Result<Unit>
+    suspend fun updateDepartment(deptId:String,model: DepartmentEntryModel): Result<Unit>
+    suspend fun updateTeacher(teacherId:String,model: TeacherEntryModel): Result<Unit>
 }

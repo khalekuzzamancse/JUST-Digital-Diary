@@ -3,7 +3,7 @@ package navigation
 import academic.ui.AcademicModuleEvent
 import academic.ui.admin.InsertDeptRoute
 import academic.ui.admin.AddFacultyRoute
-import academic.ui.admin.AddTeacherScreen
+import academic.ui.admin.InsertTeacherRoute
 import academic.ui.admin.UpdateDeptRoute
 import academic.ui.admin.UpdateFacultyRoute
 import academic.ui.admin.UpdateTeacherRoute
@@ -41,6 +41,7 @@ import miscellaneous.ui.eventGallery.EventsRoute
 import miscellaneous.ui.home.HomeRoute
 import miscellaneous.ui.vcmessage.MessageFromVCRoute
 import navigation.component.NavDestination
+import profile.presentationlogic.ProfileEvent
 import profile.ui.ProfileNavHost
 import schedule.ui.ui.admin.add_class_schedule.AddClassScheduleScreen
 import schedule.ui.ui.admin.add_exam_schedule.ExamScheduleAddScreen
@@ -53,12 +54,13 @@ fun NavGraph(
     modifier: Modifier = Modifier,
     onEvent: (AppEvent) -> Unit,
     openDrawerRequest: () -> Unit,
-    onBackPressed: () -> Unit,
+    onNavigateBackRequest: () -> Unit,
     startDestination: String,
     isNavRailMode: Boolean,
     navController: NavHostController,
     navigateToProfile: () -> Unit,
     onMiscFeatureEvent: (MiscFeatureEvent) -> Unit,
+    onAdminEvent: (ProfileEvent) -> Unit,
 ) {
 
     NavHost(
@@ -122,34 +124,6 @@ fun NavGraph(
         composable(NavDestination.FacultyList.route) {
             AcademicRoute(
                 onEvent = { event ->
-                    when(event){
-                        is AcademicModuleEvent.EditFacultyRequest->{
-                            try {
-                                navController.navigate(Routes.FACULTY_UPDATE)
-                            }
-                            catch (_: Exception){
-
-                            }
-                        }
-                        is AcademicModuleEvent.UpdateDeptRequest->{
-                            try {
-                                navController.navigate(Routes.UPDATE_DEPT_ROUTE)
-                            }
-                            catch (_: Exception){
-
-                            }
-                        }
-                        is AcademicModuleEvent.TeacherEditRequest->{
-                            try {
-                                navController.navigate(Routes.UPDATE_TEACHER)
-                            }
-                            catch (_: Exception){
-
-                            }
-                        }
-
-                        else -> {}
-                    }
                     toAppEvent(event)?.let(onEvent)
                 },
                 navigationIcon = if (!isNavRailMode) {
@@ -175,18 +149,13 @@ fun NavGraph(
             )
         }
         composable(NavDestination.Profile.route) {
-            ProfileNavHost(
-                token = NavigationFactory.token.value,
-                navigationIcon = if (!isNavRailMode) {
-                    {
-                        _MenuIcon(openDrawerRequest)
-                    }
-                } else null, onEvent = {
-                    println("Event:$it")
-                    adminNavigationRequest(event = it, navController = navController)
-
-                }
-            )
+          ProfileNavGraph(
+              navigationIcon = if (!isNavRailMode) {
+                  {
+                      _MenuIcon(openDrawerRequest)
+                  }
+              } else null
+          )
         }
         composable(NavDestination.ClassSchedule.route) {
             _DrawerIconDecorator(
@@ -238,80 +207,8 @@ fun NavGraph(
             }
 
         }
-// TODO:Admin NavGraph
-        composable(Routes.EXAM_ROUTINE_UPDATE) {
-            _BackIconDecorator(
-                onBackRequest = navController::_goBack,
-            ) {
-                ExamScheduleAddScreen()
-            }
-        }
-        composable(Routes.CLASS_ROUTINE_UPDATE) {
-            _BackIconDecorator(
-                onBackRequest = navController::_goBack,
-            ) {
-                AddClassScheduleScreen()
-            }
-        }
-        composable(Routes.TEACHER_INFO_UPDATE) {
-            _BackIconDecorator(
-                onBackRequest = navController::_goBack,
-            ) {
-                AddTeacherScreen()
-            }
-        }
-        composable(Routes.CALENDAR_UPDATE) {
-            _BackIconDecorator(
-                onBackRequest = navController::_goBack,
-            ) {
-                AddAcademicCalenderScreen()
-            }
-
-        }
-        composable(route = Routes.FACULTY_INSERT) {
-            AddFacultyRoute { }
-        }
-        composable(route = Routes.DEPARTMENT_INSERT) {
-            InsertDeptRoute { }
-
-        }
-        composable(route = Routes.UPDATE_DEPT_ROUTE) {
-            UpdateDeptRoute { }
-
-        }
-        composable(route = Routes.TEACHER_INSERT) {
-            AddTeacherScreen()
-        }
-        composable(route = Routes.FACULTY_UPDATE) {
-            UpdateFacultyRoute { }
-        }
-        composable(route = Routes.UPDATE_DEPT_ROUTE) {
-            UpdateDeptRoute { }
-        }
-        composable(route = Routes.UPDATE_TEACHER) {
-            UpdateTeacherRoute{}
-        }
-
-//        composable(GraphRoutes.NOTES_FEATURE) {
-//            NotesFeatureNavGraph.Graph(
-//                onExitRequest = openDrawerRequest,
-//                onBackPressed = onBackPressed
-//            )
-//        }
-//        composable(GraphRoutes.SEARCH) {
-//            SearchFeatureNavGraph.Graph(
-//                onEvent = { event ->
-//                    if (event is SearchFeatureEvent.ExitRequest)
-//                        openDrawerRequest()
-//                    toAppEvent(event)?.let(onEvent)
-//                },
-//                onBackPress = onBackPressed
-//            )
-//        }
-
 
     }
-
 }
 
 
@@ -340,17 +237,6 @@ private fun AdminEmployeeListEvent.toAppEvent(): AppEvent? {
     }
     return ev
 }
-
-//private fun toAppEvent(event: SearchFeatureEvent): AppEvent? {
-//    val ev: AppEvent? = when (event) {
-//        is SearchFeatureEvent.CallRequest -> AppEvent.CallRequest(event.number)
-//        is SearchFeatureEvent.MessageRequest -> AppEvent.MessageRequest(event.number)
-//        is SearchFeatureEvent.EmailRequest -> AppEvent.EmailRequest(event.email)
-//        else -> null
-//    }
-//    return ev
-//
-//}
 
 
 @Composable

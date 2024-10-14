@@ -16,14 +16,14 @@ class AdminRepositoryTest {
     @Test
     fun readFacultyByIdAsJson() {
         executeOrThrow {
-            val response = ApiFactory.academicAdminApi().readFacultyById("facultyofengineeringandtechnology")
+            val response = ApiFactory.academicApi().readFacultyById("facultyofengineeringandtechnology")
             println("Response: $response")
         }
     }
     @Test
     fun readAllFacultyAsJson() {
         executeOrThrow {
-            val response = ApiFactory.academicAdminApi().readAllFaculty()
+            val response = ApiFactory.academicApi().readAllFaculty()
             println("Response: $response")
         }
     }
@@ -33,7 +33,7 @@ class AdminRepositoryTest {
             val parser = Json {
                 ignoreUnknownKeys = true // This ignores fields that are not defined in the data class
             }
-            val json = ApiFactory.academicAdminApi().readAllFaculty()
+            val json = ApiFactory.academicApi().readAllFaculty()
             val entity = parser.decodeFromString<List<FacultyEntryEntity>>(json)
             println("Response: $entity")
         }
@@ -45,7 +45,7 @@ class AdminRepositoryTest {
             val parser = Json {
                ignoreUnknownKeys = true // This ignores fields that are not defined in the data class
             }
-            val json = ApiFactory.academicAdminApi().readFacultyById("facultyofengineeringandtechnology")
+            val json = ApiFactory.academicApi().readFacultyById("facultyofengineeringandtechnology")
             val entity = parser.decodeFromString<FacultyEntryEntity>(json)
             println("Response: $entity")
         }
@@ -54,7 +54,7 @@ class AdminRepositoryTest {
     @Test
     fun readDeptByIdAsJson() {
         executeOrThrow {
-            val response = ApiFactory.academicAdminApi().readDeptById("computerscienceandengineering")
+            val response = ApiFactory.academicApi().readDeptById("computerscienceandengineering")
             println("Response: $response")
         }
     }
@@ -64,7 +64,7 @@ class AdminRepositoryTest {
             val parser = Json {
                 ignoreUnknownKeys = true // This ignores fields that are not defined in the data class
             }
-            val json = ApiFactory.academicAdminApi().readDeptById("computerscienceandengineering")
+            val json = ApiFactory.academicApi().readDeptById("computerscienceandengineering")
             val entity = parser.decodeFromString<DepartmentEntryEntity>(json)
             println("Response: $entity")
         }
@@ -72,7 +72,7 @@ class AdminRepositoryTest {
     @Test
     fun readReadTeacherByIdAsJson() {
         executeOrThrow {
-            val response = ApiFactory.academicAdminApi().readTeacherById("Prof. Dr. Syed Md. Galib_galib.cse@just.edu.bd")
+            val response = ApiFactory.academicApi().readTeacherById("Prof. Dr. Syed Md. Galib_galib.cse@just.edu.bd")
             println("Response: $response")
         }
     }
@@ -82,7 +82,7 @@ class AdminRepositoryTest {
             val parser = Json {
                 ignoreUnknownKeys = true // This ignores fields that are not defined in the data class
             }
-            val json = ApiFactory.academicAdminApi().readTeacherById("Prof. Dr. Syed Md. Galib_galib.cse@just.edu.bd")
+            val json = ApiFactory.academicApi().readTeacherById("Prof. Dr. Syed Md. Galib_galib.cse@just.edu.bd")
             val entity = parser.decodeFromString<TeacherEntryEntity>(json)
             println("Response: $entity")
         }

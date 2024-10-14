@@ -43,7 +43,7 @@ internal fun Faculty(
                     showDeleteButton = isAdmin,
                     showEditButton = isAdmin,
                     onEditRequest = {
-                        onEvent(AcademicModuleEvent.EditFacultyRequest(faculty.id))
+                        onEvent(AcademicModuleEvent.UpdateFacultyRequest(faculty.id))
                     },
                     onDeleteRequest = {
                         onEvent(AcademicModuleEvent.DeleteFacultyRequest(faculty.id))

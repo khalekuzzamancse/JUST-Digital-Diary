@@ -111,12 +111,13 @@ private fun _FeatureNavGraph(
             NavGraph(
                 onEvent = onEvent,
                 openDrawerRequest = viewModel::openDrawer,
-                onBackPressed = navigator::pop,
+                onNavigateBackRequest = navigator::pop,
                 startDestination = NavDestination.Home.route,
                 isNavRailMode = isNavRailMode,
                 navController = navController,
                 onMiscFeatureEvent = navigator::onMiscFeatureEvent,
-                navigateToProfile = { navigator.navigator(NavDestination.Profile) }
+                navigateToProfile = { navigator.navigator(NavDestination.Profile) },
+                onAdminEvent = navigator::onAdminEvent
             )
         }
     )

@@ -108,7 +108,7 @@ private fun _TeacherList(
                 selectedEvent = AcademicModuleEvent.EmailRequest(employee.email)
             },
             onEditRequest = {id->
-                onEvent(AcademicModuleEvent.TeacherEditRequest(id))
+                onEvent(AcademicModuleEvent.UpdateTeacherRequest(id))
             },
             onDeleteRequest = {id->
                 onEvent(AcademicModuleEvent.TeacherDeleteRequest(id))

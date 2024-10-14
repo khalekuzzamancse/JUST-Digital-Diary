@@ -34,7 +34,7 @@ class RepositoryImpl2 internal constructor(
     override suspend fun getFaculties(): Result<List<FacultyModel>> {
         return with(handler) {
             withExceptionHandle {
-                val json = ApiFactory.academicAdminApi().readAllFaculty()
+                val json = ApiFactory.academicApi().readAllFaculty()
                 /** Execution is here means server sent a response we have to parse it
                  * - 3 possible cases: We got excepted  json or Json is a server message in format ServerResponseMessageEntity  or  Server send a json that format is not known yet,may be server change it json format or other
                  */
@@ -57,7 +57,7 @@ class RepositoryImpl2 internal constructor(
     override suspend fun getTeachers(deptId: String): Result<List<TeacherModel>> {
         return with(handler) {
             withExceptionHandle {
-                val json = ApiFactory.academicAdminApi().readTeachersUnderDept(deptId)
+                val json = ApiFactory.academicApi().readTeachersUnderDept(deptId)
                 if (json._isTeacherListEntity()) {
                     val entities =
                         json.parseOrThrow(ListSerializer(TeacherEntryEntity.serializer()))
@@ -78,7 +78,7 @@ class RepositoryImpl2 internal constructor(
 
         return with(handler) {
             withExceptionHandle {
-                val json = ApiFactory.academicAdminApi().deptUnderFaculty(facultyId)
+                val json = ApiFactory.academicApi().readAllDeptUnderFaculty(facultyId)
 
                 if (json._isDepartmentListEntity()) {
                     val entities =

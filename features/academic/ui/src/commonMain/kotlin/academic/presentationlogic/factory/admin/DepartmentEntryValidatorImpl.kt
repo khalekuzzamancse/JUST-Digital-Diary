@@ -24,7 +24,7 @@ internal class DepartmentEntryValidatorImpl: DeptEntryController.Validator {
         }.onEach { model ->
             val name = model.name
             val id = model.priority
-            val shortName = model.shortName
+            val shortName = model.shortname
             //Right now Need not  validation ,just check all mandatory field are filled or not
             _fieldsFilled.update {
                 id.isNotBlank() && name.isNotBlank() && shortName.isNotBlank()

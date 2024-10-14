@@ -34,6 +34,9 @@ sealed interface NavDestination : Destination {
     data object Profile : NavDestination {
         override val route = "Profile"
     }
+    data object ProfileNavGraph : NavDestination {
+        override val route = "ProfileNavGraph"
+    }
     data object FacultyList : NavDestination {
         override val route = "FacultyList"
     }
@@ -64,6 +67,35 @@ sealed interface NavDestination : Destination {
     data object ClassSchedule : NavDestination {
         override val route = "ClassSchedule"
     }
+    //Defining admin destination
+    data object InsertFaculty : NavDestination {
+        override val route = "InsertFaculty"
+    }
+    data object UpdateFaculty : NavDestination {
+        override val route = "UpdateFaculty"
+    }
+    data object InsertDept : NavDestination {
+        override val route = "InsertDept"
+    }
+    data object UpdateDept : NavDestination {
+        override val route = "UpdateDept"
+    }
+    data object InsertTeacher : NavDestination {
+        override val route = "InsertTeacher"
+    }
+    data object UpdateTeacher : NavDestination {
+        override val route = "UpdateTeacher"
+    }
+    data object UpdateExamSchedule : NavDestination {
+        override val route = "UpdateExamSchedule"
+    }
+    data object UpdateClassSchedule : NavDestination {
+        override val route = "UpdateClassSchedule"
+    }
+    data object UpdateAcademicCalender : NavDestination {
+        override val route = "UpdateAcademicCalender"
+    }
+
 }
 
 

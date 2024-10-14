@@ -7,7 +7,7 @@ package academic.presentationlogic.model.admin
 internal data class DepartmentEntryModel(
     val priority: String,
     val name: String,
-    val shortName: String,
+    val shortname: String,
     val facultyId: String,
 
     )

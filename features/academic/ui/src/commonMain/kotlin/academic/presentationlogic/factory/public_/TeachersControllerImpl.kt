@@ -5,7 +5,7 @@ package academic.presentationlogic.factory.public_
 import academic.presentationlogic.controller.core.CoreControllerImpl
 import academic.presentationlogic.model.public_.TeacherModel
 import academic.presentationlogic.controller.public_.TeachersController
-import academic.presentationlogic.mapper.ModelMapper
+import academic.presentationlogic.mapper.PublicModelMapper
 import faculty.domain.exception.CustomException
 import faculty.domain.usecase.public_.RetrieveTeachersUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +30,7 @@ internal class TeachersControllerImpl(
             onSuccess = { models ->
                 _teachers.update {
                     models
-                        .map { ModelMapper.toTeacherUiModel(it) }
+                        .map { PublicModelMapper.toTeacherUiModel(it) }
                 }
             },
             onFailure = { exception ->

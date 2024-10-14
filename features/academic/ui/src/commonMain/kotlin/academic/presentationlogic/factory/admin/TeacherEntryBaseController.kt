@@ -3,7 +3,7 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.TeacherEntryController
 import academic.presentationlogic.controller.core.CoreControllerImpl
-import academic.presentationlogic.mapper.ModelMapper
+import academic.presentationlogic.mapper.PublicModelMapper
 import academic.presentationlogic.model.admin.TeacherEntryModel
 import academic.presentationlogic.model.public_.DepartmentModel
 import faculty.domain.exception.CustomException
@@ -64,7 +64,7 @@ internal open class TeacherEntryBaseController(
         } catch (_: Exception) {
 
         }
-      //  _teacherState.value = _teacherState.value.copy(dept = value)
+
     }
 
     override fun onRoomNoChange(value: String) {
@@ -84,7 +84,10 @@ internal open class TeacherEntryBaseController(
             .execute()
             .fold(
                 onSuccess = { models ->
-                    _departments.update { models.map { ModelMapper.toUiFacultyModel(it) } }
+                    with(PublicModelMapper){
+                        _departments.update { models.map { toUiFacultyModel(it) } }
+                    }
+
                 },
                 onFailure = { exception ->
                     when (exception) {

@@ -4,7 +4,7 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.DeptEntryController
 import academic.presentationlogic.controller.admin.UpdateDeptController
-import academic.presentationlogic.mapper.ModelMapper
+import academic.presentationlogic.mapper.AdminModelMapper
 import faculty.domain.exception.CustomException
 import faculty.domain.usecase.admin.ReadDeptUseCase
 import faculty.domain.usecase.admin.UpdateDepartmentUseCase
@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
 /**
  * - Using explicit `super` to understand the code base easily, specifically understanding the delegation
  */
@@ -32,12 +33,15 @@ internal class UpdateDeptControllerImpl(
         CoroutineScope(Dispatchers.Default).launch {
             _readDept()
         }
+
+        super.validator.observeFieldChanges(super._dept)
+
     }
 
     override suspend fun update() {
         super.startLoading()
         writeUseCase
-            .execute(with(ModelMapper) { _dept.value.toDomainModelOrThrow() })
+            .execute(deptId, with(AdminModelMapper) { _dept.value.toDomainModelOrThrow() })
             .fold(
                 onSuccess = {
                     super.updateErrorMessage("Added Successfully")
@@ -62,7 +66,7 @@ internal class UpdateDeptControllerImpl(
                     super._dept.update { state ->
                         state.copy(
                             name = model.name,
-                            shortName = model.shortname,
+                            shortname = model.shortname,
                             priority = model.priority.toString()
                         )
                     }

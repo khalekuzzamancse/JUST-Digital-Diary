@@ -7,7 +7,8 @@ kotlin {
     sourceSets{
         val commonMain by getting {
             dependencies{
-                implementation(projects.core.database.mongodb)
+                implementation(projects.core.database.dataSource.mongodb)
+                implementation(projects.core.database.domain)
             }
 
 

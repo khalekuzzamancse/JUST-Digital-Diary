@@ -4,7 +4,7 @@ package academic.presentationlogic.factory.public_
 
 import academic.presentationlogic.controller.core.CoreControllerImpl
 import academic.presentationlogic.controller.public_.DepartmentController
-import academic.presentationlogic.mapper.ModelMapper
+import academic.presentationlogic.mapper.PublicModelMapper
 import academic.presentationlogic.model.public_.DepartmentModel
 import faculty.domain.exception.CustomException
 import faculty.domain.usecase.public_.RetrieveDepartmentsUseCase
@@ -36,7 +36,7 @@ internal class DepartmentsControllerImpl(
             onSuccess = { models ->
                 _departments.update {
                     models
-                        .map { ModelMapper.toUiFacultyModel(it) }
+                        .map { PublicModelMapper.toUiFacultyModel(it) }
                 }
             },
             onFailure = { exception ->

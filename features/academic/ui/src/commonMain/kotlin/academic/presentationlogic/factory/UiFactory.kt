@@ -36,12 +36,6 @@ internal object UiFactory {
 
             )
 
-    fun createTeacherAddForm(): TeacherEntryController =
-        InsertTeacherControllerImp(
-            validator = TeacherEntryValidatorImpl(),
-            readUseCase = DiContainer.getAllDeptUseCase(),
-            writeUseCase = DiContainer.insertTeacherUseCase()
-        )
 
     fun createFacultyController(token: String?): FacultyController = FacultyControllerImpl(
         userCase = DiContainer.retrieveFacultyListUseCase(token),

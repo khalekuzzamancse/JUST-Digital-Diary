@@ -2,11 +2,6 @@
 
 package navigation
 
-import academic.ui.admin.InsertDeptRoute
-import academic.ui.admin.AddFacultyRoute
-import academic.ui.admin.AddTeacherScreen
-import academic.ui.admin.UpdateDeptRoute
-import academic.ui.admin.UpdateFacultyRoute
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,18 +15,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
-import androidx.navigation.createGraph
-import calendar.ui.ui.admin.AddAcademicCalenderScreen
-import profile.presentationlogic.ProfileEvent
-import schedule.ui.ui.admin.add_class_schedule.AddClassScheduleScreen
-import schedule.ui.ui.admin.add_exam_schedule.ExamScheduleAddScreen
 
 
-fun NavHostController.adminNavGraph(): NavGraph {
-    val navController = this
+//fun NavHostController.adminNavGraph(): NavGraph {
+//    val navController = this
 //    NavHost(
 //        navController = navController,
 //        startDestination = Routes.PROFILE,
@@ -49,60 +37,60 @@ fun NavHostController.adminNavGraph(): NavGraph {
 //        }
 //    )
 
-  return  createGraph(startDestination = Routes.EXAM_ROUTINE_UPDATE) {
-
-        composable(Routes.EXAM_ROUTINE_UPDATE) {
-            _BackIconDecorator(
-                onBackRequest = navController::_goBack,
-            ) {
-                ExamScheduleAddScreen()
-            }
-        }
-        composable(Routes.CLASS_ROUTINE_UPDATE) {
-            _BackIconDecorator(
-                onBackRequest = navController::_goBack,
-            ) {
-                AddClassScheduleScreen()
-            }
-        }
-        composable(Routes.TEACHER_INFO_UPDATE) {
-            _BackIconDecorator(
-                onBackRequest = navController::_goBack,
-            ) {
-                AddTeacherScreen()
-            }
-        }
-        composable(Routes.CALENDAR_UPDATE) {
-            _BackIconDecorator(
-                onBackRequest = navController::_goBack,
-            ) {
-                AddAcademicCalenderScreen()
-            }
-
-        }
-        composable(route = Routes.FACULTY_INSERT) {
-            AddFacultyRoute { }
-        }
-        composable(route = Routes.DEPARTMENT_INSERT) {
-            InsertDeptRoute { }
-
-        }
-        composable(route = Routes.TEACHER_INSERT) {
-            AddTeacherScreen()
-        }
-        composable(route = Routes.FACULTY_UPDATE) {
-            UpdateFacultyRoute { }
-        }
-        composable(route = Routes.UPDATE_DEPT_ROUTE) {
-            UpdateDeptRoute { }
-        }
-        composable(route = Routes.UPDATE_TEACHER) {
-
-        }
-
-    }
-}
-
+//  return  createGraph(startDestination = Routes.EXAM_ROUTINE_UPDATE) {
+//
+//        composable(Routes.EXAM_ROUTINE_UPDATE) {
+//            _BackIconDecorator(
+//                onBackRequest = navController::_goBack,
+//            ) {
+//                ExamScheduleAddScreen()
+//            }
+//        }
+//        composable(Routes.CLASS_ROUTINE_UPDATE) {
+//            _BackIconDecorator(
+//                onBackRequest = navController::_goBack,
+//            ) {
+//                AddClassScheduleScreen()
+//            }
+//        }
+//        composable(Routes.TEACHER_INFO_UPDATE) {
+//            _BackIconDecorator(
+//                onBackRequest = navController::_goBack,
+//            ) {
+//                AddTeacherScreen()
+//            }
+//        }
+//        composable(Routes.CALENDAR_UPDATE) {
+//            _BackIconDecorator(
+//                onBackRequest = navController::_goBack,
+//            ) {
+//                AddAcademicCalenderScreen()
+//            }
+//
+//        }
+//        composable(route = Routes.FACULTY_INSERT) {
+//            AddFacultyRoute { }
+//        }
+//        composable(route = Routes.DEPARTMENT_INSERT) {
+//            InsertDeptRoute { }
+//
+//        }
+//        composable(route = Routes.TEACHER_INSERT) {
+//            AddTeacherScreen()
+//        }
+//        composable(route = Routes.FACULTY_UPDATE) {
+//            UpdateFacultyRoute { }
+//        }
+//        composable(route = Routes.UPDATE_DEPT_ROUTE) {
+//            UpdateDeptRoute { }
+//        }
+//        composable(route = Routes.UPDATE_TEACHER) {
+//
+//        }
+//
+//    }
+//}
+//
 fun NavHostController._goBack() {
     try {
         this.popBackStack()
@@ -110,66 +98,28 @@ fun NavHostController._goBack() {
 
     }
 }
+//
 
- fun adminNavigationRequest(event: ProfileEvent, navController: NavHostController) {
-    try {
-        when (event) {
+//
+//}
 
-            is ProfileEvent.NavigateToCalendarUpdate -> {
-                navController.navigate(Routes.CALENDAR_UPDATE)
-            }
-
-
-            is ProfileEvent.NavigateToExamRoutineUpdate -> {
-                navController.navigate(Routes.EXAM_ROUTINE_UPDATE)
-            }
-
-            is ProfileEvent.NavigateToClassRoutineUpdate -> {
-                navController.navigate(Routes.CLASS_ROUTINE_UPDATE)
-            }
-
-            is ProfileEvent.NavigateToTeacherInfoUpdate -> {
-                navController.navigate(Routes.TEACHER_INFO_UPDATE)
-            }
-
-            is ProfileEvent.FacultyInsertRequest -> {
-                navController.navigate(Routes.FACULTY_INSERT)
-            }
-
-
-            is ProfileEvent.DepartmentInsertRequest -> {
-                navController.navigate(Routes.DEPARTMENT_INSERT)
-            }
-
-            is ProfileEvent.TeacherInsertRequest -> {
-                navController.navigate(Routes.TEACHER_INSERT)
-            }
-
-
-        }
-    } catch (e: Exception) {
-        println(e)
-    }
-
-}
-
-object Routes {
-    const val PROFILE = "Profile"
-
-    // Admin-specific routes
-    const val CALENDAR_UPDATE = "CalendarUpdateFeatureNavGraph.ROUTE"
-    const val TEACHER_INFO_UPDATE = "TeacherInfoUpdateFeatureNavGraph.ROUTE"
-    const val CLASS_ROUTINE_UPDATE = "ClassRoutineUpdateFeatureNavGraph.ROUTE"
-    const val EXAM_ROUTINE_UPDATE = "ExamRoutineUpdateFeatureNavGraph.ROUTE"
-    const val FACULTY_INSERT = "faculty_insert"
-    const val FACULTY_UPDATE = "faculty_update"
-
-    const val DEPARTMENT_INSERT = "department_insert"
-    const val UPDATE_DEPT_ROUTE = "department_update"
-
-    const val TEACHER_INSERT = "teacher_insert"
-    const val UPDATE_TEACHER = "teacher_update"
-}
+//object Routes {
+//    const val PROFILE = "Profile"
+//
+//    // Admin-specific routes
+//    const val CALENDAR_UPDATE = "CalendarUpdateFeatureNavGraph.ROUTE"
+//    const val TEACHER_INFO_UPDATE = "TeacherInfoUpdateFeatureNavGraph.ROUTE"
+//    const val CLASS_ROUTINE_UPDATE = "ClassRoutineUpdateFeatureNavGraph.ROUTE"
+//    const val EXAM_ROUTINE_UPDATE = "ExamRoutineUpdateFeatureNavGraph.ROUTE"
+//    const val FACULTY_INSERT = "faculty_insert"
+//    const val FACULTY_UPDATE = "faculty_update"
+//
+//    const val DEPARTMENT_INSERT = "department_insert"
+//    const val UPDATE_DEPT_ROUTE = "department_update"
+//
+//    const val TEACHER_INSERT = "teacher_insert"
+//    const val UPDATE_TEACHER = "teacher_update"
+//}
 
 @Composable
 fun _BackIconDecorator(

@@ -3,7 +3,7 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.FacultyEntryController
 import academic.presentationlogic.controller.admin.UpdateFacultyController
-import academic.presentationlogic.mapper.ModelMapper
+import academic.presentationlogic.mapper.AdminModelMapper
 import faculty.domain.exception.CustomException
 import faculty.domain.usecase.admin.GetFacultyByIdUseCase
 import faculty.domain.usecase.admin.UpdateFacultyUseCase
@@ -31,9 +31,9 @@ internal class UpdateFacultyControllerImpl(
 
     override suspend fun update() {
         super.startLoading()
-        val model = with(ModelMapper) { faculty.value.toDomainModelOrThrow() }
+        val model = with(AdminModelMapper) { faculty.value.toDomainModelOrThrow() }
 
-        val result = writeUseCase.execute(model)
+        val result = writeUseCase.execute(facultyId,model)
         result.fold(
             onSuccess = {
                 super.updateErrorMessage("Added Successfully")

@@ -50,7 +50,7 @@ internal fun DeptEntryForm(
         Spacer(Modifier.height(8.dp))
         CustomTextField(
             label = "Short name",
-            value = controller.dept.collectAsState().value.shortName,
+            value = controller.dept.collectAsState().value.shortname,
             onValueChanged = controller::onShortNameChanged,
             leadingIcon = Icons.Outlined.School
         )

@@ -6,15 +6,18 @@ package academic.ui
  * - In the future, if new events need to be added, simply add them here to maintain the `single source` of truth` for events
  */
 sealed interface AcademicModuleEvent {
+    interface AdminEvent : AcademicModuleEvent
     data class CallRequest(val number: String) : AcademicModuleEvent
     data class MessageRequest(val number: String) : AcademicModuleEvent
     data class EmailRequest(val email: String) : AcademicModuleEvent
-    data class EditFacultyRequest(val id: String):AcademicModuleEvent
-    data class DeleteFacultyRequest(val id: String) : AcademicModuleEvent
-    data class UpdateDeptRequest(val id: String) : AcademicModuleEvent
-    data class DeleteDeptRequest(val id: String) : AcademicModuleEvent
-    data class TeacherEditRequest (val id:String): AcademicModuleEvent
-    data class TeacherDeleteRequest(val id:String) : AcademicModuleEvent
-//
+
+
+    data class UpdateFacultyRequest(val id: String) : AdminEvent
+    data class DeleteFacultyRequest(val id: String) : AdminEvent
+    data class UpdateDeptRequest(val id: String) : AdminEvent
+    data class DeleteDeptRequest(val id: String) : AdminEvent
+    data class UpdateTeacherRequest(val id: String) : AdminEvent
+    data class TeacherDeleteRequest(val id: String) : AdminEvent
+
 
 }

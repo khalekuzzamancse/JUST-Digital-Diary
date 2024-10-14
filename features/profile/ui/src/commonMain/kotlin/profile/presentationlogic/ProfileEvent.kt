@@ -2,11 +2,10 @@
 package profile.presentationlogic
 
 sealed interface ProfileEvent {
-    data object NavigateToCalendarUpdate : ProfileEvent
-    data object NavigateToExamRoutineUpdate : ProfileEvent
-    data object NavigateToClassRoutineUpdate : ProfileEvent
-    data object NavigateToTeacherInfoUpdate : ProfileEvent
-    data object TeacherInsertRequest:ProfileEvent
-    data object DepartmentInsertRequest:ProfileEvent
-    data object FacultyInsertRequest:ProfileEvent
+    data object CalendarUpdate : ProfileEvent
+    data object ExamRoutineUpdate : ProfileEvent
+    data object ClassRoutineUpdate : ProfileEvent
+    data object InsertTeacherRequest:ProfileEvent
+    data object InsertDepartmentRequest:ProfileEvent
+    data object InsertFacultyRequest:ProfileEvent
 }

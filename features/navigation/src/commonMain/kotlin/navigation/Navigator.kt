@@ -4,6 +4,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import miscellaneous.MiscFeatureEvent
 import navigation.component.NavDestination
+import profile.presentationlogic.ProfileEvent
 
 class Navigator(
     private val navController: NavHostController,
@@ -69,6 +70,9 @@ class Navigator(
         } catch (_: Exception) {
 
         }
+    }
+    fun onAdminEvent(event: ProfileEvent) {
+
     }
 
 

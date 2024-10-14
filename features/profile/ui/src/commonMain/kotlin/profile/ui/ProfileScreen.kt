@@ -47,18 +47,17 @@ internal fun ProfileRoute(
     ) {
         Dashboard(
             isAdmin = true,
-            onCalendarUpdateClick = { onEvent(ProfileEvent.NavigateToCalendarUpdate) },
-            onExamRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToExamRoutineUpdate) },
-            onClassRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToClassRoutineUpdate) },
-            onTeacherInfoUpdateClick = { onEvent(ProfileEvent.NavigateToTeacherInfoUpdate) },
+            onCalendarUpdateClick = { onEvent(ProfileEvent.CalendarUpdate) },
+            onExamRoutineUpdateClick = { onEvent(ProfileEvent.ExamRoutineUpdate) },
+            onClassRoutineUpdateClick = { onEvent(ProfileEvent.ClassRoutineUpdate) },
             onFacultyInsertRequest = {
-                onEvent(ProfileEvent.FacultyInsertRequest)
+                onEvent(ProfileEvent.InsertFacultyRequest)
             },
             onDeptInsertRequest = {
-                onEvent(ProfileEvent.DepartmentInsertRequest)
+                onEvent(ProfileEvent.InsertDepartmentRequest)
             },
             onTeacherInsertRequest = {
-                onEvent(ProfileEvent.TeacherInsertRequest)
+                onEvent(ProfileEvent.InsertTeacherRequest)
             },
 
             )
@@ -155,7 +154,6 @@ fun Dashboard(
     onCalendarUpdateClick: () -> Unit = {},
     onExamRoutineUpdateClick: () -> Unit = {},
     onClassRoutineUpdateClick: () -> Unit = {},
-    onTeacherInfoUpdateClick: () -> Unit = {},
     onTeacherInsertRequest: () -> Unit,
     onDeptInsertRequest: () -> Unit,
     onFacultyInsertRequest: () -> Unit,
@@ -204,13 +202,7 @@ fun Dashboard(
                     onClick = onClassRoutineUpdateClick
                 )
             )
-            add(
-                DashboardItemData(
-                    text = "Teacher Info Update",
-                    icon = Icons.Outlined.Person,
-                    onClick = onTeacherInfoUpdateClick
-                )
-            )
+
         }
     }
     FlowRow(

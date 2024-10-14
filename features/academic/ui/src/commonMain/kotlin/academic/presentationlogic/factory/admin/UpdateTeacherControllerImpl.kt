@@ -3,7 +3,7 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.TeacherEntryController
 import academic.presentationlogic.controller.admin.UpdateTeacherController
-import academic.presentationlogic.mapper.ModelMapper
+import academic.presentationlogic.mapper.AdminModelMapper
 import faculty.domain.exception.CustomException
 import faculty.domain.usecase.admin.ReadAllDepartmentUseCase
 import faculty.domain.usecase.admin.ReadTeacherUseCase
@@ -37,7 +37,7 @@ internal class UpdateTeacherControllerImpl(
         try {
             super.startLoading()
             writeUseCase
-                .execute(with(ModelMapper) { _teacherState.value.toDomainModelOrThrow() })
+                .execute(teacherId,with(AdminModelMapper) { _teacherState.value.toDomainModelOrThrow() })
                 .fold(
                     onSuccess = {
                         super.updateErrorMessage("Added")
@@ -64,7 +64,7 @@ internal class UpdateTeacherControllerImpl(
                 .fold(
                     onSuccess = { domainModel ->
                         println("Model:$domainModel")
-                        val uiModel = with(ModelMapper) { domainModel.toUIModel() }
+                        val uiModel = with(AdminModelMapper) { domainModel.toUIModel() }
                         _teacherState.update { uiModel }
                     },
                     onFailure = { exception ->

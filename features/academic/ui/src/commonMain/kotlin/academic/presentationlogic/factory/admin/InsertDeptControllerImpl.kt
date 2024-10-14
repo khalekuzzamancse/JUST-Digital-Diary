@@ -4,7 +4,7 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.DeptEntryController
 import academic.presentationlogic.controller.admin.InsertDeptController
-import academic.presentationlogic.mapper.ModelMapper
+import academic.presentationlogic.mapper.AdminModelMapper
 import faculty.domain.exception.CustomException
 import faculty.domain.usecase.admin.InsertDepartmentUseCase
 import faculty.domain.usecase.public_.RetrieveFactualityUseCase
@@ -22,12 +22,13 @@ internal class InsertDeptControllerImpl(
         CoroutineScope(Dispatchers.Default).launch {
             super.retrieveFaculties()
         }
+        super.validator.observeFieldChanges(super._dept)
     }
 
     override suspend fun insert() {
         super.startLoading()
         writeUseCase
-            .execute(with(ModelMapper) { _dept.value.toDomainModelOrThrow() })
+            .execute(with(AdminModelMapper) { _dept.value.toDomainModelOrThrow() })
             .fold(
                 onSuccess = {
                     super.updateErrorMessage("Added Successfully")

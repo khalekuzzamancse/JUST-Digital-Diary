@@ -2,7 +2,7 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.InsertTeacherController
 import academic.presentationlogic.controller.admin.TeacherEntryController
-import academic.presentationlogic.mapper.ModelMapper
+import academic.presentationlogic.mapper.AdminModelMapper
 import faculty.domain.exception.CustomException
 import faculty.domain.usecase.admin.InsertTeacherUseCase
 import faculty.domain.usecase.admin.ReadAllDepartmentUseCase
@@ -26,7 +26,7 @@ internal class InsertTeacherControllerImp(
         try {
             super.startLoading()
             writeUseCase
-                .execute(with(ModelMapper) { _teacherState.value.toDomainModelOrThrow() })
+                .execute(with(AdminModelMapper) { _teacherState.value.toDomainModelOrThrow() })
                 .fold(
                     onSuccess = {
                         super.updateErrorMessage("Added")

@@ -1,8 +1,12 @@
 @file:Suppress("ClassName")
+
 package academic.ui.public_
 
 import academic.presentationlogic.factory.UiFactory
 import academic.ui.AcademicModuleEvent
+import academic.ui.admin.UpdateDeptRoute
+import academic.ui.admin.UpdateFacultyRoute
+import academic.ui.admin.UpdateTeacherRoute
 import academic.ui.common.SnackNProgressBarDecorator
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -18,11 +22,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -47,22 +55,66 @@ fun AcademicRoute(
 ) {
 
     val navController = rememberNavController()
+    val goBack: () -> Unit = {
+        try {
+            navController.popBackStack()
+        } catch (_: Exception) {
+
+        }
+    }
+    val navigate: (route: String) -> Unit = {
+        try {
+            navController.navigate(it)
+        } catch (_: Exception) {
+
+        }
+    }
+    val processEvent: (AcademicModuleEvent) -> Unit = { event ->
+        if (event !is AcademicModuleEvent.AdminEvent)
+            onEvent(event)
+        else {
+            when (event) {
+                is AcademicModuleEvent.UpdateFacultyRequest -> navigate(_Route.UPDATE_FACULTY)
+                is AcademicModuleEvent.UpdateDeptRequest -> navigate(_Route.UPDATE_DEPT)
+                is AcademicModuleEvent.UpdateTeacherRequest -> navigate(_Route.UPDATE_TEACHER)
+                else -> {
+
+                }
+
+            }
+        }
+
+    }
 
     NavHost(
         navController = navController,
         startDestination = _Route.FACULTY_AND_DEPT,
         modifier = Modifier,
         enterTransition = {
-            scaleIn(initialScale = 0.8f, animationSpec = tween(700)) + fadeIn(animationSpec = tween(700))
+            scaleIn(initialScale = 0.8f, animationSpec = tween(700)) + fadeIn(
+                animationSpec = tween(
+                    700
+                )
+            )
         },
         exitTransition = {
-            scaleOut(targetScale = 1.1f, animationSpec = tween(700)) + fadeOut(animationSpec = tween(700))
+            scaleOut(
+                targetScale = 1.1f,
+                animationSpec = tween(700)
+            ) + fadeOut(animationSpec = tween(700))
         },
         popEnterTransition = {
-            scaleIn(initialScale = 1.2f, animationSpec = tween(700)) + fadeIn(animationSpec = tween(700))
+            scaleIn(initialScale = 1.2f, animationSpec = tween(700)) + fadeIn(
+                animationSpec = tween(
+                    700
+                )
+            )
         },
         popExitTransition = {
-            scaleOut(targetScale = 0.8f, animationSpec = tween(700)) + fadeOut(animationSpec = tween(700))
+            scaleOut(
+                targetScale = 0.8f,
+                animationSpec = tween(700)
+            ) + fadeOut(animationSpec = tween(700))
         }
     ) {
 
@@ -77,13 +129,10 @@ fun AcademicRoute(
                 viewModel = viewModel,
                 navigationIcon = navigationIcon,
                 onTeachersRequest = {
-                    try {
-                        navController.navigate("${_Route.TEACHER_LIST}/$it")
-                    } catch (_: Exception) {
-
-                    }
+                    navigate("${_Route.TEACHER_LIST}/$it")
                 },
-                onEvent = onEvent
+                onEvent = processEvent
+
             )
 
         }
@@ -97,11 +146,44 @@ fun AcademicRoute(
                 onExitRequest = {
                     navController.popBackStack()
                 },
-                onEvent = onEvent,
+                onEvent = processEvent,
                 token = token
             )
 
         }
+        /*
+     TODO: Admin Graph
+     Make sense to define here, since this module has its own nav host and nav graph.
+     These are non-top destinations, so it makes sense to use the back button regardless of the drawer or NavRail.
+     Only update features are added here because this module can only generate update events.
+     Insertion events are generated in the other modules.
+     Update and delete need context, such as an ID, which is why we define update and delete events here.
+     As a result, the user can easily update, delete, and see the immediate changes.
+     */
+
+        composable(route = _Route.UPDATE_FACULTY) {
+            _BackIconDecorator(
+                onBackRequest = goBack,
+            ) {
+                UpdateFacultyRoute { }
+            }
+        }
+        composable(route = _Route.UPDATE_DEPT) {
+            _BackIconDecorator(
+                onBackRequest = goBack,
+            ) {
+                UpdateDeptRoute { }
+            }
+
+        }
+        composable(route = _Route.UPDATE_TEACHER) {
+            _BackIconDecorator(
+                onBackRequest = goBack,
+            ) {
+                UpdateTeacherRoute {}
+            }
+        }
+
 
     }
 
@@ -113,9 +195,10 @@ private object _Route {
     const val FACULTY_AND_DEPT = "FACULTY_AND_DEPT"
     const val DEPT_ID = "deptId"
     const val TEACHERS_ROUTE = "$TEACHER_LIST/{$DEPT_ID}"
-    const val FACULTY_INSERT_ROUTE = "FACULTY_INSERT_ROUTE"
-    const val DEPARTMENT_INSERT_ROUTE = "DEPARTMENT_INSERT_ROUTE"
-    const val TEACHER_INSERT_ROUTE = "TEACHER_INSERT_ROUTE"
+    const val UPDATE_FACULTY = "UPDATE_FACULTY"
+    const val UPDATE_DEPT = "UPDATE_DEPT"
+    const val UPDATE_TEACHER = "UPDATE_TEACHER"
+
 }
 
 
@@ -267,3 +350,50 @@ private fun _Layout(
 
 }
 
+@Composable
+fun _BackIconDecorator(
+    onBackRequest: () -> Unit,
+    content: @Composable () -> Unit,
+) {
+    _TopBarDecorator(
+        navigationIcon = {
+            IconButton(
+                onClick = onBackRequest
+            ) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Drawer Icon"
+                )
+            }
+        },
+        content = content
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun _TopBarDecorator(
+    navigationIcon: (@Composable () -> Unit)? = null,
+    content: @Composable () -> Unit,
+) {
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {},
+                navigationIcon = {
+                    if (navigationIcon != null)
+                        navigationIcon()
+                },
+            )
+        }
+    ) {
+        Box(
+            modifier = Modifier.padding(it).fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            content()
+        }
+    }
+
+}

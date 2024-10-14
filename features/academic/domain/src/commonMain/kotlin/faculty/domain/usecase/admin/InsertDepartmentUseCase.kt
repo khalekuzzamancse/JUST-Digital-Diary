@@ -6,5 +6,5 @@ import faculty.domain.repository.AdminRepository
 class InsertDepartmentUseCase(
     private val repository: AdminRepository
 ) {
-    suspend fun execute(model: DepartmentEntryModel) = repository.addDepartment(model)
+    suspend fun execute(model: DepartmentEntryModel) = repository.insertDept(model)
 }
