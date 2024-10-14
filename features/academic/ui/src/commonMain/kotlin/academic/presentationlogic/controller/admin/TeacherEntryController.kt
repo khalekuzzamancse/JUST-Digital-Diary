@@ -58,8 +58,6 @@ internal interface TeacherEntryController {
     fun onDeptChange(index: Int)
     fun onRoomNoChange(value: String)
     fun onIdChange(value: String)
-   suspend fun  add()
-
     interface Validator {
         val areMandatoryFieldFilled: StateFlow<Boolean>
         val errors: StateFlow<List<String>>

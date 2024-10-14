@@ -74,6 +74,17 @@ internal object ModelMapper {
         roomNo = roomNo
 
     )
+    fun faculty.domain.model.admin.TeacherEntryModel.toUIModel() = TeacherEntryModel(
+        deptId = this.deptId,
+        priority = this.priority.toString(),
+        name = this.name,
+        email = this.email,
+        additionalEmail = this.additionalEmail,
+        achievements = this.achievements,
+        phone = this.phone,
+        designations = this.designations,
+        roomNo = this.roomNo
+    )
 
 
 }

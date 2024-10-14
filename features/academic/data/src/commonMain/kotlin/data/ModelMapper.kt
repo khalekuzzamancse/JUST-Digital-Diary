@@ -126,15 +126,26 @@ internal object ModelMapper {
         priority = priority,
         name = name,
         email = email,
-        additionalEmail = additionalEmail.ifBlank { null },
+        additionalEmail = additionalEmail?.ifBlank { null },
         achievements = achievements,
         phone = phone,
         designations = designations,
-        roomNo = roomNo.ifBlank { null }
+        roomNo = roomNo?.ifBlank { null }
     )
 
     fun TeacherEntryEntity.toModel() = TeacherModel(
         id = id,
+        name = name,
+        email = email,
+        additionalEmail = additionalEmail?.ifBlank { null },
+        achievements = achievements,
+        phone = phone,
+        designations = designations,
+        roomNo = roomNo
+    )
+    fun TeacherEntryEntity.toEntryModel() = TeacherEntryModel(
+        deptId=deptId,
+        priority = priority,
         name = name,
         email = email,
         additionalEmail = additionalEmail?.ifBlank { null },

@@ -6,6 +6,7 @@ import academic.ui.admin.AddFacultyRoute
 import academic.ui.admin.AddTeacherScreen
 import academic.ui.admin.UpdateDeptRoute
 import academic.ui.admin.UpdateFacultyRoute
+import academic.ui.admin.UpdateTeacherRoute
 import academic.ui.public_.AcademicRoute
 import administration.ui.public_.AdminEmployeeListEvent
 import administration.ui.public_.AdministrationRoute
@@ -133,6 +134,14 @@ fun NavGraph(
                         is AcademicModuleEvent.UpdateDeptRequest->{
                             try {
                                 navController.navigate(Routes.UPDATE_DEPT_ROUTE)
+                            }
+                            catch (_: Exception){
+
+                            }
+                        }
+                        is AcademicModuleEvent.TeacherEditRequest->{
+                            try {
+                                navController.navigate(Routes.UPDATE_TEACHER)
                             }
                             catch (_: Exception){
 
@@ -279,8 +288,8 @@ fun NavGraph(
         composable(route = Routes.UPDATE_DEPT_ROUTE) {
             UpdateDeptRoute { }
         }
-        composable(route = Routes.TEACHER_UPDATE) {
-
+        composable(route = Routes.UPDATE_TEACHER) {
+            UpdateTeacherRoute{}
         }
 
 //        composable(GraphRoutes.NOTES_FEATURE) {

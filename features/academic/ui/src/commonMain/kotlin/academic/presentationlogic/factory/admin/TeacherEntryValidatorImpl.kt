@@ -2,7 +2,6 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.TeacherEntryController
 import academic.presentationlogic.model.admin.TeacherEntryModel
-import academic.presentationlogic.model.public_.TeacherModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -7,6 +7,7 @@ import core.network.JsonParser
 import data.ModelMapper
 import data.entity.admin.DepartmentEntryEntity
 import data.entity.admin.FacultyEntryEntity
+import data.entity.admin.TeacherEntryEntity
 import data.entity.public_.FacultyEntity
 import data.service.JsonHandler
 import data.service.withExceptionHandle
@@ -91,7 +92,22 @@ import kotlinx.serialization.json.Json
         TODO("Not yet implemented")
     }
 
-    override suspend fun addTeacher(model: TeacherEntryModel): Result<Unit> {
+     override suspend fun readTeacher(id: String): Result<TeacherEntryModel> {
+         return with(handler) {
+             withExceptionHandle {
+                 val json = ApiFactory.academicAdminApi().readTeacherById(id)
+                 if (json._isTeacherEntity()) {
+                     val entity = json.parseOrThrow(TeacherEntryEntity.serializer())
+                     return Result.success(
+                         with(ModelMapper){ entity.toEntryModel() }
+                     )
+                 } else
+                     return Result.failure(json.parseAsServerMessageOrThrow())
+             }
+         }
+     }
+
+     override suspend fun addTeacher(model: TeacherEntryModel): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
                 val entity = with(ModelMapper) { model.toEntity() }
@@ -136,4 +152,5 @@ import kotlinx.serialization.json.Json
         jsonParser.parse(this, ListSerializer(DepartmentEntryEntity.serializer())).isSuccess
      private fun String._isDeptEntity() =
          jsonParser.parse(this, DepartmentEntryEntity.serializer()).isSuccess
+     private fun String._isTeacherEntity() = jsonParser.parse(this, TeacherEntryEntity.serializer()).isSuccess
 }

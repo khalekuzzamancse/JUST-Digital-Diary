@@ -7,12 +7,12 @@ package academic.presentationlogic.model.admin
 internal data class TeacherEntryModel(
     val name: String,
     val email: String,
-    val additionalEmail: String,
+    val additionalEmail: String?,
     val achievements: String,
     val phone: String,
     val designations: String,
     val deptId: String,
-    val roomNo: String,
+    val roomNo: String?,
     val priority: String//convert to Int
 
 )

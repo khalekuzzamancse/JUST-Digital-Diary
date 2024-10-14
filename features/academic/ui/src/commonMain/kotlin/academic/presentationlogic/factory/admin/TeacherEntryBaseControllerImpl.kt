@@ -1,38 +1,30 @@
 package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.TeacherEntryController
+import academic.presentationlogic.controller.admin.UiCommonStateController
 import academic.presentationlogic.mapper.ModelMapper
 import academic.presentationlogic.model.admin.TeacherEntryModel
 import academic.presentationlogic.model.public_.DepartmentModel
 import faculty.domain.exception.CustomException
-import faculty.domain.usecase.admin.AddTeacherUseCase
-import faculty.domain.usecase.admin.GetAllDepartmentUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import faculty.domain.usecase.admin.ReadAllDepartmentUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 
 /**
  * Private implementation of the TeacherFormController interface.
  * Manages the state of TeacherModel using MutableStateFlow and responds to events.
  */
-internal class TeacherEntryControllerImpl(
+internal open class TeacherEntryBaseControllerImpl(
     override val validator: TeacherEntryController.Validator,
-    private val allDeptUseCase: GetAllDepartmentUseCase,
-    private val addTeacherUser:AddTeacherUseCase,
-) : TeacherEntryController {
-    private val _networkIOInProgress = MutableStateFlow(false)
-    private val _statusMessage = MutableStateFlow<String?>(null)
-    private val _teacherState = MutableStateFlow(_emptyState())
+    private val allDeptUseCase: ReadAllDepartmentUseCase,
+) : TeacherEntryController,UiCommonStateController() {
+
+    protected val _teacherState = MutableStateFlow(_emptyState())
     private val _departments = MutableStateFlow<List<DepartmentModel>>(emptyList())
     private val _selectedDeptIndex=MutableStateFlow<Int?>(null)
-
-
 
     override val statusMessage = _statusMessage.asStateFlow()
     override val dept = _departments.asStateFlow()
@@ -85,46 +77,8 @@ internal class TeacherEntryControllerImpl(
 
     }
 
-    override suspend fun add() {
-        //Can throw exception when try to convert string to integer in model mapper
-        try {
-            _onNetworkIOStart()
-            addTeacherUser
-                .execute(with(ModelMapper) { _teacherState.value.toDomainModelOrThrow() })
-                .fold(
-                    onSuccess = {
-                        _updateErrorMessage("Added Successfully")
-                    },
-                    onFailure = { exception ->
-                        when (exception) {
-                            is CustomException -> {
-                                _updateErrorMessage(exception.message)
-                            }
-
-                            else -> {
-                                _updateErrorMessage("Failed to load faculties")
-                            }
-
-                        }
-                    }
-                )
-            _onNetworkIOStop()
-        }
-        catch (_: Exception){
-            _updateErrorMessage("Failed,Make sure priority field as integer")
-        }
-    }
-
-    init {
-        validator.observeFieldChanges(state = teacherState)
-    }
-    init {
-        CoroutineScope(Dispatchers.Default).launch {
-            _retrieveFaculties()
-        }
-    }
-    private suspend fun _retrieveFaculties() {
-        _onNetworkIOStart()
+    protected suspend fun retriveDept() {
+        super.onNetworkIOStart()
         allDeptUseCase
             .execute()
             .fold(
@@ -134,17 +88,17 @@ internal class TeacherEntryControllerImpl(
                 onFailure = { exception ->
                     when (exception) {
                         is CustomException -> {
-                            _updateErrorMessage(exception.message)
+                            super.updateErrorMessage(exception.message)
                         }
 
                         else -> {
-                            _updateErrorMessage("Failed to load faculties")
+                            super.updateErrorMessage("Failed to load faculties")
                         }
 
                     }
                 }
             )
-        _onNetworkIOStop()
+        super.onNetworkIOStop()
     }
 
 
@@ -161,14 +115,5 @@ internal class TeacherEntryControllerImpl(
         designations = "",
         priority = ""
     )
-    private fun _onNetworkIOStart() = _networkIOInProgress.update { true }
-    private fun _onNetworkIOStop() = _networkIOInProgress.update { false }
-    private fun _updateErrorMessage(msg: String) {
-        CoroutineScope(Dispatchers.Default).launch {
-            _statusMessage.update { msg }
-            //clear after 4 seconds
-            delay(4_000)
-            _statusMessage.update { null }
-        }
-    }
+
 }

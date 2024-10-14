@@ -96,7 +96,7 @@ fun NavHostController.adminNavGraph(): NavGraph {
         composable(route = Routes.UPDATE_DEPT_ROUTE) {
             UpdateDeptRoute { }
         }
-        composable(route = Routes.TEACHER_UPDATE) {
+        composable(route = Routes.UPDATE_TEACHER) {
 
         }
 
@@ -168,7 +168,7 @@ object Routes {
     const val UPDATE_DEPT_ROUTE = "department_update"
 
     const val TEACHER_INSERT = "teacher_insert"
-    const val TEACHER_UPDATE = "teacher_update"
+    const val UPDATE_TEACHER = "teacher_update"
 }
 
 @Composable

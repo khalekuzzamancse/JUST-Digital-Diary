@@ -18,10 +18,11 @@ interface AdminRepository {
     /**Useful for updating a faculty, need only the entry info,do need not faculty id because consumer already knew it*/
     suspend fun readFaculty(id:String):Result<FacultyEntryModel>
     suspend fun updateFaculty(model:FacultyEntryModel):Result<Unit>
-    /**Useful for updating a department, need only the entry info,do need not dept id because consumer/client already knew it*/
+    /**Useful for updating a department, need only the entry info,do need not faculty id because consumer/client already knew it*/
     suspend fun readDept(id:String):Result<DepartmentEntryModel>
     suspend fun addDepartment(model:DepartmentEntryModel):Result<Unit>
     suspend fun updateDepartment(model:DepartmentEntryModel):Result<Unit>
+    suspend fun readTeacher(id:String):Result<TeacherEntryModel>
     suspend fun addTeacher(model:TeacherEntryModel):Result<Unit>
     suspend fun updateTeacher(model:TeacherEntryModel):Result<Unit>
     suspend fun getAllDept():Result<List<DepartmentModel>>
