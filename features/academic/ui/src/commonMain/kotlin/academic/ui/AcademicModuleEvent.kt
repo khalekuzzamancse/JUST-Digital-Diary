@@ -11,6 +11,8 @@ sealed interface AcademicModuleEvent {
     data class EmailRequest(val email: String) : AcademicModuleEvent
     data class EditFacultyRequest(val id: String):AcademicModuleEvent
     data class DeleteFacultyRequest(val id: String) : AcademicModuleEvent
+    data class UpdateDeptRequest(val id: String) : AcademicModuleEvent
+    data class DeleteDeptRequest(val id: String) : AcademicModuleEvent
     data class TeacherEditRequest (val id:String): AcademicModuleEvent
     data class TeacherDeleteRequest(val id:String) : AcademicModuleEvent
 //

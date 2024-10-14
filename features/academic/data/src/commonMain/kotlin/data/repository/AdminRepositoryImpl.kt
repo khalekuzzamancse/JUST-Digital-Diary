@@ -20,7 +20,7 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class AdminRepositoryImpl internal constructor(
+ class AdminRepositoryImpl internal constructor(
     private val handler: JsonHandler,
     private val jsonParser: JsonParser,
 ) : AdminRepository {
@@ -43,7 +43,7 @@ class AdminRepositoryImpl internal constructor(
     override suspend fun readFaculty(id: String): Result<FacultyEntryModel> {
         return with(handler) {
             withExceptionHandle {
-                val json = ApiFactory.academicAdminApi().getDepartments()
+                val json = ApiFactory.academicAdminApi().readFacultyById(id)
                 if (json._isFacultyEntity()) {
                     val entity = json.parseOrThrow(FacultyEntryEntity.serializer())
                     return Result.success(
@@ -60,7 +60,23 @@ class AdminRepositoryImpl internal constructor(
         TODO()
     }
 
-    override suspend fun addDepartment(model: DepartmentEntryModel): Result<Unit> {
+     override suspend fun readDept(id: String): Result<DepartmentEntryModel> {
+         return with(handler) {
+             withExceptionHandle {
+                 val json = ApiFactory.academicAdminApi().readDeptById(id)
+                 if (json._isDeptEntity()) {
+                     val entity = json.parseOrThrow(DepartmentEntryEntity.serializer())
+                     return Result.success(
+                         with(ModelMapper){ entity.toEntryModel() }
+                     )
+                 } else
+                     return Result.failure(json.parseAsServerMessageOrThrow())
+
+             }
+         }
+     }
+
+     override suspend fun addDepartment(model: DepartmentEntryModel): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
                 val entity = with(ModelMapper) { model.toEntity() }
@@ -118,4 +134,6 @@ class AdminRepositoryImpl internal constructor(
         jsonParser.parse(this, FacultyEntryEntity.serializer()).isSuccess
     private fun String._isDepartmentListEntity() =
         jsonParser.parse(this, ListSerializer(DepartmentEntryEntity.serializer())).isSuccess
+     private fun String._isDeptEntity() =
+         jsonParser.parse(this, DepartmentEntryEntity.serializer()).isSuccess
 }

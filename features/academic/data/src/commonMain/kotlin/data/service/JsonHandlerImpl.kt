@@ -17,6 +17,8 @@ internal class JsonHandlerImpl(private val jsonParser: JsonParser) : JsonHandler
         return if (json.isServerMessage())
             json.createServerMessageException()
         else{
+            val error= CustomException.JsonParseException(json)
+            println(error)
            CustomException.JsonParseException(json)
 
         }

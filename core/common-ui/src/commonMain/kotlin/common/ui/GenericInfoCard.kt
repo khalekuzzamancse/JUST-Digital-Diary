@@ -1,12 +1,17 @@
 package common.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
@@ -16,7 +21,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -49,15 +53,16 @@ data class CardInfoState(
 
 @Composable
 fun GenericInfoCard(
-    modifier: Modifier=Modifier,
+    modifier: Modifier = Modifier,
     state: CardInfoState,
     onSelect: () -> Unit,
-    showEditButton: Boolean=false,
-    showDeleteButton: Boolean=false,
-    onEditRequest: () -> Unit={},
-    onDeleteRequest: () -> Unit={},
+    showEditButton: Boolean = false,
+    showDeleteButton: Boolean = false,
+    onEditRequest: () -> Unit = {},
+    onDeleteRequest: () -> Unit = {},
 ) {
-    val backgroundColor = if (state.isSelected) state.backgroundColorSelected else state.backgroundColorUnselected
+    val backgroundColor =
+        if (state.isSelected) state.backgroundColorSelected else state.backgroundColorUnselected
     val contentColor = MaterialTheme.colorScheme.contentColorFor(backgroundColor)
 
     ElevatedCard(
@@ -95,6 +100,8 @@ fun GenericInfoCard(
         }
     }
 }
+
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun _GenericInfoRow(
     shortName: String,
@@ -109,40 +116,89 @@ private fun _GenericInfoRow(
     onEditRequest: () -> Unit,
     onDeleteRequest: () -> Unit,
 ) {
-    val icon = if (isSelected) iconSelected else iconUnselected
-    val iconTint = if (!isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
-    val textColor = MaterialTheme.colorScheme.contentColorFor(cardBackgroundColor)
+    val adminMode = showEditButton || showDeleteButton
 
-    Row(
+
+    FlowRow(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+
         Text(
-            modifier = Modifier,
+            modifier = Modifier.align(Alignment.CenterVertically),
             text = shortName,
-            fontSize = 12.sp,
+            fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.secondary,
             letterSpacing = 1.5.sp
         )
-
-        Row(
-            modifier = Modifier,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = countLabel,
-                tint = iconTint
+        if (adminMode){
+            Spacer(Modifier.width(8.dp))
+            _Counting(
+                modifier = Modifier,
+                cardBackgroundColor, isSelected, iconSelected, iconUnselected, countLabel, count
             )
-            Spacer(Modifier.width(4.dp))
-            Text(
-                text = "$count $countLabel",
-                style = MaterialTheme.typography.bodySmall,
-                color = textColor
+            Spacer(Modifier.weight(1f))//take the remaining space
+            _AdminAction(
+                showEditButton = showEditButton,
+                showDeleteButton = showDeleteButton,
+                onEditRequest = onEditRequest,
+                onDeleteRequest = onDeleteRequest
             )
         }
+        else{
+            Spacer(Modifier.weight(1f))//take the remaining space
+            _Counting(
+                modifier = Modifier,
+                cardBackgroundColor, isSelected, iconSelected, iconUnselected, countLabel, count
+            )
+        }
+
+    }
+}
+
+@Composable
+fun RowScope._Counting(
+    modifier: Modifier = Modifier,
+    cardBackgroundColor: Color,
+    isSelected: Boolean,
+    iconSelected: ImageVector,
+    iconUnselected: ImageVector,
+    countLabel: String,
+    count: String,
+) {
+    val icon = if (isSelected) iconSelected else iconUnselected
+    val iconTint =
+        if (!isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary
+    val textColor = MaterialTheme.colorScheme.contentColorFor(cardBackgroundColor)
+    Row(
+        modifier = Modifier.align(Alignment.CenterVertically),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = countLabel,
+            tint = iconTint,
+            modifier = Modifier.size(20.dp)
+        )
+        Spacer(Modifier.width(4.dp))
+        Text(
+            text = "$count $countLabel",
+            style = MaterialTheme.typography.bodySmall,
+            color = textColor
+        )
+    }
+}
+
+@Composable
+private fun RowScope._AdminAction(
+    modifier: Modifier = Modifier,
+    showEditButton: Boolean,
+    showDeleteButton: Boolean,
+    onEditRequest: () -> Unit,
+    onDeleteRequest: () -> Unit,
+) {
+    Row(modifier = Modifier.align(Alignment.CenterVertically)) {
         if (showEditButton) {
             _ControlIconWithConfirmationDialog(
                 onConfirmRequest = onEditRequest,
@@ -151,11 +207,12 @@ private fun _GenericInfoRow(
                 message = "Are you sure you want to edit?"
             )
         }
+        Spacer(Modifier.width(8.dp))
         if (showDeleteButton) {
             _ControlIconWithConfirmationDialog(
                 onConfirmRequest = onDeleteRequest,
                 icon = Icons.Outlined.Delete,
-                tint =  MaterialTheme.colorScheme.secondary,
+                tint = MaterialTheme.colorScheme.secondary,
                 message = "Are you sure you want to delete?"
             )
         }
@@ -193,8 +250,13 @@ private fun _ControlIconWithConfirmationDialog(
             text = { Text(message) }
         )
     }
+    //Not using icon button to avoid default padding
+    Icon(
+        imageVector = icon,
+        contentDescription = "admin action",
+        tint = tint,
+        modifier = Modifier.clickable {
+            showDialog = true
+        })
 
-    IconButton(onClick = { showDialog = true }) {
-        Icon(imageVector = icon, contentDescription = null, tint = tint)
-    }
 }

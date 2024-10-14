@@ -2,25 +2,28 @@
 
 package academic.presentationlogic.factory
 
+import academic.presentationlogic.controller.admin.DeptEntryController
+import academic.presentationlogic.controller.admin.FacultyEntryController
 import academic.presentationlogic.controller.admin.InsertFacultyController
 import academic.presentationlogic.factory.admin.TeacherEntryControllerImpl
 import academic.presentationlogic.controller.admin.TeacherEntryController
 import academic.presentationlogic.factory.admin.TeacherEntryValidatorImpl
 import academic.presentationlogic.controller.public_.DepartmentController
-import academic.presentationlogic.controller.admin.DepartmentEntryController
+import academic.presentationlogic.controller.admin.InsertDeptController
+import academic.presentationlogic.controller.admin.UpdateDeptController
 import academic.presentationlogic.controller.admin.UpdateFacultyController
 import faculty.di.DiContainer
 import academic.presentationlogic.controller.public_.FacultyController
 import academic.presentationlogic.controller.public_.TeachersController
-import academic.presentationlogic.factory.admin.DeptEntryControllerImpl
+import academic.presentationlogic.factory.admin.DepartmentEntryValidatorImpl
+import academic.presentationlogic.factory.admin.InsertDeptControllerImpl
 import academic.presentationlogic.factory.admin.FacultyEntryValidatorImpl
 import academic.presentationlogic.factory.admin.InsertFacultyControllerImpl
+import academic.presentationlogic.factory.admin.UpdateDeptControllerImpl
 import academic.presentationlogic.factory.admin.UpdateFacultyControllerImpl
 import academic.presentationlogic.factory.public_.DepartmentsControllerImpl
 import academic.presentationlogic.factory.public_.FacultyControllerImpl
 import academic.presentationlogic.factory.public_.TeachersControllerImpl
-import faculty.domain.usecase.admin.GetFacultyByIdUseCase
-import faculty.domain.usecase.admin.UpdateFacultyUseCase
 
 internal object UiFactory {
 
@@ -47,23 +50,35 @@ internal object UiFactory {
             userCase = DiContainer.retrieveDepartListUseCase(token),
         )
 
-    fun createAddFacultyController(): InsertFacultyController = InsertFacultyControllerImpl(
+    fun insertFacultyController(): InsertFacultyController = InsertFacultyControllerImpl(
         useCase = DiContainer.addFacultyUseCase(),
-        validator = FacultyEntryValidatorImpl()
+        validator = _facultyEntryValidator()
     )
 
-    fun createUpdateFacultyController(facultyId: String): UpdateFacultyController =
+    fun updateFacultyController(facultyId: String): UpdateFacultyController =
         UpdateFacultyControllerImpl(
             facultyId = facultyId,
             readUseCase = DiContainer.readFacultyUseCase(),
             writeUseCase = DiContainer.updateFacultyUseCase(),
-            validator = FacultyEntryValidatorImpl()
+            validator = _facultyEntryValidator()
         )
 
-    fun createDepartEntryController(): DepartmentEntryController = DeptEntryControllerImpl(
-        DiContainer.retrieveFacultyListUseCase(null),
-        DiContainer.addDepartmentUseCase()
+    fun insertDeptController(): InsertDeptController = InsertDeptControllerImpl(
+        readUseCase = DiContainer.retrieveFacultyListUseCase(null),
+        writeUseCase = DiContainer.insertDeptUseCase(),
+        validator = _deptEntryValidator()
     )
+    fun updateDeptController(deptId:String): UpdateDeptController = UpdateDeptControllerImpl(
+        deptId=deptId,
+        readFacultyUseCase =  DiContainer.retrieveFacultyListUseCase(null),
+        readDeptUseCase = DiContainer.readDeptUseCase(),
+        writeUseCase =DiContainer.updateDeptUseCase() ,
+        validator = _deptEntryValidator()
+    )
+
+    private fun _deptEntryValidator(): DeptEntryController.Validator =
+        DepartmentEntryValidatorImpl()
+    private fun _facultyEntryValidator(): FacultyEntryController.Validator =FacultyEntryValidatorImpl()
 
 
 }

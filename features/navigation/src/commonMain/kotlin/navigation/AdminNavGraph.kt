@@ -2,7 +2,7 @@
 
 package navigation
 
-import academic.ui.admin.AddDeptRoute
+import academic.ui.admin.InsertDeptRoute
 import academic.ui.admin.AddFacultyRoute
 import academic.ui.admin.AddTeacherScreen
 import academic.ui.admin.UpdateDeptRoute
@@ -84,7 +84,7 @@ fun NavHostController.adminNavGraph(): NavGraph {
             AddFacultyRoute { }
         }
         composable(route = Routes.DEPARTMENT_INSERT) {
-            AddDeptRoute { }
+            InsertDeptRoute { }
 
         }
         composable(route = Routes.TEACHER_INSERT) {
@@ -93,7 +93,7 @@ fun NavHostController.adminNavGraph(): NavGraph {
         composable(route = Routes.FACULTY_UPDATE) {
             UpdateFacultyRoute { }
         }
-        composable(route = Routes.DEPARTMENT_UPDATE) {
+        composable(route = Routes.UPDATE_DEPT_ROUTE) {
             UpdateDeptRoute { }
         }
         composable(route = Routes.TEACHER_UPDATE) {
@@ -165,7 +165,7 @@ object Routes {
     const val FACULTY_UPDATE = "faculty_update"
 
     const val DEPARTMENT_INSERT = "department_insert"
-    const val DEPARTMENT_UPDATE = "department_update"
+    const val UPDATE_DEPT_ROUTE = "department_update"
 
     const val TEACHER_INSERT = "teacher_insert"
     const val TEACHER_UPDATE = "teacher_update"

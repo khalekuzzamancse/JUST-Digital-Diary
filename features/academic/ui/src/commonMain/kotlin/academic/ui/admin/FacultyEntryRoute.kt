@@ -34,7 +34,7 @@ fun AddFacultyRoute(
     modifier: Modifier = Modifier,
     navigationIcon: (@Composable () -> Unit)? = null
 ) {
-    val controller = remember { UiFactory.createAddFacultyController() }
+    val controller = remember { UiFactory.insertFacultyController() }
     SnackNProgressBarDecorator(
         isLoading = controller.networkIOInProgress.collectAsState().value,
         snackBarMessage = controller.statusMessage.collectAsState(null).value,
@@ -96,7 +96,7 @@ internal fun FacultyEntryForm(
             onClick = {
                 keyboard?.hide()
                 scope.launch {
-                    controller.onAddRequest()
+                    controller.insert()
                 }
             }
         ) {

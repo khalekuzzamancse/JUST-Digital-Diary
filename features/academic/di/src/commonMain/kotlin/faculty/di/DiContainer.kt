@@ -1,11 +1,13 @@
 package faculty.di
 
 import data.DataFactory
-import faculty.domain.usecase.admin.AddDepartmentUseCase
+import faculty.domain.usecase.admin.InsertDepartmentUseCase
 import faculty.domain.usecase.admin.AddFacultyUseCase
 import faculty.domain.usecase.admin.AddTeacherUseCase
 import faculty.domain.usecase.admin.GetAllDepartmentUseCase
 import faculty.domain.usecase.admin.GetFacultyByIdUseCase
+import faculty.domain.usecase.admin.ReadDeptUseCase
+import faculty.domain.usecase.admin.UpdateDepartmentUseCase
 import faculty.domain.usecase.admin.UpdateFacultyUseCase
 import faculty.domain.usecase.public_.RetrieveDepartmentsUseCase
 import faculty.domain.usecase.public_.RetrieveFactualityUseCase
@@ -30,7 +32,9 @@ object DiContainer {
         )
 
     fun addFacultyUseCase() = AddFacultyUseCase(_adminRepository())
-    fun addDepartmentUseCase() = AddDepartmentUseCase(_adminRepository())
+    fun readDeptUseCase() = ReadDeptUseCase(_adminRepository())
+    fun insertDeptUseCase() = InsertDepartmentUseCase(_adminRepository())
+    fun updateDeptUseCase() = UpdateDepartmentUseCase(_adminRepository())
     fun getAllDeptUseCase()=GetAllDepartmentUseCase(_adminRepository())
     fun addTeacherUseCase() = AddTeacherUseCase(_adminRepository())
     fun readFacultyUseCase() = GetFacultyByIdUseCase(_adminRepository())

@@ -2,17 +2,17 @@
 
 package academic.presentationlogic.factory.admin
 
-import academic.presentationlogic.controller.admin.FacultyAdminBaseController
+import academic.presentationlogic.controller.admin.FacultyEntryController
 import academic.presentationlogic.controller.admin.UiCommonStateController
 import academic.presentationlogic.model.admin.FacultyEntryModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-internal open class FacultyAdminBaseControllerImpl(
-    override val validator: FacultyAdminBaseController.Validator
+internal open class FacultyEntryControllerImpl(
+    override val validator: FacultyEntryController.Validator
 ) :
-    FacultyAdminBaseController, UiCommonStateController() {
+    FacultyEntryController, UiCommonStateController() {
     protected val _faculty = MutableStateFlow(FacultyEntryModel("", ""))
 
     override val statusMessage = super._statusMessage.asStateFlow()

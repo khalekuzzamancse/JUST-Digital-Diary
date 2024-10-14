@@ -54,6 +54,18 @@ internal object ModelMapper {
         }
     }
 
+    /**
+     * - Assign a dummy value for the facultyId
+     * - Used when know the facultyId such as read by faculty id, or read by under faculty or read by dept id
+     * -
+     */
+    fun DepartmentEntryEntity.toEntryModel()=DepartmentEntryModel(
+        name = name,
+        shortname = shortname,
+        priority = priority,
+        facultyId = "assigned dummy value at mapper "
+    )
+
     fun toTeacherModels(entity: TeacherListEntity): List<TeacherModel> {
         val sorter = DesignationSorter()
         return sorter.sortTeachers(entity.facultyMembers).map {
@@ -78,7 +90,7 @@ internal object ModelMapper {
     )
 
     fun toDepartmentEntryEntity(model: DepartmentEntryModel) = DepartmentEntryEntity(
-        priority = model.priority.toIntOrNull() ?: 0,
+        priority = model.priority,
         name = model.name,
         shortname = model.shortname,
 
@@ -104,7 +116,7 @@ internal object ModelMapper {
     )
 
     fun DepartmentEntryModel.toEntity() = DepartmentEntryEntity(
-        priority = this.priority.toIntOrNull() ?: 0,
+        priority = this.priority,
         name = this.name,
         shortname = this.shortname,
     )

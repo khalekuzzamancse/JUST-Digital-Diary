@@ -22,8 +22,8 @@ sealed class CustomException(override val message: String, val debugMessage: Str
      */
     class JsonParseException(json: String) :
         CustomException(
-            message = "Unrecognized JSON response from the server",
-            debugMessage = "The server returned a response in an unexpected format:\n$json"
+            message = "Unrecognized response from the server",
+            debugMessage = "The server returned a response in an unexpected JSON format:\n$json"
         )
 
 

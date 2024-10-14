@@ -1,6 +1,5 @@
 package academic.presentationlogic.controller.admin
 
-internal interface InsertFacultyController:FacultyEntryController {
+internal interface InsertDeptController:DeptEntryController {
     suspend fun insert()
-
 }

@@ -1,5 +1,5 @@
 package academic.presentationlogic.controller.admin
 
-internal interface UpdateFacultyController:FacultyEntryController {
+internal interface UpdateDeptController:DeptEntryController {
     suspend fun update()
 }

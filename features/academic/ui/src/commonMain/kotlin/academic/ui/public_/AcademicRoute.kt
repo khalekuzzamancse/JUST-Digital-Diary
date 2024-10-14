@@ -195,7 +195,8 @@ private fun _FacultyAndDepartmentList(
             Departments(
                 modifier = Modifier.fillMaxSize(),
                 controller = departmentController,
-                onTeachersRequest = onTeachersRequest
+                onTeachersRequest = onTeachersRequest,
+                onEvent = onEvent
             )
         },
         facultyList = {

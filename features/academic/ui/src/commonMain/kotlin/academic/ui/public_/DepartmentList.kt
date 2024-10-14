@@ -1,6 +1,7 @@
 package academic.ui.public_
 
 import academic.presentationlogic.controller.public_.DepartmentController
+import academic.ui.AcademicModuleEvent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,6 +28,8 @@ internal fun Departments(
     modifier: Modifier = Modifier,
     controller: DepartmentController,
     onTeachersRequest: (String) -> Unit,
+    isAdmin: Boolean = true,
+    onEvent: (AcademicModuleEvent)->Unit,
 ) {
     val departments = controller.departments.collectAsState().value
     val selected = controller.selected.collectAsState().value
@@ -50,6 +53,14 @@ internal fun Departments(
                     onSelect = {
                         controller.onSelected(index)
                         onTeachersRequest(dept.id)
+                    },
+                    showEditButton = isAdmin,
+                    showDeleteButton = isAdmin,
+                    onEditRequest = {
+                        onEvent(AcademicModuleEvent.UpdateDeptRequest(dept.id))
+                    },
+                    onDeleteRequest = {
+                        onEvent(AcademicModuleEvent.DeleteDeptRequest(dept.id))
                     }
                 )
             }
@@ -65,6 +76,10 @@ private fun _DepartmentCard(
     deptShortName: String,
     numOfTeacher: String,
     isSelected: Boolean,
+    showEditButton: Boolean,
+    showDeleteButton: Boolean ,
+    onEditRequest: () -> Unit,
+    onDeleteRequest: () -> Unit,
     onSelect: () -> Unit
 ) {
 
@@ -88,6 +103,11 @@ private fun _DepartmentCard(
     GenericInfoCard(
         modifier = modifier,
         state = state,
-        onSelect = onSelect
+        onSelect = onSelect,
+        showEditButton = showEditButton,
+        showDeleteButton = showDeleteButton,
+        onEditRequest = onEditRequest,
+        onDeleteRequest = onDeleteRequest
+
     )
 }

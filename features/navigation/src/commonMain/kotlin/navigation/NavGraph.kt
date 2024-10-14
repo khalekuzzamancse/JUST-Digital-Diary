@@ -1,7 +1,7 @@
 package navigation
 
 import academic.ui.AcademicModuleEvent
-import academic.ui.admin.AddDeptRoute
+import academic.ui.admin.InsertDeptRoute
 import academic.ui.admin.AddFacultyRoute
 import academic.ui.admin.AddTeacherScreen
 import academic.ui.admin.UpdateDeptRoute
@@ -126,7 +126,15 @@ fun NavGraph(
                             try {
                                 navController.navigate(Routes.FACULTY_UPDATE)
                             }
-                            catch (e: Exception){
+                            catch (_: Exception){
+
+                            }
+                        }
+                        is AcademicModuleEvent.UpdateDeptRequest->{
+                            try {
+                                navController.navigate(Routes.UPDATE_DEPT_ROUTE)
+                            }
+                            catch (_: Exception){
 
                             }
                         }
@@ -255,7 +263,11 @@ fun NavGraph(
             AddFacultyRoute { }
         }
         composable(route = Routes.DEPARTMENT_INSERT) {
-            AddDeptRoute { }
+            InsertDeptRoute { }
+
+        }
+        composable(route = Routes.UPDATE_DEPT_ROUTE) {
+            UpdateDeptRoute { }
 
         }
         composable(route = Routes.TEACHER_INSERT) {
@@ -264,7 +276,7 @@ fun NavGraph(
         composable(route = Routes.FACULTY_UPDATE) {
             UpdateFacultyRoute { }
         }
-        composable(route = Routes.DEPARTMENT_UPDATE) {
+        composable(route = Routes.UPDATE_DEPT_ROUTE) {
             UpdateDeptRoute { }
         }
         composable(route = Routes.TEACHER_UPDATE) {

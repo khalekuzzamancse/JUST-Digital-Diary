@@ -33,7 +33,7 @@ fun UpdateFacultyRoute(
     navigationIcon: (@Composable () -> Unit)? = null
 ) {
 
-    val controller = remember { UiFactory.createUpdateFacultyController("yytt") }
+    val controller = remember { UiFactory.updateFacultyController("yytt") }
 
     SnackNProgressBarDecorator(
         isLoading = controller.networkIOInProgress.collectAsState().value,

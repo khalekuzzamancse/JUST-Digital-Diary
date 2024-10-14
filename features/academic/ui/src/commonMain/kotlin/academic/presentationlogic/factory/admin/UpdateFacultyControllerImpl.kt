@@ -1,7 +1,7 @@
 @file:Suppress("functionName","propertyName")
 package academic.presentationlogic.factory.admin
 
-import academic.presentationlogic.controller.admin.FacultyAdminBaseController
+import academic.presentationlogic.controller.admin.FacultyEntryController
 import academic.presentationlogic.controller.admin.UpdateFacultyController
 import academic.presentationlogic.mapper.ModelMapper
 import faculty.domain.exception.CustomException
@@ -19,8 +19,8 @@ internal class UpdateFacultyControllerImpl(
     private val facultyId: String,
     private val writeUseCase: UpdateFacultyUseCase,
     private val readUseCase: GetFacultyByIdUseCase,
-    validator: FacultyAdminBaseController.Validator
-) : FacultyAdminBaseControllerImpl(validator), UpdateFacultyController {
+    validator: FacultyEntryController.Validator
+) : FacultyEntryControllerImpl(validator), UpdateFacultyController {
 
     init {
         super.validator.activate(faculty)
@@ -30,8 +30,9 @@ internal class UpdateFacultyControllerImpl(
     }
 
     override suspend fun update() {
-        val model = with(ModelMapper) { faculty.value.toDomainModelOrThrow() }
         super.onNetworkIOStart()
+        val model = with(ModelMapper) { faculty.value.toDomainModelOrThrow() }
+
         val result = writeUseCase.execute(model)
         result.fold(
             onSuccess = {
@@ -62,10 +63,11 @@ internal class UpdateFacultyControllerImpl(
             onFailure = { exception ->
                 when (exception) {
                     is CustomException -> super.updateErrorMessage(exception.message)
-                    else -> super.updateErrorMessage("Faculty not found,Something went wrong !")
+                    else -> super.updateErrorMessage("Something went wrong!,Faculty not found")
                 }
             }
         )
+        super.onNetworkIOStop()
     }
 
 }

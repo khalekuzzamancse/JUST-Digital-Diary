@@ -15,9 +15,11 @@ import faculty.domain.model.public_.FacultyModel
  */
 interface AdminRepository {
     suspend fun addFaculty(model:FacultyEntryModel):Result<Unit>
-    /**Useful for updating a faculty, need only the entry info,do need faculty id because consumer already knew it*/
+    /**Useful for updating a faculty, need only the entry info,do need not faculty id because consumer already knew it*/
     suspend fun readFaculty(id:String):Result<FacultyEntryModel>
     suspend fun updateFaculty(model:FacultyEntryModel):Result<Unit>
+    /**Useful for updating a department, need only the entry info,do need not dept id because consumer/client already knew it*/
+    suspend fun readDept(id:String):Result<DepartmentEntryModel>
     suspend fun addDepartment(model:DepartmentEntryModel):Result<Unit>
     suspend fun updateDepartment(model:DepartmentEntryModel):Result<Unit>
     suspend fun addTeacher(model:TeacherEntryModel):Result<Unit>
