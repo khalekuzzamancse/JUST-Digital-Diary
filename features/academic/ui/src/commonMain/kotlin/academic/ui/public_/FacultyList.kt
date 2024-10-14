@@ -27,7 +27,7 @@ internal fun Faculty(
 ) {
     val faculties = controller.faculties.collectAsState().value
     val selected = controller.selected.collectAsState().value
-    val isNotFetching =!(controller.isFetching.collectAsState().value)
+    val isNotFetching =!(controller.isLoading.collectAsState().value)
     if (faculties.isEmpty()&&isNotFetching) {
         EmptyContentScreen(message = "No faculty found")
     } else {

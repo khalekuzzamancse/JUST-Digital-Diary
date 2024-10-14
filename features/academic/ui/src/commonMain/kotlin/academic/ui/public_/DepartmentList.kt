@@ -33,7 +33,7 @@ internal fun Departments(
 ) {
     val departments = controller.departments.collectAsState().value
     val selected = controller.selected.collectAsState().value
-    val isNotFetching =!(controller.isFetching.collectAsState().value)
+    val isNotFetching =!(controller.isLoading.collectAsState().value)
     if (departments.isEmpty()&&isNotFetching) {
         EmptyContentScreen(message = "No department found")
     } else {

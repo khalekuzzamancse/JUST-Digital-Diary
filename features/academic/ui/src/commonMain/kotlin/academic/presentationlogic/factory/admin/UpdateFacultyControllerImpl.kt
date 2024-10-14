@@ -30,7 +30,7 @@ internal class UpdateFacultyControllerImpl(
     }
 
     override suspend fun update() {
-        super.onNetworkIOStart()
+        super.startLoading()
         val model = with(ModelMapper) { faculty.value.toDomainModelOrThrow() }
 
         val result = writeUseCase.execute(model)
@@ -45,11 +45,11 @@ internal class UpdateFacultyControllerImpl(
                 }
             }
         )
-        super.onNetworkIOStop()
+        super.stopLoading()
     }
 
     private suspend fun _readFaculty() {
-        super.onNetworkIOStart()
+        super.startLoading()
         val result = readUseCase.execute(facultyId)
         result.fold(
             onSuccess = { model ->
@@ -67,7 +67,7 @@ internal class UpdateFacultyControllerImpl(
                 }
             }
         )
-        super.onNetworkIOStop()
+        super.stopLoading()
     }
 
 }

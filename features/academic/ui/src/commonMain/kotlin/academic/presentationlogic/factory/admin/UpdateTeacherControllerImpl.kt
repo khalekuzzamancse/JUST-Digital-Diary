@@ -19,13 +19,13 @@ internal class UpdateTeacherControllerImpl(
     private val writeUseCase: UpdateTeacherUseCase,
     readAllDeptUseCase: ReadAllDepartmentUseCase,
     validator: TeacherEntryController.Validator,
-) : TeacherEntryBaseControllerImpl(allDeptUseCase = readAllDeptUseCase, validator = validator),
+) : TeacherEntryBaseController(allDeptUseCase = readAllDeptUseCase, validator = validator),
     UpdateTeacherController {
 
     init {
         super.validator.observeFieldChanges(state = teacherState)
         CoroutineScope(Dispatchers.Default).launch {
-            super.retriveDept()
+            super.readAllDept()
         }
         CoroutineScope(Dispatchers.Default).launch {
             _readTeacher()
@@ -35,7 +35,7 @@ internal class UpdateTeacherControllerImpl(
     override suspend fun update() {
         //Can throw exception when try to convert string to integer in model mapper
         try {
-            super.onNetworkIOStart()
+            super.startLoading()
             writeUseCase
                 .execute(with(ModelMapper) { _teacherState.value.toDomainModelOrThrow() })
                 .fold(
@@ -49,7 +49,7 @@ internal class UpdateTeacherControllerImpl(
                         }
                     }
                 )
-            super.onNetworkIOStop()
+            super.stopLoading()
         } catch (_: Exception) {
             super.updateErrorMessage("Failed,Make sure priority field as integer")
         }
@@ -58,7 +58,7 @@ internal class UpdateTeacherControllerImpl(
     private suspend fun _readTeacher() {
         //Can throw exception when try to convert string to integer in model mapper
         try {
-            super.onNetworkIOStart()
+            super.startLoading()
             readTeacherUseCase
                 .execute(teacherId)
                 .fold(
@@ -74,7 +74,7 @@ internal class UpdateTeacherControllerImpl(
                         }
                     }
                 )
-            super.onNetworkIOStop()
+            super.stopLoading()
         } catch (_: Exception) {
             super.updateErrorMessage("Failed,Make sure priority field as integer")
         }

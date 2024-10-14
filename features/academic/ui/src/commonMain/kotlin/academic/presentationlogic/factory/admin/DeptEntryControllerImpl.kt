@@ -3,7 +3,7 @@
 package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.DeptEntryController
-import academic.presentationlogic.controller.admin.UiCommonStateController
+import academic.presentationlogic.controller.core.CoreControllerImpl
 import academic.presentationlogic.mapper.ModelMapper
 import academic.presentationlogic.model.admin.DepartmentEntryModel
 import academic.presentationlogic.model.public_.FacultyModel
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 internal open  class DeptEntryControllerImpl(
     private val readUseCase: RetrieveFactualityUseCase,
     override val validator  : DeptEntryController.Validator
-) : DeptEntryController,UiCommonStateController() {
+) : DeptEntryController, CoreControllerImpl() {
 
     protected val _dept = MutableStateFlow(DepartmentEntryModel("", "", "", ""))
 
@@ -28,7 +28,7 @@ internal open  class DeptEntryControllerImpl(
     private val _selectedFaculty = MutableStateFlow<Int?>(null)
 
 
-    override val networkIOInProgress = _networkIOInProgress.asStateFlow()
+    override val isLoading = _isLoading.asStateFlow()
     override val dept = _dept.asStateFlow()
     override val faculties = _faculty.asStateFlow()
     override val selectedFacultyIndex = _selectedFaculty.asStateFlow()
@@ -56,7 +56,7 @@ internal open  class DeptEntryControllerImpl(
 
 
     protected suspend fun retrieveFaculties() {
-        super.onNetworkIOStart()
+        super.startLoading()
         readUseCase
             .execute()
             .fold(
@@ -78,7 +78,7 @@ internal open  class DeptEntryControllerImpl(
                     }
                 }
             )
-        super.onNetworkIOStop()
+        super.stopLoading()
     }
 
 

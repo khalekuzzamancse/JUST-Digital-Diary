@@ -35,7 +35,7 @@ internal class UpdateDeptControllerImpl(
     }
 
     override suspend fun update() {
-        super.onNetworkIOStart()
+        super.startLoading()
         writeUseCase
             .execute(with(ModelMapper) { _dept.value.toDomainModelOrThrow() })
             .fold(
@@ -50,11 +50,11 @@ internal class UpdateDeptControllerImpl(
                     }
                 }
             )
-        super.onNetworkIOStop()
+        super.stopLoading()
     }
 
     private suspend fun _readDept() {
-        super.onNetworkIOStart()
+        super.startLoading()
         readDeptUseCase
             .execute(deptId)
             .fold(
@@ -74,7 +74,7 @@ internal class UpdateDeptControllerImpl(
                     }
                 }
             )
-        super.onNetworkIOStop()
+        super.stopLoading()
     }
 
 

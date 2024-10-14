@@ -12,7 +12,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.outlined.Update
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -34,11 +33,11 @@ fun InsertDeptRoute(
 ) {
     val controller = remember { UiFactory.insertDeptController() }
     val keyboard = LocalSoftwareKeyboardController.current
-    val isLoading = controller.networkIOInProgress.collectAsState().value
+    val isLoading = controller.isLoading.collectAsState().value
     val isInputValid = controller.validator.areMandatoryFieldFilled.collectAsState().value
     val scope = rememberCoroutineScope()
     SnackNProgressBarDecorator(
-        isLoading = controller.networkIOInProgress.collectAsState().value,
+        isLoading = controller.isLoading.collectAsState().value,
         snackBarMessage = controller.statusMessage.collectAsState(null).value,
         navigationIcon = navigationIcon
     ) {

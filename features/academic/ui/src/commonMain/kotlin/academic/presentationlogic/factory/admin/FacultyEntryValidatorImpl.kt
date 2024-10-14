@@ -12,9 +12,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
-internal class FacultyEntryValidatorImpl(
-
-) : FacultyEntryController.Validator {
+internal class FacultyEntryValidatorImpl : FacultyEntryController.Validator {
 
     private val _fieldsFilled = MutableStateFlow(false)
     private val _errors = MutableStateFlow(emptyList<String>())

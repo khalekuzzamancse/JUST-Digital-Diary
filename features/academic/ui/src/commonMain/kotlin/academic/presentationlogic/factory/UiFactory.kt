@@ -5,7 +5,7 @@ package academic.presentationlogic.factory
 import academic.presentationlogic.controller.admin.DeptEntryController
 import academic.presentationlogic.controller.admin.FacultyEntryController
 import academic.presentationlogic.controller.admin.InsertFacultyController
-import academic.presentationlogic.factory.admin.InsertTeacherControllerImpl
+import academic.presentationlogic.factory.admin.InsertTeacherControllerImp
 import academic.presentationlogic.controller.admin.TeacherEntryController
 import academic.presentationlogic.factory.admin.TeacherEntryValidatorImpl
 import academic.presentationlogic.controller.public_.DepartmentController
@@ -37,7 +37,7 @@ internal object UiFactory {
             )
 
     fun createTeacherAddForm(): TeacherEntryController =
-        InsertTeacherControllerImpl(
+        InsertTeacherControllerImp(
             validator = TeacherEntryValidatorImpl(),
             readUseCase = DiContainer.getAllDeptUseCase(),
             writeUseCase = DiContainer.insertTeacherUseCase()
@@ -79,7 +79,7 @@ internal object UiFactory {
         validator = _deptEntryValidator()
     )
     fun insertTeacherController(): TeacherEntryController =
-        InsertTeacherControllerImpl(
+        InsertTeacherControllerImp(
             validator = _teacherEntryValidator(),
             readUseCase = DiContainer.getAllDeptUseCase(),
             writeUseCase = DiContainer.insertTeacherUseCase()

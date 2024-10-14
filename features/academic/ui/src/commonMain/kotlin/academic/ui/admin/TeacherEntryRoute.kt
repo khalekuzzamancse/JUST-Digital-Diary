@@ -39,7 +39,7 @@ fun AddTeacherScreen(
 
     val scope= rememberCoroutineScope()
     SnackNProgressBarDecorator(
-        isLoading = controller.networkIOInProgress.collectAsState().value,
+        isLoading = controller.isLoading.collectAsState().value,
         snackBarMessage = controller.statusMessage.collectAsState(null).value,
         navigationIcon = navigationIcon
     ) {

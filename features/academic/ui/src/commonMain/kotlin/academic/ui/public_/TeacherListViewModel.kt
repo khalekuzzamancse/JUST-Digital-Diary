@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModel
 class TeacherListViewModel internal  constructor(
    internal  val controller: TeachersController
 ):ViewModel(){
-   val isLoading = controller.isFetching
-   val screenMessage=controller.errorMessage
+   val isLoading = controller.isLoading
+   val screenMessage=controller.statusMessage
 }
 
 

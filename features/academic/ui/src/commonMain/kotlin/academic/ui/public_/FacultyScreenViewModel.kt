@@ -28,12 +28,12 @@ class FacultyScreenViewModel internal constructor(
     }
 
     val isLoading: Flow<Boolean> =
-        combine(departmentController.isFetching, facultyController.isFetching)
+        combine(departmentController.isLoading, facultyController.isLoading)
         { isLogging, isRegistering ->
             isLogging || isRegistering
         }
     val screenMessage: Flow<String?> =
-        combine(departmentController.errorMessage, facultyController.errorMessage)
+        combine(departmentController.statusMessage, facultyController.statusMessage)
         { loginMsg, registerMsg ->
             loginMsg ?: registerMsg
         }

@@ -25,7 +25,7 @@ internal class InsertDeptControllerImpl(
     }
 
     override suspend fun insert() {
-        super.onNetworkIOStart()
+        super.startLoading()
         writeUseCase
             .execute(with(ModelMapper) { _dept.value.toDomainModelOrThrow() })
             .fold(
@@ -40,7 +40,7 @@ internal class InsertDeptControllerImpl(
                     }
                 }
             )
-        super.onNetworkIOStop()
+        super.stopLoading()
     }
 
 

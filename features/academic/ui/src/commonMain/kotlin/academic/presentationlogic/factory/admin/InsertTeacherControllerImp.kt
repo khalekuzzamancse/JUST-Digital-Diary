@@ -15,16 +15,16 @@ import kotlinx.coroutines.launch
  * Private implementation of the TeacherFormController interface.
  * Manages the state of TeacherModel using MutableStateFlow and responds to events.
  */
-internal class InsertTeacherControllerImpl(
+internal class InsertTeacherControllerImp(
     readUseCase: ReadAllDepartmentUseCase,
     validator: TeacherEntryController.Validator,
     private val writeUseCase: InsertTeacherUseCase,
-) : TeacherEntryBaseControllerImpl(allDeptUseCase = readUseCase, validator = validator), InsertTeacherController {
+) : TeacherEntryBaseController(allDeptUseCase = readUseCase, validator = validator), InsertTeacherController {
 
     override suspend fun insert() {
         //Can throw exception when try to convert string to integer in model mapper
         try {
-            super.onNetworkIOStart()
+            super.startLoading()
             writeUseCase
                 .execute(with(ModelMapper) { _teacherState.value.toDomainModelOrThrow() })
                 .fold(
@@ -38,7 +38,7 @@ internal class InsertTeacherControllerImpl(
                         }
                     }
                 )
-            super.onNetworkIOStop()
+            super.stopLoading()
         } catch (_: Exception) {
             super.updateErrorMessage("Failed,Make sure priority field as integer")
         }
@@ -47,7 +47,7 @@ internal class InsertTeacherControllerImpl(
     init {
         super.validator.observeFieldChanges(state = teacherState)
         CoroutineScope(Dispatchers.Default).launch {
-            super.retriveDept()
+            super.readAllDept()
         }
     }
 

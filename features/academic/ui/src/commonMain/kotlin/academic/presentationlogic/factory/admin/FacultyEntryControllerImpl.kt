@@ -3,7 +3,7 @@
 package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.FacultyEntryController
-import academic.presentationlogic.controller.admin.UiCommonStateController
+import academic.presentationlogic.controller.core.CoreControllerImpl
 import academic.presentationlogic.model.admin.FacultyEntryModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,11 +12,11 @@ import kotlinx.coroutines.flow.update
 internal open class FacultyEntryControllerImpl(
     override val validator: FacultyEntryController.Validator
 ) :
-    FacultyEntryController, UiCommonStateController() {
+    FacultyEntryController, CoreControllerImpl() {
     protected val _faculty = MutableStateFlow(FacultyEntryModel("", ""))
 
     override val statusMessage = super._statusMessage.asStateFlow()
-    override val networkIOInProgress = super._networkIOInProgress.asStateFlow()
+    override val isLoading = super._isLoading.asStateFlow()
     override val faculty = _faculty.asStateFlow()
 
     override fun onNameChanged(value: String) = _faculty.update { it.copy(name = value) }

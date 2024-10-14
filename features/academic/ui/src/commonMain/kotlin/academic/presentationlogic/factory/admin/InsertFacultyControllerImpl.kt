@@ -21,7 +21,7 @@ internal class InsertFacultyControllerImpl(
 
     override suspend fun insert() {
         val model = with(ModelMapper) { faculty.value.toDomainModelOrThrow() }
-        super.onNetworkIOStart()
+        super.startLoading()
         val result = useCase.execute(model)
         result.fold(
             onSuccess = {
@@ -41,7 +41,7 @@ internal class InsertFacultyControllerImpl(
                 }
             }
         )
-        super.onNetworkIOStop()
+        super.stopLoading()
 
     }
 }

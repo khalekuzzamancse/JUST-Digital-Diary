@@ -1,13 +1,15 @@
 package academic.presentationlogic.controller.admin
 
+import academic.presentationlogic.controller.core.CoreController
 import academic.presentationlogic.model.admin.TeacherEntryModel
 import academic.presentationlogic.model.public_.DepartmentModel
 import academic.presentationlogic.model.public_.TeacherModel
 import kotlinx.coroutines.flow.StateFlow
 
 /**
- * Interface that defines the contract for controlling the TeacherForm.
- * It manages the state of TeacherModel and handles events related to form inputs.
+ * - Interface that defines the contract for controlling the TeacherForm.
+ * - It manages the state of TeacherModel and handles events related to form inputs
+ * - It child of [CoreController]
  *
  * @property teacherState A [StateFlow] that emits the current state of [TeacherModel].
  * @property onNameChange Handles the event when the teacher's name changes.
@@ -19,22 +21,9 @@ import kotlinx.coroutines.flow.StateFlow
  * @property onDeptChange Handles the event when the teacher's department changes.
  * @property onRoomNoChange Handles the event when the teacher's room number changes.
  */
-internal interface TeacherEntryController {
+internal interface TeacherEntryController: CoreController {
     val teacherState: StateFlow<TeacherEntryModel>
     val validator: Validator
-    /**
-     * Indicates whether a network operation is currently in progress.
-     * Uses a name that is independent of any UI framework, ensuring that this layer remains framework-agnostic,
-     * Based on this state the  UI can do something such as show Loading state using UI elements or disable something , etc
-     */
-    val networkIOInProgress: StateFlow<Boolean>
-
-    /**
-     * A message indicating the status of the operation (success or failure).
-     * Named in a way that is independent of any UI concerns to ensure framework-independence.
-     */
-    val statusMessage: StateFlow<String?>
-
     /**
      * -Help to admin, under which   department is going to add
      *- The `Implementer` should fetch the faculty list

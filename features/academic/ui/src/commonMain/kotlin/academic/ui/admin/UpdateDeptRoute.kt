@@ -33,12 +33,12 @@ fun UpdateDeptRoute(
 
     val controller = remember { UiFactory.updateDeptController("climateanddisastermanagement") }
     val keyboard = LocalSoftwareKeyboardController.current
-    val isLoading = controller.networkIOInProgress.collectAsState().value
+    val isLoading = controller.isLoading.collectAsState().value
     val isInputValid = controller.validator.areMandatoryFieldFilled.collectAsState().value
     val scope = rememberCoroutineScope()
 
     SnackNProgressBarDecorator(
-        isLoading = controller.networkIOInProgress.collectAsState().value,
+        isLoading = controller.isLoading.collectAsState().value,
         snackBarMessage = controller.statusMessage.collectAsState(null).value,
         navigationIcon = navigationIcon
     ) {

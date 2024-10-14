@@ -1,18 +1,14 @@
 package academic.presentationlogic.controller.admin
 
+import academic.presentationlogic.controller.core.CoreController
 import academic.presentationlogic.model.admin.FacultyEntryModel
 import kotlinx.coroutines.flow.StateFlow
 
 /**
  * - The common part that can be used for both insert and update
+ * - It child of [CoreController]
  */
-internal interface FacultyEntryController {
-    /**
-     * Indicates whether a network operation is currently in progress.
-     * Uses a name that is independent of any UI framework, ensuring that this layer remains framework-agnostic,
-     * Based on this state the  UI can do something such as show Loading state using UI elements or disable something , etc
-     */
-    val networkIOInProgress: StateFlow<Boolean>
+internal interface FacultyEntryController : CoreController {
     val validator: Validator
 
     /**
@@ -20,16 +16,8 @@ internal interface FacultyEntryController {
      * Uses a model that is decoupled from any specific UI implementation to maintain abstraction.
      */
     val faculty: StateFlow<FacultyEntryModel>
-
-    /**
-     * A message indicating the status of the operation (success or failure).
-     * Named in a way that is independent of any UI concerns to ensure framework-independence.
-     */
-    val statusMessage: StateFlow<String?>
     fun onPriorityChanged(value: String)
     fun onNameChanged(value: String)
-
-
     interface Validator {
         /**
          * Indicates whether all mandatory fields are filled.

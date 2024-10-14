@@ -1,7 +1,8 @@
+@file:Suppress("propertyName","functionName")
 package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.TeacherEntryController
-import academic.presentationlogic.controller.admin.UiCommonStateController
+import academic.presentationlogic.controller.core.CoreControllerImpl
 import academic.presentationlogic.mapper.ModelMapper
 import academic.presentationlogic.model.admin.TeacherEntryModel
 import academic.presentationlogic.model.public_.DepartmentModel
@@ -17,10 +18,10 @@ import kotlinx.coroutines.flow.update
  * Private implementation of the TeacherFormController interface.
  * Manages the state of TeacherModel using MutableStateFlow and responds to events.
  */
-internal open class TeacherEntryBaseControllerImpl(
+internal open class TeacherEntryBaseController(
     override val validator: TeacherEntryController.Validator,
     private val allDeptUseCase: ReadAllDepartmentUseCase,
-) : TeacherEntryController,UiCommonStateController() {
+) : TeacherEntryController, CoreControllerImpl() {
 
     protected val _teacherState = MutableStateFlow(_emptyState())
     private val _departments = MutableStateFlow<List<DepartmentModel>>(emptyList())
@@ -30,7 +31,7 @@ internal open class TeacherEntryBaseControllerImpl(
     override val dept = _departments.asStateFlow()
     override val selectedDeptIndex=_selectedDeptIndex.asStateFlow()
 
-    override val networkIOInProgress = _networkIOInProgress.asStateFlow()
+    override val isLoading = _isLoading.asStateFlow()
     override val teacherState: StateFlow<TeacherEntryModel> = _teacherState.asStateFlow()
     override fun onNameChange(value: String) {
         _teacherState.value = _teacherState.value.copy(name = value)
@@ -77,8 +78,8 @@ internal open class TeacherEntryBaseControllerImpl(
 
     }
 
-    protected suspend fun retriveDept() {
-        super.onNetworkIOStart()
+    protected suspend fun readAllDept() {
+        super.startLoading()
         allDeptUseCase
             .execute()
             .fold(
@@ -98,7 +99,7 @@ internal open class TeacherEntryBaseControllerImpl(
                     }
                 }
             )
-        super.onNetworkIOStop()
+        super.stopLoading()
     }
 
 

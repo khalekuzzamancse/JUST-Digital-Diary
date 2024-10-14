@@ -44,7 +44,7 @@ internal fun TeachersRoute(
     val viewModel = viewModel { TeacherListViewModel(UiFactory.createTeachersController(token)) }
     val controller = viewModel.controller
     val teachers = controller.teachers.collectAsState().value
-    val isNotFetching = !(controller.isFetching.collectAsState().value)
+    val isNotFetching = !(controller.isLoading.collectAsState().value)
 
 
     LaunchedEffect(Unit) {
