@@ -24,6 +24,7 @@ internal class InsertTeacherControllerImp(
     override suspend fun insert() {
         //Can throw exception when try to convert string to integer in model mapper
         try {
+            println("Request")
             super.startLoading()
             writeUseCase
                 .execute(with(AdminModelMapper) { _teacherState.value.toDomainModelOrThrow() })

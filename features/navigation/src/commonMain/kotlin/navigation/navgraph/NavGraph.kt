@@ -1,20 +1,9 @@
-package navigation
+package navigation.navgraph
 
 import academic.ui.AcademicModuleEvent
-import academic.ui.admin.InsertDeptRoute
-import academic.ui.admin.AddFacultyRoute
-import academic.ui.admin.InsertTeacherRoute
-import academic.ui.admin.UpdateDeptRoute
-import academic.ui.admin.UpdateFacultyRoute
-import academic.ui.admin.UpdateTeacherRoute
-import academic.ui.public_.AcademicRoute
+import academic.ui.AcademicNavGraph
 import administration.ui.public_.AdminEmployeeListEvent
 import administration.ui.public_.AdministrationRoute
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,17 +23,16 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import calendar.ui.ui.admin.AddAcademicCalenderScreen
+import common.ui.animation.NavAnimations
 import miscellaneous.MiscFeatureEvent
 import miscellaneous.ui.AboutUsRoute
 import miscellaneous.ui.eventGallery.EventsRoute
 import miscellaneous.ui.home.HomeRoute
 import miscellaneous.ui.vcmessage.MessageFromVCRoute
+import navigation.AppEvent
+import navigation.NavigationFactory
 import navigation.component.NavDestination
 import profile.presentationlogic.ProfileEvent
-import profile.ui.ProfileNavHost
-import schedule.ui.ui.admin.add_class_schedule.AddClassScheduleScreen
-import schedule.ui.ui.admin.add_exam_schedule.ExamScheduleAddScreen
 import schedule.ui.ui.public_.ViewClassScheduleScreen
 import schedule.ui.ui.public_.ViewExamScheduleScreen
 
@@ -67,32 +55,10 @@ fun NavGraph(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination,
-        enterTransition = {
-            scaleIn(initialScale = 0.8f, animationSpec = tween(700)) + fadeIn(
-                animationSpec = tween(
-                    700
-                )
-            )
-        },
-        exitTransition = {
-            scaleOut(
-                targetScale = 1.1f,
-                animationSpec = tween(700)
-            ) + fadeOut(animationSpec = tween(700))
-        },
-        popEnterTransition = {
-            scaleIn(initialScale = 1.2f, animationSpec = tween(700)) + fadeIn(
-                animationSpec = tween(
-                    700
-                )
-            )
-        },
-        popExitTransition = {
-            scaleOut(
-                targetScale = 0.8f,
-                animationSpec = tween(700)
-            ) + fadeOut(animationSpec = tween(700))
-        }
+        enterTransition = { NavAnimations.Enter.scaleIn() },
+        exitTransition = { NavAnimations.Exit.scaleOut() },
+        popEnterTransition = { NavAnimations.PopEnter.scaleIn() },
+        popExitTransition = { NavAnimations.PopExit.scaleOut() }
     ) {
 //        navController.adminNavGraph()
 
@@ -122,7 +88,7 @@ fun NavGraph(
         }
 
         composable(NavDestination.FacultyList.route) {
-            AcademicRoute(
+            AcademicNavGraph(
                 onEvent = { event ->
                     toAppEvent(event)?.let(onEvent)
                 },

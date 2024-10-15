@@ -7,7 +7,7 @@ import data.monggodb.db.FacultyCollection
 import data.monggodb.db.TeacherCollection
 import domain.api.AcademicAdminApi
 
-class AcademicAdminApiImpl : AcademicAdminApi {
+class AcademicAdminApiImpl internal  constructor(): AcademicAdminApi {
 
     override suspend fun readAllFaculty() = withExceptionHandle {
         FacultyCollection().getAllFaculties()

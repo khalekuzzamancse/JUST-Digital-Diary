@@ -5,6 +5,7 @@ package data.monggodb.db
 import com.mongodb.client.model.Filters
 import data.monggodb.db.MongoDBClient.COLLECTION_FACULTY
 import data.monggodb.db.MongoDBClient.DATABASE_NAME
+import data.monggodb.db.MongoDBClient.ID_KEY
 import data.monggodb.factory.insertionWithHandleException
 import domain.entity.FacultyReadEntity
 import domain.factory.ContractFactory
@@ -14,12 +15,9 @@ import org.bson.Document
 
 internal class FacultyCollection {
 
-    private val primaryKeyService = ContractFactory.primaryKeyService()
+    private val insertionService = ContractFactory.insertionService()
     private val readEntityService = ContractFactory.readEntityParserService()
 
-    private companion object {
-        const val ID_KEY = "_id"
-    }
 
     /**
      * Adds a faculty to the database.
@@ -32,11 +30,10 @@ internal class FacultyCollection {
         MongoDBClient.writeOrThrow(DATABASE_NAME) { database ->
             val collection = database.getCollection<Document>(COLLECTION_FACULTY)
 
-            val primaryKey = primaryKeyService.getFacultyKeyOrThrow(json)
+            val result = insertionService.getFacultyKeyOrThrow(json)
 
-            val doc = Document.parse(json)
-                .append(ID_KEY, primaryKey)
-                .append(FacultyReadEntity::faculty_id.name, primaryKey)
+            val doc = Document.parse(result.json)
+                .append(ID_KEY, result.primaryKey)
 
             collection.insertOne(doc)
         }

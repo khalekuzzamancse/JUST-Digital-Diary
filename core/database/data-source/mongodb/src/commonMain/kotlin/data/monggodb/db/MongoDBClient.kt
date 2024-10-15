@@ -25,6 +25,7 @@ object MongoDBClient {
     const val COLLECTION_DEPARTMENT = "departments"
     const val COLLECTION_TEACHER = "teachers"
     const val DATABASE_NAME = "JustDiary"
+    const val ID_KEY = "_id"
     private val connectionString = System.getenv("MONGO_URL") ?: "null"
 
     private val serverApi = ServerApi.builder()

@@ -1,20 +1,19 @@
 
-package navigation
+package navigation.navgraph
 
-import academic.ui.admin.AddFacultyRoute
 import academic.ui.admin.InsertDeptRoute
+import academic.ui.admin.InsertFacultyRoute
 import academic.ui.admin.InsertTeacherRoute
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import calendar.ui.ui.admin.AddAcademicCalenderScreen
+import common.ui.animation.NavAnimations
+import navigation.NavigationFactory
+import navigation._BackIconDecorator
+import navigation._goBack
 import profile.presentationlogic.ProfileEvent
 import profile.ui.ProfileNavHost
 import schedule.ui.ui.admin.add_class_schedule.AddClassScheduleScreen
@@ -44,30 +43,10 @@ fun ProfileNavGraph(
         modifier = Modifier,
         navController = navController,
         startDestination = ProfileRoutes.PROFILE_NAV_GRAPH,  // Use the uppercase route
-        enterTransition = {
-            slideInHorizontally(
-                initialOffsetX = { fullWidth -> fullWidth },  // Slide in from the right
-                animationSpec = tween(500)
-            ) + fadeIn(animationSpec = tween(500))
-        },
-        exitTransition = {
-            slideOutHorizontally(
-                targetOffsetX = { fullWidth -> -fullWidth },  // Slide out to the left
-                animationSpec = tween(500)
-            ) + fadeOut(animationSpec = tween(500))
-        },
-        popEnterTransition = {
-            slideInHorizontally(
-                initialOffsetX = { fullWidth -> -fullWidth },  // Slide in from the left
-                animationSpec = tween(500)
-            ) + fadeIn(animationSpec = tween(500))
-        },
-        popExitTransition = {
-            slideOutHorizontally(
-                targetOffsetX = { fullWidth -> fullWidth },  // Slide out to the right
-                animationSpec = tween(500)
-            ) + fadeOut(animationSpec = tween(500))
-        }
+        enterTransition = { NavAnimations.Enter.slideInHorizontally() },
+        exitTransition = { NavAnimations.Exit.slideOutHorizontally() },
+        popEnterTransition = { NavAnimations.PopEnter.slideInHorizontally() },
+        popExitTransition = { NavAnimations.PopExit.slideOutHorizontally() }
     ) {
         // Profile screen
         composable(ProfileRoutes.PROFILE_NAV_GRAPH) {
@@ -107,7 +86,7 @@ fun ProfileNavGraph(
         // Admin routes (Insert Faculty, Department, and Teacher)
         composable(route = ProfileRoutes.INSERT_FACULTY) {
             _BackIconDecorator(onBackRequest = navController::_goBack) {
-                AddFacultyRoute { }
+                InsertFacultyRoute { }
             }
         }
         composable(route = ProfileRoutes.INSERT_DEPT) {

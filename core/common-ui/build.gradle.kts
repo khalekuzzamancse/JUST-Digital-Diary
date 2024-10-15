@@ -10,6 +10,8 @@ kotlin {
                 implementation(libs.bundles.ktorClient)
                 implementation(libs.ktor.serialization.kotlinx.json)
                 implementation(compose.components.resources)
+                implementation(libs.common.navigation)//For defining animation for navigation
+
 
             }
 

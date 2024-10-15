@@ -1,7 +1,7 @@
 package academic.ui.admin
 
 import academic.presentationlogic.factory.UiFactory
-import academic.ui.common.SnackNProgressBarDecorator
+import academic.ui.core.SnackNProgressBarDecorator
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,16 +11,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import common.ui.InsertButton
 import kotlinx.coroutines.launch
 
 /**
@@ -32,10 +30,10 @@ import kotlinx.coroutines.launch
 fun InsertTeacherRoute(
     navigationIcon: (@Composable () -> Unit)? = null
 ) {
-    val keyboard = LocalSoftwareKeyboardController.current
+
     val controller = remember { UiFactory.insertTeacherController() }
-    val areMandatoryFieldsValid =
-        controller.validator.areMandatoryFieldFilled.collectAsState().value
+    val isLoading = controller.isLoading.collectAsState().value
+    val isInputValid = controller.validator.areMandatoryFieldFilled.collectAsState().value
 
     val scope= rememberCoroutineScope()
     SnackNProgressBarDecorator(
@@ -46,7 +44,7 @@ fun InsertTeacherRoute(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -56,20 +54,15 @@ fun InsertTeacherRoute(
                 modifier = Modifier
                     .widthIn(max = 600.dp)
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                modifier = Modifier.widthIn(min = 100.dp, max = 300.dp).fillMaxWidth(),
-                enabled = areMandatoryFieldsValid,
-                onClick = {
-                    keyboard?.hide()
-                    scope.launch {
-                      //  controller.add()
-                    }
-
-                }
+            Spacer(Modifier.height(32.dp))
+            InsertButton(
+                modifier = Modifier.widthIn(min = 100.dp, max = 300.dp).fillMaxWidth()
+                    .align(Alignment.CenterHorizontally),
+                enabled = !isLoading && isInputValid
             ) {
-
-                Text("Add")
+                scope.launch {
+                    controller.insert()
+                }
             }
 
         }

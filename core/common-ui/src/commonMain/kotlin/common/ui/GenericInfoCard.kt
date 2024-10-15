@@ -132,12 +132,15 @@ private fun _GenericInfoRow(
             color = MaterialTheme.colorScheme.secondary,
             letterSpacing = 1.5.sp
         )
-        if (adminMode){
+        if (adminMode) {
             Spacer(Modifier.width(8.dp))
-            _Counting(
-                modifier = Modifier,
-                cardBackgroundColor, isSelected, iconSelected, iconUnselected, countLabel, count
-            )
+            val cnt = count.toIntOrNull()
+            if (cnt != null && cnt > 0) {
+                _Counting(
+                    modifier = Modifier,
+                    cardBackgroundColor, isSelected, iconSelected, iconUnselected, countLabel, count
+                )
+            }
             Spacer(Modifier.weight(1f))//take the remaining space
             _AdminAction(
                 showEditButton = showEditButton,
@@ -145,13 +148,15 @@ private fun _GenericInfoRow(
                 onEditRequest = onEditRequest,
                 onDeleteRequest = onDeleteRequest
             )
-        }
-        else{
-            Spacer(Modifier.weight(1f))//take the remaining space
-            _Counting(
-                modifier = Modifier,
-                cardBackgroundColor, isSelected, iconSelected, iconUnselected, countLabel, count
-            )
+        } else {
+            val cnt = count.toIntOrNull()
+            if (cnt != null && cnt > 0) {
+                Spacer(Modifier.weight(1f))//take the remaining space
+                _Counting(
+                    modifier = Modifier,
+                    cardBackgroundColor, isSelected, iconSelected, iconUnselected, countLabel, count
+                )
+            }
         }
 
     }
@@ -203,7 +208,7 @@ private fun RowScope._AdminAction(
             _ControlIconWithConfirmationDialog(
                 onConfirmRequest = onEditRequest,
                 icon = Icons.Outlined.Edit,
-                tint = MaterialTheme.colorScheme.secondary,
+                tint = MaterialTheme.colorScheme.primary,
                 message = "Are you sure you want to edit?"
             )
         }
@@ -212,7 +217,7 @@ private fun RowScope._AdminAction(
             _ControlIconWithConfirmationDialog(
                 onConfirmRequest = onDeleteRequest,
                 icon = Icons.Outlined.Delete,
-                tint = MaterialTheme.colorScheme.secondary,
+                tint = MaterialTheme.colorScheme.primary,
                 message = "Are you sure you want to delete?"
             )
         }

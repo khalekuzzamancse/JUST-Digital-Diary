@@ -1,4 +1,4 @@
-package academic.ui.common
+package academic.ui.core
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SnackNProgressBarDecorator(
     modifier: Modifier = Modifier,
@@ -34,16 +33,13 @@ fun SnackNProgressBarDecorator(
     }
 
     Scaffold(
-        modifier = Modifier,
+        modifier = modifier,
         snackbarHost = {
             SnackbarHost(hostState = hostState)
         },
         topBar = {
             if (navigationIcon != null) {
-                TopAppBar(
-                    title = {},
-                    navigationIcon = navigationIcon
-                )
+                navigationIcon()
             }
         }
     ) { innerPadding ->

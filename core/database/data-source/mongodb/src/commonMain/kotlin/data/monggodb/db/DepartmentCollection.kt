@@ -4,6 +4,7 @@ package data.monggodb.db
 import com.mongodb.client.model.Filters
 import data.monggodb.db.MongoDBClient.COLLECTION_DEPARTMENT
 import data.monggodb.db.MongoDBClient.DATABASE_NAME
+import data.monggodb.db.MongoDBClient.ID_KEY
 import data.monggodb.factory.insertionWithHandleException
 import domain.entity.DepartmentReadEntity
 import domain.factory.ContractFactory
@@ -12,21 +13,19 @@ import kotlinx.coroutines.flow.toList
 import org.bson.Document
 
 internal class DepartmentCollection {
-    private val primaryKeyService = ContractFactory.primaryKeyService()
+    private val insertionService = ContractFactory.insertionService()
     private val readEntityService = ContractFactory.readEntityParserService()
 
-    private companion object {
-        const val ID_KEY = "_id"
-    }
 
     suspend fun insert(facultyId: String, json: String) = insertionWithHandleException {
         MongoDBClient.writeOrThrow(DATABASE_NAME) { database ->
             val collection = database.getCollection<Document>(COLLECTION_DEPARTMENT)
-            val pk = primaryKeyService.getDepartmentKeyOrThrow(json)
-            val doc = Document.parse(json)
-                .append(ID_KEY, pk)
-                .append(DepartmentReadEntity::dept_id.name,pk)
-                .append(DepartmentReadEntity::faculty_id.name,facultyId)
+            val result = insertionService.getDepartmentKeyOrThrow(
+                json = json,
+                facultyId = facultyId
+            )
+            val doc = Document.parse(result.json)
+                .append(ID_KEY, result.primaryKey)
             collection.insertOne(doc)
         }
 

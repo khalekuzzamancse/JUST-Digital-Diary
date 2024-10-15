@@ -4,8 +4,8 @@ package data.monggodb.db
 import com.mongodb.client.model.Filters
 import data.monggodb.db.MongoDBClient.COLLECTION_TEACHER
 import data.monggodb.db.MongoDBClient.DATABASE_NAME
+import data.monggodb.db.MongoDBClient.ID_KEY
 import data.monggodb.factory.insertionWithHandleException
-import domain.entity.DepartmentReadEntity
 import domain.entity.TeacherReadEntity
 import domain.factory.ContractFactory
 import kotlinx.coroutines.flow.firstOrNull
@@ -14,12 +14,9 @@ import org.bson.Document
 
 internal class TeacherCollection {
 
-    private val primaryKeyService = ContractFactory.primaryKeyService()
+    private val insertionService = ContractFactory.insertionService()
     private val readEntityService = ContractFactory.readEntityParserService()
 
-    private companion object {
-        const val ID_KEY = "_id"
-    }
 
     /**
      * Adds a teacher to the database.
@@ -33,12 +30,10 @@ internal class TeacherCollection {
         MongoDBClient.writeOrThrow(DATABASE_NAME) { database ->
             val collection = database.getCollection<Document>(COLLECTION_TEACHER)
 
-            val primaryKey = primaryKeyService.getTeacherKeyOrThrow(json)
+            val result = insertionService.getTeacherKeyOrThrow(json,deptId)
 
-            val doc = Document.parse(json)
-                .append(ID_KEY, primaryKey)//_id ,belong to document  id
-                .append(TeacherReadEntity::dept_id.name, deptId)//dept_id
-                .append(TeacherReadEntity::id.name,primaryKey)//id
+            val doc = Document.parse(result.json)
+                .append(ID_KEY, result.primaryKey)//_id ,belong to document  id
 
             collection.insertOne(doc)
         }

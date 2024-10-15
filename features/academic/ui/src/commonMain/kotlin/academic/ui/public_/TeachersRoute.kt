@@ -3,7 +3,7 @@ package academic.ui.public_
 import academic.presentationlogic.factory.UiFactory
 import academic.presentationlogic.model.public_.TeacherModel
 import academic.ui.AcademicModuleEvent
-import academic.ui.common.SnackNProgressBarDecorator
+import academic.ui.core.SnackNProgressBarDecorator
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

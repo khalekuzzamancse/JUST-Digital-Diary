@@ -10,6 +10,7 @@ import academic.presentationlogic.controller.admin.TeacherEntryController
 import academic.presentationlogic.factory.admin.TeacherEntryValidatorImpl
 import academic.presentationlogic.controller.public_.DepartmentController
 import academic.presentationlogic.controller.admin.InsertDeptController
+import academic.presentationlogic.controller.admin.InsertTeacherController
 import academic.presentationlogic.controller.admin.UpdateDeptController
 import academic.presentationlogic.controller.admin.UpdateFacultyController
 import academic.presentationlogic.controller.admin.UpdateTeacherController
@@ -72,7 +73,7 @@ internal object UiFactory {
         writeUseCase = DiContainer.updateDeptUseCase(),
         validator = _deptEntryValidator()
     )
-    fun insertTeacherController(): TeacherEntryController =
+    fun insertTeacherController(): InsertTeacherController =
         InsertTeacherControllerImp(
             validator = _teacherEntryValidator(),
             readUseCase = DiContainer.getAllDeptUseCase(),

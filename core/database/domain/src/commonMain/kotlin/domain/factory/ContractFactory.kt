@@ -4,12 +4,12 @@ package domain.factory
 
 import domain.service.FeedbackMessageService
 import domain.service.JsonParser
-import domain.service.PrimaryKeyService
+import domain.service.InsertionService
 import domain.service.ReadEntityParserService
 
 object ContractFactory {
     fun jsonParser(): JsonParser = JsonParserImpl()
     fun feedbackService(): FeedbackMessageService = FeedbackMessageServiceImpl()
-    fun primaryKeyService(): PrimaryKeyService = PrimaryKeyServiceImpl()
+    fun insertionService(): InsertionService = InsertionServiceImpl()
     fun readEntityParserService(): ReadEntityParserService = ReadEntityParserServiceImpl()
 }
