@@ -1,10 +1,12 @@
-
 package calendar.ui.admin
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,28 +28,51 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import calendar.presentationlogic.factory.UIFactory
 import calendar.presentationlogic.model.HolidayType
-import calendar.ui.common.AcademicCalender
-import calendar.ui.common.ProgressBarDecorator
+import calendar.ui.admin.add_calender.CalenderEntryViewModel
+import calendar.ui.component.AcademicCalender
+import calendar.ui.component.ProgressBarDecorator
+import calendar.ui.component.SnackNProgressBarDecorator
 import common.ui.InsertButton
+import common.ui.UpdateButton
+import kotlinx.coroutines.launch
 
 @Composable
 fun InsertAcademicCalenderRoute(modifier: Modifier = Modifier) {
-
+    val viewModel = remember {
+        CalenderEntryViewModel(
+            editor = UIFactory.calenderEditorController(),
+            controller = UIFactory.entryController()
+        )
+    }
+    val scope = rememberCoroutineScope()
+    SnackNProgressBarDecorator(
+        isLoading = viewModel.controller.isLoading.collectAsState().value,
+        snackBarMessage = viewModel.controller.statusMessage.collectAsState().value,
+    ) {
         _HolidayEditorUI(
-            controller = remember { UIFactory.createCalenderEditorController() },
+            controller = viewModel.editor,
             onSnackBarMsgRequest = {},
             onInsertRequest = {
+                scope.launch {
+                    viewModel.insert()
+                }
 
+            },
+            onUpdateRequest = {
+                scope.launch {
+                    viewModel.update()
+                }
             }
         )
+    }
 
 
 }
@@ -62,11 +87,13 @@ fun InsertAcademicCalenderRoute(modifier: Modifier = Modifier) {
  * takes from `factory method`
  * @param onSnackBarMsgRequest parent should show the reason via snackBar
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun _HolidayEditorUI(
     controller: HolidayEditorController,
     onSnackBarMsgRequest: (reason: String) -> Unit,
-    onInsertRequest: ()-> Unit,
+    onInsertRequest: () -> Unit,
+    onUpdateRequest: () -> Unit,
 ) {
     /**
      * - Controller should be UI independent (as much as possible)
@@ -100,7 +127,10 @@ private fun _HolidayEditorUI(
                 showDialog = true
             }
         ) {
-            Column(modifier=Modifier.fillMaxWidth(),horizontalAlignment=Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 AcademicCalender(
                     modifier = Modifier,
                     year = controller.currentYear.collectAsState("").value.toString(),
@@ -114,10 +144,21 @@ private fun _HolidayEditorUI(
                     onClick = controller::onSelectionRequest
                 )
                 Spacer(Modifier.height(32.dp))
-                InsertButton(
-                    modifier=Modifier,
-                    onClick = onInsertRequest
-                )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+
+                    InsertButton(
+                        modifier = Modifier,
+                        onClick = onInsertRequest
+                    )
+                    UpdateButton(
+                        modifier = Modifier,
+                        onClick = onUpdateRequest
+                    )
+                }
+
 
             }
 

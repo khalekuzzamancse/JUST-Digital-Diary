@@ -9,16 +9,16 @@ import domain.entity.FacultyWriteEntity
 import domain.entity.TeacherReadEntity
 import domain.entity.TeacherWriteEntity
 import domain.model.InsertionResult
-import domain.service.InsertionService
+import domain.service.AcademicInsertionService
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
 
 /**
- * - To know read [InsertionService] docs
+ * - To know read [AcademicInsertionService] docs
  */
-class InsertionServiceImpl internal constructor() : InsertionService {
+class InsertionServiceImpl internal constructor() : AcademicInsertionService {
 
     /**
      * Generate primary key for faculty and validate the write entity.

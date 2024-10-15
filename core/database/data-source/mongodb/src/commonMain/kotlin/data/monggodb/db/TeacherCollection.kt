@@ -4,8 +4,8 @@ package data.monggodb.db
 import com.mongodb.client.model.Filters
 import data.monggodb.db.MongoDBClient.COLLECTION_TEACHER
 import data.monggodb.db.MongoDBClient.DATABASE_NAME
-import data.monggodb.db.MongoDBClient.ID_KEY
-import data.monggodb.factory.insertionWithHandleException
+import data.monggodb.db.MongoDBClient.ID_FIELD
+import data.monggodb.core.insertionWithHandleException
 import domain.entity.TeacherReadEntity
 import domain.factory.ContractFactory
 import kotlinx.coroutines.flow.firstOrNull
@@ -15,7 +15,7 @@ import org.bson.Document
 internal class TeacherCollection {
 
     private val insertionService = ContractFactory.insertionService()
-    private val readEntityService = ContractFactory.readEntityParserService()
+    private val readEntityService = ContractFactory.academicReadEntityService()
 
 
     /**
@@ -33,7 +33,7 @@ internal class TeacherCollection {
             val result = insertionService.getTeacherKeyOrThrow(json,deptId)
 
             val doc = Document.parse(result.json)
-                .append(ID_KEY, result.primaryKey)//_id ,belong to document  id
+                .append(ID_FIELD, result.primaryKey)//_id ,belong to document  id
 
             collection.insertOne(doc)
         }
@@ -47,7 +47,7 @@ internal class TeacherCollection {
      */
     @Throws(Throwable::class)
     suspend fun readAll(): String {
-        return MongoDBClient.readOrThrow(DATABASE_NAME, COLLECTION_TEACHER) { database ->
+        return MongoDBClient.readOrThrow(DATABASE_NAME) { database ->
             val collection = database.getCollection<Document>(COLLECTION_TEACHER)
 
             val jsonArray = collection.find().toList().map { document ->
@@ -68,7 +68,7 @@ internal class TeacherCollection {
      */
     @Throws(Throwable::class)
     suspend fun readByDeptId(deptId: String): String {
-        return MongoDBClient.readOrThrow(DATABASE_NAME, COLLECTION_TEACHER) { database ->
+        return MongoDBClient.readOrThrow(DATABASE_NAME) { database ->
             val collection = database.getCollection<Document>(COLLECTION_TEACHER)
 
             val jsonArray =
@@ -90,11 +90,11 @@ internal class TeacherCollection {
      */
     @Throws(Throwable::class)
     suspend fun readById(teacherId: String): String {
-        return MongoDBClient.readOrThrow(DATABASE_NAME, COLLECTION_TEACHER) { database ->
+        return MongoDBClient.readOrThrow(DATABASE_NAME) { database ->
             val collection = database.getCollection<Document>(COLLECTION_TEACHER)
 
             //The document id is used as teacher id because it not explicitly store
-            val document = collection.find(Document(ID_KEY, teacherId)).firstOrNull()
+            val document = collection.find(Document(ID_FIELD, teacherId)).firstOrNull()
                 ?: throw NoSuchElementException("No teacher found")
             readEntityService.parseAsTeacherOrThrow(document.toJson())
         }
@@ -102,7 +102,7 @@ internal class TeacherCollection {
     suspend fun updateOrThrow(teacherId: String, json: String) = MongoDBClient.updateOneOrThrow(
         databaseName = DATABASE_NAME,
         collectionName = COLLECTION_TEACHER,
-        jsonUpdate = json,
+        data = json,
         query = Filters.eq(TeacherReadEntity::id.name, teacherId)
     )
 

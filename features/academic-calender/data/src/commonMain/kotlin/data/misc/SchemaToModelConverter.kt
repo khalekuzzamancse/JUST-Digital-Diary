@@ -5,9 +5,9 @@ import data.entity.AcademicCalendarSchema
 import data.entity.CalendarWrapperSchema
 import data.entity.HolidaySchema
 import data.entity.HolidayTypeSchema
-import domain.model.AcademicCalendar
-import domain.model.Holiday
-import domain.model.HolidayType
+import feature.academiccalender.domain.model.AcademicCalendar
+import feature.academiccalender.domain.model.Holiday
+import feature.academiccalender.domain.model.HolidayType
 
 internal object SchemaToModelConverter {
     // Converts HolidayTypeSchema to HolidayType

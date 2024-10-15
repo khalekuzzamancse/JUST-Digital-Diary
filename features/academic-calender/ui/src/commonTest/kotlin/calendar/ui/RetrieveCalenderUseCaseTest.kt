@@ -8,8 +8,8 @@ class RetrieveCalenderUseCaseTest {
     @Test
     fun retrieveCalender(){
         runBlocking {
-            val useCase=DIFactory.createAcademicRetrieveCalenderUseCase()
-            useCase.execute(2014)
+            val useCase=DIFactory.readAcademicCalender()
+            useCase.execute()
                 .onSuccess {calender->
                     println(calender)
                 }
@@ -23,8 +23,8 @@ class RetrieveCalenderUseCaseTest {
     @Test
     fun _1stMonthTest(){
         runBlocking {
-            val useCase=DIFactory.createAcademicRetrieveCalenderUseCase()
-            useCase.execute(2014)
+            val useCase=DIFactory.readAcademicCalender()
+            useCase.execute()
                 .onSuccess {calender->
                     println(calender.months.first())
                 }

@@ -1,10 +1,10 @@
-@file:Suppress("functionName")
+@file:Suppress("functionName","unused")
 package core.database.api
 
 import data.monggodb.factory.MongoDbFactory
-import domain.api.AcademicAdminApi
 
 object ApiFactory {
-    fun academicApi(): AcademicApi =AcademicApi(_concreteApi())
-    private fun _concreteApi(): AcademicAdminApi=MongoDbFactory.academicApi()
+    fun academicApi(): AcademicApiFacade =AcademicApiFacade(MongoDbFactory.academicApi())
+    fun calenderApi(): CalenderApiFacade =CalenderApiFacade(MongoDbFactory.calenderApi())
+
 }

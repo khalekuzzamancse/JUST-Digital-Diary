@@ -5,8 +5,8 @@ package data.monggodb.db
 import com.mongodb.client.model.Filters
 import data.monggodb.db.MongoDBClient.COLLECTION_FACULTY
 import data.monggodb.db.MongoDBClient.DATABASE_NAME
-import data.monggodb.db.MongoDBClient.ID_KEY
-import data.monggodb.factory.insertionWithHandleException
+import data.monggodb.db.MongoDBClient.ID_FIELD
+import data.monggodb.core.insertionWithHandleException
 import domain.entity.FacultyReadEntity
 import domain.factory.ContractFactory
 import kotlinx.coroutines.flow.firstOrNull
@@ -16,7 +16,7 @@ import org.bson.Document
 internal class FacultyCollection {
 
     private val insertionService = ContractFactory.insertionService()
-    private val readEntityService = ContractFactory.readEntityParserService()
+    private val readEntityService = ContractFactory.academicReadEntityService()
 
 
     /**
@@ -33,7 +33,7 @@ internal class FacultyCollection {
             val result = insertionService.getFacultyKeyOrThrow(json)
 
             val doc = Document.parse(result.json)
-                .append(ID_KEY, result.primaryKey)
+                .append(ID_FIELD, result.primaryKey)
 
             collection.insertOne(doc)
         }
@@ -47,7 +47,7 @@ internal class FacultyCollection {
      */
     @Throws(Throwable::class)
     suspend fun getAllFaculties(): String {
-        return MongoDBClient.readOrThrow(DATABASE_NAME, COLLECTION_FACULTY) { database ->
+        return MongoDBClient.readOrThrow(DATABASE_NAME) { database ->
             val collection = database.getCollection<Document>(COLLECTION_FACULTY)
 
             val jsonArray = collection.find().toList().map { document ->
@@ -70,7 +70,7 @@ internal class FacultyCollection {
      */
     @Throws(Throwable::class)
     suspend fun read(id: String): String {
-        return MongoDBClient.readOrThrow(DATABASE_NAME, COLLECTION_FACULTY) { database ->
+        return MongoDBClient.readOrThrow(DATABASE_NAME) { database ->
             val collection = database.getCollection<Document>(COLLECTION_FACULTY)
 
             val document =
@@ -86,7 +86,7 @@ internal class FacultyCollection {
     suspend fun updateOrThrow(facultyId: String, json: String) = MongoDBClient.updateOneOrThrow(
         databaseName = DATABASE_NAME,
         collectionName = COLLECTION_FACULTY,
-        jsonUpdate = json,
+        data = json,
         query = Filters.eq(FacultyReadEntity::faculty_id.name, facultyId)
     )
 }

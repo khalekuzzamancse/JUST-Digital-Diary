@@ -32,6 +32,7 @@ interface HolidayEditorController {
     val currentMonthData: StateFlow<MonthData?>
     val currentYear: StateFlow<Int?>
     val selectedDates: StateFlow<Set<CalendarGridCell>>
+    fun getYearData():List<MonthData>
 
     fun onSelectionRequest(cell: CalendarGridCell)
     fun onHolidayConfirm(reason: String, type: HolidayType)

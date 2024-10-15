@@ -2,19 +2,19 @@
 
 package data.misc
 
-import domain.model.CalendarModel
-import domain.model.DayModel
-import domain.model.HolidayModel
-import domain.model.HolidayType
-import domain.model.MonthModel
+import feature.academiccalender.domain.model.CalendarModel
+import feature.academiccalender.domain.model.DayModel
+import feature.academiccalender.domain.model.HolidayModel
+import feature.academiccalender.domain.model.HolidayType
+import feature.academiccalender.domain.model.MonthModel
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.Month
 
 class CalendarBuilder {
-    private val weekends: MutableList<domain.model.DayOfWeek> = mutableListOf()
+    private val weekends: MutableList<feature.academiccalender.domain.model.DayOfWeek> = mutableListOf()
 
-    fun addWeekend(day: domain.model.DayOfWeek): CalendarBuilder {
+    fun addWeekend(day: feature.academiccalender.domain.model.DayOfWeek): CalendarBuilder {
         weekends.add(day)
         return this
     }
@@ -41,15 +41,15 @@ class CalendarBuilder {
         return MonthModel(month, days)
     }
 
-    private fun mapDayOfWeek(dayOfWeek: DayOfWeek): domain.model.DayOfWeek {
+    private fun mapDayOfWeek(dayOfWeek: DayOfWeek): feature.academiccalender.domain.model.DayOfWeek {
         return when (dayOfWeek) {
-            DayOfWeek.SATURDAY -> domain.model.DayOfWeek.SATURDAY
-            DayOfWeek.SUNDAY -> domain.model.DayOfWeek.SUNDAY
-            DayOfWeek.MONDAY -> domain.model.DayOfWeek.MONDAY
-            DayOfWeek.TUESDAY ->domain.model. DayOfWeek.TUESDAY
-            DayOfWeek.WEDNESDAY -> domain.model.DayOfWeek.WEDNESDAY
-            DayOfWeek.THURSDAY ->domain.model. DayOfWeek.THURSDAY
-            DayOfWeek.FRIDAY -> domain.model.DayOfWeek.FRIDAY
+            DayOfWeek.SATURDAY -> feature.academiccalender.domain.model.DayOfWeek.SATURDAY
+            DayOfWeek.SUNDAY -> feature.academiccalender.domain.model.DayOfWeek.SUNDAY
+            DayOfWeek.MONDAY -> feature.academiccalender.domain.model.DayOfWeek.MONDAY
+            DayOfWeek.TUESDAY -> feature.academiccalender.domain.model.DayOfWeek.TUESDAY
+            DayOfWeek.WEDNESDAY -> feature.academiccalender.domain.model.DayOfWeek.WEDNESDAY
+            DayOfWeek.THURSDAY -> feature.academiccalender.domain.model.DayOfWeek.THURSDAY
+            DayOfWeek.FRIDAY -> feature.academiccalender.domain.model.DayOfWeek.FRIDAY
         }
     }
 

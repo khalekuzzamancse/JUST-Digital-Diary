@@ -10,6 +10,9 @@ import com.mongodb.client.model.Filters
 import com.mongodb.client.model.Updates
 import com.mongodb.kotlin.client.coroutine.MongoClient
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
+import data.monggodb.core.toCustomException
+import domain.entity.FeedbackMessageEntity
+import domain.exception.CustomException
 import domain.factory.ContractFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,9 +27,11 @@ object MongoDBClient {
     const val COLLECTION_FACULTY = "faculties"
     const val COLLECTION_DEPARTMENT = "departments"
     const val COLLECTION_TEACHER = "teachers"
+    const val COLLECTION_CALENDAR = "calender"
     const val DATABASE_NAME = "JustDiary"
-    const val ID_KEY = "_id"
+    const val ID_FIELD = "_id"
     private val connectionString = System.getenv("MONGO_URL") ?: "null"
+    private val feedback = ContractFactory.feedbackService()
 
     private val serverApi = ServerApi.builder()
         .version(ServerApiVersion.V1)
@@ -43,31 +48,47 @@ object MongoDBClient {
     /**
      * Retrieves the MongoDatabase instance for the specified database name.
      *
-     * @param databaseName The name of the database to connect to.
      * @return The MongoDatabase instance for the specified database name.
      * @throws Throwable if the database connection fails.
      */
-    private fun getDbOrThrow(databaseName: String): MongoDatabase {
-        return client.getDatabase(databaseName)
+    private fun getDbOrThrow(): MongoDatabase {
+        return client.getDatabase(DATABASE_NAME)
     }
 
     /**
      * Executes a read operation on the specified database and collection.
      *
      * @param databaseName The name of the database.
-     * @param collectionName The name of the collection.
      * @param operation The read operation to be performed on the database.
      * @return The result of the read operation.
      * @throws Throwable if the read operation fails.
      */
     suspend fun <T> readOrThrow(
         databaseName: String,
-        collectionName: String,
         operation: suspend (MongoDatabase) -> T
     ): T {
         return withContext(Dispatchers.IO) {
-            val database = getDbOrThrow(databaseName)
+            val database = getDbOrThrow()
             operation(database)
+        }
+
+    }
+
+    /**
+     * - Insert one  and handle exceptions
+     * @return feedback message as [FeedbackMessageEntity]  json, failure message  when not inserted or exception occurred
+     */
+    suspend fun insertOne(collectionName: String, doc: Document): String {
+        return try {
+            val collection = getDbOrThrow().getCollection<Document>(collectionName)
+
+            val id = collection.insertOne(doc).insertedId
+            if (id != null)
+                feedback.toFeedbackMessage("Inserted Successfully")
+            else
+                feedback.toFeedbackMessage("Server Error:Failed to insert")
+        } catch (e: Throwable) {
+            feedback.toFeedbackMessage(toCustomException(e))
         }
 
     }
@@ -76,7 +97,6 @@ object MongoDBClient {
      * Executes a write operation on the specified database and collection.
      *
      * @param databaseName The name of the database.
-     * @param collectionName The name of the collection.
      * @param operation The write operation to be performed on the database.
      * @return The result of the write operation.
      * @throws Throwable if the write operation fails.
@@ -86,7 +106,7 @@ object MongoDBClient {
         operation: suspend (MongoDatabase) -> T
     ): T {
         return withContext(Dispatchers.IO) {
-            val database = getDbOrThrow(databaseName)
+            val database = getDbOrThrow()
             operation(database)
 
         }
@@ -134,17 +154,24 @@ object MongoDBClient {
         databaseName: String,
         collectionName: String,
         query: Bson,
-        jsonUpdate: String
+        data: String
     ): String {
         val feedbackService = ContractFactory.feedbackService()
 
         return writeOrThrow(databaseName) { database ->
             val collection = database.getCollection<Document>(collectionName)
-            val updateDocument = Document.parse(jsonUpdate)
+            val updateDocument = Document.parse(data)
             val updates = Updates.combine(updateDocument.map { (key, value) ->
                 Updates.set(key, value)
             })
             val result = collection.updateOne(filter = query, updates)
+
+            val noDocumentUpdated=(result.matchedCount==0L)
+            if (noDocumentUpdated)
+                throw  CustomException.DataNotFoundException(
+                    message = "Update failed, consider inserting.",
+                    debugMessage = "Failed to update document,query=$query, data=$data"
+                )
 
             if (result.modifiedCount > 0)
                 feedbackService.toFeedbackMessage("Updated successfully")

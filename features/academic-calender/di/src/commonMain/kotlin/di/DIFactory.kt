@@ -3,24 +3,27 @@
 package di
 
 import data.factory.DataModuleFactory
-import domain.usecase.GetCalenderByYearUseCase
-import domain.usecase.ReadAcademicCalender
+import feature.academiccalender.domain.usecase.ReadRawCalenderUseCase
+import feature.academiccalender.domain.usecase.InsertUseCase
+import feature.academiccalender.domain.usecase.ReadAcademicCalenderUseCase
+import feature.academiccalender.domain.usecase.UpdateUseCase
 
 object DIFactory {
-    fun createAcademicRetrieveCalenderUseCase(): ReadAcademicCalender =
-        ReadAcademicCalender(
+    fun readAcademicCalender(): ReadAcademicCalenderUseCase =
+        ReadAcademicCalenderUseCase(
             repository = DataModuleFactory.createRepository(),
-            validationService = DataModuleFactory.createCalenderService()
         )
 
-    fun createRawRetrieveCalenderUseCase(): GetCalenderByYearUseCase =
-        GetCalenderByYearUseCase(
+    fun readRawCalenderUseCase(): ReadRawCalenderUseCase =
+        ReadRawCalenderUseCase(
             repository = DataModuleFactory.createRepository()
         )
 
-    fun createAddCalenderUseCase(): InsertAcademicCalendarUseCase =
-        InsertAcademicCalendarUseCase(
+    fun insertUseCase(): InsertUseCase =
+        InsertUseCase(
             repository = DataModuleFactory.createRepository(),
-            service = DataModuleFactory.createUserService()
         )
+
+    fun updateUseCase(): UpdateUseCase =
+        UpdateUseCase(repository = DataModuleFactory.createRepository())
 }

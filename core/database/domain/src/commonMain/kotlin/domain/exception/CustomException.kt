@@ -10,6 +10,7 @@ package domain.exception
  * @param debugMessage the message for developer to find the causes or source of error for easy debugging
  * @param message this will directly be shown to the end user, so it should be user-friendly
  **/
+
 sealed class CustomException(override val message: String, val debugMessage: String) :
     Throwable(message = message, cause = Throwable(debugMessage)) {
 
@@ -30,10 +31,14 @@ sealed class CustomException(override val message: String, val debugMessage: Str
      * - Thrown when the queried data is not found in the database.
      * - This usually occurs when a specific document, record, or entity is expected but does not exist.
      */
-    class DataNotFoundException(query: String) : CustomException(
-        message = "Requested data not found",
-        debugMessage = "No data matched the query:\n$query"
+    class DataNotFoundException(
+        override val message: String = "Requested data not found",
+        debugMessage: String
+    ) : CustomException(
+        message=message,
+        debugMessage = debugMessage
     )
+
 
     /**
      * - Thrown when there is a conflict with existing data in the database.
@@ -80,13 +85,14 @@ sealed class CustomException(override val message: String, val debugMessage: Str
         message = "An unexpected error occurred",
         debugMessage = "${exception.printStackTrace()}"
     )
+
     /**
      * - Thrown when an attempt to insert data fails because the record already exists in the database.
      * - This typically occurs when trying to insert a new record that conflicts with an existing one, such as
      *   attempting to insert a record with a unique key that is already present.
      */
     class DataAlreadyExistsException(entity: String) : CustomException(
-        message = "Data already exists",
+        message = "Exists already, Consider updating.",
         debugMessage = "Attempt to insert an existing record for entity: $entity"
     )
 }

@@ -1,9 +1,9 @@
 package data.service
 
-import domain.exception.CustomException
-import domain.model.AcademicCalendar
-import domain.model.User
-import domain.service.CalendarService
+import feature.academiccalender.domain.exception.CustomException
+import feature.academiccalender.domain.model.AcademicCalendar
+import feature.academiccalender.domain.model.User
+import feature.academiccalender.domain.service.CalendarService
 
 class CalendarServiceImpl: CalendarService {
     override fun validateCalender(calendar: AcademicCalendar): CustomException? {

@@ -12,5 +12,5 @@ kotlin {
 
 }
 android {
-    namespace = "domain"
+    namespace = "feature.academiccalender.domain"
 }
