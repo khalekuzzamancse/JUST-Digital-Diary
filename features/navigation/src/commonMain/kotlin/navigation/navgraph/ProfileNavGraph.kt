@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import calendar.ui.ui.admin.AddAcademicCalenderScreen
+import calendar.ui.admin.InsertAcademicCalenderRoute
 import common.ui.animation.NavAnimations
 import navigation.NavigationFactory
 import navigation._BackIconDecorator
@@ -113,7 +113,7 @@ fun ProfileNavGraph(
         }
         composable(ProfileRoutes.UPDATE_ACADEMIC_CALENDER) {
             _BackIconDecorator(onBackRequest = navController::_goBack) {
-                AddAcademicCalenderScreen()
+                InsertAcademicCalenderRoute()
             }
         }
     }

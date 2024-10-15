@@ -1,11 +1,11 @@
 package data.service
 
-import domain.exception.CalendarFeatureException
+import domain.exception.CustomException
 import domain.model.User
 import domain.service.UserService
 
 class UserServiceImpl: UserService {
-    override fun validateAuthenticity(user: User): CalendarFeatureException? {
+    override fun validateAuthenticity(user: User): CustomException? {
         TODO("Not yet implemented")
     }
 }

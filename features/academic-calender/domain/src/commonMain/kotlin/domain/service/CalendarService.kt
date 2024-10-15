@@ -3,7 +3,7 @@
 package domain.service
 
 import common.docs.domain_layer.ServiceDoc
-import domain.exception.CalendarFeatureException
+import domain.exception.CustomException
 import domain.model.AcademicCalendar
 import domain.model.User
 import common.docs.domain_layer.CustomExceptionDoc
@@ -19,15 +19,15 @@ interface CalendarService {
      * @param calendar The [AcademicCalendar] to be validated
      */
 
-    fun validateCalender(calendar: AcademicCalendar): CalendarFeatureException?
+    fun validateCalender(calendar: AcademicCalendar): CustomException?
 
     /**
      * - Validates user has right permission or not for adding/updating or fetching the calender to database
      */
-    fun validateAuthenticity(user: User): CalendarFeatureException?
+    fun validateAuthenticity(user: User): CustomException?
     /**
      * - Validates user has right permission or not for adding/updating or fetching the calender to database
      */
-     fun validateYear(year: Int):  CalendarFeatureException?
+     fun validateYear(year: Int):  CustomException?
 
 }

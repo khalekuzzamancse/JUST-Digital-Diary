@@ -8,7 +8,7 @@ import data.data_source.holidayJson
 import data.misc.CalendarBuilder
 import data.misc.SchemaToModelConverter
 import data.entity.CalendarWrapperSchema
-import domain.exception.CalendarFeatureException
+import domain.exception.CustomException
 import domain.model.AcademicCalendar
 import domain.model.CalendarModel
 import domain.model.DayOfWeek
@@ -21,7 +21,8 @@ class CalenderRepositoryImpl(
     val apiServiceClient: ApiServiceClient,
     val jsonParser: JsonParser
 ) : CalenderRepository {
-    override fun addCalender(calender: AcademicCalendar): CalendarFeatureException? {
+    override fun addCalender(calender: AcademicCalendar): CustomException? {
+        println("Calender")
         TODO("Not yet implemented")
     }
 
@@ -49,7 +50,7 @@ class CalenderRepositoryImpl(
             },
             onFailure = { exception ->
                 Result.failure(
-                    CalendarFeatureException.MiscException(
+                    CustomException.MiscException(
                         message = "Failed to load calender",
                         debugMessage = exception.cause?.message
                             ?: "Json parsing error at:${this.javaClass.name}"

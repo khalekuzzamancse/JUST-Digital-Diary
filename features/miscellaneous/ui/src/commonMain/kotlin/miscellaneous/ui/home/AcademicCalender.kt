@@ -3,8 +3,8 @@ package miscellaneous.ui.home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import calendar.ui.factory.UIFactory
-import calendar.ui.ui.public_.AcademicCalenderView
+import calendar.presentationlogic.factory.UIFactory
+import calendar.ui.public_.AcademicCalenderView
 
 
 @Composable

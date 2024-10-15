@@ -7,6 +7,7 @@ kotlin {
             dependencies {
                 implementation(projects.features.academicCalender.domain)
                 implementation(projects.features.academicCalender.di)
+                implementation(projects.core.commonUi)
             }
         }
         val commonTest by getting {
