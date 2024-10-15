@@ -28,5 +28,6 @@ internal data class TeacherEntryEntity(
     @SerialName("achievements") val achievements: String,
     @SerialName("phone") val phone: String,
     @SerialName("designations") val designations: String,
-    @SerialName("room_no") val roomNo: String?
+    @SerialName("room_no") val roomNo: String?,
+    @SerialName("image_link") val profileImageLink: String?,
 )

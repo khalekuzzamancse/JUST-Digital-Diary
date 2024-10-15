@@ -55,9 +55,6 @@ class RemoteDataSourceImpl internal constructor(
         facultyId: String
     ): Result<List<DepartmentModel>> {
         val url = "https://backend.rnzgoldenventure.com/api/get/departments/$facultyId"
-//        println("Token is:$token")
-//        val classLoader = this::class.java.classLoader
-//        val json = classLoader?.getResource("faculty_list.json")?.readText()//resource/faculty_list.json
 
         try {
             val json = apiServiceClient.retrieveJsonOrThrow(url, Header(key = "Authorization", value = token))
@@ -77,7 +74,6 @@ class RemoteDataSourceImpl internal constructor(
         try {
             val json = apiServiceClient.retrieveJsonOrThrow(url, Header(key = "Authorization", value = token))
             if (json._isTeacherListEntity()) {
-                println("TeacherListEntity")
                 val entity = jsonParser.parseOrThrow(json, TeacherListEntity.serializer())
                 return Result.success(ModelMapper.toTeacherModels(entity))
             } else

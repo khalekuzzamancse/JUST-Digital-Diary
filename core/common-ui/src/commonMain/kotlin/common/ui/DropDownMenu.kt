@@ -49,7 +49,11 @@ fun DropDown(
                 textFieldSize = coordinates.size.toSize()
             },
             readOnly = true,
-            value = if (selected == null) "" else options[selected],
+            value = if (selected == null) "" else {
+                if (selected >= 0 && selected < options.size)//Otherwise can cause out of bounds exception
+                    options[selected]
+                else ""
+            },
             onValueChanged = {
 
             },

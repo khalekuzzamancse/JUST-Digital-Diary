@@ -19,7 +19,7 @@ internal class InsertTeacherControllerImp(
     readUseCase: ReadAllDepartmentUseCase,
     validator: TeacherEntryController.Validator,
     private val writeUseCase: InsertTeacherUseCase,
-) : TeacherEntryBaseController(allDeptUseCase = readUseCase, validator = validator), InsertTeacherController {
+) : TeacherEntryControllerImpl(allDeptUseCase = readUseCase, validator = validator), InsertTeacherController {
 
     override suspend fun insert() {
         //Can throw exception when try to convert string to integer in model mapper

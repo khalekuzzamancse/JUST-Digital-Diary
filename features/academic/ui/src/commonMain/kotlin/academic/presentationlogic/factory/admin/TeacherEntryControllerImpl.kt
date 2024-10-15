@@ -1,4 +1,5 @@
-@file:Suppress("propertyName","functionName")
+@file:Suppress("propertyName", "functionName")
+
 package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.TeacherEntryController
@@ -18,18 +19,18 @@ import kotlinx.coroutines.flow.update
  * Private implementation of the TeacherFormController interface.
  * Manages the state of TeacherModel using MutableStateFlow and responds to events.
  */
-internal open class TeacherEntryBaseController(
+internal open class TeacherEntryControllerImpl(
     override val validator: TeacherEntryController.Validator,
     private val allDeptUseCase: ReadAllDepartmentUseCase,
 ) : TeacherEntryController, CoreControllerImpl() {
 
     protected val _teacherState = MutableStateFlow(_emptyState())
     private val _departments = MutableStateFlow<List<DepartmentModel>>(emptyList())
-    private val _selectedDeptIndex=MutableStateFlow<Int?>(null)
+    private val _selectedDeptIndex = MutableStateFlow<Int?>(null)
 
     override val statusMessage = _statusMessage.asStateFlow()
     override val dept = _departments.asStateFlow()
-    override val selectedDeptIndex=_selectedDeptIndex.asStateFlow()
+    override val selectedDeptIndex = _selectedDeptIndex.asStateFlow()
 
     override val isLoading = _isLoading.asStateFlow()
     override val teacherState: StateFlow<TeacherEntryModel> = _teacherState.asStateFlow()
@@ -73,10 +74,13 @@ internal open class TeacherEntryBaseController(
 
     override fun onIdChange(value: String) {
 
-            _teacherState.value = _teacherState.value.copy(priority = value.filter { it.isDigit() })
+        _teacherState.value = _teacherState.value.copy(priority = value.filter { it.isDigit() })
 
 
     }
+
+    override fun onImageLinkChange(value: String) =
+        _teacherState.update { it.copy(profileImageLink = value) }
 
     protected suspend fun readAllDept() {
         super.startLoading()
@@ -84,7 +88,7 @@ internal open class TeacherEntryBaseController(
             .execute()
             .fold(
                 onSuccess = { models ->
-                    with(PublicModelMapper){
+                    with(PublicModelMapper) {
                         _departments.update { models.map { toUiFacultyModel(it) } }
                     }
 
@@ -106,7 +110,6 @@ internal open class TeacherEntryBaseController(
     }
 
 
-
     //TODO:Helper methods section
     private fun _emptyState() = TeacherEntryModel(
         name = "",
@@ -115,9 +118,10 @@ internal open class TeacherEntryBaseController(
         achievements = "",
         phone = "",
         deptId = "",
-        roomNo ="",
+        roomNo = "",
         designations = "",
-        priority = ""
+        priority = "",
+        profileImageLink = ""
     )
 
 }

@@ -59,8 +59,10 @@ class RepositoryImpl2 internal constructor(
             withExceptionHandle {
                 val json = ApiFactory.academicApi().readTeachersUnderDept(deptId)
                 if (json._isTeacherListEntity()) {
+
                     val entities =
                         json.parseOrThrow(ListSerializer(TeacherEntryEntity.serializer()))
+
                     return Result.success(
                         with(ModelMapper) {
                             entities.sortedBy { it.priority }.map { it.toModel() }

@@ -22,5 +22,6 @@ data class TeacherWriteEntity(
     val achievements: String,
     val phone: String,
     val designations: String,
-    val room_no: String?
+    val room_no: String?,
+    val image_link:String?
 )

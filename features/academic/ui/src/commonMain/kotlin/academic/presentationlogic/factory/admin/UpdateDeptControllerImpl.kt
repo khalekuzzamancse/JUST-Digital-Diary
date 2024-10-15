@@ -11,6 +11,7 @@ import faculty.domain.usecase.admin.UpdateDepartmentUseCase
 import faculty.domain.usecase.public_.RetrieveFactualityUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -33,6 +34,7 @@ internal class UpdateDeptControllerImpl(
         CoroutineScope(Dispatchers.Default).launch {
             _readDept()
         }
+
 
         super.validator.observeFieldChanges(super._dept)
 
@@ -70,6 +72,19 @@ internal class UpdateDeptControllerImpl(
                             priority = model.priority.toString()
                         )
                     }
+                    try {
+                        //TODO: Have a problem to data layer, faculty id is not loaded
+                        // TODO: Refactor later, Edge case: faculty may not be leaded yet...
+                        super.onFacultySelected(
+                            super.faculties.value
+                                .map { it.id }
+                                .indexOf(model.facultyId)
+                        )
+                    } catch (_: Exception) {
+
+                    }
+
+
                 },
                 onFailure = { exception ->
                     when (exception) {

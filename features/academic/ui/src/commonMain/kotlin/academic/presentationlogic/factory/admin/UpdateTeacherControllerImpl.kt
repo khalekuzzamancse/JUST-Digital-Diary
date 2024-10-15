@@ -19,7 +19,7 @@ internal class UpdateTeacherControllerImpl(
     private val writeUseCase: UpdateTeacherUseCase,
     readAllDeptUseCase: ReadAllDepartmentUseCase,
     validator: TeacherEntryController.Validator,
-) : TeacherEntryBaseController(allDeptUseCase = readAllDeptUseCase, validator = validator),
+) : TeacherEntryControllerImpl(allDeptUseCase = readAllDeptUseCase, validator = validator),
     UpdateTeacherController {
 
     init {
@@ -63,9 +63,19 @@ internal class UpdateTeacherControllerImpl(
                 .execute(teacherId)
                 .fold(
                     onSuccess = { domainModel ->
-                        println("Model:$domainModel")
                         val uiModel = with(AdminModelMapper) { domainModel.toUIModel() }
                         _teacherState.update { uiModel }
+                        try {
+                            //TODO: Have a problem to data layer, dept  id is not loaded
+                            // TODO: Refactor later, Edge case: all dept may not be leaded yet...
+                            super.onDeptChange(
+                                super.dept.value
+                                    .map { it.id }
+                                    .indexOf(domainModel.deptId)
+                            )
+                        } catch (_: Exception) {
+
+                        }
                     },
                     onFailure = { exception ->
                         when (exception) {

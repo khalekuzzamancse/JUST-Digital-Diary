@@ -8,9 +8,10 @@ package faculty.domain.model.admin
    val priority:Int,
    val name: String,
    val email: String,
-   val additionalEmail: String?,
    val achievements: String,
    val phone: String,
    val designations: String,
+   val additionalEmail: String?,
    val roomNo: String?,
+   val profileImageLink: String?,
 )

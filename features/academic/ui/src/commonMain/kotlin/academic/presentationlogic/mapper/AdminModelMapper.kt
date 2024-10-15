@@ -31,8 +31,8 @@ internal object AdminModelMapper {
         achievements = this.achievements,
         phone = phone,
         designations = designations,
-        roomNo = roomNo
-
+        roomNo = roomNo,
+        profileImageLink = profileImageLink?.ifBlank{null},
     )
 
     fun faculty.domain.model.admin.DepartmentEntryModel.toUiModel() =
@@ -52,7 +52,8 @@ internal object AdminModelMapper {
         achievements = this.achievements,
         phone = this.phone,
         designations = this.designations,
-        roomNo = this.roomNo
+        roomNo = this.roomNo,
+        profileImageLink = profileImageLink
     )
 
 

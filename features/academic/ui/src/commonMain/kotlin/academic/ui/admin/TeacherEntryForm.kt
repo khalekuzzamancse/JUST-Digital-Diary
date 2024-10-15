@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.InsertLink
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
 import androidx.compose.material.icons.outlined.Room
@@ -105,14 +106,20 @@ internal fun TeacherEntryForm(
             leadingIcon = Icons.Outlined.Room
         )
         _VerticalSpace()
-
         CustomTextField(
-            label = "Sorting order",
+            label = "Priority",
             value = teacher.priority,
             onValueChanged = { id ->
                 controller.onIdChange(id.filter { it.isDigit() })
             },
             leadingIcon = Icons.Outlined.Badge
+        )
+        _VerticalSpace()
+        CustomTextField(
+            label = "Image Link",
+            value = teacher.profileImageLink?:"",
+            onValueChanged = controller::onImageLinkChange,
+            leadingIcon = Icons.Outlined.InsertLink
         )
     }
 }

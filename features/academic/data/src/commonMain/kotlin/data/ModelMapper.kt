@@ -106,7 +106,8 @@ internal object ModelMapper {
             achievements = model.achievements,
             phone = model.phone,
             designations = model.designations,
-            roomNo = model.roomNo
+            roomNo = model.roomNo,
+            profileImageLink = model.profileImageLink
         )
     }
 
@@ -130,7 +131,8 @@ internal object ModelMapper {
         achievements = achievements,
         phone = phone,
         designations = designations,
-        roomNo = roomNo?.ifBlank { null }
+        roomNo = roomNo?.ifBlank { null },
+        profileImageLink = profileImageLink
     )
 
     fun TeacherEntryEntity.toModel() = TeacherModel(
@@ -141,7 +143,8 @@ internal object ModelMapper {
         achievements = achievements,
         phone = phone,
         designations = designations,
-        roomNo = roomNo
+        roomNo = roomNo,
+        profile = profileImageLink
     )
     fun TeacherEntryEntity.toEntryModel() = TeacherEntryModel(
         deptId=deptId,
@@ -152,7 +155,8 @@ internal object ModelMapper {
         achievements = achievements,
         phone = phone,
         designations = designations,
-        roomNo = roomNo
+        roomNo = roomNo,
+        profileImageLink = profileImageLink
     )
 
     fun DepartmentEntryEntity.toModel() = DepartmentModel(

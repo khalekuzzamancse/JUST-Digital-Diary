@@ -47,6 +47,8 @@ internal interface TeacherEntryController: CoreController {
     fun onDeptChange(index: Int)
     fun onRoomNoChange(value: String)
     fun onIdChange(value: String)
+    fun onImageLinkChange(value: String)
+
     interface Validator {
         val areMandatoryFieldFilled: StateFlow<Boolean>
         val errors: StateFlow<List<String>>
