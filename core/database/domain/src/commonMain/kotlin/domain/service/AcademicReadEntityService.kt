@@ -1,8 +1,8 @@
 @file:Suppress("unused")
 package domain.service
-import domain.entity.DepartmentReadEntity
-import domain.entity.FacultyReadEntity
-import domain.entity.TeacherReadEntity
+import domain.entity.academic.DepartmentReadEntity
+import domain.entity.academic.FacultyReadEntity
+import domain.entity.academic.TeacherReadEntity
 interface AcademicReadEntityService {
 
     /**

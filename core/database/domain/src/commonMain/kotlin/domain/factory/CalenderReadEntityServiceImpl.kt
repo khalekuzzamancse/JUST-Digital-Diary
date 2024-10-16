@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 package domain.factory
 
-import domain.entity.AcademicCalenderEntity
+import domain.entity.calender.AcademicCalenderEntity
 import domain.service.CalenderReadEntityService
 import kotlinx.serialization.json.Json
 

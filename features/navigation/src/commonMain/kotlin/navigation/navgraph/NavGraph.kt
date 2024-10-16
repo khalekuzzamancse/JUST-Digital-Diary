@@ -33,8 +33,8 @@ import navigation.AppEvent
 import navigation.NavigationFactory
 import navigation.component.NavDestination
 import profile.presentationlogic.ProfileEvent
-import schedule.ui.ui.public_.ViewClassScheduleScreen
-import schedule.ui.ui.public_.ViewExamScheduleScreen
+import schedule.ui.public_.ViewClassScheduleScreen
+import schedule.ui.public_.ViewExamScheduleScreen
 
 
 @Composable

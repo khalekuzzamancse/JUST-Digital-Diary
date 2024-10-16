@@ -2,7 +2,7 @@
 package domain.factory
 
 import domain.core.toInsertionResult
-import domain.entity.AcademicCalenderEntity
+import domain.entity.calender.AcademicCalenderEntity
 import domain.model.InsertionResult
 import domain.service.CalenderInsertionService
 

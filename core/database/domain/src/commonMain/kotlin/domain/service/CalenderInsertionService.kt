@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 package domain.service
-import domain.entity.FacultyWriteEntity
+import domain.entity.academic.FacultyWriteEntity
 import domain.model.InsertionResult
 
 /**

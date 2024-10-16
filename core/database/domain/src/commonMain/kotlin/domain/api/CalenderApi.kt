@@ -2,7 +2,7 @@
 
 package domain.api
 
-import domain.entity.AcademicCalenderEntity
+import domain.entity.calender.AcademicCalenderEntity
 import domain.entity.FeedbackMessageEntity
 
 /**

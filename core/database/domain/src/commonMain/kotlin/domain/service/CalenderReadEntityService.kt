@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 package domain.service
-import domain.entity.AcademicCalenderEntity
+import domain.entity.calender.AcademicCalenderEntity
 
 interface CalenderReadEntityService {
 

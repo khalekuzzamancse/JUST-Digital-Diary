@@ -1,6 +1,7 @@
 package core.network
 
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.json.Json
 
 /**
  * -  Parses the given JSON string and converts it into an instance of the specified type T
@@ -33,5 +34,12 @@ interface JsonParser {
     /**
      * Throws an exception on parsing errors
      */
-    fun <T> parseOrThrow(json: String, serializer: KSerializer<T>):T
+    fun <T> parseOrThrow(json: String, serializer: KSerializer<T>): T
+    fun <T> toJsonOrThrow(value: T, serializer: KSerializer<T>): String {
+        val parser = Json {
+            prettyPrint = true
+            ignoreUnknownKeys = true
+        }
+        return parser.encodeToString(serializer, value)
+    }
 }

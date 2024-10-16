@@ -6,7 +6,7 @@ import data.monggodb.db.MongoDBClient.COLLECTION_DEPARTMENT
 import data.monggodb.db.MongoDBClient.DATABASE_NAME
 import data.monggodb.db.MongoDBClient.ID_FIELD
 import data.monggodb.core.insertionWithHandleException
-import domain.entity.DepartmentReadEntity
+import domain.entity.academic.DepartmentReadEntity
 import domain.factory.ContractFactory
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList

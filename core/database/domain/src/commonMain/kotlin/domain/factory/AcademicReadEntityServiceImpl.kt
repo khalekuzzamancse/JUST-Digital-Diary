@@ -1,9 +1,9 @@
 @file:Suppress("unused")
 package domain.factory
 
-import domain.entity.DepartmentReadEntity
-import domain.entity.FacultyReadEntity
-import domain.entity.TeacherReadEntity
+import domain.entity.academic.DepartmentReadEntity
+import domain.entity.academic.FacultyReadEntity
+import domain.entity.academic.TeacherReadEntity
 import domain.service.AcademicReadEntityService
 import kotlinx.serialization.json.Json
 

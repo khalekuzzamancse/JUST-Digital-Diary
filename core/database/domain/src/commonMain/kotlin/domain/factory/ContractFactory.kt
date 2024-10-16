@@ -8,6 +8,7 @@ import domain.service.AcademicInsertionService
 import domain.service.CalenderInsertionService
 import domain.service.AcademicReadEntityService
 import domain.service.CalenderReadEntityService
+import domain.service.ScheduleService
 
 object ContractFactory {
     fun jsonParser(): JsonParser = JsonParserImpl()
@@ -16,4 +17,5 @@ object ContractFactory {
     fun calenderInsertionService():CalenderInsertionService=CalenderInsertionServiceImpl()
     fun academicReadEntityService(): AcademicReadEntityService = AcademicReadEntityServiceImpl()
     fun calenderReadEntityService():CalenderReadEntityService=CalenderReadEntityServiceImpl()
+    fun scheduleService(): ScheduleService=ScheduleServiceImpl()
 }

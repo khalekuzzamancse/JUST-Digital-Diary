@@ -16,8 +16,8 @@ import navigation._BackIconDecorator
 import navigation._goBack
 import profile.presentationlogic.ProfileEvent
 import profile.ui.ProfileNavHost
-import schedule.ui.ui.admin.add_class_schedule.AddClassScheduleScreen
-import schedule.ui.ui.admin.add_exam_schedule.ExamScheduleAddScreen
+import schedule.ui.admin.AddClassScheduleScreen
+import schedule.ui.admin.ExamScheduleAddScreen
 
 //Though profile will generate the admin event,thus it make sense to define the graph here
 //because now profile module need not to depend on different other features modules
