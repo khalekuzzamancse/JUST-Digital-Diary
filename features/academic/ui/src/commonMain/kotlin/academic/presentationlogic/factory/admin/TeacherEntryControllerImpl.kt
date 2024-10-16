@@ -7,7 +7,7 @@ import academic.presentationlogic.controller.core.CoreControllerImpl
 import academic.presentationlogic.mapper.PublicModelMapper
 import academic.presentationlogic.model.admin.TeacherEntryModel
 import academic.presentationlogic.model.public_.DepartmentModel
-import faculty.domain.exception.CustomException
+import core.customexception.CustomException
 import faculty.domain.usecase.admin.ReadAllDepartmentUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -34,9 +34,8 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import common.newui.EmptyContentScreen
+import common.ui.EmptyContentScreen
 import schedule.di.DiFactory
-import schedule.presentationlogic.mapper.ModelMapper
 import schedule.ui.core.SessionHeader
 import schedule.ui.core.TextSizeMeasurer
 import schedule.presentationlogic.model.ExamDetailsModel

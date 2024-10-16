@@ -3,7 +3,6 @@
 package academic.ui.public_
 
 import academic.ui.AcademicModuleEvent
-import academic.ui.core.SnackNProgressBarDecorator
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -12,6 +11,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import common.ui.SnackNProgressBarDecorator
 import common.ui.TwoPaneLayout
 
 

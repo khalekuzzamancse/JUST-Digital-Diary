@@ -1,4 +1,4 @@
-@file:Suppress("SpellChecking")
+@file:Suppress("SpellCheckingInspection")
 
 package data
 

@@ -1,7 +1,6 @@
 package academic.ui.admin
 
 import academic.presentationlogic.factory.UiFactory
-import academic.ui.core.SnackNProgressBarDecorator
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import common.ui.SnackNProgressBarDecorator
 import common.ui.UpdateButton
 import kotlinx.coroutines.launch
 

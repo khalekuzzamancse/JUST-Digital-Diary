@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import common.newui.EmptyContentScreen
+import common.ui.EmptyContentScreen
 import common.ui.AdaptiveList
 import common.ui.GenericEmployeeCard
 import common.ui.TopBarDecoratorCommon

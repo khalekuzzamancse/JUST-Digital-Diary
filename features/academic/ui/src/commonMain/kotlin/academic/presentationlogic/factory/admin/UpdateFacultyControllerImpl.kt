@@ -4,8 +4,8 @@ package academic.presentationlogic.factory.admin
 import academic.presentationlogic.controller.admin.FacultyEntryController
 import academic.presentationlogic.controller.admin.UpdateFacultyController
 import academic.presentationlogic.mapper.AdminModelMapper
-import faculty.domain.exception.CustomException
-import faculty.domain.usecase.admin.GetFacultyByIdUseCase
+import core.customexception.CustomException
+import faculty.domain.usecase.admin.ReadFacultyUseCase
 import faculty.domain.usecase.admin.UpdateFacultyUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 internal class UpdateFacultyControllerImpl(
     private val facultyId: String,
     private val writeUseCase: UpdateFacultyUseCase,
-    private val readUseCase: GetFacultyByIdUseCase,
+    private val readUseCase: ReadFacultyUseCase,
     validator: FacultyEntryController.Validator
 ) : FacultyEntryControllerImpl(validator), UpdateFacultyController {
 

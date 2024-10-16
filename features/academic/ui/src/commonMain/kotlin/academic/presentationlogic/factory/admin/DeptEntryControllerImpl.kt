@@ -8,8 +8,8 @@ import academic.presentationlogic.mapper.AdminModelMapper
 import academic.presentationlogic.mapper.PublicModelMapper.toUiModel
 import academic.presentationlogic.model.admin.DepartmentEntryModel
 import academic.presentationlogic.model.public_.FacultyModel
-import faculty.domain.exception.CustomException
-import faculty.domain.usecase.public_.RetrieveFactualityUseCase
+import core.customexception.CustomException
+import faculty.domain.usecase.public_.ReadAllFactualityUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal open  class DeptEntryControllerImpl(
-    private val readUseCase: RetrieveFactualityUseCase,
+    private val readUseCase: ReadAllFactualityUseCase,
     override val validator  : DeptEntryController.Validator
 ) : DeptEntryController, CoreControllerImpl() {
 

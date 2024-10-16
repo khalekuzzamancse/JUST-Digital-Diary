@@ -1,7 +1,7 @@
 package data.repository
 
+import core.customexception.CustomException
 import data.source.RemoteDataSource
-import faculty.domain.exception.CustomException
 import faculty.domain.model.public_.DepartmentModel
 import faculty.domain.model.public_.FacultyModel
 import faculty.domain.model.public_.TeacherModel

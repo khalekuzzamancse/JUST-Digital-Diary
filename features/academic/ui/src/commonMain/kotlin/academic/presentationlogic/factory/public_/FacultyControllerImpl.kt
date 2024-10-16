@@ -6,14 +6,14 @@ import academic.presentationlogic.controller.core.CoreControllerImpl
 import academic.presentationlogic.controller.public_.FacultyController
 import academic.presentationlogic.mapper.PublicModelMapper
 import academic.presentationlogic.model.public_.FacultyModel
-import faculty.domain.exception.CustomException
-import faculty.domain.usecase.public_.RetrieveFactualityUseCase
+import core.customexception.CustomException
+import faculty.domain.usecase.public_.ReadAllFactualityUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 internal class FacultyControllerImpl(
-    private val userCase: RetrieveFactualityUseCase,
+    private val userCase: ReadAllFactualityUseCase,
 ) : FacultyController, CoreControllerImpl() {
     private val _faculties = MutableStateFlow<List<FacultyModel>>(emptyList())
     private val _selected = MutableStateFlow<Int?>(null)

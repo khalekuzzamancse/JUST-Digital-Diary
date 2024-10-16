@@ -6,14 +6,14 @@ import academic.presentationlogic.controller.core.CoreControllerImpl
 import academic.presentationlogic.controller.public_.DepartmentController
 import academic.presentationlogic.mapper.PublicModelMapper
 import academic.presentationlogic.model.public_.DepartmentModel
-import faculty.domain.exception.CustomException
-import faculty.domain.usecase.public_.RetrieveDepartmentsUseCase
+import core.customexception.CustomException
+import faculty.domain.usecase.public_.ReadDepartmentsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 internal class DepartmentsControllerImpl(
-    private val userCase: RetrieveDepartmentsUseCase,
+    private val userCase: ReadDepartmentsUseCase,
 ) : DepartmentController, CoreControllerImpl() {
 
     private val _departments = MutableStateFlow<List<DepartmentModel>>(emptyList())

@@ -5,13 +5,12 @@ package academic.presentationlogic.factory.admin
 import academic.presentationlogic.controller.admin.DeptEntryController
 import academic.presentationlogic.controller.admin.UpdateDeptController
 import academic.presentationlogic.mapper.AdminModelMapper
-import faculty.domain.exception.CustomException
+import core.customexception.CustomException
 import faculty.domain.usecase.admin.ReadDeptUseCase
 import faculty.domain.usecase.admin.UpdateDepartmentUseCase
-import faculty.domain.usecase.public_.RetrieveFactualityUseCase
+import faculty.domain.usecase.public_.ReadAllFactualityUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -22,7 +21,7 @@ internal class UpdateDeptControllerImpl(
     private val deptId: String,
     private val readDeptUseCase: ReadDeptUseCase,
     private val writeUseCase: UpdateDepartmentUseCase,
-    readFacultyUseCase: RetrieveFactualityUseCase,
+    readFacultyUseCase: ReadAllFactualityUseCase,
     validator: DeptEntryController.Validator
 ) : DeptEntryControllerImpl(readUseCase = readFacultyUseCase, validator = validator),
     UpdateDeptController {

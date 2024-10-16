@@ -35,6 +35,7 @@ class RepositoryImpl2 internal constructor(
         return with(handler) {
             withExceptionHandle {
                 val json = ApiFactory.academicApi().readAllFaculty()
+
                 /** Execution is here means server sent a response we have to parse it
                  * - 3 possible cases: We got excepted  json or Json is a server message in format ServerResponseMessageEntity  or  Server send a json that format is not known yet,may be server change it json format or other
                  */

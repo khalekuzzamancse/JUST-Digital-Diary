@@ -43,6 +43,7 @@ val applications= listOf(
 //val common= listOf(":common",":common:data",":common:ui",":common:docs","common:di")
 val coreModules = listOf(
     ":core",
+    ":core:custom-exception",
     ":core:network",
     ":core:database",":core:database:api",":core:database:domain",
     ":core:database:data-source",":core:database:data-source:mongodb",

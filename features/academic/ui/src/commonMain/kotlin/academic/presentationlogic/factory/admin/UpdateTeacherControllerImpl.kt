@@ -4,7 +4,7 @@ package academic.presentationlogic.factory.admin
 import academic.presentationlogic.controller.admin.TeacherEntryController
 import academic.presentationlogic.controller.admin.UpdateTeacherController
 import academic.presentationlogic.mapper.AdminModelMapper
-import faculty.domain.exception.CustomException
+import core.customexception.CustomException
 import faculty.domain.usecase.admin.ReadAllDepartmentUseCase
 import faculty.domain.usecase.admin.ReadTeacherUseCase
 import faculty.domain.usecase.admin.UpdateTeacherUseCase

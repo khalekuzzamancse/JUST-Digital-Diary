@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import common.ui.animation.NavAnimations
+import common.ui.NavAnimations
 import miscellaneous.MiscFeatureEvent
 import miscellaneous.ui.AboutUsRoute
 import miscellaneous.ui.eventGallery.EventsRoute

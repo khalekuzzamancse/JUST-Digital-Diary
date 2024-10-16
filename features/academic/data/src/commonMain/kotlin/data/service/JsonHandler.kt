@@ -1,6 +1,6 @@
 package data.service
 
-import faculty.domain.exception.CustomException
+import core.customexception.CustomException
 import kotlinx.serialization.KSerializer
 import kotlin.jvm.Throws
 
@@ -39,6 +39,6 @@ internal interface JsonHandler {
      */
     fun <T> String.parseOrThrow(serializer: KSerializer<T>):T
 
-    fun createCustomException(exception: Throwable):CustomException
+    fun createCustomException(exception: Throwable): CustomException
 
 }

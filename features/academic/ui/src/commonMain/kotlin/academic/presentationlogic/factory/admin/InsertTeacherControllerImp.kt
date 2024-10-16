@@ -3,7 +3,7 @@ package academic.presentationlogic.factory.admin
 import academic.presentationlogic.controller.admin.InsertTeacherController
 import academic.presentationlogic.controller.admin.TeacherEntryController
 import academic.presentationlogic.mapper.AdminModelMapper
-import faculty.domain.exception.CustomException
+import core.customexception.CustomException
 import faculty.domain.usecase.admin.InsertTeacherUseCase
 import faculty.domain.usecase.admin.ReadAllDepartmentUseCase
 import kotlinx.coroutines.CoroutineScope

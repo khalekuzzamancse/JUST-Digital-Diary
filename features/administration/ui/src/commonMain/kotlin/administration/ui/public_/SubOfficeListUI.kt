@@ -11,7 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import common.newui.EmptyContentScreen
+import common.ui.EmptyContentScreen
 import common.ui.CardInfoState
 import common.ui.GenericInfoCard
 import common.ui.generateAcronym

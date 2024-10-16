@@ -10,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import calendar.ui.admin.InsertAcademicCalenderRoute
-import common.ui.animation.NavAnimations
+import common.ui.NavAnimations
 import navigation.NavigationFactory
 import navigation._BackIconDecorator
 import navigation._goBack

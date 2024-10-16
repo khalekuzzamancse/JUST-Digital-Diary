@@ -3,7 +3,6 @@ package academic.ui.public_
 import academic.presentationlogic.factory.UiFactory
 import academic.presentationlogic.model.public_.TeacherModel
 import academic.ui.AcademicModuleEvent
-import academic.ui.core.SnackNProgressBarDecorator
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -25,10 +24,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import common.newui.ContactSelectionDialog
-import common.newui.EmptyContentScreen
 import common.ui.AdaptiveList
+import common.ui.ContactSelectionDialog
+import common.ui.EmptyContentScreen
 import common.ui.GenericEmployeeCard
+import common.ui.SnackNProgressBarDecorator
 import common.ui.TopBarDecoratorCommon
 
 

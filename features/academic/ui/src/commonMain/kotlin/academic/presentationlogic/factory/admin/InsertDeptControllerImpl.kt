@@ -5,16 +5,16 @@ package academic.presentationlogic.factory.admin
 import academic.presentationlogic.controller.admin.DeptEntryController
 import academic.presentationlogic.controller.admin.InsertDeptController
 import academic.presentationlogic.mapper.AdminModelMapper
-import faculty.domain.exception.CustomException
+import core.customexception.CustomException
 import faculty.domain.usecase.admin.InsertDepartmentUseCase
-import faculty.domain.usecase.public_.RetrieveFactualityUseCase
+import faculty.domain.usecase.public_.ReadAllFactualityUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 internal class InsertDeptControllerImpl(
     private val writeUseCase: InsertDepartmentUseCase,
-    readUseCase: RetrieveFactualityUseCase,
+    readUseCase: ReadAllFactualityUseCase,
     validator  : DeptEntryController.Validator
 ) : DeptEntryControllerImpl(readUseCase = readUseCase, validator =validator ), InsertDeptController {
 

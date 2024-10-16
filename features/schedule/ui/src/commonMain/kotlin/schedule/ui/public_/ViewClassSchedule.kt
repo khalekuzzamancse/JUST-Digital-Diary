@@ -20,12 +20,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,11 +30,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import common.newui.EmptyContentScreen
+import common.ui.EmptyContentScreen
 import common.ui.SnackNProgressBarDecorator
-import schedule.di.DiFactory
 import schedule.presentationlogic.factory.UiFactory
-import schedule.presentationlogic.mapper.ModelMapper
 import schedule.ui.core.SessionHeader
 import schedule.ui.core.TextSizeMeasurer
 import schedule.presentationlogic.model.ClassDetailModel

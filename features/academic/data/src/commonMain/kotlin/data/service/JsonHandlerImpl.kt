@@ -1,10 +1,10 @@
 package data.service
 
 
+import core.customexception.CustomException
 import core.network.JsonParser
 import core.network.NetworkException
-import data.entity.ServerResponseMessageEntity
-import faculty.domain.exception.CustomException
+import data.entity.FeedbackEntity
 import kotlinx.serialization.KSerializer
 
 /**
@@ -48,12 +48,12 @@ internal class JsonHandlerImpl(private val jsonParser: JsonParser) : JsonHandler
 
     // Helper methods to process JSON strings
     private fun String.createServerMessageException(): CustomException.MessageFromServer {
-        val entity = jsonParser.parse(this, ServerResponseMessageEntity.serializer()).getOrThrow()
+        val entity = jsonParser.parse(this, FeedbackEntity.serializer()).getOrThrow()
         return CustomException.MessageFromServer(message = entity.message)
     }
 
     private fun String.isServerMessage(): Boolean =
-        jsonParser.parse(this, ServerResponseMessageEntity.serializer()).isSuccess
+        jsonParser.parse(this, FeedbackEntity.serializer()).isSuccess
 
 
 }
