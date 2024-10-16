@@ -25,7 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import common.ui.CustomTextField
-import schedule.presentationlogic.controller.ExamScheduleController
+import schedule.presentationlogic.controller.ExamScheduleInsertController
 import schedule.ui.public_.ExamScheduleScreen
 import schedule.ui.core.ErrorText
 import schedule.presentationlogic.factory.UiFactory
@@ -35,7 +35,7 @@ import schedule.ui.core.ScaffoldDecorator
 
 @Composable
 fun ExamScheduleAddScreen(modifier: Modifier = Modifier) {
-    val controller: ExamScheduleController =
+    val controller: ExamScheduleInsertController =
         remember { UiFactory.createExamScheduleFormController() }
     var showForm by remember { mutableStateOf(false) }
     val schedule = controller.state.collectAsState().value
@@ -75,7 +75,7 @@ fun ExamScheduleAddScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun _Form(
     modifier: Modifier = Modifier,
-    controller: ExamScheduleController,
+    controller: ExamScheduleInsertController,
 ) {
     Column(modifier = modifier.widthIn(max = 600.dp)) {
         CustomTextField(

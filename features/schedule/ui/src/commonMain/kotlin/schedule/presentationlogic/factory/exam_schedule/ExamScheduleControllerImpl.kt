@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import schedule.presentationlogic.model.ExamDetailsModel
 import schedule.presentationlogic.model.ExamScheduleModel
-import schedule.presentationlogic.controller.ExamScheduleController
+import schedule.presentationlogic.controller.ExamScheduleInsertController
 
 
 /**
@@ -17,9 +17,9 @@ import schedule.presentationlogic.controller.ExamScheduleController
 with Dependency Injection (DI)
  */
 class ExamScheduleControllerImpl internal constructor(
-    override val validator: ExamScheduleController.Validator,
+    override val validator: ExamScheduleInsertController.Validator,
     private val addCommand: AddCommand,
-) : ExamScheduleController {
+) : ExamScheduleInsertController {
     private val _state = MutableStateFlow(toEmpty())
     override val state = _state.asStateFlow()
 

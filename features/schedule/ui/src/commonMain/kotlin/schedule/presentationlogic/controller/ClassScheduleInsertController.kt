@@ -17,7 +17,7 @@ import schedule.presentationlogic.model.ClassScheduleModel
  *   or kept open based on the result
  */
 
-interface ClassScheduleController:CoreController {
+interface ClassScheduleInsertController:CoreController {
     val days: List<String>
         get() = listOf("Sat", "Sun", "Mon", "Tue", "Wed")
 

@@ -1,15 +1,21 @@
-@file:Suppress("SpellCheckingInspection")
-package data.monggodb
+@file:Suppress("spellCheckingInspection", "unused")
 
-import data.monggodb.db.ScheduleCollection
+package data
+
+import core.database.api.ApiFactory
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.json.Json
+import schedule.data.entity.schedule.ClassScheduleReadEntity
+import schedule.data.mapper.ReadEntityModelMapper
 import kotlin.test.Test
 import kotlin.test.fail
 
-class ScheduleCollectionTest {
-
-    private val collection = ScheduleCollection()
-    private val deptId="computerscienceandengineering"//TODO:Make sure dept exists in the department collection
+class ScheduleApiTest {
+    private val api = ApiFactory.scheduleApi()
+    private val parser = Json { ignoreUnknownKeys = true }
+    private val deptId =
+        "computerscienceandengineering"//TODO:Make sure dept exists in the department collection
 
     @Test
     fun insert() {
@@ -56,7 +62,7 @@ class ScheduleCollectionTest {
             """.trimIndent()
 
             try {
-                println(collection.insertOrThrow(deptId = deptId, json = json))
+                println(api.insert(deptId = deptId, json = json))
             } catch (e: Exception) {
                 fail("Insert failed: ${e.message}")
             }
@@ -67,8 +73,10 @@ class ScheduleCollectionTest {
     fun readAll() {
         executeTest {
             try {
-                val result = collection.readAllOrThrow()
-                println(result)
+                val json = api.readAll()
+                println("Json:$json")
+
+
             } catch (e: Exception) {
                 fail(" ${e.message}")
             }
@@ -76,10 +84,36 @@ class ScheduleCollectionTest {
     }
 
     @Test
+    fun readAllEntityTest() {
+        executeTest {
+            val json = api.readAll()
+            val entity = parser.decodeFromString(
+                ListSerializer(ClassScheduleReadEntity.serializer()),
+                json
+            )
+            println("Entity:$entity")
+        }
+    }
+
+    @Test
+    fun readAllEntityModelTest() {
+        executeTest {
+            val json = api.readAll()
+            val model = with(ReadEntityModelMapper) {
+                parser
+                    .decodeFromString(ListSerializer(ClassScheduleReadEntity.serializer()), json)
+                    .map { it.toModel() }
+            }
+            println("Model:$model")
+        }
+    }
+
+
+    @Test
     fun readUnderDept() {
         executeTest {
             try {
-                val result = collection.readByDeptOrThrow(deptId)
+                val result = api.readUnderDept(deptId)
                 println(result)
             } catch (e: Exception) {
                 fail(" failed: ${e.message}")
@@ -111,7 +145,7 @@ class ScheduleCollectionTest {
             """.trimIndent()
 
             try {
-                println(collection.updateOrThrow(id = "", json = json))
+                println(api.update(id = "", json = json))
             } catch (e: Exception) {
                 fail("Update failed: ${e.message}")
             }

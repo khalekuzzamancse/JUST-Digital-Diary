@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import schedule.presentationlogic.controller.ExamScheduleController
+import schedule.presentationlogic.controller.ExamScheduleInsertController
 
-class ValidatorImpl : ExamScheduleController.Validator {
+class ValidatorImpl : ExamScheduleInsertController.Validator {
     private val _areAllFieldsFilled = MutableStateFlow(false)
     override val areAllFieldsFilled = _areAllFieldsFilled.asStateFlow()
 

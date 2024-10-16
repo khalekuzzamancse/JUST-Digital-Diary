@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import common.ui.CustomTextField
 import common.ui.SnackNProgressBarDecorator
 import kotlinx.coroutines.launch
-import schedule.presentationlogic.controller.ClassScheduleController
+import schedule.presentationlogic.controller.ClassScheduleInsertController
 import schedule.presentationlogic.factory.UiFactory
 import schedule.ui.core.AcademicInfoForm
 import schedule.ui.core.ErrorText
@@ -126,7 +126,7 @@ private fun _Actions(
 @Composable
 private fun _ScheduleAdd(
     modifier: Modifier = Modifier,
-    controller: ClassScheduleController,
+    controller: ClassScheduleInsertController,
     showScheduleAddFrom: Boolean,
     onDone: () -> Unit,
     onDismiss: () -> Unit,
@@ -154,7 +154,7 @@ private fun _ScheduleAdd(
 @Composable
 private fun _Form(
     modifier: Modifier = Modifier,
-    controller: ClassScheduleController,
+    controller: ClassScheduleInsertController,
 ) {
     Column(modifier = modifier.widthIn(max = 600.dp)) {
         CustomTextField(

@@ -36,11 +36,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import common.newui.EmptyContentScreen
 import schedule.di.DiFactory
+import schedule.presentationlogic.mapper.ModelMapper
 import schedule.ui.core.SessionHeader
 import schedule.ui.core.TextSizeMeasurer
 import schedule.presentationlogic.model.ExamDetailsModel
 import schedule.presentationlogic.model.ExamScheduleModel
-import schedule.presentationlogic.mapper.ExamScheduleModelMapper
 
 /**
  * TODO: Need to Refactor, use a Viewmodel
@@ -54,8 +54,8 @@ fun ViewExamScheduleScreen() {
         result.onSuccess {
             try {
 
-                examSchedule =
-                    ExamScheduleModelMapper().fromDomainToUIModel(result.getOrThrow().first())
+//                examSchedule = with(ModelMapper){result.getOrThrow().first().tom}
+//                    ExamScheduleModelMapper().fromDomainToUIModel()
 
             } catch (_: Exception) {
 

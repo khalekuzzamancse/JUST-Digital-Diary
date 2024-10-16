@@ -2,7 +2,7 @@ package schedule.presentationlogic.factory.class_schedule
 
 import schedule.presentationlogic.model.ClassDetailModel
 import schedule.presentationlogic.model.ClassScheduleModel
-import schedule.presentationlogic.model.DailyClassScheduleModel
+import schedule.presentationlogic.model.ClassModel
 
 class AddCommandImpl : AddCommand {
 
@@ -37,7 +37,7 @@ class AddCommandImpl : AddCommand {
 
     // Add a new day with the class detail if the day doesn't exist
     private fun ClassScheduleModel.addNewDay(day: String, classDetail: ClassDetailModel): ClassScheduleModel {
-        val newDailySchedule = DailyClassScheduleModel(day, mutableListOf(classDetail))
+        val newDailySchedule = ClassModel(day, mutableListOf(classDetail))
         val updatedRoutine = this.routine.toMutableList().apply {
             add(newDailySchedule)
         }

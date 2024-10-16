@@ -14,7 +14,7 @@ import schedule.presentationlogic.model.ExamScheduleModel
  *   or kept open based on the result
  */
 
-interface ExamScheduleController {
+interface ExamScheduleInsertController {
     val state: StateFlow<ExamScheduleModel>
     val validator: Validator
     val year: StateFlow<String>

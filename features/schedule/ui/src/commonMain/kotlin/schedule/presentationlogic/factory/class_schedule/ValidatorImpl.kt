@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import schedule.presentationlogic.controller.ClassScheduleController
+import schedule.presentationlogic.controller.ClassScheduleInsertController
 
-class ValidatorImpl : ClassScheduleController.Validator {
+class ValidatorImpl : ClassScheduleInsertController.Validator {
 
     private val _areAllFieldsFilled = MutableStateFlow(false)
     private val _errors = MutableStateFlow<List<String>>(emptyList())

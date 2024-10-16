@@ -21,6 +21,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,13 +35,15 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import common.newui.EmptyContentScreen
+import common.ui.SnackNProgressBarDecorator
 import schedule.di.DiFactory
+import schedule.presentationlogic.factory.UiFactory
+import schedule.presentationlogic.mapper.ModelMapper
 import schedule.ui.core.SessionHeader
 import schedule.ui.core.TextSizeMeasurer
 import schedule.presentationlogic.model.ClassDetailModel
 import schedule.presentationlogic.model.ClassScheduleModel
-import schedule.presentationlogic.model.DailyClassScheduleModel
-import schedule.presentationlogic.mapper.ClassScheduleDomainToUiModel
+import schedule.presentationlogic.model.ClassModel
 
 
 /**
@@ -48,33 +51,34 @@ import schedule.presentationlogic.mapper.ClassScheduleDomainToUiModel
  */
 @Composable
 fun ViewClassScheduleScreen() {
-    var classSchedule by remember { mutableStateOf<ClassScheduleModel?>(null) }
-    LaunchedEffect(Unit) {
-        val result = DiFactory.createRetrieveClassScheduleUseCase().execute("")
-        result.onSuccess {
-            try {
-                classSchedule =
-                    ClassScheduleDomainToUiModel().covert(result.getOrThrow().first())
-
-            } catch (_: Exception) {
-
+    val controller = remember { UiFactory.classScheduleViewerController() }
+    val schedules = controller.schedules.collectAsState().value
+    val isLoading = controller.isLoading.collectAsState().value
+    val noScheduleFound=(!isLoading && schedules.isEmpty())
+    SnackNProgressBarDecorator(
+        isLoading = isLoading,
+        snackBarMessage = controller.statusMessage.collectAsState(null).value
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            schedules.forEach { schedule ->
+                ClassSchedule(
+                    schedule = schedule,
+                    modifier = Modifier
+                        .padding(8.dp)
+                )
             }
 
         }
-
+        if (noScheduleFound) {
+            EmptyContentScreen(message = "No class schedule found")
+        }
     }
 
-    classSchedule?.let { schedule ->
-        ClassSchedule(
-            modifier = Modifier
-                .horizontalScroll(rememberScrollState())
-                .verticalScroll(rememberScrollState())
-                .padding(8.dp), schedule
-        )
-    }
-    if (classSchedule == null) {
-        EmptyContentScreen(message = "No class schedule found")
-    }
 
 }
 
@@ -120,7 +124,7 @@ fun ClassSchedule(
  * - Every Cell has same size, cell height=Max Of all text height,width=max of all text width
  */
 @Composable
-fun _ClassSchedule(schedule: List<DailyClassScheduleModel>) {
+fun _ClassSchedule(schedule: List<ClassModel>) {
 
 
     val measurer = rememberTextMeasurer()
@@ -173,7 +177,7 @@ fun _ClassSchedule(schedule: List<DailyClassScheduleModel>) {
 
 @Composable
 private fun _EachRow(
-    daySchedule: DailyClassScheduleModel,
+    daySchedule: ClassModel,
     widthPerHour: Dp,
     height: Dp,
     style: TextStyle

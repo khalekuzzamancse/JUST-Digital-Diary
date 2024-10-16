@@ -11,12 +11,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+
 import schedule.domain.exception.CustomException
 import schedule.domain.usecase.InsertCalenderUseCase
-import schedule.presentationlogic.controller.ClassScheduleController
+import schedule.presentationlogic.controller.ClassScheduleInsertController
 import schedule.presentationlogic.controller.core.AcademicInfoController
 import schedule.presentationlogic.controller.core.CoreControllerImpl
-import schedule.presentationlogic.mapper.ClassScheduleMapper
+import schedule.presentationlogic.mapper.ModelMapper
 import schedule.presentationlogic.model.ClassDetailModel
 import schedule.presentationlogic.model.ClassScheduleModel
 
@@ -28,12 +29,12 @@ import schedule.presentationlogic.model.ClassScheduleModel
  * - This class receives all dependencies via the constructor, making it easy to integrate
 with Dependency Injection (DI)
  */
-internal class ClassScheduleControllerImpl internal constructor(
-    override val validator: ClassScheduleController.Validator,
+internal class ClassScheduleInsertControllerImpl internal constructor(
+    override val validator: ClassScheduleInsertController.Validator,
     private val addCommand: AddCommand,
     override val academicController: AcademicInfoController,
     private val insertUseCase: InsertCalenderUseCase,
-) : ClassScheduleController, CoreControllerImpl() {
+) : ClassScheduleInsertController, CoreControllerImpl() {
 
     private val _academicFormFilled = MutableStateFlow(false)
     private val _schedule = MutableStateFlow(toEmpty())
@@ -70,7 +71,7 @@ internal class ClassScheduleControllerImpl internal constructor(
     override suspend fun insert() {
         super.startLoading()
         insertUseCase.execute(
-            model = ClassScheduleMapper.UiToDomain().convert(schedule.value),
+            model = with(ModelMapper){schedule.value.toModel()},
             deptId = deptId
         ).fold(
             onSuccess = {

@@ -1,4 +1,4 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "functionName")
 
 package data.monggodb.db
 
@@ -7,19 +7,22 @@ import data.monggodb.db.MongoDBClient.COLLECTION_SCHEDULE
 import data.monggodb.db.MongoDBClient.DATABASE_NAME
 import data.monggodb.db.MongoDBClient.ID_FIELD
 import domain.core.EntityExtraField
-import domain.entity.calender.AcademicCalenderEntity
+import domain.entity.academic.DepartmentReadEntity
 import domain.entity.schedule.ClassScheduleReadEntity
 import domain.factory.ContractFactory
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
+import kotlinx.serialization.json.Json
 import org.bson.Document
 
 internal class ScheduleCollection {
     private val scheduleService = ContractFactory.scheduleService()
     private val feedbackService = ContractFactory.feedbackService()
+    private val academyService = ContractFactory.academicReadEntityService()
     private val collection = COLLECTION_SCHEDULE
+    private val parser = Json { ignoreUnknownKeys = true }
 
-    suspend fun insert(deptId: String, json: String): String {
+    suspend fun insertOrThrow(deptId: String, json: String): String {
         val result =
             scheduleService.processAsClassScheduleWriteEntityOrThrow(json = json, deptId = deptId)
         val doc = Document.parse(result.json)
@@ -29,25 +32,23 @@ internal class ScheduleCollection {
 
     /**Useful for admin to read all and delete the old once*/
     @Throws(Throwable::class)
-    suspend fun readAll(): String {
+    suspend fun readAllOrThrow(): String {
         return MongoDBClient.writeOrThrow(
             DATABASE_NAME
         ) { database ->
             val collection = database.getCollection<Document>(collection)
             val jsonArray = collection.find().toList().map { document ->
-                //TODO: read the dept and fill the filed later
-                val doc = document
-                    .append(ClassScheduleReadEntity::deptName.name, "Not Implemented Yet")
-                    .append(ClassScheduleReadEntity::deptShortName.name, "NIY")
-                scheduleService.parseAsClassScheduleReadEntityOrThrow(doc.toJson())
+
+                scheduleService.parseAsClassScheduleReadEntityOrThrow(_appendDeptInfo(document).toJson())
             }
             // Join all the JSON strings into a single JSON array
             "[${jsonArray.joinToString(",")}]"
         }
     }
 
+
     @Throws(Throwable::class)
-    suspend fun readByDept(deptId: String): String {
+    suspend fun readByDeptOrThrow(deptId: String): String {
         return MongoDBClient.readOrThrow(
             DATABASE_NAME
         ) { database ->
@@ -56,7 +57,7 @@ internal class ScheduleCollection {
                 collection.find(Document(EntityExtraField.SCHEDULE_ENTITY_FIELD_DEPT_ID, deptId))
                     .firstOrNull()
                     ?: throw NoSuchElementException("No schedule available")
-            scheduleService.parseAsClassScheduleReadEntityOrThrow(document.toJson())
+            scheduleService.parseAsClassScheduleReadEntityOrThrow(_appendDeptInfo(document).toJson())
         }
     }
 
@@ -66,5 +67,14 @@ internal class ScheduleCollection {
         data = json,
         query = Filters.eq(ClassScheduleReadEntity::id.name, id)
     )
+
+    private suspend fun _appendDeptInfo(document: Document): Document {
+        val deptId = document.getString(EntityExtraField.SCHEDULE_ENTITY_FIELD_DEPT_ID)
+        val deptJson = DepartmentCollection().readById(deptId = deptId)
+        val dept = parser.decodeFromString<DepartmentReadEntity>(deptJson)
+        return document
+            .append(ClassScheduleReadEntity::deptName.name, dept.name)
+            .append(ClassScheduleReadEntity::deptShortName.name, dept.shortname)
+    }
 
 }

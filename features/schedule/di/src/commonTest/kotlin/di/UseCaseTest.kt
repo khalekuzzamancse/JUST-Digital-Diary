@@ -11,7 +11,7 @@ class UseCaseTest {
     @Test
     fun classUseCaseTest() {
         runBlocking {
-            val response = DiFactory.createRetrieveClassScheduleUseCase().execute("")
+            val response = DiFactory.createRetrieveClassScheduleUseCase().execute()
             response.onSuccess {
                 println(response.getOrNull())
             }.onFailure {

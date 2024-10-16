@@ -1,13 +1,13 @@
 package schedule.domain.usecase
 
-import schedule.domain.model.ClassScheduleModel
+import schedule.domain.model.ClassScheduleReadModel
 import schedule.domain.repository.Repository
 
 class RetrieveClassScheduleUseCase(
     private val repository: Repository
 ) {
-    fun execute(deptId:String):Result<List<ClassScheduleModel>>{
+    suspend fun execute():Result<List<ClassScheduleReadModel>>{
         //check authentication then do operation
-        return  repository.retrieveClassSchedule(deptId)
+        return  repository.retrieveClassSchedule()
     }
 }
