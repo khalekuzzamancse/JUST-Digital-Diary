@@ -8,6 +8,5 @@ data class ClassScheduleWriteEntity(
     val year:String,
     val semester:String,
     val routine:List<Class>
-
 )
 
