@@ -1,7 +1,7 @@
 package schedule.data.service
 
+import core.customexception.CustomException
 import kotlinx.serialization.KSerializer
-import schedule.domain.exception.CustomException
 
 /**
  * After implementing the  repositories, we identified duplicate and common code

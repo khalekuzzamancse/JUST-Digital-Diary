@@ -1,14 +1,14 @@
 package academic.presentationlogic.controller.admin
 
-import academic.presentationlogic.controller.core.CoreController
+import academic.presentationlogic.controller.core.ICoreController
 import academic.presentationlogic.model.FacultyWriteModel
 import kotlinx.coroutines.flow.StateFlow
 
 /**
  * - The common part that can be used for both insert and update
- * - It child of [CoreController]
+ * - It child of [ICoreController]
  */
-internal interface FacultyEntryController : CoreController {
+internal interface FacultyEntryController : ICoreController {
     val validator: Validator
 
     /**

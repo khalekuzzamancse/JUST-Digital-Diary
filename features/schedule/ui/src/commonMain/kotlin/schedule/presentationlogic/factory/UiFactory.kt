@@ -2,16 +2,17 @@
 
 package schedule.presentationlogic.factory
 
-import schedule.di.DiFactory
+import schedule.di.DiContainer
 import schedule.presentationlogic.factory.class_schedule.AddCommand
 import schedule.presentationlogic.factory.class_schedule.AddCommandImpl
 import schedule.presentationlogic.factory.class_schedule.ClassScheduleInsertControllerImpl
 import schedule.presentationlogic.factory.class_schedule.ValidatorImpl
 import schedule.presentationlogic.factory.exam_schedule.ExamScheduleControllerImpl
 import schedule.presentationlogic.controller.ClassScheduleInsertController
-import schedule.presentationlogic.controller.ClassScheduleViewerController
+import schedule.presentationlogic.controller.ClassScheduleListController
 import schedule.presentationlogic.controller.ExamScheduleInsertController
 import schedule.presentationlogic.controller.core.AcademicInfoController
+import schedule.presentationlogic.factory.class_schedule.ClassScheduleListControllerImpl
 import schedule.presentationlogic.factory.core.AcademicInfoControllerImpl
 import schedule.presentationlogic.factory.core.AcademicInfoValidatorImpl
 
@@ -24,12 +25,12 @@ object UiFactory {
             validator = _createValidator(),
             addCommand = _createAddCommand(),
             academicController = _academicFormController(),
-            insertUseCase = DiFactory.insertUseCase()
+            insertUseCase = DiContainer.insertUseCase()
         )
 
-    fun classScheduleViewerController(): ClassScheduleViewerController =
-        ClassScheduleViewerControllerImpl(
-            readAllUseCase = DiFactory.createRetrieveClassScheduleUseCase()
+    fun classScheduleViewerController(): ClassScheduleListController =
+        ClassScheduleListControllerImpl(
+            readAllUseCase = DiContainer.readClassScheduleUseCase()
         )
 
     fun createExamScheduleFormController(): ExamScheduleInsertController =
@@ -45,6 +46,6 @@ object UiFactory {
 
     private fun _academicFormController(): AcademicInfoController = AcademicInfoControllerImpl(
         validator = AcademicInfoValidatorImpl(),
-        allDeptUseCase = DiFactory.readAllDeptUseCase()
+        allDeptUseCase = DiContainer.readAllDeptUseCase()
     )
 }

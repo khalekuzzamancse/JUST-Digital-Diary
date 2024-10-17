@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
  *
  */
 
-interface HolidayEditorController {
+internal interface HolidayEditorController {
     val currentMonthData: StateFlow<MonthData?>
     val currentYear: StateFlow<Int?>
     val selectedDates: StateFlow<Set<CalendarGridCell>>

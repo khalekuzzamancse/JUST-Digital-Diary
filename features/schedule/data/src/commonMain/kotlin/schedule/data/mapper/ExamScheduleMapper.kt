@@ -18,16 +18,7 @@ class ExamScheduleMapper {
         )
     }
 
-    // Convert ExamScheduleModel to ExamScheduleSchema
-    fun fromModelToSchema(model: ExamScheduleModel): ExamScheduleSchema {
-        return ExamScheduleSchema(
-            dept = model.dept,
-            session = model.session,
-            year = model.year,
-            semester = model.semester,
-            exams = model.exams.map { fromExamDetailsModelToSchema(it) } // Convert each ExamDetailsModel to ExamDetailsSchema
-        )
-    }
+
 
     // Helper to convert ExamDetailsSchema to ExamDetailsModel
     private fun fromExamDetailsSchemaToModel(schema: ExamDetailsSchema): ExamDetailsModel {
@@ -39,13 +30,5 @@ class ExamScheduleMapper {
         )
     }
 
-    // Helper to convert ExamDetailsModel to ExamDetailsSchema
-    private fun fromExamDetailsModelToSchema(model: ExamDetailsModel): ExamDetailsSchema {
-        return ExamDetailsSchema(
-            courseCode = model.courseCode,
-            courseTitle = model.courseTitle,
-            time = model.time,
-            date = model.date
-        )
-    }
+
 }

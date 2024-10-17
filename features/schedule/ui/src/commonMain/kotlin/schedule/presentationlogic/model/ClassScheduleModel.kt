@@ -17,4 +17,13 @@ data class ClassScheduleModel(
     fun areFieldsEmptyOrBlank(): Boolean {
         return deptName.isBlank() && session.isBlank() && year.isBlank() && semester.isBlank()
     }
+    companion object{
+        fun empty() =ClassScheduleModel(
+        deptName = "",
+        session = "",
+        year = "",
+        semester = "",
+        routine = emptyList()
+        )
+    }
 }

@@ -1,4 +1,4 @@
-@file:Suppress("className")
+@file:Suppress("className", "functionName")
 
 package academic.ui
 
@@ -6,20 +6,22 @@ import academic.presentationlogic.factory.UiFactory
 import academic.ui.admin.UpdateDeptRoute
 import academic.ui.admin.UpdateFacultyRoute
 import academic.ui.admin.UpdateTeacherRoute
-import academic.ui.core.BackButton
 import academic.ui.public_.FacultyNDeptRoute
 import academic.ui.public_.FacultyScreenViewModel
 import academic.ui.public_.TeachersRoute
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import common.ui.BackButton
 import common.ui.NavAnimations
 
 @Composable
@@ -31,39 +33,12 @@ fun AcademicNavGraph(
 ) {
 
     val navController = rememberNavController()
-    val goBack: () -> Unit = {
-        try {
-            navController.popBackStack()
-        } catch (_: Exception) {
-
-        }
-    }
-    val navigate: (route: String) -> Unit = {
-        try {
-            navController.navigate(it)
-        } catch (_: Exception) {
-
-        }
-    }
+    val navigator = remember { _Navigator(navController) }
     val processEvent: (AcademicModuleEvent) -> Unit = { event ->
         if (event !is AcademicModuleEvent.AdminEvent)
             onEvent(event)
         else {
-            when (event) {
-                is AcademicModuleEvent.UpdateFacultyRequest ->
-                    navigate(_NavRoute.UpdateFaculty.createRoute(event.id))
-
-                is AcademicModuleEvent.UpdateDeptRequest ->
-                    navigate(_NavRoute.UpdateDept.createRoute(event.id))
-
-                is AcademicModuleEvent.UpdateTeacherRequest ->
-                    navigate(_NavRoute.UpdateTeacher.createRoute(event.id))
-
-                else -> {
-
-                }
-
-            }
+            navigator.onNavigationEvent(event)
         }
 
     }
@@ -89,9 +64,7 @@ fun AcademicNavGraph(
             FacultyNDeptRoute(
                 viewModel = viewModel,
                 navigationIcon = navigationIcon,
-                onTeachersRequest = { deptId ->
-                    navigate(_NavRoute.TeacherList.createRoute(deptId))
-                },
+                onTeachersRequest =navigator::navigateToTeacherList,
                 onEvent = processEvent
 
             )
@@ -135,9 +108,7 @@ fun AcademicNavGraph(
                 UpdateFacultyRoute(
                     facultyId = id,
                     navigationIcon = {
-                        BackButton(
-                            onClick = goBack
-                        )
+                        BackButton(onClick = navigator::goBack)
                     }
                 )
             } else {
@@ -155,9 +126,7 @@ fun AcademicNavGraph(
             val id = _NavRoute.UpdateDept.getId(entry)
             if (id != null) {
                 UpdateDeptRoute(deptId = id, navigationIcon = {
-                    BackButton(
-                        onClick = goBack
-                    )
+                    BackButton(onClick = navigator::goBack)
                 })
             } else {
                 Text("Something went wrong")
@@ -177,9 +146,7 @@ fun AcademicNavGraph(
                 UpdateTeacherRoute(
                     teacherId = id,
                     navigationIcon = {
-                        BackButton(
-                            onClick = goBack
-                        )
+                        BackButton(onClick = navigator::goBack)
                     }
                 )
             } else {
@@ -191,10 +158,50 @@ fun AcademicNavGraph(
 
 }
 
-/**
- * - Since they are object(static field) so using function instead of store
- * to avoid store unnecessary something
- */
+private class _Navigator(
+    private val navController: NavHostController,
+) {
+    fun onNavigationEvent(event: AcademicModuleEvent) {
+        when (event) {
+            is AcademicModuleEvent.UpdateFacultyRequest ->
+                navigate(_NavRoute.UpdateFaculty.createRoute(event.id))
+
+            is AcademicModuleEvent.UpdateDeptRequest ->
+                navigate(_NavRoute.UpdateDept.createRoute(event.id))
+
+            is AcademicModuleEvent.UpdateTeacherRequest ->
+                navigate(_NavRoute.UpdateTeacher.createRoute(event.id))
+
+            else -> {
+
+            }
+
+        }
+    }
+
+    fun goBack() = _try {
+        navController.popBackStack()
+    }
+
+    private fun _try(block: () -> Unit) {
+        try {
+            block()
+        } catch (_: Exception) {
+
+        }
+    }
+    fun navigateToTeacherList(deptId: String){
+        navigate(_NavRoute.TeacherList.createRoute(deptId))
+    }
+
+    private fun navigate(route: String) = _try {
+        navController.navigate(route)
+    }
+
+
+}
+
+/**Since they are static fields (objects), using functions instead of storing them helps avoid unnecessary memory usage*/
 private sealed class _NavRoute {
     data object FacultyNDeptList {
         const val ROUTE = "faculty_and_dept"

@@ -4,16 +4,15 @@ package schedule.data.repository
 
 import core.database.factory.ApiFactory
 import core.database.network.JsonParser
-import data.service.withExceptionHandle
+import schedule.data.service.withExceptionHandle
 import kotlinx.serialization.builtins.ListSerializer
 import schedule.data.entity.DepartmentEntity
 import schedule.data.entity.ExamScheduleSchema
-import schedule.data.entity.schedule.ClassScheduleReadEntity
-import schedule.data.entity.schedule.ClassScheduleWriteEntity
+import schedule.data.entity.ClassScheduleReadEntity
+import schedule.data.entity.ClassScheduleWriteEntity
 import schedule.data.mapper.ExamScheduleMapper
-import schedule.data.mapper.ModelMapper
-import schedule.data.mapper.ReadEntityModelMapper
-import schedule.data.mapper.ReadEntityModelMapper.toEntity
+import schedule.data.mapper.EntityModelMapper
+import schedule.data.mapper.EntityModelMapper.toEntity
 import schedule.data.service.JsonHandler
 import schedule.domain.model.ClassScheduleReadModel
 import schedule.domain.model.ClassScheduleWriteModel
@@ -51,7 +50,7 @@ class RepositoryImpl internal constructor(
                     val entities =
                         json.parseOrThrow(ListSerializer(DepartmentEntity.serializer()))
                     return Result.success(
-                        with(ModelMapper) {
+                        with(EntityModelMapper) {
                             entities.sortedBy { it.priority }.map { it.toModel() }
                         }
                     )
@@ -72,7 +71,7 @@ class RepositoryImpl internal constructor(
                     val entities =
                         json.parseOrThrow(ListSerializer(ClassScheduleReadEntity.serializer()))
                     return Result.success(
-                        with(ReadEntityModelMapper) {
+                        with(EntityModelMapper) {
                             entities.map { it.toModel() }
                         }
                     )

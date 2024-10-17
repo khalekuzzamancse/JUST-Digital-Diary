@@ -4,10 +4,7 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.TeacherEntryController
 import academic.presentationlogic.controller.admin.UpdateTeacherController
-import academic.presentationlogic.mapper.AdminModelMapper
-import academic.presentationlogic.mapper.ReadModelMapper
-import common.ui.SnackBarMessage
-import core.customexception.CustomException
+import academic.presentationlogic.ModelMapper
 import faculty.domain.usecase.admin.ReadAllDepartmentUseCase
 import faculty.domain.usecase.admin.ReadTeacherUseCase
 import faculty.domain.usecase.admin.UpdateTeacherUseCase
@@ -39,14 +36,17 @@ internal class UpdateTeacherControllerImpl(
         //Can throw exception when try to convert string to integer in model mapper
         try {
             super.startLoading()
+
             writeUseCase
                 .execute(
                     teacherId,
-                    with(AdminModelMapper) { _teacherState.value.toDomainModelOrThrow() })
-                .updateStatusMsg(operationName = "Update")
+                    with(ModelMapper) { _teacherState.value.toDomainModelOrThrow() })
+                .showStatusMsg(operation = "Update")
+
             super.stopLoading()
+
         } catch (_: Exception) {
-            super.updateStatusMessage(SnackBarMessage.error("Failed,Make sure priority field as integer"))
+            "Priority must be an integer".showAsErrorMsg()
         }
     }
 
@@ -58,7 +58,7 @@ internal class UpdateTeacherControllerImpl(
                 .execute(teacherId)
                 .fold(
                     onSuccess = { model ->
-                        _teacherState.update { with(ReadModelMapper) { model.toEntryModel() } }
+                        _teacherState.update { with(ModelMapper) { model.toEntryModel() } }
                         try {
                             //TODO: Have a problem to data layer, dept  id is not loaded
                             // TODO: Refactor later, Edge case: all dept may not be leaded yet...
@@ -72,12 +72,12 @@ internal class UpdateTeacherControllerImpl(
                         }
                     },
                     onFailure = { exception ->
-                        exception.updateStatusMessage(optionalMsg = "Failed to fetch")
+                        exception.showStatusMsg(optionalMsg = "Unable to load teacher")
                     }
                 )
             super.stopLoading()
         } catch (_: Exception) {
-            super.updateStatusMessage(SnackBarMessage.error("Failed,Make sure priority field as integer"))
+            "Priority must be an integer".showAsErrorMsg()
         }
     }
 

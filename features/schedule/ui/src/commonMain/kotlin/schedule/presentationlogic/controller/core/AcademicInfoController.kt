@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.StateFlow
 import schedule.presentationlogic.model.DepartmentModel
 
 /**Recommend to use separate UI components for academic info because this is one time event*/
-interface AcademicInfoController :CoreController{
+interface AcademicInfoController :ICoreController{
     /**List of department that help the user to select under which department the schedule belongs to */
     val department: StateFlow<List<DepartmentModel>>
 

@@ -2,12 +2,10 @@
 
 package academic.presentationlogic.factory.public_
 
-import academic.presentationlogic.controller.core.CoreControllerImpl
+import academic.presentationlogic.controller.core.CoreController
 import academic.presentationlogic.controller.public_.DepartmentController
-import academic.presentationlogic.mapper.ReadModelMapper
+import academic.presentationlogic.ModelMapper
 import academic.presentationlogic.model.DepartmentReadModel
-import common.ui.SnackBarMessage
-import core.customexception.CustomException
 import faculty.domain.usecase.public_.ReadDepartmentsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +13,7 @@ import kotlinx.coroutines.flow.update
 
 internal class DepartmentsControllerImpl(
     private val userCase: ReadDepartmentsUseCase,
-) : DepartmentController, CoreControllerImpl() {
+) : DepartmentController, CoreController() {
 
     private val _departments = MutableStateFlow<List<DepartmentReadModel>>(emptyList())
     private val _selected = MutableStateFlow<Int?>(null)
@@ -36,12 +34,12 @@ internal class DepartmentsControllerImpl(
         result.fold(
             onSuccess = { models ->
                 _departments.update {
-                    with(ReadModelMapper){
+                    with(ModelMapper){
                         models.map { it.toModel() }
                     }
                 }
             },
-            onFailure = { exception -> exception.updateStatusMessage() }
+            onFailure = { exception -> exception.showStatusMsg() }
         )
         super.stopLoading()
     }

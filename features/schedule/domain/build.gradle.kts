@@ -6,6 +6,7 @@ kotlin {
         val commonMain by getting{
             dependencies {
                 implementation(projects.core.commonDocs)//for common docs comment
+                api(projects.core.customException)
             }
         }
         val commonTest by getting {

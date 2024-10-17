@@ -3,9 +3,7 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.FacultyEntryController
 import academic.presentationlogic.controller.admin.UpdateFacultyController
-import academic.presentationlogic.mapper.AdminModelMapper
-import common.ui.SnackBarMessage
-import core.customexception.CustomException
+import academic.presentationlogic.ModelMapper
 import faculty.domain.usecase.admin.ReadFacultyUseCase
 import faculty.domain.usecase.admin.UpdateFacultyUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -32,10 +30,10 @@ internal class UpdateFacultyControllerImpl(
 
     override suspend fun update() {
         super.startLoading()
-        val model = with(AdminModelMapper) { faculty.value.toDomainModelOrThrow() }
+        val model = with(ModelMapper) { faculty.value.toDomainModelOrThrow() }
 
         val result = writeUseCase.execute(facultyId,model)
-        result.updateStatusMsg(operationName = "Update")
+        result.showStatusMsg(operation = "Update")
         super.stopLoading()
     }
 
@@ -51,9 +49,7 @@ internal class UpdateFacultyControllerImpl(
                     )
                 }
             },
-            onFailure = { exception ->
-                exception.updateStatusMessage(optionalMsg = "Failed to fetch")
-            }
+            onFailure = { ex -> ex.showStatusMsg(optionalMsg = "Failed to fetch") }
         )
         super.stopLoading()
     }

@@ -10,4 +10,13 @@ internal data class DepartmentWriteModel(
     val shortname: String,
     val facultyId: String,
 
-    )
+    ) {
+    companion object {
+        fun empty() = DepartmentWriteModel(
+            priority = "",
+            name = "",
+            shortname = "",
+            facultyId = ""
+        )
+    }
+}

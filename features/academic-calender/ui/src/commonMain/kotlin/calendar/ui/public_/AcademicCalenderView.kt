@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import calendar.presentationlogic.controller.public_.CalendarViewController
 import calendar.ui.component.AcademicCalender
 import calendar.ui.component.ProgressBarDecorator
-import calendar.ui.public_.view_calender.CalendarViewController
 
 
 /**

@@ -35,7 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import common.ui.EmptyContentScreen
-import schedule.di.DiFactory
+import schedule.di.DiContainer
 import schedule.ui.core.SessionHeader
 import schedule.ui.core.TextSizeMeasurer
 import schedule.presentationlogic.model.ExamDetailsModel
@@ -49,7 +49,7 @@ import schedule.presentationlogic.model.ExamScheduleModel
 fun ViewExamScheduleScreen() {
     var examSchedule by remember { mutableStateOf<ExamScheduleModel?>(null) }
     LaunchedEffect(Unit) {
-        val result = DiFactory.createRetrieveExaScheduleUseCase().execute("")
+        val result = DiContainer.readExaScheduleUseCase().execute("")
         result.onSuccess {
             try {
 

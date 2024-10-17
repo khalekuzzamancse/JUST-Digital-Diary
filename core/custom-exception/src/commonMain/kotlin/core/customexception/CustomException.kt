@@ -40,7 +40,7 @@ open class CustomException(override val message: String, open val debugMessage: 
      * @property debugMessage A detailed message describing the unexpected error.
      */
     class UnKnownException(exception: Throwable) : CustomException(
-        message = "UnKnown exception",
+        message = "Something  went wrong",
         debugMessage = "${exception.printStackTrace()}"
     )
 

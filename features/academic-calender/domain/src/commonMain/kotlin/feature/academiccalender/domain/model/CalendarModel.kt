@@ -1,4 +1,4 @@
-@file:Suppress("UnUsed")
+@file:Suppress("unused")
 
 package feature.academiccalender.domain.model
 

@@ -11,8 +11,23 @@ internal data class TeacherWriteModel(
     val phone: String,
     val designations: String,
     val deptId: String,
-    val priority: String,//convert to Int,used as string to use as label in UI
+    val priority: String, // Convert to Int later
     val additionalEmail: String?,
     val profileImageLink: String?,
     val roomNo: String?,
-)
+) {
+    companion object {
+        fun empty() = TeacherWriteModel(
+            name = "",
+            email = "",
+            achievements = "",
+            phone = "",
+            designations = "",
+            deptId = "",
+            priority = "0", // Defaulting priority to "0" as a string
+            additionalEmail = null,
+            profileImageLink = null,
+            roomNo = null
+        )
+    }
+}

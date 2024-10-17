@@ -2,9 +2,7 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.InsertTeacherController
 import academic.presentationlogic.controller.admin.TeacherEntryController
-import academic.presentationlogic.mapper.AdminModelMapper
-import common.ui.SnackBarMessage
-import core.customexception.CustomException
+import academic.presentationlogic.ModelMapper
 import faculty.domain.usecase.admin.InsertTeacherUseCase
 import faculty.domain.usecase.admin.ReadAllDepartmentUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -26,14 +24,15 @@ internal class InsertTeacherControllerImp(
     override suspend fun insert() {
         //Can throw exception when try to convert string to integer in model mapper
         try {
-            println("Request")
             super.startLoading()
+
             writeUseCase
-                .execute(with(AdminModelMapper) { _teacherState.value.toDomainModelOrThrow() })
-                .updateStatusMsg(operationName = "Insertion")
+                .execute(with(ModelMapper) { _teacherState.value.toDomainModelOrThrow() })
+                .showStatusMsg(operation = "Insertion")
             super.stopLoading()
+
         } catch (_: Exception) {
-            "Failed,Make sure priority field as integer".updateAsErrorMessage()
+            "Priority must be an integer".showAsErrorMsg()
         }
     }
 

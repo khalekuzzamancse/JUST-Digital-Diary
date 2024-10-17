@@ -4,9 +4,7 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.FacultyEntryController
 import academic.presentationlogic.controller.admin.InsertFacultyController
-import academic.presentationlogic.mapper.AdminModelMapper
-import common.ui.SnackBarMessage
-import core.customexception.CustomException
+import academic.presentationlogic.ModelMapper
 import faculty.domain.usecase.admin.InsertFacultyUseCase
 
 /**
@@ -22,12 +20,18 @@ internal class InsertFacultyControllerImpl(
     }
 
     override suspend fun insert() {
-        val model = with(AdminModelMapper) { faculty.value.toDomainModelOrThrow() }
-        super.startLoading()
-        useCase.execute(model)
-            .updateStatusMsg(operationName = "Insertion")
+        try {
+            val model = with(ModelMapper) { faculty.value.toDomainModelOrThrow() }
+            super.startLoading()
+            useCase.execute(model)
+                .showStatusMsg(operation = "Insertion")
 
-        super.stopLoading()
+            super.stopLoading()
+        }
+        catch (_:Exception){
+            "Priority must be an integer".showAsErrorMsg()
+        }
+
 
     }
 

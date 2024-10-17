@@ -8,7 +8,7 @@ import feature.academiccalender.domain.model.Holiday
 object ModelMapper {
     fun holidayModel(year: Int, yearData: List<MonthData>): AcademicCalender2 {
 
-        val holidays: List<List<Holiday>> = yearData.mapIndexed { index, month ->
+        val holidays: List<List<Holiday>> = yearData.mapIndexed { _, month ->
             month.cells.mapNotNull { cell ->
                 //if has holiday on that day
                 val day = cell.dayOfMonth

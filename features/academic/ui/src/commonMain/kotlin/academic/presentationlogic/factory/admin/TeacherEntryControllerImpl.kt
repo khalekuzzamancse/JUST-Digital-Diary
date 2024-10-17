@@ -3,12 +3,10 @@
 package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.TeacherEntryController
-import academic.presentationlogic.controller.core.CoreControllerImpl
-import academic.presentationlogic.mapper.ReadModelMapper
+import academic.presentationlogic.controller.core.CoreController
+import academic.presentationlogic.ModelMapper
 import academic.presentationlogic.model.TeacherWriteModel
 import academic.presentationlogic.model.DepartmentReadModel
-import common.ui.SnackBarMessage
-import core.customexception.CustomException
 import faculty.domain.usecase.admin.ReadAllDepartmentUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,9 +21,9 @@ import kotlinx.coroutines.flow.update
 internal open class TeacherEntryControllerImpl(
     override val validator: TeacherEntryController.Validator,
     private val allDeptUseCase: ReadAllDepartmentUseCase,
-) : TeacherEntryController, CoreControllerImpl() {
+) : TeacherEntryController, CoreController() {
 
-    protected val _teacherState = MutableStateFlow(_emptyState())
+    protected val _teacherState = MutableStateFlow(TeacherWriteModel.empty())
     private val _departments = MutableStateFlow<List<DepartmentReadModel>>(emptyList())
     private val _selectedDeptIndex = MutableStateFlow<Int?>(null)
 
@@ -89,30 +87,14 @@ internal open class TeacherEntryControllerImpl(
             .execute()
             .fold(
                 onSuccess = { models ->
-                    with(ReadModelMapper){
+                    with(ModelMapper){
                         models.map { it.toModel() }
                     }
                 },
-                onFailure = { exception ->
-                  exception.updateStatusMessage("Failed to fetch dept list")
-                }
+                onFailure = { ex -> ex.showStatusMsg(optionalMsg = "Unable to load departments") }
             )
         super.stopLoading()
     }
 
-
-    //TODO:Helper methods section
-    private fun _emptyState() = TeacherWriteModel(
-        name = "",
-        email = "",
-        additionalEmail = "",
-        achievements = "",
-        phone = "",
-        deptId = "",
-        roomNo = "",
-        designations = "",
-        priority = "",
-        profileImageLink = ""
-    )
 
 }

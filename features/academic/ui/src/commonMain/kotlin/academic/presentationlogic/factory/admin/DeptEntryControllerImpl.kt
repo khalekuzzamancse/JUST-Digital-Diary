@@ -3,12 +3,10 @@
 package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.DeptEntryController
-import academic.presentationlogic.controller.core.CoreControllerImpl
-import academic.presentationlogic.mapper.ReadModelMapper
+import academic.presentationlogic.controller.core.CoreController
+import academic.presentationlogic.ModelMapper
 import academic.presentationlogic.model.DepartmentWriteModel
 import academic.presentationlogic.model.FacultyReadModel
-import common.ui.SnackBarMessage
-import core.customexception.CustomException
 import faculty.domain.usecase.public_.ReadAllFactualityUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,9 +18,9 @@ import kotlinx.coroutines.launch
 internal open class DeptEntryControllerImpl(
     private val readUseCase: ReadAllFactualityUseCase,
     override val validator: DeptEntryController.Validator
-) : DeptEntryController, CoreControllerImpl() {
+) : DeptEntryController, CoreController() {
 
-    protected val _dept = MutableStateFlow(DepartmentWriteModel("", "", "", ""))
+    protected val _dept = MutableStateFlow(DepartmentWriteModel.empty())
 
     private val _faculty = MutableStateFlow<List<FacultyReadModel>>(emptyList())
     private val _selectedFaculty = MutableStateFlow<Int?>(null)
@@ -50,21 +48,21 @@ internal open class DeptEntryControllerImpl(
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
-            retrieveFaculties()
+            readFaculties()
         }
     }
 
 
-    protected suspend fun retrieveFaculties() {
+    protected suspend fun readFaculties() {
         super.startLoading()
         readUseCase
             .execute()
             .fold(
                 onSuccess = { models ->
-                    with(ReadModelMapper) { _faculty.update { models.map { it.toModel() } } }
-                    "Faculty list updated".updateAsSuccessMessage()
+                    with(ModelMapper) { _faculty.update { models.map { it.toModel() } } }
+                    "Faculty list updated".showAsNeutralMsg()
                 },
-                onFailure = { exception -> exception.updateStatusMessage("failed to load faculties") }
+                onFailure = { exception -> exception.showStatusMsg(optionalMsg = "Unable to load faculties") }
             )
         super.stopLoading()
     }

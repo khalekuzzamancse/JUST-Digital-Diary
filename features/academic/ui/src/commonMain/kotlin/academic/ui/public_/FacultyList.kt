@@ -29,7 +29,9 @@ internal fun Faculty(
     val selected = controller.selected.collectAsState().value
     val isNotFetching =!(controller.isLoading.collectAsState().value)
     if (faculties.isEmpty()&&isNotFetching) {
+
         EmptyContentScreen(message = "No faculty found")
+
     } else {
         Column(modifier.verticalScroll(rememberScrollState())) {
             faculties.forEachIndexed { index, faculty ->

@@ -2,8 +2,8 @@ package data
 
 import core.database.factory.ApiFactory
 import data.entity.AcademicCalenderEntity
-import data.misc.CalendarBuilder
-import data.misc.HodidayAdder
+import data.service.CalendarBuilder
+import data.service.HolidayAdder
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import kotlin.test.Test
@@ -32,8 +32,8 @@ class RepositoryTest {
                 println("holidays: $json")
                 println("--------")
                 val entity=Json.decodeFromString(AcademicCalenderEntity.serializer(),json)
-                val rawCalender=CalendarBuilder().build(entity.year)
-                val academicCalender=HodidayAdder().add(rawCalender,entity)
+                val rawCalender= CalendarBuilder().build(entity.year)
+                val academicCalender= HolidayAdder().add(rawCalender,entity)
 
                 academicCalender.months.forEach {
                     println(it.month.name)

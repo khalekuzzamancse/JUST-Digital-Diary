@@ -6,8 +6,8 @@ import core.database.factory.ApiFactory
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
-import schedule.data.entity.schedule.ClassScheduleReadEntity
-import schedule.data.mapper.ReadEntityModelMapper
+import schedule.data.entity.ClassScheduleReadEntity
+import schedule.data.mapper.EntityModelMapper
 import kotlin.test.Test
 import kotlin.test.fail
 
@@ -99,7 +99,7 @@ class ScheduleApiTest {
     fun readAllEntityModelTest() {
         executeTest {
             val json = api.readAll()
-            val model = with(ReadEntityModelMapper) {
+            val model = with(EntityModelMapper) {
                 parser
                     .decodeFromString(ListSerializer(ClassScheduleReadEntity.serializer()), json)
                     .map { it.toModel() }

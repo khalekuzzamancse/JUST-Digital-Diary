@@ -1,10 +1,7 @@
 package academic.ui.admin
 
 import academic.presentationlogic.controller.admin.FacultyEntryController
-import academic.presentationlogic.controller.admin.InsertFacultyController
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
@@ -12,12 +9,11 @@ import androidx.compose.material.icons.outlined.Badge
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import common.ui.CustomTextField
+import common.ui.VerticalSpace_8
 
 /**
  * Will be used for both add and update
@@ -35,14 +31,14 @@ internal fun FacultyEntryForm(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Spacer(Modifier.height(8.dp))
         CustomTextField(
             label = "Faculty Name",
             value = controller.faculty.collectAsState().value.name,
             onValueChanged = controller::onNameChanged,
             leadingIcon = Icons.Outlined.School
         )
-        Spacer(Modifier.height(8.dp))
+        VerticalSpace_8()
+
         CustomTextField(
             label = "Priority",
             value = controller.faculty.collectAsState().value.priority,

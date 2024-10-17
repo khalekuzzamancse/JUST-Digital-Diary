@@ -1,7 +1,6 @@
 @file:Suppress("unused")
 package schedule.domain.usecase
 
-import schedule.domain.model.ClassScheduleReadModel
 import schedule.domain.model.ClassScheduleWriteModel
 import schedule.domain.repository.Repository
 

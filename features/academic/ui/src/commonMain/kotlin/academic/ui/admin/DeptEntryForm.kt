@@ -2,8 +2,6 @@ package academic.ui.admin
 
 import academic.presentationlogic.controller.admin.DeptEntryController
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
@@ -16,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import common.ui.CustomTextField
 import common.ui.DropDown
+import common.ui.VerticalSpace_8
 
 /**
  * Will be used for both add and update
@@ -40,14 +39,16 @@ internal fun DeptEntryForm(
             leadingIcon = Icons.Outlined.School,
             onOptionSelected = controller::onFacultySelected,
         )
-        Spacer(Modifier.height(8.dp))
+        VerticalSpace_8()
+
         CustomTextField(
             label = "Department Name",
             value = controller.dept.collectAsState().value.name,
             onValueChanged = controller::onNameChanged,
             leadingIcon = Icons.Outlined.School
         )
-        Spacer(Modifier.height(8.dp))
+        VerticalSpace_8()
+
         CustomTextField(
             label = "Short name",
             value = controller.dept.collectAsState().value.shortname,
@@ -55,7 +56,8 @@ internal fun DeptEntryForm(
             leadingIcon = Icons.Outlined.School
         )
 
-        Spacer(Modifier.height(8.dp))
+        VerticalSpace_8()
+
         CustomTextField(
             label = "Priority",
             value = controller.dept.collectAsState().value.priority,

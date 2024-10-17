@@ -11,13 +11,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-
-import schedule.domain.exception.CustomException
 import schedule.domain.usecase.InsertCalenderUseCase
 import schedule.presentationlogic.controller.ClassScheduleInsertController
 import schedule.presentationlogic.controller.core.AcademicInfoController
-import schedule.presentationlogic.controller.core.CoreControllerImpl
-import schedule.presentationlogic.mapper.ModelMapper
+import schedule.presentationlogic.controller.core.CoreController
+import schedule.presentationlogic.ModelMapper
 import schedule.presentationlogic.model.ClassDetailModel
 import schedule.presentationlogic.model.ClassScheduleModel
 
@@ -34,10 +32,10 @@ internal class ClassScheduleInsertControllerImpl internal constructor(
     private val addCommand: AddCommand,
     override val academicController: AcademicInfoController,
     private val insertUseCase: InsertCalenderUseCase,
-) : ClassScheduleInsertController, CoreControllerImpl() {
+) : ClassScheduleInsertController, CoreController() {
 
     private val _academicFormFilled = MutableStateFlow(false)
-    private val _schedule = MutableStateFlow(toEmpty())
+    private val _schedule = MutableStateFlow(ClassScheduleModel.empty())
     private val _courseCode = MutableStateFlow("")
     private var deptId = ""//used to while inserting or updating to server or database
 
@@ -71,18 +69,9 @@ internal class ClassScheduleInsertControllerImpl internal constructor(
     override suspend fun insert() {
         super.startLoading()
         insertUseCase.execute(
-            model = with(ModelMapper){schedule.value.toModel()},
+            model = with(ModelMapper) { schedule.value.toModel() },
             deptId = deptId
-        ).fold(
-            onSuccess = {
-            },
-            onFailure = { exception ->
-                when (exception) {
-                    is CustomException -> super.updateErrorMessage(exception.message)
-                    else -> super.updateErrorMessage("Failed upload")
-                }
-            }
-        )
+        ).showStatusMsg(operation = "Insert")
         super.stopLoading()
 
     }
@@ -148,14 +137,7 @@ internal class ClassScheduleInsertControllerImpl internal constructor(
         return true
     }
 
-    //TODO:Helper method section
-    private fun toEmpty() = ClassScheduleModel(
-        deptName = "",
-        session = "",
-        year = "",
-        semester = "",
-        routine = emptyList()
-    )
+
 
     private fun MutableStateFlow<ClassScheduleModel>._checkAcademicInfoFilled() =
         this.value.deptName.isNotBlank()

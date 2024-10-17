@@ -4,9 +4,7 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.DeptEntryController
 import academic.presentationlogic.controller.admin.UpdateDeptController
-import academic.presentationlogic.mapper.AdminModelMapper
-import common.ui.SnackBarMessage
-import core.customexception.CustomException
+import academic.presentationlogic.ModelMapper
 import faculty.domain.usecase.admin.ReadDeptUseCase
 import faculty.domain.usecase.admin.UpdateDepartmentUseCase
 import faculty.domain.usecase.public_.ReadAllFactualityUseCase
@@ -29,7 +27,7 @@ internal class UpdateDeptControllerImpl(
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
-            super.retrieveFaculties()
+            super.readFaculties()
         }
         CoroutineScope(Dispatchers.Default).launch {
             _readDept()
@@ -43,8 +41,8 @@ internal class UpdateDeptControllerImpl(
     override suspend fun update() {
         super.startLoading()
         writeUseCase
-            .execute(deptId, with(AdminModelMapper) { _dept.value.toDomainModelOrThrow() })
-            .updateStatusMsg(operationName = "Update")
+            .execute(deptId, with(ModelMapper) { _dept.value.toDomainModelOrThrow() })
+            .showStatusMsg(operation = "Update")
         super.stopLoading()
     }
 
@@ -75,9 +73,7 @@ internal class UpdateDeptControllerImpl(
 
 
                 },
-                onFailure = { exception ->
-                    exception.updateStatusMessage("Failed to fetch")
-                }
+                onFailure = { exception -> exception.showStatusMsg(optionalMsg = "Unable to load departments") }
             )
         super.stopLoading()
     }

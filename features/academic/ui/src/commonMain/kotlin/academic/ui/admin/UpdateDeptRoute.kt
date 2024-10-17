@@ -2,9 +2,7 @@ package academic.ui.admin
 
 import academic.presentationlogic.factory.UiFactory
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -17,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import common.ui.SnackNProgressBarDecorator
 import common.ui.UpdateButton
+import common.ui.VerticalSpace_32
 import kotlinx.coroutines.launch
 
 @Composable
@@ -43,7 +42,8 @@ internal fun UpdateDeptRoute(
                 modifier = Modifier,
                 controller = controller,
             )
-            Spacer(Modifier.height(32.dp))
+            VerticalSpace_32()
+
             UpdateButton(
                 modifier = Modifier.widthIn(min = 100.dp, max = 300.dp).fillMaxWidth()
                     .align(Alignment.CenterHorizontally),

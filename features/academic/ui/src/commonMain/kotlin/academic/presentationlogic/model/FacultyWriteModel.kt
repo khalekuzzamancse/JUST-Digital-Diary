@@ -6,5 +6,12 @@ package academic.presentationlogic.model
  */
 internal data class FacultyWriteModel(
     val priority: String,
-    val name:String,
-)
+    val name: String,
+) {
+    companion object {
+        fun empty() = FacultyWriteModel(
+            priority = "",
+            name = ""
+        )
+    }
+}

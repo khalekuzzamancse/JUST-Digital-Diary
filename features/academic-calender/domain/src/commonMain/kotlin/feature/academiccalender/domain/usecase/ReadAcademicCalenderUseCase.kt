@@ -1,4 +1,4 @@
-@file:Suppress("UnUsed")
+@file:Suppress("unused")
 
 package feature.academiccalender.domain.usecase
 
@@ -8,6 +8,7 @@ import common.docs.ServiceDoc
 import common.docs.UseCaseDoc
 import feature.academiccalender.domain.model.CalendarModel
 import feature.academiccalender.domain.repository.CalenderRepository
+import core.customexception.CustomException
 
 /**
  * - Use case for retrieving a calendar to the `Repository`
@@ -23,7 +24,6 @@ class ReadAcademicCalenderUseCase(
     /**
      * Executes the use case for retrieving a calendar for a specific year
      *
-     * @param year The year for which the calendar should be retrieved
      * @return [Result] wrapping either the [CalendarModel] on success, or a [CustomException] on failure
      */
     suspend fun execute(): Result<CalendarModel> {

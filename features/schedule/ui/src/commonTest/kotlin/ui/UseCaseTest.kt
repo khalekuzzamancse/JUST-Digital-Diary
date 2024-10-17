@@ -1,7 +1,7 @@
 package ui
 
 
-import schedule.di.DiFactory
+import schedule.di.DiContainer
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.fail
@@ -11,7 +11,7 @@ class UseCaseTest {
     @Test
     fun classUseCaseTest() {
         runBlocking {
-            val response = DiFactory.createRetrieveClassScheduleUseCase().execute()
+            val response = DiContainer.readClassScheduleUseCase().execute()
             response.onSuccess {
                 println(response.getOrNull())
             }.onFailure {
@@ -24,7 +24,7 @@ class UseCaseTest {
     @Test
     fun examUseCaseTest() {
         runBlocking {
-            val response = DiFactory.createRetrieveExaScheduleUseCase().execute("")
+            val response = DiContainer.readExaScheduleUseCase().execute("")
             response.onSuccess {
                 println(response.getOrNull())
             }.onFailure {

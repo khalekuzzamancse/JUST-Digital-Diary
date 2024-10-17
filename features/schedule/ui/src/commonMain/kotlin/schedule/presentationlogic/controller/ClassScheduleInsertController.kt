@@ -4,7 +4,7 @@ package schedule.presentationlogic.controller
 
 import kotlinx.coroutines.flow.StateFlow
 import schedule.presentationlogic.controller.core.AcademicInfoController
-import schedule.presentationlogic.controller.core.CoreController
+import schedule.presentationlogic.controller.core.ICoreController
 import schedule.presentationlogic.model.ClassScheduleModel
 
 /**
@@ -17,7 +17,7 @@ import schedule.presentationlogic.model.ClassScheduleModel
  *   or kept open based on the result
  */
 
-interface ClassScheduleInsertController:CoreController {
+interface ClassScheduleInsertController:ICoreController {
     val days: List<String>
         get() = listOf("Sat", "Sun", "Mon", "Tue", "Wed")
 

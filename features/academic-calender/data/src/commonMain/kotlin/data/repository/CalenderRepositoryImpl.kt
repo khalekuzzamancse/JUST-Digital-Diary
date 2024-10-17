@@ -5,11 +5,11 @@ package data.repository
 import core.database.factory.ApiFactory
 import core.database.network.JsonParser
 import data.entity.AcademicCalenderEntity
-import data.misc.CalendarBuilder
-import data.misc.HodidayAdder
-import data.misc.JsonHandler
-import data.misc.ModelMapper
-import data.misc.withExceptionHandle
+import data.service.CalendarBuilder
+import data.service.HolidayAdder
+import data.service.JsonHandler
+import data.factory.ModelMapper
+import data.service.withExceptionHandle
 import feature.academiccalender.domain.model.AcademicCalender2
 import feature.academiccalender.domain.model.CalendarModel
 import feature.academiccalender.domain.model.DayOfWeek
@@ -56,7 +56,7 @@ class CalenderRepositoryImpl internal constructor(
                         .addWeekend(DayOfWeek.THURSDAY)
                         .addWeekend(DayOfWeek.FRIDAY)
                         .build(entity.year)
-                    val academicCalender = HodidayAdder().add(rawCalender, entity)
+                    val academicCalender = HolidayAdder().add(rawCalender, entity)
                     Result.success(academicCalender)
                 } else
                     Result.failure(parseAsServerMessageOrThrowCustomException(json))

@@ -1,4 +1,4 @@
-@file:Suppress("UnUsed")
+@file:Suppress("unused")
 
 package feature.academiccalender.domain.usecase
 
@@ -6,7 +6,7 @@ import common.docs.CustomExceptionDoc
 import common.docs.RepositoryDoc
 import common.docs.ServiceDoc
 import common.docs.UseCaseDoc
-import feature.academiccalender.domain.model.AcademicCalendar
+import core.customexception.CustomException
 import feature.academiccalender.domain.model.AcademicCalender2
 import feature.academiccalender.domain.repository.CalenderRepository
 
@@ -25,7 +25,7 @@ class InsertUseCase(
     /**
      * Executes the use case for adding a calendar
      *
-     * @param calendar The [AcademicCalendar] to be added
+     * @param calendar The [AcademicCalender2] to be added
      * @return [CustomException]? Returns an exception if validation or adding fails, otherwise `null` on success
      */
    suspend fun execute(calendar: AcademicCalender2):Result<Unit> {

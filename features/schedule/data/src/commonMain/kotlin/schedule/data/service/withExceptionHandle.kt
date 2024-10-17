@@ -1,6 +1,4 @@
-package data.service
-
-import schedule.data.service.JsonHandler
+package schedule.data.service
 
 /**
  * - After Implementing the Repositories, found this portion is common for all methods, that is why

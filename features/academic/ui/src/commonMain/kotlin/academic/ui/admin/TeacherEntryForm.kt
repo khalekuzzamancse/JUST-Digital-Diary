@@ -22,6 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import common.ui.CustomTextField
 import common.ui.DropDown
+import common.ui.VerticalSpace_16
 
 /**
  * Composable function that displays a form to edit a TeacherModel.
@@ -43,21 +44,24 @@ internal fun TeacherEntryForm(
             leadingIcon = Icons.Outlined.School,
             onOptionSelected = controller::onDeptChange,
         )
-        _VerticalSpace()
+       VerticalSpace_16()
+
         CustomTextField(
             label = "Name",
             value = teacher.name,
             onValueChanged = controller::onNameChange,
             leadingIcon = Icons.Outlined.Person
         )
-        _VerticalSpace()
+        VerticalSpace_16()
+
         CustomTextField(
             label = "Email",
             value = teacher.email,
             onValueChanged = controller::onEmailChange,
             leadingIcon = Icons.Outlined.Email
         )
-        _VerticalSpace()
+
+        VerticalSpace_16()
 
         CustomTextField(
             label = "Additional Email",
@@ -65,7 +69,8 @@ internal fun TeacherEntryForm(
             onValueChanged = controller::onAdditionalEmailChange,
             leadingIcon = Icons.Outlined.Email
         )
-        _VerticalSpace()
+
+        VerticalSpace_16()
 
         CustomTextField(
             label = "Achievements",
@@ -73,7 +78,8 @@ internal fun TeacherEntryForm(
             onValueChanged = controller::onAchievementsChange,
             leadingIcon = Icons.Outlined.Description
         )
-        _VerticalSpace()
+
+        VerticalSpace_16()
 
         CustomTextField(
             label = "Phone",
@@ -86,7 +92,8 @@ internal fun TeacherEntryForm(
             keyboardType = KeyboardType.Phone,
             leadingIcon = Icons.Outlined.Phone
         )
-        _VerticalSpace()
+
+        VerticalSpace_16()
 
         CustomTextField(
             label = "Designations",
@@ -95,7 +102,8 @@ internal fun TeacherEntryForm(
             leadingIcon = Icons.Outlined.Description
         )
 
-        _VerticalSpace()
+        VerticalSpace_16()
+
         CustomTextField(
             label = "Room No",
             value = teacher.roomNo?:"",
@@ -105,7 +113,9 @@ internal fun TeacherEntryForm(
             keyboardType = KeyboardType.Number,
             leadingIcon = Icons.Outlined.Room
         )
-        _VerticalSpace()
+
+        VerticalSpace_16()
+
         CustomTextField(
             label = "Priority",
             value = teacher.priority,
@@ -114,7 +124,9 @@ internal fun TeacherEntryForm(
             },
             leadingIcon = Icons.Outlined.Badge
         )
-        _VerticalSpace()
+
+        VerticalSpace_16()
+
         CustomTextField(
             label = "Image Link",
             value = teacher.profileImageLink?:"",

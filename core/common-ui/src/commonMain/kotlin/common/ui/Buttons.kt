@@ -7,11 +7,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Update
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -83,5 +86,20 @@ fun UpdateButton(
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(vertical = 8.dp)
         )
+    }
+}
+
+
+@Composable
+fun BackButton(onClick: () -> Unit) {
+    IconButton(onClick = onClick) {
+        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+    }
+}
+
+@Composable
+fun MenuButton(onMenuClick: () -> Unit) {
+    IconButton(onClick = onMenuClick) {
+        Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu")
     }
 }

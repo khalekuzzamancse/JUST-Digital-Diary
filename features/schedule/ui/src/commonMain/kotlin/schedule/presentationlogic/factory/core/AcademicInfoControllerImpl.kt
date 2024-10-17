@@ -7,16 +7,15 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import schedule.domain.exception.CustomException
 import schedule.domain.usecase.ReadAllDeptUseCase
 import schedule.presentationlogic.controller.core.AcademicInfoController
-import schedule.presentationlogic.controller.core.CoreControllerImpl
+import schedule.presentationlogic.controller.core.CoreController
 import schedule.presentationlogic.model.DepartmentModel
 
 internal class AcademicInfoControllerImpl(
     override val validator: AcademicInfoController.Validator,
     private val allDeptUseCase: ReadAllDeptUseCase,
-) : AcademicInfoController,CoreControllerImpl() {
+) : AcademicInfoController,CoreController() {
     private val _selectedDeptIndex = MutableStateFlow<Int?>(null)
     private val _dept = MutableStateFlow<List<DepartmentModel>>(emptyList())
     private val _year = MutableStateFlow("")
@@ -69,18 +68,7 @@ internal class AcademicInfoControllerImpl(
                     }
 
                 },
-                onFailure = { exception ->
-                    when (exception) {
-                        is CustomException -> {
-                            super.updateErrorMessage(exception.message)
-                        }
-
-                        else -> {
-                            super.updateErrorMessage("Failed to load faculties")
-                        }
-
-                    }
-                }
+                onFailure = { ex ->ex.showStatusMsg(optionalMsg = "Unable to load departments") }
             )
         super.stopLoading()
     }

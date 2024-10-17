@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,11 +36,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import calendar.presentationlogic.factory.UIFactory
 import calendar.presentationlogic.model.HolidayType
-import calendar.ui.admin.add_calender.CalenderEntryViewModel
 import calendar.ui.component.AcademicCalender
 import calendar.ui.component.ProgressBarDecorator
-import calendar.ui.component.SnackNProgressBarDecorator
 import common.ui.InsertButton
+import common.ui.SnackNProgressBarDecorator
 import common.ui.UpdateButton
 import kotlinx.coroutines.launch
 
@@ -54,7 +54,7 @@ fun InsertAcademicCalenderRoute(modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
     SnackNProgressBarDecorator(
         isLoading = viewModel.controller.isLoading.collectAsState().value,
-        snackBarMessage = viewModel.controller.statusMessage.collectAsState().value,
+        message = viewModel.controller.statusMessage.collectAsState().value,
     ) {
         _HolidayEditorUI(
             controller = viewModel.editor,
@@ -117,7 +117,7 @@ private fun _HolidayEditorUI(
     }
 
     if (cellData == null) {
-        ProgressBarDecorator()
+        ProgressBarDecorator(Modifier.fillMaxSize())
     } else {
         _Scaffold(
             modifier = Modifier.fillMaxWidth(),

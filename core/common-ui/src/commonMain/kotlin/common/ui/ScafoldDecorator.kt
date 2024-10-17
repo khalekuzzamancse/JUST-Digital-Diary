@@ -2,24 +2,19 @@ package common.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**
@@ -29,11 +24,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun SnackNProgressBarDecorator(
     modifier: Modifier = Modifier,
-    isLoading: Boolean,
-    message: String?,
+    isLoading: Boolean=false,
+    message: String?=null,
     navigationIcon: (@Composable () -> Unit)? = null,
     fab: @Composable () -> Unit = {},
-    content: @Composable BoxScope.() -> Unit,
+    content: @Composable BoxScope.() -> Unit={},
 ) {
     SnackNProgressBarDecorator(
         modifier = modifier,
@@ -50,20 +45,32 @@ fun SnackNProgressBarDecorator(
  * @param message snackBar message
  * @param isLoading
  */
+
+
 @Composable
 fun SnackNProgressBarDecorator(
     modifier: Modifier = Modifier,
-    isLoading: Boolean,
-    message: SnackBarMessage?,
+    isLoading: Boolean=false,
+    message: SnackBarMessage?=null,
     navigationIcon: (@Composable () -> Unit)? = null,
     fab: @Composable () -> Unit = {},
     content: @Composable BoxScope.() -> Unit,
 ) {
     val hostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+
+    // Track the previous snack bar coroutine
+    var previousJob: Job? by remember { mutableStateOf(null) }
+
     if (message != null) {
-        scope.launch {
-            hostState.showSnackbar(message = message.text)
+        LaunchedEffect(message) {
+            // Cancel the previous snack bar if a new message arrives
+            previousJob?.cancel()
+
+            // Launch a new coroutine for the latest message
+            previousJob = scope.launch {
+                hostState.showSnackbar(message = message.text)
+            }
         }
     }
 
@@ -84,17 +91,22 @@ fun SnackNProgressBarDecorator(
         },
         floatingActionButton = fab
     ) { innerPadding ->
-        Box(Modifier.padding(innerPadding).fillMaxSize()) {
+        Box(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        ) {
             content()
+
             if (isLoading)
                 _LoadingUi(
-                    Modifier.matchParentSize().align(Alignment.Center)
+                    Modifier
+                        .matchParentSize()
+                        .align(Alignment.Center)
                         .background(Color.Gray.copy(alpha = 0.7f))
                 )
         }
-
     }
-
 }
 
 @Composable

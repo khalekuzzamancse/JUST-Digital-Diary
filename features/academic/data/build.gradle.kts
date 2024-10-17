@@ -9,7 +9,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(projects.core.database.api)
-                implementation(projects.core.network)
                 implementation(projects.features.academic.domain)
             }
         }

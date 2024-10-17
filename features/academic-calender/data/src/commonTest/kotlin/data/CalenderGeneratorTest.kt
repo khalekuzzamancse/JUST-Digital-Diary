@@ -1,6 +1,6 @@
 package data
 
-import data.misc.CalendarBuilder
+import data.service.CalendarBuilder
 import feature.academiccalender.domain.model.DayOfWeek
 import kotlin.test.Test
 

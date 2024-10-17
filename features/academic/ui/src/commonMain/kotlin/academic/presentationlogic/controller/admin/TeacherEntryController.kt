@@ -1,6 +1,6 @@
 package academic.presentationlogic.controller.admin
 
-import academic.presentationlogic.controller.core.CoreController
+import academic.presentationlogic.controller.core.ICoreController
 import academic.presentationlogic.model.TeacherWriteModel
 import academic.presentationlogic.model.DepartmentReadModel
 import academic.presentationlogic.model.TeacherReadModel
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 /**
  * - Interface that defines the contract for controlling the TeacherForm.
  * - It manages the state of TeacherModel and handles events related to form inputs
- * - It child of [CoreController]
+ * - It child of [ICoreController]
  *
  * @property teacherState A [StateFlow] that emits the current state of [TeacherReadModel].
  * @property onNameChange Handles the event when the teacher's name changes.
@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.StateFlow
  * @property onDeptChange Handles the event when the teacher's department changes.
  * @property onRoomNoChange Handles the event when the teacher's room number changes.
  */
-internal interface TeacherEntryController: CoreController {
+internal interface TeacherEntryController: ICoreController {
     val teacherState: StateFlow<TeacherWriteModel>
     val validator: Validator
     /**

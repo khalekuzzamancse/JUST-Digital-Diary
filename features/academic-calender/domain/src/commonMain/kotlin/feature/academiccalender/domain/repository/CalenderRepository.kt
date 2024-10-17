@@ -1,10 +1,11 @@
-@file:Suppress("UnUsed")
+@file:Suppress("unused")
 
 package feature.academiccalender.domain.repository
 
 
 import common.docs.CustomExceptionDoc
 import common.docs.RepositoryDoc
+import core.customexception.CustomException
 import feature.academiccalender.domain.model.AcademicCalender2
 import feature.academiccalender.domain.model.CalendarModel
 
@@ -33,7 +34,6 @@ interface CalenderRepository {
      *
      *  - On failure, return [CustomException] instead of throwing generic exceptions to  ensures concrete
      *  classes only throw exceptions defined in the 'domain' module
-     * @param year The year for which the calendar is being retrieved
      * @return [Result] wrapping either the [CalendarModel] on success, or a [CustomException] on failure
      */
     suspend fun readAcademicCalender(): Result<CalendarModel>

@@ -4,9 +4,7 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.DeptEntryController
 import academic.presentationlogic.controller.admin.InsertDeptController
-import academic.presentationlogic.mapper.AdminModelMapper
-import common.ui.SnackBarMessage
-import core.customexception.CustomException
+import academic.presentationlogic.ModelMapper
 import faculty.domain.usecase.admin.InsertDepartmentUseCase
 import faculty.domain.usecase.public_.ReadAllFactualityUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -21,18 +19,24 @@ internal class InsertDeptControllerImpl(
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
-            super.retrieveFaculties()
+            super.readFaculties()
         }
         super.validator.observeFieldChanges(super._dept)
     }
 
     override suspend fun insert() {
-        super.startLoading()
-        writeUseCase
-            .execute(with(AdminModelMapper) { _dept.value.toDomainModelOrThrow() })
-            .updateStatusMsg(operationName = "Insertion")
+        try {
+            super.startLoading()
+            writeUseCase
+                .execute(with(ModelMapper) { _dept.value.toDomainModelOrThrow() })
+                .showStatusMsg(operation = "Insertion")
 
-        super.stopLoading()
+            super.stopLoading()
+        }
+        catch (e:Exception){
+            e.showStatusMsg(optionalMsg = "Priority must be an integer")
+        }
+
     }
 
 
