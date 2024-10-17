@@ -1,7 +1,7 @@
 package academic.ui.public_
 
 import academic.presentationlogic.factory.UiFactory
-import academic.presentationlogic.model.public_.TeacherModel
+import academic.presentationlogic.model.TeacherReadModel
 import academic.ui.AcademicModuleEvent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -52,7 +52,7 @@ internal fun TeachersRoute(
     }
     SnackNProgressBarDecorator(
         isLoading = viewModel.isLoading.collectAsState(false).value,
-        snackBarMessage = viewModel.screenMessage.collectAsState(null).value
+        message = viewModel.screenMessage.collectAsState(null).value
     ) {
         TopBarDecoratorCommon(
             topNavigationIcon = Icons.AutoMirrored.Default.ArrowBack,
@@ -80,9 +80,9 @@ internal fun TeachersRoute(
 @Composable
 private fun _TeacherList(
     modifier: Modifier = Modifier,
-    teachers: List<TeacherModel>,
-    showEditButton: Boolean ,
-    showDeleteButton: Boolean ,
+    teachers: List<TeacherReadModel>,
+    showEditButton: Boolean,
+    showDeleteButton: Boolean,
     onEvent: (AcademicModuleEvent) -> Unit
 ) {
 
@@ -180,9 +180,9 @@ private fun _TeacherList(
 @Composable
 private fun _EmployeeCard(
     modifier: Modifier,
-    teacher: TeacherModel,
-    showEditButton: Boolean ,
-    showDeleteButton: Boolean ,
+    teacher: TeacherReadModel,
+    showEditButton: Boolean,
+    showDeleteButton: Boolean,
     onCallRequest: () -> Unit,
     onEmailRequest: () -> Unit,
     onMessageRequest: () -> Unit,
@@ -219,7 +219,7 @@ private fun _EmployeeCard(
 @Composable
 private fun EmployeeDetails(
     modifier: Modifier,
-    teacher: TeacherModel
+    teacher: TeacherReadModel
 ) {
     Column(
         modifier = modifier
@@ -240,7 +240,7 @@ private fun EmployeeDetails(
             style = CardTypography.contactStyle
         )
         Text(
-            text = teacher.additionalEmail,
+            text = teacher.additionalEmail?:"",
             style = CardTypography.contactStyle
         )
         Text(

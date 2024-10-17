@@ -23,23 +23,23 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
 /**
- * @param snackBarMessage snackBar message
+ * @param message snackBar message
  * @param isLoading
  */
 @Composable
 fun SnackNProgressBarDecorator(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
-    snackBarMessage: String?,
+    message: String?,
     navigationIcon: (@Composable () -> Unit)? = null,
     fab: @Composable () -> Unit = {},
     content: @Composable BoxScope.() -> Unit,
 ) {
     SnackNProgressBarDecorator(
         modifier = modifier,
-        showProgressBar = isLoading,
-        message = if (snackBarMessage != null)
-            SnackBarMessage.neutral(snackBarMessage) else null,
+        isLoading = isLoading,
+        message = if (message != null)
+            SnackBarMessage.neutral(message) else null,
         navigationIcon = navigationIcon,
         fab = fab,
         content = content
@@ -48,12 +48,12 @@ fun SnackNProgressBarDecorator(
 }
 /**
  * @param message snackBar message
- * @param showProgressBar
+ * @param isLoading
  */
 @Composable
 fun SnackNProgressBarDecorator(
     modifier: Modifier = Modifier,
-    showProgressBar: Boolean,
+    isLoading: Boolean,
     message: SnackBarMessage?,
     navigationIcon: (@Composable () -> Unit)? = null,
     fab: @Composable () -> Unit = {},
@@ -86,7 +86,7 @@ fun SnackNProgressBarDecorator(
     ) { innerPadding ->
         Box(Modifier.padding(innerPadding).fillMaxSize()) {
             content()
-            if (showProgressBar)
+            if (isLoading)
                 _LoadingUi(
                     Modifier.matchParentSize().align(Alignment.Center)
                         .background(Color.Gray.copy(alpha = 0.7f))

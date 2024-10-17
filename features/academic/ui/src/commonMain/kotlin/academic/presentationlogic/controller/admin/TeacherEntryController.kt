@@ -1,9 +1,9 @@
 package academic.presentationlogic.controller.admin
 
 import academic.presentationlogic.controller.core.CoreController
-import academic.presentationlogic.model.admin.TeacherEntryModel
-import academic.presentationlogic.model.public_.DepartmentModel
-import academic.presentationlogic.model.public_.TeacherModel
+import academic.presentationlogic.model.TeacherWriteModel
+import academic.presentationlogic.model.DepartmentReadModel
+import academic.presentationlogic.model.TeacherReadModel
 import kotlinx.coroutines.flow.StateFlow
 
 /**
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
  * - It manages the state of TeacherModel and handles events related to form inputs
  * - It child of [CoreController]
  *
- * @property teacherState A [StateFlow] that emits the current state of [TeacherModel].
+ * @property teacherState A [StateFlow] that emits the current state of [TeacherReadModel].
  * @property onNameChange Handles the event when the teacher's name changes.
  * @property onEmailChange Handles the event when the teacher's email changes.
  * @property onAdditionalEmailChange Handles the event when the teacher's additional email changes.
@@ -22,13 +22,13 @@ import kotlinx.coroutines.flow.StateFlow
  * @property onRoomNoChange Handles the event when the teacher's room number changes.
  */
 internal interface TeacherEntryController: CoreController {
-    val teacherState: StateFlow<TeacherEntryModel>
+    val teacherState: StateFlow<TeacherWriteModel>
     val validator: Validator
     /**
      * -Help to admin, under which   department is going to add
      *- The `Implementer` should fetch the faculty list
      **/
-    val dept:StateFlow<List<DepartmentModel>>
+    val dept:StateFlow<List<DepartmentReadModel>>
 
     /**
      * - Since UI has access teh dept list so need to store the selected dept instead index is enough,
@@ -52,7 +52,7 @@ internal interface TeacherEntryController: CoreController {
     interface Validator {
         val areMandatoryFieldFilled: StateFlow<Boolean>
         val errors: StateFlow<List<String>>
-        fun observeFieldChanges(state: StateFlow<TeacherEntryModel>)
+        fun observeFieldChanges(state: StateFlow<TeacherWriteModel>)
 
     }
 }

@@ -3,11 +3,10 @@
 package feature.academiccalender.domain.repository
 
 
-import common.docs.domain_layer.CustomExceptionDoc
-import common.docs.domain_layer.RepositoryDoc
+import common.docs.CustomExceptionDoc
+import common.docs.RepositoryDoc
 import feature.academiccalender.domain.model.AcademicCalender2
 import feature.academiccalender.domain.model.CalendarModel
-import feature.academiccalender.domain.model.DayOfWeek
 
 /**
  * Further discussion on:

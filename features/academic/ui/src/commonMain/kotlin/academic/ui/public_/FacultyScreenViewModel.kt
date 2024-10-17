@@ -4,6 +4,7 @@ import academic.presentationlogic.controller.public_.DepartmentController
 import academic.presentationlogic.controller.public_.FacultyController
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import common.ui.SnackBarMessage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -32,7 +33,7 @@ class FacultyScreenViewModel internal constructor(
         { isLogging, isRegistering ->
             isLogging || isRegistering
         }
-    val screenMessage: Flow<String?> =
+    val screenMessage: Flow<SnackBarMessage?> =
         combine(departmentController.statusMessage, facultyController.statusMessage)
         { loginMsg, registerMsg ->
             loginMsg ?: registerMsg

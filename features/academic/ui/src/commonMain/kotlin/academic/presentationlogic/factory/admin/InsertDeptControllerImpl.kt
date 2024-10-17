@@ -5,6 +5,7 @@ package academic.presentationlogic.factory.admin
 import academic.presentationlogic.controller.admin.DeptEntryController
 import academic.presentationlogic.controller.admin.InsertDeptController
 import academic.presentationlogic.mapper.AdminModelMapper
+import common.ui.SnackBarMessage
 import core.customexception.CustomException
 import faculty.domain.usecase.admin.InsertDepartmentUseCase
 import faculty.domain.usecase.public_.ReadAllFactualityUseCase
@@ -29,18 +30,8 @@ internal class InsertDeptControllerImpl(
         super.startLoading()
         writeUseCase
             .execute(with(AdminModelMapper) { _dept.value.toDomainModelOrThrow() })
-            .fold(
-                onSuccess = {
-                    super.updateErrorMessage("Added Successfully")
-                },
-                onFailure = { exception ->
-                    when (exception) {
-                        is CustomException -> super.updateErrorMessage(exception.message)
-                        else ->
-                            super.updateErrorMessage("Failed to load faculties")
-                    }
-                }
-            )
+            .updateStatusMsg(operationName = "Insertion")
+
         super.stopLoading()
     }
 

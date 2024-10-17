@@ -3,9 +3,10 @@
 package academic.presentationlogic.factory.public_
 
 import academic.presentationlogic.controller.core.CoreControllerImpl
-import academic.presentationlogic.model.public_.TeacherModel
 import academic.presentationlogic.controller.public_.TeachersController
-import academic.presentationlogic.mapper.PublicModelMapper
+import academic.presentationlogic.mapper.ReadModelMapper
+import academic.presentationlogic.model.TeacherReadModel
+import common.ui.SnackBarMessage
 import core.customexception.CustomException
 import faculty.domain.usecase.public_.ReadTeachersUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,7 @@ internal class TeachersControllerImpl(
     private val useCase: ReadTeachersUseCase,
 ) : TeachersController, CoreControllerImpl() {
 
-    private val _teachers = MutableStateFlow<List<TeacherModel>>(emptyList())
+    private val _teachers = MutableStateFlow<List<TeacherReadModel>>(emptyList())
 
     override val isLoading = super._isLoading.asStateFlow()
     override val statusMessage = super._statusMessage.asStateFlow()
@@ -29,17 +30,12 @@ internal class TeachersControllerImpl(
         result.fold(
             onSuccess = { models ->
                 _teachers.update {
-                    models
-                        .map { PublicModelMapper.toTeacherUiModel(it) }
+                    with(ReadModelMapper) {
+                        models.map { it.toModel() }
+                    }
                 }
             },
-            onFailure = { exception ->
-
-                when (exception) {
-                    is CustomException -> super.updateErrorMessage(exception.message)
-                    else -> super.updateErrorMessage("Something went wrong")
-                }
-            }
+            onFailure = { exception -> exception.updateStatusMessage() }
         )
         super.stopLoading()
     }

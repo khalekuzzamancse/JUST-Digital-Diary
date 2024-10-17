@@ -4,8 +4,9 @@ package academic.presentationlogic.factory.public_
 
 import academic.presentationlogic.controller.core.CoreControllerImpl
 import academic.presentationlogic.controller.public_.FacultyController
-import academic.presentationlogic.mapper.PublicModelMapper
-import academic.presentationlogic.model.public_.FacultyModel
+import academic.presentationlogic.mapper.ReadModelMapper
+import academic.presentationlogic.model.FacultyReadModel
+import common.ui.SnackBarMessage
 import core.customexception.CustomException
 import faculty.domain.usecase.public_.ReadAllFactualityUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,7 @@ import kotlinx.coroutines.flow.update
 internal class FacultyControllerImpl(
     private val userCase: ReadAllFactualityUseCase,
 ) : FacultyController, CoreControllerImpl() {
-    private val _faculties = MutableStateFlow<List<FacultyModel>>(emptyList())
+    private val _faculties = MutableStateFlow<List<FacultyReadModel>>(emptyList())
     private val _selected = MutableStateFlow<Int?>(null)
 
     override val statusMessage = super._statusMessage.asStateFlow()
@@ -34,16 +35,12 @@ internal class FacultyControllerImpl(
         result.fold(
             onSuccess = { models ->
                 _faculties.update {
-                    models
-                        .map { PublicModelMapper.toUiFacultyModel(it) }
+                    with(ReadModelMapper) {
+                        models.map { it.toModel() }
+                    }
                 }
             },
-            onFailure = { exception ->
-                when (exception) {
-                    is CustomException -> super.updateErrorMessage(exception.message)
-                    else -> super.updateErrorMessage("Something went wrong")
-                }
-            }
+            onFailure = { exception -> exception.updateStatusMessage() }
         )
         super.stopLoading()
     }

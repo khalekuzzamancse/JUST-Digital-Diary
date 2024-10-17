@@ -55,7 +55,7 @@ fun AddClassScheduleScreen(modifier: Modifier = Modifier) {
 
     SnackNProgressBarDecorator(
         isLoading = controller.isLoading.collectAsState().value,
-        snackBarMessage = controller.statusMessage.collectAsState(null).value,
+        message = controller.statusMessage.collectAsState(null).value,
         fab = {
             _Actions(
                 enable = !showAcademicForm,

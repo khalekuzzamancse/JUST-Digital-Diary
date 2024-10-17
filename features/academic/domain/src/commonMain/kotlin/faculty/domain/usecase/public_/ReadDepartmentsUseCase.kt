@@ -1,10 +1,9 @@
 package faculty.domain.usecase.public_
 
-import common.docs.domain_layer.CustomExceptionDoc
-import common.docs.domain_layer.RepositoryDoc
-import common.docs.domain_layer.ServiceDoc
-import common.docs.domain_layer.UseCaseDoc
-import faculty.domain.model.public_.DepartmentModel
+import common.docs.CustomExceptionDoc
+import common.docs.RepositoryDoc
+import common.docs.ServiceDoc
+import common.docs.UseCaseDoc
 import faculty.domain.repository.Repository
 
 /**
@@ -18,7 +17,6 @@ import faculty.domain.repository.Repository
 class ReadDepartmentsUseCase(
     private val repository: Repository
 ) {
-    suspend fun execute(facultyId:String):  Result<List<DepartmentModel>> {
-        return repository.getDepartment(facultyId)
-    }
+    suspend fun execute(facultyId:String)=repository.getDepartment(facultyId)
+
 }

@@ -2,8 +2,8 @@ package data.service
 
 
 import core.customexception.CustomException
-import core.network.JsonParser
-import core.network.NetworkException
+import core.database.network.JsonParser
+import core.database.network.NetworkException
 import data.entity.FeedbackEntity
 import kotlinx.serialization.KSerializer
 

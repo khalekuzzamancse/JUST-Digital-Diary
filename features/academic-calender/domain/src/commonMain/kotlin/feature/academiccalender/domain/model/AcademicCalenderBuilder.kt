@@ -1,7 +1,7 @@
 @file:Suppress("UnUsed")
 package feature.academiccalender.domain.model
 
-import common.docs.domain_layer.ModelDoc
+import common.docs.ModelDoc
 
 
 /**

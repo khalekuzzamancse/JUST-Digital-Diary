@@ -2,7 +2,7 @@
 
 package feature.academiccalender.domain.model
 
-import common.docs.domain_layer.ModelDoc
+import common.docs.ModelDoc
 import java.time.Month
 
 data class CalendarModel(

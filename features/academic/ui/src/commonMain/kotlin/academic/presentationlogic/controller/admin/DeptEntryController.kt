@@ -1,8 +1,8 @@
 package academic.presentationlogic.controller.admin
 
 import academic.presentationlogic.controller.core.CoreController
-import academic.presentationlogic.model.admin.DepartmentEntryModel
-import academic.presentationlogic.model.public_.FacultyModel
+import academic.presentationlogic.model.DepartmentWriteModel
+import academic.presentationlogic.model.FacultyReadModel
 import kotlinx.coroutines.flow.StateFlow
 
 /**
@@ -11,12 +11,12 @@ import kotlinx.coroutines.flow.StateFlow
  */
 internal interface DeptEntryController : CoreController {
     val validator: Validator
-    val dept: StateFlow<DepartmentEntryModel>
+    val dept: StateFlow<DepartmentWriteModel>
 
     /**- Help to admin, under which faculty the department is going to add
      *- The `Implementer` should fetch the faculty list
      **/
-    val faculties: StateFlow<List<FacultyModel>>
+    val faculties: StateFlow<List<FacultyReadModel>>
 
     /**
      * - Since UI has access teh faculty list so need to store the selected faculty instead index is enough,
@@ -38,7 +38,7 @@ internal interface DeptEntryController : CoreController {
          */
         val areMandatoryFieldFilled: StateFlow<Boolean>
         val errors: StateFlow<List<String>>
-        fun observeFieldChanges(state: StateFlow<DepartmentEntryModel>)
+        fun observeFieldChanges(state: StateFlow<DepartmentWriteModel>)
 
     }
 }

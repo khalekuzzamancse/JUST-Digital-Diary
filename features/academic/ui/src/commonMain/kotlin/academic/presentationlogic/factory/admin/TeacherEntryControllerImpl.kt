@@ -4,9 +4,10 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.TeacherEntryController
 import academic.presentationlogic.controller.core.CoreControllerImpl
-import academic.presentationlogic.mapper.PublicModelMapper
-import academic.presentationlogic.model.admin.TeacherEntryModel
-import academic.presentationlogic.model.public_.DepartmentModel
+import academic.presentationlogic.mapper.ReadModelMapper
+import academic.presentationlogic.model.TeacherWriteModel
+import academic.presentationlogic.model.DepartmentReadModel
+import common.ui.SnackBarMessage
 import core.customexception.CustomException
 import faculty.domain.usecase.admin.ReadAllDepartmentUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +26,7 @@ internal open class TeacherEntryControllerImpl(
 ) : TeacherEntryController, CoreControllerImpl() {
 
     protected val _teacherState = MutableStateFlow(_emptyState())
-    private val _departments = MutableStateFlow<List<DepartmentModel>>(emptyList())
+    private val _departments = MutableStateFlow<List<DepartmentReadModel>>(emptyList())
     private val _selectedDeptIndex = MutableStateFlow<Int?>(null)
 
     override val statusMessage = _statusMessage.asStateFlow()
@@ -33,7 +34,7 @@ internal open class TeacherEntryControllerImpl(
     override val selectedDeptIndex = _selectedDeptIndex.asStateFlow()
 
     override val isLoading = _isLoading.asStateFlow()
-    override val teacherState: StateFlow<TeacherEntryModel> = _teacherState.asStateFlow()
+    override val teacherState: StateFlow<TeacherWriteModel> = _teacherState.asStateFlow()
     override fun onNameChange(value: String) {
         _teacherState.value = _teacherState.value.copy(name = value)
     }
@@ -88,22 +89,12 @@ internal open class TeacherEntryControllerImpl(
             .execute()
             .fold(
                 onSuccess = { models ->
-                    with(PublicModelMapper) {
-                        _departments.update { models.map { toUiFacultyModel(it) } }
+                    with(ReadModelMapper){
+                        models.map { it.toModel() }
                     }
-
                 },
                 onFailure = { exception ->
-                    when (exception) {
-                        is CustomException -> {
-                            super.updateErrorMessage(exception.message)
-                        }
-
-                        else -> {
-                            super.updateErrorMessage("Failed to load faculties")
-                        }
-
-                    }
+                  exception.updateStatusMessage("Failed to fetch dept list")
                 }
             )
         super.stopLoading()
@@ -111,7 +102,7 @@ internal open class TeacherEntryControllerImpl(
 
 
     //TODO:Helper methods section
-    private fun _emptyState() = TeacherEntryModel(
+    private fun _emptyState() = TeacherWriteModel(
         name = "",
         email = "",
         additionalEmail = "",

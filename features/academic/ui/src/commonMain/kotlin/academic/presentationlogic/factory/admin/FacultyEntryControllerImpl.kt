@@ -4,7 +4,7 @@ package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.FacultyEntryController
 import academic.presentationlogic.controller.core.CoreControllerImpl
-import academic.presentationlogic.model.admin.FacultyEntryModel
+import academic.presentationlogic.model.FacultyWriteModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -13,7 +13,7 @@ internal open class FacultyEntryControllerImpl(
     override val validator: FacultyEntryController.Validator
 ) :
     FacultyEntryController, CoreControllerImpl() {
-    protected val _faculty = MutableStateFlow(FacultyEntryModel("", ""))
+    protected val _faculty = MutableStateFlow(FacultyWriteModel("", ""))
 
     override val statusMessage = super._statusMessage.asStateFlow()
     override val isLoading = super._isLoading.asStateFlow()

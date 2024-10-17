@@ -1,5 +1,6 @@
 package academic.presentationlogic.controller.core
 
+import common.ui.SnackBarMessage
 import kotlinx.coroutines.flow.StateFlow
 /**
  * - Almost all the controllers that control the UI has some common state,that state is defined here
@@ -22,5 +23,5 @@ interface CoreController {
      *
      * - `SnackBarMessage` or `ToastMessage` is not a good name because they are UI dependent
      */
-    val statusMessage: StateFlow<String?>
+    val statusMessage: StateFlow<SnackBarMessage?>
 }

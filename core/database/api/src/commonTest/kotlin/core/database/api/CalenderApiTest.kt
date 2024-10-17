@@ -1,5 +1,6 @@
 package core.database.api
 
+import core.database.factory.ApiFactory
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.fail

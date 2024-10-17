@@ -2,8 +2,8 @@
 
 package data.repository
 
-import core.database.api.ApiFactory
-import core.network.JsonParser
+import core.database.factory.ApiFactory
+import core.database.network.JsonParser
 import data.entity.AcademicCalenderEntity
 import data.misc.CalendarBuilder
 import data.misc.HodidayAdder

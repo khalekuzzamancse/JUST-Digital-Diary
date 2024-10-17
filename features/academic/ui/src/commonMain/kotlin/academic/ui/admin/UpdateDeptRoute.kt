@@ -33,7 +33,7 @@ internal fun UpdateDeptRoute(
 
     SnackNProgressBarDecorator(
         isLoading = controller.isLoading.collectAsState().value,
-        snackBarMessage = controller.statusMessage.collectAsState(null).value,
+        message = controller.statusMessage.collectAsState(null).value,
         navigationIcon = navigationIcon
     ) {
         Column(

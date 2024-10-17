@@ -2,7 +2,7 @@ package faculty.data
 
 
 
-import core.database.api.ApiFactory
+import core.database.factory.ApiFactory
 import data.entity.admin.DepartmentEntryEntity
 import data.entity.admin.FacultyEntryEntity
 import data.entity.admin.TeacherEntryEntity

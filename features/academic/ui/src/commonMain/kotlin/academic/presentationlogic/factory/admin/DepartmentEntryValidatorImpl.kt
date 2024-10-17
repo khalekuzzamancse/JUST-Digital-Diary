@@ -1,7 +1,7 @@
 package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.DeptEntryController
-import academic.presentationlogic.model.admin.DepartmentEntryModel
+import academic.presentationlogic.model.DepartmentWriteModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +18,7 @@ internal class DepartmentEntryValidatorImpl: DeptEntryController.Validator {
     private val _errors = MutableStateFlow(emptyList<String>())
     override val areMandatoryFieldFilled = _fieldsFilled.asStateFlow()
     override val errors = _errors.asStateFlow()
-    override fun observeFieldChanges(state: StateFlow<DepartmentEntryModel>) {
+    override fun observeFieldChanges(state: StateFlow<DepartmentWriteModel>) {
         combine(state) {
             it.first()
         }.onEach { model ->

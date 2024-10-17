@@ -2,12 +2,12 @@
 
 package domain.factory
 
+import domain.service.AcademicInsertionService
+import domain.service.AcademicReadEntityService
+import domain.service.CalenderInsertionService
+import domain.service.CalenderReadEntityService
 import domain.service.FeedbackMessageService
 import domain.service.JsonParser
-import domain.service.AcademicInsertionService
-import domain.service.CalenderInsertionService
-import domain.service.AcademicReadEntityService
-import domain.service.CalenderReadEntityService
 import domain.service.ScheduleService
 
 object ContractFactory {
@@ -18,4 +18,6 @@ object ContractFactory {
     fun academicReadEntityService(): AcademicReadEntityService = AcademicReadEntityServiceImpl()
     fun calenderReadEntityService():CalenderReadEntityService=CalenderReadEntityServiceImpl()
     fun scheduleService(): ScheduleService=ScheduleServiceImpl()
+
+
 }

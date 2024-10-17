@@ -4,6 +4,7 @@ package academic.presentationlogic.factory.admin
 import academic.presentationlogic.controller.admin.FacultyEntryController
 import academic.presentationlogic.controller.admin.UpdateFacultyController
 import academic.presentationlogic.mapper.AdminModelMapper
+import common.ui.SnackBarMessage
 import core.customexception.CustomException
 import faculty.domain.usecase.admin.ReadFacultyUseCase
 import faculty.domain.usecase.admin.UpdateFacultyUseCase
@@ -34,17 +35,7 @@ internal class UpdateFacultyControllerImpl(
         val model = with(AdminModelMapper) { faculty.value.toDomainModelOrThrow() }
 
         val result = writeUseCase.execute(facultyId,model)
-        result.fold(
-            onSuccess = {
-                super.updateErrorMessage("Added Successfully")
-            },
-            onFailure = { exception ->
-                when (exception) {
-                    is CustomException -> super.updateErrorMessage(exception.message)
-                    else -> super.updateErrorMessage("Something went wrong")
-                }
-            }
-        )
+        result.updateStatusMsg(operationName = "Update")
         super.stopLoading()
     }
 
@@ -61,10 +52,7 @@ internal class UpdateFacultyControllerImpl(
                 }
             },
             onFailure = { exception ->
-                when (exception) {
-                    is CustomException -> super.updateErrorMessage(exception.message)
-                    else -> super.updateErrorMessage("Something went wrong!,Faculty not found")
-                }
+                exception.updateStatusMessage(optionalMsg = "Failed to fetch")
             }
         )
         super.stopLoading()

@@ -1,5 +1,5 @@
 package auth.presentationlogic.controller
-import common.docs.domain_layer.ControllerDocs
+import common.docs.ControllerDocs
 import auth.presentationlogic.model.RegisterModel
 import kotlinx.coroutines.flow.StateFlow
 

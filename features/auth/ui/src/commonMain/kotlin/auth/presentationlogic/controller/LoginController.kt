@@ -2,7 +2,7 @@ package auth.presentationlogic.controller
 
 import auth.presentationlogic.model.LoginModel
 import kotlinx.coroutines.flow.StateFlow
-import common.docs.domain_layer.ControllerDocs
+import common.docs.ControllerDocs
 
 /**
  * - On Login success should return true so that

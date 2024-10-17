@@ -1,12 +1,11 @@
 @file:Suppress("unused")
 package feature.academiccalender.domain.usecase
 
-import common.docs.domain_layer.CustomExceptionDoc
-import common.docs.domain_layer.RepositoryDoc
-import common.docs.domain_layer.ServiceDoc
-import common.docs.domain_layer.UseCaseDoc
+import common.docs.CustomExceptionDoc
+import common.docs.RepositoryDoc
+import common.docs.ServiceDoc
+import common.docs.UseCaseDoc
 import feature.academiccalender.domain.model.CalendarModel
-import feature.academiccalender.domain.model.DayOfWeek
 import feature.academiccalender.domain.repository.CalenderRepository
 
 /**

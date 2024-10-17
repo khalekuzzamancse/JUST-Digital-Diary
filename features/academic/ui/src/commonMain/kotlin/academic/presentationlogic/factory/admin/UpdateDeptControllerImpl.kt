@@ -5,6 +5,7 @@ package academic.presentationlogic.factory.admin
 import academic.presentationlogic.controller.admin.DeptEntryController
 import academic.presentationlogic.controller.admin.UpdateDeptController
 import academic.presentationlogic.mapper.AdminModelMapper
+import common.ui.SnackBarMessage
 import core.customexception.CustomException
 import faculty.domain.usecase.admin.ReadDeptUseCase
 import faculty.domain.usecase.admin.UpdateDepartmentUseCase
@@ -43,18 +44,7 @@ internal class UpdateDeptControllerImpl(
         super.startLoading()
         writeUseCase
             .execute(deptId, with(AdminModelMapper) { _dept.value.toDomainModelOrThrow() })
-            .fold(
-                onSuccess = {
-                    super.updateErrorMessage("Added Successfully")
-                },
-                onFailure = { exception ->
-                    when (exception) {
-                        is CustomException -> super.updateErrorMessage(exception.message)
-                        else ->
-                            super.updateErrorMessage("Failed to load faculties")
-                    }
-                }
-            )
+            .updateStatusMsg(operationName = "Update")
         super.stopLoading()
     }
 
@@ -86,10 +76,7 @@ internal class UpdateDeptControllerImpl(
 
                 },
                 onFailure = { exception ->
-                    when (exception) {
-                        is CustomException -> super.updateErrorMessage(exception.message)
-                        else -> super.updateErrorMessage("Failed to load dept")
-                    }
+                    exception.updateStatusMessage("Failed to fetch")
                 }
             )
         super.stopLoading()

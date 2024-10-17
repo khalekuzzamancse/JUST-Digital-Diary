@@ -28,7 +28,7 @@ internal fun FacultyNDeptRoute(
 
     SnackNProgressBarDecorator(
         isLoading = viewModel.isLoading.collectAsState(false).value,
-        snackBarMessage = viewModel.screenMessage.collectAsState(null).value,
+        message = viewModel.screenMessage.collectAsState(null).value,
         navigationIcon = if (notShowingDepartment) navigationIcon else {
             {
                 IconButton(onClick = viewModel::onDeptCloseRequest) {

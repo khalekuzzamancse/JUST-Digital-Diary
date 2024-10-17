@@ -1,9 +1,9 @@
 package data
 
-import core.network.JsonParser
+import core.database.network.JsonParser
 import data.data_source.holidayJson
 import data.entity.CalendarWrapperSchema
-import factory.NetworkFactory
+import core.database.factory.NetworkFactory
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -11,7 +11,7 @@ import kotlin.test.fail
 
 class JsonParserTest {
 
-    private val jsonParser: JsonParser = NetworkFactory.createJsonParser()
+    private val jsonParser: JsonParser = NetworkFactory.jsonParser()
 
     @Test
     fun testParseCalendar() {

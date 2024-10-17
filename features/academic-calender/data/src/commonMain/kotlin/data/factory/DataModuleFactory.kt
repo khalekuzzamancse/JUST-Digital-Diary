@@ -8,12 +8,12 @@ import data.service.UserServiceImpl
 import feature.academiccalender.domain.repository.CalenderRepository
 import feature.academiccalender.domain.service.CalendarService
 import feature.academiccalender.domain.service.UserService
-import factory.NetworkFactory
+import core.database.factory.NetworkFactory
 
 object DataModuleFactory {
     fun createRepository(): CalenderRepository = CalenderRepositoryImpl(
-        jsonParser = NetworkFactory.createJsonParser(),
-        handler = JsonHandlerImpl(NetworkFactory.createJsonParser())
+        jsonParser = NetworkFactory.jsonParser(),
+        handler = JsonHandlerImpl(NetworkFactory.jsonParser())
     )
 
     fun createCalenderService(): CalendarService = CalendarServiceImpl()

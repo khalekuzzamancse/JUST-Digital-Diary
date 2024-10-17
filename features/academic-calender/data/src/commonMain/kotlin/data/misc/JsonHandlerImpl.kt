@@ -1,8 +1,8 @@
 package data.misc
 
 
-import core.network.JsonParser
-import core.network.NetworkException
+import core.database.network.JsonParser
+import core.database.network.NetworkException
 import data.entity.ServerResponseMessageEntity
 import feature.academiccalender.domain.exception.CustomException
 

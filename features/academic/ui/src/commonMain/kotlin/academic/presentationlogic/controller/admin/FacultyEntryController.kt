@@ -1,7 +1,7 @@
 package academic.presentationlogic.controller.admin
 
 import academic.presentationlogic.controller.core.CoreController
-import academic.presentationlogic.model.admin.FacultyEntryModel
+import academic.presentationlogic.model.FacultyWriteModel
 import kotlinx.coroutines.flow.StateFlow
 
 /**
@@ -15,7 +15,7 @@ internal interface FacultyEntryController : CoreController {
      * Represents the current state of the faculty being added.
      * Uses a model that is decoupled from any specific UI implementation to maintain abstraction.
      */
-    val faculty: StateFlow<FacultyEntryModel>
+    val faculty: StateFlow<FacultyWriteModel>
     fun onPriorityChanged(value: String)
     fun onNameChanged(value: String)
     interface Validator {
@@ -26,6 +26,6 @@ internal interface FacultyEntryController : CoreController {
          */
         val areMandatoryFieldFilled: StateFlow<Boolean>
         val errors: StateFlow<List<String>>
-        fun activate(state: StateFlow<FacultyEntryModel>)
+        fun activate(state: StateFlow<FacultyWriteModel>)
     }
 }

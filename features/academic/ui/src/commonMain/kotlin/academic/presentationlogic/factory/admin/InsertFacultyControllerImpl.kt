@@ -5,6 +5,7 @@ package academic.presentationlogic.factory.admin
 import academic.presentationlogic.controller.admin.FacultyEntryController
 import academic.presentationlogic.controller.admin.InsertFacultyController
 import academic.presentationlogic.mapper.AdminModelMapper
+import common.ui.SnackBarMessage
 import core.customexception.CustomException
 import faculty.domain.usecase.admin.InsertFacultyUseCase
 
@@ -23,26 +24,11 @@ internal class InsertFacultyControllerImpl(
     override suspend fun insert() {
         val model = with(AdminModelMapper) { faculty.value.toDomainModelOrThrow() }
         super.startLoading()
-        val result = useCase.execute(model)
-        result.fold(
-            onSuccess = {
-                updateErrorMessage("Added Successfully")
+        useCase.execute(model)
+            .updateStatusMsg(operationName = "Insertion")
 
-            },
-            onFailure = { exception ->
-                when (exception) {
-                    is CustomException -> {
-                        updateErrorMessage(exception.message)
-                    }
-
-                    else -> {
-                        updateErrorMessage("Something went wrong")
-                    }
-
-                }
-            }
-        )
         super.stopLoading()
 
     }
+
 }

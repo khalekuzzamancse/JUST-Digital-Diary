@@ -1,9 +1,12 @@
 @file:Suppress("functionName")
+
 package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.TeacherEntryController
 import academic.presentationlogic.controller.admin.UpdateTeacherController
 import academic.presentationlogic.mapper.AdminModelMapper
+import academic.presentationlogic.mapper.ReadModelMapper
+import common.ui.SnackBarMessage
 import core.customexception.CustomException
 import faculty.domain.usecase.admin.ReadAllDepartmentUseCase
 import faculty.domain.usecase.admin.ReadTeacherUseCase
@@ -37,21 +40,13 @@ internal class UpdateTeacherControllerImpl(
         try {
             super.startLoading()
             writeUseCase
-                .execute(teacherId,with(AdminModelMapper) { _teacherState.value.toDomainModelOrThrow() })
-                .fold(
-                    onSuccess = {
-                        super.updateErrorMessage("Added")
-                    },
-                    onFailure = { exception ->
-                        when (exception) {
-                            is CustomException -> super.updateErrorMessage(exception.message)
-                            else -> super.updateErrorMessage("Failed insert")
-                        }
-                    }
-                )
+                .execute(
+                    teacherId,
+                    with(AdminModelMapper) { _teacherState.value.toDomainModelOrThrow() })
+                .updateStatusMsg(operationName = "Update")
             super.stopLoading()
         } catch (_: Exception) {
-            super.updateErrorMessage("Failed,Make sure priority field as integer")
+            super.updateStatusMessage(SnackBarMessage.error("Failed,Make sure priority field as integer"))
         }
     }
 
@@ -62,31 +57,27 @@ internal class UpdateTeacherControllerImpl(
             readTeacherUseCase
                 .execute(teacherId)
                 .fold(
-                    onSuccess = { domainModel ->
-                        val uiModel = with(AdminModelMapper) { domainModel.toUIModel() }
-                        _teacherState.update { uiModel }
+                    onSuccess = { model ->
+                        _teacherState.update { with(ReadModelMapper) { model.toEntryModel() } }
                         try {
                             //TODO: Have a problem to data layer, dept  id is not loaded
                             // TODO: Refactor later, Edge case: all dept may not be leaded yet...
                             super.onDeptChange(
                                 super.dept.value
                                     .map { it.id }
-                                    .indexOf(domainModel.deptId)
+                                    .indexOf(model.deptId)
                             )
                         } catch (_: Exception) {
 
                         }
                     },
                     onFailure = { exception ->
-                        when (exception) {
-                            is CustomException -> super.updateErrorMessage(exception.message)
-                            else -> super.updateErrorMessage("Failed read the teacher")
-                        }
+                        exception.updateStatusMessage(optionalMsg = "Failed to fetch")
                     }
                 )
             super.stopLoading()
         } catch (_: Exception) {
-            super.updateErrorMessage("Failed,Make sure priority field as integer")
+            super.updateStatusMessage(SnackBarMessage.error("Failed,Make sure priority field as integer"))
         }
     }
 

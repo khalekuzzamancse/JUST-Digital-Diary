@@ -51,7 +51,7 @@ fun ViewClassScheduleScreen() {
     val noScheduleFound=(!isLoading && schedules.isEmpty())
     SnackNProgressBarDecorator(
         isLoading = isLoading,
-        snackBarMessage = controller.statusMessage.collectAsState(null).value
+        message = controller.statusMessage.collectAsState(null).value
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()

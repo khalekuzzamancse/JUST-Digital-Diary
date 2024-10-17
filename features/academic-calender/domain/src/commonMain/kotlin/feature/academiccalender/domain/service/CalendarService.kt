@@ -2,10 +2,10 @@
 
 package feature.academiccalender.domain.service
 
-import common.docs.domain_layer.ServiceDoc
+import common.docs.ServiceDoc
 import feature.academiccalender.domain.model.AcademicCalendar
 import feature.academiccalender.domain.model.User
-import common.docs.domain_layer.CustomExceptionDoc
+import common.docs.CustomExceptionDoc
 import feature.academiccalender.domain.exception.CustomException
 
 /**

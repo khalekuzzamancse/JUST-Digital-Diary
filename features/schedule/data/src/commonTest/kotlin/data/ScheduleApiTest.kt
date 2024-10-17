@@ -2,7 +2,7 @@
 
 package data
 
-import core.database.api.ApiFactory
+import core.database.factory.ApiFactory
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json

@@ -2,8 +2,8 @@
 
 package schedule.data.repository
 
-import core.database.api.ApiFactory
-import core.network.JsonParser
+import core.database.factory.ApiFactory
+import core.database.network.JsonParser
 import data.service.withExceptionHandle
 import kotlinx.serialization.builtins.ListSerializer
 import schedule.data.entity.DepartmentEntity
@@ -29,7 +29,7 @@ class RepositoryImpl internal constructor(
     private val handler: JsonHandler,
     private val parser: JsonParser
 ) : Repository {
-    private val api=ApiFactory.scheduleApi()
+    private val api= ApiFactory.scheduleApi()
     override suspend fun insert(model: ClassScheduleWriteModel, deptId: String): Result<Unit> {
         return with(handler) {
             withExceptionHandle {

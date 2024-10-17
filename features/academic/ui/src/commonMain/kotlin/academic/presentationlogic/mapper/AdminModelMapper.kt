@@ -1,20 +1,20 @@
 package academic.presentationlogic.mapper
 
-import academic.presentationlogic.model.admin.DepartmentEntryModel
-import academic.presentationlogic.model.admin.FacultyEntryModel
-import academic.presentationlogic.model.admin.TeacherEntryModel
+import academic.presentationlogic.model.DepartmentWriteModel
+import academic.presentationlogic.model.FacultyWriteModel
+import academic.presentationlogic.model.TeacherWriteModel
 
 internal object AdminModelMapper {
     @Throws(NumberFormatException::class)
-    fun FacultyEntryModel.toDomainModelOrThrow() =
-        faculty.domain.model.admin.FacultyEntryModel(
+    fun FacultyWriteModel.toDomainModelOrThrow() =
+        faculty.domain.model.FacultyWriteModel(
             priority = this.priority.toInt(),
             name = this.name,
         )
 
     @Throws(NumberFormatException::class)
-    fun DepartmentEntryModel.toDomainModelOrThrow() =
-        faculty.domain.model.admin.DepartmentEntryModel(
+    fun DepartmentWriteModel.toDomainModelOrThrow() =
+        faculty.domain.model.DepartmentWriteModel(
             priority = this.priority.toInt(),
             name = this.name,
             shortname = this.shortname,
@@ -22,7 +22,7 @@ internal object AdminModelMapper {
         )
 
     @Throws(NumberFormatException::class)
-    fun TeacherEntryModel.toDomainModelOrThrow() = faculty.domain.model.admin.TeacherEntryModel(
+    fun TeacherWriteModel.toDomainModelOrThrow() = faculty.domain.model.TeacherWriteModel(
         deptId = deptId,
         priority = this.priority.toInt(),
         name = this.name,
@@ -32,28 +32,7 @@ internal object AdminModelMapper {
         phone = phone,
         designations = designations,
         roomNo = roomNo,
-        profileImageLink = profileImageLink?.ifBlank{null},
-    )
-
-    fun faculty.domain.model.admin.DepartmentEntryModel.toUiModel() =
-        DepartmentEntryModel(
-            facultyId = facultyId,
-            name = name,
-            priority = priority.toString(),
-            shortname = shortname
-        )
-
-    fun faculty.domain.model.admin.TeacherEntryModel.toUIModel() = TeacherEntryModel(
-        deptId = this.deptId,
-        priority = this.priority.toString(),
-        name = this.name,
-        email = this.email,
-        additionalEmail = this.additionalEmail,
-        achievements = this.achievements,
-        phone = this.phone,
-        designations = this.designations,
-        roomNo = this.roomNo,
-        profileImageLink = profileImageLink
+        profileImageLink = profileImageLink?.ifBlank { null },
     )
 
 

@@ -1,7 +1,7 @@
 package academic.presentationlogic.factory.admin
 
 import academic.presentationlogic.controller.admin.TeacherEntryController
-import academic.presentationlogic.model.admin.TeacherEntryModel
+import academic.presentationlogic.model.TeacherWriteModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +19,7 @@ internal class TeacherEntryValidatorImpl : TeacherEntryController.Validator {
     private val _errors = MutableStateFlow<List<String>>(emptyList())
     override val errors: StateFlow<List<String>> = _errors.asStateFlow()
 
-    override fun observeFieldChanges(state: StateFlow<TeacherEntryModel>) {
+    override fun observeFieldChanges(state: StateFlow<TeacherWriteModel>) {
         combine(state) {
             it.first()
         }.onEach { model ->

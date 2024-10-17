@@ -3,7 +3,7 @@ package schedule.data.factory
 
 import schedule.data.repository.RepositoryImpl
 import schedule.domain.repository.Repository
-import factory.NetworkFactory
+import core.database.factory.NetworkFactory
 import schedule.data.service.JsonHandlerImpl
 
 object DataModuleFactory {
@@ -11,5 +11,5 @@ object DataModuleFactory {
         parser =_jsonParser(),
         handler = JsonHandlerImpl(_jsonParser())
     )
-    private fun _jsonParser()= NetworkFactory.createJsonParser()
+    private fun _jsonParser()= NetworkFactory.jsonParser()
 }

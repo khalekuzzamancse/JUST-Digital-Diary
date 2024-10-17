@@ -9,6 +9,7 @@ kotlin {
             dependencies{
                 implementation(projects.core.database.dataSource.mongodb)
                 implementation(projects.core.database.domain)
+                implementation(projects.core.commonDocs)
             }
 
 

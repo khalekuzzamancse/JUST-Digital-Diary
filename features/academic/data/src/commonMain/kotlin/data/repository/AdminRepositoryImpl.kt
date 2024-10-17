@@ -2,18 +2,21 @@
 
 package data.repository
 
-import core.database.api.ApiFactory
-import core.network.JsonParser
+import core.database.factory.ApiFactory
+import core.database.network.JsonParser
 import data.ModelMapper
-import data.entity.admin.DepartmentEntryEntity
-import data.entity.admin.FacultyEntryEntity
-import data.entity.admin.TeacherEntryEntity
+import data.ReadEntityModelMapper
+import data.entity2.DepartmentReadEntity
+import data.entity2.FacultyReadEntity
+import data.entity2.TeacherReadEntity
 import data.service.JsonHandler
 import data.service.withExceptionHandle
-import faculty.domain.model.admin.DepartmentEntryModel
-import faculty.domain.model.admin.FacultyEntryModel
-import faculty.domain.model.admin.TeacherEntryModel
-import faculty.domain.model.public_.DepartmentModel
+import faculty.domain.model.TeacherReadModel
+import faculty.domain.model.DepartmentWriteModel
+import faculty.domain.model.FacultyWriteModel
+import faculty.domain.model.TeacherWriteModel
+import faculty.domain.model.DepartmentReadModel
+import faculty.domain.model.FacultyReadModel
 import faculty.domain.repository.AdminRepository
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.encodeToString
@@ -24,7 +27,7 @@ class AdminRepositoryImpl internal constructor(
     private val jsonParser: JsonParser,
 ) : AdminRepository {
     private val jsonConverter = Json { prettyPrint = true }
-    override suspend fun insertFaculty(model: FacultyEntryModel): Result<Unit> {
+    override suspend fun insertFaculty(model: FacultyWriteModel): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
                 val entity = with(ModelMapper) { model.toEntity() }
@@ -39,14 +42,14 @@ class AdminRepositoryImpl internal constructor(
         }
     }
 
-    override suspend fun readFaculty(id: String): Result<FacultyEntryModel> {
+    override suspend fun readFaculty(id: String): Result<FacultyReadModel> {
         return with(handler) {
             withExceptionHandle {
                 val json = ApiFactory.academicApi().readFacultyById(id)
                 if (json._isFacultyEntity()) {
-                    val entity = json.parseOrThrow(FacultyEntryEntity.serializer())
+                    val entity = json.parseOrThrow(FacultyReadEntity.serializer())
                     return Result.success(
-                        with(ModelMapper) { entity.toEntryModel() }
+                        with(ReadEntityModelMapper) { entity.toModel() }
                     )
                 } else
                     return Result.failure(json.parseAsServerMessageOrThrow())
@@ -55,14 +58,14 @@ class AdminRepositoryImpl internal constructor(
     }
 
 
-    override suspend fun readDept(id: String): Result<DepartmentEntryModel> {
+    override suspend fun readDept(id: String): Result<DepartmentReadModel> {
         return with(handler) {
             withExceptionHandle {
                 val json = ApiFactory.academicApi().readDeptById(id)
                 if (json._isDeptEntity()) {
-                    val entity = json.parseOrThrow(DepartmentEntryEntity.serializer())
+                    val entity = json.parseOrThrow(DepartmentReadEntity.serializer())
                     return Result.success(
-                        with(ModelMapper) { entity.toEntryModel() }
+                        with(ReadEntityModelMapper) { entity.toModel() }
                     )
                 } else
                     return Result.failure(json.parseAsServerMessageOrThrow())
@@ -71,7 +74,7 @@ class AdminRepositoryImpl internal constructor(
         }
     }
 
-    override suspend fun insertDept(model: DepartmentEntryModel): Result<Unit> {
+    override suspend fun insertDept(model: DepartmentWriteModel): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
                 val entity = with(ModelMapper) { model.toEntity() }
@@ -83,14 +86,14 @@ class AdminRepositoryImpl internal constructor(
     }
 
 
-    override suspend fun readTeacher(id: String): Result<TeacherEntryModel> {
+    override suspend fun readTeacher(id: String): Result<TeacherReadModel> {
         return with(handler) {
             withExceptionHandle {
                 val json = ApiFactory.academicApi().readTeacherById(id)
                 if (json._isTeacherEntity()) {
-                    val entity = json.parseOrThrow(TeacherEntryEntity.serializer())
+                    val entity = json.parseOrThrow(TeacherReadEntity.serializer())
                     return Result.success(
-                        with(ModelMapper) { entity.toEntryModel() }
+                        with(ReadEntityModelMapper) { entity.toModel() }
                     )
                 } else
                     return Result.failure(json.parseAsServerMessageOrThrow())
@@ -98,7 +101,7 @@ class AdminRepositoryImpl internal constructor(
         }
     }
 
-    override suspend fun insertTeacher(model: TeacherEntryModel): Result<Unit> {
+    override suspend fun insertTeacher(model: TeacherWriteModel): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
                 val entity = with(ModelMapper) { model.toEntity() }
@@ -113,16 +116,16 @@ class AdminRepositoryImpl internal constructor(
     }
 
 
-    override suspend fun getAllDept(): Result<List<DepartmentModel>> {
+    override suspend fun getAllDept(): Result<List<DepartmentReadModel>> {
         return with(handler) {
             withExceptionHandle {
                 val json = ApiFactory.academicApi().readAllDept()
 
                 if (json._isDepartmentListEntity()) {
                     val entities =
-                        json.parseOrThrow(ListSerializer(DepartmentEntryEntity.serializer()))
+                        json.parseOrThrow(ListSerializer(DepartmentReadEntity.serializer()))
                     return Result.success(
-                        with(ModelMapper) {
+                        with(ReadEntityModelMapper) {
                             entities.sortedBy { it.priority }.map { it.toModel() }
                         }
                     )
@@ -137,7 +140,7 @@ class AdminRepositoryImpl internal constructor(
     //TODO:UPDATE OPERATIONS---------UPDATE OPERATIONS
     //TODO:UPDATE OPERATIONS---------UPDATE OPERATIONS
     //TODO:UPDATE OPERATIONS---------UPDATE OPERATIONS
-    override suspend fun updateFaculty(facultyId: String, model: FacultyEntryModel): Result<Unit> {
+    override suspend fun updateFaculty(facultyId: String, model: FacultyWriteModel): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
                 val entity = with(ModelMapper) { model.toEntity() }
@@ -153,7 +156,7 @@ class AdminRepositoryImpl internal constructor(
 
     override suspend fun updateDepartment(
         deptId: String,
-        model: DepartmentEntryModel
+        model: DepartmentWriteModel
     ): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
@@ -168,7 +171,7 @@ class AdminRepositoryImpl internal constructor(
         }
     }
 
-    override suspend fun updateTeacher(teacherId: String, model: TeacherEntryModel): Result<Unit> {
+    override suspend fun updateTeacher(teacherId: String, model: TeacherWriteModel): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
                 val entity = with(ModelMapper) { model.toEntity() }
@@ -186,14 +189,14 @@ class AdminRepositoryImpl internal constructor(
 
 
     private fun String._isFacultyEntity() =
-        jsonParser.parse(this, FacultyEntryEntity.serializer()).isSuccess
+        jsonParser.parse(this, FacultyReadEntity.serializer()).isSuccess
 
     private fun String._isDepartmentListEntity() =
-        jsonParser.parse(this, ListSerializer(DepartmentEntryEntity.serializer())).isSuccess
+        jsonParser.parse(this, ListSerializer(DepartmentReadEntity.serializer())).isSuccess
 
     private fun String._isDeptEntity() =
-        jsonParser.parse(this, DepartmentEntryEntity.serializer()).isSuccess
+        jsonParser.parse(this, DepartmentReadEntity.serializer()).isSuccess
 
     private fun String._isTeacherEntity() =
-        jsonParser.parse(this, TeacherEntryEntity.serializer()).isSuccess
+        jsonParser.parse(this, TeacherReadEntity.serializer()).isSuccess
 }

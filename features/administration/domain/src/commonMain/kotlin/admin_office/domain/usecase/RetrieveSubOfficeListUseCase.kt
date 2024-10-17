@@ -2,10 +2,10 @@ package admin_office.domain.usecase
 
 import admin_office.domain.model.SubOfficeModel
 import admin_office.domain.repository.Repository
-import common.docs.domain_layer.CustomExceptionDoc
-import common.docs.domain_layer.RepositoryDoc
-import common.docs.domain_layer.ServiceDoc
-import common.docs.domain_layer.UseCaseDoc
+import common.docs.CustomExceptionDoc
+import common.docs.RepositoryDoc
+import common.docs.ServiceDoc
+import common.docs.UseCaseDoc
 
 /**
  * - Use case for retrieving a calendar to the `Repository`

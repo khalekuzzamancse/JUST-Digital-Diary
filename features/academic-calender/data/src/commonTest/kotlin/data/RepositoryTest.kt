@@ -1,6 +1,6 @@
 package data
 
-import core.database.api.ApiFactory
+import core.database.factory.ApiFactory
 import data.entity.AcademicCalenderEntity
 import data.misc.CalendarBuilder
 import data.misc.HodidayAdder

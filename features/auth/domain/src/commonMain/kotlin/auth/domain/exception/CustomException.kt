@@ -2,7 +2,7 @@
 
 package auth.domain.exception
 
-import common.docs.domain_layer.CustomExceptionDoc
+import common.docs.CustomExceptionDoc
 
 /**
  * Further discussion on:
