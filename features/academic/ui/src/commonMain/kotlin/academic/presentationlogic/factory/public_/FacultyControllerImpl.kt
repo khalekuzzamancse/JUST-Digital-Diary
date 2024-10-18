@@ -10,7 +10,11 @@ import faculty.domain.usecase.public_.ReadAllFactualityUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-
+/**
+ * Though it allowed to use the delete controller here but right now not use here,
+ * just focusing on single operation(Reading),if some external consumer want to delete
+ * while showing the list by this controller then do not forget to call the [refresh] method
+ */
 internal class FacultyControllerImpl(
     private val userCase: ReadAllFactualityUseCase,
 ) : FacultyController, CoreController() {
@@ -27,7 +31,7 @@ internal class FacultyControllerImpl(
 
     }
 
-    override suspend fun fetchFaculty() {
+    override suspend fun readFaculties() {
         super.startLoading()
         val result = userCase.execute()
         result.fold(
@@ -42,5 +46,7 @@ internal class FacultyControllerImpl(
         )
         super.stopLoading()
     }
+
+    override suspend fun refresh()=readFaculties()
 
 }

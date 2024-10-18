@@ -4,7 +4,6 @@ package core.database.datasource.monggodb.db
 
 import com.mongodb.client.model.Filters
 import core.database.datasource.monggodb.db.MongoDBClient.COLLECTION_CALENDAR
-import core.database.datasource.monggodb.db.MongoDBClient.DATABASE_NAME
 import core.database.datasource.monggodb.db.MongoDBClient.ID_FIELD
 import domain.entity.calender.AcademicCalenderEntity
 import domain.factory.ContractFactory
@@ -29,9 +28,7 @@ internal class CalenderCollection {
     /**Useful for admin to read all and delete the old once*/
     @Throws(Throwable::class)
     suspend fun readAll(): String {
-        return MongoDBClient.writeOrThrow(
-            DATABASE_NAME
-        ) { database ->
+        return MongoDBClient.writeOrThrow { database ->
             val collection = database.getCollection<Document>(COLLECTION_CALENDAR)
 
             val jsonArray = collection.find().toList().map { document ->
@@ -44,9 +41,7 @@ internal class CalenderCollection {
 
     @Throws(Throwable::class)
     suspend fun readOfCurrentYear(): String {
-        return MongoDBClient.readOrThrow(
-            DATABASE_NAME
-        ) { database ->
+        return MongoDBClient.readOrThrow { database ->
             val collection = database.getCollection<Document>(COLLECTION_CALENDAR)
             val year: Int = LocalDate.now().year
             val document =
@@ -58,10 +53,9 @@ internal class CalenderCollection {
     }
 
     suspend fun updateOrThrow(year: Int, json: String) = MongoDBClient.updateOneOrThrow(
-        databaseName = DATABASE_NAME,
         collectionName = COLLECTION_CALENDAR,
-        data = json,
-        query = Filters.eq(AcademicCalenderEntity::year.name, year)
+        query = Filters.eq(AcademicCalenderEntity::year.name, year),
+        data = json
     )
 
 }

@@ -1,7 +1,11 @@
-@file:Suppress("functionName")
+@file:Suppress("functionName","unused")
+
 package faculty.di
 
 import faculty.data.DataFactory
+import faculty.domain.usecase.admin.DeleteDepartmentUseCase
+import faculty.domain.usecase.admin.DeleteFacultyUseCase
+import faculty.domain.usecase.admin.DeleteTeacherUseCase
 import faculty.domain.usecase.admin.InsertDepartmentUseCase
 import faculty.domain.usecase.admin.InsertFacultyUseCase
 import faculty.domain.usecase.admin.InsertTeacherUseCase
@@ -38,12 +42,18 @@ object DiContainer {
     fun readDeptUseCase() = ReadDeptUseCase(_adminRepository())
     fun insertDeptUseCase() = InsertDepartmentUseCase(_adminRepository())
     fun updateDeptUseCase() = UpdateDepartmentUseCase(_adminRepository())
-    fun getAllDeptUseCase()=ReadAllDepartmentUseCase(_adminRepository())
+    fun getAllDeptUseCase() = ReadAllDepartmentUseCase(_adminRepository())
     fun readTeacherUseCase() = ReadTeacherUseCase(_adminRepository())
     fun insertTeacherUseCase() = InsertTeacherUseCase(_adminRepository())
     fun updateTeacherUseCase() = UpdateTeacherUseCase(_adminRepository())
     fun readFacultyUseCase() = ReadFacultyUseCase(_adminRepository())
-    fun updateFacultyUseCase()= UpdateFacultyUseCase(_adminRepository())
+    fun updateFacultyUseCase() = UpdateFacultyUseCase(_adminRepository())
+
+    //TODO:Delete Operations
+    fun deleteFacultyUseCase() = DeleteFacultyUseCase(_adminRepository())
+    fun deleteDepartmentUseCase() = DeleteDepartmentUseCase(_adminRepository())
+    fun deleteTeacherUseCase() = DeleteTeacherUseCase(_adminRepository())
+
     private fun _adminRepository() = DataFactory.createAdminRepository()
 
 }

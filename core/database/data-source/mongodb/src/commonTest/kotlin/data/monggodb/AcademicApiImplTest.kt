@@ -1,3 +1,4 @@
+@file:Suppress("spellCheckingInspection")
 package data.monggodb
 import core.database.datasource.monggodb.factory.AcademicApiImpl
 import kotlinx.coroutines.runBlocking
@@ -84,7 +85,8 @@ class AcademicApiImplTest {
                     "achievements": "PhD in Physics",
                     "phone": "1234567890",
                     "designations": "Professor",
-                    "room_no": "101"
+                    "room_no": "101",
+                    "image_link": "no link"
                 }
             """.trimIndent()
             println(api.insertTeacher(deptId, json))
@@ -111,6 +113,22 @@ class AcademicApiImplTest {
             println(api.readTeacherById(teacherId))
         }
     }
+
+    @Test
+    fun deleteFacultyTest()= executeTest {
+            println(api.deleteFaculty(id = "15oct"))
+    }
+    @Test
+    fun deleteDepartmentTest()= executeTest {
+        println(api.deleteDepartment(id = "physicsdepartment"))
+    }
+    @Test
+    fun deleteTeacherTest()= executeTest {
+        println(api.deleteTeacher(id = "johndoejohn.doe@university.com"))
+    }
+
+
+
 
     /**
      * Helper method to execute tests with error handling.

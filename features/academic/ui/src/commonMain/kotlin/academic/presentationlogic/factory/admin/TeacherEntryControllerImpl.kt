@@ -27,11 +27,12 @@ internal open class TeacherEntryControllerImpl(
     private val _departments = MutableStateFlow<List<DepartmentReadModel>>(emptyList())
     private val _selectedDeptIndex = MutableStateFlow<Int?>(null)
 
-    override val statusMessage = _statusMessage.asStateFlow()
     override val dept = _departments.asStateFlow()
     override val selectedDeptIndex = _selectedDeptIndex.asStateFlow()
 
-    override val isLoading = _isLoading.asStateFlow()
+    override val statusMessage = super._statusMessage.asStateFlow()
+    override val isLoading = super._isLoading.asStateFlow()
+
     override val teacherState: StateFlow<TeacherWriteModel> = _teacherState.asStateFlow()
     override fun onNameChange(value: String) {
         _teacherState.value = _teacherState.value.copy(name = value)

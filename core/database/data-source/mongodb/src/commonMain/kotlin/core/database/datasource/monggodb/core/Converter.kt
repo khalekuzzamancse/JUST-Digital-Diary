@@ -10,7 +10,7 @@ internal inline fun insertionWithHandleException(block: () -> InsertOneResult): 
         val result = block()
         if (result.insertedId != null) {
             println("InsertionResult:${result.insertedId}")
-            service.toFeedbackMessage("Insert s")
+            service.toFeedbackMessage("Insert Successfully")
         } else {
             service.toFeedbackMessage("Server Error:Failed to insert")
         }
@@ -30,35 +30,32 @@ suspend fun withExceptionHandle(operation: suspend () -> String): String {
 
 fun toCustomException(exception: Throwable): CustomException {
     return when (exception) {
-        is CustomException ->exception//If already custom exception returned it
-        is com.mongodb.MongoSocketOpenException -> {
-            CustomException.ConnectionFailedException(exception)
-        }
+        is CustomException -> exception//If already custom exception returned it
+        is com.mongodb.MongoSocketOpenException -> CustomException.ConnectionFailedException(exception)
 
-        is com.mongodb.MongoWriteException -> {
-            if (exception.error.category == com.mongodb.ErrorCategory.DUPLICATE_KEY) {
+
+        is com.mongodb.MongoWriteException ->
+            if (exception.error.category == com.mongodb.ErrorCategory.DUPLICATE_KEY)
                 CustomException.DataAlreadyExistsException("MongoDB Document")
-            } else {
+             else
                 CustomException.DataConflictException("MongoDB Document")
-            }
-        }
 
-        is com.mongodb.MongoQueryException -> {
-            CustomException.InvalidQueryException(exception.message ?: "Unknown query issue")
-        }
 
-        is com.mongodb.MongoCommandException -> {
-            CustomException.JsonParseException(
-                exception.errorMessage ?: "Unknown MongoDB command error"
-            )
-        }
 
-        is com.mongodb.MongoSecurityException -> {
-            CustomException.UnauthorizedAccessException()
-        }
+        is com.mongodb.MongoQueryException -> CustomException.InvalidQueryException(
+            exception.message ?: "Unknown query issue"
+        )
 
-        else -> {
-            CustomException.UnknownCustomException(exception)
-        }
+
+        is com.mongodb.MongoCommandException -> CustomException.JsonParseException(
+            exception.errorMessage ?: "Unknown MongoDB command error"
+        )
+
+
+        is com.mongodb.MongoSecurityException -> CustomException.UnauthorizedAccessException()
+
+
+        else -> CustomException.UnknownCustomException(exception)
+
     }
 }

@@ -1,4 +1,5 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "spellCheckingInspection")
+
 package core.customexception
 
 interface DatabaseException {
@@ -26,7 +27,11 @@ interface DatabaseException {
     ) : CustomException(
         message = message,
         debugMessage = debugMessage
-    )
+    ) {
+
+        override val code = "DE-DRE"
+
+    }
 
     /**
      * Exception to be thrown when a record is not found in the database during any operation.
@@ -55,6 +60,26 @@ interface DatabaseException {
     ) : CustomException(
         message = message,
         debugMessage = debugMessage
-    )
+    ) {
+
+        override val code = "DE-RNFE"
+
+    }
+
+    /**
+     * - Should thrown when database instance can not create
+     *
+     * - for [message],[debugMessage] and [code] see the [CustomException] docs
+     */
+    class DatabaseCanNotCreateException(
+        override val message: String = "DE-DICNCE:Something went wrong",
+        override val debugMessage: String = "Failed to create or configure the database instance"
+    ) : CustomException(
+        message = message,
+        debugMessage = debugMessage
+    ) {
+        override val code = "DE-DICNCE"
+
+    }
 
 }

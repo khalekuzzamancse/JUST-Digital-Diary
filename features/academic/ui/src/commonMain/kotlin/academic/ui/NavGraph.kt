@@ -8,10 +8,12 @@ import academic.ui.admin.UpdateFacultyRoute
 import academic.ui.admin.UpdateTeacherRoute
 import academic.ui.public_.FacultyNDeptRoute
 import academic.ui.public_.FacultyScreenViewModel
+import academic.ui.public_.TeacherListViewModel
 import academic.ui.public_.TeachersRoute
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
@@ -23,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import common.ui.BackButton
 import common.ui.NavAnimations
+import kotlinx.coroutines.launch
 
 @Composable
 fun AcademicNavGraph(
@@ -31,6 +34,7 @@ fun AcademicNavGraph(
     navigationIcon: (@Composable () -> Unit)? = null,
     onEvent: (AcademicModuleEvent) -> Unit
 ) {
+    val scope = rememberCoroutineScope()
 
     val navController = rememberNavController()
     val navigator = remember { _Navigator(navController) }
@@ -58,14 +62,23 @@ fun AcademicNavGraph(
             val viewModel = viewModel {
                 FacultyScreenViewModel(
                     facultyController = UiFactory.createFacultyController(token),
-                    departmentController = UiFactory.createDepartmentsController(token)
+                    departmentController = UiFactory.createDepartmentsController(token),
+                    deleteController = UiFactory.deleteController()
                 )
             }
             FacultyNDeptRoute(
                 viewModel = viewModel,
                 navigationIcon = navigationIcon,
-                onTeachersRequest =navigator::navigateToTeacherList,
-                onEvent = processEvent
+                onTeachersRequest = navigator::navigateToTeacherList,
+                onEvent = { event ->
+                    processEvent(event)
+                    //No need to navigate to different screen for delete operation,because these delete operation need to any UI
+                    //So handle here...
+                    if (event is AcademicModuleEvent.DeleteFacultyRequest)
+                        scope.launch { viewModel.deleteFaculty(event.id) }
+                    if (event is AcademicModuleEvent.DeleteDeptRequest)
+                        scope.launch { viewModel.deleteDepartment(event.id) }
+                }
 
             )
 
@@ -75,13 +88,24 @@ fun AcademicNavGraph(
             arguments = _NavRoute.TeacherList.args()
         ) { entry ->
             val deptId = _NavRoute.TeacherList.getId(entry)
+            val viewModel = viewModel {
+                TeacherListViewModel(
+                    teachersController = UiFactory.teacherReadController(token),
+                    deleteController = UiFactory.deleteController()
+                )
+            }
             TeachersRoute(
+                viewModel = viewModel,
                 deptId = deptId ?: "",
                 onExitRequest = {
                     navController.popBackStack()
                 },
-                onEvent = processEvent,
-                token = token
+                onEvent = { event ->
+                    //No need to navigate to different screen for delete operation,because these delete operation need to any UI
+                    //So handle here...
+                    if (event is AcademicModuleEvent.DeleteTeacherRequest)
+                        scope.launch { viewModel.delete(event.id) }
+                },
             )
 
         }
@@ -190,7 +214,8 @@ private class _Navigator(
 
         }
     }
-    fun navigateToTeacherList(deptId: String){
+
+    fun navigateToTeacherList(deptId: String) {
         navigate(_NavRoute.TeacherList.createRoute(deptId))
     }
 

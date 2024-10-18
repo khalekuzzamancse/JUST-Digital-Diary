@@ -1,3 +1,5 @@
+@file:Suppress("spellCheckingInspection")
+
 package data.monggodb
 
 import core.database.datasource.monggodb.db.FacultyCollection
@@ -11,7 +13,7 @@ class FacultyCollectionTest {
     @Test
     fun insert() {
         executeTest {
-            val json="""
+            val json = """
                 {
                   "priority": 0,
                   "name": "Dummy Facility"
@@ -20,11 +22,12 @@ class FacultyCollectionTest {
             println(FacultyCollection().insert(json))
         }
     }
+
     @Test
     fun update() {
         executeTest {
             //TODO:Insert it ,then take the id and then try
-            val json="""
+            val json = """
                 {
                   "priority": 100,
                   "name": "Dummy Facility"
@@ -34,8 +37,6 @@ class FacultyCollectionTest {
             println(FacultyCollection().updateOrThrow(facultyId = "dummyfacility", json = json))
         }
     }
-
-
 
 
     @Test
@@ -50,9 +51,15 @@ class FacultyCollectionTest {
     fun testReadFacultyById() {
         executeTest {
 
-            println( FacultyCollection().read("facultyofveterinarymedicine"))
+            println(FacultyCollection().read("facultyofveterinarymedicine"))
         }
     }
+
+    @Test
+    fun delete() = executeTest {
+        println(FacultyCollection().deleteOrThrow(facultyId = "x"))
+    }
+
 
     /**
      * Helper method to execute tests with error handling.

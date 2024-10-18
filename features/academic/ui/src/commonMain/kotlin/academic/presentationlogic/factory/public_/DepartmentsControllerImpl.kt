@@ -11,12 +11,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+/**
+ * Though it allowed to use the delete controller here but right now not use here,
+ * just focusing on single operation(Reading),if some external consumer want to delete
+ * while showing the list by this controller then do not forget to call the [refresh] method
+ */
 internal class DepartmentsControllerImpl(
     private val userCase: ReadDepartmentsUseCase,
 ) : DepartmentController, CoreController() {
 
     private val _departments = MutableStateFlow<List<DepartmentReadModel>>(emptyList())
     private val _selected = MutableStateFlow<Int?>(null)
+    /**Will use for refresh*/
+    private var _facultyId:String? = null
 
     override val statusMessage = super._statusMessage.asStateFlow()
     override val isLoading = super._isLoading.asStateFlow()
@@ -28,7 +35,8 @@ internal class DepartmentsControllerImpl(
 
     }
 
-    override suspend fun fetchDepartments(facultyId: String) {
+    override suspend fun readDepartments(facultyId: String) {
+        this._facultyId =facultyId
         super.startLoading()
         val result = userCase.execute(facultyId = facultyId)
         result.fold(
@@ -43,5 +51,12 @@ internal class DepartmentsControllerImpl(
         )
         super.stopLoading()
     }
+
+    override suspend fun refresh() {
+        _facultyId?.let {facultyId->
+            readDepartments(facultyId)
+        }
+    }
+
 
 }

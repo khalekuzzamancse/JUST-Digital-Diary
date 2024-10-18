@@ -4,11 +4,10 @@ package faculty.data.repository
 
 import core.database.factory.ApiFactory
 import core.database.network.JsonParser
-import faculty.data.ModelMapper
-import faculty.data.ReadEntityModelMapper
-import faculty.data.entity.admin.FacultyEntryEntity
-import faculty.data.entity2.DepartmentReadEntity
-import faculty.data.entity2.TeacherReadEntity
+import faculty.data.EntityModelMapper
+import faculty.data.entity.DepartmentReadEntity
+import faculty.data.entity.FacultyReadEntity
+import faculty.data.entity.TeacherReadEntity
 import faculty.data.service.JsonHandler
 import faculty.data.service.withExceptionHandle
 import faculty.domain.model.TeacherReadModel
@@ -41,9 +40,9 @@ class RepositoryImpl internal constructor(
                  * - 3 possible cases: We got excepted  json or Json is a server message in format ServerResponseMessageEntity  or  Server send a json that format is not known yet,may be server change it json format or other
                  */
                 if (json._isFacultyListEntity()) {
-                    val entity = json.parseOrThrow(ListSerializer(faculty.data.entity.admin.FacultyEntryEntity.serializer()))
+                    val entity = json.parseOrThrow(ListSerializer(FacultyReadEntity.serializer()))
                     return Result.success(
-                        with(faculty.data.ModelMapper) {
+                        with(EntityModelMapper) {
                             entity.sortedBy { it.priority }.map { it.toModel() }
                         }
                     )
@@ -63,10 +62,10 @@ class RepositoryImpl internal constructor(
                 if (json._isTeacherListEntity()) {
 
                     val entities =
-                        json.parseOrThrow(ListSerializer(faculty.data.entity2.TeacherReadEntity.serializer()))
+                        json.parseOrThrow(ListSerializer(TeacherReadEntity.serializer()))
 
                     return Result.success(
-                        with(ReadEntityModelMapper) {
+                        with(EntityModelMapper) {
                             entities.sortedBy { it.priority }.map { it.toModel() }
                         }
                     )
@@ -86,9 +85,9 @@ class RepositoryImpl internal constructor(
 
                 if (json._isDepartmentListEntity()) {
                     val entities =
-                        json.parseOrThrow(ListSerializer(faculty.data.entity2.DepartmentReadEntity.serializer()))
+                        json.parseOrThrow(ListSerializer(DepartmentReadEntity.serializer()))
                     return Result.success(
-                        with(ReadEntityModelMapper) {
+                        with(EntityModelMapper) {
                             entities.sortedBy { it.priority }.map { it.toModel() }
                         }
                     )
@@ -100,7 +99,7 @@ class RepositoryImpl internal constructor(
     }
 
     private fun String._isFacultyListEntity() =
-        jsonParser.parse(this, ListSerializer(FacultyEntryEntity.serializer())).isSuccess
+        jsonParser.parse(this, ListSerializer(FacultyReadEntity.serializer())).isSuccess
 
     private fun String._isDepartmentListEntity() =
         jsonParser.parse(this, ListSerializer(DepartmentReadEntity.serializer())).isSuccess

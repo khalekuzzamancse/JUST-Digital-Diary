@@ -4,19 +4,18 @@ package faculty.data.repository
 
 import core.database.factory.ApiFactory
 import core.database.network.JsonParser
-import faculty.data.ModelMapper
-import faculty.data.ReadEntityModelMapper
-import faculty.data.entity2.DepartmentReadEntity
-import faculty.data.entity2.FacultyReadEntity
-import faculty.data.entity2.TeacherReadEntity
+import faculty.data.EntityModelMapper
+import faculty.data.entity.DepartmentReadEntity
+import faculty.data.entity.FacultyReadEntity
+import faculty.data.entity.TeacherReadEntity
 import faculty.data.service.JsonHandler
 import faculty.data.service.withExceptionHandle
-import faculty.domain.model.TeacherReadModel
-import faculty.domain.model.DepartmentWriteModel
-import faculty.domain.model.FacultyWriteModel
-import faculty.domain.model.TeacherWriteModel
 import faculty.domain.model.DepartmentReadModel
+import faculty.domain.model.DepartmentWriteModel
 import faculty.domain.model.FacultyReadModel
+import faculty.domain.model.FacultyWriteModel
+import faculty.domain.model.TeacherReadModel
+import faculty.domain.model.TeacherWriteModel
 import faculty.domain.repository.AdminRepository
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.encodeToString
@@ -30,7 +29,7 @@ class AdminRepositoryImpl internal constructor(
     override suspend fun insertFaculty(model: FacultyWriteModel): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
-                val entity = with(faculty.data.ModelMapper) { model.toEntity() }
+                val entity = with(EntityModelMapper) { model.toEntity() }
                 val dataJson = jsonConverter.encodeToString(entity)
 
                 /** Execution is here means server sent a response we have to parse it
@@ -47,9 +46,9 @@ class AdminRepositoryImpl internal constructor(
             withExceptionHandle {
                 val json = ApiFactory.academicApi().readFacultyById(id)
                 if (json._isFacultyEntity()) {
-                    val entity = json.parseOrThrow(faculty.data.entity2.FacultyReadEntity.serializer())
+                    val entity = json.parseOrThrow(FacultyReadEntity.serializer())
                     return Result.success(
-                        with(faculty.data.ReadEntityModelMapper) { entity.toModel() }
+                        with(faculty.data.EntityModelMapper) { entity.toModel() }
                     )
                 } else
                     return Result.failure(json.parseAsServerMessageOrThrow())
@@ -63,9 +62,9 @@ class AdminRepositoryImpl internal constructor(
             withExceptionHandle {
                 val json = ApiFactory.academicApi().readDeptById(id)
                 if (json._isDeptEntity()) {
-                    val entity = json.parseOrThrow(faculty.data.entity2.DepartmentReadEntity.serializer())
+                    val entity = json.parseOrThrow(DepartmentReadEntity.serializer())
                     return Result.success(
-                        with(faculty.data.ReadEntityModelMapper) { entity.toModel() }
+                        with(faculty.data.EntityModelMapper) { entity.toModel() }
                     )
                 } else
                     return Result.failure(json.parseAsServerMessageOrThrow())
@@ -77,7 +76,7 @@ class AdminRepositoryImpl internal constructor(
     override suspend fun insertDept(model: DepartmentWriteModel): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
-                val entity = with(faculty.data.ModelMapper) { model.toEntity() }
+                val entity = with(EntityModelMapper) { model.toEntity() }
                 val dataJson = jsonConverter.encodeToString(entity)
                 val responseJson = ApiFactory.academicApi().insertDept(model.facultyId, dataJson)
                 return Result.failure(responseJson.parseAsServerMessageOrThrow())
@@ -91,9 +90,9 @@ class AdminRepositoryImpl internal constructor(
             withExceptionHandle {
                 val json = ApiFactory.academicApi().readTeacherById(id)
                 if (json._isTeacherEntity()) {
-                    val entity = json.parseOrThrow(faculty.data.entity2.TeacherReadEntity.serializer())
+                    val entity = json.parseOrThrow(TeacherReadEntity.serializer())
                     return Result.success(
-                        with(faculty.data.ReadEntityModelMapper) { entity.toModel() }
+                        with(faculty.data.EntityModelMapper) { entity.toModel() }
                     )
                 } else
                     return Result.failure(json.parseAsServerMessageOrThrow())
@@ -104,7 +103,7 @@ class AdminRepositoryImpl internal constructor(
     override suspend fun insertTeacher(model: TeacherWriteModel): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
-                val entity = with(faculty.data.ModelMapper) { model.toEntity() }
+                val entity = with(EntityModelMapper) { model.toEntity() }
                 val dataJson = jsonConverter.encodeToString(entity)
                 val responseJson = ApiFactory.academicApi().insertTeacher(model.deptId, dataJson)
 
@@ -123,9 +122,9 @@ class AdminRepositoryImpl internal constructor(
 
                 if (json._isDepartmentListEntity()) {
                     val entities =
-                        json.parseOrThrow(ListSerializer(faculty.data.entity2.DepartmentReadEntity.serializer()))
+                        json.parseOrThrow(ListSerializer(DepartmentReadEntity.serializer()))
                     return Result.success(
-                        with(faculty.data.ReadEntityModelMapper) {
+                        with(faculty.data.EntityModelMapper) {
                             entities.sortedBy { it.priority }.map { it.toModel() }
                         }
                     )
@@ -143,7 +142,7 @@ class AdminRepositoryImpl internal constructor(
     override suspend fun updateFaculty(facultyId: String, model: FacultyWriteModel): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
-                val entity = with(faculty.data.ModelMapper) { model.toEntity() }
+                val entity = with(EntityModelMapper) { model.toEntity() }
                 val dataJson = jsonConverter.encodeToString(entity)
                 val responseJson = ApiFactory.academicApi().updateFaculty(
                     facultyId = facultyId,
@@ -160,7 +159,7 @@ class AdminRepositoryImpl internal constructor(
     ): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
-                val entity = with(faculty.data.ModelMapper) { model.toEntity() }
+                val entity = with(EntityModelMapper) { model.toEntity() }
                 val dataJson = jsonConverter.encodeToString(entity)
                 val responseJson = ApiFactory.academicApi().updateDept(
                     deptId = deptId,
@@ -174,12 +173,45 @@ class AdminRepositoryImpl internal constructor(
     override suspend fun updateTeacher(teacherId: String, model: TeacherWriteModel): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
-                val entity = with(faculty.data.ModelMapper) { model.toEntity() }
+                val entity = with(EntityModelMapper) { model.toEntity() }
                 val dataJson = jsonConverter.encodeToString(entity)
                 val responseJson = ApiFactory.academicApi().updateTeacher(
                     teacherId = teacherId,
                     json = dataJson
                 )
+                return Result.failure(
+                    responseJson.parseAsServerMessageOrThrow()
+                )
+            }
+        }
+    }
+
+    override suspend fun deleteFaculty(facultyId: String): Result<Unit> {
+        return with(handler) {
+            withExceptionHandle {
+                val responseJson = ApiFactory.academicApi().deleteFaculty(facultyId)
+                return Result.failure(
+                    responseJson.parseAsServerMessageOrThrow()
+                )
+            }
+        }
+    }
+
+    override suspend fun deleteDepartment(deptId: String): Result<Unit> {
+        return with(handler) {
+            withExceptionHandle {
+                val responseJson = ApiFactory.academicApi().deleteDepartment(deptId)
+                return Result.failure(
+                    responseJson.parseAsServerMessageOrThrow()
+                )
+            }
+        }
+    }
+
+    override suspend fun deleteTeacher(teacherId: String): Result<Unit> {
+        return with(handler) {
+            withExceptionHandle {
+                val responseJson = ApiFactory.academicApi().deleteTeacher(teacherId)
                 return Result.failure(
                     responseJson.parseAsServerMessageOrThrow()
                 )

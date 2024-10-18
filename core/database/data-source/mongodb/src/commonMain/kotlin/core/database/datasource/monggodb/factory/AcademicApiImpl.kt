@@ -23,6 +23,13 @@ class AcademicApiImpl internal  constructor(): AcademicApi {
         FacultyCollection().read(id)
     }
 
+    override suspend fun deleteFaculty(id: String)=withExceptionHandle {
+        FacultyCollection().deleteOrThrow(id)
+    }
+
+
+
+    //TODO:Departments Related
 
     override suspend fun insertDept(facultyId: String, json: String) = withExceptionHandle {
         DepartmentCollection().insert(facultyId = facultyId, json = json)
@@ -40,6 +47,10 @@ class AcademicApiImpl internal  constructor(): AcademicApi {
 
     override suspend fun readDeptById(id: String) = withExceptionHandle {
         DepartmentCollection().readById(id)
+    }
+
+    override suspend fun deleteDepartment(id: String)= withExceptionHandle {
+        DepartmentCollection().deleteOrThrow(id)
     }
 
     override suspend fun insertTeacher(deptId: String, json: String)= withExceptionHandle {
@@ -70,5 +81,8 @@ class AcademicApiImpl internal  constructor(): AcademicApi {
         TeacherCollection().updateOrThrow(teacherId = teacherId, json = json)
     }
 
+    override suspend fun deleteTeacher(id: String)= withExceptionHandle {
+        TeacherCollection().deleteOrThrow(id)
+    }
 
 }

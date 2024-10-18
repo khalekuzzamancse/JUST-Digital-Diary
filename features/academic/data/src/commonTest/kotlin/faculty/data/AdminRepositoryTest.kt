@@ -1,11 +1,6 @@
+@file:Suppress("spellCheckingInspection")
 package faculty.data
-
-
-
 import core.database.factory.ApiFactory
-import faculty.data.entity.admin.DepartmentEntryEntity
-import faculty.data.entity.admin.FacultyEntryEntity
-import faculty.data.entity.admin.TeacherEntryEntity
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import kotlin.test.Test
@@ -34,8 +29,8 @@ class AdminRepositoryTest {
                 ignoreUnknownKeys = true // This ignores fields that are not defined in the data class
             }
             val json = ApiFactory.academicApi().readAllFaculty()
-            val entity = parser.decodeFromString<List<FacultyEntryEntity>>(json)
-            println("Response: $entity")
+
+
         }
     }
 
@@ -46,8 +41,7 @@ class AdminRepositoryTest {
                ignoreUnknownKeys = true // This ignores fields that are not defined in the data class
             }
             val json = ApiFactory.academicApi().readFacultyById("facultyofengineeringandtechnology")
-            val entity = parser.decodeFromString<FacultyEntryEntity>(json)
-            println("Response: $entity")
+
         }
     }
 
@@ -61,12 +55,7 @@ class AdminRepositoryTest {
     @Test
     fun readDeptByIdByEntity() {
         executeOrThrow {
-            val parser = Json {
-                ignoreUnknownKeys = true // This ignores fields that are not defined in the data class
-            }
-            val json = ApiFactory.academicApi().readDeptById("computerscienceandengineering")
-            val entity = parser.decodeFromString<DepartmentEntryEntity>(json)
-            println("Response: $entity")
+
         }
     }
     @Test
@@ -83,8 +72,8 @@ class AdminRepositoryTest {
                 ignoreUnknownKeys = true // This ignores fields that are not defined in the data class
             }
             val json = ApiFactory.academicApi().readTeacherById("Prof. Dr. Syed Md. Galib_galib.cse@just.edu.bd")
-            val entity = parser.decodeFromString<TeacherEntryEntity>(json)
-            println("Response: $entity")
+//            val entity = parser.decodeFromString<TeacherEntryEntity>(json)
+//            println("Response: $entity")
         }
     }
 

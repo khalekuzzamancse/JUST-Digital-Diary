@@ -1,6 +1,5 @@
 package academic.ui.public_
 
-import academic.presentationlogic.factory.UiFactory
 import academic.presentationlogic.model.TeacherReadModel
 import academic.ui.AcademicModuleEvent
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +22,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import common.ui.AdaptiveList
 import common.ui.ContactSelectionDialog
 import common.ui.EmptyContentScreen
@@ -34,21 +32,20 @@ import common.ui.TopBarDecoratorCommon
 
 @Composable
 internal fun TeachersRoute(
+    viewModel: TeacherListViewModel,
     deptId: String,
-    token: String?,
     onExitRequest: () -> Unit,
     isAdmin: Boolean = true,
     onEvent: (AcademicModuleEvent) -> Unit
     //TODO: event should go out,it should not handle by controller
 ) {
-    val viewModel = viewModel { TeacherListViewModel(UiFactory.createTeachersController(token)) }
-    val controller = viewModel.controller
+    val controller = viewModel.teachersController
     val teachers = controller.teachers.collectAsState().value
     val isNotFetching = !(controller.isLoading.collectAsState().value)
 
 
     LaunchedEffect(Unit) {
-        controller.fetch(deptId)
+        controller.read(deptId)
     }
     SnackNProgressBarDecorator(
         isLoading = viewModel.isLoading.collectAsState(false).value,
@@ -111,7 +108,7 @@ private fun _TeacherList(
                 onEvent(AcademicModuleEvent.UpdateTeacherRequest(id))
             },
             onDeleteRequest = {id->
-                onEvent(AcademicModuleEvent.TeacherDeleteRequest(id))
+                onEvent(AcademicModuleEvent.DeleteTeacherRequest(id))
             }
         )
 

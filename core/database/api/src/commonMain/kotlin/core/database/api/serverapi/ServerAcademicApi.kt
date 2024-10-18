@@ -90,6 +90,18 @@ class ServerAcademicApi internal constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun deleteFaculty(id: String): String {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteDepartment(id: String): String {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteTeacher(id: String): String {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun readTeachersUnderDept(deptId: String): String {
         if (token == null)
             throw  Throwable("Token is null,caching is not implemented yet")

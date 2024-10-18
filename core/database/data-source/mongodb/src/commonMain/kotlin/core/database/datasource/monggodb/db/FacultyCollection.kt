@@ -4,7 +4,6 @@ package core.database.datasource.monggodb.db
 
 import com.mongodb.client.model.Filters
 import core.database.datasource.monggodb.db.MongoDBClient.COLLECTION_FACULTY
-import core.database.datasource.monggodb.db.MongoDBClient.DATABASE_NAME
 import core.database.datasource.monggodb.db.MongoDBClient.ID_FIELD
 import core.database.datasource.monggodb.core.insertionWithHandleException
 import domain.entity.academic.FacultyReadEntity
@@ -27,7 +26,7 @@ internal class FacultyCollection {
      */
     @Throws(Throwable::class)
     suspend fun insert(json: String) = insertionWithHandleException {
-        MongoDBClient.writeOrThrow(DATABASE_NAME) { database ->
+        MongoDBClient.writeOrThrow { database ->
             val collection = database.getCollection<Document>(COLLECTION_FACULTY)
 
             val result = insertionService.getFacultyKeyOrThrow(json)
@@ -47,7 +46,7 @@ internal class FacultyCollection {
      */
     @Throws(Throwable::class)
     suspend fun getAllFaculties(): String {
-        return MongoDBClient.readOrThrow(DATABASE_NAME) { database ->
+        return MongoDBClient.readOrThrow { database ->
             val collection = database.getCollection<Document>(COLLECTION_FACULTY)
 
             val jsonArray = collection.find().toList().map { document ->
@@ -70,7 +69,7 @@ internal class FacultyCollection {
      */
     @Throws(Throwable::class)
     suspend fun read(id: String): String {
-        return MongoDBClient.readOrThrow(DATABASE_NAME) { database ->
+        return MongoDBClient.readOrThrow { database ->
             val collection = database.getCollection<Document>(COLLECTION_FACULTY)
 
             val document =
@@ -84,9 +83,12 @@ internal class FacultyCollection {
     }
 
     suspend fun updateOrThrow(facultyId: String, json: String) = MongoDBClient.updateOneOrThrow(
-        databaseName = DATABASE_NAME,
         collectionName = COLLECTION_FACULTY,
-        data = json,
+        query = Filters.eq(FacultyReadEntity::faculty_id.name, facultyId),
+        data = json
+    )
+    suspend  fun deleteOrThrow(facultyId: String) = MongoDBClient.deleteOneOrThrow(
+        collectionName = COLLECTION_FACULTY,
         query = Filters.eq(FacultyReadEntity::faculty_id.name, facultyId)
     )
 }

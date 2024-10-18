@@ -4,7 +4,6 @@ package core.database.datasource.monggodb.db
 
 import com.mongodb.client.model.Filters
 import core.database.datasource.monggodb.db.MongoDBClient.COLLECTION_SCHEDULE
-import core.database.datasource.monggodb.db.MongoDBClient.DATABASE_NAME
 import core.database.datasource.monggodb.db.MongoDBClient.ID_FIELD
 import domain.core.EntityExtraField
 import domain.entity.academic.DepartmentReadEntity
@@ -33,9 +32,7 @@ internal class ScheduleCollection {
     /**Useful for admin to read all and delete the old once*/
     @Throws(Throwable::class)
     suspend fun readAllOrThrow(): String {
-        return MongoDBClient.writeOrThrow(
-            DATABASE_NAME
-        ) { database ->
+        return MongoDBClient.writeOrThrow { database ->
             val collection = database.getCollection<Document>(collection)
             val jsonArray = collection.find().toList().map { document ->
 
@@ -49,9 +46,7 @@ internal class ScheduleCollection {
 
     @Throws(Throwable::class)
     suspend fun readByDeptOrThrow(deptId: String): String {
-        return MongoDBClient.readOrThrow(
-            DATABASE_NAME
-        ) { database ->
+        return MongoDBClient.readOrThrow { database ->
             val collection = database.getCollection<Document>(collection)
             val document =
                 collection.find(Document(EntityExtraField.SCHEDULE_ENTITY_FIELD_DEPT_ID, deptId))
@@ -62,10 +57,9 @@ internal class ScheduleCollection {
     }
 
     suspend fun updateOrThrow(id: String, json: String) = MongoDBClient.updateOneOrThrow(
-        databaseName = DATABASE_NAME,
         collectionName = collection,
-        data = json,
-        query = Filters.eq(ClassScheduleReadEntity::id.name, id)
+        query = Filters.eq(ClassScheduleReadEntity::id.name, id),
+        data = json
     )
 
     private suspend fun _appendDeptInfo(document: Document): Document {

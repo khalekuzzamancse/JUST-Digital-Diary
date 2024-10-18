@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.StateFlow
 /**
  * - Almost all the controllers that control the UI has some common state,that state is defined here
  * - The controller that is `abstract` such as `interface` should inherit from it
+ * @property isLoading
+ * @property statusMessage
  */
 interface ICoreController {
     /**

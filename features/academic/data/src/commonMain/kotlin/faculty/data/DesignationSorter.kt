@@ -2,52 +2,6 @@
 
 package faculty.data
 
-import faculty.data.entity.admin.DepartmentEntryEntity
-import faculty.data.entity.admin.FacultyEntryEntity
-import faculty.data.entity.admin.TeacherEntryEntity
-import faculty.domain.model.DepartmentWriteModel
-import faculty.domain.model.FacultyWriteModel
-import faculty.domain.model.TeacherWriteModel
-import faculty.domain.model.FacultyReadModel
-
-internal object ModelMapper {
-
-    fun FacultyEntryEntity.toModel() =
-        FacultyReadModel(
-            facultyId = facultyId,
-            name = name,
-            departmentsCount = numberOfDept,
-            priority = priority
-        )
-
-    fun FacultyWriteModel.toEntity() = FacultyEntryEntity(
-        priority = this.priority,
-        name = this.name,
-    )
-
-    fun DepartmentWriteModel.toEntity() = DepartmentEntryEntity(
-        priority = this.priority,
-        name = this.name,
-        shortname = this.shortname,
-    )
-
-    fun TeacherWriteModel.toEntity() = TeacherEntryEntity(
-        deptId = deptId,
-        priority = priority,
-        name = name,
-        email = email,
-        additionalEmail = additionalEmail?.ifBlank { null },
-        achievements = achievements,
-        phone = phone,
-        designations = designations,
-        roomNo = roomNo?.ifBlank { null },
-        profileImageLink = profileImageLink
-    )
-
-
-
-
-}
 
 //internal class DesignationSorter {
 //    // A predefined map that ranks the designations

@@ -1,7 +1,9 @@
 package academic.ui.public_
 
+import academic.presentationlogic.controller.admin.DeleteController
 import academic.presentationlogic.controller.public_.DepartmentController
 import academic.presentationlogic.controller.public_.FacultyController
+import academic.ui.AcademicModuleEvent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import common.ui.SnackBarMessage
@@ -14,11 +16,13 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class FacultyScreenViewModel internal constructor(
-    internal val facultyController: FacultyController,
-    internal val departmentController: DepartmentController
+internal class FacultyScreenViewModel(
+    val facultyController: FacultyController,
+    val departmentController: DepartmentController,
+    private val deleteController: DeleteController
 ) : ViewModel() {
 
+    private val scope = CoroutineScope(Dispatchers.Default)
     private val _showDepartments = MutableStateFlow(false)
     val showDepartments = _showDepartments.asStateFlow()
     fun onDeptCloseRequest() {
@@ -29,19 +33,52 @@ class FacultyScreenViewModel internal constructor(
     }
 
     val isLoading: Flow<Boolean> =
-        combine(departmentController.isLoading, facultyController.isLoading)
-        { isLogging, isRegistering ->
-            isLogging || isRegistering
+        combine(
+            departmentController.isLoading,
+            facultyController.isLoading,
+            deleteController.isLoading
+        )
+        { readingDept, readingFaculty, deleting ->
+            readingDept || readingFaculty || deleting
         }
     val screenMessage: Flow<SnackBarMessage?> =
-        combine(departmentController.statusMessage, facultyController.statusMessage)
-        { loginMsg, registerMsg ->
-            loginMsg ?: registerMsg
+        combine(
+            departmentController.statusMessage,
+            facultyController.statusMessage,
+            deleteController.statusMessage,
+        )
+        { loginMsg, registerMsg, deleterMsg ->
+            loginMsg ?: registerMsg ?: deleterMsg
         }
+    suspend fun deleteFaculty(id:String){
+        deleteController.deleteFaculty(id)
+        facultyController.refresh()
+    }
+    suspend fun deleteDepartment(id:String){
+        deleteController.deleteDepartment(id)
+        departmentController.refresh()
+    }
+
+    fun onAdminEvent(event: AcademicModuleEvent.AdminEvent) {
+        scope.launch {
+            when (event) {
+                is AcademicModuleEvent.DeleteFacultyRequest -> {
+                    deleteController.deleteFaculty(event.id)
+                }
+
+                is AcademicModuleEvent.DeleteDeptRequest -> {
+                    deleteController.deleteDepartment(event.id)
+                }
+
+            }
+        }
+
+
+    }
 
     init {
         viewModelScope.launch {
-            facultyController.fetchFaculty()
+            facultyController.readFaculties()
         }
     }
 
@@ -55,7 +92,7 @@ class FacultyScreenViewModel internal constructor(
                 if (facultyIndex != null) {
                     try {
                         val facultyId = facultyController.faculties.value[facultyIndex].id
-                        departmentController.fetchDepartments(facultyId)
+                        departmentController.readDepartments(facultyId)
                         _showDepartments.update { true }
                     } catch (_: Exception) {
 

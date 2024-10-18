@@ -10,9 +10,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import common.ui.SnackNProgressBarDecorator
 import common.ui.TwoPaneLayout
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -25,6 +27,8 @@ internal fun FacultyNDeptRoute(
 ) {
 
     val notShowingDepartment = !(viewModel.showDepartments.collectAsState().value)
+    val scope = rememberCoroutineScope()
+
 
     SnackNProgressBarDecorator(
         isLoading = viewModel.isLoading.collectAsState(false).value,

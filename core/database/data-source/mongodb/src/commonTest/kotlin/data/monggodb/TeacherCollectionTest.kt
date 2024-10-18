@@ -1,3 +1,4 @@
+@file:Suppress("spellCheckingInspection")
 package data.monggodb
 
 
@@ -7,6 +8,7 @@ import kotlin.test.Test
 import kotlin.test.fail
 
 class TeacherCollectionTest {
+    private val collection=TeacherCollection()
     private val teacherId = "johndoejohn.doe@university.com"
     private val deptId = "computerscience"
 
@@ -22,10 +24,11 @@ class TeacherCollectionTest {
                     "achievements": "PhD in Computer Science",
                     "phone": "1234567890",
                     "designations": "Professor",
-                    "room_no": "101"
+                    "room_no": "101",
+                    "image_link":"No image link "
                 }
             """.trimIndent()
-            println(TeacherCollection().insert(deptId, json))
+            println(collection.insert("computerscienceandengineering", json))
         }
     }
     @Test
@@ -72,6 +75,11 @@ class TeacherCollectionTest {
         executeTest {
             println(TeacherCollection().readById(teacherId))
         }
+    }
+
+    @Test
+    fun delete() = executeTest {
+        println(collection.deleteOrThrow(id = "johndoejohn.doe@university.com"))
     }
 
     /**

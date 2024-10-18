@@ -1,12 +1,15 @@
+@file:Suppress("spellCheckingInspection")
 package data.monggodb
 
 import core.database.datasource.monggodb.db.DepartmentCollection
+import core.database.datasource.monggodb.db.FacultyCollection
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.fail
 
 class DepartmentCollectionTest {
 
+    private val collection=DepartmentCollection()
 
     @Test
     fun insert() {
@@ -62,7 +65,10 @@ class DepartmentCollectionTest {
             println(DepartmentCollection().readById(dummyDeptId))
         }
     }
-
+    @Test
+    fun delete() = executeTest {
+        println(collection.deleteOrThrow(id = "15octdept"))
+    }
 
     /**
      * Helper method to execute tests with error handling.

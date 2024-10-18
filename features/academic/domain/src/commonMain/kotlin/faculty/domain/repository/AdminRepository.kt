@@ -28,7 +28,12 @@ interface AdminRepository {
     suspend fun getAllDept(): Result<List<DepartmentReadModel>>
 
     //TODO: UPDATE OPERATIONS
-    suspend fun updateFaculty(facultyId:String,model: FacultyWriteModel): Result<Unit>
-    suspend fun updateDepartment(deptId:String,model: DepartmentWriteModel): Result<Unit>
-    suspend fun updateTeacher(teacherId:String,model: TeacherWriteModel): Result<Unit>
+    suspend fun updateFaculty(facultyId: String, model: FacultyWriteModel): Result<Unit>
+    suspend fun updateDepartment(deptId: String, model: DepartmentWriteModel): Result<Unit>
+    suspend fun updateTeacher(teacherId: String, model: TeacherWriteModel): Result<Unit>
+
+    //TODO:Delete OPERATIONS
+    suspend fun deleteFaculty(facultyId: String): Result<Unit>
+    suspend fun deleteDepartment(deptId: String): Result<Unit>
+    suspend fun deleteTeacher(teacherId: String): Result<Unit>
 }

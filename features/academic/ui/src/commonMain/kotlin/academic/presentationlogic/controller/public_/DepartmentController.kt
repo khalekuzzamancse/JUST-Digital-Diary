@@ -11,6 +11,8 @@ internal interface DepartmentController: ICoreController {
     val departments: StateFlow<List<DepartmentReadModel>>
     val selected: StateFlow<Int?>
     fun onSelected(index: Int)
-    suspend fun fetchDepartments(facultyId:String)
+    suspend fun readDepartments(facultyId:String)
+    /**Should be used  for pull to refresh or read again after deleting*/
+    suspend fun refresh()
 
 }

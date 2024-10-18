@@ -3,10 +3,11 @@ package core.database.datasource.monggodb.db
 
 import com.mongodb.client.model.Filters
 import core.database.datasource.monggodb.db.MongoDBClient.COLLECTION_DEPARTMENT
-import core.database.datasource.monggodb.db.MongoDBClient.DATABASE_NAME
 import core.database.datasource.monggodb.db.MongoDBClient.ID_FIELD
 import core.database.datasource.monggodb.core.insertionWithHandleException
+import core.database.datasource.monggodb.db.MongoDBClient.COLLECTION_FACULTY
 import domain.entity.academic.DepartmentReadEntity
+import domain.entity.academic.FacultyReadEntity
 import domain.factory.ContractFactory
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
@@ -15,11 +16,12 @@ import org.bson.Document
 internal class DepartmentCollection {
     private val insertionService = ContractFactory.insertionService()
     private val readEntityService = ContractFactory.academicReadEntityService()
+    private val collection=COLLECTION_DEPARTMENT
 
 
     suspend fun insert(facultyId: String, json: String) = insertionWithHandleException {
-        MongoDBClient.writeOrThrow(DATABASE_NAME) { database ->
-            val collection = database.getCollection<Document>(COLLECTION_DEPARTMENT)
+        MongoDBClient.writeOrThrow { database ->
+            val collection = database.getCollection<Document>(collection)
             val result = insertionService.getDepartmentKeyOrThrow(
                 json = json,
                 facultyId = facultyId
@@ -33,10 +35,8 @@ internal class DepartmentCollection {
 
     @Throws(Throwable::class)
     suspend fun readAll(): String {
-        return MongoDBClient.writeOrThrow(
-            DATABASE_NAME
-        ) { database ->
-            val collection = database.getCollection<Document>(COLLECTION_DEPARTMENT)
+        return MongoDBClient.writeOrThrow { database ->
+            val collection = database.getCollection<Document>(collection)
 
             val jsonArray = collection.find().toList().map { document ->
                 //TODO:Later fetch the number of employees and refactor it
@@ -50,10 +50,8 @@ internal class DepartmentCollection {
 
     @Throws(Throwable::class)
     suspend fun readUnderFaculty(facultyId: String): String {
-        return MongoDBClient.readOrThrow(
-            DATABASE_NAME
-        ) { database ->
-            val collection = database.getCollection<Document>(COLLECTION_DEPARTMENT)
+        return MongoDBClient.readOrThrow { database ->
+            val collection = database.getCollection<Document>(collection)
 
             val jsonArray =
                 collection.find(Filters.eq(DepartmentReadEntity::faculty_id.name, facultyId))
@@ -70,10 +68,8 @@ internal class DepartmentCollection {
 
     @Throws(Throwable::class)
     suspend fun readById(deptId: String): String {
-        return MongoDBClient.readOrThrow(
-            DATABASE_NAME
-        ) { database ->
-            val collection = database.getCollection<Document>(COLLECTION_DEPARTMENT)
+        return MongoDBClient.readOrThrow { database ->
+            val collection = database.getCollection<Document>(collection)
 
             val document =
                 collection.find(Document(DepartmentReadEntity::dept_id.name, deptId)).firstOrNull()
@@ -87,10 +83,13 @@ internal class DepartmentCollection {
         }
     }
     suspend fun updateOrThrow(deptId: String, json: String) = MongoDBClient.updateOneOrThrow(
-        databaseName = DATABASE_NAME,
-        collectionName = COLLECTION_DEPARTMENT,
-        data = json,
-        query = Filters.eq(DepartmentReadEntity::dept_id.name, deptId)
+        collectionName = collection,
+        query = Filters.eq(DepartmentReadEntity::dept_id.name, deptId),
+        data = json
+    )
+    suspend  fun deleteOrThrow(id: String) = MongoDBClient.deleteOneOrThrow(
+        collectionName = collection,
+        query = Filters.eq(DepartmentReadEntity::dept_id.name, id)
     )
 
 }

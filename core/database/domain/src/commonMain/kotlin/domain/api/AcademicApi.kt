@@ -1,7 +1,8 @@
 @file:Suppress("unused")
 
 package domain.api
-import  domain.entity.*
+import  domain.entity.academic.*
+import domain.entity.FeedbackMessageEntity
 
 /**
  * - Define the set of apis that should be implemented by the database, regardless of database type
@@ -34,6 +35,12 @@ interface AcademicApi {
      */
     suspend fun readFacultyById(id: String): String
 
+    /**@return on failure/success return the JSON version of [FeedbackMessageEntity]*/
+    suspend fun  deleteFaculty(id: String):String
+
+
+
+
     /**
      * Insert a department under a faculty.
      * @param facultyId the ID of the faculty under which the department is added.
@@ -41,6 +48,8 @@ interface AcademicApi {
      * @return on success return the JSON version of the inserted [DepartmentReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
+
+
     suspend fun insertDept(facultyId: String, json: String): String
 
     /**
@@ -64,6 +73,15 @@ interface AcademicApi {
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
     suspend fun readDeptById(id: String): String
+
+
+
+
+    /**@return on failure/success return the JSON version of [FeedbackMessageEntity]*/
+    suspend fun  deleteDepartment(id: String):String
+
+
+
 
     /**
      * Insert a teacher under a department.
@@ -99,5 +117,9 @@ interface AcademicApi {
     suspend fun updateFaculty(facultyId: String,json:String): String
     suspend fun updateDept(deptId: String,json:String): String
     suspend fun updateTeacher(teacherId: String,json:String): String
+
+
+    /**@return on failure/success return the JSON version of [FeedbackMessageEntity]*/
+    suspend fun  deleteTeacher(id: String):String
 
 }

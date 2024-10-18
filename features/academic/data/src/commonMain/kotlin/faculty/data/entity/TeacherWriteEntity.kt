@@ -1,5 +1,5 @@
 @file:Suppress("unused")
-package faculty.data.entity2
+package faculty.data.entity
 
 import kotlinx.serialization.Serializable
 

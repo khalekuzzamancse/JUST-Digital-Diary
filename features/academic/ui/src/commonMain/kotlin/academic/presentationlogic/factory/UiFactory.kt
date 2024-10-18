@@ -1,7 +1,8 @@
-@file:Suppress("FunctionName")
+@file:Suppress("FunctionName","unused")
 
 package academic.presentationlogic.factory
 
+import academic.presentationlogic.controller.admin.DeleteController
 import academic.presentationlogic.controller.admin.DeptEntryController
 import academic.presentationlogic.controller.admin.FacultyEntryController
 import academic.presentationlogic.controller.admin.InsertFacultyController
@@ -17,6 +18,7 @@ import academic.presentationlogic.controller.admin.UpdateTeacherController
 import faculty.di.DiContainer
 import academic.presentationlogic.controller.public_.FacultyController
 import academic.presentationlogic.controller.public_.TeachersController
+import academic.presentationlogic.factory.admin.DeleteControllerImpl
 import academic.presentationlogic.factory.admin.DepartmentEntryValidatorImpl
 import academic.presentationlogic.factory.admin.InsertDeptControllerImpl
 import academic.presentationlogic.factory.admin.FacultyEntryValidatorImpl
@@ -31,7 +33,7 @@ import academic.presentationlogic.factory.public_.TeachersControllerImpl
 internal object UiFactory {
 
 
-    internal fun createTeachersController(token: String?): TeachersController =
+    internal fun teacherReadController(token: String?): TeachersController =
         TeachersControllerImpl(
             useCase = DiContainer.retrieveTeacherListUseCase(token),
 
@@ -87,6 +89,11 @@ internal object UiFactory {
             readAllDeptUseCase = DiContainer.getAllDeptUseCase(),
             writeUseCase = DiContainer.updateTeacherUseCase()
         )
+    fun deleteController():DeleteController= DeleteControllerImpl(
+        facultyDeleteCase = DiContainer.deleteFacultyUseCase(),
+        deptDeleteCase = DiContainer.deleteDepartmentUseCase(),
+        teacherDeleteCase = DiContainer.deleteTeacherUseCase()
+    )
 
     private fun _deptEntryValidator(): DeptEntryController.Validator =
         DepartmentEntryValidatorImpl()

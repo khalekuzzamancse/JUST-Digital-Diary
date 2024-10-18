@@ -17,7 +17,7 @@ sealed interface AcademicModuleEvent {
     data class UpdateDeptRequest(val id: String) : AdminEvent
     data class DeleteDeptRequest(val id: String) : AdminEvent
     data class UpdateTeacherRequest(val id: String) : AdminEvent
-    data class TeacherDeleteRequest(val id: String) : AdminEvent
+    data class DeleteTeacherRequest(val id: String) : AdminEvent
 
 
 }
