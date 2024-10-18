@@ -13,5 +13,5 @@ kotlin {
 
 }
 android {
-    namespace = "di"
+    namespace = "acdemiccalender.di"
 }

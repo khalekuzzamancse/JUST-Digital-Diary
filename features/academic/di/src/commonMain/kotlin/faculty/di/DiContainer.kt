@@ -1,7 +1,7 @@
 @file:Suppress("functionName")
 package faculty.di
 
-import data.DataFactory
+import faculty.data.DataFactory
 import faculty.domain.usecase.admin.InsertDepartmentUseCase
 import faculty.domain.usecase.admin.InsertFacultyUseCase
 import faculty.domain.usecase.admin.InsertTeacherUseCase

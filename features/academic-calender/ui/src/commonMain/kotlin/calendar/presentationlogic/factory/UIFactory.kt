@@ -14,7 +14,7 @@ import calendar.ui.admin.HolidayEditorController
 import calendar.ui.component.CalendarViewerController
 import calendar.presentationlogic.controller.public_.CalendarViewController
 import calendar.ui.component.CalendarViewerControllerImpl
-import di.DiContainer
+import acdemiccalender.di.DiContainer
 
  object UIFactory {
     fun createCalenderController(): CalendarViewController =

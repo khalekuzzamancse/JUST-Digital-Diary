@@ -1,6 +1,6 @@
 package data.monggodb
 
-import data.monggodb.db.CalenderCollection
+import core.database.datasource.monggodb.db.CalenderCollection
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.fail

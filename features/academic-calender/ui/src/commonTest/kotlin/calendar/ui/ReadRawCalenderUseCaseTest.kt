@@ -1,5 +1,5 @@
 package calendar.ui
-import di.DiContainer
+import acdemiccalender.di.DiContainer
 import feature.academiccalender.domain.model.DayOfWeek
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
@@ -9,7 +9,7 @@ class ReadRawCalenderUseCaseTest {
     @Test
     fun retrieveCalender(){
        runBlocking {
-           val useCase=DiContainer.readRawCalenderUseCase()
+           val useCase= DiContainer.readRawCalenderUseCase()
            useCase.execute(2024, listOf(DayOfWeek.THURSDAY, DayOfWeek.THURSDAY))
                .onSuccess {calendar->
                    println(calendar)

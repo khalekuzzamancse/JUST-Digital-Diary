@@ -3,9 +3,9 @@ package faculty.data
 
 
 import core.database.factory.ApiFactory
-import data.entity.admin.DepartmentEntryEntity
-import data.entity.admin.FacultyEntryEntity
-import data.entity.admin.TeacherEntryEntity
+import faculty.data.entity.admin.DepartmentEntryEntity
+import faculty.data.entity.admin.FacultyEntryEntity
+import faculty.data.entity.admin.TeacherEntryEntity
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import kotlin.test.Test

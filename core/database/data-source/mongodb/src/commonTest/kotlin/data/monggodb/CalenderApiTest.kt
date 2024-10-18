@@ -1,6 +1,6 @@
 package data.monggodb
 
-import data.monggodb.factory.MongoDbFactory
+import core.database.datasource.monggodb.factory.MongoDbFactory
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.fail

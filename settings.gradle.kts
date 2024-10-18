@@ -43,6 +43,7 @@ val applications= listOf(
 //val common= listOf(":common",":common:data",":common:ui",":common:docs","common:di")
 val coreModules = listOf(
     ":core",
+    ":core:database:data-source:server",
     ":core:custom-exception",
     ":core:network",
     ":core:database",":core:database:api",":core:database:domain",
@@ -69,4 +70,3 @@ val featureModules = listOf(
 
 rootProject.name = "JUSTDigitalDiary"//do not use whitespace,it may causes build error or DEX
 include(applications+coreModules+featureModules)
-include(":backend")

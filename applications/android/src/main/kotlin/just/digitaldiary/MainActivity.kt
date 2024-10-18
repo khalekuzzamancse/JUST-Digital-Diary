@@ -1,6 +1,7 @@
 package just.digitaldiary
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.icons.Icons
@@ -9,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
+import core.database.factory.NetworkFactory
 import just.digitaldiary.theme.AppTheme
 import navigation.RootNavHost
 
@@ -24,6 +26,8 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
         splashScreen.setKeepOnScreenCondition { !isTokenReady }
 
+
+
         setContent {
             val tokenViewModel: TokenViewModel = viewModel()
             val token by tokenViewModel.token.collectAsState()
@@ -34,6 +38,7 @@ class MainActivity : ComponentActivity() {
                 if (isTokenLoaded) {
                     isTokenReady = true
                 }
+
             }
             AppTheme {
                 RootNavHost(

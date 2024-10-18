@@ -1,5 +1,5 @@
 package data.monggodb
-import data.monggodb.factory.AcademicApiImpl
+import core.database.datasource.monggodb.factory.AcademicApiImpl
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.fail

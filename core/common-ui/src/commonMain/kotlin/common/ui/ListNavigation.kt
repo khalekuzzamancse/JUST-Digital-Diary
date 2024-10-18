@@ -1,7 +1,6 @@
 package common.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.HoverInteraction
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -45,8 +44,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-data class NavigationItemInfo<T>(
-    val key:T,
+data class NavigationItemInfo(
+    val key:String,
     val label: String,
     val unFocusedIcon: ImageVector,
     val focusedIcon: ImageVector =unFocusedIcon,
@@ -54,7 +53,7 @@ data class NavigationItemInfo<T>(
     val badge: String? = null,
 )
 data class NavigationItemInfo2<T>(
-    val key:T,
+    val key:String,
     val label: String,
     val iconText: String,
     val route: String = label,
@@ -126,9 +125,9 @@ private fun NavigationItemLayoutCore(
     if (focusing) {
         onFocusing()
     }
-    val backgroundColor by animateColorAsState(
-        targetValue = if (focusing) props.focusedColor else props.unFocusedColor
-    )
+//    val backgroundColor by animateColorAsState(
+//        targetValue = if (focusing) props.focusedColor else props.unFocusedColor
+//    )
 
     val selectionColor = props.focusedColor
     val itemColor = if (selected) props.focusedColor else props.unFocusedColor
@@ -255,9 +254,9 @@ private fun TextToIcon(
 
 }
 @Composable
-fun <T> NavigationItem(
+fun NavigationItem(
     modifier: Modifier = Modifier,
-    navigationItem: NavigationItemInfo<T>,
+    navigationItem: NavigationItemInfo,
     selected: Boolean,
     visibilityDelay: Long = 0,
     onFocusing: () -> Unit = {},

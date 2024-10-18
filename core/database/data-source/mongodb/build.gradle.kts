@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.Packaging
+
 plugins {
     alias(libs.plugins.convention.dataModulePlugin)
     alias(libs.plugins.kotlinxSerialization)
@@ -8,7 +10,11 @@ kotlin {
         val commonMain by getting{
             dependencies{
                 implementation(projects.core.database.domain)
+
+
+                //noinspection UseTomlInstead
                 implementation("org.mongodb:mongodb-driver-kotlin-coroutine:5.2.0")
+                //noinspection UseTomlInstead
                 implementation("org.mongodb:bson-kotlinx:5.2.0")
             }
         }
@@ -24,6 +30,8 @@ kotlin {
 
 }
 android {
-    namespace = "data.monggodb"
+    namespace = "core.database.datasource.monggodb"
+
+
 
 }

@@ -3,7 +3,7 @@ package profile.data.factory
 
 import core.network.JsonParser
 import core.network.NetworkException
-import profile.data.entity.ServerResponseMessageEntity
+import profile.data.entity.FeedbackEntity
 import profile.data.services.JsonHandler
 import domain.execption.CustomException
 
@@ -35,12 +35,12 @@ internal class JsonHandlerImpl(private val jsonParser: JsonParser) : JsonHandler
 
     // Helper methods to process JSON strings
     private fun String.createServerMessageException(): CustomException.MessageFromServer {
-        val entity = jsonParser.parse(this, ServerResponseMessageEntity.serializer()).getOrThrow()
+        val entity = jsonParser.parse(this, FeedbackEntity.serializer()).getOrThrow()
         return CustomException.MessageFromServer(message = entity.message)
     }
 
     private fun String.isServerMessage(): Boolean =
-        jsonParser.parse(this, ServerResponseMessageEntity.serializer()).isSuccess
+        jsonParser.parse(this, FeedbackEntity.serializer()).isSuccess
 
 
 }

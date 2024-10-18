@@ -25,12 +25,22 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import profile.presentationlogic.ProfileEvent
 import profile.presentationlogic.model.ProfileModel
@@ -45,22 +55,25 @@ internal fun ProfileRoute(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Dashboard(
-            isAdmin = true,
-            onCalendarUpdateClick = { onEvent(ProfileEvent.CalendarUpdate) },
-            onExamRoutineUpdateClick = { onEvent(ProfileEvent.ExamRoutineUpdate) },
-            onClassRoutineUpdateClick = { onEvent(ProfileEvent.ClassRoutineUpdate) },
-            onFacultyInsertRequest = {
-                onEvent(ProfileEvent.InsertFacultyRequest)
-            },
-            onDeptInsertRequest = {
-                onEvent(ProfileEvent.InsertDepartmentRequest)
-            },
-            onTeacherInsertRequest = {
-                onEvent(ProfileEvent.InsertTeacherRequest)
-            },
+        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
+            Dashboard(
+                isAdmin = true,
+                onCalendarUpdateClick = { onEvent(ProfileEvent.CalendarUpdate) },
+                onExamRoutineUpdateClick = { onEvent(ProfileEvent.ExamRoutineUpdate) },
+                onClassRoutineUpdateClick = { onEvent(ProfileEvent.ClassRoutineUpdate) },
+                onFacultyInsertRequest = {
+                    onEvent(ProfileEvent.InsertFacultyRequest)
+                },
+                onDeptInsertRequest = {
+                    onEvent(ProfileEvent.InsertDepartmentRequest)
+                },
+                onTeacherInsertRequest = {
+                    onEvent(ProfileEvent.InsertTeacherRequest)
+                },
 
-            )
+                )
+        }
+
     }
 
 
@@ -147,7 +160,7 @@ private data class DashboardItemData(
 )
 
 // Root Dashboard Function with default lambdas for each event
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun Dashboard(
     isAdmin: Boolean = false,
@@ -205,31 +218,58 @@ fun Dashboard(
 
         }
     }
+    val windows= calculateWindowSizeClass()
+    val itemsPerRow = when ( windows.widthSizeClass ){
+        WindowWidthSizeClass.Expanded-> 3 // Expanded screen: show at most 3 items per row
+        else -> 2 // Compact screen: show at most 2 items per row
+    }
+    var maxWidth by remember { mutableStateOf(0) } // Store the largest width
+    val density = LocalDensity.current // For converting pixels to dp
+
     FlowRow(
         modifier = Modifier
             .padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        dashboardItems.forEachIndexed { _, item ->
-            _DashboardItem(
+        dashboardItems.chunked(itemsPerRow).forEach { rowItems ->
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
-                    .weight(1f)
-                    .clickable { item.onClick() }
-                    .shadow(8.dp, RoundedCornerShape(12.dp))
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(12.dp)
+            ) {
+                rowItems.forEach { item ->
+                    _DashboardItem(
+                        modifier = Modifier
+                            .onGloballyPositioned { layoutCoordinates ->
+                                // Measure the width of each item and update maxWidth if necessary
+                                val width = layoutCoordinates.size.width
+                                if (width > maxWidth) {
+                                    maxWidth = width
+                                }
+                            }
+                            .width(
+                                if (maxWidth > 0) {
+                                    with(density) { maxWidth.toDp() } // Apply maxWidth once it's available
+                                } else {
+                                    Dp.Unspecified // Initially don't specify a width
+                                }
+                            )
+                            .clickable { item.onClick() }
+                            .shadow(8.dp, RoundedCornerShape(12.dp))
+                            .background(
+                                color = Color.White,
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                            .padding(16.dp),
+                        text = item.text,
+                        icon = item.icon,
                     )
-                    .padding(16.dp),
-                text = item.text,
-                icon = item.icon,
-            )
-
-
+                }
+            }
         }
-
     }
+
+
 }
 
 @Composable
@@ -240,7 +280,7 @@ private fun _DashboardItem(
     val color = MaterialTheme.colorScheme.secondary //clickable so importance is high
     Box(
         modifier = modifier,
-        contentAlignment = Alignment.CenterStart
+        contentAlignment = Alignment.Center
     ) {
         Row(
             modifier = Modifier

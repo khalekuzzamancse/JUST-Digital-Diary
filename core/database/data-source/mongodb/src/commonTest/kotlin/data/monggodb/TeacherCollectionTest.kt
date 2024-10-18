@@ -1,7 +1,7 @@
 package data.monggodb
 
 
-import data.monggodb.db.TeacherCollection
+import core.database.datasource.monggodb.db.TeacherCollection
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.fail

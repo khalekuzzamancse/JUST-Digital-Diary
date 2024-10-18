@@ -1,7 +1,7 @@
 @file:Suppress("SpellCheckingInspection")
 package data.monggodb
 
-import data.monggodb.db.ScheduleCollection
+import core.database.datasource.monggodb.db.ScheduleCollection
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.fail
