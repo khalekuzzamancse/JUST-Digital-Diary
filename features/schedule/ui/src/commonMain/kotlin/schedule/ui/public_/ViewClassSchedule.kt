@@ -30,25 +30,28 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import common.ui.DeleteButton
 import common.ui.EmptyContentScreen
 import common.ui.SnackNProgressBarDecorator
 import schedule.presentationlogic.factory.UiFactory
+import schedule.presentationlogic.model.ClassDetailModel
+import schedule.presentationlogic.model.ClassModel
+import schedule.presentationlogic.model.ClassScheduleModel
 import schedule.ui.core.SessionHeader
 import schedule.ui.core.TextSizeMeasurer
-import schedule.presentationlogic.model.ClassDetailModel
-import schedule.presentationlogic.model.ClassScheduleModel
-import schedule.presentationlogic.model.ClassModel
 
 
 /**
  * TODO: Need to Refactor, use a Viewmodel
  */
 @Composable
-fun ViewClassScheduleScreen() {
+fun ViewClassScheduleScreen(
+    isAdmin: Boolean = true,
+) {
     val controller = remember { UiFactory.classScheduleViewerController() }
     val schedules = controller.schedules.collectAsState().value
     val isLoading = controller.isLoading.collectAsState().value
-    val noScheduleFound=(!isLoading && schedules.isEmpty())
+    val noScheduleFound = (!isLoading && schedules.isEmpty())
     SnackNProgressBarDecorator(
         isLoading = isLoading,
         message = controller.statusMessage.collectAsState(null).value
@@ -61,6 +64,7 @@ fun ViewClassScheduleScreen() {
         ) {
             schedules.forEach { schedule ->
                 ClassSchedule(
+                    showDeleteButton = isAdmin,
                     schedule = schedule,
                     modifier = Modifier
                         .padding(8.dp)
@@ -79,7 +83,8 @@ fun ViewClassScheduleScreen() {
 @Composable
 fun ClassSchedule(
     modifier: Modifier = Modifier,
-    schedule: ClassScheduleModel
+    schedule: ClassScheduleModel,
+    showDeleteButton: Boolean=false,
 ) {
     val inCompleteInfo = schedule.routine.isEmpty()
     if (inCompleteInfo) {
@@ -90,6 +95,7 @@ fun ClassSchedule(
             shadowElevation = 3.dp
         ) {
             Column {
+
                 SessionHeader(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -101,10 +107,22 @@ fun ClassSchedule(
                     year = schedule.year,
                     semester = schedule.semester,
                 )
-
                 _ClassSchedule(
-                    schedule = schedule.routine
+                    schedule = schedule.routine,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
                 )
+                if (showDeleteButton) {
+                    //No Spacer needed, schedule has bottom padding=16.dp
+                    DeleteButton(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        onConfirm = {
+
+                        }
+                    )
+                }
+
             }
 
         }
@@ -118,8 +136,10 @@ fun ClassSchedule(
  * - Every Cell has same size, cell height=Max Of all text height,width=max of all text width
  */
 @Composable
-fun _ClassSchedule(schedule: List<ClassModel>) {
-
+fun _ClassSchedule(
+    modifier: Modifier = Modifier,
+    schedule: List<ClassModel>
+) {
 
     val measurer = rememberTextMeasurer()
     val density = LocalDensity.current
@@ -136,9 +156,7 @@ fun _ClassSchedule(schedule: List<ClassModel>) {
         remember(schedule) { textMeasurer.calculateMaxWidth(schedule.map { it.day }) }
 
     Row(
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth()
+        modifier = modifier
     ) {
         _DayColumn(
             modifier = Modifier,

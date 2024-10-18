@@ -28,18 +28,15 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.ExpandLess
 import androidx.compose.material.icons.outlined.ExpandMore
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -222,16 +219,16 @@ private fun _Controls(
                 tint = tint
             )
             if (showEditButton) {
-                _ControlIconWithConfirmationDialog(
-                    onConfirmRequest = onEditRequest,
+                IconButtonWithConfirmation(
+                    onConfirm = onEditRequest,
                     icon = Icons.Outlined.Edit,
                     tint = MaterialTheme.colorScheme.secondary,
                     message = "Are you sure you want to edit?"
                 )
             }
             if (showDeleteButton) {
-                _ControlIconWithConfirmationDialog(
-                    onConfirmRequest = onDeleteRequest,
+                IconButtonWithConfirmation(
+                    onConfirm = onDeleteRequest,
                     icon = Icons.Outlined.Delete,
                     tint =  MaterialTheme.colorScheme.secondary,
                     message = "Are you sure you want to delete?"
@@ -309,39 +306,3 @@ private fun ColumnScope._ProfileImage(
     }
 }
 
-@Composable
-private fun _ControlIconWithConfirmationDialog(
-    onConfirmRequest: () -> Unit,
-    icon: ImageVector,
-    tint: Color,
-    message: String
-) {
-    /**
-     * - This just for confirmation, so it make sense  to not hoist the state
-     */
-    var showDialog by rememberSaveable { mutableStateOf(false) }
-
-    if (showDialog) {
-        AlertDialog(
-            onDismissRequest = { showDialog = false },
-            confirmButton = {
-                TextButton(onClick = {
-                    showDialog = false
-                    onConfirmRequest() // Perform the confirmed action
-                }) {
-                    Text("Confirm")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDialog = false }) {
-                    Text("Cancel")
-                }
-            },
-            text = { Text(message) }
-        )
-    }
-
-    IconButton(onClick = { showDialog = true }) {
-        Icon(imageVector = icon, contentDescription = null, tint = tint)
-    }
-}

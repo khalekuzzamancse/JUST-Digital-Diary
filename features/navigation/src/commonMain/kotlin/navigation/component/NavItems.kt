@@ -152,13 +152,13 @@ object NavDestinationBuilder {
                 focusedIcon =  Icons.Filled.CalendarMonth,
                 destination = NavDestination.ClassSchedule
             ),
-            NavigationItem(
-                label = "Exam Schedule",
-                unFocusedIcon = Icons.Outlined.CalendarToday,
-                focusedIcon = Icons.Filled.CalendarToday,
-                destination = NavDestination.ExamSchedule
-            ),
-        )
+//            NavigationItem(
+//                label = "Exam Schedule",
+//                unFocusedIcon = Icons.Outlined.CalendarToday,
+//                focusedIcon = Icons.Filled.CalendarToday,
+//                destination = NavDestination.ExamSchedule
+//            ),
+       )
     )
     private fun group4() = NavGroup(
         items = listOf(

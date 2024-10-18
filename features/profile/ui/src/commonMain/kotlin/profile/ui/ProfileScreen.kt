@@ -201,13 +201,13 @@ fun Dashboard(
                     onClick = onCalendarUpdateClick
                 )
             )
-            add(
-                DashboardItemData(
-                    text = "Exam Routine Update",
-                    icon = Icons.Outlined.Schedule,
-                    onClick = onExamRoutineUpdateClick
-                )
-            )
+//            add(
+//                DashboardItemData(
+//                    text = "Exam Routine Update",
+//                    icon = Icons.Outlined.Schedule,
+//                    onClick = onExamRoutineUpdateClick
+//                )
+//            )
             add(
                 DashboardItemData(
                     text = "Class Routine Update",
