@@ -16,27 +16,25 @@ import navigation.component.NavDestination
 import navigation.component.NavDestinationBuilder
 import navigation.navgraph.NavGraph
 
-@Composable
-fun RootNavHost(
-    token: String?,
-    onTokenSaveRequest: (String) -> Unit = {},
-    onTokenDeleteRequest: () -> Unit = {},
-    onEvent: (AppEvent) -> Unit,
-) {
-
-
-    val mainViewModel = viewModel { MainViewModel() }
-    _FeatureNavGraph(
-        viewModel = mainViewModel,
-        onEvent = onEvent,
-        onLogOutRequest = {
-            onTokenDeleteRequest()
-        }
-    )
-}
+//@Composable
+//fun RootNavHost(
+//    token: String?,
+//    onTokenSaveRequest: (String) -> Unit = {},
+//    onTokenDeleteRequest: () -> Unit = {},
+//    onEvent: (AppEvent) -> Unit,
+//) {
+//    val mainViewModel = viewModel { MainViewModel() }
+//    _FeatureNavGraph(
+//        viewModel = mainViewModel,
+//        onEvent = onEvent,
+//        onLogOutRequest = {
+//            onTokenDeleteRequest()
+//        }
+//    )
+//}
 
 @Composable
-private fun _RootNavHost(
+ fun RootNavHost(
     token: String?,
     onTokenSaveRequest: (String) -> Unit = {},
     onTokenDeleteRequest: () -> Unit = {},

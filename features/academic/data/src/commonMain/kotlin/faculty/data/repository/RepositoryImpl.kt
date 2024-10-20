@@ -29,12 +29,13 @@ import kotlinx.serialization.builtins.ListSerializer
 class RepositoryImpl internal constructor(
     private val jsonParser: JsonParser,
     private val handler: JsonHandler,
+    private val token:String?
 ) : Repository {
-
+    private val api= ApiFactory.academicApi(token)
     override suspend fun getFaculties(): Result<List<FacultyReadModel>> {
         return with(handler) {
             withExceptionHandle {
-                val json = ApiFactory.academicApi().readAllFaculty()
+                val json = api.readAllFaculty()
 
                 /** Execution is here means server sent a response we have to parse it
                  * - 3 possible cases: We got excepted  json or Json is a server message in format ServerResponseMessageEntity  or  Server send a json that format is not known yet,may be server change it json format or other
@@ -58,7 +59,7 @@ class RepositoryImpl internal constructor(
     override suspend fun getTeachers(deptId: String): Result<List<TeacherReadModel>> {
         return with(handler) {
             withExceptionHandle {
-                val json = ApiFactory.academicApi().readTeachersUnderDept(deptId)
+                val json = api.readTeachersUnderDept(deptId)
                 if (json._isTeacherListEntity()) {
 
                     val entities =
@@ -81,7 +82,7 @@ class RepositoryImpl internal constructor(
 
         return with(handler) {
             withExceptionHandle {
-                val json = ApiFactory.academicApi().readAllDeptUnderFaculty(facultyId)
+                val json = api.readAllDeptUnderFaculty(facultyId)
 
                 if (json._isDepartmentListEntity()) {
                     val entities =

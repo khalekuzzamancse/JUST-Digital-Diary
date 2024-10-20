@@ -26,7 +26,8 @@ import schedule.domain.repository.Repository
  */
 class RepositoryImpl internal constructor(
     private val handler: JsonHandler,
-    private val parser: JsonParser
+    private val parser: JsonParser,
+    private val token:String?=null,
 ) : Repository {
     private val api= ApiFactory.scheduleApi()
     override suspend fun insert(model: ClassScheduleWriteModel, deptId: String): Result<Unit> {
@@ -44,7 +45,7 @@ class RepositoryImpl internal constructor(
     override suspend fun readAllDept(): Result<List<DepartmentModel>> {
         return with(handler) {
             withExceptionHandle {
-                val json = ApiFactory.academicApi().readAllDept()
+                val json = ApiFactory.academicApi(token).readAllDept()
 
                 if (json._isDepartmentListEntity()) {
                     val entities =

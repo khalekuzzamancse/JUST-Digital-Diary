@@ -16,7 +16,7 @@ import kotlinx.serialization.builtins.ListSerializer
 class ServerAcademicApi internal constructor(
     private val parser: JsonParser,
     private val apiServiceClient: ApiServiceClient,
-    private val token: String?=URL.TOKEN
+    private val token: String?
 ):AcademicApiFacade {
     override suspend fun insertFaculty(json: String): String {
         TODO("Not yet implemented")
@@ -64,7 +64,7 @@ class ServerAcademicApi internal constructor(
 
     override suspend fun readAllDeptUnderFaculty(facultyId: String): String {
         if (token == null)
-            throw  Throwable("Token is null,caching is not implemented yet")
+            throw  Throwable("Login Session Expire")
 
         val response = apiServiceClient.readJsonOrThrow(
             url = "${URL.DEPT_UNDER_FACULTY}/$facultyId",
@@ -104,7 +104,7 @@ class ServerAcademicApi internal constructor(
 
     override suspend fun readTeachersUnderDept(deptId: String): String {
         if (token == null)
-            throw  Throwable("Token is null,caching is not implemented yet")
+            throw  Throwable("Login Session Expire")
 
         val response = apiServiceClient.readJsonOrThrow(
             url = "${URL.TEACHER_UNDER_DEPT}/$deptId",

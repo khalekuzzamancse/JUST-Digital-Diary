@@ -24,6 +24,7 @@ object DataFactory {
         RepositoryImpl(
             jsonParser = _createJsonParser(),
             handler = JsonHandlerImpl(_createJsonParser()),
+            token=token
         )
 
     fun createAdminRepository(): AdminRepository = AdminRepositoryImpl(
