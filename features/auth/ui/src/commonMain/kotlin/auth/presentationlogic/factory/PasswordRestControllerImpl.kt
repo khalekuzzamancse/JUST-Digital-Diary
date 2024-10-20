@@ -1,7 +1,9 @@
 package auth.presentationlogic.factory
 
 import auth.domain.exception.CustomException
+import auth.domain.model.ResetPasswordCodeValidateModel
 import auth.domain.model.ResetPasswordModel
+import auth.domain.usecase.ResetPasswordCodeValidateUseCase
 import auth.domain.usecase.ResetPasswordUseCase
 import auth.domain.usecase.SendPasswordResetUseCase
 import auth.presentationlogic.controller.PasswordResetController
@@ -14,11 +16,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class PasswordRestControllerImpl(
+    private val validateCase: ResetPasswordCodeValidateUseCase,
     private val requestUseCase: SendPasswordResetUseCase,
     private val resetUseCase: ResetPasswordUseCase
 ) : PasswordResetController {
     //    private val _state = MutableStateFlow(LoginModel("190142.cse@student.just.edu.bd", "12345678"))
-
+    val scope = CoroutineScope(Dispatchers.Default)
     private val _isRequestSending = MutableStateFlow(false)
     private val _screenMessage = MutableStateFlow<String?>(null)
     private val _email = MutableStateFlow("")
@@ -40,10 +43,35 @@ internal class PasswordRestControllerImpl(
 
     override fun onPasswordChanged(value: String) {
         _password.update { value }
+
     }
 
     override fun onCodeChanged(value: String) {
         _code.update { value }
+        //TODO:Refactor later
+        //Code expire time 1 minute so silently validate the code
+        //Normally code is>4 digit:
+        if (code.value.length >= 4) {
+            scope.launch {
+                validateCase.execute(
+                    ResetPasswordCodeValidateModel(
+                        email = email.value,
+                        code = value
+                    )
+                ).fold(
+                    onSuccess = {},
+                    onFailure = { exception ->
+                        if (exception is CustomException) {
+                            _updateErrorMessage(exception.message)
+                        } else {
+                          //  _updateErrorMessage("Something went wrong")
+                        }
+
+                    }
+                )
+            }
+        }
+
     }
 
 
@@ -69,6 +97,7 @@ internal class PasswordRestControllerImpl(
     }
 
     override suspend fun resetPassword() {
+
         handleApiCall(
             execute = {
                 resetUseCase.execute(

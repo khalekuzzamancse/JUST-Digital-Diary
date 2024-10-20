@@ -46,7 +46,6 @@ fun AuthRoute(
             startDestination = Route.LOGIN_SCREEN,
             modifier = Modifier
         ) {
-
             composable(route = Route.LOGIN_SCREEN) {
                 LoginScreen(
                     controller = authViewModel.loginController,

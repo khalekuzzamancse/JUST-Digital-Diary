@@ -13,6 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -21,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import common.newui.ContactSelectionDialog
 import common.newui.EmptyContentScreen
 import common.ui.AdaptiveList
 import common.ui.GenericEmployeeCard
@@ -87,6 +92,8 @@ private fun ListOfAdminOfficer(
     officers: List<AdminOfficerModel>,
     onEvent:(AdminEmployeeListEvent)->Unit,
 ) {
+    var selectedEvent by rememberSaveable { mutableStateOf<AdminEmployeeListEvent?>(null) }
+
     if (officers.isNotEmpty()){
         Surface(
             shadowElevation = 8.dp
@@ -99,19 +106,66 @@ private fun ListOfAdminOfficer(
                     modifier = Modifier.padding(8.dp),
                     adminOfficer = employee,
                     onCallRequest = {
-                        onEvent(AdminEmployeeListEvent.CallRequest(employee.phone))
+                        selectedEvent = AdminEmployeeListEvent.CallRequest(employee.phone)
                     },
                     onMessageRequest = {
-                        onEvent(AdminEmployeeListEvent.MessageRequest(employee.phone))
+                        selectedEvent = AdminEmployeeListEvent.MessageRequest(employee.phone)
                     },
                     onEmailRequest = {
-                        onEvent(AdminEmployeeListEvent.EmailRequest(employee.email))
-                    }
+                        selectedEvent = AdminEmployeeListEvent.EmailRequest(employee.email)
+                    },
                 )
             }
 
         }
     }
+    selectedEvent?.let { event ->
+        when (event) {
+            is AdminEmployeeListEvent.CallRequest -> {
+                ContactSelectionDialog(
+                    contactString = event.number,
+                    onDismissRequest = {
+                        selectedEvent = null
+                    },
+                    onItemSelected = { selectedPhoneNo ->
+                        onEvent(AdminEmployeeListEvent.CallRequest(selectedPhoneNo))
+                        selectedEvent = null
+                    }
+                )
+            }
+
+            is AdminEmployeeListEvent.MessageRequest -> {
+                ContactSelectionDialog(
+                    contactString = event.number,
+                    onDismissRequest = {
+                        selectedEvent = null
+
+                    },
+                    onItemSelected = { selectedPhoneNo ->
+                        onEvent(AdminEmployeeListEvent.MessageRequest(selectedPhoneNo))
+                        selectedEvent = null
+                    }
+                )
+
+            }
+
+            is AdminEmployeeListEvent.EmailRequest -> {
+                ContactSelectionDialog(
+                    contactString = event.email,
+                    onDismissRequest = {
+                        selectedEvent = null
+                    },
+                    onItemSelected = { email ->
+                        onEvent(AdminEmployeeListEvent.EmailRequest(email))
+                        selectedEvent = null
+                    }
+                )
+
+            }
+        }
+
+    }
+
 }
 
 @Composable

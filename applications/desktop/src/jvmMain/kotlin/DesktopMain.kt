@@ -34,6 +34,7 @@ fun main() {
                     RootNavHost(
                         token = token,
                         onTokenSaveRequest = {
+                            println("Token:$it")
                             token = it
                         },
                         onTokenDeleteRequest = {},

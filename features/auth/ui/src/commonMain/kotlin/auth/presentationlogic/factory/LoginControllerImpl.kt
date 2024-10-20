@@ -19,12 +19,14 @@ typealias LoginDomainModel = auth.domain.model.LoginModel
 
 internal class LoginControllerImpl(
     private val useCase: LoginUseCase,
+
     override val validator: LoginController.Validator,
 
-    ) : LoginController {
-   private val _state = MutableStateFlow(LoginModel("190142.cse@student.just.edu.bd", "12345678"))
 
-  //  private val _state = MutableStateFlow(LoginModel("", ""))
+    ) : LoginController {
+//   private val _state = MutableStateFlow(LoginModel("190142.cse@student.just.edu.bd", "12345678"))
+
+   private val _state = MutableStateFlow(LoginModel("", ""))
     private val _isLogging = MutableStateFlow(false)
     private val _screenMessage = MutableStateFlow<String?>(null)
 
@@ -53,14 +55,12 @@ internal class LoginControllerImpl(
             LoginDomainModel(username = state.value.username, state.value.password)
         )
         stopLoading()
-
         return result.fold(
             onSuccess = { token ->
                 _updateErrorMessage("Login Success")
                 token
             },
             onFailure = { exception ->
-
                 when (exception) {
                     is CustomException -> {
                         _updateErrorMessage(exception.message)

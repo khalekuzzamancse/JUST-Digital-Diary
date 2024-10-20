@@ -25,7 +25,7 @@ class ApiServiceClientImpl internal constructor() : ApiServiceClient {
         val client = _createClient()
         return try {
             val response = client.get(url)
-            ToCustomException().throwCustomExceptionIfAny(code = response.status, body = response.bodyAsText())
+          //  ToCustomException().throwCustomExceptionIfAny(code = response.status, body = response.bodyAsText())
 
             val json = response.bodyAsText()
             Result.success(json)
@@ -44,7 +44,7 @@ class ApiServiceClientImpl internal constructor() : ApiServiceClient {
                 contentType(ContentType.Application.Json)
                 setBody(body)
             }
-            ToCustomException().throwCustomExceptionIfAny(code = response.status, body = response.bodyAsText())
+        //    ToCustomException().throwCustomExceptionIfAny(code = response.status, body = response.bodyAsText())
 
             val json = response.bodyAsText()
             Result.success(json)
@@ -63,8 +63,10 @@ class ApiServiceClientImpl internal constructor() : ApiServiceClient {
                 contentType(ContentType.Application.Json)
                 setBody(body)
             }
-            ToCustomException().throwCustomExceptionIfAny(code = response.status, body = response.bodyAsText())
+            //TODO:Fix it later
+          //  ToCustomException().throwCustomExceptionIfAny(code = response.status, body = response.bodyAsText())
             val json = response.bodyAsText()
+
             return json
 
         } catch (ex: Exception) {

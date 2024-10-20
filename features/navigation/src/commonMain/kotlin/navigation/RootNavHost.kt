@@ -27,11 +27,11 @@ fun RootNavHost(
     LaunchedEffect(token) {
         NavigationFactory.updateToken(token)
     }
-
     AppTheme {
         if (token == null) {
             AuthRoute(
                 onLoginSuccess = {
+
                     onTokenSaveRequest(it)
                 }
             )
