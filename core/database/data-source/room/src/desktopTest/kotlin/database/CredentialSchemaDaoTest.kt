@@ -1,19 +1,20 @@
 package database
 
-import core.database.db.Database
-import core.database.getDatabase
-import database.schema.CredentialSchema
+import core.roomdb.dao.CredentialDao
+import core.roomdb.db.DB
+import core.roomdb.schema.CredentialSchema
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
+import core.roomdb.factory.getDatabase
 import kotlin.test.Test
 import kotlin.test.assertNull
 
 class CredentialSchemaDaoTest {
 
-    private lateinit var db: Database
-    private lateinit var credentialDao: core.database.dao.CredentialDao
+    private lateinit var db: DB
+    private lateinit var credentialDao: CredentialDao
 
     @Before
     fun createDb() {
@@ -27,16 +28,19 @@ class CredentialSchemaDaoTest {
     }
 
     @Test
-    fun testInsertAndRetrieveCredential() = runBlocking {
-        val credential = CredentialSchema(username = "user1", password = "pass1")
-        credentialDao.upsertCredential(credential)
+    fun insert() = runBlocking {
+            val credential = CredentialSchema(username = "user1", password = "pass1")
+            credentialDao.upsertCredential(credential)
 
+        val response = credentialDao.getCredential()
+        assertEquals(credential.username,response?.username)
+        assertEquals(credential.password,response?.password)
+
+    }
+    @Test
+    fun read() = runBlocking {
         val retrievedCredential = credentialDao.getCredential()
-        println("Inserted credential: ${credential.username}, ${credential.password}")
         println("Retrieved credential: ${retrievedCredential?.username}, ${retrievedCredential?.password}")
-
-        assertEquals(credential.username, retrievedCredential?.username)
-        assertEquals(credential.password, retrievedCredential?.password)
     }
 
     @Test

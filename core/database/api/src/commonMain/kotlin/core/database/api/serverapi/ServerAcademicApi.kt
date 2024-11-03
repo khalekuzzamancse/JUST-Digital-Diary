@@ -6,6 +6,7 @@ import core.database.api.AcademicApiFacade
 import core.database.network.ApiServiceClient
 import core.database.network.Header
 import core.database.network.JsonParser
+import domain.factory.ContractFactory
 import domain.factory.Serializers
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
@@ -16,8 +17,9 @@ import kotlinx.serialization.builtins.ListSerializer
 class ServerAcademicApi internal constructor(
     private val parser: JsonParser,
     private val apiServiceClient: ApiServiceClient,
-    private val token: String?
+    private val token: String
 ):AcademicApiFacade {
+    private val feedbackService=ContractFactory.feedbackService()
     override suspend fun insertFaculty(json: String): String {
         TODO("Not yet implemented")
     }
@@ -33,8 +35,7 @@ class ServerAcademicApi internal constructor(
     /**Not handle any exception,propagate out the exception**/
     @Throws(Throwable::class)
     override suspend fun readAllFaculty(): String {
-        if (token == null)
-            throw  Throwable("Token is null,caching is not implemented yet")
+
         val response = apiServiceClient.readJsonOrThrow(
             URL.ALL_FACULTY,
             Header(key = "Authorization", value =token )

@@ -5,6 +5,7 @@ import domain.entity.academic.DepartmentReadEntity
 import domain.entity.academic.FacultyReadEntity
 import domain.entity.academic.TeacherReadEntity
 import domain.service.AcademicReadEntityService
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
 class AcademicReadEntityServiceImpl : AcademicReadEntityService {
@@ -16,6 +17,13 @@ class AcademicReadEntityServiceImpl : AcademicReadEntityService {
     override fun parseAsFacultyOrThrow(json: String): String {
         val entity = parser.decodeFromString(FacultyReadEntity.serializer(), json)
         return parser.encodeToString(FacultyReadEntity.serializer(), entity)
+    }
+
+    override fun parseOrThrow(entity: FacultyReadEntity): String {
+        return  parser.encodeToString(value = entity, serializer = FacultyReadEntity.serializer())
+    }
+    override fun parseOrThrow(entities: List<FacultyReadEntity>): String {
+        return  parser.encodeToString(value = entities, serializer = ListSerializer(FacultyReadEntity.serializer()))
     }
 
     override fun parseAsDeptOrThrow(json: String): String {

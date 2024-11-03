@@ -9,8 +9,8 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
-                implementation(libs.room.runtime)
-                implementation(libs.sqlite.bundled)
+                implementation(projects.core.database.domain)
+                implementation(libs.bundles.room)
                 implementation(compose.ui) //for accessing context android
             }
         }
@@ -33,9 +33,11 @@ kotlin {
 
 }
 android {
-    namespace = "core.database"
+    namespace = "core.roomdb"
 }
 room {
     schemaDirectory("$projectDir/schemas")
 }
-
+dependencies {
+    ksp(libs.room.compiler)
+}

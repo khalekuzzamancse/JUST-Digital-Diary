@@ -10,7 +10,7 @@ import kotlin.test.Test
 import kotlin.test.fail
 
 class ServerAcademicApiTest {
-    private val api = ApiFactory.serverApi()
+    private val api = ApiFactory.serverApi("")
 
     @Test
     fun facultyList() = executeTest {

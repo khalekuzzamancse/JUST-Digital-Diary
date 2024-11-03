@@ -8,16 +8,27 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
  class FeedbackMessageServiceImpl internal  constructor(): FeedbackMessageService {
-    private val json = Json { prettyPrint = true }
+    private val parser = Json { prettyPrint = true }
 
     override fun toFeedbackMessage(message: String): String {
-        return json.encodeToString(FeedbackMessageEntity(message))
+        return parser.encodeToString(FeedbackMessageEntity(message))
     }
 
     override fun toFeedbackMessage(exception: Throwable): String {
         return if (exception is CustomException)
-            json.encodeToString(FeedbackMessageEntity(exception.message))
+            parser.encodeToString(FeedbackMessageEntity(exception.message))
         else
-            json.encodeToString(FeedbackMessageEntity(exception.javaClass.simpleName))
+            parser.encodeToString(FeedbackMessageEntity(exception.javaClass.simpleName))
     }
-}
+
+     override fun isFeedbackEntity(json: String): Boolean {
+         return  try {
+               val entity:FeedbackMessageEntity=parser.decodeFromString(json)
+               true
+           }
+           catch (_:Exception){
+               false
+           }
+
+     }
+ }

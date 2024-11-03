@@ -16,55 +16,55 @@ import navigation.component.NavDestination
 import navigation.component.NavDestinationBuilder
 import navigation.navgraph.NavGraph
 
-//@Composable
-//fun RootNavHost(
-//    token: String?,
-//    onTokenSaveRequest: (String) -> Unit = {},
-//    onTokenDeleteRequest: () -> Unit = {},
-//    onEvent: (AppEvent) -> Unit,
-//) {
-//    val mainViewModel = viewModel { MainViewModel() }
-//    _FeatureNavGraph(
-//        viewModel = mainViewModel,
-//        onEvent = onEvent,
-//        onLogOutRequest = {
-//            onTokenDeleteRequest()
-//        }
-//    )
-//}
-
 @Composable
- fun RootNavHost(
+fun RootNavHost(
     token: String?,
     onTokenSaveRequest: (String) -> Unit = {},
     onTokenDeleteRequest: () -> Unit = {},
     onEvent: (AppEvent) -> Unit,
 ) {
     val mainViewModel = viewModel { MainViewModel() }
-    LaunchedEffect(token) {
-        NavigationFactory.updateToken(token)
-    }
-
-    AppTheme {
-        if (token == null) {
-            AuthRoute(
-                onLoginSuccess = {
-                    onTokenSaveRequest(it)
-                }
-            )
-        } else {
-            _FeatureNavGraph(
-                viewModel = mainViewModel,
-                onEvent = onEvent,
-                onLogOutRequest = {
-                    onTokenDeleteRequest()
-                }
-            )
+    _FeatureNavGraph(
+        viewModel = mainViewModel,
+        onEvent = onEvent,
+        onLogOutRequest = {
+            onTokenDeleteRequest()
         }
-
-
-    }
+    )
 }
+
+//@Composable
+// fun RootNavHost(
+//    token: String?,
+//    onTokenSaveRequest: (String) -> Unit = {},
+//    onTokenDeleteRequest: () -> Unit = {},
+//    onEvent: (AppEvent) -> Unit,
+//) {
+//    val mainViewModel = viewModel { MainViewModel() }
+//    LaunchedEffect(token) {
+//        NavigationFactory.updateToken(token)
+//    }
+//
+//    AppTheme {
+//        if (token == null) {
+//            AuthRoute(
+//                onLoginSuccess = {
+//                    onTokenSaveRequest(it)
+//                }
+//            )
+//        } else {
+//            _FeatureNavGraph(
+//                viewModel = mainViewModel,
+//                onEvent = onEvent,
+//                onLogOutRequest = {
+//                    onTokenDeleteRequest()
+//                }
+//            )
+//        }
+//
+//
+//    }
+//}
 
 
 @Composable

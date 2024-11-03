@@ -19,10 +19,10 @@ kotlinxCoroutinesSwing="1.8.0"
 commonNavigationVer = "2.7.0-alpha07"
 commonViewmodelVer="2.8.0"
 ## For room database
-room = "2.7.0-alpha01"
+room = "2.7.0-alpha11"
 ksp = "1.9.23-1.0.19"
 sqlite = "2.5.0-SNAPSHOT"
-roomCommonJvm = "2.7.0-alpha08"
+roomCommonJvm = "2.7.0-alpha11"
 
 ## For server
 logback = "1.2.11"
@@ -61,11 +61,11 @@ common-navigation={module="org.jetbrains.androidx.navigation:navigation-compose"
 ##  Navigation for multiplatfrom
 common-viewmodel={module="org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose",version.ref="commonViewmodelVer"}
 ##ROOM
+room-gradle-plugin={module="androidx.room:room-gradle-plugin",version.ref="room"}
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-room-runtime-android = { module = "androidx.room:room-runtime-android", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
-androidx-room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
+
 
 
 ##
@@ -79,8 +79,9 @@ ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negoti
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
 
-
 [bundles]
+room=["room-gradle-plugin","room-compiler","room-runtime","sqlite-bundled"]
+
 test = ["kotlin-test", "kotlin-test-junit"]
 ktorClient=["ktor-client-core","ktor-client-okhttp","ktor-client-content-negotiation","ktor-serialization-kotlinx-json"]
 coil=["coil3-core","coil3-network","coil3"]

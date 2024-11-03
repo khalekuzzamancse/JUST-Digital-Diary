@@ -68,15 +68,15 @@ private fun HomeDestination(
                 modifier = Modifier.padding(16.dp).fillMaxWidth(),
                 onEvent=onEvent
             )
-            AcademicCalender(
-                onSnackBarMsgRequest = { msg ->
-                    snackBarJob?.cancel() // Cancel the previous SnackBar job if it's still active
-                    snackBarJob =
-                        scope.launch { // Launch a new coroutine to show the latest message
-                            hostState.showSnackbar(msg, duration = SnackbarDuration.Short)
-                        }
-                }
-            )
+//            AcademicCalender(
+//                onSnackBarMsgRequest = { msg ->
+//                    snackBarJob?.cancel() // Cancel the previous SnackBar job if it's still active
+//                    snackBarJob =
+//                        scope.launch { // Launch a new coroutine to show the latest message
+//                            hostState.showSnackbar(msg, duration = SnackbarDuration.Short)
+//                        }
+//                }
+//            )
 
         }
     }

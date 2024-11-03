@@ -8,6 +8,7 @@ kotlin {
         val commonMain by getting {
             dependencies{
                 implementation(projects.core.database.dataSource.mongodb)
+                implementation(projects.core.database.dataSource.room)
                 implementation(projects.core.database.domain)
                 implementation(projects.core.commonDocs)
             }

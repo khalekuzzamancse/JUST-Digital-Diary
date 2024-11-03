@@ -2,22 +2,23 @@
 
 package database
 
-import core.database.db.Database
-import core.database.getDatabase
-import database.schema.DepartmentSchema
-import database.schema.FacultySchema
+import core.roomdb.dao.FacultyDao
+import core.roomdb.db.DB
+import core.roomdb.schema.DepartmentSchema
+import core.roomdb.schema.FacultySchema
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
+import core.roomdb.factory.getDatabase
 import kotlin.test.Test
 import kotlin.test.assertNull
 
 class DepartmentSubSchemaDaoTest {
 
-    private lateinit var db: Database
-    private lateinit var departmentDao: core.database.dao.DepartmentDao
-    private lateinit var facultyDao: core.database.dao.FacultyDao
+    private lateinit var db: DB
+    private lateinit var departmentDao: core.roomdb.dao.DepartmentDao
+    private lateinit var facultyDao: FacultyDao
 
     // Provided sample departments data
     private val sampleDepartments = listOf(

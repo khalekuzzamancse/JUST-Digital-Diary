@@ -1,8 +1,9 @@
 package database
 
-import core.database.db.Database
-import core.database.factory.DatabaseFactory
-import core.database.getDatabase
+import core.roomdb.apis.TokenApi
+import core.roomdb.db.DB
+import core.roomdb.factory.RoomDBFactory
+import core.roomdb.factory.getDatabase
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -13,18 +14,23 @@ import kotlin.test.assertNull
 
 class TokenApiTest {
 
-    private lateinit var db: Database
-    private lateinit var tokenApi: core.database.apis.TokenApi
+    private lateinit var db: DB
+    private lateinit var tokenApi: TokenApi
 
-    @Before
+@Before
     fun createDb() {
         db = getDatabase()
-        tokenApi = DatabaseFactory().createTokenApi()
+        tokenApi = RoomDBFactory().createTokenApi()
     }
 
-    @After
+@After
     fun closeDb() {
         db.close()
+    }
+
+    @Test
+    fun createDbTest() {
+        db = getDatabase()
     }
 
     @Test
