@@ -6,6 +6,7 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
+
                 implementation(projects.core.commonUi)
                 implementation(projects.features.administration.domain)
                 implementation(projects.features.administration.di)

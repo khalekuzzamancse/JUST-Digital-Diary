@@ -1,8 +1,6 @@
 package domain.factory
 
-import domain.entity.academic.DepartmentReadEntity
-import domain.entity.academic.FacultyReadEntity
-import domain.entity.academic.TeacherReadEntity
+import core.data.entity.academic.*
 
 object  Serializers{
         fun facultyReadEntity()= FacultyReadEntity.serializer()

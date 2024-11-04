@@ -2,12 +2,7 @@
 
 package domain.factory
 
-import domain.entity.academic.DepartmentReadEntity
-import domain.entity.academic.DepartmentWriteEntity
-import domain.entity.academic.FacultyReadEntity
-import domain.entity.academic.FacultyWriteEntity
-import domain.entity.academic.TeacherReadEntity
-import domain.entity.academic.TeacherWriteEntity
+import core.data.entity.academic.*
 import domain.model.InsertionResult
 import domain.service.AcademicInsertionService
 import kotlinx.serialization.json.Json

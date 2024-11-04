@@ -32,7 +32,7 @@ class AcademicApiTest {
 
     @Test
     fun read(): Unit = runBlocking {
-       val response= api.readAllFaculty()
+       val response= api.readFaculties()
         println(response)
     }
 

@@ -6,13 +6,13 @@ import com.mongodb.client.model.Filters
 import core.database.datasource.monggodb.db.MongoDBClient.COLLECTION_SCHEDULE
 import core.database.datasource.monggodb.db.MongoDBClient.ID_FIELD
 import domain.core.EntityExtraField
-import domain.entity.academic.DepartmentReadEntity
-import domain.entity.schedule.ClassScheduleReadEntity
+import core.data.entity.academic.*
 import domain.factory.ContractFactory
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
 import kotlinx.serialization.json.Json
 import org.bson.Document
+import core.data.entity.schedule.*
 
 internal class ScheduleCollection {
     private val scheduleService = ContractFactory.scheduleService()

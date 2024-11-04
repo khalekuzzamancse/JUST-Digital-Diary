@@ -74,7 +74,7 @@ class ApiServiceClientImpl internal constructor() : ApiServiceClient {
         }
     }
 
-    override suspend fun retrieveJsonOrThrow(url: String, header: Header): String {
+    override suspend fun readJsonOrThrow(url: String, header: Header): String {
         val client = _createClient()
         return try {
             val response = client.get(url) {

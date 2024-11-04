@@ -1,8 +1,8 @@
 @file:Suppress("unused")
 package domain.api
 
-import domain.entity.FeedbackMessageEntity
-import domain.entity.schedule.*
+import core.data.entity.schedule.*
+import core.data.entity.FeedbackMessageEntity
 
 interface ScheduleApi {
     /**

@@ -2,8 +2,9 @@
 
 package domain.api
 
-import domain.entity.calender.AcademicCalenderEntity
-import domain.entity.FeedbackMessageEntity
+import core.data.entity.calender.*
+import core.data.entity.FeedbackMessageEntity
+
 
 /**
  * - Define set of apis for `AcademicCalendar` or the `HolidayCalendar`

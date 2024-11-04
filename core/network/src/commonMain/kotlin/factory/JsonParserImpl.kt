@@ -2,6 +2,7 @@ package factory
 
 import core.network.JsonParser
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
 /**- Outer module should not create direct instance of this but can use it by getting
@@ -32,5 +33,9 @@ class JsonParserImpl internal constructor() : JsonParser {
 
     override fun <T> parseOrThrow(json: String, serializer: KSerializer<T>): T {
         return jsonParser.decodeFromString(serializer, json)
+    }
+
+    override fun <T> toJsonListOrThrow(valueList: List<T>, serializer: KSerializer<T>): String {
+       return jsonParser.encodeToString(ListSerializer(serializer), valueList)
     }
 }

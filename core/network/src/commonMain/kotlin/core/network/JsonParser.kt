@@ -35,6 +35,7 @@ interface JsonParser {
      * Throws an exception on parsing errors
      */
     fun <T> parseOrThrow(json: String, serializer: KSerializer<T>): T
+    fun <T> toJsonListOrThrow(valueList: List<T>, serializer: KSerializer<T>):String
     fun <T> toJsonOrThrow(value: T, serializer: KSerializer<T>): String {
         val parser = Json {
             prettyPrint = true

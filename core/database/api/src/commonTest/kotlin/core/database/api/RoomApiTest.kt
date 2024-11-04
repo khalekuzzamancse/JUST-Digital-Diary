@@ -9,7 +9,7 @@ class RoomApiTest {
     @Test
     fun testReadAllAcademicCalendars()=executeTest {
             try {
-                val result = api.readAllFaculty()
+                val result = api.readFaculties()
                 println("All calendars: $result")
             } catch (e: Exception) {
                 fail("Reading all calendars failed: ${e.message}")

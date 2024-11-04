@@ -44,6 +44,7 @@ val applications= listOf(
 val coreModules = listOf(
     ":core",
     ":core:database:data-source:server",
+    ":core:database:entity",
     ":core:custom-exception",
     ":core:network",
     ":core:database",":core:database:api",":core:database:domain",

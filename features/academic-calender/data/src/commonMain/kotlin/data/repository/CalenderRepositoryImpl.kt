@@ -3,7 +3,7 @@
 package data.repository
 
 import core.database.factory.ApiFactory
-import core.database.network.JsonParser
+import core.network.JsonParser
 import data.entity.AcademicCalenderEntity
 import data.service.CalendarBuilder
 import data.service.HolidayAdder

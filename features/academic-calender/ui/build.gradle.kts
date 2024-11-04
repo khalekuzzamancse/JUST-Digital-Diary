@@ -8,6 +8,7 @@ kotlin {
                 implementation(projects.features.academicCalender.domain)
                 implementation(projects.features.academicCalender.di)
                 implementation(projects.core.commonUi)
+                implementation(projects.core.network)
             }
         }
         val commonTest by getting {

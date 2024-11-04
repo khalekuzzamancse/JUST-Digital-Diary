@@ -2,11 +2,11 @@
 
 package faculty.data
 
+import factory.NetworkFactory
 import faculty.data.repository.AdminRepositoryImpl
 import faculty.data.repository.RepositoryImpl
 import faculty.data.service.JsonHandler
 import faculty.data.service.JsonHandlerImpl
-import core.database.factory.NetworkFactory
 import faculty.domain.repository.AdminRepository
 import faculty.domain.repository.Repository
 
@@ -34,7 +34,7 @@ object DataFactory {
 
 
     internal  fun jsonHandler(): JsonHandler = JsonHandlerImpl(_createJsonParser())
-    private fun _createJsonParser() = NetworkFactory.jsonParser()
+    private fun _createJsonParser() = NetworkFactory.createJsonParser()
     private fun _createApiClient() = NetworkFactory.createAPIServiceClient()
 
 

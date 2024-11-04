@@ -7,6 +7,7 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
+                implementation(projects.core.database.api)
                 implementation(projects.core.network)
                 implementation(projects.features.administration.domain)
                 implementation(libs.common.viewmodel)

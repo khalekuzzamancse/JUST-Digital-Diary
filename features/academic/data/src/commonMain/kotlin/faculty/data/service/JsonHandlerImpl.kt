@@ -2,8 +2,8 @@ package faculty.data.service
 
 
 import core.customexception.CustomException
-import core.database.network.JsonParser
-import core.database.network.NetworkException
+import core.network.JsonParser
+import core.network.NetworkException
 import faculty.data.entity.FeedbackEntity
 import kotlinx.serialization.KSerializer
 

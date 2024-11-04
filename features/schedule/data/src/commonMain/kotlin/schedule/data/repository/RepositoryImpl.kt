@@ -3,7 +3,7 @@
 package schedule.data.repository
 
 import core.database.factory.ApiFactory
-import core.database.network.JsonParser
+import core.network.JsonParser
 import schedule.data.service.withExceptionHandle
 import kotlinx.serialization.builtins.ListSerializer
 import schedule.data.entity.DepartmentEntity

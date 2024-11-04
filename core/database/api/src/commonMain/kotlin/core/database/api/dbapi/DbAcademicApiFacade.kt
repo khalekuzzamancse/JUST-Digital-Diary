@@ -14,7 +14,7 @@ class DbAcademicApiFacade(
 ) : AcademicApiFacade {
 
     //TODO:INSERT
-    override suspend fun insertFaculty(json: String) = contract.insertFaculty(json)
+    override suspend fun insertFaculty(json: String) = contract.upsetFacultyList(json)
     override suspend fun insertDept(facultyId: String, json: String) =
         contract.insertDept(facultyId, json)
 
@@ -22,7 +22,7 @@ class DbAcademicApiFacade(
         contract.insertTeacher(deptId, json)
 
     //TODO:READ
-    override suspend fun readAllFaculty() = contract.readAllFaculty()
+    override suspend fun readAllFaculty() = contract.readFaculties()
     override suspend fun readFacultyById(id: String) = contract.readFacultyById(id)
     override suspend fun readDeptById(id: String) = contract.readDeptById(id)
     override suspend fun readAllTeachers() = contract.readAllTeacher()
@@ -33,8 +33,8 @@ class DbAcademicApiFacade(
         contract.readTeacherById(teacherId)
 
     override suspend fun readAllDept() = contract.readAllDept()
-    override suspend fun readAllDeptUnderFaculty(facultyId: String) =
-        contract.deptUnderFaculty(facultyId)
+    override suspend fun readDeptsUnderFaculty(facultyId: String) =
+        contract.readDeptsUnderFaculty(facultyId)
 
     //TODO:UPDATE
     override suspend fun updateFaculty(facultyId: String, json: String) =

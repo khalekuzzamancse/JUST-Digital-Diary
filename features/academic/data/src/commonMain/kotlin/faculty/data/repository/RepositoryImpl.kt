@@ -3,7 +3,7 @@
 package faculty.data.repository
 
 import core.database.factory.ApiFactory
-import core.database.network.JsonParser
+import core.network.JsonParser
 import faculty.data.EntityModelMapper
 import faculty.data.entity.DepartmentReadEntity
 import faculty.data.entity.FacultyReadEntity
@@ -82,7 +82,7 @@ class RepositoryImpl internal constructor(
 
         return with(handler) {
             withExceptionHandle {
-                val json = api.readAllDeptUnderFaculty(facultyId)
+                val json = api.readDeptsUnderFaculty(facultyId)
 
                 if (json._isDepartmentListEntity()) {
                     val entities =

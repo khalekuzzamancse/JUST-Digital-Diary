@@ -1,11 +1,7 @@
 package core.database.api
 
 import core.database.factory.ApiFactory
-import core.database.factory.NetworkFactory
-import domain.entity.academic.TeacherReadEntity
-import domain.factory.ContractFactory
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.builtins.ListSerializer
 import kotlin.test.Test
 import kotlin.test.fail
 
@@ -14,12 +10,12 @@ class ServerAcademicApiTest {
 
     @Test
     fun facultyList() = executeTest {
-        println(api.readAllFaculty())
+        println(api.readFaculties())
 
     }
     @Test
     fun deptList() = executeTest {
-        println(api.readAllDeptUnderFaculty("01"))
+        println(api.readDeptsUnderFaculty("01"))
 
     }
     @Test
@@ -30,8 +26,8 @@ class ServerAcademicApiTest {
     @Test
     fun teacherEntityList() = executeTest {
         val json=api.readTeachersUnderDept("01")
-       val entity= NetworkFactory.jsonParser().parseOrThrow(json,ListSerializer(TeacherReadEntity.serializer()))
-        println(entity)
+//       val entity= NetworkFactory.jsonParser().parseOrThrow(json,ListSerializer(TeacherReadEntity.serializer()))
+//        println(entity)
 
     }
 

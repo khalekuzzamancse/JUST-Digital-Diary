@@ -10,7 +10,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
-import core.database.factory.NetworkFactory
 import just.digitaldiary.theme.AppTheme
 import navigation.RootNavHost
 

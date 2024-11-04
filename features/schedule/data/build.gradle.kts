@@ -7,6 +7,7 @@ kotlin {
             dependencies {
                 implementation(projects.features.schedule.domain)
                 implementation(projects.core.database.api)
+                implementation(projects.core.network)
             }
 
         }

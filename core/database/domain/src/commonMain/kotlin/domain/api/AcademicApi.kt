@@ -1,8 +1,8 @@
 @file:Suppress("unused")
-
 package domain.api
-import  domain.entity.academic.*
-import domain.entity.FeedbackMessageEntity
+import core.data.entity.academic.*
+import core.data.entity.FeedbackMessageEntity
+
 
 /**
  * - Define the set of apis that should be implemented by the database, regardless of database type
@@ -17,7 +17,7 @@ interface AcademicApi {
      * @return on success return JSON version of list of [FacultyReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
-    suspend fun readAllFaculty(): String
+    suspend fun readFaculties(): String
 
     /**
      * Insert a faculty.
@@ -26,6 +26,13 @@ interface AcademicApi {
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
     suspend fun insertFaculty(json: String): String
+    /**
+     * Insert a faculty if not exits otherwise update
+     * - This is useful for caching such as room database where it direcly insert the
+     * @param json the JSON string representing the [FacultyReadEntity]
+     * on failure return the JSON version of [FeedbackMessageEntity].
+     */
+    suspend fun upsetFacultyList(json: String): String
 
     /**
      * Read a faculty by its ID.
@@ -64,7 +71,9 @@ interface AcademicApi {
      * @return on success return the JSON version of list of [DepartmentReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
-    suspend fun deptUnderFaculty(facultyId: String): String
+
+
+    suspend fun readDeptsUnderFaculty(facultyId: String): String
 
     /**
      * Read a department by its ID.

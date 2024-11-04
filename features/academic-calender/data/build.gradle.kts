@@ -7,6 +7,8 @@ kotlin {
             dependencies {
                 implementation(projects.features.academicCalender.domain)
                 implementation(projects.core.database.api)
+                implementation(projects.core.network)
+                implementation(projects.core.network)
             }
 
         }

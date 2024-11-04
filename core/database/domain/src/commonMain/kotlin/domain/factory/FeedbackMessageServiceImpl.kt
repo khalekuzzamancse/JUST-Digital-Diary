@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 package domain.factory
 
-import domain.entity.FeedbackMessageEntity
+import core.data.entity.FeedbackMessageEntity
 import domain.exception.CustomException
 import domain.service.FeedbackMessageService
 import kotlinx.serialization.encodeToString
@@ -30,5 +30,14 @@ import kotlinx.serialization.json.Json
                false
            }
 
+     }
+
+     override fun asFeedbackEntityOrThrow(json: String):FeedbackMessageEntity{
+         try {
+           return  parser.decodeFromString(json) as FeedbackMessageEntity
+         }
+         catch (e:Exception){
+             throw  CustomException.JsonParseException(json = json)
+         }
      }
  }

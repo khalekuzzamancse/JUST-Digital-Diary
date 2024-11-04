@@ -1,7 +1,6 @@
 @file:Suppress("unused")
 package domain.service
-import domain.entity.schedule.ClassScheduleReadEntity
-import domain.entity.schedule.ClassScheduleWriteEntity
+import core.data.entity.schedule.*
 import domain.model.InsertionResult
 
 /**

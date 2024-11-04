@@ -1,9 +1,12 @@
 package core.database.api
 
-import domain.entity.FeedbackMessageEntity
+import core.data.entity.FeedbackMessageEntity
 
 interface AcademicApiFacade {
+
     suspend fun insertFaculty(json: String): String
+
+
     suspend fun insertDept(facultyId: String, json: String): String
     suspend fun insertTeacher(deptId: String, json: String): String
 
@@ -15,7 +18,7 @@ interface AcademicApiFacade {
     suspend fun readTeachersUnderDept(deptId: String): String
     suspend fun readTeacherById(teacherId: String): String
     suspend fun readAllDept(): String
-    suspend fun readAllDeptUnderFaculty(facultyId: String): String
+    suspend fun readDeptsUnderFaculty(facultyId: String): String
 
     suspend fun updateFaculty(facultyId: String, json: String): String
     suspend fun updateDept(deptId: String, json: String): String

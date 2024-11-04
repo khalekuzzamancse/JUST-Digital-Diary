@@ -6,7 +6,7 @@ import com.mongodb.client.model.Filters
 import core.database.datasource.monggodb.db.MongoDBClient.COLLECTION_FACULTY
 import core.database.datasource.monggodb.db.MongoDBClient.ID_FIELD
 import core.database.datasource.monggodb.core.insertionWithHandleException
-import domain.entity.academic.FacultyReadEntity
+import core.data.entity.academic.*
 import domain.factory.ContractFactory
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList

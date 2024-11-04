@@ -4,8 +4,7 @@ package domain.factory
 
 import domain.core.EntityExtraField
 import domain.core.toInsertionResult
-import domain.entity.schedule.ClassScheduleReadEntity
-import domain.entity.schedule.ClassScheduleWriteEntity
+import core.data.entity.schedule.*
 import domain.model.InsertionResult
 import domain.service.ScheduleService
 import kotlinx.serialization.json.Json

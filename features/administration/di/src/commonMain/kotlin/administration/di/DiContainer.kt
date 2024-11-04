@@ -3,7 +3,7 @@ package administration.di
 import admin_office.domain.usecase.RetrieveOfficeListUseCase
 import admin_office.domain.usecase.RetrieveOfficersUseCase
 import admin_office.domain.usecase.RetrieveSubOfficeListUseCase
-import administration.data.factory.DataFactory
+import administration.data.DataFactory
 
 
 object DiContainer {

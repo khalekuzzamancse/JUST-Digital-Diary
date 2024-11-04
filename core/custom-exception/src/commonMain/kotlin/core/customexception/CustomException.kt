@@ -77,4 +77,9 @@ open class CustomException(
         message = message,
         debugMessage = debugMessage
     )
+
+    class ServerFeedbackExecpton(message: String, debugMessage: String="Server send a feedback instead of exepected response") : CustomException(
+        message = message,
+        debugMessage = debugMessage
+    )
 }

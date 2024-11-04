@@ -1,9 +1,6 @@
 package core.roomdb
 
 import domain.exception.CustomException
-import domain.exception.CustomException.DataAlreadyExistsException
-import domain.exception.CustomException.DataConflictException
-import domain.exception.CustomException.InvalidQueryException
 import domain.exception.CustomException.UnknownCustomException
 import domain.factory.ContractFactory
 

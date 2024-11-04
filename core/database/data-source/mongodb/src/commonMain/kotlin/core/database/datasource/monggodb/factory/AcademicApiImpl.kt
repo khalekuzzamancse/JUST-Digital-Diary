@@ -10,11 +10,15 @@ import domain.api.AcademicApi
 
 class AcademicApiImpl internal  constructor(): AcademicApi {
 
-    override suspend fun readAllFaculty() = withExceptionHandle {
+    override suspend fun readFaculties() = withExceptionHandle {
         FacultyCollection().getAllFaculties()
     }
 
-    override suspend fun insertFaculty(json: String) = withExceptionHandle {
+    override suspend fun insertFaculty(json: String): String {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun upsetFacultyList(json: String) = withExceptionHandle {
         FacultyCollection().insert(json)
     }
 
@@ -40,7 +44,7 @@ class AcademicApiImpl internal  constructor(): AcademicApi {
         DepartmentCollection().readAll()
     }
 
-    override suspend fun deptUnderFaculty(facultyId: String) = withExceptionHandle {
+    override suspend fun readDeptsUnderFaculty(facultyId: String) = withExceptionHandle {
         DepartmentCollection().readUnderFaculty(facultyId)
     }
 

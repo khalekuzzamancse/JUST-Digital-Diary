@@ -14,7 +14,7 @@ class AcademicApiImplTest {
     @Test
     fun testReadAllFaculty() {
         executeTest {
-            println(api.readAllFaculty())
+            println(api.readFaculties())
         }
     }
 
@@ -27,7 +27,7 @@ class AcademicApiImplTest {
                     "name": "Science Faculty"
                 }
             """.trimIndent()
-            println(api.insertFaculty(json))
+            println(api.upsetFacultyList(json))
         }
     }
 
@@ -62,7 +62,7 @@ class AcademicApiImplTest {
     @Test
     fun testReadDepartmentsUnderFaculty() {
         executeTest {
-            println(api.deptUnderFaculty(facultyId))
+            println(api.readDeptsUnderFaculty(facultyId))
         }
     }
 

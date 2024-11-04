@@ -22,7 +22,7 @@ class RemoteDataSourceImpl internal constructor(
     override suspend fun getVCInfo(token: String): Result<VCInfoModel> {
         val url = "TODO()"
         try {
-            val json = apiServiceClient.retrieveJsonOrThrow(
+            val json = apiServiceClient.readJsonOrThrow(
                 url,
                 Header(key = "Authorization", value = token)
             )
@@ -44,7 +44,7 @@ class RemoteDataSourceImpl internal constructor(
     override suspend fun getEvents(token: String): Result<List<EventGalleryModel>> {
         val url = "TODO()"
         try {
-            val json = apiServiceClient.retrieveJsonOrThrow(
+            val json = apiServiceClient.readJsonOrThrow(
                 url,
                 Header(key = "Authorization", value = token)
             )

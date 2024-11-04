@@ -5,7 +5,7 @@ package core.database.datasource.monggodb.db
 import com.mongodb.client.model.Filters
 import core.database.datasource.monggodb.db.MongoDBClient.COLLECTION_CALENDAR
 import core.database.datasource.monggodb.db.MongoDBClient.ID_FIELD
-import domain.entity.calender.AcademicCalenderEntity
+import core.data.entity.calender.*
 import domain.factory.ContractFactory
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
