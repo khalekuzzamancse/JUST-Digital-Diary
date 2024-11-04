@@ -1,7 +1,5 @@
 package core.roomdb
-
-import domain.exception.CustomException
-import domain.exception.CustomException.UnknownCustomException
+import core.customexception.CustomException
 import domain.factory.ContractFactory
 
 
@@ -35,6 +33,6 @@ fun toCustomException(exception: Throwable): CustomException {
         return exception // If already a custom exception, return it
     }
 
-    return UnknownCustomException(exception)
+    return CustomException.UnknownCustomException(exception)
 }
 

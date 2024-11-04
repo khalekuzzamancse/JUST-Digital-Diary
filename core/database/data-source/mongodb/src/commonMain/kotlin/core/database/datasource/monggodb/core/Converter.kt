@@ -1,7 +1,7 @@
 package core.database.datasource.monggodb.core
 
 import com.mongodb.client.result.InsertOneResult
-import domain.exception.CustomException
+import core.customexception.CustomException
 import domain.factory.ContractFactory
 
 internal inline fun insertionWithHandleException(block: () -> InsertOneResult): String {

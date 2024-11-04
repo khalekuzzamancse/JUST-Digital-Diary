@@ -1,13 +1,13 @@
 @file:Suppress("unused")
 package domain.factory
 
+import core.customexception.CustomException
 import core.data.entity.FeedbackMessageEntity
-import domain.exception.CustomException
 import domain.service.FeedbackMessageService
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
- class FeedbackMessageServiceImpl internal  constructor(): FeedbackMessageService {
+class FeedbackMessageServiceImpl internal  constructor(): FeedbackMessageService {
     private val parser = Json { prettyPrint = true }
 
     override fun toFeedbackMessage(message: String): String {

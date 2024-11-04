@@ -2,12 +2,7 @@
 
 package faculty.data
 
-import faculty.data.entity.DepartmentReadEntity
-import faculty.data.entity.DepartmentWriteEntity
-import faculty.data.entity.FacultyReadEntity
-import faculty.data.entity.FacultyWriteEntity
-import faculty.data.entity.TeacherReadEntity
-import faculty.data.entity.TeacherWriteEntity
+import core.data.entity.academic.*
 import faculty.domain.model.TeacherReadModel
 import faculty.domain.model.DepartmentReadModel
 import faculty.domain.model.DepartmentWriteModel
@@ -19,60 +14,58 @@ import faculty.domain.model.TeacherWriteModel
  * Need to send down the priorities to the UI,so that admin can use it while updating
  */
 internal object EntityModelMapper {
-    fun FacultyReadEntity.toModel() = FacultyReadModel(
-        facultyId = faculty_id,
-        name = name,
-        departmentsCount = number_of_dept,
-        priority = priority
+
+    fun toModel(entity: FacultyReadEntity): FacultyReadModel = FacultyReadModel(
+
+        facultyId = entity.faculty_id,
+        name = entity.name,
+        departmentsCount = entity.number_of_dept,
+        priority = entity.priority
     )
 
-    fun DepartmentReadEntity.toModel() = DepartmentReadModel(
-        name = name,
-        shortname = shortname,
-        deptId = dept_id,
-        numberOfEmployee = number_of_employee,
-        facultyId = faculty_id,
-        priority = priority
+    fun toModel(entity: DepartmentReadEntity): DepartmentReadModel = DepartmentReadModel(
+        name = entity.name,
+        shortname = entity.shortname,
+        deptId = entity.dept_id,
+        numberOfEmployee = entity.number_of_employee,
+        facultyId = entity.faculty_id,
+        priority = entity.priority
     )
 
-    fun TeacherReadEntity.toModel() = TeacherReadModel(
-        name = name,
-        id = id,
-        deptId = dept_id,
-        email = email,
-        additionalEmail = additional_email,
-        phone = phone,
-        achievements = achievements,
-        roomNo = room_no,
-        imageLink = image_link,
-        designations = designations,
-        priority = priority
-
+    fun toModel(entity: TeacherReadEntity): TeacherReadModel = TeacherReadModel(
+        name = entity.name,
+        id = entity.id,
+        deptId = entity.dept_id,
+        email = entity.email,
+        additionalEmail = entity.additional_email,
+        phone = entity.phone,
+        achievements = entity.achievements,
+        roomNo = entity.room_no,
+        imageLink = entity.image_link,
+        designations = entity.designations,
+        priority = entity.priority
     )
 
-
-    fun FacultyWriteModel.toEntity() = FacultyWriteEntity(
-        priority = this.priority,
-        name = this.name,
+    fun toEntity(model: FacultyWriteModel): FacultyWriteEntity = FacultyWriteEntity(
+        priority = model.priority,
+        name = model.name,
     )
 
-    fun DepartmentWriteModel.toEntity() = DepartmentWriteEntity(
-        priority = this.priority,
-        name = this.name,
-        shortname = this.shortname,
+    fun toEntity(model: DepartmentWriteModel): DepartmentWriteEntity = DepartmentWriteEntity(
+        priority = model.priority,
+        name = model.name,
+        shortname = model.shortname,
     )
 
-    fun TeacherWriteModel.toEntity() = TeacherWriteEntity(
-        priority = priority,
-        name = name,
-        email = email,
-        additional_email = additionalEmail?.ifBlank { null },
-        achievements = achievements,
-        phone = phone,
-        designations = designations,
-        room_no = roomNo?.ifBlank { null },
-        image_link = profileImageLink
+    fun toEntity(model: TeacherWriteModel): TeacherWriteEntity = TeacherWriteEntity(
+        priority = model.priority,
+        name = model.name,
+        email = model.email,
+        additional_email = model.additionalEmail?.ifBlank { null },
+        achievements = model.achievements,
+        phone = model.phone,
+        designations = model.designations,
+        room_no = model.roomNo?.ifBlank { null },
+        image_link = model.profileImageLink
     )
-
-
 }

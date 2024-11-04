@@ -3,16 +3,16 @@ package database
 import core.roomdb.db.DB
 import core.roomdb.factory.RoomDBFactory
 import core.roomdb.factory.getDatabase
-import domain.api.AcademicApi
+import domain.api.AcademicApiDeprecated
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import kotlin.test.Test
 
-class AcademicApiTest {
+class RoomAcademicApiDeprecatedTest {
 
     private lateinit var db: DB
-    private lateinit var api: AcademicApi
+    private lateinit var api: AcademicApiDeprecated
 
     @Before
     fun createDb() {

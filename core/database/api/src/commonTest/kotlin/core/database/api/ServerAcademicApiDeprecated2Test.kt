@@ -5,7 +5,7 @@ import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.fail
 
-class ServerAcademicApiTest {
+class ServerAcademicApiDeprecated2Test {
     private val api = ApiFactory.serverApi("")
 
     @Test

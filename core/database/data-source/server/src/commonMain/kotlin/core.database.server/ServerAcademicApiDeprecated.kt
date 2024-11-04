@@ -4,7 +4,7 @@ package core.database.server
 import core.network.ApiServiceClient
 import core.network.Header
 import core.network.JsonParser
-import domain.api.AcademicApi
+import domain.api.AcademicApiDeprecated
 import domain.factory.ContractFactory
 import domain.factory.Serializers
 import kotlinx.serialization.KSerializer
@@ -13,10 +13,10 @@ import kotlinx.serialization.builtins.ListSerializer
 /**
  * This the api that belong to "https://backend.rnzgoldenventure.com"
  */
-class ServerAcademicApi internal constructor(
+class ServerAcademicApiDeprecated internal constructor(
     private val parser: JsonParser,
     private val apiServiceClient: ApiServiceClient,
-    private val token: String): AcademicApi {
+    private val token: String): AcademicApiDeprecated {
     private val feedbackService=ContractFactory.feedbackService()
 
 

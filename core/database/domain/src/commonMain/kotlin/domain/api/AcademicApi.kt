@@ -17,7 +17,7 @@ interface AcademicApi {
      * @return on success return JSON version of list of [FacultyReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
-    suspend fun readFaculties(): String
+    suspend fun readFacultiesOrThrow(): List<FacultyReadEntity>
 
     /**
      * Insert a faculty.
@@ -25,14 +25,9 @@ interface AcademicApi {
      * @return on success return the JSON version of the inserted [FacultyReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
-    suspend fun insertFaculty(json: String): String
-    /**
-     * Insert a faculty if not exits otherwise update
-     * - This is useful for caching such as room database where it direcly insert the
-     * @param json the JSON string representing the [FacultyReadEntity]
-     * on failure return the JSON version of [FeedbackMessageEntity].
-     */
-    suspend fun upsetFacultyList(json: String): String
+    suspend fun insertFacultyOrThrow(entity: FacultyWriteEntity)
+    suspend fun insertFacultiesOrThrow(entities:List<FacultyWriteEntity>)
+
 
     /**
      * Read a faculty by its ID.
@@ -40,11 +35,10 @@ interface AcademicApi {
      * @return on success return the JSON version of the [FacultyReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
-    suspend fun readFacultyById(id: String): String
+    suspend fun readFacultyByIdOrThrow(id: String): FacultyReadEntity
 
     /**@return on failure/success return the JSON version of [FeedbackMessageEntity]*/
-    suspend fun  deleteFaculty(id: String):String
-
+    suspend fun  deleteFacultyOrThrow(id: String)
 
 
 
@@ -57,13 +51,14 @@ interface AcademicApi {
      */
 
 
-    suspend fun insertDept(facultyId: String, json: String): String
+    suspend fun insertDeptOrThrow(facultyId: String, entity: DepartmentWriteEntity)
+    suspend fun insertDeptsOrThrow(facultyId: String, entities:List<DepartmentWriteEntity>)
 
     /**
      * @return on success return JSON version of list of [DepartmentReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
-    suspend fun readAllDept(): String
+    suspend fun readAllDeptOrThrow(): List<DepartmentReadEntity>
 
     /**
      * Get departments under a specific faculty.
@@ -73,7 +68,7 @@ interface AcademicApi {
      */
 
 
-    suspend fun readDeptsUnderFaculty(facultyId: String): String
+    suspend fun readDeptsOrThrow(facultyId: String): List<DepartmentReadEntity>
 
     /**
      * Read a department by its ID.
@@ -81,13 +76,13 @@ interface AcademicApi {
      * @return on success return the JSON version of the [DepartmentReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
-    suspend fun readDeptById(id: String): String
+    suspend fun readDeptOrThrow(id: String): DepartmentReadEntity
 
 
 
 
     /**@return on failure/success return the JSON version of [FeedbackMessageEntity]*/
-    suspend fun  deleteDepartment(id: String):String
+    suspend fun  deleteDepartmentOrThrow(id: String)
 
 
 
@@ -99,13 +94,13 @@ interface AcademicApi {
      * @return on success return the JSON version of the inserted [TeacherReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
-    suspend fun insertTeacher(deptId: String, json: String): String
-
+    suspend fun insertTeacherOrThrow(deptId: String, entity: TeacherWriteEntity)
+    suspend fun insertTeachersOrThrow(deptId: String, entities:List<TeacherWriteEntity>)
     /**
      * @return on success return JSON version of list of [TeacherReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
-    suspend fun readAllTeacher(): String
+    suspend fun readAllTeacherOrThrow(): List<TeacherReadEntity>
 
     /**
      * Get teachers under a specific department.
@@ -113,7 +108,7 @@ interface AcademicApi {
      * @return on success return the JSON version of list of [TeacherReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
-    suspend fun readTeachersUnderDept(deptId: String): String
+    suspend fun readTeachersOrThrow(deptId: String): List<TeacherReadEntity>
 
     /**
      * Read a teacher by their ID.
@@ -121,14 +116,14 @@ interface AcademicApi {
      * @return on success return the JSON version of the [TeacherReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
-    suspend fun readTeacherById(teacherId: String): String
+    suspend fun readTeacherOrThrow(teacherId: String): TeacherReadEntity
 
-    suspend fun updateFaculty(facultyId: String,json:String): String
-    suspend fun updateDept(deptId: String,json:String): String
-    suspend fun updateTeacher(teacherId: String,json:String): String
+    suspend fun updateFacultyOrThrow(facultyId: String, entity:FacultyWriteEntity)
+    suspend fun updateDeptOrThrow(deptId: String, entity:DepartmentWriteEntity)
+    suspend fun updateTeacherOrThrow(teacherId: String, entity: TeacherWriteEntity)
 
 
     /**@return on failure/success return the JSON version of [FeedbackMessageEntity]*/
-    suspend fun  deleteTeacher(id: String):String
+    suspend fun  deleteTeacherOrThrow(id: String)
 
 }

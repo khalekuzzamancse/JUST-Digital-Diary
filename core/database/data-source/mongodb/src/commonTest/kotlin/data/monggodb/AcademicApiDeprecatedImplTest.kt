@@ -1,12 +1,12 @@
 @file:Suppress("spellCheckingInspection")
 package data.monggodb
-import core.database.datasource.monggodb.factory.AcademicApiImpl
+import core.database.datasource.monggodb.factory.AcademicApiDeprecatedImpl
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.fail
-class AcademicApiImplTest {
+class AcademicApiDeprecatedImplTest {
 
-    private val api = AcademicApiImpl()
+    private val api = AcademicApiDeprecatedImpl()
     private val facultyId = "facultyofscience"
     private val deptId = "departmentofphysics"
     private val teacherId = "johndoejohn.doe@university.com"

@@ -2,16 +2,16 @@
 
 package core.database.api.dbapi
 
-import core.database.api.AcademicApiFacade
-import domain.api.AcademicApi
+import core.database.api.AcademicApiFacadeDeprecated
+import domain.api.AcademicApiDeprecated
 
 /*
  * - Just to hide the `domain` module component to the consumer module
  * of this module, because `Domain.AcademicApi` is not accessible from the consumer module of this module
  */
-class DbAcademicApiFacade(
-    private val contract: AcademicApi,
-) : AcademicApiFacade {
+class DbAcademicApiFacadeDeprecated(
+    private val contract: AcademicApiDeprecated,
+) : AcademicApiFacadeDeprecated {
 
     //TODO:INSERT
     override suspend fun insertFaculty(json: String) = contract.upsetFacultyList(json)

@@ -1,7 +1,8 @@
-@file:Suppress("unused")
+
 package domain.api
 import core.data.entity.academic.*
 import core.data.entity.FeedbackMessageEntity
+
 
 
 /**
@@ -12,12 +13,13 @@ import core.data.entity.FeedbackMessageEntity
  * - The presentation or the api/endpoint  layer should be implemented this, and must delegate the
  * call to a database
  */
-interface AcademicApi2 {
+@Deprecated("")
+interface AcademicApiDeprecated {
     /**
      * @return on success return JSON version of list of [FacultyReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].
      */
-    suspend fun readFacultiesOrThrow(): String
+    suspend fun readFaculties(): String
 
     /**
      * Insert a faculty.

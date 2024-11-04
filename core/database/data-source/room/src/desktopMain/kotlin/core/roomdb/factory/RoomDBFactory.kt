@@ -2,7 +2,6 @@ package core.roomdb.factory
 
 import core.roomdb.apis.AuthApi
 import core.roomdb.apis.TokenApi
-import domain.api.AcademicApi
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class RoomDBFactory {
@@ -18,8 +17,8 @@ actual class RoomDBFactory {
         return TokenApiImpl(tokenDao = getDatabase().tokenDao())
     }
 
-    actual fun createAcademicApi2(): AcademicApi {
-        return RoomAcademicApi(
+    actual fun createAcademicApi2(): RoomAcademicApi {
+        return RoomAcademicImpl(
             facultyDao = getDatabase().facultyDao(),
             departmentDao = getDatabase().departmentDao(),
             teacherDao = getDatabase().facultyMemberDao()

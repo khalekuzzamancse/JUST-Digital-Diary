@@ -1,128 +1,119 @@
 package core.database.factory
 
+import core.data.entity.academic.DepartmentReadEntity
+import core.data.entity.academic.DepartmentWriteEntity
+import core.data.entity.academic.FacultyReadEntity
+import core.data.entity.academic.FacultyWriteEntity
+import core.data.entity.academic.TeacherReadEntity
+import core.data.entity.academic.TeacherWriteEntity
 import core.database.api.AcademicApiFacade
-import core.database.server.ServerAcademicApi
+import core.database.api.fetchWithCache
+import core.roomdb.factory.RoomAcademicApi
+import domain.api.AcademicApi
 
-import core.roomdb.factory.getRoomDBFactory
-import domain.factory.ContractFactory
-
-class AcademicApiFacadeImpl internal constructor(
-    token: String?
+class AcademicApiFacadeImpl(
+    private val remoteApi: AcademicApi?,
+    private val cacheApi: RoomAcademicApi
 ) : AcademicApiFacade {
-    private val serverApi: ServerAcademicApi? = token?.let { ApiFactory.serverApi(it) }
-    private val roomApi = getRoomDBFactory().createAcademicApi2()
-    private val feedbackService = ContractFactory.feedbackService()
-    private val readService = ContractFactory.academicReadEntityService()
+    private val notConnectedRemote = remoteApi == null
+    override suspend fun readFacultiesOrThrow(): List<FacultyReadEntity> {
+        return fetchWithCache(
+            notConnectedRemote = notConnectedRemote,
+            remoteFetch = { remoteApi!!.readFacultiesOrThrow() },
+            cacheFetch = { cacheApi.readFacultiesOrThrow() },
+            cacheInsert = { entities -> cacheApi.insertFacultiesOrThrow(entities) },
 
-    override suspend fun insertFaculty(json: String): String {
+        )
+
+    }
+
+    override suspend fun readFacultyByIdOrThrow(id: String): FacultyReadEntity {
         TODO("Not yet implemented")
     }
 
-    override suspend fun insertDept(facultyId: String, json: String): String {
+    override suspend fun readAllDeptOrThrow(): List<DepartmentReadEntity> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun insertTeacher(deptId: String, json: String): String {
+    override suspend fun readDeptsOrThrow(facultyId: String): List<DepartmentReadEntity> {
+        return fetchWithCache(
+            remoteFetch = { remoteApi!!.readDeptsOrThrow(facultyId) },
+            cacheFetch = { cacheApi.readDeptsOrThrow(facultyId) },
+            cacheInsert = { entities -> cacheApi.insertDeptsOrThrow(facultyId, entities) },
+            notConnectedRemote = notConnectedRemote
+        )
+
+    }
+
+    override suspend fun readDeptOrThrow(id: String): DepartmentReadEntity {
         TODO("Not yet implemented")
     }
 
-    /**Not handle any exception,propagate out the exception**/
-    @Throws(Throwable::class)
-    override suspend fun readAllFaculty(): String {
-        if (serverApi == null) return roomApi.readFaculties()
-        val serverResponse = serverApi.readFaculties()
-        val isSuccess = readService.isFacultyListReadEntity(serverResponse)
-
-        if (isSuccess)
-            roomApi.insertFaculty(serverResponse)
-        else {
-            //Failed to load from remote , let fetch from local cache(room)
-            val roomDbResponse = roomApi.readFaculties()
-            if (!roomDbResponse.isFailed())
-                return roomDbResponse
-        }
-        //If both failed then propagating the server feedback/failure message
-        return serverResponse
-    }
-
-    override suspend fun readFacultyById(id: String): String {
+    override suspend fun readAllTeacherOrThrow(): List<TeacherReadEntity> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun readDeptById(id: String): String {
+    override suspend fun readTeachersOrThrow(deptId: String): List<TeacherReadEntity> {
+        return fetchWithCache(
+            remoteFetch = { remoteApi!!.readTeachersOrThrow(deptId) },
+            cacheFetch = { cacheApi.readTeachersOrThrow(deptId) },
+            cacheInsert = { entities -> cacheApi.insertTeachersOrThrow(deptId, entities) },
+            notConnectedRemote = notConnectedRemote
+        )
+    }
+
+    override suspend fun readTeacherOrThrow(teacherId: String): TeacherReadEntity {
         TODO("Not yet implemented")
     }
 
-    override suspend fun readAllTeachers(): String {
+    override suspend fun insertFacultyOrThrow(entity: FacultyWriteEntity) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun readTeachersUnderDept(deptId: String): String {
-        if (serverApi == null) return roomApi.readTeachersUnderDept(deptId)
-        val serverResponse = serverApi.readTeachersUnderDept(deptId)
-        val isSuccess = readService.isTeacherListReadEntity(serverResponse)
-
-        if (isSuccess)
-            println(roomApi.insertTeacher(deptId = deptId, json = serverResponse))
-        else {
-            //Failed to load from remote , let fetch from local cache(room)
-            val roomDbResponse = roomApi.readFaculties()
-            if (!roomDbResponse.isFailed())
-                return roomDbResponse
-        }
-        //If both failed then propagating the server feedback/failure message
-        return serverResponse
-    }
-
-    override suspend fun readTeacherById(teacherId: String): String {
+    override suspend fun insertFacultiesOrThrow(entities: List<FacultyWriteEntity>) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun readAllDept(): String {
+    override suspend fun insertDeptOrThrow(facultyId: String, entity: DepartmentWriteEntity) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun readDeptsUnderFaculty(facultyId: String): String {
-        if (serverApi == null) return roomApi.readDeptsUnderFaculty(facultyId)
-        val serverResponse = serverApi.readDeptsUnderFaculty(facultyId)
-        val isSuccess = readService.isDeptListReadEntity(serverResponse)
-
-        if (isSuccess)
-            roomApi.insertDept(facultyId = facultyId, json = serverResponse)
-        else {
-            //Failed to load from remote , let fetch from local cache(room)
-            val roomDbResponse = roomApi.readFaculties()
-            if (!roomDbResponse.isFailed())
-                return roomDbResponse
-        }
-        //If both failed then propagating the server feedback/failure message
-        return serverResponse
-    }
-
-    override suspend fun updateFaculty(facultyId: String, json: String): String {
+    override suspend fun insertDeptsOrThrow(
+        facultyId: String,
+        entities: List<DepartmentWriteEntity>
+    ) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateDept(deptId: String, json: String): String {
+    override suspend fun insertTeacherOrThrow(deptId: String, entity: TeacherWriteEntity) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateTeacher(teacherId: String, json: String): String {
+    override suspend fun insertTeachersOrThrow(deptId: String, entities: List<TeacherWriteEntity>) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteFaculty(id: String): String {
+    override suspend fun updateFacultyOrThrow(facultyId: String, entity: FacultyWriteEntity) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteDepartment(id: String): String {
+    override suspend fun updateDeptOrThrow(deptId: String, entity: DepartmentWriteEntity) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteTeacher(id: String): String {
+    override suspend fun updateTeacherOrThrow(teacherId: String, entity: TeacherWriteEntity) {
         TODO("Not yet implemented")
     }
 
-    private fun String.isFailed() = feedbackService.isFeedbackEntity(json = this)
+    override suspend fun deleteFacultyOrThrow(id: String) {
+        TODO("Not yet implemented")
+    }
 
+    override suspend fun deleteDepartmentOrThrow(id: String) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteTeacherOrThrow(id: String) {
+        TODO("Not yet implemented")
+    }
 }

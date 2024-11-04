@@ -43,23 +43,24 @@ class RepositoryImpl internal constructor(
     }
 
     override suspend fun readAllDept(): Result<List<DepartmentModel>> {
-        return with(handler) {
-            withExceptionHandle {
-                val json = ApiFactory.academicApi(token).readAllDept()
-
-                if (json._isDepartmentListEntity()) {
-                    val entities =
-                        json.parseOrThrow(ListSerializer(DepartmentEntity.serializer()))
-                    return Result.success(
-                        with(EntityModelMapper) {
-                            entities.sortedBy { it.priority }.map { it.toModel() }
-                        }
-                    )
-                } else
-                    return Result.failure(json.parseAsServerMessageOrThrow())
-
-            }
-        }
+        TODO()
+//        return with(handler) {
+//            withExceptionHandle {
+////                val json = ApiFactory.academicApi(token).readAllDept()
+//
+//                if (json._isDepartmentListEntity()) {
+//                    val entities =
+//                        json.parseOrThrow(ListSerializer(DepartmentEntity.serializer()))
+//                    return Result.success(
+//                        with(EntityModelMapper) {
+//                            entities.sortedBy { it.priority }.map { it.toModel() }
+//                        }
+//                    )
+//                } else
+//                    return Result.failure(json.parseAsServerMessageOrThrow())
+//
+//            }
+//        }
 
     }
 

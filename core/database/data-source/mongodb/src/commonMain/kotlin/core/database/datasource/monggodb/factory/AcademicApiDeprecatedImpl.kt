@@ -6,9 +6,9 @@ import core.database.datasource.monggodb.core.withExceptionHandle
 import core.database.datasource.monggodb.db.DepartmentCollection
 import core.database.datasource.monggodb.db.FacultyCollection
 import core.database.datasource.monggodb.db.TeacherCollection
-import domain.api.AcademicApi
+import domain.api.AcademicApiDeprecated
 
-class AcademicApiImpl internal  constructor(): AcademicApi {
+class AcademicApiDeprecatedImpl internal  constructor(): AcademicApiDeprecated {
 
     override suspend fun readFaculties() = withExceptionHandle {
         FacultyCollection().getAllFaculties()

@@ -9,9 +9,9 @@ import com.mongodb.ServerApiVersion
 import com.mongodb.client.model.Updates
 import com.mongodb.kotlin.client.coroutine.MongoClient
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
+import core.customexception.CustomException
 import core.database.datasource.monggodb.core.toCustomException
 import core.data.entity.academic.*
-import domain.exception.CustomException
 import domain.factory.ContractFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
