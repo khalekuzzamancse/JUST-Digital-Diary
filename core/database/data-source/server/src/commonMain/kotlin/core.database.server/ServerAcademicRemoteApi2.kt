@@ -10,16 +10,16 @@ import core.data.entity.academic.TeacherWriteEntity
 import core.network.ApiServiceClient
 import core.network.Header
 import core.network.JsonParser
-import domain.api.AcademicApi
+import domain.api.AcademicRemoteApi
 import domain.service.FeedbackMessageService
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 
-class ServerAcademicApi2(
+class ServerAcademicRemoteApi2(
     private val parser: JsonParser,
     private val apiServiceClient: ApiServiceClient,
     private val token: String,
-    private val feedbackService:FeedbackMessageService):AcademicApi {
+    private val feedbackService:FeedbackMessageService):AcademicRemoteApi {
 
     override suspend fun readFacultiesOrThrow(): List<FacultyReadEntity> {
         val response = apiServiceClient.readJsonOrThrow(URL.ALL_FACULTY, Header(key = "Authorization", value =token ))

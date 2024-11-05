@@ -1,15 +1,33 @@
 package core.database.api
 
+import core.data.entity.academic.FacultyReadEntity
+import core.data.entity.academic.FacultyWriteEntity
 import core.roomdb.factory.getRoomDBFactory
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.fail
 
 class RoomApiTest {
-    private val api = getRoomDBFactory().createAcademicApi2()
+    private val api = getRoomDBFactory().createAcademicCacheApi()
 
     @Test
-    fun testReadAllAcademicCalendars() = executeTest {
+    fun insertFaculties() = executeTest {
+        api.insertFacultiesOrThrow(
+            listOf(
+                FacultyReadEntity(
+                    priority = 1,
+                    name = "XYZ",
+                    faculty_id = "01",
+                    number_of_dept = 0
+                )
+            )
+        )
+        val result = api.readFacultiesOrThrow()
+        println("$result")
+
+    }
+    @Test
+    fun readFaculties() = executeTest {
         val result = api.readFacultiesOrThrow()
         println("$result")
 

@@ -38,7 +38,7 @@ class FacultyMemberDaoTest {
             present = 0
         )
         val facultyMember = FacultyMemberSchema(
-            uid = "02d6adb8-d989-4ac9-a",
+            id = "02d6adb8-d989-4ac9-a",
             deptId = "CSE",  // Set deptId for the test
             name = "Monishanker Halder",
             email = "m.halder@just.edu.bd",
@@ -53,7 +53,7 @@ class FacultyMemberDaoTest {
 
         facultyMemberDao.upsertFacultyMember(facultyMember)
 
-        val retrievedFacultyMember = facultyMemberDao.getFacultyMemberById(facultyMember.uid)
+        val retrievedFacultyMember = facultyMemberDao.getFacultyMemberById(facultyMember.id)
         println("Inserted faculty member: $facultyMember")
         println("Retrieved faculty member: $retrievedFacultyMember")
 
@@ -70,7 +70,7 @@ class FacultyMemberDaoTest {
             present = 0
         )
         val facultyMember = FacultyMemberSchema(
-            uid = "02d6adb8-d989-4ac9-a",
+            id = "02d6adb8-d989-4ac9-a",
             deptId = "CSE",  // Set deptId for the test
             name = "Monishanker Halder",
             email = "m.halder@just.edu.bd",
@@ -88,7 +88,7 @@ class FacultyMemberDaoTest {
 
         facultyMemberDao.deleteAllFacultyMembers()
 
-        val retrievedFacultyMember = facultyMemberDao.getFacultyMemberById(facultyMember.uid)
+        val retrievedFacultyMember = facultyMemberDao.getFacultyMemberById(facultyMember.id)
         println("Faculty member after clearing: ${retrievedFacultyMember?.name}")
 
         assertNull(retrievedFacultyMember)
@@ -104,7 +104,7 @@ class FacultyMemberDaoTest {
             present = 0
         )
         val facultyMember = FacultyMemberSchema(
-            uid = "02d6adb8-d989-4ac9-a",
+            id = "02d6adb8-d989-4ac9-a",
             deptId = "CSE",  // Set deptId for the test
             name = "Monishanker Halder",
             email = "m.halder@just.edu.bd",
@@ -125,7 +125,7 @@ class FacultyMemberDaoTest {
         facultyMemberDao.upsertFacultyMember(updatedFacultyMember)
         println("Updated faculty member: ${updatedFacultyMember.name}")
 
-        val retrievedFacultyMember = facultyMemberDao.getFacultyMemberById(facultyMember.uid)
+        val retrievedFacultyMember = facultyMemberDao.getFacultyMemberById(facultyMember.id)
         println("Retrieved updated faculty member: ${retrievedFacultyMember?.name}")
 
         assertEquals("Updated Name", retrievedFacultyMember?.name)
@@ -149,7 +149,7 @@ class FacultyMemberDaoTest {
             present = 0
         )
         val facultyMember = FacultyMemberSchema(
-            uid = "02d6adb8-d989-4ac9-a",
+            id = "02d6adb8-d989-4ac9-a",
             deptId = "CSE",  // Set deptId for the test
             name = "Monishanker Halder",
             email = "m.halder@just.edu.bd",

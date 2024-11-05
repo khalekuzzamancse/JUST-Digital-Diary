@@ -38,6 +38,11 @@ class InsertionServiceImpl internal constructor() : AcademicInsertionService {
         return _toInsertionResult(json = json, fields = extraFields, primaryKey = pk)
     }
 
+    override fun getFacultyPrimaryKey(entity: FacultyWriteEntity): String {
+        val pk = entity.name.replace(" ", "").lowercase()
+        return  pk
+    }
+
 
     /**
      * Generate primary key for department and validate the write entity.
@@ -65,6 +70,11 @@ class InsertionServiceImpl internal constructor() : AcademicInsertionService {
         return _toInsertionResult(json = json, fields = extraFields, primaryKey = pk)
     }
 
+    override fun getDeptPrimaryKey(entity: DepartmentWriteEntity, facultyId: String): String {
+        val pk = entity.name.replace(" ", "").lowercase()
+        return  pk
+    }
+
     /**
      * Generate primary key for teacher and validate the write entity.
      * @param json pass the [TeacherWriteEntity] in JSON format.
@@ -87,6 +97,15 @@ class InsertionServiceImpl internal constructor() : AcademicInsertionService {
             TeacherReadEntity::dept_id.name to deptId
         )
         return _toInsertionResult(json = json, fields = extraFields, primaryKey = pk)
+    }
+
+    override fun getTeacherPrimaryKey(entity: TeacherWriteEntity, deptId: String): String {
+        // Name+email combination is unique
+        val pk = entity.name.replace(" ", "").lowercase() +
+                entity.email.replace(" ", "").lowercase()
+        //TODO: Email might be changed, so refactor this later
+        return  pk
+
     }
 
 

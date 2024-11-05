@@ -4,7 +4,7 @@ import core.database.datasource.monggodb.factory.AcademicApiDeprecatedImpl
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.test.fail
-class AcademicApiDeprecatedImplTest {
+class AcademicRemoteApiDeprecatedImplTest {
 
     private val api = AcademicApiDeprecatedImpl()
     private val facultyId = "facultyofscience"

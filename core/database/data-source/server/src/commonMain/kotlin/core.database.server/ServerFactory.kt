@@ -1,6 +1,6 @@
 package core.database.server
 
-import domain.api.AdministrationApi
+import domain.api.AdministrationRemoteApi
 import domain.factory.ContractFactory
 import factory.NetworkFactory
 
@@ -12,8 +12,8 @@ object ServerFactory {
             parser = NetworkFactory.createJsonParser()
         )
 
-    fun serverApi2(token: String): ServerAcademicApi2 =
-        ServerAcademicApi2(
+    fun serverApi2(token: String): ServerAcademicRemoteApi2 =
+        ServerAcademicRemoteApi2(
             token = token,
             apiServiceClient = NetworkFactory.createAPIServiceClient(),
             parser = NetworkFactory.createJsonParser(),
@@ -21,7 +21,7 @@ object ServerFactory {
         )
 
 
-    fun administrationApi(token: String): AdministrationApi = ServerAdministrationApi(
+    fun administrationApi(token: String): AdministrationRemoteApi = ServerAdministrationRemoteApi(
         token = token,
         apiService = NetworkFactory.createAPIServiceClient(),
         parser = NetworkFactory.createJsonParser(),

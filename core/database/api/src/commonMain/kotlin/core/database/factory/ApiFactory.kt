@@ -11,10 +11,12 @@ import core.database.server.ServerFactory
 object ApiFactory {
     fun academicApi(token: String?): AcademicApiFacade = AcademicApiFacadeImpl(
         remoteApi = token?.let { ServerFactory.serverApi2(it) },
-        cacheApi = getRoomDBFactory().createAcademicApi2()
+        cacheApi = getRoomDBFactory().createAcademicCacheApi()
+
     )
     fun administrationApi(token: String?): AdministrationApiFacade = AdministrationApiFacadeImpl(
-        remoteApi = if (token!=null)ServerFactory.administrationApi(token) else null
+        remoteApi = if (token!=null)ServerFactory.administrationApi(token) else null,
+        cacheApi =getRoomDBFactory().createAdministrationCacheApi()
     )
     fun calenderApi(): CalenderApiFacade = CalenderApiFacade(MongoDbFactory.calenderApi())
     fun scheduleApi(): ScheduleApiFacade = ScheduleApiFacade(MongoDbFactory.scheduleApi())

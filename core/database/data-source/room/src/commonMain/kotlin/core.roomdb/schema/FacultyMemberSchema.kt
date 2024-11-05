@@ -11,7 +11,7 @@ import kotlinx.serialization.json.Json
 @Entity(tableName = "faculty_members")
 @Serializable
 internal data class FacultyMemberSchema(
-    @PrimaryKey val uid: String,
+    @PrimaryKey val id: String,
     val deptId: String,  // Additional field for query
     val name: String,
     val email: String?,

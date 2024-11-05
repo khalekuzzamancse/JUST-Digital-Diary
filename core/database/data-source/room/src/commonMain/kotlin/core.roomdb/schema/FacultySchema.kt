@@ -5,12 +5,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * @property id denote the sorting order,it is not the primary key
+ * @property priority denote the sorting order,it is not the primary key
  */
 @Entity(tableName = "faculty_table")
 internal data class FacultySchema(
     @PrimaryKey val facultyId: String,
-    val id:Int,
+    val priority:Int,
     val name: String,
-    val departmentCount: Int
 )

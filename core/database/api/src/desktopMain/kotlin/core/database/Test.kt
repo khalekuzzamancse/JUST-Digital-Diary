@@ -5,6 +5,6 @@ import core.roomdb.factory.RoomDBFactory
 class Test {
 
     fun test(){
-        RoomDBFactory().createAcademicApi2()
+        RoomDBFactory().createAcademicCacheApi()
     }
 }

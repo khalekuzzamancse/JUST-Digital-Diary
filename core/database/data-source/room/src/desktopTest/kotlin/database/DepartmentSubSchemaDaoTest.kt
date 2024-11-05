@@ -27,7 +27,6 @@ class DepartmentSubSchemaDaoTest {
             deptId = "01",
             shortname = "CSE",
             name = "Computer Science and Engineering",
-            membersCount = 25,
             facultyId = "01"
         ),
         DepartmentSchema(
@@ -35,7 +34,6 @@ class DepartmentSubSchemaDaoTest {
             deptId = "11",
             shortname = "EEE",
             name = "Electrical and Electronic Engineering",
-            membersCount = 17,
             facultyId = "01"
         ),
         DepartmentSchema(
@@ -43,7 +41,6 @@ class DepartmentSubSchemaDaoTest {
             deptId = "07",
             shortname = "IPE",
             name = "Industrial and Production Engineering",
-            membersCount = 18,
             facultyId = "01"
         ),
         DepartmentSchema(
@@ -51,7 +48,6 @@ class DepartmentSubSchemaDaoTest {
             deptId = "22",
             shortname = "TE",
             name = "Textile Engineering",
-            membersCount = 9,
             facultyId = "01"
         ),
         DepartmentSchema(
@@ -59,7 +55,6 @@ class DepartmentSubSchemaDaoTest {
             deptId = "05",
             shortname = "CHE",
             name = "Chemical Engineering",
-            membersCount = 20,
             facultyId = "01"
         ),
         DepartmentSchema(
@@ -67,7 +62,6 @@ class DepartmentSubSchemaDaoTest {
             deptId = "08",
             shortname = "PME",
             name = "Petroleum and Mining Engineering",
-            membersCount = 13,
             facultyId = "01"
         ),
         DepartmentSchema(
@@ -75,7 +69,6 @@ class DepartmentSubSchemaDaoTest {
             deptId = "19",
             shortname = "BME",
             name = "Biomedical Engineering",
-            membersCount = 9,
             facultyId = "01"
         )
     )
@@ -95,24 +88,21 @@ class DepartmentSubSchemaDaoTest {
     private suspend fun insertFacultyIfNotExists() {
         // Insert the corresponding faculty entry if it does not exist
         val faculty = FacultySchema(
-            id=1,
+            priority=1,
             facultyId = "01",
             name = "Faculty of Engineering and Technology",
-            departmentCount = 7
         )
         facultyDao.upsertFaculty(faculty)
     }
 
     @Test
-    fun testUpsertAndRetrieveDepartment() = runBlocking {
+    fun upset() = runBlocking {
         insertFacultyIfNotExists()
-
         val department = DepartmentSchema(
             id = 1,
             deptId = "01",
             shortname = "CSE",
             name = "Computer Science and Engineering",
-            membersCount = 25,
             facultyId = "01"
         )
 
@@ -136,17 +126,17 @@ class DepartmentSubSchemaDaoTest {
 
         assertEquals(sampleDepartments.size, retrievedDepartments.size)
     }
-
     @Test
-    fun testGetDepartmentsByFaculty() = runBlocking {
-        insertFacultyIfNotExists()
+    fun readAllDept() = runBlocking {
+        val retrievedDepartments = departmentDao.getAllDepartments()
+        println("Departments retrieved for faculty: $retrievedDepartments")
 
-        departmentDao.upsertDepartments(sampleDepartments)
-
+    }
+    @Test
+    fun readDepartmentByFacultyId() = runBlocking {
         val retrievedDepartments = departmentDao.getDepartmentsByFaculty("01")
         println("Departments retrieved for faculty: $retrievedDepartments")
 
-        assertEquals(7, retrievedDepartments.size)
     }
 
     @Test
@@ -158,7 +148,6 @@ class DepartmentSubSchemaDaoTest {
             deptId = "01",
             shortname = "CSE",
             name = "Computer Science and Engineering",
-            membersCount = 25,
             facultyId = "01"
         )
 

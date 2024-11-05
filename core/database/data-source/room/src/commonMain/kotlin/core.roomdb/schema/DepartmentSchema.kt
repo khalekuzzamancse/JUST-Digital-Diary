@@ -17,11 +17,10 @@ import androidx.room.ForeignKey
 /**
  * @property id denote the sorting order,it is not the primary key
  */
-data class DepartmentSchema(
+internal data class DepartmentSchema(
     val id:Int,
     val facultyId: String, // Foreign key that references the faculty
     val deptId: String,
     val shortname: String,
     val name: String,
-    val membersCount: Int
 )

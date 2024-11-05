@@ -11,6 +11,7 @@ import org.junit.After
 import org.junit.Before
 import kotlin.test.Test
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class FacultyDaoTest {
 
@@ -29,30 +30,34 @@ class FacultyDaoTest {
     }
 
     @Test
-    fun testUpsertAndRetrieveFaculty() = runBlocking {
+    fun upset() = runBlocking {
         val faculty = FacultySchema(
-            id = 1,
+            priority = 1,
             facultyId = "01",
             name = "Faculty of Engineering and Technology",
-            departmentCount = 7
         )
 
         facultyDao.upsertFaculty(faculty)
 
-        val retrievedFaculty = facultyDao.getFacultyById(faculty.facultyId)
-        println("Inserted faculty: ${faculty.name}")
-        println("Retrieved faculty: ${retrievedFaculty?.name}")
+        val retrievedFaculty = facultyDao.getAllFaculties()
+        println("read:$retrievedFaculty")
 
-        assertEquals(faculty.name, retrievedFaculty?.name)
+        assertEquals(faculty.name, retrievedFaculty.any{it.name==faculty.name})
+    }
+    @Test
+    fun readFaculty() = runBlocking {
+
+        val retrievedFaculty = facultyDao.getAllFaculties()
+        println("Retrieved faculty: $retrievedFaculty")
+        assertTrue(retrievedFaculty.isNotEmpty())
     }
 
     @Test
     fun testClearFaculties() = runBlocking {
         val faculty = FacultySchema(
-            id = 1,
+            priority = 1,
             facultyId = "01",
             name = "Faculty of Engineering and Technology",
-            departmentCount = 7
         )
 
         facultyDao.upsertFaculty(faculty)
@@ -69,10 +74,9 @@ class FacultyDaoTest {
     @Test
     fun testUpdateFaculty() = runBlocking {
         val faculty = FacultySchema(
-            id = 1,
+            priority = 1,
             facultyId = "01",
             name = "Faculty of Engineering and Technology",
-            departmentCount = 7
         )
 
         facultyDao.upsertFaculty(faculty)

@@ -8,18 +8,18 @@ import core.data.entity.administration.SubOfficeReadEntity
 import core.network.ApiServiceClient
 import core.network.Header
 import core.network.JsonParser
-import domain.api.AdministrationApi
+import domain.api.AdministrationRemoteApi
 import domain.service.FeedbackMessageService
 import core.database.server.entity.administration.AdminOfficeListEntity
 import core.database.server.entity.administration.AdminOfficerListEntity
 import core.database.server.entity.administration.SubOfficeListEntity
 
-class ServerAdministrationApi(
+class ServerAdministrationRemoteApi(
     private val apiService: ApiServiceClient,
     private val parser: JsonParser,
     private val token: String,
     private val feedbackService:FeedbackMessageService
-) : AdministrationApi {
+) : AdministrationRemoteApi {
 
     override suspend fun readOfficesOrThrow(): List<OfficeReadEntity> {
         val response = apiService.readJsonOrThrow(URL.ALL_OFFICE, Header(key = URL.KEY, value = token))

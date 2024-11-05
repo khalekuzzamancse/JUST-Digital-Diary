@@ -13,7 +13,7 @@ internal interface FacultyMemberDao {
     suspend fun upsertFacultyMember(facultyMemberSchema: FacultyMemberSchema)
     @Upsert
     suspend fun upsertFacultyMembers(facultyMembers: List<FacultyMemberSchema>)
-    @Query("SELECT * FROM faculty_members WHERE uid = :uid LIMIT 1")
+    @Query("SELECT * FROM faculty_members WHERE id = :uid LIMIT 1")
     suspend fun getFacultyMemberById(uid: String): FacultyMemberSchema?
 
     @Query("SELECT * FROM faculty_members")
@@ -22,7 +22,7 @@ internal interface FacultyMemberDao {
     @Query("SELECT * FROM faculty_members WHERE deptId = :deptId")
     suspend fun getFacultyMembersByDeptId(deptId: String): List<FacultyMemberSchema>  // New query by deptId
 
-    @Query("DELETE FROM faculty_members WHERE uid = :uid")
+    @Query("DELETE FROM faculty_members WHERE id = :uid")
     suspend fun deleteFacultyMemberById(uid: String)
 
     @Query("DELETE FROM faculty_members")

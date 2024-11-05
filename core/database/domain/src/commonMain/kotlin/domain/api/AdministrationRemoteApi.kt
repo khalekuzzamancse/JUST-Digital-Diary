@@ -4,7 +4,7 @@ import core.data.entity.administration.AdminOfficerReadEntity
 import core.data.entity.administration.OfficeReadEntity
 import core.data.entity.administration.SubOfficeReadEntity
 
-interface AdministrationApi {
+interface AdministrationRemoteApi {
     /**Throw custom Exception where the Exception can be server feedback*/
     suspend fun readOfficesOrThrow():List<OfficeReadEntity>
     /**Throw custom Exception where the Exception can be server feedback*/

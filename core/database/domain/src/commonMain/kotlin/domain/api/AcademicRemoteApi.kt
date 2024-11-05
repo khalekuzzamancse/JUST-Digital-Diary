@@ -12,7 +12,7 @@ import core.data.entity.FeedbackMessageEntity
  * - The presentation or the api/endpoint  layer should be implemented this, and must delegate the
  * call to a database
  */
-interface AcademicApi {
+interface AcademicRemoteApi {
     /**
      * @return on success return JSON version of list of [FacultyReadEntity],
      * on failure return the JSON version of [FeedbackMessageEntity].

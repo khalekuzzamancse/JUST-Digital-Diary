@@ -35,6 +35,16 @@ interface AcademicInsertionService {
     fun getFacultyKeyOrThrow(json: String): InsertionResult
 
     /**
+     * Generate primary key for faculty and validate the write entity.
+     * @param json pass the [FacultyWriteEntity] in JSON format.
+     * @return the generated primary key for the faculty.
+     * @throws Throwable validation of the entity fails or the JSON format is invalid or doesn't match [FacultyWriteEntity].
+     **/
+    fun getFacultyPrimaryKey(entity: FacultyWriteEntity): String
+
+
+
+    /**
      * Generate primary key for department and validate the write entity.
      * - Need to know under which faculty wants to add, and id will be used to insert missing fields to json
      * @param json pass the [DepartmentWriteEntity] in JSON format.
@@ -44,6 +54,15 @@ interface AcademicInsertionService {
     fun getDepartmentKeyOrThrow(json: String,facultyId:String): InsertionResult
 
     /**
+     * Generate primary key for department and validate the write entity.
+     * - Need to know under which faculty wants to add, and id will be used to insert missing fields to json
+     * @param json pass the [DepartmentWriteEntity] in JSON format.
+     * @return the generated primary key for the department.
+     * @throws Throwable validation of the entity fails or the JSON format is invalid or doesn't match [DepartmentWriteEntity].
+     **/
+    fun getDeptPrimaryKey(entity: DepartmentWriteEntity, facultyId:String): String
+
+    /**
      * Generate primary key for teacher and validate the write entity
      *  - Need to know under which dept wants to add, and id will be used to insert missing fields to json
      * @param json pass the [TeacherWriteEntity] in JSON format.
@@ -51,4 +70,13 @@ interface AcademicInsertionService {
      * @throws Throwable validation of the entity fails or the JSON format is invalid or doesn't match [TeacherWriteEntity].
      **/
     fun getTeacherKeyOrThrow(json: String,deptId:String): InsertionResult
+
+    /**
+     * Generate primary key for teacher and validate the write entity
+     *  - Need to know under which dept wants to add, and id will be used to insert missing fields to json
+     * @param json pass the [TeacherWriteEntity] in JSON format.
+     * @return the generated primary key for the teacher.
+     * @throws Throwable validation of the entity fails or the JSON format is invalid or doesn't match [TeacherWriteEntity].
+     **/
+    fun getTeacherPrimaryKey(entity: TeacherWriteEntity, deptId:String): String
 }

@@ -1,6 +1,5 @@
 package core.roomdb.factory
 
-import core.roomdb.apis.AuthApi
 import core.roomdb.apis.TokenApi
 import domain.api.AcademicApiDeprecated
 
@@ -16,7 +15,7 @@ actual class RoomDBFactory {
         TODO("Not yet implemented")
     }
 
-    actual fun createAcademicApi2(): AcademicApiDeprecated {
+    actual fun createAcademicCacheApi(): AcademicApiDeprecated {
         TODO("Not yet implemented")
     }
 }

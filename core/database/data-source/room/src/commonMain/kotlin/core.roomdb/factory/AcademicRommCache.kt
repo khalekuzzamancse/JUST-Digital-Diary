@@ -9,21 +9,22 @@ import core.roomdb.schema.DepartmentSchema
 import core.roomdb.schema.DepartmentSubSchema
 import core.roomdb.schema.FacultyMemberSchema
 import core.roomdb.schema.FacultySchema
+import domain.api.AcademicCacheApi
 
-class RoomAcademicImpl internal constructor(
+class AcademicRommCache internal constructor(
     private val facultyDao: FacultyDao,
     private val departmentDao: DepartmentDao,
     private val teacherDao: FacultyMemberDao
-) : RoomAcademicApi {
+) : AcademicCacheApi {
 
     override suspend fun readFacultiesOrThrow(): List<FacultyReadEntity> {
         val schemas = facultyDao.getAllFaculties()
         return schemas.map { schema ->
             FacultyReadEntity(
-                priority = schema.id,
+                priority = schema.priority,
                 faculty_id = schema.facultyId,
                 name = schema.name,
-                number_of_dept = schema.departmentCount
+                number_of_dept = 0//TODO:Derived property, refactor later
             )
         }
     }
@@ -32,10 +33,9 @@ class RoomAcademicImpl internal constructor(
         facultyDao.upsertFaculties(
             entities.map { entity ->
                 FacultySchema(
-                    id = entity.priority,
+                    priority = entity.priority,
                     facultyId = entity.faculty_id,
                     name = entity.name,
-                    departmentCount = entity.number_of_dept
                 )
             }
         )
@@ -49,7 +49,6 @@ class RoomAcademicImpl internal constructor(
                     id = entity.priority,
                     facultyId = facultyId,
                     name = entity.name,
-                    membersCount = entity.number_of_employee,
                     shortname = entity.shortname
                 )
             }
@@ -65,7 +64,7 @@ class RoomAcademicImpl internal constructor(
                 faculty_id = schema.facultyId,
                 name = schema.name,
                 shortname = schema.shortname,
-                number_of_employee = schema.membersCount
+                number_of_employee = 0//TODO:Derived property, refactor later
             )
         }
     }
@@ -74,7 +73,7 @@ class RoomAcademicImpl internal constructor(
         teacherDao.upsertFacultyMembers(
             entities.map { entity ->
                 FacultyMemberSchema(
-                    uid = entity.id,
+                    id = entity.id,
                     deptId = entity.dept_id,
                     name = entity.name,
                     email = entity.email,
@@ -102,7 +101,7 @@ class RoomAcademicImpl internal constructor(
         val schemas = teacherDao.getFacultyMembersByDeptId(deptId)
         return schemas.map { schema ->
             TeacherReadEntity(
-                id = schema.uid,
+                id = schema.id,
                 dept_id = schema.deptId,
                 priority = schema.type,
                 name = schema.name,
