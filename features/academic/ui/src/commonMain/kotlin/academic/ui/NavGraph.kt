@@ -67,6 +67,7 @@ fun AcademicNavGraph(
                 )
             }
             FacultyNDeptRoute(
+
                 viewModel = viewModel,
                 navigationIcon = navigationIcon,
                 onTeachersRequest = navigator::navigateToTeacherList,
@@ -95,6 +96,7 @@ fun AcademicNavGraph(
                 )
             }
             TeachersRoute(
+                isAdmin = false,
                 viewModel = viewModel,
                 deptId = deptId ?: "",
                 onExitRequest = {

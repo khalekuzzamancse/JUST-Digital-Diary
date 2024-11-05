@@ -1,21 +1,23 @@
 package core.roomdb.factory
 
-import core.roomdb.apis.TokenApi
-import domain.api.AcademicApiDeprecated
+import domain.api.AcademicCacheApi
+import domain.api.AdministrationCacheApi
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 actual class RoomDBFactory {
-
-
-    actual fun createAuthApi(): AuthApi {
-        TODO("Not yet implemented")
+    actual fun createAcademicCacheApi(): AcademicCacheApi {
+        return AcademicRommCache(
+            facultyDao = RoomDBProvider.db.facultyDao(),
+            departmentDao =  RoomDBProvider.db.departmentDao(),
+            teacherDao =  RoomDBProvider.db.facultyMemberDao(),
+        )
     }
 
-    actual fun createTokenApi(): TokenApi {
-        TODO("Not yet implemented")
-    }
-
-    actual fun createAcademicCacheApi(): AcademicApiDeprecated {
-        TODO("Not yet implemented")
+    actual fun createAdministrationCacheApi(): AdministrationCacheApi {
+        return AdministrationRoomCache(
+            officeDao =  RoomDBProvider.db.officeDao(),
+            subOfficeDao =  RoomDBProvider.db.subOfficeDao(),
+            employeeDao =  RoomDBProvider.db.adminEmployeeDao()
+        )
     }
 }

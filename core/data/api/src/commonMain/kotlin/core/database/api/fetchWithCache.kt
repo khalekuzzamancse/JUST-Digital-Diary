@@ -18,17 +18,17 @@ object RemoteCacheHelper {
                 cacheUpdate(serverResponse)
                 //Since server give response so return the sever response
                 serverResponse
-            } catch (cacheInsertionEx: Exception) {
+            } catch (cacheInsertionEx: Throwable) { //TODO:catch as throwable to make sure all kind of exception caught
                 // Log cache insertion exception if needed
                 //Since server give response so return the sever response even if the update to cache is failed
                 serverResponse
             }
 
 
-        } catch (serverException: Exception) {
+        } catch (serverException: Throwable) {//TODO:catch as throwable to make sure all kind of exception caught
             try {
                 cacheCall()
-            } catch (cacheEx: Exception) {
+            } catch (cacheEx: Throwable) {//TODO:catch as throwable to make sure all kind of exception caught
                 throw serverException // propagate the server exception if cache also fails
             }
         }

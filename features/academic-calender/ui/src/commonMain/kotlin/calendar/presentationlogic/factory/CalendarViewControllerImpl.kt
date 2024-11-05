@@ -7,6 +7,7 @@ import calendar.presentationlogic.controller.public_.CalendarViewController
 import calendar.ui.component.CalendarViewerController
 import calendar.ui.component.CalendarGridManager
 import calendar.ui.public_.AcademicCalenderView
+import core.customexception.ErrorHandler
 import feature.academiccalender.domain.model.CalendarModel
 import feature.academiccalender.domain.usecase.ReadAcademicCalenderUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -51,14 +52,16 @@ internal class CalendarViewControllerImpl(
     override val statusMessage = super._statusMessage
 
     private suspend fun loadCalender() {
-        try {
-            val model: CalendarModel = useCase.execute().getOrThrow()
-            val yearData = model.let { presenter.buildMonthGrid(it) }
-            viewerController.setYearData(yearData)
-        } catch (ex: Throwable) {//Custom exception is throwable
-           ex.showStatusMsg(optionalMsg = "Unable to load holiday")
-            println("End2")
-        }
+            ErrorHandler.runAsync (
+            _try = {
+                val model: CalendarModel = useCase.execute().getOrThrow()
+                val yearData = model.let { presenter.buildMonthGrid(it) }
+                viewerController.setYearData(yearData)
+            },
+            _catch = { ex->
+                ex.showStatusMsg(optionalMsg = "Unable to load holiday")
+            }
+        )
 
     }
 

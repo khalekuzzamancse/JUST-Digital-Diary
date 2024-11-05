@@ -1,6 +1,8 @@
 @file:Suppress("unused")
+
 package schedule.presentationlogic.factory.class_schedule
 
+import core.customexception.ErrorHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +24,7 @@ internal class ClassScheduleListControllerImpl(
     override val schedules = _schedule.asStateFlow()
     override val isLoading = super._isLoading
     override val statusMessage = super._statusMessage
+
     init {
         CoroutineScope(Dispatchers.Default).launch {
             readAllSchedule()
@@ -29,18 +32,18 @@ internal class ClassScheduleListControllerImpl(
     }
 
     private suspend fun readAllSchedule() {
-        super.startLoading()
-        readAllUseCase.execute()
-            .fold(
-                onSuccess = { models ->
-                    with(ModelMapper) {
-                        _schedule.update { models.map { it.toModel() } }
-                    }
-                },
-                onFailure = { exception ->exception.showStatusMsg(optionalMsg = "Unable to load schedules")
-                }
-            )
-        super.stopLoading()
+        ErrorHandler.runAsync(
+            _try = {
+                super.startLoading()
+                val models = readAllUseCase.execute().getOrThrow()
+                _schedule.update { with(ModelMapper) { models.map { it.toModel() } } }
+                super.stopLoading()
+            },
+            _catch = { ex ->
+                super.stopLoading()
+                ex.showStatusMsg(optionalMsg = "Unable to load schedules")
+            }
+        )
     }
 
 }

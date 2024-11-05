@@ -15,16 +15,10 @@ pluginManagement {
 }
 dependencyResolutionManagement {
     repositories {
-     //   google()
-        google {
-            mavenContent {
-                includeGroupAndSubgroups("androidx")
-                includeGroupAndSubgroups("com.android")
-                includeGroupAndSubgroups("com.google")
-            }
-        }
+       google()
         mavenCentral()
     }
+
 
 }
 
@@ -54,6 +48,7 @@ val coreModules = listOf(
 )
 
 val featureModules = listOf(
+    "features:di-container",
     ":features",
     ":features:auth", ":features:auth:data",  ":features:auth:domain",":features:auth:ui",":features:auth:di",
     ":features:academic", ":features:academic:domain",":features:academic:data",":features:academic:ui",":features:academic:di",

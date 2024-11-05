@@ -68,7 +68,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.common.viewmodel)
     implementation(project(":features:navigation"))
-    implementation(projects.core.data.api)
+    implementation(projects.features.diContainer)
 
 
 }

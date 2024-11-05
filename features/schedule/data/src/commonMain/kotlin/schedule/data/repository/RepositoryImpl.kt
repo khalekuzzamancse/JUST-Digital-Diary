@@ -65,6 +65,7 @@ class RepositoryImpl internal constructor(
     }
 
     override suspend fun retrieveClassSchedule(): Result<List<ClassScheduleReadModel>> {
+
         return with(handler) {
             withExceptionHandle {
                 val json = ApiFactory.scheduleApi().readAll()

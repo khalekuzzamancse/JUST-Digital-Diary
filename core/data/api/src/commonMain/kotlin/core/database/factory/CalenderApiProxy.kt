@@ -5,6 +5,7 @@ import domain.api.CalenderApi
 
 internal class CalenderApiProxy : CalenderApi {
     override suspend fun readOfCurrentYear(): String {
+        //Avoid to because TODO throw Error that not sub type of Throwable
         throw CustomException.MessageFromServer("No holiday found")
     }
 

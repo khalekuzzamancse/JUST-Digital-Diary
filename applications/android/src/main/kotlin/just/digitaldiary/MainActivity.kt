@@ -1,15 +1,15 @@
 package just.digitaldiary
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
+import global.dicontainer.initializeDBAndroid
+
 import just.digitaldiary.theme.AppTheme
 import navigation.RootNavHost
 
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+       initializeDBAndroid(applicationContext)
         eventHandler = AppEventHandler(this)
         val splashScreen = installSplashScreen()
         splashScreen.setKeepOnScreenCondition { !isTokenReady }

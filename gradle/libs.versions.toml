@@ -8,7 +8,6 @@ datastorePreferences = "1.1.1"
 kotlin = "1.9.21"# 1.9.21
 
 junit = "4.13.2"
-voyager = "1.0.0"
 coil3-io = "3.0.0-alpha02"
 ktor = "2.3.7"
 
@@ -19,14 +18,16 @@ kotlinxCoroutinesSwing="1.8.0"
 commonNavigationVer = "2.7.0-alpha07"
 commonViewmodelVer="2.8.0"
 ## For room database
-room = "2.7.0-alpha11"
+room = "2.7.0-alpha01"
 ksp = "1.9.23-1.0.19"
 sqlite = "2.5.0-SNAPSHOT"
-roomCommonJvm = "2.7.0-alpha11"
+
 
 ## For server
 logback = "1.2.11"
 ktorServer = "2.0.0"
+lifecycleRuntimeKtx = "2.8.7"
+composeBom = "2024.04.01"
 
 [libraries]
 androidx-activity-compose= { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -61,11 +62,13 @@ common-navigation={module="org.jetbrains.androidx.navigation:navigation-compose"
 ##  Navigation for multiplatfrom
 common-viewmodel={module="org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose",version.ref="commonViewmodelVer"}
 ##ROOM
-room-gradle-plugin={module="androidx.room:room-gradle-plugin",version.ref="room"}
+#room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+#room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+#sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-runtime-android = { module = "androidx.room:room-runtime-android", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
-
 
 
 ##
@@ -77,10 +80,19 @@ ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktorSer
 ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktorServer" }
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
 
 [bundles]
-room=["room-gradle-plugin","room-compiler","room-runtime","sqlite-bundled"]
+room=["room-compiler","room-runtime","sqlite-bundled"]
 
 test = ["kotlin-test", "kotlin-test-junit"]
 ktorClient=["ktor-client-core","ktor-client-okhttp","ktor-client-content-negotiation","ktor-serialization-kotlinx-json"]
@@ -115,4 +127,5 @@ convention-composeMultiplatfrom={id="convention.composeMultiplatform",version="u
 convention-kotlinMultiplatform={id="convention.kotlinMultiplatform",version="unspecified"}
 convention-domainModulePlugin={id="convention.DomainModulePlugin",version="unspecified"}
 convention-dataModulePlugin={id="convention.dataModulePlugin",version="unspecified"}
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 

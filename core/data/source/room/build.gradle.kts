@@ -10,7 +10,9 @@ kotlin {
         val commonMain by getting{
             dependencies {
                 implementation(projects.core.data.domain)
-                implementation(libs.bundles.room)
+//                implementation(libs.bundles.room)
+                implementation(libs.room.runtime)
+                implementation(libs.sqlite.bundled)
                 implementation(compose.ui) //for accessing context android
             }
         }
@@ -23,9 +25,7 @@ kotlin {
 
         }
         val androidMain by getting{
-            dependencies{
 
-            }
         }
 
     }

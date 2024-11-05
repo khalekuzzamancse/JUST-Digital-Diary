@@ -35,7 +35,7 @@ internal fun TeachersRoute(
     viewModel: TeacherListViewModel,
     deptId: String,
     onExitRequest: () -> Unit,
-    isAdmin: Boolean = true,
+    isAdmin: Boolean,
     onEvent: (AcademicModuleEvent) -> Unit
     //TODO: event should go out,it should not handle by controller
 ) {

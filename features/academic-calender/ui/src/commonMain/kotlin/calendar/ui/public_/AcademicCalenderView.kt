@@ -2,13 +2,12 @@
 
 package calendar.ui.public_
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import calendar.presentationlogic.controller.public_.CalendarViewController
 import calendar.ui.component.AcademicCalender
-import calendar.ui.component.ProgressBarDecorator
 
 
 /**
@@ -22,6 +21,14 @@ fun AcademicCalenderView(
     controller: CalendarViewController,
     onSnackBarMsgRequest: (reason: String) -> Unit,
 ) {
+
+    LaunchedEffect(Unit){
+        controller.statusMessage.collect{msg->
+            if (msg != null) {
+                onSnackBarMsgRequest(msg.text)
+            }
+        }
+    }
     ///Wrapping the whole UI into a box so that consumer can easily deal alignment
     //or other staff via Modifier
     /** Calender Grid cell data*/
