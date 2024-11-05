@@ -1,5 +1,6 @@
 package core.network
 
+import core.customexception.NetworkException
 import io.ktor.client.network.sockets.ConnectTimeoutException
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.RedirectResponseException
@@ -88,8 +89,9 @@ internal class ToCustomException {
     fun throwCustomExceptionIfAny(code: HttpStatusCode,body: String?=null) {
         when (code) {
             HttpStatusCode.Unauthorized -> {
+                //This can be because of invalid token(session expire) or username/password wrong
                 throw NetworkException.UnauthorizedException(
-                    message = "Session expired. Please sign in again.",
+                    message = "Session expired or invalid credentials",
                     debugMessage = "Unauthorized access (401),server response is\n$body"
                 )
             }

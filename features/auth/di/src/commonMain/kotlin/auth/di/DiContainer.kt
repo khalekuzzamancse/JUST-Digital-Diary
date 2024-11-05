@@ -4,8 +4,10 @@ import auth.data.factory.DataModuleFactory
 import auth.domain.usecase.AccountVerifyUseCase
 import auth.domain.usecase.LoginUseCase
 import auth.domain.usecase.RegisterUseCase
+import auth.domain.usecase.ResetPasswordCodeValidateUseCase
 import auth.domain.usecase.ResetPasswordUseCase
 import auth.domain.usecase.SendPasswordResetUseCase
+
 
 
 /**
@@ -25,6 +27,9 @@ object DiContainer {
     fun createSendPasswordResetUseCase(): SendPasswordResetUseCase =
         SendPasswordResetUseCase(repository = DataModuleFactory.createLoginRepository())
     fun createResetPasswordUseCase(): ResetPasswordUseCase =ResetPasswordUseCase(
+        repository = DataModuleFactory.createLoginRepository()
+    )
+    fun codeValidateCase()= ResetPasswordCodeValidateUseCase(
         repository = DataModuleFactory.createLoginRepository()
     )
 

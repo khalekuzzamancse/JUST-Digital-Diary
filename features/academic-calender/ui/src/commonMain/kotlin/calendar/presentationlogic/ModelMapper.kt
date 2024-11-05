@@ -2,11 +2,11 @@ package calendar.presentationlogic
 
 import calendar.presentationlogic.model.HolidayType
 import calendar.presentationlogic.model.MonthData
-import feature.academiccalender.domain.model.AcademicCalender2
+import feature.academiccalender.domain.model.AcademicCalender
 import feature.academiccalender.domain.model.Holiday
 
 object ModelMapper {
-    fun holidayModel(year: Int, yearData: List<MonthData>): AcademicCalender2 {
+    fun holidayModel(year: Int, yearData: List<MonthData>): AcademicCalender {
 
         val holidays: List<List<Holiday>> = yearData.mapIndexed { _, month ->
             month.cells.mapNotNull { cell ->
@@ -27,7 +27,7 @@ object ModelMapper {
                 else null
             }
         }
-        return AcademicCalender2(
+        return AcademicCalender(
             year = year,
             holiday = holidays
         )

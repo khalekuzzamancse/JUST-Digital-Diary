@@ -7,6 +7,7 @@ import calendar.presentationlogic.controller.public_.CalendarViewController
 import calendar.ui.component.CalendarViewerController
 import calendar.ui.component.CalendarGridManager
 import calendar.ui.public_.AcademicCalenderView
+import feature.academiccalender.domain.model.CalendarModel
 import feature.academiccalender.domain.usecase.ReadAcademicCalenderUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,13 +33,13 @@ internal class CalendarViewControllerImpl(
     private val viewerController: CalendarViewerController,
     private val presenter: CalendarGridManager,
     private val useCase: ReadAcademicCalenderUseCase
-) : CalendarViewController,CoreController() {
+) : CalendarViewController, CoreController() {
     override val currentMonthCalender = viewerController.currentMonthCalendar
     private val _year = MutableStateFlow<Int?>(null)
     override val year = _year.asStateFlow()
 
     init {
-        CoroutineScope(Dispatchers.Default).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             loadCalender()
         }
 
@@ -46,18 +47,20 @@ internal class CalendarViewControllerImpl(
 
     override fun goToNextMonthCalender() = viewerController.goToNextMonth()
     override fun goToPreviousMonthCalender() = viewerController.goToPreviousMonth()
-    override val isLoading=super._isLoading
-    override val statusMessage=super._statusMessage
+    override val isLoading = super._isLoading
+    override val statusMessage = super._statusMessage
 
     private suspend fun loadCalender() {
-        useCase.execute()
-            .fold(
-                onSuccess = {calender->
-                    val yearData =presenter.buildMonthGrid(calender)
-                    viewerController.setYearData(yearData)
-                },
-                onFailure = {ex->ex.showStatusMsg(optionalMsg = "Unable to load holiday")}
-            )
+        try {
+            val model: CalendarModel = useCase.execute().getOrThrow()
+            val yearData = model.let { presenter.buildMonthGrid(it) }
+            viewerController.setYearData(yearData)
+        } catch (ex: Throwable) {//Custom exception is throwable
+           ex.showStatusMsg(optionalMsg = "Unable to load holiday")
+            println("End2")
+        }
 
     }
+
+
 }

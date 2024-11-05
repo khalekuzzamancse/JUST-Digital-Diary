@@ -4,13 +4,13 @@ package data.factory
 
 import data.entity.AcademicCalenderEntity
 import data.entity.HolidayEntity
-import feature.academiccalender.domain.model.AcademicCalender2
+import feature.academiccalender.domain.model.AcademicCalender
 import feature.academiccalender.domain.model.HolidayType
 
 internal object ModelMapper {
 
 
-    fun AcademicCalender2.toEntity(): AcademicCalenderEntity {
+    fun AcademicCalender.toEntity(): AcademicCalenderEntity {
         return AcademicCalenderEntity(
             year = this.year,
             holidays = this.holiday.map { monthHolidays ->

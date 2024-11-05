@@ -6,7 +6,7 @@ package feature.academiccalender.domain.repository
 import common.docs.CustomExceptionDoc
 import common.docs.RepositoryDoc
 import core.customexception.CustomException
-import feature.academiccalender.domain.model.AcademicCalender2
+import feature.academiccalender.domain.model.AcademicCalender
 import feature.academiccalender.domain.model.CalendarModel
 
 /**
@@ -23,8 +23,8 @@ interface CalenderRepository {
      *  classes only throw exceptions defined in the 'domain' module
      * @return onSuccess, it return null
      */
-    suspend fun insert(calender: AcademicCalender2): Result<Unit>
-    suspend fun update(calender: AcademicCalender2): Result<Unit>
+    suspend fun insert(calender: AcademicCalender): Result<Unit>
+    suspend fun update(calender: AcademicCalender): Result<Unit>
 
     /**
      * - Fetches the calendar for the current year from the database or API

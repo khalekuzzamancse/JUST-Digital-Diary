@@ -1,12 +1,10 @@
-package core.network
+package core.customexception
 
-sealed class NetworkException(override val message: String, val debugMessage: String) :
-    Throwable(message = message, cause = Throwable(debugMessage)) {
-    
-    override fun toString(): String {
-        return "message: $message\nDebug Message: $debugMessage"
-    }
-
+sealed class NetworkException(override val message: String, override val debugMessage: String)
+    :CustomException(
+    message = message,
+    debugMessage = debugMessage
+){
 
     // Specific network-related exceptions, each takes both a message and debugMessage parameter
     class RedirectionException(message: String, debugMessage: String) : NetworkException(

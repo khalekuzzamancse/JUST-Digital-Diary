@@ -27,7 +27,8 @@ fun AcademicCalenderView(
     /** Calender Grid cell data*/
     val monthData = controller.currentMonthCalender.collectAsState().value
     if (monthData == null) {
-        ProgressBarDecorator(Modifier.fillMaxSize())
+
+      //  ProgressBarDecorator(Modifier.fillMaxSize())
     } else {
         AcademicCalender(
             modifier = modifier,

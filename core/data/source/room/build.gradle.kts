@@ -9,7 +9,7 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies {
-                implementation(projects.core.database.domain)
+                implementation(projects.core.data.domain)
                 implementation(libs.bundles.room)
                 implementation(compose.ui) //for accessing context android
             }

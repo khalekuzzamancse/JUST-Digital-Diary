@@ -1,7 +1,7 @@
 package auth.data.repository
 
 import auth.data.entity.LoginResponseEntity
-import auth.domain.exception.CustomException
+import core.customexception.CustomException
 
 /**
  * After implementing the Login and Register repositories, we identified duplicate and common code

@@ -16,7 +16,7 @@ internal fun AcademicCalender(
     val controller = remember { UIFactory.createCalenderController() }
     //From academic calender module
     AcademicCalenderView(
-        modifier = Modifier,
+        modifier = modifier,
         controller = controller,
         onSnackBarMsgRequest = onSnackBarMsgRequest
     )

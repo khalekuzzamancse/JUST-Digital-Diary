@@ -1,8 +1,8 @@
 package miscellaneous.data.factory
 
 
+import core.customexception.NetworkException
 import core.network.JsonParser
-import core.network.NetworkException
 import miscellaneous.data.entity.ServerResponseMessageEntity
 import miscellaneous.domain.exception.CustomException
 import miscellaneous.data.services.JsonHandler

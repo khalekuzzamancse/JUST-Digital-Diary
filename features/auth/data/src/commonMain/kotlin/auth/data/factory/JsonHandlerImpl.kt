@@ -3,9 +3,9 @@ package auth.data.factory
 import auth.data.entity.LoginResponseEntity
 import auth.data.entity.ServerResponseMessageEntity
 import auth.data.repository.JsonHandler
-import auth.domain.exception.CustomException
+import core.customexception.CustomException
+import core.customexception.NetworkException
 import core.network.JsonParser
-import core.network.NetworkException
 /**
  * - See[JsonHandler] docs
  */

@@ -3,9 +3,11 @@
 package auth.data.repository
 
 import auth.data.dto.LoginModelDTO
+import auth.data.entity.ResetPasswordCodeValidateEntity
 import auth.data.entity.ResetPasswordConfirmEntity
 import auth.data.entity.ResetPasswordRequestEntity
 import auth.domain.model.LoginModel
+import auth.domain.model.ResetPasswordCodeValidateModel
 import auth.domain.model.ResetPasswordModel
 import auth.domain.repository.LoginRepository
 import core.network.ApiServiceClient
@@ -26,6 +28,7 @@ class LoginRepositoryImpl internal constructor(
     override suspend fun login(model: LoginModel): Result<String> {
         val url = "https://backend.rnzgoldenventure.com/api/users/login"
         return try {
+
             /** Execution is here means server sent a response we have to parse it
             //         * - 3 possible cases:
             //         * - We got excepted  json
@@ -56,9 +59,17 @@ class LoginRepositoryImpl internal constructor(
         }
     }
 
+
     override suspend fun resetPassword(model: ResetPasswordModel): Result<Unit> {
+        val validate = "https://backend.rnzgoldenventure.com/api/users/validate-code"
         val url = "https://backend.rnzgoldenventure.com/api/users/set-new-password"
         try {
+            apiServiceClient.postOrThrow(
+                url = validate, body = ResetPasswordCodeValidateEntity(
+                    email = model.email,
+                    code = model.code
+                )
+            )
             val json = apiServiceClient.postOrThrow(
                 url, ResetPasswordConfirmEntity(
                     email = model.email, password = model.newPassword, code = model.code
@@ -70,5 +81,20 @@ class LoginRepositoryImpl internal constructor(
             return Result.failure(responseHandler.createCustomException(exception))
         }
     }
-}
 
+    override suspend fun validateResetPasswordCode(model: ResetPasswordCodeValidateModel): Result<Unit> {
+        val validate = "https://backend.rnzgoldenventure.com/api/users/validate-code"
+        try {
+            val json = apiServiceClient.postOrThrow(
+                url = validate, body = ResetPasswordCodeValidateEntity(
+                    email = model.email,
+                    code = model.code
+                )
+            )
+            return Result.failure(responseHandler.parseAsServerMessageOrThrowCustomException(json))
+
+        } catch (exception: Throwable) {
+            return Result.failure(responseHandler.createCustomException(exception))
+        }
+    }
+}

@@ -7,14 +7,11 @@ kotlin {
     sourceSets{
         val commonMain by getting {
             dependencies{
-                implementation(projects.core.database.dataSource.mongodb)
-                implementation(projects.core.database.dataSource.room)
-                implementation(projects.core.database.dataSource.server)
-                api(projects.core.database.entity)
-                implementation(projects.core.database.domain)
+                implementation(projects.core.data.domain)
+                implementation(projects.core.customException)
+                implementation(projects.core.network)
                 implementation(projects.core.commonDocs)
             }
-
 
         }
         val commonTest by getting {
@@ -30,6 +27,5 @@ kotlin {
 
 }
 android {
-    namespace = "core.database.api"
-
+    namespace = "core.database.server"
 }

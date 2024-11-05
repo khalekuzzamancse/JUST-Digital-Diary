@@ -2,12 +2,12 @@
 
 package auth.presentationlogic.factory
 
-import auth.domain.exception.CustomException
 import auth.domain.usecase.RegisterUseCase
 import auth.presentationlogic.model.RegisterModel
 import auth.presentationlogic.controller.RegisterController
 import auth.domain.model.AccountVerifyModel
 import auth.domain.usecase.AccountVerifyUseCase
+import core.customexception.CustomException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

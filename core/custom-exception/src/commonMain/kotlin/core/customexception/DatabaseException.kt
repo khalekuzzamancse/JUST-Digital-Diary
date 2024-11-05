@@ -2,7 +2,7 @@
 
 package core.customexception
 
-interface DatabaseException {
+sealed interface DatabaseException {
     /**
      * - This exception informs the user that the record already exists in the database, so it cannot be inserted again
      *   If changes are needed, the user should try updating the record instead of inserting it

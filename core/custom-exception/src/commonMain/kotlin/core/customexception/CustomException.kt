@@ -8,7 +8,7 @@ package core.customexception
  * @param message  this will directly shown to end user so make it short enough and user friendly
  * @param code will help to identify which exception occurred and can show in UI since this intended to be short
  **/
-open class CustomException(
+sealed  class CustomException(
     override val message: String,
     open val debugMessage: String,
     open val code: String = "",

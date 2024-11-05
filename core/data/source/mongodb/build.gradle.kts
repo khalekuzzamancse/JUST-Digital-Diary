@@ -8,7 +8,7 @@ kotlin {
     sourceSets{
         val commonMain by getting{
             dependencies{
-                implementation(projects.core.database.domain)
+                implementation(projects.core.data.domain)
 
 
                 //noinspection UseTomlInstead

@@ -10,7 +10,7 @@ import data.service.HolidayAdder
 import data.service.JsonHandler
 import data.factory.ModelMapper
 import data.service.withExceptionHandle
-import feature.academiccalender.domain.model.AcademicCalender2
+import feature.academiccalender.domain.model.AcademicCalender
 import feature.academiccalender.domain.model.CalendarModel
 import feature.academiccalender.domain.model.DayOfWeek
 import feature.academiccalender.domain.repository.CalenderRepository
@@ -24,7 +24,7 @@ class CalenderRepositoryImpl internal constructor(
 ) : CalenderRepository {
     private val api = ApiFactory.calenderApi()
 
-    override suspend fun insert(calender: AcademicCalender2): Result<Unit> {
+    override suspend fun insert(calender: AcademicCalender): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
                 val entity = with(ModelMapper) { calender.toEntity() }
@@ -35,7 +35,7 @@ class CalenderRepositoryImpl internal constructor(
         }
     }
 
-    override suspend fun update(calender: AcademicCalender2): Result<Unit> {
+    override suspend fun update(calender: AcademicCalender): Result<Unit> {
         return with(handler) {
             withExceptionHandle {
                 val entity = with(ModelMapper) { calender.toEntity() }
@@ -47,21 +47,36 @@ class CalenderRepositoryImpl internal constructor(
     }
 
     override suspend fun readAcademicCalender(): Result<CalendarModel> {
-        return with(handler) {
-            withExceptionHandle {
-                val json = api.readOfCurrentYear()
-                if (json._isHolidayEntity()) {
-                    val entity = jsonParser.parseOrThrow(json, AcademicCalenderEntity.serializer())
-                    val rawCalender = CalendarBuilder()
-                        .addWeekend(DayOfWeek.THURSDAY)
-                        .addWeekend(DayOfWeek.FRIDAY)
-                        .build(entity.year)
-                    val academicCalender = HolidayAdder().add(rawCalender, entity)
-                    Result.success(academicCalender)
-                } else
-                    Result.failure(parseAsServerMessageOrThrowCustomException(json))
+        return  try {
+            val json = api.readOfCurrentYear()
+            if (json._isHolidayEntity()) {
+                val entity = jsonParser.parseOrThrow(json, AcademicCalenderEntity.serializer())
+                val rawCalender = CalendarBuilder()
+                    .addWeekend(DayOfWeek.THURSDAY)
+                    .addWeekend(DayOfWeek.FRIDAY)
+                    .build(entity.year)
+                val academicCalender = HolidayAdder().add(rawCalender, entity)
+                Result.success(academicCalender)
+            } else {
+                //If failed to load holiday or calender then return the current calender
+                val entity = jsonParser.parseOrThrow(json, AcademicCalenderEntity.serializer())
+                val rawCalender = CalendarBuilder()
+                    .addWeekend(DayOfWeek.THURSDAY)
+                    .addWeekend(DayOfWeek.FRIDAY)
+                    .build(entity.year)
+                Result.success(rawCalender)
+                //   Result.failure(parseAsServerMessageOrThrowCustomException(json))
             }
         }
+        catch (e:Throwable){//Must catch as Throwable because Custom Execution is Throwable
+            //If failed then return the current calender
+            val rawCalender = CalendarBuilder()
+                .addWeekend(DayOfWeek.THURSDAY)
+                .addWeekend(DayOfWeek.FRIDAY)
+                .build(Year.now().value)
+            Result.success(rawCalender)
+        }
+
 
     }
 

@@ -22,7 +22,8 @@ internal object UiFactory {
     fun createForgetController(): PasswordResetController=
         PasswordRestControllerImpl(
             requestUseCase = DiContainer.createSendPasswordResetUseCase(),
-            resetUseCase = DiContainer.createResetPasswordUseCase()
+            resetUseCase = DiContainer.createResetPasswordUseCase(),
+            validateCase = DiContainer.codeValidateCase()
         )
 
 }

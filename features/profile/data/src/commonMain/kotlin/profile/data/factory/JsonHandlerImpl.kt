@@ -1,8 +1,8 @@
 package profile.data.factory
 
 
+import core.customexception.NetworkException
 import core.network.JsonParser
-import core.network.NetworkException
 import profile.data.entity.FeedbackEntity
 import profile.data.services.JsonHandler
 import domain.execption.CustomException
