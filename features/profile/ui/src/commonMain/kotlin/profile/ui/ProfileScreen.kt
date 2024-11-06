@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarToday
 import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Timer
 import androidx.compose.material3.Card
@@ -29,6 +28,7 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,7 +42,12 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import common.ui.EmptyContentScreen
+import common.ui.SnackNProgressBarDecorator
+import common.ui.VerticalSpace_8
 import profile.presentationlogic.ProfileEvent
+import profile.presentationlogic.factory.ProfileUiFactory
 import profile.presentationlogic.model.ProfileModel
 
 @Composable
@@ -51,68 +56,53 @@ internal fun ProfileRoute(
     onEvent: (ProfileEvent) -> Unit
 ) {
 
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
-            Dashboard(
-                isAdmin = true,
-                onCalendarUpdateClick = { onEvent(ProfileEvent.CalendarUpdate) },
-                onExamRoutineUpdateClick = { onEvent(ProfileEvent.ExamRoutineUpdate) },
-                onClassRoutineUpdateClick = { onEvent(ProfileEvent.ClassRoutineUpdate) },
-                onFacultyInsertRequest = {
-                    onEvent(ProfileEvent.InsertFacultyRequest)
-                },
-                onDeptInsertRequest = {
-                    onEvent(ProfileEvent.InsertDepartmentRequest)
-                },
-                onTeacherInsertRequest = {
-                    onEvent(ProfileEvent.InsertTeacherRequest)
-                },
+    if (token == null) {
+        EmptyContentScreen(
+            message = "Something is wrong,Please Log in again"
+        )
+    } else {
+        val viewModel = viewModel { ProfileViewModel(ProfileUiFactory.createProfileController(token)) }
+        val isNotFetching = !(viewModel.controller.isFetching.collectAsState().value)
+        SnackNProgressBarDecorator(
+            isLoading = viewModel.isLoading.collectAsState().value,
+            message = viewModel.screenMessage.collectAsState().value
+        ) {
+            val model = viewModel.controller.profile.collectAsState().value
+            if (model.isEmpty() && isNotFetching) {
+                EmptyContentScreen()
+            } else {
+                if (!model.isEmpty()) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        ProfileCard(profile = model)
+                       VerticalSpace_8()
+                        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
+                            Dashboard(
+                                isAdmin = false,
+                                onCalendarUpdateClick = { onEvent(ProfileEvent.CalendarUpdate) },
+                                onExamRoutineUpdateClick = { onEvent(ProfileEvent.ExamRoutineUpdate) },
+                                onClassRoutineUpdateClick = { onEvent(ProfileEvent.ClassRoutineUpdate) },
+                                onFacultyInsertRequest = {
+                                    onEvent(ProfileEvent.InsertFacultyRequest)
+                                },
+                                onDeptInsertRequest = {
+                                    onEvent(ProfileEvent.InsertDepartmentRequest)
+                                },
+                                onTeacherInsertRequest = {
+                                    onEvent(ProfileEvent.InsertTeacherRequest)
+                                },
 
-                )
+                                )
+                        }
+                    }
+                }
+
+
+            }
         }
-
     }
-
-
-//    if (token == null) {
-//        EmptyContentScreen(
-//            message = "Something is wrong,Please Log in again"
-//        )
-//    } else {
-//        val viewModel = viewModel { ProfileViewModel(UiFactory.createProfileController(token)) }
-//        val isNotFetching = !(viewModel.controller.isFetching.collectAsState().value)
-//        SnackNProgressBarDecorator(
-//            isLoading = viewModel.isLoading.collectAsState().value,
-//            snackBarMessage = viewModel.screenMessage.collectAsState().value
-//        ) {
-//            val model = viewModel.controller.profile.collectAsState().value
-//            if (model.isEmpty() && isNotFetching) {
-//                EmptyContentScreen()
-//            } else {
-//                if (!model.isEmpty()) {
-//                    Column(
-//                        modifier = Modifier.fillMaxWidth(),
-//                        horizontalAlignment = Alignment.CenterHorizontally
-//                    ) {
-//                        ProfileCard(profile = model)
-//                        Spacer(Modifier.height(8.dp))
-//                        Dashboard(
-//                            isAdmin = true,
-//                            onCalendarUpdateClick = { onEvent(ProfileEvent.NavigateToCalendarUpdate) },
-//                            onExamRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToExamRoutineUpdate) },
-//                            onClassRoutineUpdateClick = { onEvent(ProfileEvent.NavigateToClassRoutineUpdate) },
-//                            onTeacherInfoUpdateClick = { onEvent(ProfileEvent.NavigateToTeacherInfoUpdate) },
-//                        )
-//                    }
-//                }
-//
-//
-//            }
-//        }
-//    }
 
 
 }

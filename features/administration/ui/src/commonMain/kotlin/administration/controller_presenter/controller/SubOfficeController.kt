@@ -8,7 +8,7 @@ internal interface SubOfficeController {
     val errorMessage: StateFlow<String?>
     val sobOffices: StateFlow<List<SubOfficeModel>>
     val selected: StateFlow<Int?>
-
+    fun clearSelection()
     fun onSelected(index: Int?)
     suspend fun fetch(officeId:String)
 

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import common.ui.EmptyContentScreen
@@ -85,22 +87,27 @@ private fun _DepartmentCard(
     onSelect: () -> Unit
 ) {
 
-    val backgroundColorSelected = MaterialTheme.colorScheme.secondary
+    val backgroundColorSelected = MaterialTheme.colorScheme.onSecondaryContainer
     val backgroundColorUnselected = MaterialTheme.colorScheme.surfaceContainer
     val iconSelected = Icons.Filled.Person
     val iconUnselected = Icons.Outlined.Person
     val countLabel = "Teacher(s)"
-    val state = CardInfoState(
-        name = deptName,
-        shortName = deptShortName,
-        count = numOfTeacher,
-        isSelected = isSelected,
-        backgroundColorSelected = backgroundColorSelected,
-        backgroundColorUnselected = backgroundColorUnselected,
-        iconSelected = iconSelected,
-        iconUnselected = iconUnselected,
-        countLabel = countLabel
-    )
+    val state  = remember {
+        CardInfoState(
+            name = deptName,
+            nameFontSize = 16,//Use larger font size for Faculty because Dept and faculty show side
+            // by side so need to distinguish them,
+            shape = RoundedCornerShape(12.dp),//use less radius than faculty
+            shortName = deptShortName,
+            count = numOfTeacher,
+            isSelected = isSelected,
+            backgroundColorSelected = backgroundColorSelected,
+            backgroundColorUnselected = backgroundColorUnselected,
+            iconSelected = iconSelected,
+            iconUnselected = iconUnselected,
+            countLabel = countLabel
+        )
+    }
 
     GenericInfoCard(
         modifier = modifier,

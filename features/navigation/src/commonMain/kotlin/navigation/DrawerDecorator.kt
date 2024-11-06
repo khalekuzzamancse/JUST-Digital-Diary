@@ -104,7 +104,7 @@ fun DrawerToNavRailDecorator(
     modifier: Modifier = Modifier,
     controller: NavigationDrawerController,
     groups: List<NavGroup>,
-    itemVisibilityDelay: Long? = null,
+    itemVisibilityDelay: Long?=80,
     onEvent: (NavigationEvent) -> Unit,
     topAppbar: @Composable () -> Unit = {},
     header: @Composable () -> Unit = {},
@@ -296,6 +296,7 @@ private fun _AnimationLessDrawer(
     header: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
+
     _ModalDrawer(
         modifier = modifier,
         drawerState = drawerState,
@@ -422,7 +423,9 @@ private fun _NavItem(
         modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, start = 4.dp, end = 4.dp),
         icon = {
             Icon(
-                imageVector = if (isSelected) item.focusedIcon else item.unFocusedIcon,
+                //Avoid using focused icon here because it `Filled` which does not look good according to this app theme
+                imageVector = item.unFocusedIcon,
+//                imageVector = if (isSelected) item.focusedIcon else item.unFocusedIcon,
                 contentDescription = "Nav item"
             )
         },
@@ -433,11 +436,17 @@ private fun _NavItem(
         },
         selected = isSelected,
         onClick = onClick,
+        //Following the material 3 but allowed to customize something
         colors = NavigationDrawerItemDefaults.colors(
-            selectedContainerColor = MaterialTheme.colorScheme.secondary,
-            selectedTextColor = MaterialTheme.colorScheme.onSecondary,
-            selectedIconColor = MaterialTheme.colorScheme.onSecondary,
-            unselectedIconColor = MaterialTheme.colorScheme.primary,
+            selectedContainerColor = MaterialTheme.colorScheme.secondaryContainer,//md.sys.color.secondary-container
+            selectedTextColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            selectedIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            //For UnselectedIcon:
+            //M3 says to use onSecondaryContainer but according to JUST logo, secondly is better
+            //MoreEver since the item is clickable/selectable make sense to use secondary
+            // selectedIconColor = MaterialTheme.colorScheme.primary,
+            unselectedIconColor = MaterialTheme.colorScheme.secondary,
+
         )
     )
 

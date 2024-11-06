@@ -1,5 +1,6 @@
 package profile.presentationlogic.factory
 
+import common.ui.SnackBarMessage
 import domain.execption.CustomException
 import domain.usecase.GetProfileUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +17,7 @@ import profile.presentationlogic.model.ProfileModel
 class ProfileControllerImpl(
     private val useCase: GetProfileUseCase
 ) : ProfileController {
-    private val _screenMessage = MutableStateFlow<String?>(null)
+    private val _screenMessage = MutableStateFlow<SnackBarMessage?>(null)
     private val _isLoading = MutableStateFlow(false)
     private val _profile = MutableStateFlow(toEmpty())
 
@@ -54,7 +55,7 @@ class ProfileControllerImpl(
     private fun _stopLoading() = _isLoading.update { false }
     private fun _updateErrorMessage(msg: String) {
         CoroutineScope(Dispatchers.Default).launch {
-            _screenMessage.update { msg }
+            _screenMessage.update { SnackBarMessage.neutral(msg) }
             //clear after 4 seconds
             delay(4_000)
             _screenMessage.update { null }

@@ -27,6 +27,10 @@ class SubOfficeControllerImpl(
     override val isFetching = _isLoading.asStateFlow()
     override val sobOffices = _subOffices.asStateFlow()
     override val selected = _selected.asStateFlow()
+    override fun clearSelection() {
+        _selected.update { null }
+    }
+
     override fun onSelected(index: Int?) {
         _selected.update { index }
 

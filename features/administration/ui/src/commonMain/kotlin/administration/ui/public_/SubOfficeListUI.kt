@@ -3,6 +3,7 @@ package administration.ui.public_
 import administration.controller_presenter.controller.SubOfficeController
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
@@ -10,7 +11,9 @@ import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import common.ui.EmptyContentScreen
 import common.ui.CardInfoState
 import common.ui.GenericInfoCard
@@ -63,18 +66,22 @@ private fun SubOfficeCard(
     val iconSelected = Icons.Filled.Person
     val iconUnselected = Icons.Outlined.Person
     val countLabel = "Employee(s)"
-    val state = CardInfoState(
-        name = name,
-        shortName = shortName,
-        count = employeeCount,
-        isSelected = isSelected,
-        backgroundColorSelected = backgroundColorSelected,
-        backgroundColorUnselected = backgroundColorUnselected,
-        iconSelected = iconSelected,
-        iconUnselected = iconUnselected,
-        countLabel = countLabel
-    )
+    val state = remember {
+        CardInfoState(
+            name = name,
+            nameFontSize = 16,
+            shape = RoundedCornerShape(12.dp),
+            shortName = shortName,
+            count = employeeCount,
+            isSelected = isSelected,
+            backgroundColorSelected = backgroundColorSelected,
+            backgroundColorUnselected = backgroundColorUnselected,
+            iconSelected = iconSelected,
+            iconUnselected = iconUnselected,
+            countLabel = countLabel
+        )
 
+    }
     GenericInfoCard(
         modifier = modifier,
         state = state,

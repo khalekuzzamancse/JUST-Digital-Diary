@@ -47,7 +47,7 @@ fun DrawerHeader(
             Spacer(Modifier.width(8.dp))
             AppName()
             Spacer(Modifier.width(4.dp))
-            AppLogo()
+           // AppLogo()
 
         }
         Spacer(Modifier.height(16.dp))

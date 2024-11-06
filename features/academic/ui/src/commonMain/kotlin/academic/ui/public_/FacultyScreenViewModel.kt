@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -30,6 +31,15 @@ internal class FacultyScreenViewModel(
         //clear the faculty selection
         facultyController.onSelected(null)
 
+    }
+    init {
+        CoroutineScope(Dispatchers.Default).launch {
+            _showDepartments.collect{show->
+                if (!show)
+                    departmentController.clearSelection()
+
+            }
+        }
     }
 
     val isLoading: Flow<Boolean> =

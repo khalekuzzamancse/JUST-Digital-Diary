@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
@@ -33,13 +34,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 data class CardInfoState(
+    val nameFontSize:Int=17,
+    val shape: Shape= RoundedCornerShape(16.dp),
     val name: String,
     val shortName: String,
     val count: String,
@@ -63,9 +69,10 @@ fun GenericInfoCard(
 ) {
     val backgroundColor =
         if (state.isSelected) state.backgroundColorSelected else state.backgroundColorUnselected
-    val contentColor = MaterialTheme.colorScheme.contentColorFor(backgroundColor)
+    val contentColor = if(backgroundColor.luminance()<0.5f) Color.White else Color.Black
 
     ElevatedCard(
+        shape = state.shape,
         modifier = modifier
             .padding(8.dp)
             .selectable(selected = state.isSelected, onClick = onSelect, role = Role.Tab),
@@ -80,7 +87,7 @@ fun GenericInfoCard(
         ) {
             Text(
                 text = state.name,
-                style = MaterialTheme.typography.titleMedium,
+                fontSize = state.nameFontSize.sp,
                 color = contentColor
             )
             Spacer(Modifier.height(8.dp))
@@ -95,7 +102,8 @@ fun GenericInfoCard(
                 showEditButton = showEditButton,
                 showDeleteButton = showDeleteButton,
                 onEditRequest = onEditRequest,
-                onDeleteRequest = onDeleteRequest
+                onDeleteRequest = onDeleteRequest,
+                fontSize =state.nameFontSize-5
             )
         }
     }
@@ -110,6 +118,7 @@ private fun _GenericInfoRow(
     isSelected: Boolean,
     iconSelected: ImageVector,
     iconUnselected: ImageVector,
+    fontSize: Int,
     countLabel: String,
     showEditButton: Boolean,
     showDeleteButton: Boolean,
@@ -127,9 +136,9 @@ private fun _GenericInfoRow(
         Text(
             modifier = Modifier.align(Alignment.CenterVertically),
             text = shortName,
-            fontSize = 14.sp,
+            fontSize = fontSize.sp,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.secondary,
+            color =if(cardBackgroundColor.luminance()<0.5f) Color.White else Color.Black,
             letterSpacing = 1.5.sp
         )
         if (adminMode) {

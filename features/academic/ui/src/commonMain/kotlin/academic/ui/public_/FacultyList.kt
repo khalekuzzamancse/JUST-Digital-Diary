@@ -70,13 +70,15 @@ private fun _FacultyCard(
     onDeleteRequest: () -> Unit,
 ) {
 
-    val backgroundColorSelected = MaterialTheme.colorScheme.primaryContainer
-    val backgroundColorUnselected = MaterialTheme.colorScheme.tertiaryContainer
+    val backgroundColorSelected = MaterialTheme.colorScheme.secondaryContainer
+    val backgroundColorUnselected = MaterialTheme.colorScheme.surfaceContainer
     val iconSelected = Icons.Filled.School
     val iconUnselected = Icons.Outlined.School
     val countLabel = "Departments"
 
     val state = CardInfoState(
+        nameFontSize = 18,//Use smaller font size for Faculty because Dept and faculty show side
+        // by side so need to distinguish them,
         name = facultyName,
         shortName = generateAcronym(facultyName),
         count = departmentCount,

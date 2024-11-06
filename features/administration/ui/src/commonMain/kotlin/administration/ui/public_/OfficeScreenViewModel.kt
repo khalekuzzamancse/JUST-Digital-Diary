@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -16,13 +17,8 @@ import kotlinx.coroutines.launch
 internal class OfficeScreenViewModel internal constructor(
     val officeController: OfficeController,
     val subOfficeController: SubOfficeController
-) :ViewModel(){
+) : ViewModel() {
 
-    init {
-        viewModelScope.launch {
-            officeController.fetch()
-        }
-    }
 
     private val _showSubOffice = MutableStateFlow(false)
     val showSubOffice = _showSubOffice.asStateFlow()
@@ -32,6 +28,22 @@ internal class OfficeScreenViewModel internal constructor(
         officeController.onSelected(null)
 
     }
+
+    init {
+        viewModelScope.launch {
+            officeController.fetch()
+        }
+        viewModelScope.launch {
+            _showSubOffice.collect { show ->
+                if (!show)
+                    subOfficeController.clearSelection()
+
+            }
+        }
+
+
+    }
+
 
     val isLoading: Flow<Boolean> =
         combine(subOfficeController.isFetching, officeController.isFetching)

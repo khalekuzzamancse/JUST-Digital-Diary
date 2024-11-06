@@ -1,6 +1,7 @@
 package common.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.HoverInteraction
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -60,7 +61,7 @@ data class NavigationItemInfo2<T>(
     val badge: String? = null,
 )
 @Composable
-internal fun NavigationItemLayout(
+ fun NavigationItemLayout(
     modifier: Modifier = Modifier,
     visibilityDelay: Long = 0,
     label: String,
@@ -69,8 +70,8 @@ internal fun NavigationItemLayout(
     icon: @Composable () -> Unit,
     onFocusing: () -> Unit = {},
     props: NavigationItemProps = NavigationItemProps(
-        focusedColor = MaterialTheme.colorScheme.errorContainer,
-        unFocusedColor = MaterialTheme.colorScheme.primaryContainer
+        focusedColor = MaterialTheme.colorScheme.secondaryContainer,
+        unFocusedColor = MaterialTheme.colorScheme.surface
     )
 ) {
     var show by remember { mutableStateOf(false) }
@@ -106,10 +107,7 @@ private fun NavigationItemLayoutCore(
     icon: @Composable () -> Unit,
     onFocusing: () -> Unit = {},
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    props: NavigationItemProps = NavigationItemProps(
-        focusedColor = MaterialTheme.colorScheme.errorContainer,
-        unFocusedColor = MaterialTheme.colorScheme.primaryContainer,
-    )
+    props: NavigationItemProps,
 ) {
 
     var focusing by remember { mutableStateOf(false) }
@@ -125,9 +123,9 @@ private fun NavigationItemLayoutCore(
     if (focusing) {
         onFocusing()
     }
-//    val backgroundColor by animateColorAsState(
-//        targetValue = if (focusing) props.focusedColor else props.unFocusedColor
-//    )
+    val backgroundColor by animateColorAsState(
+        targetValue = if (focusing) props.focusedColor else props.unFocusedColor
+    )
 
     val selectionColor = props.focusedColor
     val itemColor = if (selected) props.focusedColor else props.unFocusedColor
@@ -174,11 +172,7 @@ fun <T> NavigationItem(
     visibilityDelay: Long = 0,
     onFocusing: () -> Unit = {},
     onClick: () -> Unit,
-    colors: NavigationItemProps = NavigationItemProps(
-        focusedColor = MaterialTheme.colorScheme.secondary,
-        unFocusedColor = MaterialTheme.colorScheme.primaryContainer,
-        shape = MaterialTheme.shapes.small
-    )
+    colors: NavigationItemProps ,
 ) {
     NavigationItem(
         label = navigationItem.label,
@@ -200,10 +194,7 @@ fun NavigationItem(
     onClick: () -> Unit,
     onFocusing: () -> Unit = {},
     visibilityDelay: Long = 0L,
-    props: NavigationItemProps = NavigationItemProps(
-        focusedColor = MaterialTheme.colorScheme.secondary,
-        unFocusedColor = MaterialTheme.colorScheme.primaryContainer,
-    ),
+    props: NavigationItemProps,
     iconText: String,
 ) {
     NavigationItemLayout(

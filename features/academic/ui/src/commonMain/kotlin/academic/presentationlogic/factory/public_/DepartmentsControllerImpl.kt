@@ -35,6 +35,10 @@ internal class DepartmentsControllerImpl(
 
     }
 
+    override fun clearSelection() {
+        _selected.update { null }
+    }
+
     override suspend fun readDepartments(facultyId: String) {
         this._facultyId =facultyId
         super.startLoading()
