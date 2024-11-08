@@ -14,7 +14,7 @@ class Navigator(
     internal fun navigator(destination: Destination) {
         when (destination) {
             is NavDestination.ExploreJust -> {
-                onEvent(AppEvent.WebVisitRequest("https://just.edu.bd/"))
+                onEvent(AppEvent.WebVisitRequest(""))//will be modified to UI
             }
             else -> {
                 navigateAsTopMostDestination(destination.route)

@@ -20,11 +20,15 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import common.ui.ConfirmDialog
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import miscellaneous.MiscFeatureEvent
@@ -47,6 +51,21 @@ private fun HomeDestination(
     val hostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     var snackBarJob: Job? = remember { null } // Track the current SnackBar Job
+    var showConfirmDialog by  remember { mutableStateOf(false) }
+    if (showConfirmDialog){
+        ConfirmDialog(
+            message = "Are you sure to download?",
+            onDismissRequest = {
+                showConfirmDialog=false
+            },
+            onConfirm = {
+                showConfirmDialog=false
+                onEvent(
+                    MiscFeatureEvent.CalenderRequest("https://drive.google.com/file/d/1Ar0xjbA6H_rMAPrBDPzjjqqW1ainIOmU/view?usp=sharing")
+                )
+            }
+        )
+    }
 
     Scaffold(
         modifier = Modifier,
@@ -54,9 +73,7 @@ private fun HomeDestination(
         snackbarHost = { SnackbarHost(hostState = hostState) },
         floatingActionButton = {
             CalenderDownloadButton {
-                onEvent(
-                    MiscFeatureEvent.CalenderRequest("https://drive.google.com/file/d/1Ar0xjbA6H_rMAPrBDPzjjqqW1ainIOmU/view?usp=sharing")
-                )
+                showConfirmDialog=true
             }
         }
     ) {

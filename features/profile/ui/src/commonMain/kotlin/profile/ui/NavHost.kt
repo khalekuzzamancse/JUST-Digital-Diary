@@ -19,15 +19,12 @@ fun ProfileNavHost(
     onEvent: (ProfileEvent) -> Unit={},
     navigationIcon: (@Composable () -> Unit)? = null,
 ) {
-
-    _TopBarDecorator(
-        navigationIcon = navigationIcon
-    ) {
         ProfileRoute(
+            navigationIcon = navigationIcon,
             token = token,
             onEvent =onEvent
         )
-    }
+
 }
 
 

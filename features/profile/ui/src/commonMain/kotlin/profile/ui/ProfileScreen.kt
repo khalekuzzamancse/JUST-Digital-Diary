@@ -2,6 +2,7 @@ package profile.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,18 +10,22 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarToday
+import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Person3
 import androidx.compose.material.icons.outlined.School
 import androidx.compose.material.icons.outlined.Timer
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,12 +45,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import common.ui.EmptyContentScreen
+import common.ui.ProfileImagePlaceHolder
 import common.ui.SnackNProgressBarDecorator
 import common.ui.VerticalSpace_8
+import common.ui.getContrastingContentColor
+import common.ui.gradientBackground
 import profile.presentationlogic.ProfileEvent
 import profile.presentationlogic.factory.ProfileUiFactory
 import profile.presentationlogic.model.ProfileModel
@@ -53,7 +63,12 @@ import profile.presentationlogic.model.ProfileModel
 @Composable
 internal fun ProfileRoute(
     token: String?,
-    onEvent: (ProfileEvent) -> Unit
+    onEvent: (ProfileEvent) -> Unit,
+    navigationIcon: (@Composable () -> Unit)? = null,
+    colors: List<Color> = listOf(
+        MaterialTheme.colorScheme.primary,
+        MaterialTheme.colorScheme.secondary
+    )
 ) {
 
     if (token == null) {
@@ -61,11 +76,13 @@ internal fun ProfileRoute(
             message = "Something is wrong,Please Log in again"
         )
     } else {
-        val viewModel = viewModel { ProfileViewModel(ProfileUiFactory.createProfileController(token)) }
+        val viewModel =
+            viewModel { ProfileViewModel(ProfileUiFactory.createProfileController(token)) }
         val isNotFetching = !(viewModel.controller.isFetching.collectAsState().value)
         SnackNProgressBarDecorator(
             isLoading = viewModel.isLoading.collectAsState().value,
-            message = viewModel.screenMessage.collectAsState().value
+            message = viewModel.screenMessage.collectAsState().value,
+            navigationIcon = navigationIcon
         ) {
             val model = viewModel.controller.profile.collectAsState().value
             if (model.isEmpty() && isNotFetching) {
@@ -73,25 +90,27 @@ internal fun ProfileRoute(
             } else {
                 if (!model.isEmpty()) {
                     Column(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxSize()
+                           // .gradientBackground(colors),
+                                ,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        ProfileCard(profile = model)
-                       VerticalSpace_8()
-                        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
+                        ProfileCard(profile = model, colors = colors)
+                        VerticalSpace_8()
+                        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                             Dashboard(
                                 isAdmin = false,
                                 onCalendarUpdateClick = { onEvent(ProfileEvent.CalendarUpdate) },
-                                onExamRoutineUpdateClick = { onEvent(ProfileEvent.ExamRoutineUpdate) },
                                 onClassRoutineUpdateClick = { onEvent(ProfileEvent.ClassRoutineUpdate) },
-                                onFacultyInsertRequest = {
-                                    onEvent(ProfileEvent.InsertFacultyRequest)
+                                onTeacherInsertRequest = {
+                                    onEvent(ProfileEvent.InsertTeacherRequest)
                                 },
                                 onDeptInsertRequest = {
                                     onEvent(ProfileEvent.InsertDepartmentRequest)
                                 },
-                                onTeacherInsertRequest = {
-                                    onEvent(ProfileEvent.InsertTeacherRequest)
+                                onFacultyInsertRequest = {
+                                    onEvent(ProfileEvent.InsertFacultyRequest)
                                 },
 
                                 )
@@ -107,40 +126,89 @@ internal fun ProfileRoute(
 
 }
 
+
 @Composable
-private fun ProfileCard(profile: ProfileModel) {
-    Card(
-        modifier = Modifier
-            .padding(16.dp)
-            .wrapContentWidth(),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(8.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+private fun ProfileCard(
+    profile: ProfileModel,
+    colors: List<Color>,
+) {
+    val style = remember { TextStyle(fontSize = 16.sp, color = getContrastingContentColor(colors)) }
+    val iconColor = remember { getContrastingContentColor(colors) }
+    val space = remember { 8.dp }
+    Column(
+        modifier = Modifier.padding(16.dp)
+            .verticalScroll(rememberScrollState())
+            .horizontalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = profile.name,
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.primary
+        ProfileImagePlaceHolder(
+            modifier = Modifier.size(200.dp)
+        )
+        Spacer(Modifier.height(32.dp))
+        Column {
+            _Label(
+                label = "Name",
+                icon = Icons.Outlined.Person,
+                labelStyle = style,
+                value = profile.name,
+                iconColor = iconColor
             )
-            Text(
-                text = "@${profile.username}",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.secondary
+            Spacer(Modifier.height(space))
+            _Label(
+                label = "Username",
+                icon = Icons.Outlined.Person3,
+                labelStyle = style,
+                value = profile.username,
+                iconColor = iconColor
             )
-            Text(
-                text = profile.email,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface
+            Spacer(Modifier.height(space))
+            _Label(
+                label = "Email",
+                icon = Icons.Outlined.Email,
+                labelStyle = style,
+                value = profile.email,
+                iconColor = iconColor
             )
         }
+
+
     }
 }
 
 
+@Composable
+fun _Label(
+    modifier: Modifier = Modifier,
+    label: String,
+    labelStyle: TextStyle,
+    icon: ImageVector,
+    value: String,
+    iconColor: Color,
+) {
+    Column {
+        Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                imageVector = icon,
+                contentDescription = "$label symbol",
+                tint = iconColor
+            )
+            Spacer(Modifier.width(4.dp))
+            Text(
+                text = label,
+                style = labelStyle,
+            )
+        }
+        Spacer(Modifier.height(4.dp))
+        Row {
+            Spacer(Modifier.width(32.dp))
+            Text(
+                text = value,
+                style = labelStyle,
+            )
+        }
+
+    }
+}
 //TODO:Dashboard section
 
 private data class DashboardItemData(
@@ -155,7 +223,6 @@ private data class DashboardItemData(
 fun Dashboard(
     isAdmin: Boolean = false,
     onCalendarUpdateClick: () -> Unit = {},
-    onExamRoutineUpdateClick: () -> Unit = {},
     onClassRoutineUpdateClick: () -> Unit = {},
     onTeacherInsertRequest: () -> Unit,
     onDeptInsertRequest: () -> Unit,
@@ -208,9 +275,9 @@ fun Dashboard(
 
         }
     }
-    val windows= calculateWindowSizeClass()
-    val itemsPerRow = when ( windows.widthSizeClass ){
-        WindowWidthSizeClass.Expanded-> 3 // Expanded screen: show at most 3 items per row
+    val windows = calculateWindowSizeClass()
+    val itemsPerRow = when (windows.widthSizeClass) {
+        WindowWidthSizeClass.Expanded -> 3 // Expanded screen: show at most 3 items per row
         else -> 2 // Compact screen: show at most 2 items per row
     }
     var maxWidth by remember { mutableStateOf(0) } // Store the largest width

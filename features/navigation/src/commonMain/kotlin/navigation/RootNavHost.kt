@@ -10,11 +10,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import auth.ui.AuthRoute
+import common.ui.ConfirmDialog
 import kotlinx.coroutines.launch
+import miscellaneous.MiscFeatureEvent
 import navigation.component.DrawerHeader
 import navigation.component.NavDestination
 import navigation.component.NavDestinationBuilder
 import navigation.navgraph.NavGraph
+
 //
 //@Composable
 //fun RootNavHost(
@@ -23,7 +26,7 @@ import navigation.navgraph.NavGraph
 //    onTokenDeleteRequest: () -> Unit = {},
 //    onEvent: (AppEvent) -> Unit,
 //) {
- //   AnimateDrawerPreview()
+//   AnimateDrawerPreview()
 //    val mainViewModel = viewModel { MainViewModel() }
 //    _FeatureNavGraph(
 //        viewModel = mainViewModel,
@@ -35,13 +38,30 @@ import navigation.navgraph.NavGraph
 //}
 
 @Composable
- fun RootNavHost(
+fun RootNavHost(
     token: String?,
     onTokenSaveRequest: (String) -> Unit = {},
     onTokenDeleteRequest: () -> Unit = {},
     onEvent: (AppEvent) -> Unit,
 ) {
     val mainViewModel = viewModel { MainViewModel() }
+    var showConfirmDialog by remember { mutableStateOf(false) }
+
+    if (showConfirmDialog) {
+        ConfirmDialog(
+            message = "Are you sure to visit website?",
+            onDismissRequest = {
+                showConfirmDialog = false
+            },
+            onConfirm = {
+                showConfirmDialog = false
+                onEvent(
+                    AppEvent.WebVisitRequest("  https://just.edu.bd/")
+                )
+            }
+        )
+    }
+
     LaunchedEffect(token) {
         NavigationFactory.updateToken(token)
     }
@@ -57,7 +77,11 @@ import navigation.navgraph.NavGraph
         } else {
             _FeatureNavGraph(
                 viewModel = mainViewModel,
-                onEvent = onEvent,
+                onEvent = { event ->
+                    if (event is AppEvent.WebVisitRequest)
+                        showConfirmDialog = true
+                    else onEvent(event)
+                },
                 onLogOutRequest = {
                     onTokenDeleteRequest()
                 }

@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -31,6 +33,7 @@ import miscellaneous.ui.home.HomeRoute
 import miscellaneous.ui.vcmessage.MessageFromVCRoute
 import navigation.AppEvent
 import navigation.NavigationFactory
+import navigation._BackIconDecorator
 import navigation.component.NavDestination
 import profile.presentationlogic.ProfileEvent
 import schedule.ui.public_.ViewClassScheduleScreen
@@ -62,8 +65,6 @@ fun NavGraph(
     ) {
 //        navController.adminNavGraph()
 
-
-        ///
         composable(NavDestination.Home.route) {
             _DrawerIconDecorator(
                 onMenuIconClick = openDrawerRequest,
@@ -116,11 +117,18 @@ fun NavGraph(
         }
         composable(NavDestination.Profile.route) {
           ProfileNavGraph(
-              navigationIcon = if (!isNavRailMode) {
-                  {
-                      _MenuIcon(openDrawerRequest)
+              navigationIcon = {
+                  IconButton(
+                      onClick = {
+                          navController.popBackStack()
+                      }
+                  ){
+                      Icon(
+                          imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                          contentDescription = "back "
+                      )
                   }
-              } else null
+              }
           )
         }
         composable(NavDestination.ClassSchedule.route) {
