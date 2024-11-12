@@ -8,11 +8,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import auth.ui.ResetPasswordRoute
 import navigation.hall.auth.auth.presentationlogic.factory.UiFactory
-import auth.ui.common.SnackNProgressBarDecorator
-import auth.ui.login.LoginScreen
-import auth.ui.register.RegisterDestination
+import navigation.hall.auth.auth.ui.common.SnackNProgressBarDecorator
+import navigation.hall.auth.auth.ui.login.LoginScreen
+import navigation.hall.auth.auth.ui.register.RegisterDestination
 
 /**
  * - It has own navigation system and ViewModel

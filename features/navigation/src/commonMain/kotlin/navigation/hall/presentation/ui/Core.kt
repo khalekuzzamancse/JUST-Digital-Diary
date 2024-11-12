@@ -66,7 +66,11 @@ import androidx.compose.ui.unit.sp
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
-
+object ThemeInfo {
+    val LOGO_GREEN = Color(0xFF008A4E) // Green from JUST logo
+    val LOGO_RED = Color(0xFFDB372B) // Red from JUST logo
+    val LOGO_GREEN_LIGHT= Color.LightGray
+}
 /**
  * - Symbol may be sun for day such as morning and noon and moon for night
  */

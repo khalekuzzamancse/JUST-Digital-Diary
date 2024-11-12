@@ -89,7 +89,7 @@ fun AdminNavHost() {
                 )
             }
             composable(route = "summary") {
-                WalletScreen()
+                SummaryScreen()
             }
             composable(route = "profile") {
                 ProfileScreen(

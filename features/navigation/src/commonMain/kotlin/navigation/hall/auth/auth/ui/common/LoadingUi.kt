@@ -1,4 +1,4 @@
-package auth.ui.common
+package navigation.hall.auth.auth.ui.common
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

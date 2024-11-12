@@ -1,4 +1,4 @@
-package auth.ui
+package navigation.hall.auth.auth.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,7 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import navigation.hall.auth.auth.presentationlogic.controller.PasswordResetController
-import auth.ui.common.AuthPasswordField
+import navigation.hall.auth.auth.ui.common.AuthPasswordField
 import common.ui.CustomTextField
 import kotlinx.coroutines.launch
 

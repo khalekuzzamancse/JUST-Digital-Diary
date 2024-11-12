@@ -1,4 +1,4 @@
-package auth.ui.login
+package navigation.hall.auth.auth.ui.login
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -34,7 +34,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import navigation.hall.auth.auth.presentationlogic.controller.LoginController
-import auth.ui.common.AuthPasswordField
+import navigation.hall.auth.auth.ui.common.AuthPasswordField
 import common.ui.CustomTextField
 import kotlinx.coroutines.launch
 

@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 import navigation.component.DrawerHeader
 import navigation.component.NavDestination
 import navigation.component.NavDestinationBuilder
+import navigation.hall.auth.auth.ui.HallAuthRoute
 import navigation.hall.presentation.ui.AdminNavHost
-import navigation.hall.presentation.ui.SearchPreview
 import navigation.hall.presentation.ui.StudentNavGraph
 import navigation.navgraph.NavGraph
 
@@ -29,12 +29,12 @@ fun RootNavHost(
 
 
     if (loginAsAdmin == null) {
-        SearchPreview()
-//        HallAuthRoute(
-//            onLoginSuccess = {
-//                loginAsAdmin=it
-//            }
-//        )
+       // SearchPreview()
+        HallAuthRoute(
+            onLoginSuccess = {
+                loginAsAdmin=it
+            }
+        )
     }
     loginAsAdmin?.let { admin ->
         if (admin)

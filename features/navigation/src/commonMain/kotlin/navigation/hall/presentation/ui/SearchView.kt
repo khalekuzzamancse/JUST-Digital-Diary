@@ -1,52 +1,36 @@
 package navigation.hall.presentation.ui
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Clear
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
+import common.ui.EmptyContentScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-@Composable
-fun SearchPreview() {
-    SearchView(
-        onExitRequest = {},
-        items = students,
-        filterPredicate = { employee, queryText ->
-            val filter = employee.name.contains(queryText, ignoreCase = true)
-                        || employee.id.contains(queryText, ignoreCase = true)
-            filter
-        },
-        searchedItemDecorator = { model, queryText ->
-            UserShortInfo(
-                modifier = Modifier.clickable {},
-                name = SearcherHighlightedText().getHighLightedString(model. name, queryText),
-                id = SearcherHighlightedText().getHighLightedString(model. id, queryText),
-                avatar = model.avatar
-            )
-        })
-
-}
 
 /**
  * - SearchBar , used Strategy Design pattern so need to fill some slot in order to use
@@ -76,14 +60,20 @@ fun SearchPreview() {
  * ```
  */
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> SearchView(
     items: List<T>,
     filterPredicate: (T, String) -> Boolean,
-    barLeadingIcon: @Composable () -> Unit = {},
+    background:Color= MaterialTheme.colorScheme.background,
+    barLeadingIcon: @Composable () -> Unit = {
+        DefaultLeadingIcon(
+            color = if (background.luminance() > 0.5f) Color.Black else Color.White
+        )
+    },
     onSearch: (String) -> Unit = {},
     onExitRequest: () -> Unit,
-    searchedItemDecorator: @Composable (T, highLightedText: String) -> Unit,
+    content: @Composable (result: List<T>, highLightedText: String) -> Unit,
 ) {
     val uiState = remember(items) {
         SearchDecoratorState(
@@ -91,23 +81,81 @@ fun <T> SearchView(
             filterPredicate
         )
     }
+
+    val contentColor = remember {
+        if (background.luminance() > 0.5f) Color.Black else Color.White
+    }
     val active = uiState.active.collectAsState().value
-    SearchView(
-        query = uiState.query.collectAsState().value,
-        onQueryChanged = uiState::onQueryChanged,
-        onActiveChanged = {
+    val query = uiState.query.collectAsState().value
+    val result = uiState.results.collectAsState().value
+
+    SearchBar(
+        modifier = Modifier.fillMaxWidth(),
+        shadowElevation = 8.dp,
+        colors = SearchBarDefaults.colors(
+            containerColor =background,
+            inputFieldColors = TextFieldDefaults.colors().copy(
+                focusedTextColor = contentColor,
+                unfocusedTextColor = contentColor,
+                focusedIndicatorColor = contentColor,
+                unfocusedContainerColor = contentColor
+            )
+        ),
+        query = query,
+        enabled = true,
+        onQueryChange = uiState::onQueryChanged,
+        onSearch = onSearch,
+        active = true,
+        onActiveChange = {
             if (!it)
                 onExitRequest()
         },
-        result = uiState.results.collectAsState().value,
-        searchedItemDecorator = searchedItemDecorator,
-        barLeadingIcon = barLeadingIcon,
-        onSearch = onSearch
+        placeholder = {
+            Text(text = "Type here  to to search", color = contentColor)
+        },
+        shape = RectangleShape,
+        leadingIcon = barLeadingIcon,
+        trailingIcon = {
+            if (query.isNotBlank()) {
+                IconButton(
+                    onClick = {
+                        uiState.onQueryChanged("")
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Clear,
+                        contentDescription = "clear",
+                        tint = contentColor
+                    )
+                }
+            }
+
+        },
+        content = {
+            if (result.isEmpty())
+                EmptyContentScreen(message = "Not Found")
+            else
+                content(result, query)
+        }
     )
+
 
 
 }
 
+@Composable
+fun DefaultLeadingIcon(
+    modifier: Modifier = Modifier,
+    color: Color=Color.Unspecified
+) {
+    Icon(
+        modifier = modifier,
+        imageVector = Icons.Outlined.Search,
+        contentDescription = "Search Icon",
+        tint = color
+    )
+
+}
 class SearchDecoratorState<T>(
     private val items: List<T>,
     val predicate: (T, String) -> Boolean,
@@ -147,135 +195,6 @@ class SearchDecoratorState<T>(
 
 }
 
-@Composable
-private fun <T> SearchView(
-    query: String,
-    onQueryChanged: (String) -> Unit,
-    onActiveChanged: (Boolean) -> Unit,
-    result: List<T>,
-    barLeadingIcon: @Composable () -> Unit = {},
-    onSearch: (String) -> Unit = {},
-    searchedItemDecorator: @Composable (T, String) -> Unit,
-) {
-    _MySearchBar(
-        query = query,
-        onQueryChange = onQueryChanged,
-        active = true,
-        barLeadingIcon = barLeadingIcon,
-        onSearch = onSearch,
-        onActiveChanged = onActiveChanged,
-        modifier = Modifier,
-    ) {
-        LazyColumn {
-            items(items = result) { item ->
-                searchedItemDecorator(item, query)
-            }
-        }
-    }
-
-
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun _MySearchBar(
-    modifier: Modifier = Modifier,
-    query: String,
-    onQueryChange: (String) -> Unit = {},
-    active: Boolean,
-    onActiveChanged: (Boolean) -> Unit,
-    barLeadingIcon: @Composable () -> Unit = {},
-    onSearch: (String) -> Unit = {},
-    content: @Composable ColumnScope.() -> Unit = {},
-) {
-    SearchBar(
-        modifier = modifier.fillMaxWidth(),
-        query = query,
-        enabled = true,
-        onQueryChange = onQueryChange,
-        onSearch = onSearch,
-        active = active,
-        onActiveChange = onActiveChanged,
-        placeholder = {
-            Text(text = "Type here  to to search")
-        },
-        shape = RectangleShape,
-        leadingIcon = barLeadingIcon, trailingIcon = {
-            if (query.isNotBlank()) {
-                IconButton(
-                    onClick = {
-                        onQueryChange("")
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        null
-                    )
-                }
-            }
-
-        },
-        content = content
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun _MySearchBar(
-    modifier: Modifier = Modifier,
-    onGoBack: () -> Unit = {},
-    query: String,
-    onQueryChange: (String) -> Unit = {},
-    active: Boolean,
-    onActiveChanged: (Boolean) -> Unit,
-    content: @Composable ColumnScope.() -> Unit = {},
-) {
-
-    SearchBar(
-        modifier = modifier.fillMaxWidth(),
-        query = query,
-        onQueryChange = onQueryChange,
-        onSearch = {
-            // onActiveChanged(false)
-        },
-        active = active,
-        onActiveChange = onActiveChanged,
-        placeholder = {
-            Text(text = "Type here  to to search")
-        },
-        shape = RectangleShape,
-        leadingIcon = {
-            IconButton(
-                onClick = {
-                    // onActiveChanged(false) #disabling the exits
-                    onGoBack()
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    null
-                )
-            }
-
-        }, trailingIcon = {
-            if (query.isNotBlank()) {
-                IconButton(
-                    onClick = {
-                        onQueryChange("")
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        null
-                    )
-                }
-            }
-
-        },
-        content = content
-    )
-}
 
 /**
  * - Used to highlight text
@@ -295,7 +214,7 @@ class SearcherHighlightedText {
             urls.forEach { pair ->
                 addStyle(
                     style = SpanStyle(
-                        background = Color.Yellow,
+                        background = Color.Yellow.copy(alpha = 0.4f),//light yellow for this app
                         textDecoration = TextDecoration.None
                     ),
                     start = pair.first,
